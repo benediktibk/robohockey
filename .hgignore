@@ -1,0 +1,7 @@
+syntax: glob
+build/*
+*.creator.user*
+documents/specification_sheet/*.aux
+documents/specification_sheet/*.log
+documents/specification_sheet/*.out
+documents/specification_sheet/*.pdf

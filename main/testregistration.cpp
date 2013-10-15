@@ -1,0 +1,2 @@
+//CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Common::ASDFBLUBTest);
+
