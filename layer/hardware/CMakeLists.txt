@@ -1,9 +1,17 @@
 set(LAYER_HARDWARE_SRC
-	deletemelater.cpp
+	robotimpl.cpp
+	sonarimpl.cpp
+	lidarimpl.cpp
+	cameraimpl.cpp
+	odometryimpl.cpp
 )
 
 set(LAYER_HARDWARE_TEST_SRC
-	deletemelatertest.cpp
+	sonarstub.cpp
+	lidarstub.cpp
+	robotstub.cpp
+	camerastub.cpp
+	odometrystub.cpp
 )
 
 add_library(layerhardware ${LAYER_HARDWARE_SRC})
