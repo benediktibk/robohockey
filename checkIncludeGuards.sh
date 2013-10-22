@@ -6,7 +6,11 @@ for headerFileWithPath in ${headerFiles}
 do
 	if	[ $headerFileWithPath != "./physic/Box2D" ] &&
 		[ $headerFileWithPath != "./build" ]; then
-		echo "checking include guard of ${headerFileWithPath}"
+		headerFileWithoutPath=${headerFileWithPath##*/}
+		headerFile=${headerFileWithoutPath%.h}
+		path=${headerFileWithPath%/*}
+		subProjectPath=${path##*./}
+		echo "checking include guard of ${subProjectPath}/${headerFile}.h"
 
 		firstLine=$(head --lines 1 ${headerFileWithPath})
 		secondLine=$(head --lines 2 ${headerFileWithPath} | tail --lines 1)
@@ -35,11 +39,6 @@ do
 		fi
 
 		includeGuardReal=$includeGuardOne;
-
-		headerFileWithoutPath=${headerFileWithPath##*/}
-		headerFile=${headerFileWithoutPath%.h}
-		path=${headerFileWithPath%/*}
-		subProjectPath=${path##*./}
 		subProject=$(echo "$subProjectPath" | tr / _)
 		subProjectUpperCase=$(echo $subProject | tr  "[:lower:]" "[:upper:]")
 		fileNameUpperCase=$(echo $headerFile | tr  "[:lower:]" "[:upper:]")

@@ -39,3 +39,4 @@ layer/hardware/odometryimpl.h
 layer/hardware/odometryimpl.cpp
 layer/hardware/odometrystub.h
 layer/hardware/odometrystub.cpp
+checkIncludeGuards.sh
