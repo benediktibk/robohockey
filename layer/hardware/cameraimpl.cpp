@@ -1,6 +1,9 @@
 #include "layer/hardware/cameraimpl.h"
 
 using namespace RoboHockey::Layer::Hardware;
+using namespace cv;
 
-void CameraImpl::foo() const
-{ }
+Mat* CameraImpl::getFrame() const
+{
+    return new Mat();
+}

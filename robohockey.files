@@ -40,3 +40,4 @@ layer/hardware/odometryimpl.cpp
 layer/hardware/odometrystub.h
 layer/hardware/odometrystub.cpp
 checkIncludeGuards.sh
+main/CMakeLists.txt

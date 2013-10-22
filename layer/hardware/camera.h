@@ -1,6 +1,11 @@
 #ifndef ROBOHOCKEY_LAYER_HARDWARE_CAMERA_H
 #define ROBOHOCKEY_LAYER_HARDWARE_CAMERA_H
 
+namespace cv
+{
+class Mat;
+}
+
 namespace RoboHockey
 {
 namespace Layer
@@ -12,7 +17,7 @@ class Camera
 public:
 	virtual ~Camera() { }
 
-	virtual void foo() const = 0;
+    virtual cv::Mat* getFrame() const = 0;
 };
 }
 }

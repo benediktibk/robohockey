@@ -2,5 +2,7 @@
 
 using namespace RoboHockey::Layer::Hardware;
 
-void CameraStub::foo() const
-{ }
+cv::Mat* CameraStub::getFrame() const
+{
+    return 0;
+}
