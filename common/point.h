@@ -26,9 +26,15 @@ public:
 	void operator*=(double value);
 	bool fuzzyEqual(const Point &point, double epsilon) const;
 
+public:
+	static const Point& zero();
+
 private:
 	double m_x;
 	double m_y;
+
+private:
+	static const Point m_zero;
 };
 }
 }

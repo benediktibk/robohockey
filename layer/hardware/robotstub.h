@@ -21,7 +21,7 @@ public:
 	virtual const Sonar& getSonar() const;
 	virtual const Lidar& getLidar() const;
 	virtual const Camera& getCamera() const;
-	virtual const Odometry& getOdometry() const;
+	virtual Odometry& getOdometry();
 	virtual Engine& getEngine();
 
 private:

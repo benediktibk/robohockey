@@ -17,7 +17,7 @@ const Camera &RobotStub::getCamera() const
 	return m_camera;
 }
 
-const Odometry &RobotStub::getOdometry() const
+Odometry &RobotStub::getOdometry()
 {
 	return m_odometry;
 }

@@ -3,6 +3,11 @@
 
 namespace RoboHockey
 {
+namespace Common
+{
+class Point;
+}
+
 namespace Layer
 {
 namespace Hardware
@@ -12,7 +17,8 @@ class Odometry
 public:
 	virtual ~Odometry() { }
 
-	virtual void foo() const = 0;
+	virtual void setCurrentPosition(const Common::Point &position) const;
+	virtual const Common::Point& getCurrentPosition() const;
 };
 }
 }

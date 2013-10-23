@@ -5,6 +5,8 @@
 using namespace RoboHockey::Common;
 using namespace std;
 
+const Point Point::m_zero;
+
 Point::Point() :
 	m_x(0),
 	m_y(0)
@@ -76,4 +78,9 @@ bool Point::fuzzyEqual(const Point &point, double epsilon) const
 {
 	Compare compare(epsilon);
 	return	compare.isFuzzyEqual(getX(), point.getX()) && compare.isFuzzyEqual(getY(), point.getY());
+}
+
+const Point &Point::zero()
+{
+	return m_zero;
 }

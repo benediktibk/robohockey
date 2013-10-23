@@ -127,3 +127,8 @@ void PointTest::operatorMultpliyAndAssign_3And5With2_6And10()
 
 	CPPUNIT_ASSERT(Point(6, 10).fuzzyEqual(point, 0.0001));
 }
+
+void PointTest::zero_empty_bothCoordinatesZero()
+{
+	CPPUNIT_ASSERT_EQUAL(Point(), Point::zero());
+}

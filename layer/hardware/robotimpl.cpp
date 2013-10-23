@@ -44,7 +44,7 @@ const Camera &RobotImpl::getCamera() const
 	return *m_camera;
 }
 
-const Odometry &RobotImpl::getOdometry() const
+Odometry &RobotImpl::getOdometry()
 {
 	return *m_odometry;
 }
