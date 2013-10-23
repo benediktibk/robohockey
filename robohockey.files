@@ -44,3 +44,4 @@ common/comparetest.h
 common/compare.h
 common/comparetest.cpp
 common/compare.cpp
+main/CMakeLists.txt
