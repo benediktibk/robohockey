@@ -3,10 +3,6 @@ common/CMakeLists.txt
 main/main.cpp
 main/testrunner.cpp
 main/testregistration.cpp
-common/deletemelatertest.h
-common/deletemelater.h
-common/deletemelatertest.cpp
-common/deletemelater.cpp
 layer/CMakeLists.txt
 layer/hardware/CMakeLists.txt
 layer/hardware/robot.h
@@ -40,3 +36,11 @@ layer/hardware/odometryimpl.cpp
 layer/hardware/odometrystub.h
 layer/hardware/odometrystub.cpp
 checkIncludeGuards.sh
+common/pointtest.h
+common/point.h
+common/pointtest.cpp
+common/point.cpp
+common/comparetest.h
+common/compare.h
+common/comparetest.cpp
+common/compare.cpp

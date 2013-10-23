@@ -1,9 +1,11 @@
 set(COMMON_SRC
-	deletemelater.cpp
+	compare.cpp
+	point.cpp
 )
 
 set(COMMON_TEST_SRC
-	deletemelatertest.cpp
+	comparetest.cpp
+	pointtest.cpp
 )
 
 add_library(common ${COMMON_SRC})
