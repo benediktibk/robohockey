@@ -17,8 +17,8 @@ class Odometry
 public:
 	virtual ~Odometry() { }
 
-	virtual void setCurrentPosition(const Common::Point &position) const;
-	virtual const Common::Point& getCurrentPosition() const;
+	virtual void setCurrentPosition(const Common::Point &position) const = 0;
+	virtual const Common::Point& getCurrentPosition() const = 0;
 };
 }
 }

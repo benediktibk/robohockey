@@ -4,8 +4,8 @@ find_library(CPPUNIT_LIBRARY cppunit)
 find_library(PLAYER_LIBRARY playerc++)
 
 set(LIBRARIES
-	common
 	layerhardware
+	common
 )
 
 set(LIBRARIES_TEST

@@ -4,6 +4,7 @@ set(LAYER_HARDWARE_SRC
 	lidarimpl.cpp
 	cameraimpl.cpp
 	odometryimpl.cpp
+	engineimpl.cpp
 )
 
 set(LAYER_HARDWARE_TEST_SRC
