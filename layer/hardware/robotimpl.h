@@ -3,6 +3,11 @@
 
 #include "layer/hardware/robot.h"
 
+namespace PlayerCc
+{
+class PlayerClient;
+}
+
 namespace RoboHockey
 {
 namespace Layer
@@ -28,6 +33,7 @@ private:
 	Camera *m_camera;
 	Odometry *m_odometry;
 	Engine *m_engine;
+	PlayerCc::PlayerClient *m_playerClient;
 };
 }
 }

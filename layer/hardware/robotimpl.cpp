@@ -4,6 +4,7 @@
 #include "layer/hardware/cameraimpl.h"
 #include "layer/hardware/odometryimpl.h"
 #include "layer/hardware/engineimpl.h"
+#include <libplayerc++/playerc++.h>
 
 using namespace RoboHockey::Layer::Hardware;
 
@@ -12,8 +13,11 @@ RobotImpl::RobotImpl() :
 	m_lidar(new LidarImpl),
 	m_camera(new CameraImpl),
 	m_odometry(new OdometryImpl),
-	m_engine(new EngineImpl)
-{ }
+	m_engine(new EngineImpl),
+	m_playerClient(new PlayerCc::PlayerClient("localhost", 6665))
+{
+	m_playerClient->Read();
+}
 
 RobotImpl::~RobotImpl()
 {
@@ -27,6 +31,8 @@ RobotImpl::~RobotImpl()
 	m_odometry = 0;
 	delete m_engine;
 	m_engine = 0;
+	delete m_playerClient;
+	m_playerClient = 0;
 }
 
 const Sonar &RobotImpl::getSonar() const

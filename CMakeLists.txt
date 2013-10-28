@@ -12,6 +12,7 @@ set(CMAKE_CXX_FLAGS_COVERAGE "${CMAKE_CXX_FLAGS_COMMON} -g -fprofile-arcs -ftest
 
 include_directories(
 	.
+	/usr/local/include/player-3.0
 )
 
 add_subdirectory(common)
