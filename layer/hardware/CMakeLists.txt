@@ -13,6 +13,7 @@ set(LAYER_HARDWARE_TEST_SRC
 	camerastub.cpp
 	odometrystub.cpp
 )
-
+include(UsePlayerC++)
+include_directories(${PLAYERCPP_INCLUDE_DIRS})
 add_library(layerhardware ${LAYER_HARDWARE_SRC})
 add_library(layerhardwaretest ${LAYER_HARDWARE_TEST_SRC})
