@@ -3,6 +3,7 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 find_library(CPPUNIT_LIBRARY cppunit)
 include(UsePlayerC++)
+find_library(PLAYER_LIBRARY playerc++)
 find_package(OpenCV REQUIRED)
 
 set(LIBRARIES
