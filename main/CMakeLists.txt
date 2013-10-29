@@ -1,7 +1,8 @@
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY bin)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
+
 find_library(CPPUNIT_LIBRARY cppunit)
-find_library(PLAYER_LIBRARY playerc++)
+include(UsePlayerC++)
 find_package(OpenCV REQUIRED)
 
 set(LIBRARIES
