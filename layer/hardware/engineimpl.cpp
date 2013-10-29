@@ -8,6 +8,7 @@ EngineImpl::EngineImpl(PlayerCc::PlayerClient *playerClient) :
 {
 }
 
-void EngineImpl::setSpeed(double /*magnitude*/, double /*rotation*/)
+void EngineImpl::setSpeed(double magnitude, double rotation)
 {
+	return m_engine.SetSpeed(magnitude, rotation);
 }
