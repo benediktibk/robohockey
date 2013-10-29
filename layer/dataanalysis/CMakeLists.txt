@@ -3,6 +3,7 @@ set(LAYER_DATAANALYSIS_SRC
 	odometryimpl.cpp
 	lidarimpl.cpp
 	sonarimpl.cpp
+	cameraimpl.cpp
 )
 
 set(LAYER_DATAANALYSIS_TEST_SRC
@@ -10,6 +11,7 @@ set(LAYER_DATAANALYSIS_TEST_SRC
 	odometrystub.cpp
 	lidarstub.cpp
 	sonarstub.cpp
+	camerastub.cpp
 )
 add_library(layerdataanalysis ${LAYER_DATAANALYSIS_SRC})
 add_library(layerdataanalysistest ${LAYER_DATAANALYSIS_TEST_SRC})

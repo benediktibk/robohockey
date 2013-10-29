@@ -84,3 +84,8 @@ layer/dataanalysis/sonarimpl.cpp
 layer/dataanalysis/sonarstub.h
 layer/dataanalysis/sonarimpl.h
 layer/dataanalysis/sonar.h
+layer/dataanalysis/camerastub.cpp
+layer/dataanalysis/cameraimpl.cpp
+layer/dataanalysis/camerastub.h
+layer/dataanalysis/cameraimpl.h
+layer/dataanalysis/camera.h
