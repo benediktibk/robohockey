@@ -10,7 +10,7 @@ using namespace RoboHockey::Layer::Hardware;
 
 RobotImpl::RobotImpl() :
 	m_sonar(new SonarImpl),
-	m_lidar(new LidarImpl),
+	m_lidar(new LidarImpl(m_playerClient)),
 	m_camera(new CameraImpl),
 	m_odometry(new OdometryImpl),
 	m_engine(new EngineImpl),
