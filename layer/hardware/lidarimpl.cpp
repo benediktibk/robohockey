@@ -1,8 +1,13 @@
 #include "layer/hardware/lidarimpl.h"
 
 using namespace RoboHockey::Layer::Hardware;
+using namespace PlayerCc;
 
-double LidarImpl::getDistance(unsigned int /*angle*/) const
+LidarImpl::LidarImpl(PlayerClient *playerClient) :
+	m_laser(playerClient, 0)
+{ }
+
+double LidarImpl::getDistance(unsigned int angle) const
 {
-	return 0;
+	return m_laser.GetRange(angle);
 }

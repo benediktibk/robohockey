@@ -7,6 +7,7 @@ find_package(OpenCV REQUIRED)
 
 set(LIBRARIES
 	layerhardware
+	layerdataanalysis
 	common
 	threading
 	${PLAYERCPP_LINK_LIBS}
@@ -17,6 +18,7 @@ set(LIBRARIES
 set(LIBRARIES_TEST
 	commontest
 	layerhardwaretest
+	layerdataanalysis
 	threadingtest
 	${CPPUNIT_LIBRARY}
 )
