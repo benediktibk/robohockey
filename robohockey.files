@@ -79,3 +79,8 @@ layer/dataanalysis/lidarimpl.cpp
 layer/dataanalysis/lidarstub.h
 layer/dataanalysis/lidarimpl.h
 layer/dataanalysis/lidar.h
+layer/dataanalysis/sonarstub.cpp
+layer/dataanalysis/sonarimpl.cpp
+layer/dataanalysis/sonarstub.h
+layer/dataanalysis/sonarimpl.h
+layer/dataanalysis/sonar.h
