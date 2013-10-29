@@ -17,7 +17,7 @@ class Camera
 public:
 	virtual ~Camera() { }
 
-    virtual cv::Mat* getFrame() const = 0;
+	virtual cv::Mat getFrame() const = 0;
 };
 }
 }
