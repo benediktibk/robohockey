@@ -112,3 +112,5 @@ layer/dataanalysis/cameratest.h
 layer/dataanalysis/cameratest.cpp
 layer/dataanalysis/enginetest.h
 layer/dataanalysis/enginetest.cpp
+layer/dataanalysis/lidartest.h
+layer/dataanalysis/lidartest.cpp
