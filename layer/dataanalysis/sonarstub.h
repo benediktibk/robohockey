@@ -13,7 +13,7 @@ class SonarStub :
 		public Sonar
 {
 public:
-	virtual double getMinimumDistance() const;
+	virtual bool isObstacleDirectInFront() const;
 };
 }
 }

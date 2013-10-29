@@ -12,7 +12,7 @@ class Sonar
 public:
 	virtual ~Sonar() { }
 
-	virtual double getMinimumDistance() const = 0;
+	virtual bool isObstacleDirectInFront() const = 0;
 };
 }
 }

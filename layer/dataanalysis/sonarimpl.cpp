@@ -7,7 +7,7 @@ SonarImpl::SonarImpl(const Hardware::Sonar &sonar) :
 	m_sonar(sonar)
 { }
 
-double SonarImpl::getMinimumDistance() const
+bool SonarImpl::isObstacleDirectInFront() const
 {
-	return 0;
+	return false;
 }

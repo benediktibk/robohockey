@@ -20,7 +20,7 @@ class SonarImpl :
 public:
 	SonarImpl(const Hardware::Sonar &sonar);
 
-	virtual double getMinimumDistance() const;
+	virtual bool isObstacleDirectInFront() const;
 
 private:
 	const Hardware::Sonar &m_sonar;
