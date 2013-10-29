@@ -4,6 +4,11 @@
 using namespace RoboHockey::Layer::Hardware;
 using namespace RoboHockey::Common;
 
+OdometryImpl::OdometryImpl(PlayerCc::PlayerClient *playerClient) :
+	m_odometry(playerClient)
+{
+}
+
 void OdometryImpl::setCurrentPosition(const Point &/*position*/) const
 {
 
