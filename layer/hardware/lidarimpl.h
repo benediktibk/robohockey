@@ -14,7 +14,6 @@ class LidarImpl :
 		public Lidar
 {
 public:
-
 	LidarImpl(PlayerCc::PlayerClient *playerClient);
 
 	virtual double getDistance(unsigned int angle) const;

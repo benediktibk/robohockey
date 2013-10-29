@@ -13,7 +13,7 @@ RobotImpl::RobotImpl() :
 	m_lidar(new LidarImpl(m_playerClient)),
 	m_camera(new CameraImpl),
 	m_odometry(new OdometryImpl),
-	m_engine(new EngineImpl),
+	m_engine(new EngineImpl(m_playerClient)),
 	m_playerClient(new PlayerCc::PlayerClient("localhost", 6665))
 {
 	m_playerClient->Read();
