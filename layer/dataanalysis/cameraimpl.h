@@ -9,21 +9,21 @@ namespace Layer
 {
 namespace Hardware
 {
-class Camera;
+	class Camera;
 }
 
 namespace DataAnalysis
 {
-class CameraImpl :
-		public Camera
-{
-public:
-	CameraImpl(const Hardware::Camera &camera);
-	virtual void getColor() const;
+	class CameraImpl :
+			public Camera
+	{
+	public:
+		CameraImpl(const Hardware::Camera &camera);
+		virtual void getColor() const;
 
-private:
-	const Hardware::Camera &m_camera;
-};
+	private:
+		const Hardware::Camera &m_camera;
+	};
 }
 }
 }

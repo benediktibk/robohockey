@@ -7,13 +7,13 @@ namespace Layer
 {
 namespace Hardware
 {
-class Sonar
-{
-public:
-	virtual ~Sonar() { }
+	class Sonar
+	{
+	public:
+		virtual ~Sonar() { }
 
-	virtual double getDistanceForSensor(unsigned int sensorNumber) = 0;
-};
+		virtual double getDistanceForSensor(unsigned int sensorNumber) = 0;
+	};
 }
 }
 }

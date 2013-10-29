@@ -9,18 +9,18 @@ namespace Layer
 {
 namespace Hardware
 {
-class EngineMock :
-		public Engine
-{
-public:
-	EngineMock();
+	class EngineMock :
+			public Engine
+	{
+	public:
+		EngineMock();
 
-	virtual void setSpeed(double magnitude, double rotation);
-	unsigned int getCallsToSetSpeed() const;
+		virtual void setSpeed(double magnitude, double rotation);
+		unsigned int getCallsToSetSpeed() const;
 
-private:
-	unsigned int m_callsToSetSpeed;
-};
+	private:
+		unsigned int m_callsToSetSpeed;
+	};
 }
 }
 }

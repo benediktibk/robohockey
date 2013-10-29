@@ -10,16 +10,16 @@ namespace Layer
 {
 namespace DataAnalysis
 {
-class EngineTest :
-		public CPPUNIT_NS::TestFixture
-{
-	CPPUNIT_TEST_SUITE(EngineTest);
-	CPPUNIT_TEST(setSpeed_mockHardwareEngine_atLeastOneCallToSetSpeed);
-	CPPUNIT_TEST_SUITE_END();
+	class EngineTest :
+			public CPPUNIT_NS::TestFixture
+	{
+		CPPUNIT_TEST_SUITE(EngineTest);
+		CPPUNIT_TEST(setSpeed_mockHardwareEngine_atLeastOneCallToSetSpeed);
+		CPPUNIT_TEST_SUITE_END();
 
-private:
-	void setSpeed_mockHardwareEngine_atLeastOneCallToSetSpeed();
-};
+	private:
+		void setSpeed_mockHardwareEngine_atLeastOneCallToSetSpeed();
+	};
 }
 }
 }

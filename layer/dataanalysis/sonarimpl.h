@@ -9,22 +9,22 @@ namespace Layer
 {
 namespace Hardware
 {
-class Sonar;
+	class Sonar;
 }
 
 namespace DataAnalysis
 {
-class SonarImpl :
-		public Sonar
-{
-public:
-	SonarImpl(const Hardware::Sonar &sonar);
+	class SonarImpl :
+			public Sonar
+	{
+	public:
+		SonarImpl(const Hardware::Sonar &sonar);
 
-	virtual bool isObstacleDirectInFront() const;
+		virtual bool isObstacleDirectInFront() const;
 
-private:
-	const Hardware::Sonar &m_sonar;
-};
+	private:
+		const Hardware::Sonar &m_sonar;
+	};
 }
 }
 }

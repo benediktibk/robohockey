@@ -9,18 +9,18 @@ namespace Layer
 {
 namespace Hardware
 {
-class CameraMock :
-		public Camera
-{
-public:
-	CameraMock();
+	class CameraMock :
+			public Camera
+	{
+	public:
+		CameraMock();
 
-	virtual cv::Mat getFrame();
-	unsigned int getCallsToGetFrame() const;
+		virtual cv::Mat getFrame();
+		unsigned int getCallsToGetFrame() const;
 
-private:
-	unsigned int m_callsToGetFrame;
-};
+	private:
+		unsigned int m_callsToGetFrame;
+	};
 }
 }
 }

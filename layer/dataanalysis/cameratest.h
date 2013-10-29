@@ -10,16 +10,16 @@ namespace Layer
 {
 namespace DataAnalysis
 {
-class CameraTest :
-		public CPPUNIT_NS::TestFixture
-{
-	CPPUNIT_TEST_SUITE(CameraTest);
-	CPPUNIT_TEST(getColor_mockHardwareCamera_atLeastOneCallToGetFrame);
-	CPPUNIT_TEST_SUITE_END();
+	class CameraTest :
+			public CPPUNIT_NS::TestFixture
+	{
+		CPPUNIT_TEST_SUITE(CameraTest);
+		CPPUNIT_TEST(getColor_mockHardwareCamera_atLeastOneCallToGetFrame);
+		CPPUNIT_TEST_SUITE_END();
 
-private:
-	void getColor_mockHardwareCamera_atLeastOneCallToGetFrame();
-};
+	private:
+		void getColor_mockHardwareCamera_atLeastOneCallToGetFrame();
+	};
 }
 }
 }

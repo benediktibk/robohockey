@@ -10,24 +10,24 @@ namespace Layer
 {
 namespace DataAnalysis
 {
-class DataAnalyserTest :
-		public CPPUNIT_NS::TestFixture
-{
-	CPPUNIT_TEST_SUITE(DataAnalyserTest);
-	CPPUNIT_TEST(constructor_mockRobot_atLeastOneCallToGetSonar);
-	CPPUNIT_TEST(constructor_mockRobot_atLeastOneCallToGetLidar);
-	CPPUNIT_TEST(constructor_mockRobot_atLeastOneCallToGetCamera);
-	CPPUNIT_TEST(constructor_mockRobot_atLeastOneCallToGetOdometry);
-	CPPUNIT_TEST(constructor_mockRobot_atLeastOneCallToGetEngine);
-	CPPUNIT_TEST_SUITE_END();
+	class DataAnalyserTest :
+			public CPPUNIT_NS::TestFixture
+	{
+		CPPUNIT_TEST_SUITE(DataAnalyserTest);
+		CPPUNIT_TEST(constructor_mockRobot_atLeastOneCallToGetSonar);
+		CPPUNIT_TEST(constructor_mockRobot_atLeastOneCallToGetLidar);
+		CPPUNIT_TEST(constructor_mockRobot_atLeastOneCallToGetCamera);
+		CPPUNIT_TEST(constructor_mockRobot_atLeastOneCallToGetOdometry);
+		CPPUNIT_TEST(constructor_mockRobot_atLeastOneCallToGetEngine);
+		CPPUNIT_TEST_SUITE_END();
 
-private:
-	void constructor_mockRobot_atLeastOneCallToGetSonar();
-	void constructor_mockRobot_atLeastOneCallToGetLidar();
-	void constructor_mockRobot_atLeastOneCallToGetCamera();
-	void constructor_mockRobot_atLeastOneCallToGetOdometry();
-	void constructor_mockRobot_atLeastOneCallToGetEngine();
-};
+	private:
+		void constructor_mockRobot_atLeastOneCallToGetSonar();
+		void constructor_mockRobot_atLeastOneCallToGetLidar();
+		void constructor_mockRobot_atLeastOneCallToGetCamera();
+		void constructor_mockRobot_atLeastOneCallToGetOdometry();
+		void constructor_mockRobot_atLeastOneCallToGetEngine();
+	};
 }
 }
 }

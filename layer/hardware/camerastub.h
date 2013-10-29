@@ -9,12 +9,12 @@ namespace Layer
 {
 namespace Hardware
 {
-class CameraStub :
-		public Camera
-{
-public:
-	virtual cv::Mat getFrame();
-};
+	class CameraStub :
+			public Camera
+	{
+	public:
+		virtual cv::Mat getFrame();
+	};
 }
 }
 }

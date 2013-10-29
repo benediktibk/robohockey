@@ -9,12 +9,12 @@ namespace Layer
 {
 namespace Hardware
 {
-class SonarStub :
-		public Sonar
-{
-public:
-	virtual double getDistanceForSensor(unsigned int sensorNumber);
-};
+	class SonarStub :
+			public Sonar
+	{
+	public:
+		virtual double getDistanceForSensor(unsigned int sensorNumber);
+	};
 }
 }
 }

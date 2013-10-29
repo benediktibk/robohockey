@@ -5,17 +5,17 @@ namespace RoboHockey
 {
 namespace Threading
 {
-class Mutex;
+	class Mutex;
 
-class Lock
-{
-public:
-	Lock(Mutex &mutex);
-	~Lock();
+	class Lock
+	{
+	public:
+		Lock(Mutex &mutex);
+		~Lock();
 
-private:
-	Mutex &m_mutex;
-};
+	private:
+		Mutex &m_mutex;
+	};
 }
 }
 

@@ -14,23 +14,23 @@ namespace Layer
 {
 namespace DataAnalysis
 {
-class DataAnalyserStub:
-		public DataAnalyser
-{
-public:
-	virtual const Sonar& getSonar() const;
-	virtual const Lidar& getLidar() const;
-	virtual const Camera& getCamera() const;
-	virtual Odometry& getOdometry();
-	virtual Engine& getEngine();
+	class DataAnalyserStub:
+			public DataAnalyser
+	{
+	public:
+		virtual const Sonar& getSonar() const;
+		virtual const Lidar& getLidar() const;
+		virtual const Camera& getCamera() const;
+		virtual Odometry& getOdometry();
+		virtual Engine& getEngine();
 
-private:
-	SonarStub m_sonar;
-	LidarStub m_lidar;
-	CameraStub m_camera;
-	OdometryStub m_odometry;
-	EngineStub m_engine;
-};
+	private:
+		SonarStub m_sonar;
+		LidarStub m_lidar;
+		CameraStub m_camera;
+		OdometryStub m_odometry;
+		EngineStub m_engine;
+	};
 }
 }
 }

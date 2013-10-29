@@ -12,13 +12,13 @@ namespace Layer
 {
 namespace DataAnalysis
 {
-class Camera
-{
-public:
-	virtual ~Camera() { }
+	class Camera
+	{
+	public:
+		virtual ~Camera() { }
 
-	virtual void getColor() const = 0;
-};
+		virtual void getColor() const = 0;
+	};
 }
 }
 }

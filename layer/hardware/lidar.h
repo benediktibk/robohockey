@@ -7,13 +7,13 @@ namespace Layer
 {
 namespace Hardware
 {
-class Lidar
-{
-public:
-	virtual ~Lidar() { }
+	class Lidar
+	{
+	public:
+		virtual ~Lidar() { }
 
-	virtual double getDistance(unsigned int angle) = 0;
-};
+		virtual double getDistance(unsigned int angle) = 0;
+	};
 }
 }
 }

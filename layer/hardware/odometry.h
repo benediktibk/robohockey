@@ -5,21 +5,21 @@ namespace RoboHockey
 {
 namespace Common
 {
-class Point;
+	class Point;
 }
 
 namespace Layer
 {
 namespace Hardware
 {
-class Odometry
-{
-public:
-	virtual ~Odometry() { }
+	class Odometry
+	{
+	public:
+		virtual ~Odometry() { }
 
-	virtual void setCurrentPosition(const Common::Point &position) = 0;
-	virtual const Common::Point& getCurrentPosition() = 0;
-};
+		virtual void setCurrentPosition(const Common::Point &position) = 0;
+		virtual const Common::Point& getCurrentPosition() = 0;
+	};
 }
 }
 }

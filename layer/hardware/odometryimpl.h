@@ -10,18 +10,18 @@ namespace Layer
 {
 namespace Hardware
 {
-class OdometryImpl :
-		public Odometry
-{
-public:
-	OdometryImpl(PlayerCc::PlayerClient *playerClient);
+	class OdometryImpl :
+			public Odometry
+	{
+	public:
+		OdometryImpl(PlayerCc::PlayerClient *playerClient);
 
-	virtual void setCurrentPosition(const Common::Point &position);
-	virtual const Common::Point& getCurrentPosition();
+		virtual void setCurrentPosition(const Common::Point &position);
+		virtual const Common::Point& getCurrentPosition();
 
-private:
-	PlayerCc::Position2dProxy m_odometry;
-};
+	private:
+		PlayerCc::Position2dProxy m_odometry;
+	};
 }
 }
 }

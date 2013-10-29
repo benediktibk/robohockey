@@ -9,18 +9,18 @@ namespace Layer
 {
 namespace Hardware
 {
-class SonarMock :
-		public Sonar
-{
-public:
-	SonarMock();
+	class SonarMock :
+			public Sonar
+	{
+	public:
+		SonarMock();
 
-	virtual double getDistanceForSensor(unsigned int sensorNumber);
-	unsigned int getCallsToGetDistanceForSensor() const;
+		virtual double getDistanceForSensor(unsigned int sensorNumber);
+		unsigned int getCallsToGetDistanceForSensor() const;
 
-private:
-	unsigned int m_callsToGetDistanceForSensor;
-};
+	private:
+		unsigned int m_callsToGetDistanceForSensor;
+	};
 }
 }
 }

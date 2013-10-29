@@ -9,12 +9,12 @@ namespace Layer
 {
 namespace DataAnalysis
 {
-class CameraStub :
-		public Camera
-{
-public:
-	virtual void getColor() const;
-};
+	class CameraStub :
+			public Camera
+	{
+	public:
+		virtual void getColor() const;
+	};
 }
 }
 }

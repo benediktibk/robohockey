@@ -9,12 +9,12 @@ namespace Layer
 {
 namespace DataAnalysis
 {
-class EngineStub :
-		public Engine
-{
-public:
-	virtual void setSpeed(double magnitude, double rotation);
-};
+	class EngineStub :
+			public Engine
+	{
+	public:
+		virtual void setSpeed(double magnitude, double rotation);
+	};
 }
 }
 }

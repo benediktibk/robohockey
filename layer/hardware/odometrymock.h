@@ -9,22 +9,22 @@ namespace Layer
 {
 namespace Hardware
 {
-class OdometryMock :
-		public Odometry
-{
-public:
-	OdometryMock();
+	class OdometryMock :
+			public Odometry
+	{
+	public:
+		OdometryMock();
 
-	virtual void setCurrentPosition(const Common::Point &position);
-	virtual const Common::Point& getCurrentPosition();
+		virtual void setCurrentPosition(const Common::Point &position);
+		virtual const Common::Point& getCurrentPosition();
 
-	unsigned int getCallsToSetCurrentPosition() const;
-	unsigned int getCallsToGetCurrentPosition() const;
+		unsigned int getCallsToSetCurrentPosition() const;
+		unsigned int getCallsToGetCurrentPosition() const;
 
-private:
-	unsigned int m_callsToSetCurrentPosition;
-	unsigned int m_callsToGetCurrentPosition;
-};
+	private:
+		unsigned int m_callsToSetCurrentPosition;
+		unsigned int m_callsToGetCurrentPosition;
+	};
 }
 }
 }

@@ -10,16 +10,16 @@ namespace Layer
 {
 namespace DataAnalysis
 {
-class SonarTest :
-		public CPPUNIT_NS::TestFixture
-{
-	CPPUNIT_TEST_SUITE(SonarTest);
-	CPPUNIT_TEST(isObstacleInFront_mockHardwareSonar_atLeastOneCallToGetDistanceForSensor);
-	CPPUNIT_TEST_SUITE_END();
+	class SonarTest :
+			public CPPUNIT_NS::TestFixture
+	{
+		CPPUNIT_TEST_SUITE(SonarTest);
+		CPPUNIT_TEST(isObstacleInFront_mockHardwareSonar_atLeastOneCallToGetDistanceForSensor);
+		CPPUNIT_TEST_SUITE_END();
 
-private:
-	void isObstacleInFront_mockHardwareSonar_atLeastOneCallToGetDistanceForSensor();
-};
+	private:
+		void isObstacleInFront_mockHardwareSonar_atLeastOneCallToGetDistanceForSensor();
+	};
 }
 }
 }

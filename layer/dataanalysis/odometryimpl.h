@@ -9,23 +9,23 @@ namespace Layer
 {
 namespace Hardware
 {
-class Odometry;
+	class Odometry;
 }
 
 namespace DataAnalysis
 {
-class OdometryImpl :
-		public Odometry
-{
-public:
-	OdometryImpl(Hardware::Odometry &odometry);
+	class OdometryImpl :
+			public Odometry
+	{
+	public:
+		OdometryImpl(Hardware::Odometry &odometry);
 
-	virtual void setCurrentPosition(const Common::Point &position) const;
-	virtual const Common::Point& getCurrentPosition() const;
+		virtual void setCurrentPosition(const Common::Point &position) const;
+		virtual const Common::Point& getCurrentPosition() const;
 
-private:
-	Hardware::Odometry &m_odometry;
-};
+	private:
+		Hardware::Odometry &m_odometry;
+	};
 }
 }
 }

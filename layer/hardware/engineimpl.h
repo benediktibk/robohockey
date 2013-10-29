@@ -10,17 +10,17 @@ namespace Layer
 {
 namespace Hardware
 {
-class EngineImpl :
-		public Engine
-{
-public:
-	EngineImpl(PlayerCc::PlayerClient *playerClient);
+	class EngineImpl :
+			public Engine
+	{
+	public:
+		EngineImpl(PlayerCc::PlayerClient *playerClient);
 
-	virtual void setSpeed(double magnitude, double rotation);
+		virtual void setSpeed(double magnitude, double rotation);
 
-private:
-	PlayerCc::Position2dProxy m_engine;
-};
+	private:
+		PlayerCc::Position2dProxy m_engine;
+	};
 }
 }
 }

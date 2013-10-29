@@ -10,17 +10,17 @@ namespace Layer
 {
 namespace Hardware
 {
-class SonarImpl :
-		public Sonar
-{
-public:
-	SonarImpl(PlayerCc::PlayerClient *playerClient);
+	class SonarImpl :
+			public Sonar
+	{
+	public:
+		SonarImpl(PlayerCc::PlayerClient *playerClient);
 
-	virtual double getDistanceForSensor(unsigned int sensorNumber);
+		virtual double getDistanceForSensor(unsigned int sensorNumber);
 
-private:
-	PlayerCc::SonarProxy m_sonar;
-};
+	private:
+		PlayerCc::SonarProxy m_sonar;
+	};
 }
 }
 }

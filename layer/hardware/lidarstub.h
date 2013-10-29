@@ -9,12 +9,12 @@ namespace Layer
 {
 namespace Hardware
 {
-class LidarStub :
-		public Lidar
-{
-public:
-	virtual double getDistance(unsigned int angle);
-};
+	class LidarStub :
+			public Lidar
+	{
+	public:
+		virtual double getDistance(unsigned int angle);
+	};
 }
 }
 }

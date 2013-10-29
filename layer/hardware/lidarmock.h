@@ -9,18 +9,18 @@ namespace Layer
 {
 namespace Hardware
 {
-class LidarMock :
-		public Lidar
-{
-public:
-	LidarMock();
+	class LidarMock :
+			public Lidar
+	{
+	public:
+		LidarMock();
 
-	virtual double getDistance(unsigned int angle);
-	unsigned int getCallsToGetDistance() const;
+		virtual double getDistance(unsigned int angle);
+		unsigned int getCallsToGetDistance() const;
 
-private:
-	unsigned int m_callsToGetDistance;
-};
+	private:
+		unsigned int m_callsToGetDistance;
+	};
 }
 }
 }

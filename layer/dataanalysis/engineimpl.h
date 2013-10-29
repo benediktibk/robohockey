@@ -9,22 +9,22 @@ namespace Layer
 {
 namespace Hardware
 {
-class Engine;
+	class Engine;
 }
 
 namespace DataAnalysis
 {
-class EngineImpl :
-		public Engine
-{
-public:
-	EngineImpl(Hardware::Engine &engine);
+	class EngineImpl :
+			public Engine
+	{
+	public:
+		EngineImpl(Hardware::Engine &engine);
 
-	virtual void setSpeed(double magnitude, double rotation);
+		virtual void setSpeed(double magnitude, double rotation);
 
-private:
-	Hardware::Engine &m_engine;
-};
+	private:
+		Hardware::Engine &m_engine;
+	};
 }
 }
 }
