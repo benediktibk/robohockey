@@ -63,3 +63,9 @@ threading/mutextest.h
 threading/mutex.h
 threading/locktest.h
 threading/lock.h
+layer/dataanalysis/CMakeLists.txt
+layer/dataanalysis/engine.h
+layer/dataanalysis/enginestub.h
+layer/dataanalysis/enginestub.cpp
+layer/dataanalysis/engineimpl.cpp
+layer/dataanalysis/engineimpl.h

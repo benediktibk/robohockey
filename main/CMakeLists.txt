@@ -6,6 +6,7 @@ find_package(OpenCV REQUIRED)
 
 set(LIBRARIES
 	layerhardware
+	layerdataanalysis
 	common
 	threading
 )
@@ -13,6 +14,7 @@ set(LIBRARIES
 set(LIBRARIES_TEST
 	commontest
 	layerhardwaretest
+	layerdataanalysis
 	threadingtest
 )
 
