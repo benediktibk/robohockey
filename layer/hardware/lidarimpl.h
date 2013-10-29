@@ -2,7 +2,7 @@
 #define ROBOHOCKEY_LAYER_HARDWARE_LIDARIMPL_H
 
 #include "layer/hardware/lidar.h"
-#include <libplayerc++/playerc++.h>
+#include <player-3.0/libplayerc++/playerc++.h>
 
 namespace RoboHockey
 {
