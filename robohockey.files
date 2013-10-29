@@ -74,3 +74,8 @@ layer/dataanalysis/odometryimpl.cpp
 layer/dataanalysis/odometrystub.h
 layer/dataanalysis/odometryimpl.h
 layer/dataanalysis/odometry.h
+layer/dataanalysis/lidarstub.cpp
+layer/dataanalysis/lidarimpl.cpp
+layer/dataanalysis/lidarstub.h
+layer/dataanalysis/lidarimpl.h
+layer/dataanalysis/lidar.h
