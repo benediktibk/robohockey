@@ -89,3 +89,8 @@ layer/dataanalysis/cameraimpl.cpp
 layer/dataanalysis/camerastub.h
 layer/dataanalysis/cameraimpl.h
 layer/dataanalysis/camera.h
+layer/dataanalysis/dataanalyser.h
+layer/dataanalysis/dataanalyserimpl.h
+layer/dataanalysis/dataanalyserimpl.cpp
+layer/dataanalysis/dataanalyserstub.cpp
+layer/dataanalysis/dataanalyserstub.h

@@ -4,6 +4,7 @@ set(LAYER_DATAANALYSIS_SRC
 	lidarimpl.cpp
 	sonarimpl.cpp
 	cameraimpl.cpp
+	dataanalyserimpl.cpp
 )
 
 set(LAYER_DATAANALYSIS_TEST_SRC
@@ -12,6 +13,7 @@ set(LAYER_DATAANALYSIS_TEST_SRC
 	lidarstub.cpp
 	sonarstub.cpp
 	camerastub.cpp
+	dataanalyserstub.cpp
 )
 add_library(layerdataanalysis ${LAYER_DATAANALYSIS_SRC})
 add_library(layerdataanalysistest ${LAYER_DATAANALYSIS_TEST_SRC})
