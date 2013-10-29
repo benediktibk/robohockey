@@ -69,3 +69,8 @@ layer/dataanalysis/enginestub.h
 layer/dataanalysis/enginestub.cpp
 layer/dataanalysis/engineimpl.cpp
 layer/dataanalysis/engineimpl.h
+layer/dataanalysis/odometrystub.cpp
+layer/dataanalysis/odometryimpl.cpp
+layer/dataanalysis/odometrystub.h
+layer/dataanalysis/odometryimpl.h
+layer/dataanalysis/odometry.h

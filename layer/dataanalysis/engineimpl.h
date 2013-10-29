@@ -1,7 +1,7 @@
 #ifndef ROBOHOCKEY_LAYER_DATAANALYSIS_ENGINEIMPL_H
 #define ROBOHOCKEY_LAYER_DATAANALYSIS_ENGINEIMPL_H
 
-#include "layer/dataanalysis//engine.h"
+#include "layer/dataanalysis/engine.h"
 
 namespace RoboHockey
 {
