@@ -3,6 +3,7 @@
 
 #include "layer/hardware/camera.h"
 #include <opencv2/opencv.hpp>
+#include <player-3.0/libplayerc++/playerc++.h>
 
 namespace RoboHockey
 {
@@ -14,7 +15,12 @@ class CameraImpl :
 		public Camera
 {
 public:
+	CameraImpl(PlayerCc::PlayerClient *playerClient);
+
     virtual cv::Mat* getFrame() const;
+
+private:
+	PlayerCc::CameraProxy m_camera;
 };
 }
 }
