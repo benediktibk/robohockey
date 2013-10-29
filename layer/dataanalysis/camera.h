@@ -17,7 +17,7 @@ class Camera
 public:
 	virtual ~Camera() { }
 
-	virtual void getColor() const;
+	virtual void getColor() const = 0;
 };
 }
 }

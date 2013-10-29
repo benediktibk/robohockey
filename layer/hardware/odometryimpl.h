@@ -16,8 +16,8 @@ class OdometryImpl :
 public:
 	OdometryImpl(PlayerCc::PlayerClient *playerClient);
 
-	virtual void setCurrentPosition(const Common::Point &position) const;
-	virtual const Common::Point& getCurrentPosition() const;
+	virtual void setCurrentPosition(const Common::Point &position);
+	virtual const Common::Point& getCurrentPosition();
 
 private:
 	PlayerCc::Position2dProxy m_odometry;

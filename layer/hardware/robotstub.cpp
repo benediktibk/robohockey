@@ -2,17 +2,17 @@
 
 using namespace RoboHockey::Layer::Hardware;
 
-const Sonar &RobotStub::getSonar() const
+Sonar &RobotStub::getSonar()
 {
 	return m_sonar;
 }
 
-const Lidar &RobotStub::getLidar() const
+Lidar &RobotStub::getLidar()
 {
 	return m_lidar;
 }
 
-const Camera &RobotStub::getCamera() const
+Camera &RobotStub::getCamera()
 {
 	return m_camera;
 }

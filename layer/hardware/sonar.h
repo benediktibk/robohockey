@@ -12,7 +12,7 @@ class Sonar
 public:
 	virtual ~Sonar() { }
 
-	virtual double getDistanceForSensor(unsigned int sensorNumber) const = 0;
+	virtual double getDistanceForSensor(unsigned int sensorNumber) = 0;
 };
 }
 }

@@ -17,7 +17,7 @@ class CameraImpl :
 public:
 	CameraImpl(PlayerCc::PlayerClient *playerClient);
 
-	virtual cv::Mat getFrame() const;
+	virtual cv::Mat getFrame();
 
 private:
 	PlayerCc::CameraProxy m_camera;

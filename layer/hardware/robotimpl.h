@@ -21,9 +21,9 @@ public:
 	RobotImpl();
 	~RobotImpl();
 
-	virtual const Sonar& getSonar() const;
-	virtual const Lidar& getLidar() const;
-	virtual const Camera& getCamera() const;
+	virtual Sonar& getSonar();
+	virtual Lidar& getLidar();
+	virtual Camera& getCamera();
 	virtual Odometry& getOdometry();
 	virtual Engine& getEngine();
 

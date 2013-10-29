@@ -3,7 +3,7 @@
 
 using namespace RoboHockey::Layer::Hardware;
 
-cv::Mat CameraStub::getFrame() const
+cv::Mat CameraStub::getFrame()
 {
 	return cv::Mat();
 }

@@ -12,7 +12,7 @@ class Lidar
 public:
 	virtual ~Lidar() { }
 
-	virtual double getDistance(unsigned int angle) const = 0;
+	virtual double getDistance(unsigned int angle) = 0;
 };
 }
 }

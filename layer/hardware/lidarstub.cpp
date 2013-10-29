@@ -2,7 +2,7 @@
 
 using namespace RoboHockey::Layer::Hardware;
 
-double LidarStub::getDistance(unsigned int) const
+double LidarStub::getDistance(unsigned int)
 {
 	return 0;
 }

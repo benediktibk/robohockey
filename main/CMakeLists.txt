@@ -6,20 +6,20 @@ include(UsePlayerC++)
 find_package(OpenCV REQUIRED)
 
 set(LIBRARIES
-	layerhardware
 	layerdataanalysis
-	common
+	layerhardware
 	threading
+	common
 	${PLAYERCPP_LINK_LIBS}
 	${OpenCV_LIBS}
 	boost_thread-mt
 )
 
 set(LIBRARIES_TEST
-	commontest
+	layerdataanalysistest
 	layerhardwaretest
-	layerdataanalysis
 	threadingtest
+	commontest
 	${CPPUNIT_LIBRARY}
 )
 

@@ -8,7 +8,7 @@ CameraImpl::CameraImpl(PlayerCc::PlayerClient *playerClient) :
 	m_camera(playerClient)
 { }
 
-Mat CameraImpl::getFrame() const
+Mat CameraImpl::getFrame()
 {
 	return Mat();
 }

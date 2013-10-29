@@ -16,7 +16,7 @@ class LidarImpl :
 public:
 	LidarImpl(PlayerCc::PlayerClient *playerClient);
 
-	virtual double getDistance(unsigned int angle) const;
+	virtual double getDistance(unsigned int angle);
 
 private:
 	PlayerCc::LaserProxy m_laser;

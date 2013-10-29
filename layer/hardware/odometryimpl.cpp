@@ -9,12 +9,12 @@ OdometryImpl::OdometryImpl(PlayerCc::PlayerClient *playerClient) :
 {
 }
 
-void OdometryImpl::setCurrentPosition(const Point &/*position*/) const
+void OdometryImpl::setCurrentPosition(const Point &/*position*/)
 {
 
 }
 
-const Point &OdometryImpl::getCurrentPosition() const
+const Point &OdometryImpl::getCurrentPosition()
 {
 	return *(new const Point(m_odometry.GetXPos(), m_odometry.GetYPos()));
 }

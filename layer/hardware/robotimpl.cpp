@@ -35,17 +35,17 @@ RobotImpl::~RobotImpl()
 	m_playerClient = 0;
 }
 
-const Sonar &RobotImpl::getSonar() const
+Sonar &RobotImpl::getSonar()
 {
 	return *m_sonar;
 }
 
-const Lidar &RobotImpl::getLidar() const
+Lidar &RobotImpl::getLidar()
 {
 	return *m_lidar;
 }
 
-const Camera &RobotImpl::getCamera() const
+Camera &RobotImpl::getCamera()
 {
 	return *m_camera;
 }

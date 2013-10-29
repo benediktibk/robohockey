@@ -94,3 +94,17 @@ layer/dataanalysis/dataanalyserimpl.h
 layer/dataanalysis/dataanalyserimpl.cpp
 layer/dataanalysis/dataanalyserstub.cpp
 layer/dataanalysis/dataanalyserstub.h
+layer/hardware/cameramock.h
+layer/hardware/cameramock.cpp
+layer/hardware/enginemock.h
+layer/hardware/enginemock.cpp
+layer/hardware/lidarmock.h
+layer/hardware/lidarmock.cpp
+layer/hardware/odometrymock.h
+layer/hardware/odometrymock.cpp
+layer/hardware/sonarmock.h
+layer/hardware/sonarmock.cpp
+layer/hardware/robotmock.h
+layer/hardware/robotmock.cpp
+layer/dataanalysis/dataanalysertest.h
+layer/dataanalysis/dataanalysertest.cpp

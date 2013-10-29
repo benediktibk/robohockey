@@ -13,7 +13,7 @@ class LidarStub :
 		public Lidar
 {
 public:
-	virtual double getDistance(unsigned int angle) const;
+	virtual double getDistance(unsigned int angle);
 };
 }
 }

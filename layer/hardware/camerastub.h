@@ -13,7 +13,7 @@ class CameraStub :
 		public Camera
 {
 public:
-	virtual cv::Mat getFrame() const;
+	virtual cv::Mat getFrame();
 };
 }
 }

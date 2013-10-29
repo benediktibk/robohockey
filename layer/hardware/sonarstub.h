@@ -13,7 +13,7 @@ class SonarStub :
 		public Sonar
 {
 public:
-	virtual double getDistanceForSensor(unsigned int sensorNumber) const;
+	virtual double getDistanceForSensor(unsigned int sensorNumber);
 };
 }
 }

@@ -16,7 +16,7 @@ class SonarImpl :
 public:
 	SonarImpl(PlayerCc::PlayerClient *playerClient);
 
-	virtual double getDistanceForSensor(unsigned int sensorNumber) const;
+	virtual double getDistanceForSensor(unsigned int sensorNumber);
 
 private:
 	PlayerCc::SonarProxy m_sonar;
