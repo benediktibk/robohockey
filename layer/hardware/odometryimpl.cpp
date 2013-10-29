@@ -16,5 +16,5 @@ void OdometryImpl::setCurrentPosition(const Point &/*position*/) const
 
 const Point &OdometryImpl::getCurrentPosition() const
 {
-	return Point::zero();
+	return *(new const Point(m_odometry.GetXPos(), m_odometry.GetYPos()));
 }
