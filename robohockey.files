@@ -110,3 +110,5 @@ layer/dataanalysis/dataanalysertest.h
 layer/dataanalysis/dataanalysertest.cpp
 layer/dataanalysis/cameratest.h
 layer/dataanalysis/cameratest.cpp
+layer/dataanalysis/enginetest.h
+layer/dataanalysis/enginetest.cpp
