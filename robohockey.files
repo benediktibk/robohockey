@@ -108,3 +108,5 @@ layer/hardware/robotmock.h
 layer/hardware/robotmock.cpp
 layer/dataanalysis/dataanalysertest.h
 layer/dataanalysis/dataanalysertest.cpp
+layer/dataanalysis/cameratest.h
+layer/dataanalysis/cameratest.cpp
