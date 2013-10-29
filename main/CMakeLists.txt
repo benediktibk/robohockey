@@ -6,15 +6,19 @@ find_package(OpenCV REQUIRED)
 
 set(LIBRARIES
 	layerhardware
+	layerdataanalysis
 	common
+	threading
 )
 
 set(LIBRARIES_TEST
 	commontest
 	layerhardwaretest
+	layerdataanalysis
+	threadingtest
 )
 
 add_executable(robot main.cpp)
 add_executable(testrunner testregistration.cpp testrunner.cpp)
-target_link_libraries(robot ${LIBRARIES} ${PLAYER_LIBRARY} ${OpenCV_LIBS})
-target_link_libraries(testrunner ${LIBRARIES_TEST} ${LIBRARIES} ${CPPUNIT_LIBRARY} ${PLAYER_LIBRARY} ${OpenCV_LIBS})
+target_link_libraries(robot ${LIBRARIES} ${PLAYER_LIBRARY} ${OpenCV_LIBS} boost_thread-mt)
+target_link_libraries(testrunner ${LIBRARIES_TEST} ${LIBRARIES} ${CPPUNIT_LIBRARY} ${PLAYER_LIBRARY} ${OpenCV_LIBS} boost_thread-mt)
