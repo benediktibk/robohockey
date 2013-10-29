@@ -4,6 +4,8 @@
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
 
+namespace RoboHockey
+{
 namespace Threading
 {
 class ThreadTest :
@@ -16,6 +18,7 @@ class ThreadTest :
 private:
 	 void constructor_setValueTo5DuringExecution_valueIs5();
 };
+}
 }
 
 #endif

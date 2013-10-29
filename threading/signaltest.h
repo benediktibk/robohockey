@@ -4,6 +4,8 @@
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
 
+namespace RoboHockey
+{
 namespace Threading
 {
 class SignalTest :
@@ -18,6 +20,7 @@ private:
 	 void send_threadWaitingOnSignalAndThenCopiesValue_destinationHasValueSetAfterCreationOfThread();
 	 void reset_signalSent_signalNotSet();
 };
+}
 }
 
 #endif

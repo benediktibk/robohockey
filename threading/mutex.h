@@ -6,21 +6,24 @@ namespace boost
 	class mutex;
 }
 
+namespace RoboHockey
+{
 namespace Threading
 {
-	class Mutex
-	{
-	public:
-		Mutex();
-		~Mutex();
+class Mutex
+{
+public:
+	Mutex();
+	~Mutex();
 
-		void lock();
-		void unlock();
-		bool isLocked();
+	void lock();
+	void unlock();
+	bool isLocked();
 
-	private:
-		boost::mutex *m_mutex;
-	};
+private:
+	boost::mutex *m_mutex;
+};
+}
 }
 
 #endif

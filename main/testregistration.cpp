@@ -13,10 +13,10 @@
 
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Common::CompareTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Common::PointTest);
-CPPUNIT_TEST_SUITE_REGISTRATION(Threading::ThreadTest);
-CPPUNIT_TEST_SUITE_REGISTRATION(Threading::MutexTest);
-CPPUNIT_TEST_SUITE_REGISTRATION(Threading::SignalTest);
-CPPUNIT_TEST_SUITE_REGISTRATION(Threading::LockTest);
+CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Threading::ThreadTest);
+CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Threading::MutexTest);
+CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Threading::SignalTest);
+CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Threading::LockTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::DataAnalysis::DataAnalyserTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::DataAnalysis::CameraTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::DataAnalysis::EngineTest);

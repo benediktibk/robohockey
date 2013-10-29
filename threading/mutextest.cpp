@@ -1,9 +1,9 @@
-#include "mutextest.h"
+#include "threading/mutextest.h"
 #include "threading/mutex.h"
 #include "threading/thread.h"
 #include <vector>
 
-using namespace Threading;
+using namespace RoboHockey::Threading;
 using namespace std;
 
 class ThreadMutexTestImplementation :

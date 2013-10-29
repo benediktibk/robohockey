@@ -7,6 +7,8 @@ namespace boost
 	class mutex;
 }
 
+namespace RoboHockey
+{
 namespace Threading
 {
 class Signal
@@ -26,6 +28,7 @@ private:
 	boost::mutex *m_sendingMutex;
 	bool m_sent;
 };
+}
 }
 
 #endif
