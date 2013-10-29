@@ -114,3 +114,5 @@ layer/dataanalysis/enginetest.h
 layer/dataanalysis/enginetest.cpp
 layer/dataanalysis/lidartest.h
 layer/dataanalysis/lidartest.cpp
+layer/dataanalysis/odometrytest.h
+layer/dataanalysis/odometrytest.cpp

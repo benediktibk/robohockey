@@ -18,6 +18,7 @@ set(LAYER_DATAANALYSIS_TEST_SRC
 	cameratest.cpp
 	enginetest.cpp
 	lidartest.cpp
+	odometrytest.cpp
 )
 
 add_library(layerdataanalysis ${LAYER_DATAANALYSIS_SRC})
