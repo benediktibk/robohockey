@@ -3,8 +3,12 @@
 
 #include "layer/hardware/camera.h"
 #include <opencv2/opencv.hpp>
-#include <player-3.0/libplayerc++/playerc++.h>
 
+namespace PlayerCc
+{
+	class PlayerClient;
+	class CameraProxy;
+}
 namespace RoboHockey
 {
 namespace Layer
@@ -20,7 +24,7 @@ namespace Hardware
 		virtual cv::Mat getFrame();
 
 	private:
-		PlayerCc::CameraProxy m_camera;
+		PlayerCc::CameraProxy *m_camera;
 	};
 }
 }
