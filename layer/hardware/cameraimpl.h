@@ -19,8 +19,12 @@ namespace Hardware
 	{
 	public:
 		CameraImpl();
+		~CameraImpl();
 
 		virtual cv::Mat getFrame();
+
+	private:
+		cv::VideoCapture *m_capture;
 
 	};
 }
