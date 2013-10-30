@@ -11,5 +11,9 @@ CameraImpl::CameraImpl(PlayerCc::PlayerClient *playerClient) :
 
 Mat CameraImpl::getFrame()
 {
-	return Mat();
+	Mat frame;
+	VideoCapture caputre;
+	caputre.open(1);
+	caputre >> frame;
+	return frame;
 }
