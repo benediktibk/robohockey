@@ -1,7 +1,6 @@
 #include <cv.h>
 #include <highgui.h>
 #include <iostream>
-//#include "layer/hardware/robotimpl.h"
 #include "layer/hardware/cameraimpl.h"
 
 using namespace std;
