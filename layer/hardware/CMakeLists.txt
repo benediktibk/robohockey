@@ -9,10 +9,17 @@ set(LAYER_HARDWARE_SRC
 
 set(LAYER_HARDWARE_TEST_SRC
 	sonarstub.cpp
+	sonarmock.cpp
 	lidarstub.cpp
+	lidarmock.cpp
 	robotstub.cpp
+	robotmock.cpp
 	camerastub.cpp
+	cameramock.cpp
 	odometrystub.cpp
+	odometrymock.cpp
+	enginestub.cpp
+	enginemock.cpp
 )
 
 include(UsePlayerC++)

@@ -4,6 +4,8 @@
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
 
+namespace RoboHockey
+{
 namespace Threading
 {
 	class MutexTest :
@@ -16,6 +18,7 @@ namespace Threading
 	private:
 		 void lock_100ThreadsWhichEachIncreaseDoubleVariable1000Times_variablesIs100000();
 	};
+}
 }
 
 #endif

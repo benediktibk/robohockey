@@ -7,7 +7,7 @@ LidarImpl::LidarImpl(PlayerClient *playerClient) :
 	m_laser(playerClient, 0)
 { }
 
-double LidarImpl::getDistance(unsigned int angle) const
+double LidarImpl::getDistance(unsigned int angle)
 {
 	return m_laser.GetRange(angle);
 }

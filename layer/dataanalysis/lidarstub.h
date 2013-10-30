@@ -9,12 +9,12 @@ namespace Layer
 {
 namespace DataAnalysis
 {
-class LidarStub :
-		public Lidar
-{
-public:
-	virtual void getAllObjects() const;
-};
+	class LidarStub :
+			public Lidar
+	{
+	public:
+		virtual void getAllObjects() const;
+	};
 }
 }
 }

@@ -2,7 +2,7 @@
 #include "threading/signal.h"
 #include <boost/thread.hpp>
 
-using namespace Threading;
+using namespace RoboHockey::Threading;
 
 Thread::Thread() :
 	m_constructionFinished(new Signal()),

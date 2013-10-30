@@ -1,8 +1,9 @@
 #include "layer/hardware/camerastub.h"
+#include <opencv2/opencv.hpp>
 
 using namespace RoboHockey::Layer::Hardware;
 
-cv::Mat* CameraStub::getFrame() const
+cv::Mat CameraStub::getFrame()
 {
-    return 0;
+	return cv::Mat();
 }

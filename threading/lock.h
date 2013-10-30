@@ -1,6 +1,8 @@
 #ifndef ROBOHOCKEY_THREADING_LOCK_H
 #define ROBOHOCKEY_THREADING_LOCK_H
 
+namespace RoboHockey
+{
 namespace Threading
 {
 	class Mutex;
@@ -14,6 +16,7 @@ namespace Threading
 	private:
 		Mutex &m_mutex;
 	};
+}
 }
 
 #endif

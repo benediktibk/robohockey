@@ -4,10 +4,10 @@
 using namespace RoboHockey::Layer::Hardware;
 using namespace RoboHockey::Common;
 
-void OdometryStub::setCurrentPosition(const Point &/*position*/) const
+void OdometryStub::setCurrentPosition(const Point &/*position*/)
 { }
 
-const Point &OdometryStub::getCurrentPosition() const
+const Point &OdometryStub::getCurrentPosition()
 {
 	return Point::zero();
 }

@@ -9,13 +9,13 @@ namespace Layer
 {
 namespace DataAnalysis
 {
-class OdometryStub :
-		public Odometry
-{
-public:
-	virtual void setCurrentPosition(const Common::Point &position) const;
-	virtual const Common::Point& getCurrentPosition() const;
-};
+	class OdometryStub :
+			public Odometry
+	{
+	public:
+		virtual void setCurrentPosition(const Common::Point &position) const;
+		virtual const Common::Point& getCurrentPosition() const;
+	};
 }
 }
 }

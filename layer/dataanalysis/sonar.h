@@ -7,13 +7,13 @@ namespace Layer
 {
 namespace DataAnalysis
 {
-class Sonar
-{
-public:
-	virtual ~Sonar() { }
+	class Sonar
+	{
+	public:
+		virtual ~Sonar() { }
 
-	virtual double getMinimumDistance() const = 0;
-};
+		virtual bool isObstacleDirectInFront() const = 0;
+	};
 }
 }
 }

@@ -1,7 +1,7 @@
-#include "threadtest.h"
+#include "threading/threadtest.h"
 #include "threading/thread.h"
 
-using namespace Threading;
+using namespace RoboHockey::Threading;
 
 class ThreadTestImplementation :
 		public Thread

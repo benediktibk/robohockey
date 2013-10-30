@@ -4,18 +4,21 @@
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
 
+namespace RoboHockey
+{
 namespace Threading
 {
-class ThreadTest :
-		public CPPUNIT_NS::TestFixture
-{
-	 CPPUNIT_TEST_SUITE(ThreadTest);
-	 CPPUNIT_TEST(constructor_setValueTo5DuringExecution_valueIs5);
-	 CPPUNIT_TEST_SUITE_END();
+	class ThreadTest :
+			public CPPUNIT_NS::TestFixture
+	{
+		 CPPUNIT_TEST_SUITE(ThreadTest);
+		 CPPUNIT_TEST(constructor_setValueTo5DuringExecution_valueIs5);
+		 CPPUNIT_TEST_SUITE_END();
 
-private:
-	 void constructor_setValueTo5DuringExecution_valueIs5();
-};
+	private:
+		 void constructor_setValueTo5DuringExecution_valueIs5();
+	};
+}
 }
 
 #endif

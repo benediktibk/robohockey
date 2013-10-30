@@ -1,9 +1,9 @@
-#include "signaltest.h"
+#include "threading/signaltest.h"
 #include "threading/signal.h"
 #include "threading/thread.h"
 #include <unistd.h>
 
-using namespace Threading;
+using namespace RoboHockey::Threading;
 
 class ThreadSignalTestImplementation :
 		public Thread

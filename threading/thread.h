@@ -6,6 +6,8 @@ namespace boost
 	class thread;
 }
 
+namespace RoboHockey
+{
 namespace Threading
 {
 	class Signal;
@@ -30,6 +32,7 @@ namespace Threading
 		Threading::Signal *m_finished;
 		boost::thread *m_thread;
 	};
+}
 }
 
 #endif

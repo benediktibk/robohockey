@@ -9,12 +9,12 @@ namespace Layer
 {
 namespace DataAnalysis
 {
-class SonarStub :
-		public Sonar
-{
-public:
-	virtual double getMinimumDistance() const;
-};
+	class SonarStub :
+			public Sonar
+	{
+	public:
+		virtual bool isObstacleDirectInFront() const;
+	};
 }
 }
 }

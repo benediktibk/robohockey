@@ -1,7 +1,7 @@
 #include "threading/mutex.h"
 #include <boost/thread/mutex.hpp>
 
-using namespace Threading;
+using namespace RoboHockey::Threading;
 using namespace boost;
 
 Mutex::Mutex() :

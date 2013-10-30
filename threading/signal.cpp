@@ -4,7 +4,7 @@
 #include <boost/interprocess/sync/scoped_lock.hpp>
 #include <assert.h>
 
-using namespace Threading;
+using namespace RoboHockey::Threading;
 using namespace boost;
 
 Signal::Signal() :

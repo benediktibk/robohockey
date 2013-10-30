@@ -10,17 +10,17 @@ namespace Layer
 {
 namespace Hardware
 {
-class LidarImpl :
-		public Lidar
-{
-public:
-	LidarImpl(PlayerCc::PlayerClient *playerClient);
+	class LidarImpl :
+			public Lidar
+	{
+	public:
+		LidarImpl(PlayerCc::PlayerClient *playerClient);
 
-	virtual double getDistance(unsigned int angle) const;
+		virtual double getDistance(unsigned int angle);
 
-private:
-	PlayerCc::LaserProxy m_laser;
-};
+	private:
+		PlayerCc::LaserProxy m_laser;
+	};
 }
 }
 }

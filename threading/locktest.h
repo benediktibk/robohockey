@@ -4,6 +4,8 @@
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
 
+namespace RoboHockey
+{
 namespace Threading
 {
 	class LockTest :
@@ -18,6 +20,7 @@ namespace Threading
 		 void constructor_validMutex_mutexIsLocked();
 		 void destructor_empty_mutexIsNotLocked();
 	};
+}
 }
 
 #endif

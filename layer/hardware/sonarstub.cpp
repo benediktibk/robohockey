@@ -2,7 +2,7 @@
 
 using namespace RoboHockey::Layer::Hardware;
 
-double SonarStub::getDistanceForSensor(unsigned int) const
+double SonarStub::getDistanceForSensor(unsigned int)
 {
 	return 0;
 }

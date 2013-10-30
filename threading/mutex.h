@@ -6,6 +6,8 @@ namespace boost
 	class mutex;
 }
 
+namespace RoboHockey
+{
 namespace Threading
 {
 	class Mutex
@@ -21,6 +23,7 @@ namespace Threading
 	private:
 		boost::mutex *m_mutex;
 	};
+}
 }
 
 #endif

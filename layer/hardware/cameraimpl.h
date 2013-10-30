@@ -11,17 +11,17 @@ namespace Layer
 {
 namespace Hardware
 {
-class CameraImpl :
-		public Camera
-{
-public:
-	CameraImpl(PlayerCc::PlayerClient *playerClient);
+	class CameraImpl :
+			public Camera
+	{
+	public:
+		CameraImpl(PlayerCc::PlayerClient *playerClient);
 
-    virtual cv::Mat* getFrame() const;
+		virtual cv::Mat getFrame();
 
-private:
-	PlayerCc::CameraProxy m_camera;
-};
+	private:
+		PlayerCc::CameraProxy m_camera;
+	};
 }
 }
 }

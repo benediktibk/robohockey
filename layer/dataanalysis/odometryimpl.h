@@ -7,15 +7,25 @@ namespace RoboHockey
 {
 namespace Layer
 {
+namespace Hardware
+{
+	class Odometry;
+}
+
 namespace DataAnalysis
 {
-class OdometryImpl :
-		public Odometry
-{
-public:
-	virtual void setCurrentPosition(const Common::Point &position) const;
-	virtual const Common::Point& getCurrentPosition() const;
-};
+	class OdometryImpl :
+			public Odometry
+	{
+	public:
+		OdometryImpl(Hardware::Odometry &odometry);
+
+		virtual void setCurrentPosition(const Common::Point &position) const;
+		virtual const Common::Point& getCurrentPosition() const;
+
+	private:
+		Hardware::Odometry &m_odometry;
+	};
 }
 }
 }

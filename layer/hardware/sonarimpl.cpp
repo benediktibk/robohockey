@@ -8,7 +8,7 @@ SonarImpl::SonarImpl(PlayerCc::PlayerClient *playerClient) :
 {
 }
 
-double SonarImpl::getDistanceForSensor(unsigned int sensorNumber) const
+double SonarImpl::getDistanceForSensor(unsigned int sensorNumber)
 {
 	return m_sonar[sensorNumber];
 }

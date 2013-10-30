@@ -5,7 +5,7 @@
 
 namespace PlayerCc
 {
-class PlayerClient;
+	class PlayerClient;
 }
 
 namespace RoboHockey
@@ -14,27 +14,27 @@ namespace Layer
 {
 namespace Hardware
 {
-class RobotImpl :
-		public Robot
-{
-public:
-	RobotImpl();
-	~RobotImpl();
+	class RobotImpl :
+			public Robot
+	{
+	public:
+		RobotImpl();
+		~RobotImpl();
 
-	virtual const Sonar& getSonar() const;
-	virtual const Lidar& getLidar() const;
-	virtual const Camera& getCamera() const;
-	virtual Odometry& getOdometry();
-	virtual Engine& getEngine();
+		virtual Sonar& getSonar();
+		virtual Lidar& getLidar();
+		virtual Camera& getCamera();
+		virtual Odometry& getOdometry();
+		virtual Engine& getEngine();
 
-private:
-	Sonar *m_sonar;
-	Lidar *m_lidar;
-	Camera *m_camera;
-	Odometry *m_odometry;
-	Engine *m_engine;
-	PlayerCc::PlayerClient *m_playerClient;
-};
+	private:
+		Sonar *m_sonar;
+		Lidar *m_lidar;
+		Camera *m_camera;
+		Odometry *m_odometry;
+		Engine *m_engine;
+		PlayerCc::PlayerClient *m_playerClient;
+	};
 }
 }
 }

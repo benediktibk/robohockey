@@ -4,20 +4,23 @@
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
 
+namespace RoboHockey
+{
 namespace Threading
 {
-class SignalTest :
-		public CPPUNIT_NS::TestFixture
-{
-	 CPPUNIT_TEST_SUITE(SignalTest);
-	 CPPUNIT_TEST(send_threadWaitingOnSignalAndThenCopiesValue_destinationHasValueSetAfterCreationOfThread);
-	 CPPUNIT_TEST(reset_signalSent_signalNotSet);
-	 CPPUNIT_TEST_SUITE_END();
+	class SignalTest :
+			public CPPUNIT_NS::TestFixture
+	{
+		 CPPUNIT_TEST_SUITE(SignalTest);
+		 CPPUNIT_TEST(send_threadWaitingOnSignalAndThenCopiesValue_destinationHasValueSetAfterCreationOfThread);
+		 CPPUNIT_TEST(reset_signalSent_signalNotSet);
+		 CPPUNIT_TEST_SUITE_END();
 
-private:
-	 void send_threadWaitingOnSignalAndThenCopiesValue_destinationHasValueSetAfterCreationOfThread();
-	 void reset_signalSent_signalNotSet();
-};
+	private:
+		 void send_threadWaitingOnSignalAndThenCopiesValue_destinationHasValueSetAfterCreationOfThread();
+		 void reset_signalSent_signalNotSet();
+	};
+}
 }
 
 #endif

@@ -7,25 +7,28 @@ namespace boost
 	class mutex;
 }
 
+namespace RoboHockey
+{
 namespace Threading
 {
-class Signal
-{
-public:
-	Signal();
-	~Signal();
+	class Signal
+	{
+	public:
+		Signal();
+		~Signal();
 
-	void send();
-	void reset();
-	void wait();
-	bool isSignalSent() const;
+		void send();
+		void reset();
+		void wait();
+		bool isSignalSent() const;
 
-private:
-	boost::condition_variable *m_condition;
-	boost::mutex *m_conditionMutex;
-	boost::mutex *m_sendingMutex;
-	bool m_sent;
-};
+	private:
+		boost::condition_variable *m_condition;
+		boost::mutex *m_conditionMutex;
+		boost::mutex *m_sendingMutex;
+		bool m_sent;
+	};
+}
 }
 
 #endif

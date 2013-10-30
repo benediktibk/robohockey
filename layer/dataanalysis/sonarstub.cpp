@@ -2,7 +2,7 @@
 
 using namespace RoboHockey::Layer::DataAnalysis;
 
-double SonarStub::getMinimumDistance() const
+bool SonarStub::isObstacleDirectInFront() const
 {
-	return 0;
+	return false;
 }
