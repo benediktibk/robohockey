@@ -22,5 +22,8 @@ set(LAYER_DATAANALYSIS_TEST_SRC
 	sonartest.cpp
 )
 
+include(UsePlayerC++)
+include_directories(${PLAYERCPP_INCLUDE_DIRS})
+
 add_library(layerdataanalysis ${LAYER_DATAANALYSIS_SRC})
 add_library(layerdataanalysistest ${LAYER_DATAANALYSIS_TEST_SRC})
