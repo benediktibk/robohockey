@@ -11,9 +11,10 @@ OdometryImpl::OdometryImpl(PlayerClient *playerClient) :
 {
 }
 
-void OdometryImpl::setCurrentPosition(const Point &/*position*/)
+void OdometryImpl::setCurrentPosition(const Point &position)
 {
-
+	m_odometry->ResetOdometry();
+	m_odometry->SetOdometry(position.getX(), position.getY(), 0);
 }
 
 const Point &OdometryImpl::getCurrentPosition()
