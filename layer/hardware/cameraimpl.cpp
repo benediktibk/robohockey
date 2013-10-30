@@ -6,10 +6,10 @@ using namespace RoboHockey::Layer::Hardware;
 using namespace cv;
 using namespace PlayerCc;
 
-CameraImpl::CameraImpl()
+CameraImpl::CameraImpl(int device)
 {
 	m_capture = new VideoCapture;
-	m_capture->open(0);
+	m_capture->open(device);
 
 	if (! m_capture->isOpened())
 	{

@@ -18,7 +18,7 @@ namespace Hardware
 			public Camera
 	{
 	public:
-		CameraImpl();
+		CameraImpl(int device=0);
 		~CameraImpl();
 
 		virtual cv::Mat getFrame();
