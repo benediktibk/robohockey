@@ -5,15 +5,14 @@ using namespace RoboHockey::Layer::Hardware;
 using namespace cv;
 using namespace PlayerCc;
 
-CameraImpl::CameraImpl(PlayerCc::PlayerClient *playerClient) :
-	m_camera(new CameraProxy(playerClient))
+CameraImpl::CameraImpl()
 { }
 
 Mat CameraImpl::getFrame()
 {
 	Mat frame;
 	VideoCapture caputre;
-	caputre.open(1);
+	caputre.open(0);
 	caputre >> frame;
 	return frame;
 }

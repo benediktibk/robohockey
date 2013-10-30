@@ -11,7 +11,7 @@ using namespace RoboHockey::Layer::Hardware;
 RobotImpl::RobotImpl() :
 	m_sonar(new SonarImpl(m_playerClient)),
 	m_lidar(new LidarImpl(m_playerClient)),
-	m_camera(new CameraImpl(m_playerClient)),
+	m_camera(new CameraImpl()),
 	m_odometry(new OdometryImpl(m_playerClient)),
 	m_engine(new EngineImpl(m_playerClient)),
 	m_playerClient(new PlayerCc::PlayerClient("localhost", 6665))

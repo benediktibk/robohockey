@@ -7,7 +7,6 @@
 namespace PlayerCc
 {
 	class PlayerClient;
-	class CameraProxy;
 }
 namespace RoboHockey
 {
@@ -19,12 +18,10 @@ namespace Hardware
 			public Camera
 	{
 	public:
-		CameraImpl(PlayerCc::PlayerClient *playerClient);
+		CameraImpl();
 
 		virtual cv::Mat getFrame();
 
-	private:
-		PlayerCc::CameraProxy *m_camera;
 	};
 }
 }
