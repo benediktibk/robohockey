@@ -1,6 +1,6 @@
 #include "layer/hardware/odometryimpl.h"
 #include "common/point.h"
-#include <player-3.0/libplayerc++/playerc++.h>
+#include <libplayerc++/playerc++.h>
 
 using namespace RoboHockey::Layer::Hardware;
 using namespace RoboHockey::Common;

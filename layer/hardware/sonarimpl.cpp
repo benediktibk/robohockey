@@ -1,5 +1,5 @@
 #include "layer/hardware/sonarimpl.h"
-#include <player-3.0/libplayerc++/playerc++.h>
+#include <libplayerc++/playerc++.h>
 
 using namespace RoboHockey::Layer::Hardware;
 using namespace PlayerCc;
