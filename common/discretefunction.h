@@ -30,6 +30,7 @@ namespace Common
 		std::vector<double> m_values;
 		std::vector<double> m_coreNoiseSuppression;
 		std::vector<double> m_coreDifferentiation;
+
 	};
 }
 }

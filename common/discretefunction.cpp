@@ -1,4 +1,5 @@
 #include "common/discretefunction.h"
+#include "common/compare.h"
 #include <assert.h>
 
 using namespace RoboHockey::Common;
@@ -68,9 +69,11 @@ bool DiscreteFunction::withinRange(int x) const
 
 bool DiscreteFunction::operator==(const DiscreteFunction &rhs) const
 {
+	static const Compare compare(0.0001);
+
 	return	m_start == rhs.m_start &&
 			m_end == rhs.m_end &&
-			m_values == rhs.m_values;
+			compare.isFuzzyEqual(m_values, rhs.m_values);
 }
 
 size_t DiscreteFunction::getVectorPosition(int x) const
