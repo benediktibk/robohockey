@@ -122,3 +122,7 @@ common/discretefunction.h
 common/discretefunction.cpp
 common/discretefunctiontest.h
 common/discretefunctiontest.cpp
+layer/dataanalysis/lidarobject.h
+layer/dataanalysis/lidarobject.cpp
+layer/dataanalysis/lidarobjecttest.h
+layer/dataanalysis/lidarobjecttest.cpp
