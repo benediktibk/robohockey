@@ -2,12 +2,13 @@
 #include <math.h>
 
 using namespace RoboHockey::Common;
+using namespace std;
 
 Compare::Compare(double epsilon) :
 	m_epsilon(epsilon)
 { }
 
-bool Compare::isFuzzyEqual(double value1, double value2)
+bool Compare::isFuzzyEqual(double value1, double value2) const
 {
 	if(fabs(value1 - value2) < m_epsilon)
 		return true;
@@ -15,7 +16,19 @@ bool Compare::isFuzzyEqual(double value1, double value2)
 		return false;
 }
 
-bool Compare::isFuzzyGreater(double value1, double value2)
+bool Compare::isFuzzyEqual(const vector<double> &one, const vector<double> &two) const
+{
+	if (one.size() != two.size())
+		return false;
+
+	for (size_t i = 0; i < one.size(); ++i)
+		if (!isFuzzyEqual(one[i], two[i]))
+			return false;
+
+	return true;
+}
+
+bool Compare::isFuzzyGreater(double value1, double value2) const
 {
 	if(value1 + m_epsilon > value2)
 		return true;
@@ -23,7 +36,7 @@ bool Compare::isFuzzyGreater(double value1, double value2)
 		return false;
 }
 
-bool Compare::isFuzzySmaller(double value1, double value2)
+bool Compare::isFuzzySmaller(double value1, double value2) const
 {
 	if(value1 < m_epsilon + value2)
 		return true;
@@ -31,7 +44,7 @@ bool Compare::isFuzzySmaller(double value1, double value2)
 		return false;
 }
 
-bool Compare::isStrictFuzzyGreater(double value1, double value2)
+bool Compare::isStrictFuzzyGreater(double value1, double value2) const
 {
 	if(value1 > m_epsilon + value2)
 		return true;
@@ -39,7 +52,7 @@ bool Compare::isStrictFuzzyGreater(double value1, double value2)
 		return false;
 }
 
-bool Compare::isStrictFuzzySmaller(double value1, double value2)
+bool Compare::isStrictFuzzySmaller(double value1, double value2) const
 {
 	if(value1 + m_epsilon < value2)
 		return true;

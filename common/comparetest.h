@@ -13,6 +13,10 @@ namespace Common
 	{
 	CPPUNIT_TEST_SUITE(CompareTest);
 	CPPUNIT_TEST(isFuzzyEqual_towAndTwoPointOneAndEpsilonZeroPointTwo_resultIsFuzzyEqual);
+	CPPUNIT_TEST(isFuzzyEqual_twoCompletelyEqualVectors_true);
+	CPPUNIT_TEST(isFuzzyEqual_twoNearlyEqualVectors_true);
+	CPPUNIT_TEST(isFuzzyEqual_twoVectorsWithDifferentSize_false);
+	CPPUNIT_TEST(isFuzzyEqual_twoDifferentVectors_false);
 	CPPUNIT_TEST(isFuzzyGreater_towAndTwoPointOneAndEpsilonZeroPointTwo_resultIsFuzzyGreater);
 	CPPUNIT_TEST(isFuzzySmaller_towAndTwoPointOneAndEpsilonZeroPointTwo_resultIsFuzzySmaller);
 	CPPUNIT_TEST(isStrictFuzzyGreater_twoPointOneAndTwoAndEpsilonZeroPointZeroFife_resultIsStrictFuzzyGreater);
@@ -21,6 +25,10 @@ namespace Common
 
 	private:
 		void isFuzzyEqual_towAndTwoPointOneAndEpsilonZeroPointTwo_resultIsFuzzyEqual();
+		void isFuzzyEqual_twoCompletelyEqualVectors_true();
+		void isFuzzyEqual_twoNearlyEqualVectors_true();
+		void isFuzzyEqual_twoVectorsWithDifferentSize_false();
+		void isFuzzyEqual_twoDifferentVectors_false();
 		void isFuzzyGreater_towAndTwoPointOneAndEpsilonZeroPointTwo_resultIsFuzzyGreater();
 		void isFuzzySmaller_towAndTwoPointOneAndEpsilonZeroPointTwo_resultIsFuzzySmaller();
 		void isStrictFuzzyGreater_twoPointOneAndTwoAndEpsilonZeroPointZeroFife_resultIsStrictFuzzyGreater();
