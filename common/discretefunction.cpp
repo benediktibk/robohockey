@@ -17,9 +17,10 @@ DiscreteFunction::DiscreteFunction(int start, int end) :
 	m_coreNoiseSuppression[3] = 2.0/9;
 	m_coreNoiseSuppression[4] = 1.0/9;
 	m_coreDifferentiation.resize(3);
-	m_coreDifferentiation[0] = -1;
+	double differentiationCorrection = 0.998027/0.125333;
+	m_coreDifferentiation[0] = -1*differentiationCorrection;
 	m_coreDifferentiation[1] = 0;
-	m_coreDifferentiation[2] = 1;
+	m_coreDifferentiation[2] = 1*differentiationCorrection;
 }
 
 void DiscreteFunction::setValue(int x, double y)

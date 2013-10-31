@@ -103,5 +103,22 @@ void DiscreteFunctionTest::suppressNoise_someValues_correctResult()
 
 void DiscreteFunctionTest::differentiate_someValues_correctResult()
 {
-	CPPUNIT_ASSERT(false);
+	const int n = 100;
+	DiscreteFunction function(0, n);
+	DiscreteFunction functionShouldBe(0, n);
+	functionShouldBe.setValue(0, 1);
+	for (int i = 1; i < n; ++i)
+	{
+		double x = static_cast<double>(i)/n*M_PI*2;
+		function.setValue(i, sin(x));
+		functionShouldBe.setValue(i, cos(x));
+	}
+	functionShouldBe.setValue(n, 1);
+
+	function.differentiate();
+
+	Compare compare(0.01);
+	function.setValue(0, 1);
+	function.setValue(n, 1);
+	CPPUNIT_ASSERT(DiscreteFunction::compareValues(compare, function, functionShouldBe));
 }
