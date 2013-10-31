@@ -118,3 +118,7 @@ layer/dataanalysis/odometrytest.h
 layer/dataanalysis/odometrytest.cpp
 layer/dataanalysis/sonartest.h
 layer/dataanalysis/sonartest.cpp
+common/discretefunction.h
+common/discretefunction.cpp
+common/discretefunctiontest.h
+common/discretefunctiontest.cpp

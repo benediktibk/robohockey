@@ -29,4 +29,4 @@ namespace Common
 }
 }
 
-#endif // COMPARETEST_H
+#endif
