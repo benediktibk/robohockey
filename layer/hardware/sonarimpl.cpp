@@ -12,6 +12,7 @@ SonarImpl::SonarImpl(PlayerCc::PlayerClient *playerClient) :
 SonarImpl::~SonarImpl()
 {
 	delete m_sonar;
+	m_sonar = 0;
 }
 
 double SonarImpl::getDistanceForSensor(unsigned int sensorNumber)

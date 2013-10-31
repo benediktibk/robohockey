@@ -11,6 +11,7 @@ LidarImpl::LidarImpl(PlayerClient *playerClient) :
 LidarImpl::~LidarImpl()
 {
 	delete m_laser;
+	m_laser = 0;
 }
 
 double LidarImpl::getDistance(unsigned int angle)

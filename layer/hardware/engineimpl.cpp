@@ -12,6 +12,7 @@ EngineImpl::EngineImpl(PlayerCc::PlayerClient *playerClient) :
 EngineImpl::~EngineImpl()
 {
 	delete m_engine;
+	m_engine = 0;
 }
 
 void EngineImpl::setSpeed(double magnitude, double rotation)
