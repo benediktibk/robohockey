@@ -1,10 +1,12 @@
 #include "layer/hardware/cameraimpl.h"
 #include <libplayerc++/playerc++.h>
 #include <assert.h>
+#include <iostream>
 
 using namespace RoboHockey::Layer::Hardware;
 using namespace cv;
 using namespace PlayerCc;
+using namespace std;
 
 CameraImpl::CameraImpl(int device)
 {
@@ -13,7 +15,8 @@ CameraImpl::CameraImpl(int device)
 
 	if (! m_capture->isOpened())
 	{
-		assert(false);
+		cout << "\n\n###\n### Could not open camera!\n###" << endl;
+		//assert(false);
 	}
 }
 
