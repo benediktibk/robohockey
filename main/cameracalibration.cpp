@@ -1,6 +1,7 @@
 #include <cv.h>
 #include <highgui.h>
 #include <sstream>
+#include <iostream>
 #include "layer/hardware/cameraimpl.h"
 
 using namespace std;
@@ -9,6 +10,8 @@ using namespace RoboHockey;
 
 int main(int /*argc*/, char **/*argv*/)
 {
+	cout << "##\n## Take a picture to current dir with 'p'.\n## Exit with 'q'\n##"<< endl;
+
 	Layer::Hardware::Camera *camera = new Layer::Hardware::CameraImpl();
 	Mat frame;
 	int pictureNumber = 0;
