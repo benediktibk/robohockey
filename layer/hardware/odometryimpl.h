@@ -19,6 +19,7 @@ namespace Hardware
 	{
 	public:
 		OdometryImpl(PlayerCc::PlayerClient *playerClient);
+		~OdometryImpl();
 
 		virtual void setCurrentPosition(const Common::Point &position);
 		virtual const Common::Point& getCurrentPosition();

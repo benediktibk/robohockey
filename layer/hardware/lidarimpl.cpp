@@ -8,6 +8,12 @@ LidarImpl::LidarImpl(PlayerClient *playerClient) :
 	m_laser(new LaserProxy(playerClient, 0))
 { }
 
+LidarImpl::~LidarImpl()
+{
+	delete m_laser;
+	m_laser = 0;
+}
+
 double LidarImpl::getDistance(unsigned int angle)
 {
 	return m_laser->GetRange(angle);

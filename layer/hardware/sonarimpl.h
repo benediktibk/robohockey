@@ -19,6 +19,7 @@ namespace Hardware
 	{
 	public:
 		SonarImpl(PlayerCc::PlayerClient *playerClient);
+		~SonarImpl();
 
 		virtual double getDistanceForSensor(unsigned int sensorNumber);
 

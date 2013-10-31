@@ -23,6 +23,7 @@ CameraImpl::CameraImpl(int device)
 CameraImpl::~CameraImpl()
 {
 	delete m_capture;
+	m_capture = 0;
 }
 
 Mat CameraImpl::getFrame()
