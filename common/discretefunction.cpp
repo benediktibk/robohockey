@@ -42,7 +42,10 @@ void DiscreteFunction::suppressNoise()
 
 void DiscreteFunction::differentiate()
 {
+	assert(m_values.size() > 2);
 	applyCore(m_coreDifferentiation);
+	m_values[0] = m_values[1];
+	m_values[*(m_values.end() - 1)] = m_values[*(m_values.end() - 2)];
 }
 
 void DiscreteFunction::applyCore(const vector<double> &core)
