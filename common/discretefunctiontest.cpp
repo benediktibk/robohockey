@@ -1,5 +1,8 @@
 #include "common/discretefunctiontest.h"
 #include "common/discretefunction.h"
+#include "common/compare.h"
+#include <math.h>
+#include <stdlib.h>
 
 using namespace RoboHockey::Common;
 
@@ -71,9 +74,31 @@ void DiscreteFunctionTest::setValue_3AtMinus1_valueAtMinus1Is3()
 	CPPUNIT_ASSERT_DOUBLES_EQUAL(3, function.getValue(-1), 0.000001);
 }
 
-void DiscreteFunctionTest::suppressNoise_oneDisturbingPeak_correctResult()
+void DiscreteFunctionTest::suppressNoise_someValues_correctResult()
 {
-	CPPUNIT_ASSERT(false);
+	const int n = 100;
+	srand(0);
+	DiscreteFunction function(0, n);
+	DiscreteFunction functionShouldBe(0, n);
+	function.setValue(1, sin(1.0/n*M_PI*2));
+	functionShouldBe.setValue(1, sin(1.0/n*M_PI*2));
+	for (int i = 2; i < n - 1; ++i)
+	{
+		double x = static_cast<double>(i)/n*M_PI*2;
+		double exactValue = sin(x);
+		double noise = static_cast<double>(rand()%1000)/9000;
+		double valueWithNoise = exactValue + noise;
+		function.setValue(i, valueWithNoise);
+		functionShouldBe.setValue(i, exactValue);
+	}
+	function.setValue(n - 1, sin((n - 1.0)/n*M_PI*2));
+	functionShouldBe.setValue(n - 1, sin((n - 1.0)/n*M_PI*2));
+	Compare compare(0.1);
+	CPPUNIT_ASSERT(!DiscreteFunction::compareValues(compare, function, functionShouldBe));
+
+	function.suppressNoise();
+
+	CPPUNIT_ASSERT(DiscreteFunction::compareValues(compare, function, functionShouldBe));
 }
 
 void DiscreteFunctionTest::differentiate_someValues_correctResult()

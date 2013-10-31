@@ -7,6 +7,8 @@ namespace RoboHockey
 {
 namespace Common
 {
+	class Compare;
+
 	class DiscreteFunction
 	{
 	public:
@@ -18,7 +20,7 @@ namespace Common
 		void differentiate();
 		bool withinRange(int x) const;
 
-		bool operator==(const DiscreteFunction &rhs) const;
+		static bool compareValues(const Compare &compare, const DiscreteFunction &one, const DiscreteFunction &two);
 
 	private:
 		void applyCore(const std::vector<double> &core);

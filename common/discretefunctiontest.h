@@ -21,7 +21,7 @@ namespace Common
 		CPPUNIT_TEST(isWithinRange_endAt5And6_false);
 		CPPUNIT_TEST(setValue_4At3_valueAt3Is4);
 		CPPUNIT_TEST(setValue_3AtMinus1_valueAtMinus1Is3);
-		CPPUNIT_TEST(suppressNoise_oneDisturbingPeak_correctResult);
+		CPPUNIT_TEST(suppressNoise_someValues_correctResult);
 		CPPUNIT_TEST(differentiate_someValues_correctResult);
 		CPPUNIT_TEST_SUITE_END();
 
@@ -35,7 +35,7 @@ namespace Common
 		void isWithinRange_endAt5And6_false();
 		void setValue_4At3_valueAt3Is4();
 		void setValue_3AtMinus1_valueAtMinus1Is3();
-		void suppressNoise_oneDisturbingPeak_correctResult();
+		void suppressNoise_someValues_correctResult();
 		void differentiate_someValues_correctResult();
 	};
 }
