@@ -19,6 +19,7 @@ namespace Hardware
 	{
 	public:
 		LidarImpl(PlayerCc::PlayerClient *playerClient);
+		~LidarImpl();
 
 		virtual double getDistance(unsigned int angle);
 

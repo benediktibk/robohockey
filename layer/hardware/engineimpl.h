@@ -19,6 +19,7 @@ namespace Hardware
 	{
 	public:
 		EngineImpl(PlayerCc::PlayerClient *playerClient);
+		~EngineImpl();
 
 		virtual void setSpeed(double magnitude, double rotation);
 

@@ -11,6 +11,11 @@ OdometryImpl::OdometryImpl(PlayerClient *playerClient) :
 {
 }
 
+OdometryImpl::~OdometryImpl()
+{
+	delete m_odometry;
+}
+
 void OdometryImpl::setCurrentPosition(const Point &position)
 {
 	m_odometry->ResetOdometry();
