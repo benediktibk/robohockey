@@ -2,8 +2,12 @@
 #define ROBOHOCKEY_LAYER_HARDWARE_SONARIMPL_H
 
 #include "layer/hardware/sonar.h"
-#include <player-3.0/libplayerc++/playerc++.h>
 
+namespace PlayerCc
+{
+	class PlayerClient;
+	class SonarProxy;
+}
 namespace RoboHockey
 {
 namespace Layer
@@ -15,11 +19,12 @@ namespace Hardware
 	{
 	public:
 		SonarImpl(PlayerCc::PlayerClient *playerClient);
+		~SonarImpl();
 
 		virtual double getDistanceForSensor(unsigned int sensorNumber);
 
 	private:
-		PlayerCc::SonarProxy m_sonar;
+		PlayerCc::SonarProxy *m_sonar;
 	};
 }
 }

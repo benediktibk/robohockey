@@ -2,8 +2,12 @@
 #define ROBOHOCKEY_LAYER_HARDWARE_ODOMETRYIMPL_H
 
 #include "layer/hardware/odometry.h"
-#include <player-3.0/libplayerc++/playerc++.h>
 
+namespace PlayerCc
+{
+	class PlayerClient;
+	class Position2dProxy;
+}
 namespace RoboHockey
 {
 namespace Layer
@@ -15,12 +19,13 @@ namespace Hardware
 	{
 	public:
 		OdometryImpl(PlayerCc::PlayerClient *playerClient);
+		~OdometryImpl();
 
 		virtual void setCurrentPosition(const Common::Point &position);
 		virtual const Common::Point& getCurrentPosition();
 
 	private:
-		PlayerCc::Position2dProxy m_odometry;
+		PlayerCc::Position2dProxy *m_odometry;
 	};
 }
 }

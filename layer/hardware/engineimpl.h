@@ -2,8 +2,12 @@
 #define ROBOHOCKEY_LAYER_HARDWARE_ENGINEIMPL_H
 
 #include "layer/hardware/engine.h"
-#include <player-3.0/libplayerc++/playerc++.h>
 
+namespace PlayerCc
+{
+	class PlayerClient;
+	class Position2dProxy;
+}
 namespace RoboHockey
 {
 namespace Layer
@@ -15,11 +19,12 @@ namespace Hardware
 	{
 	public:
 		EngineImpl(PlayerCc::PlayerClient *playerClient);
+		~EngineImpl();
 
 		virtual void setSpeed(double magnitude, double rotation);
 
 	private:
-		PlayerCc::Position2dProxy m_engine;
+		PlayerCc::Position2dProxy *m_engine;
 	};
 }
 }

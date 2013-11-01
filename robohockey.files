@@ -134,3 +134,4 @@ layer/dataanalysis/lidarobjectdistancecomparator.h
 layer/dataanalysis/lidarobjectdistancecomparator.cpp
 layer/dataanalysis/lidarobjectdistancecomparatortest.h
 layer/dataanalysis/lidarobjectdistancecomparatortest.cpp
+main/cameracalibration.cpp
