@@ -2,6 +2,7 @@
 #define ROBOHOCKEY_COMMON_DISCRETEFUNCTION_H
 
 #include <vector>
+#include <list>
 
 namespace RoboHockey
 {
@@ -19,8 +20,8 @@ namespace Common
 		void suppressNoise();
 		void differentiate(double stepSize);
 		bool withinRange(int x) const;
-		std::vector<int> getPositionsWithValuesAbove(double value) const;
-		std::vector<int> getPositionsWithValuesBelow(double value) const;
+		std::list<int> getPositionsWithValuesAbove(double value) const;
+		std::list<int> getPositionsWithValuesBelow(double value) const;
 
 		void operator*=(double value);
 

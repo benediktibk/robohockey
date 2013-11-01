@@ -167,7 +167,7 @@ void DiscreteFunctionTest::getPositionsWithValuesAbove_twoValuesAbove_bothPositi
 	function.setValue(3, 1);
 	function.setValue(5, 2);
 
-	vector<int> result = function.getPositionsWithValuesAbove(1);
+	list<int> result = function.getPositionsWithValuesAbove(1);
 
 	CPPUNIT_ASSERT_EQUAL((size_t)2, result.size());
 	CPPUNIT_ASSERT(count(result.begin(), result.end(), 2) == 1);
@@ -181,7 +181,7 @@ void DiscreteFunctionTest::getPositionsWithValuesBelow_oneValueBelow_positionCon
 	function.setValue(3, -1);
 	function.setValue(5, 2);
 
-	vector<int> result = function.getPositionsWithValuesBelow(0);
+	list<int> result = function.getPositionsWithValuesBelow(0);
 
 	CPPUNIT_ASSERT_EQUAL((size_t)1, result.size());
 	CPPUNIT_ASSERT(count(result.begin(), result.end(), 3) == 1);

@@ -73,9 +73,9 @@ bool DiscreteFunction::withinRange(int x) const
 	return x >= m_start && x <= m_end;
 }
 
-vector<int> DiscreteFunction::getPositionsWithValuesAbove(double value) const
+list<int> DiscreteFunction::getPositionsWithValuesAbove(double value) const
 {
-	vector<int> result;
+	list<int> result;
 
 	for (int i = m_start; i <= m_end; ++i)
 	{
@@ -86,9 +86,9 @@ vector<int> DiscreteFunction::getPositionsWithValuesAbove(double value) const
 	return result;
 }
 
-vector<int> DiscreteFunction::getPositionsWithValuesBelow(double value) const
+list<int> DiscreteFunction::getPositionsWithValuesBelow(double value) const
 {
-	vector<int> result;
+	list<int> result;
 
 	for (int i = m_start; i <= m_end; ++i)
 	{
