@@ -17,12 +17,14 @@ namespace DataAnalysis
 		CPPUNIT_TEST(constructor_empty_diameterIs0);
 		CPPUNIT_TEST(constructor_validPosition_positionIsSetOne);
 		CPPUNIT_TEST(constructor_diameterOf5_diameterIs5);
+		CPPUNIT_TEST(getDistanceTo_euclideanDistance5AndDiameter2_4);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
 		void constructor_empty_diameterIs0();
 		void constructor_validPosition_positionIsSetOne();
 		void constructor_diameterOf5_diameterIs5();
+		void getDistanceTo_euclideanDistance5AndDiameter2_4();
 	};
 }
 }

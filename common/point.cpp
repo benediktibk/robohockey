@@ -80,6 +80,12 @@ bool Point::fuzzyEqual(const Point &point, double epsilon) const
 	return	compare.isFuzzyEqual(getX(), point.getX()) && compare.isFuzzyEqual(getY(), point.getY());
 }
 
+double Point::distanceTo(const Point &point) const
+{
+	Point difference = *this - point;
+	return sqrt(difference.getX()*difference.getX() + difference.getY()*difference.getY());
+}
+
 const Point &Point::zero()
 {
 	return m_zero;

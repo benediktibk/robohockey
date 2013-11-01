@@ -132,3 +132,11 @@ void PointTest::zero_empty_bothCoordinatesZero()
 {
 	CPPUNIT_ASSERT_EQUAL(Point(), Point::zero());
 }
+
+void PointTest::distanceTo_from4And5To8And2_5()
+{
+	Point one(4, 5);
+	Point two(8, 2);
+
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(5, one.distanceTo(two), 0.00001);
+}

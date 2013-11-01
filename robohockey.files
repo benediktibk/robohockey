@@ -126,3 +126,11 @@ layer/dataanalysis/lidarobject.h
 layer/dataanalysis/lidarobject.cpp
 layer/dataanalysis/lidarobjecttest.h
 layer/dataanalysis/lidarobjecttest.cpp
+layer/dataanalysis/lidarobjects.h
+layer/dataanalysis/lidarobjects.cpp
+layer/dataanalysis/lidarobjectstest.h
+layer/dataanalysis/lidarobjectstest.cpp
+layer/dataanalysis/lidarobjectdistancecomparator.h
+layer/dataanalysis/lidarobjectdistancecomparator.cpp
+layer/dataanalysis/lidarobjectdistancecomparatortest.h
+layer/dataanalysis/lidarobjectdistancecomparatortest.cpp
