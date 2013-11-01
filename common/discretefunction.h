@@ -15,10 +15,12 @@ namespace Common
 		DiscreteFunction(int start, int end);
 
 		void setValue(int x, double y);
-		double getValue(int x);
+		double getValue(int x) const;
 		void suppressNoise();
 		void differentiate(double stepSize);
 		bool withinRange(int x) const;
+		std::vector<int> getPositionsWithValuesAbove(double value) const;
+		std::vector<int> getPositionsWithValuesBelow(double value) const;
 
 		void operator*=(double value);
 

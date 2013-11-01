@@ -1,11 +1,12 @@
 #include "common/discretefunctiontest.h"
 #include "common/discretefunction.h"
 #include "common/compare.h"
+#include <algorithm>
 #include <math.h>
 #include <stdlib.h>
 
 using namespace RoboHockey::Common;
-
+using namespace std;
 
 void DiscreteFunctionTest::constructor_1And5_3IsInRange()
 {
@@ -157,4 +158,31 @@ void DiscreteFunctionTest::operatorMultiplyAndAssign_threeValues3With2_valuesAre
 	CPPUNIT_ASSERT_DOUBLES_EQUAL(6, function.getValue(0), 0.00001);
 	CPPUNIT_ASSERT_DOUBLES_EQUAL(6, function.getValue(1), 0.00001);
 	CPPUNIT_ASSERT_DOUBLES_EQUAL(6, function.getValue(2), 0.00001);
+}
+
+void DiscreteFunctionTest::getPositionsWithValuesAbove_twoValuesAbove_bothPositionsContainedInResult()
+{
+	DiscreteFunction function(0, 5);
+	function.setValue(2, 4);
+	function.setValue(3, 1);
+	function.setValue(5, 2);
+
+	vector<int> result = function.getPositionsWithValuesAbove(1);
+
+	CPPUNIT_ASSERT_EQUAL((size_t)2, result.size());
+	CPPUNIT_ASSERT(count(result.begin(), result.end(), 2) == 1);
+	CPPUNIT_ASSERT(count(result.begin(), result.end(), 5) == 1);
+}
+
+void DiscreteFunctionTest::getPositionsWithValuesBelow_oneValueBelow_positionContainedInResult()
+{
+	DiscreteFunction function(0, 5);
+	function.setValue(2, 4);
+	function.setValue(3, -1);
+	function.setValue(5, 2);
+
+	vector<int> result = function.getPositionsWithValuesBelow(0);
+
+	CPPUNIT_ASSERT_EQUAL((size_t)1, result.size());
+	CPPUNIT_ASSERT(count(result.begin(), result.end(), 3) == 1);
 }

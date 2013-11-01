@@ -25,6 +25,8 @@ namespace Common
 		CPPUNIT_TEST(differentiate_sine_cosine);
 		CPPUNIT_TEST(differentiate_xToThe3_threeTimesXToThe2);
 		CPPUNIT_TEST(operatorMultiplyAndAssign_threeValues3With2_valuesAre6);
+		CPPUNIT_TEST(getPositionsWithValuesAbove_twoValuesAbove_bothPositionsContainedInResult);
+		CPPUNIT_TEST(getPositionsWithValuesBelow_oneValueBelow_positionContainedInResult);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
@@ -41,6 +43,8 @@ namespace Common
 		void differentiate_sine_cosine();
 		void differentiate_xToThe3_threeTimesXToThe2();
 		void operatorMultiplyAndAssign_threeValues3With2_valuesAre6();
+		void getPositionsWithValuesAbove_twoValuesAbove_bothPositionsContainedInResult();
+		void getPositionsWithValuesBelow_oneValueBelow_positionContainedInResult();
 	};
 }
 }

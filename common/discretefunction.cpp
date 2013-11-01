@@ -28,7 +28,7 @@ void DiscreteFunction::setValue(int x, double y)
 	m_values[getVectorPosition(x)] = y;
 }
 
-double DiscreteFunction::getValue(int x)
+double DiscreteFunction::getValue(int x) const
 {
 	assert(withinRange(x));
 	return m_values[getVectorPosition(x)];
@@ -71,6 +71,32 @@ void DiscreteFunction::applyCore(const vector<double> &core)
 bool DiscreteFunction::withinRange(int x) const
 {
 	return x >= m_start && x <= m_end;
+}
+
+vector<int> DiscreteFunction::getPositionsWithValuesAbove(double value) const
+{
+	vector<int> result;
+
+	for (int i = m_start; i <= m_end; ++i)
+	{
+		if (getValue(i) > value)
+			result.push_back(i);
+	}
+
+	return result;
+}
+
+vector<int> DiscreteFunction::getPositionsWithValuesBelow(double value) const
+{
+	vector<int> result;
+
+	for (int i = m_start; i <= m_end; ++i)
+	{
+		if (getValue(i) < value)
+			result.push_back(i);
+	}
+
+	return result;
 }
 
 void DiscreteFunction::operator*=(double value)
