@@ -8,7 +8,13 @@ using namespace std;
 
 LidarObjects::LidarObjects(const RoboHockey::Common::Point &ownPosition) :
 	m_ownPosition(ownPosition),
-	m_distanceComparator(new LidarObjectDistanceComparator(ownPosition))
+	m_distanceComparator(new LidarObjectDistanceComparator(m_ownPosition))
+{ }
+
+LidarObjects::LidarObjects(const LidarObjects &objects) :
+	m_ownPosition(objects.m_ownPosition),
+	m_objectsSortedByDistance(objects.m_objectsSortedByDistance),
+	m_distanceComparator(new LidarObjectDistanceComparator(m_ownPosition))
 { }
 
 LidarObjects::~LidarObjects()
@@ -36,4 +42,10 @@ vector<LidarObject> LidarObjects::getObjectsWithDistanceBelow(double distance) c
 size_t LidarObjects::getObjectCount() const
 {
 	return m_objectsSortedByDistance.size();
+}
+
+void LidarObjects::operator=(const LidarObjects &objects)
+{
+	m_ownPosition = objects.m_ownPosition;
+	m_objectsSortedByDistance = objects.m_objectsSortedByDistance;
 }

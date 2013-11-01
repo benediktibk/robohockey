@@ -20,7 +20,7 @@ namespace DataAnalysis
 	public:
 		LidarImpl(const Hardware::Lidar &lidar);
 
-		virtual void getAllObjects() const;
+		virtual LidarObjects getAllObjects(const Common::Point &ownPosition) const;
 
 	private:
 		const Hardware::Lidar &m_lidar;

@@ -2,6 +2,7 @@
 #define ROBOHOCKEY_LAYER_HARDWARE_LIDARSTUB_H
 
 #include "layer/hardware/lidar.h"
+#include <map>
 
 namespace RoboHockey
 {
@@ -13,7 +14,15 @@ namespace Hardware
 			public Lidar
 	{
 	public:
+		LidarStub();
+		LidarStub(double defaultDistance);
+
 		virtual double getDistance(unsigned int angle);
+		void setValueForAngle(unsigned int angle, double value);
+
+	private:
+		std::map<unsigned int, double> m_valueForAngle;
+		double m_defaultDistance;
 	};
 }
 }

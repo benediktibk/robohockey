@@ -17,16 +17,14 @@ namespace DataAnalysis
 	{
 	public:
 		LidarObjects(const Common::Point &ownPosition);
+		LidarObjects(const LidarObjects &objects);
 		~LidarObjects();
 
 		void addObject(const LidarObject &object);
 		std::vector<LidarObject> getObjectsWithDistanceBelow(double distance) const;
 		size_t getObjectCount() const;
 
-	private:
-		// forbid copies (just too lazy to implement)
-		LidarObjects(const LidarObjects &) { }
-		void operator=(const LidarObjects &) { }
+		void operator=(const LidarObjects &objects);
 
 	private:
 		Common::Point m_ownPosition;
