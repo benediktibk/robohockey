@@ -186,3 +186,35 @@ void DiscreteFunctionTest::getPositionsWithValuesBelow_oneValueBelow_positionCon
 	CPPUNIT_ASSERT_EQUAL((size_t)1, result.size());
 	CPPUNIT_ASSERT(count(result.begin(), result.end(), 3) == 1);
 }
+
+void DiscreteFunctionTest::getMinimumInRange_onlyOneValue_onlyValue()
+{
+	DiscreteFunction function(0, 10);
+	function.setValue(2, 4);
+
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(4, function.getMinimumInRange(2, 2), 0.00001);
+}
+
+void DiscreteFunctionTest::getMinimumInRange_severalValues_smallestValue()
+{
+	DiscreteFunction function(0, 10);
+	function.setValue(2, 4);
+	function.setValue(3, 3);
+	function.setValue(4, 2);
+	function.setValue(5, 3);
+
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(2, function.getMinimumInRange(2, 5), 0.00001);
+}
+
+void DiscreteFunctionTest::getMinimumInRange_rangeIsWholeFunction_totalMinimum()
+{
+	DiscreteFunction function(0, 5);
+	function.setValue(0, 6);
+	function.setValue(1, 70);
+	function.setValue(2, 5);
+	function.setValue(3, 9);
+	function.setValue(4, 5);
+	function.setValue(5, 3);
+
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(3, function.getMinimumInRange(0, 5), 0.00001);
+}

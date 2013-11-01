@@ -27,6 +27,9 @@ namespace Common
 		CPPUNIT_TEST(operatorMultiplyAndAssign_threeValues3With2_valuesAre6);
 		CPPUNIT_TEST(getPositionsWithValuesAbove_twoValuesAbove_bothPositionsContainedInResult);
 		CPPUNIT_TEST(getPositionsWithValuesBelow_oneValueBelow_positionContainedInResult);
+		CPPUNIT_TEST(getMinimumInRange_onlyOneValue_onlyValue);
+		CPPUNIT_TEST(getMinimumInRange_severalValues_smallestValue);
+		CPPUNIT_TEST(getMinimumInRange_rangeIsWholeFunction_totalMinimum);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
@@ -45,6 +48,9 @@ namespace Common
 		void operatorMultiplyAndAssign_threeValues3With2_valuesAre6();
 		void getPositionsWithValuesAbove_twoValuesAbove_bothPositionsContainedInResult();
 		void getPositionsWithValuesBelow_oneValueBelow_positionContainedInResult();
+		void getMinimumInRange_onlyOneValue_onlyValue();
+		void getMinimumInRange_severalValues_smallestValue();
+		void getMinimumInRange_rangeIsWholeFunction_totalMinimum();
 	};
 }
 }

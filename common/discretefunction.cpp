@@ -78,10 +78,8 @@ list<int> DiscreteFunction::getPositionsWithValuesAbove(double value) const
 	list<int> result;
 
 	for (int i = m_start; i <= m_end; ++i)
-	{
 		if (getValue(i) > value)
 			result.push_back(i);
-	}
 
 	return result;
 }
@@ -91,12 +89,24 @@ list<int> DiscreteFunction::getPositionsWithValuesBelow(double value) const
 	list<int> result;
 
 	for (int i = m_start; i <= m_end; ++i)
-	{
 		if (getValue(i) < value)
 			result.push_back(i);
-	}
 
 	return result;
+}
+
+double DiscreteFunction::getMinimumInRange(int start, int end) const
+{
+	assert(start <= end);
+	assert(start >= m_start);
+	assert(end <= m_end);
+
+	double minimum = getValue(start);
+
+	for (int i = start + 1; i <= end; ++i)
+		minimum = min(minimum, getValue(i));
+
+	return minimum;
 }
 
 void DiscreteFunction::operator*=(double value)

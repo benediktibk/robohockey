@@ -22,6 +22,7 @@ namespace Common
 		bool withinRange(int x) const;
 		std::list<int> getPositionsWithValuesAbove(double value) const;
 		std::list<int> getPositionsWithValuesBelow(double value) const;
+		double getMinimumInRange(int start, int end) const;
 
 		void operator*=(double value);
 
@@ -32,8 +33,8 @@ namespace Common
 		size_t getVectorPosition(int x) const;
 
 	private:
-		const int m_start;
-		const int m_end;
+		int m_start;
+		int m_end;
 		std::vector<double> m_values;
 		std::vector<double> m_coreNoiseSuppression;
 		std::vector<double> m_coreDifferentiation;
