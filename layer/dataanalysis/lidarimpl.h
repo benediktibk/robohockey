@@ -20,7 +20,7 @@ namespace DataAnalysis
 	public:
 		LidarImpl(Hardware::Lidar &lidar);
 
-		virtual LidarObjects getAllObjects(const Common::Point &ownPosition) const;
+		virtual LidarObjects getAllObjects(const Common::Point &ownPosition, double ownOrientation) const;
 
 	private:
 		std::list<std::pair<int, int> > findStartAndEndOfObjects(

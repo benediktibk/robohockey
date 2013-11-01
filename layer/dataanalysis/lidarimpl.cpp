@@ -13,7 +13,7 @@ LidarImpl::LidarImpl(Hardware::Lidar &lidar) :
 	m_lidar(lidar)
 { }
 
-LidarObjects LidarImpl::getAllObjects(const Point &ownPosition) const
+LidarObjects LidarImpl::getAllObjects(const Point &ownPosition, double /*ownOrientation*/) const
 {
 	LidarObjects objects(ownPosition);
 	DiscreteFunction distances(0, 360);

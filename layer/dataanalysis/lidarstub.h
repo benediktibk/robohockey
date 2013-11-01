@@ -13,7 +13,7 @@ namespace DataAnalysis
 			public Lidar
 	{
 	public:
-		virtual LidarObjects getAllObjects(const Common::Point &ownPosition) const;
+		virtual LidarObjects getAllObjects(const Common::Point &ownPosition, double ownOrientation) const;
 	};
 }
 }

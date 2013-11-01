@@ -13,7 +13,7 @@ void LidarTest::getAllObjects_mockHardwareLidar_atLeastOneCallToGetDistance()
 	Hardware::LidarMock hardwareLidar;
 	LidarImpl lidar(hardwareLidar);
 
-	lidar.getAllObjects(Point());
+	lidar.getAllObjects(Point(), 0);
 
 	CPPUNIT_ASSERT(hardwareLidar.getCallsToGetDistance() > 0);
 }
@@ -23,7 +23,7 @@ void LidarTest::getAllObjects_oneObjectInFront_onlyObjectIsCorrect()
 	Hardware::LidarMock hardwareLidar;
 	LidarImpl lidar(hardwareLidar);
 
-	LidarObjects allObjects = lidar.getAllObjects(Point(1, 1));
+	LidarObjects allObjects = lidar.getAllObjects(Point(1, 1), 0);
 
 	vector<LidarObject> objects = allObjects.getObjectsWithDistanceBelow(5);
 	CPPUNIT_ASSERT_EQUAL((size_t)1, objects.size());
