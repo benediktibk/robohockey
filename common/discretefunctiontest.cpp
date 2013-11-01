@@ -74,7 +74,7 @@ void DiscreteFunctionTest::setValue_3AtMinus1_valueAtMinus1Is3()
 	CPPUNIT_ASSERT_DOUBLES_EQUAL(3, function.getValue(-1), 0.000001);
 }
 
-void DiscreteFunctionTest::suppressNoise_someValues_correctResult()
+void DiscreteFunctionTest::suppressNoise_sineWithNoise_nearlySine()
 {
 	const int n = 100;
 	srand(0);
@@ -101,7 +101,7 @@ void DiscreteFunctionTest::suppressNoise_someValues_correctResult()
 	CPPUNIT_ASSERT(DiscreteFunction::compareValues(compare, function, functionShouldBe));
 }
 
-void DiscreteFunctionTest::differentiate_someValues_correctResult()
+void DiscreteFunctionTest::differentiate_sine_cosine()
 {
 	const int n = 100;
 	DiscreteFunction function(0, n);
