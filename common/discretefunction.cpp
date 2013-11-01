@@ -17,10 +17,9 @@ DiscreteFunction::DiscreteFunction(int start, int end) :
 	m_coreNoiseSuppression[3] = 2.0/9;
 	m_coreNoiseSuppression[4] = 1.0/9;
 	m_coreDifferentiation.resize(3);
-	double differentiationCorrection = 0.998027/0.125333;
-	m_coreDifferentiation[0] = -1*differentiationCorrection;
+	m_coreDifferentiation[0] = -0.5;
 	m_coreDifferentiation[1] = 0;
-	m_coreDifferentiation[2] = 1*differentiationCorrection;
+	m_coreDifferentiation[2] = 0.5;
 }
 
 void DiscreteFunction::setValue(int x, double y)
@@ -69,6 +68,12 @@ void DiscreteFunction::applyCore(const vector<double> &core)
 bool DiscreteFunction::withinRange(int x) const
 {
 	return x >= m_start && x <= m_end;
+}
+
+void DiscreteFunction::operator*=(double value)
+{
+	for (vector<double>::iterator i = m_values.begin(); i != m_values.end(); ++i)
+		*i *= value;
 }
 
 bool DiscreteFunction::compareValues(const Compare &compare, const DiscreteFunction &one, const DiscreteFunction &two)

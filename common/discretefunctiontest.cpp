@@ -104,12 +104,13 @@ void DiscreteFunctionTest::suppressNoise_sineWithNoise_nearlySine()
 void DiscreteFunctionTest::differentiate_sine_cosine()
 {
 	const int n = 100;
+	const double rangeEnd = M_PI*2;
 	DiscreteFunction function(0, n);
 	DiscreteFunction functionShouldBe(0, n);
 	functionShouldBe.setValue(0, 1);
 	for (int i = 1; i < n; ++i)
 	{
-		double x = static_cast<double>(i)/n*M_PI*2;
+		double x = static_cast<double>(i)/n*rangeEnd;
 		function.setValue(i, sin(x));
 		functionShouldBe.setValue(i, cos(x));
 	}
@@ -118,7 +119,44 @@ void DiscreteFunctionTest::differentiate_sine_cosine()
 	function.differentiate();
 
 	Compare compare(0.01);
+	function *= n/rangeEnd;
 	function.setValue(0, 1);
 	function.setValue(n, 1);
 	CPPUNIT_ASSERT(DiscreteFunction::compareValues(compare, function, functionShouldBe));
+}
+
+void DiscreteFunctionTest::differentiate_xToThe3_threeTimesXToThe2()
+{
+	const int n = 100;
+	const double rangeEnd = 2;
+	DiscreteFunction function(0, n);
+	DiscreteFunction functionShouldBe(0, n);
+	for (int i = 0; i <= n; ++i)
+	{
+		double x = static_cast<double>(i)/n*rangeEnd;
+		function.setValue(i, x*x*x);
+		functionShouldBe.setValue(i, 3*x*x);
+	}
+
+	function.differentiate();
+
+	Compare compare(0.1);
+	function *= n/rangeEnd;
+	function.setValue(0, 0);
+	function.setValue(n, 3*2*2);
+	CPPUNIT_ASSERT(DiscreteFunction::compareValues(compare, function, functionShouldBe));
+}
+
+void DiscreteFunctionTest::operatorMultiplyAndAssign_threeValues3With2_valuesAre6()
+{
+	DiscreteFunction function(0, 2);
+	function.setValue(0, 3);
+	function.setValue(1, 3);
+	function.setValue(2, 3);
+
+	function *= 2;
+
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(6, function.getValue(0), 0.00001);
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(6, function.getValue(1), 0.00001);
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(6, function.getValue(2), 0.00001);
 }

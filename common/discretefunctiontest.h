@@ -23,6 +23,8 @@ namespace Common
 		CPPUNIT_TEST(setValue_3AtMinus1_valueAtMinus1Is3);
 		CPPUNIT_TEST(suppressNoise_sineWithNoise_nearlySine);
 		CPPUNIT_TEST(differentiate_sine_cosine);
+		CPPUNIT_TEST(differentiate_xToThe3_threeTimesXToThe2);
+		CPPUNIT_TEST(operatorMultiplyAndAssign_threeValues3With2_valuesAre6);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
@@ -37,6 +39,8 @@ namespace Common
 		void setValue_3AtMinus1_valueAtMinus1Is3();
 		void suppressNoise_sineWithNoise_nearlySine();
 		void differentiate_sine_cosine();
+		void differentiate_xToThe3_threeTimesXToThe2();
+		void operatorMultiplyAndAssign_threeValues3With2_valuesAre6();
 	};
 }
 }

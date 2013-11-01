@@ -20,6 +20,8 @@ namespace Common
 		void differentiate();
 		bool withinRange(int x) const;
 
+		void operator*=(double value);
+
 		static bool compareValues(const Compare &compare, const DiscreteFunction &one, const DiscreteFunction &two);
 
 	private:
