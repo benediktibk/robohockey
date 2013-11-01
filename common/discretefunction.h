@@ -17,7 +17,7 @@ namespace Common
 		void setValue(int x, double y);
 		double getValue(int x);
 		void suppressNoise();
-		void differentiate();
+		void differentiate(double stepSize);
 		bool withinRange(int x) const;
 
 		void operator*=(double value);

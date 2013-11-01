@@ -39,10 +39,11 @@ void DiscreteFunction::suppressNoise()
 	applyCore(m_coreNoiseSuppression);
 }
 
-void DiscreteFunction::differentiate()
+void DiscreteFunction::differentiate(double stepSize)
 {
 	assert(m_values.size() > 2);
 	applyCore(m_coreDifferentiation);
+	*this *= (1/stepSize);
 	m_values[0] = m_values[1];
 	m_values[*(m_values.end() - 1)] = m_values[*(m_values.end() - 2)];
 }

@@ -116,10 +116,9 @@ void DiscreteFunctionTest::differentiate_sine_cosine()
 	}
 	functionShouldBe.setValue(n, 1);
 
-	function.differentiate();
+	function.differentiate(rangeEnd/n);
 
 	Compare compare(0.01);
-	function *= n/rangeEnd;
 	function.setValue(0, 1);
 	function.setValue(n, 1);
 	CPPUNIT_ASSERT(DiscreteFunction::compareValues(compare, function, functionShouldBe));
@@ -138,10 +137,9 @@ void DiscreteFunctionTest::differentiate_xToThe3_threeTimesXToThe2()
 		functionShouldBe.setValue(i, 3*x*x);
 	}
 
-	function.differentiate();
+	function.differentiate(rangeEnd/n);
 
 	Compare compare(0.1);
-	function *= n/rangeEnd;
 	function.setValue(0, 0);
 	function.setValue(n, 3*2*2);
 	CPPUNIT_ASSERT(DiscreteFunction::compareValues(compare, function, functionShouldBe));
