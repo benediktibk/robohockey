@@ -6,6 +6,7 @@ include(UsePlayerC++)
 find_package(OpenCV REQUIRED)
 
 set(LIBRARIES
+	layerautonomous
 	layerdataanalysis
 	layerhardware
 	threading
@@ -16,6 +17,7 @@ set(LIBRARIES
 )
 
 set(LIBRARIES_TEST
+	layerautonomoustest
 	layerdataanalysistest
 	layerhardwaretest
 	threadingtest
