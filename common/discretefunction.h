@@ -31,7 +31,7 @@ namespace Common
 
 	private:
 		void applyCore(const std::vector<double> &core);
-		size_t getVectorPosition(int x) const;
+		std::size_t getVectorPosition(int x) const;
 
 	private:
 		int m_start;
