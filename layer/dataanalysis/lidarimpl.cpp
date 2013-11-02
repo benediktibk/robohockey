@@ -45,7 +45,7 @@ LidarObjects LidarImpl::getAllObjects(const Point &ownPosition, double ownOrient
 		int middleSensorNumber = (end + start)/2;
 		double orientationOfObjectRelativeToOwnOrientation = calculateOrientationFromSensorNumber(middleSensorNumber);
 		double orientationOfObject = ownOrientation - orientationOfObjectRelativeToOwnOrientation;
-		double widthInAngle = calculateOrientationFromSensorNumber(end) - calculateOrientationFromSensorNumber(start);
+		double widthInAngle = calculateOrientationFromSensorNumber(end - 1) - calculateOrientationFromSensorNumber(start + 1);
 		double widthOfObject = calculateWidthFromAngleAndDistance(widthInAngle, distance);
 		double totalDistance = distance + widthOfObject/2;
 		Point positionOfObjectRelativeToOwnPosition =

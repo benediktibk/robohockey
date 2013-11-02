@@ -70,8 +70,8 @@ void LidarTest::getAllObjects_oneObjectInFront_onlyObjectIsCorrect()
 	vector<LidarObject> objects = allObjects.getObjectsWithDistanceBelow(5);
 	CPPUNIT_ASSERT_EQUAL((size_t)1, objects.size());
 	LidarObject object = objects.front();
-	CPPUNIT_ASSERT_DOUBLES_EQUAL(1, object.getDiameter(), 0.1);
-	CPPUNIT_ASSERT(Point(4, 1).fuzzyEqual(object.getPosition(), 0.1));
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(1, object.getDiameter(), 0.05);
+	CPPUNIT_ASSERT(Point(4, 1).fuzzyEqual(object.getPosition(), 0.05));
 }
 
 void LidarTest::getAllObjects_lookingIntoLeftUpperDirectionAndObjectSlightlyLeft_onlyObjectIsCorrect()
