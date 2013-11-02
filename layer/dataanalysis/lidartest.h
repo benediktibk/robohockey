@@ -16,11 +16,13 @@ namespace DataAnalysis
 		CPPUNIT_TEST_SUITE(LidarTest);
 		CPPUNIT_TEST(getAllObjects_mockHardwareLidar_atLeastOneCallToGetDistance);
 		CPPUNIT_TEST(getAllObjects_oneObjectInFront_onlyObjectIsCorrect);
+		CPPUNIT_TEST(getAllObjects_lookingIntoLeftUpperDirectionAndObjectSlightlyLeft_onlyObjectIsCorrect);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
 		void getAllObjects_mockHardwareLidar_atLeastOneCallToGetDistance();
 		void getAllObjects_oneObjectInFront_onlyObjectIsCorrect();
+		void getAllObjects_lookingIntoLeftUpperDirectionAndObjectSlightlyLeft_onlyObjectIsCorrect();
 	};
 }
 }

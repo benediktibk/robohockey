@@ -3,6 +3,7 @@
 #include "layer/hardware/lidarmock.h"
 #include "layer/hardware/lidarstub.h"
 #include "common/compare.h"
+#include <math.h>
 
 using namespace RoboHockey::Common;
 using namespace RoboHockey::Layer;
@@ -71,4 +72,24 @@ void LidarTest::getAllObjects_oneObjectInFront_onlyObjectIsCorrect()
 	LidarObject object = objects.front();
 	CPPUNIT_ASSERT_DOUBLES_EQUAL(1, object.getDiameter(), 0.1);
 	CPPUNIT_ASSERT(Point(4, 1).fuzzyEqual(object.getPosition(), 0.1));
+}
+
+void LidarTest::getAllObjects_lookingIntoLeftUpperDirectionAndObjectSlightlyLeft_onlyObjectIsCorrect()
+{
+	Hardware::LidarStub hardwareLidar(10);
+	hardwareLidar.setValueForAngle(150, 3.04);
+	hardwareLidar.setValueForAngle(151, 3.02);
+	hardwareLidar.setValueForAngle(152, 2.99);
+	hardwareLidar.setValueForAngle(153, 3.02);
+	hardwareLidar.setValueForAngle(154, 3.04);
+	LidarImpl lidar(hardwareLidar);
+	Point ownPosition(1, 2);
+
+	LidarObjects allObjects = lidar.getAllObjects(ownPosition, M_PI*0.7);
+
+	vector<LidarObject> objects = allObjects.getObjectsWithDistanceBelow(5);
+	CPPUNIT_ASSERT_EQUAL((size_t)1, objects.size());
+	LidarObject object = objects.front();
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(0.15, object.getDiameter(), 0.1);
+	CPPUNIT_ASSERT(Point(-1.4, 4).fuzzyEqual(object.getPosition(), 0.1));
 }
