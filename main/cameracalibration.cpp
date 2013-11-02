@@ -24,23 +24,23 @@ int main(int /*argc*/, char **/*argv*/)
 
 	namedWindow( "Video", CV_WINDOW_AUTOSIZE );
 
-		char k;
-		while(true)
+	char key;
+	while(true)
+	{
+		frame = camera->getFrame();
+		imshow( "Video", frame );
+
+		key = cvWaitKey(25);
+		if (key == 'q') break;
+
+		if (key == 'p')
 		{
-			frame = camera->getFrame();
-			imshow( "Video", frame );
-
-			k = cvWaitKey(25);
-			if (k == 'q') break;
-
-			if (k == 'p')
-			{
-				pictureName << "image" << setfill('0') << setw(3) << pictureNumber << ".png";
-				imwrite(pictureName.str(), frame);
-				pictureName.str("");
-				pictureNumber++;
-			}
+			pictureName << "image" << setfill('0') << setw(3) << pictureNumber << ".png";
+			imwrite(pictureName.str(), frame);
+			pictureName.str("");
+			pictureNumber++;
 		}
+	}
 
 	return 0;
 }
