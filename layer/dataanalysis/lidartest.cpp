@@ -62,12 +62,13 @@ void LidarTest::getAllObjects_oneObjectInFront_onlyObjectIsCorrect()
 	hardwareLidar.setValueForAngle(198, 3.02);
 	hardwareLidar.setValueForAngle(199, 3.04);
 	LidarImpl lidar(hardwareLidar);
+	Point ownPosition(1, 1);
 
-	LidarObjects allObjects = lidar.getAllObjects(Point(1, 1), 0);
+	LidarObjects allObjects = lidar.getAllObjects(ownPosition, 0);
 
 	vector<LidarObject> objects = allObjects.getObjectsWithDistanceBelow(5);
 	CPPUNIT_ASSERT_EQUAL((size_t)1, objects.size());
 	LidarObject object = objects.front();
-	CPPUNIT_ASSERT_DOUBLES_EQUAL(1, object.getDiameter(), 0.01);
-	CPPUNIT_ASSERT(Point(1, 4).fuzzyEqual(object.getPosition(), 0.01));
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(1, object.getDiameter(), 0.05);
+	CPPUNIT_ASSERT(Point(1, 4).fuzzyEqual(object.getPosition(), 0.05));
 }

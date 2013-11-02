@@ -27,7 +27,7 @@ LidarObjects LidarImpl::getAllObjects(const Point &ownPosition, double ownOrient
 	DiscreteFunction distanceEdges(*distances);
 	distanceEdges.differentiate(1);
 	list<int> positiveEdges = distanceEdges.getPositionsWithValuesAbove(m_edgeTreshold);
-	list<int> negativeEdges = distanceEdges.getPositionsWithValuesAbove((-1)*m_edgeTreshold);
+	list<int> negativeEdges = distanceEdges.getPositionsWithValuesBelow((-1)*m_edgeTreshold);
 	list<pair<int, int> > startAndEndOfObjects = findStartAndEndOfObjects(positiveEdges, negativeEdges);
 
 	for (list<pair<int, int> >::iterator i = startAndEndOfObjects.begin(); i != startAndEndOfObjects.end(); ++i)
