@@ -141,3 +141,5 @@ layer/autonomous/robotimpl.cpp
 layer/autonomous/robottest.h
 layer/autonomous/robottest.cpp
 layer/autonomous/robot.h
+threading/threadreadloop.h
+threading/threadreadloop.cpp
