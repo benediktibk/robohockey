@@ -14,6 +14,7 @@ namespace Hardware
 	{
 	public:
 		virtual cv::Mat getFrame();
+		virtual bool isValid() const;
 	};
 }
 }

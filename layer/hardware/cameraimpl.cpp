@@ -12,12 +12,6 @@ CameraImpl::CameraImpl(int device)
 {
 	m_capture = new VideoCapture;
 	m_capture->open(device);
-
-	if (! m_capture->isOpened())
-	{
-		cout << "\n\n###\n### Could not open camera!\n###" << endl;
-		//assert(false);
-	}
 }
 
 CameraImpl::~CameraImpl()
@@ -28,8 +22,15 @@ CameraImpl::~CameraImpl()
 
 Mat CameraImpl::getFrame()
 {
+	assert(isValid());
+
 	Mat frame;
 	m_capture->operator >> (frame);
 
 	return frame;
+}
+
+bool CameraImpl::isValid() const
+{
+	return m_capture->isOpened();
 }

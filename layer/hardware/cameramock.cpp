@@ -13,6 +13,11 @@ cv::Mat CameraMock::getFrame()
 	return cv::Mat();
 }
 
+bool CameraMock::isValid() const
+{
+	return true;
+}
+
 unsigned int CameraMock::getCallsToGetFrame() const
 {
 	return m_callsToGetFrame;

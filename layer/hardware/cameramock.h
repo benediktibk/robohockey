@@ -16,6 +16,7 @@ namespace Hardware
 		CameraMock();
 
 		virtual cv::Mat getFrame();
+		virtual bool isValid() const;
 		unsigned int getCallsToGetFrame() const;
 
 	private:

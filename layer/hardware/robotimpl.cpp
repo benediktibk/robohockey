@@ -14,7 +14,7 @@ RobotImpl::RobotImpl()
 
 	m_sonar = new SonarImpl(m_playerClient);
 	m_lidar = new LidarImpl(m_playerClient);
-	m_camera = new CameraImpl();
+	m_camera = new CameraImpl(0);
 	m_odometry = new OdometryImpl(m_playerClient);
 	m_engine = new EngineImpl(m_playerClient);
 

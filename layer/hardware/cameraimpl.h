@@ -18,10 +18,11 @@ namespace Hardware
 			public Camera
 	{
 	public:
-		CameraImpl(int device=0);
+		CameraImpl(int device);
 		~CameraImpl();
 
 		virtual cv::Mat getFrame();
+		virtual bool isValid() const;
 
 	private:
 		cv::VideoCapture *m_capture;

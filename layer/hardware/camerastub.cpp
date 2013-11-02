@@ -7,3 +7,8 @@ cv::Mat CameraStub::getFrame()
 {
 	return cv::Mat();
 }
+
+bool CameraStub::isValid() const
+{
+	return true;
+}

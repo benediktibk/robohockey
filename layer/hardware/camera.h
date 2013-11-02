@@ -18,6 +18,7 @@ public:
 	virtual ~Camera() { }
 
 	virtual cv::Mat getFrame() = 0;
+	virtual bool isValid() const = 0;
 };
 }
 }

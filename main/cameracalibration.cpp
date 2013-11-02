@@ -3,7 +3,7 @@
 #include <iostream>
 #include "layer/hardware/cameraimpl.h"
 
-//Including this files manually as <highgui.h> is missing on robot.
+// Including these files manually as <highgui.h> is missing on robot.
 #include "opencv2/core/core_c.h"
 #include "opencv2/core/core.hpp"
 #include "opencv2/highgui/highgui_c.h"
@@ -17,7 +17,14 @@ int main(int /*argc*/, char **/*argv*/)
 {
 	cout << "##\n## Take a picture to current dir with 'p'.\n## Exit with 'q'\n##"<< endl;
 
-	Layer::Hardware::Camera *camera = new Layer::Hardware::CameraImpl();
+	Layer::Hardware::Camera *camera = new Layer::Hardware::CameraImpl(0);
+
+	if (!camera->isValid())
+	{
+		cout << "\n\n###\n### Could not open camera!\n###" << endl;
+		return 1;
+	}
+
 	Mat frame;
 	int pictureNumber = 0;
 	stringstream pictureName;
