@@ -5,6 +5,11 @@
 
 namespace RoboHockey
 {
+namespace Common
+{
+	class DiscreteFunction;
+}
+
 namespace Layer
 {
 namespace Hardware
@@ -25,12 +30,18 @@ namespace DataAnalysis
 	private:
 		std::list<std::pair<int, int> > findStartAndEndOfObjects(
 				const std::list<int> &positiveEdges, const std::list<int> &negativeEdges) const;
+		Common::DiscreteFunction* readInData() const;
+
+	private:
+		static double calculateOrientationFromSensorNumber(int value);
+		static double calculateWidthFromAngleAndDistance(double angle, double distance);
 
 	private:
 		Hardware::Lidar &m_lidar;
 
 	private:
 		static const double m_edgeTreshold;
+		static const int m_maximumSensorNumber;
 	};
 }
 }

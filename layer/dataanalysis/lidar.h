@@ -14,6 +14,10 @@ namespace DataAnalysis
 	public:
 		virtual ~Lidar() { }
 
+		/*!
+		 * The orientation is relative to the axis, therefore lookin in the direction of the x-axis means 0 orienation.
+		 * All other orientations are in mathematical positive direction.
+		 */
 		virtual LidarObjects getAllObjects(const Common::Point &ownPosition, double ownOrientation) const = 0;
 	};
 }
