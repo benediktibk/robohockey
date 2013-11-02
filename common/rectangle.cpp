@@ -1,4 +1,5 @@
 #include "common/rectangle.h"
+#include "common/compare.h"
 #include <algorithm>
 
 using namespace RoboHockey::Common;
@@ -17,4 +18,12 @@ const Point &Rectangle::getLeftLower() const
 const Point &Rectangle::getRightUpper() const
 {
 	return m_rightUpper;
+}
+
+bool Rectangle::isInside(const Point &point, const Compare &compare) const
+{
+	return	compare.isFuzzyGreater(point.getX(), m_leftLower.getX()) &&
+			compare.isFuzzyGreater(point.getY(), m_leftLower.getY()) &&
+			compare.isFuzzySmaller(point.getX(), m_rightUpper.getX()) &&
+			compare.isFuzzySmaller(point.getY(), m_rightUpper.getY());
 }

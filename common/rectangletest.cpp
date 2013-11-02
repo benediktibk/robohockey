@@ -1,5 +1,6 @@
 #include "common/rectangletest.h"
 #include "common/rectangle.h"
+#include "common/compare.h"
 
 using namespace RoboHockey::Common;
 
@@ -61,4 +62,44 @@ void RectangleTest::constructor_1And5AsOneAnd4And1AsTwo_rightUpperIs4And5()
 	Rectangle rectangle(one, two);
 
 	CPPUNIT_ASSERT_EQUAL(Point(4, 5), rectangle.getRightUpper());
+}
+
+void RectangleTest::isInside_tooMuchLeft_false()
+{
+	Compare compare(0.01);
+	Rectangle rectangle(Point(0, 1), Point(3, 5));
+
+	CPPUNIT_ASSERT(!rectangle.isInside(Point(-1, 2), compare));
+}
+
+void RectangleTest::isInside_tooMuchRight_false()
+{
+	Compare compare(0.01);
+	Rectangle rectangle(Point(0, 1), Point(3, 5));
+
+	CPPUNIT_ASSERT(!rectangle.isInside(Point(4, 2), compare));
+}
+
+void RectangleTest::isInside_tooMuchDown_false()
+{
+	Compare compare(0.01);
+	Rectangle rectangle(Point(0, 1), Point(3, 5));
+
+	CPPUNIT_ASSERT(!rectangle.isInside(Point(2, -2), compare));
+}
+
+void RectangleTest::isInside_tooMuchUp_false()
+{
+	Compare compare(0.01);
+	Rectangle rectangle(Point(0, 1), Point(3, 5));
+
+	CPPUNIT_ASSERT(!rectangle.isInside(Point(2, 9), compare));
+}
+
+void RectangleTest::isInside_inside_true()
+{
+	Compare compare(0.01);
+	Rectangle rectangle(Point(0, 1), Point(3, 5));
+
+	CPPUNIT_ASSERT(rectangle.isInside(Point(2, 2), compare));
 }

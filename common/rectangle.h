@@ -7,6 +7,8 @@ namespace RoboHockey
 {
 namespace Common
 {
+	class Compare;
+
 	class Rectangle
 	{
 	public:
@@ -14,6 +16,7 @@ namespace Common
 
 		const Point &getLeftLower() const;
 		const Point &getRightUpper() const;
+		bool isInside(const Point &point, const Compare &compare) const;
 
 	private:
 		Point m_leftLower;
