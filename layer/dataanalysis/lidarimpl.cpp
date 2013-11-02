@@ -28,6 +28,8 @@ LidarObjects LidarImpl::getAllObjects(const Point &ownPosition, double ownOrient
 	distanceEdges.differentiate(1);
 	list<int> positiveEdges = distanceEdges.getPositionsWithValuesAbove(m_edgeTreshold);
 	list<int> negativeEdges = distanceEdges.getPositionsWithValuesBelow((-1)*m_edgeTreshold);
+	positiveEdges = replaceFollowingEdgesWithMiddlePosition(positiveEdges);
+	negativeEdges = replaceFollowingEdgesWithMiddlePosition(negativeEdges);
 	list<pair<int, int> > startAndEndOfObjects = findStartAndEndOfObjects(positiveEdges, negativeEdges);
 
 	for (list<pair<int, int> >::iterator i = startAndEndOfObjects.begin(); i != startAndEndOfObjects.end(); ++i)
@@ -151,4 +153,27 @@ double LidarImpl::calculateWidthFromAngleAndDistance(double angle, double distan
 		return 0;
 	else
 		return 2*distance/(1/tan(angle/2) - 1);
+}
+
+list<int> LidarImpl::replaceFollowingEdgesWithMiddlePosition(const list<int> &edges)
+{
+	list<int> result;
+
+	for (list<int>::const_iterator i = edges.begin(); i != edges.end(); ++i)
+	{
+		list<int>::const_iterator lastEdgeOfFollowingOnes = i;
+		++lastEdgeOfFollowingOnes;
+		int lastPosition = *i;
+
+		for (; lastEdgeOfFollowingOnes != edges.end() && *lastEdgeOfFollowingOnes == lastPosition + 1; ++lastEdgeOfFollowingOnes)
+			lastPosition = *lastEdgeOfFollowingOnes;
+
+		--lastEdgeOfFollowingOnes;
+		int middlePosition = (*i + *lastEdgeOfFollowingOnes)/2;
+		result.push_back(middlePosition);
+
+		i = lastEdgeOfFollowingOnes;
+	}
+
+	return result;
 }

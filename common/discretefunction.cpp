@@ -47,7 +47,7 @@ void DiscreteFunction::differentiate(double stepSize)
 	if (stepSize != 1)
 		*this *= (1/stepSize);
 	m_values[0] = m_values[1];
-	m_values[*(m_values.end() - 1)] = m_values[*(m_values.end() - 2)];
+	*(m_values.end() - 1) = *(m_values.end() - 2);
 }
 
 void DiscreteFunction::applyCore(const vector<double> &core)

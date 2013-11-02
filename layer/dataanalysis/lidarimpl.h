@@ -35,6 +35,7 @@ namespace DataAnalysis
 	private:
 		static double calculateOrientationFromSensorNumber(int value);
 		static double calculateWidthFromAngleAndDistance(double angle, double distance);
+		static std::list<int> replaceFollowingEdgesWithMiddlePosition(const std::list<int> &edges);
 
 	private:
 		Hardware::Lidar &m_lidar;
