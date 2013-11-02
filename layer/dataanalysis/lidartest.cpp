@@ -115,7 +115,7 @@ void LidarTest::getAllObjects_twoObjects_objectCountIs2()
 	CPPUNIT_ASSERT_EQUAL((size_t)2, objects.getObjectCount());
 }
 
-void LidarTest::getAllObjects_oneObjectBehindAnotherOne_objectCountIs2()
+void LidarTest::getAllObjects_oneObjectBehindAnotherOneLeft_objectCountIs2()
 {
 	Hardware::LidarStub hardwareLidar(10);
 	hardwareLidar.setValueForAngle(150, 3.04);
@@ -128,6 +128,27 @@ void LidarTest::getAllObjects_oneObjectBehindAnotherOne_objectCountIs2()
 	hardwareLidar.setValueForAngle(157, 0.99);
 	hardwareLidar.setValueForAngle(158, 1.02);
 	hardwareLidar.setValueForAngle(159, 1.04);
+	LidarImpl lidar(hardwareLidar);
+	Point ownPosition(1, 2);
+
+	LidarObjects objects = lidar.getAllObjects(ownPosition, M_PI*(-0.5));
+
+	CPPUNIT_ASSERT_EQUAL((size_t)2, objects.getObjectCount());
+}
+
+void LidarTest::getAllObjects_oneObjectBehindAnotherOneRight_objectCountIs2()
+{
+	Hardware::LidarStub hardwareLidar(10);
+	hardwareLidar.setValueForAngle(150, 2.04);
+	hardwareLidar.setValueForAngle(151, 2.02);
+	hardwareLidar.setValueForAngle(152, 1.99);
+	hardwareLidar.setValueForAngle(153, 2.02);
+	hardwareLidar.setValueForAngle(154, 2.04);
+	hardwareLidar.setValueForAngle(155, 4.04);
+	hardwareLidar.setValueForAngle(156, 4.02);
+	hardwareLidar.setValueForAngle(157, 3.99);
+	hardwareLidar.setValueForAngle(158, 4.02);
+	hardwareLidar.setValueForAngle(159, 4.04);
 	LidarImpl lidar(hardwareLidar);
 	Point ownPosition(1, 2);
 
