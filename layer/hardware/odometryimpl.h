@@ -8,6 +8,7 @@ namespace PlayerCc
 	class PlayerClient;
 	class Position2dProxy;
 }
+
 namespace RoboHockey
 {
 namespace Layer

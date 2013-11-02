@@ -8,6 +8,7 @@ namespace PlayerCc
 	class PlayerClient;
 	class SonarProxy;
 }
+
 namespace RoboHockey
 {
 namespace Layer
