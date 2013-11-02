@@ -109,6 +109,16 @@ double DiscreteFunction::getMinimumInRange(int start, int end) const
 	return minimum;
 }
 
+double DiscreteFunction::getMeanValueInRange(int start, int end) const
+{
+	double result = 0;
+
+	for (int i = start; i <= end; ++i)
+		result += getValue(i);
+
+	return result/(end - start + 1);
+}
+
 void DiscreteFunction::operator*=(double value)
 {
 	for (vector<double>::iterator i = m_values.begin(); i != m_values.end(); ++i)

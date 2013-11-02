@@ -218,3 +218,19 @@ void DiscreteFunctionTest::getMinimumInRange_rangeIsWholeFunction_totalMinimum()
 
 	CPPUNIT_ASSERT_DOUBLES_EQUAL(3, function.getMinimumInRange(0, 5), 0.00001);
 }
+
+void DiscreteFunctionTest::getMeanValueInRange_severalValues_correctResult()
+{
+	DiscreteFunction function(-1, 7);
+	function.setValue(-1, -3);
+	function.setValue(0, 6);
+	function.setValue(1, 7);
+	function.setValue(2, 5);
+	function.setValue(3, 9);
+	function.setValue(4, 5);
+	function.setValue(5, 3);
+	function.setValue(6, 5);
+	function.setValue(7, 10);
+
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(5.8333, function.getMeanValueInRange(0, 5), 0.001);
+}

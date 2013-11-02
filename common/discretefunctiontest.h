@@ -30,6 +30,7 @@ namespace Common
 		CPPUNIT_TEST(getMinimumInRange_onlyOneValue_onlyValue);
 		CPPUNIT_TEST(getMinimumInRange_severalValues_smallestValue);
 		CPPUNIT_TEST(getMinimumInRange_rangeIsWholeFunction_totalMinimum);
+		CPPUNIT_TEST(getMeanValueInRange_severalValues_correctResult);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
@@ -51,6 +52,7 @@ namespace Common
 		void getMinimumInRange_onlyOneValue_onlyValue();
 		void getMinimumInRange_severalValues_smallestValue();
 		void getMinimumInRange_rangeIsWholeFunction_totalMinimum();
+		void getMeanValueInRange_severalValues_correctResult();
 	};
 }
 }

@@ -23,6 +23,7 @@ namespace Common
 		std::list<int> getPositionsWithValuesAbove(double value) const;
 		std::list<int> getPositionsWithValuesBelow(double value) const;
 		double getMinimumInRange(int start, int end) const;
+		double getMeanValueInRange(int start, int end) const;
 
 		void operator*=(double value);
 

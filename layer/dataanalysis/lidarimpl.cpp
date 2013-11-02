@@ -13,6 +13,7 @@ using namespace boost;
 
 const double LidarImpl::m_edgeTreshold = 0.5;
 const int LidarImpl::m_maximumSensorNumber = 360;
+const int LidarImpl::m_minimumWidthInSensorNumbers = 3;
 
 LidarImpl::LidarImpl(Hardware::Lidar &lidar) :
 	m_lidar(lidar)
@@ -36,7 +37,11 @@ LidarObjects LidarImpl::getAllObjects(const Point &ownPosition, double ownOrient
 	{
 		int start = i->first;
 		int end = i->second;
-		double distance = distances->getMinimumInRange(start, end);
+		int widthInSensorNumbers = end - start + 1;
+		if (widthInSensorNumbers < m_minimumWidthInSensorNumbers)
+			continue;
+
+		double distance = distances->getMinimumInRange(start + 1, end - 1);
 		int middleSensorNumber = (end + start)/2;
 		double orientationOfObjectRelativeToOwnOrientation = calculateOrientationFromSensorNumber(middleSensorNumber);
 		double orientationOfObject = ownOrientation - orientationOfObjectRelativeToOwnOrientation;
@@ -56,7 +61,7 @@ list<pair<int, int> > LidarImpl::findStartAndEndOfObjects(
 		const list<int> &positiveEdges, const list<int> &negativeEdges) const
 {
 	list<pair<int, int> > result;
-	list<pair<bool, int> > edgeOrientation; // true: positive edge; false: negative edge
+	vector<int> allEdges; // true: positive edge; false: negative edge
 	list<int>::const_iterator positiveEdgeIterator = positiveEdges.begin();
 	list<int>::const_iterator negativeEdgeIterator = negativeEdges.begin();
 
@@ -67,65 +72,31 @@ list<pair<int, int> > LidarImpl::findStartAndEndOfObjects(
 
 		if (nextPositivePosition < nextNegativePosition)
 		{
-			edgeOrientation.push_back(pair<bool, int>(true, nextPositivePosition));
+			allEdges.push_back(nextPositivePosition);
 			++positiveEdgeIterator;
 		}
 		else
 		{
-			edgeOrientation.push_back(pair<bool, int>(false, nextNegativePosition));
+			allEdges.push_back(nextNegativePosition);
 			++negativeEdgeIterator;
 		}
 	}
 
 	if (positiveEdgeIterator != positiveEdges.end())
 		for (; positiveEdgeIterator != positiveEdges.end(); ++positiveEdgeIterator)
-			edgeOrientation.push_back(pair<bool, int>(true, *positiveEdgeIterator));
+			allEdges.push_back(*positiveEdgeIterator);
 	else
 		for (; negativeEdgeIterator != negativeEdges.end(); ++negativeEdgeIterator)
-			edgeOrientation.push_back(pair<bool, int>(false, *negativeEdgeIterator));
+			allEdges.push_back(*negativeEdgeIterator);
 
-	if (edgeOrientation.size() == 0)
+	if (allEdges.size() == 0)
 		return result;
 
-	pair<bool, int> firstEdge = edgeOrientation.front();
-	if (firstEdge.first)
-	{
-		result.push_back(pair<int, int>(0, firstEdge.second));
-		edgeOrientation.pop_front();
-	}
+	result.push_back(pair<int, int>(0, allEdges.front()));
+	result.push_back(pair<int, int>(allEdges.back(), m_maximumSensorNumber));
 
-	if (edgeOrientation.size() == 0)
-		return result;
-
-	pair<bool, int> lastEdge = edgeOrientation.back();
-	if (!lastEdge.first)
-	{
-		result.push_back(pair<int, int>(lastEdge.second, m_maximumSensorNumber));
-		edgeOrientation.pop_back();
-	}
-
-	while (edgeOrientation.size() > 1)
-	{
-		pair<bool, int> currentEdge = edgeOrientation.front();
-
-		if (currentEdge.first)
-		{
-			edgeOrientation.pop_front();
-			continue;
-		}
-
-		pair<bool, int> nextEdge = *(++edgeOrientation.begin());
-
-		if (!nextEdge.first)
-		{
-			edgeOrientation.pop_front();
-			continue;
-		}
-
-		result.push_back(pair<int, int>(currentEdge.second, nextEdge.second));
-		edgeOrientation.pop_front();
-		edgeOrientation.pop_front();
-	}
+	for (vector<int>::const_iterator i = allEdges.begin(); i != allEdges.end() - 1; ++i)
+		result.push_back(pair<int, int>(*i, *(i + 1)));
 
 	return result;
 }

@@ -112,7 +112,8 @@ void LidarTest::getAllObjects_twoObjects_objectCountIs2()
 
 	LidarObjects objects = lidar.getAllObjects(ownPosition, M_PI*0.7);
 
-	CPPUNIT_ASSERT_EQUAL((size_t)2, objects.getObjectCount());
+	vector<LidarObject> objectsInForeground = objects.getObjectsWithDistanceBelow(5);
+	CPPUNIT_ASSERT_EQUAL((size_t)2, objectsInForeground.size());
 }
 
 void LidarTest::getAllObjects_oneObjectBehindAnotherOneLeft_objectCountIs2()
@@ -133,7 +134,8 @@ void LidarTest::getAllObjects_oneObjectBehindAnotherOneLeft_objectCountIs2()
 
 	LidarObjects objects = lidar.getAllObjects(ownPosition, M_PI*(-0.5));
 
-	CPPUNIT_ASSERT_EQUAL((size_t)2, objects.getObjectCount());
+	vector<LidarObject> objectsInForeground = objects.getObjectsWithDistanceBelow(5);
+	CPPUNIT_ASSERT_EQUAL((size_t)2, objectsInForeground.size());
 }
 
 void LidarTest::getAllObjects_oneObjectBehindAnotherOneRight_objectCountIs2()
@@ -154,7 +156,8 @@ void LidarTest::getAllObjects_oneObjectBehindAnotherOneRight_objectCountIs2()
 
 	LidarObjects objects = lidar.getAllObjects(ownPosition, M_PI*(-0.5));
 
-	CPPUNIT_ASSERT_EQUAL((size_t)2, objects.getObjectCount());
+	vector<LidarObject> objectsInForeground = objects.getObjectsWithDistanceBelow(5);
+	CPPUNIT_ASSERT_EQUAL((size_t)2, objectsInForeground.size());
 }
 
 void LidarTest::getAllObjects_objectAtLeftBorder_objectCountIs1()
@@ -168,7 +171,8 @@ void LidarTest::getAllObjects_objectAtLeftBorder_objectCountIs1()
 
 	LidarObjects objects = lidar.getAllObjects(ownPosition, M_PI*(-0.5));
 
-	CPPUNIT_ASSERT_EQUAL((size_t)1, objects.getObjectCount());
+	vector<LidarObject> objectsInForeground = objects.getObjectsWithDistanceBelow(5);
+	CPPUNIT_ASSERT_EQUAL((size_t)1, objectsInForeground.size());
 }
 
 void LidarTest::getAllObjects_objectAtRightBorder_objectCountIs1()
@@ -182,5 +186,6 @@ void LidarTest::getAllObjects_objectAtRightBorder_objectCountIs1()
 
 	LidarObjects objects = lidar.getAllObjects(ownPosition, M_PI*(-0.5));
 
-	CPPUNIT_ASSERT_EQUAL((size_t)1, objects.getObjectCount());
+	vector<LidarObject> objectsInForeground = objects.getObjectsWithDistanceBelow(5);
+	CPPUNIT_ASSERT_EQUAL((size_t)1, objectsInForeground.size());
 }
