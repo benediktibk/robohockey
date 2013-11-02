@@ -141,3 +141,7 @@ layer/autonomous/robotimpl.cpp
 layer/autonomous/robottest.h
 layer/autonomous/robottest.cpp
 layer/autonomous/robot.h
+common/rectangle.h
+common/rectangle.cpp
+common/rectangletest.h
+common/rectangletest.cpp

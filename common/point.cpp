@@ -39,8 +39,7 @@ double Point::getY() const
 
 bool Point::operator ==(const Point &point) const
 {
-	return	getX() == point.getX() &&
-			getY() == point.getY();
+	return	fuzzyEqual(point, 0.00001);
 }
 
 Point Point::operator *(double value) const
