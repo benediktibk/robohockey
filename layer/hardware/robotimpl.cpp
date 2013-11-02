@@ -61,3 +61,8 @@ Engine &RobotImpl::getEngine()
 {
 	return *m_engine;
 }
+
+void RobotImpl::updateSensorData()
+{
+	m_playerClient->Read();
+}
