@@ -30,4 +30,23 @@ void LidarObjectsTest::getObjectsWithDistanceBelow_twoObjectsBelowAndOneNot_resu
 	CPPUNIT_ASSERT_EQUAL((size_t)2, result.size());
 }
 
+void LidarObjectsTest::getObjectsInRegionOfInterest_twoInsideAndThreeNot_resultSizeIs2()
+{
+	LidarObjects objects(Point(0, 0));
+	LidarObject objectOne(Point(3, 4), 2);
+	LidarObject objectTwo(Point(5, 3), 1);
+	LidarObject objectThree(Point(50, 10), 1);
+	LidarObject objectFour(Point(0, 0), 1);
+	LidarObject objectFive(Point(-10, -5), 1);
+	objects.addObject(objectOne);
+	objects.addObject(objectTwo);
+	objects.addObject(objectThree);
+	objects.addObject(objectFour);
+	objects.addObject(objectFive);
+
+	list<LidarObject> result = objects.getObjectsInRegionOfInterest(Rectangle(Point(-1, -1), Point(10, 10)));
+
+	CPPUNIT_ASSERT_EQUAL((size_t)3, result.size());
+}
+
 

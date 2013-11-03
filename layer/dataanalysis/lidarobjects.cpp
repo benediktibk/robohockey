@@ -1,5 +1,6 @@
 #include "layer/dataanalysis/lidarobjects.h"
 #include "layer/dataanalysis/lidarobjectdistancecomparator.h"
+#include "common/compare.h"
 #include <algorithm>
 
 using namespace RoboHockey::Common;
@@ -37,6 +38,18 @@ vector<LidarObject> LidarObjects::getObjectsWithDistanceBelow(double distance) c
 			upper_bound(m_objectsSortedByDistance.begin(), m_objectsSortedByDistance.end(),
 						upperBoundObject, *m_distanceComparator);
 	return vector<LidarObject>(m_objectsSortedByDistance.begin(), lastPosition);
+}
+
+list<LidarObject> LidarObjects::getObjectsInRegionOfInterest(const Rectangle &rectangle) const
+{
+	list<LidarObject> result;
+	Compare compare(0.01);
+
+	for (list<LidarObject>::const_iterator i = m_objectsSortedByDistance.begin(); i != m_objectsSortedByDistance.end(); ++i)
+		if (rectangle.overlapsApproximately(*i, compare))
+			result.push_back(*i);
+
+	return result;
 }
 
 size_t LidarObjects::getObjectCount() const

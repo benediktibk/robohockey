@@ -19,6 +19,7 @@ namespace Common
 		void setDiameter(double value);
 		double getDiameter() const;
 		Rectangle getBoundingRectangle() const;
+		double getDistanceTo(const Common::Point &position) const;
 
 	private:
 		Point m_center;

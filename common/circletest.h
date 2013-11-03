@@ -11,14 +11,15 @@ namespace Common
 	class CircleTest :
 		public CPPUNIT_NS::TestFixture
 	{
-	CPPUNIT_TEST_SUITE(CircleTest);
-	CPPUNIT_TEST(constructor_empty_diameterIs0);
-	CPPUNIT_TEST(constructor_centerAndDiameter_centerIsCorrect);
-	CPPUNIT_TEST(constructor_centerAndDiameter_diameterIsCorrect);
-	CPPUNIT_TEST(setCenter_4And5_centerIs4And5);
-	CPPUNIT_TEST(setDiameter_3_diameterIs3);
-	CPPUNIT_TEST(getBoundingRectangle_validCircle_correctResult);
-	CPPUNIT_TEST_SUITE_END();
+		CPPUNIT_TEST_SUITE(CircleTest);
+		CPPUNIT_TEST(constructor_empty_diameterIs0);
+		CPPUNIT_TEST(constructor_centerAndDiameter_centerIsCorrect);
+		CPPUNIT_TEST(constructor_centerAndDiameter_diameterIsCorrect);
+		CPPUNIT_TEST(setCenter_4And5_centerIs4And5);
+		CPPUNIT_TEST(setDiameter_3_diameterIs3);
+		CPPUNIT_TEST(getBoundingRectangle_validCircle_correctResult);
+		CPPUNIT_TEST(getDistanceTo_euclideanDistance5AndDiameter2_4);
+		CPPUNIT_TEST_SUITE_END();
 
 	private:
 		void constructor_empty_diameterIs0();
@@ -27,6 +28,7 @@ namespace Common
 		void setCenter_4And5_centerIs4And5();
 		void setDiameter_3_diameterIs3();
 		void getBoundingRectangle_validCircle_correctResult();
+		void getDistanceTo_euclideanDistance5AndDiameter2_4();
 	};
 }
 }

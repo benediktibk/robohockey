@@ -36,3 +36,9 @@ Rectangle Circle::getBoundingRectangle() const
 	double radius = m_diameter/2;
 	return Rectangle(m_center - Point(radius, radius), m_center + Point(radius, radius));
 }
+
+double Circle::getDistanceTo(const Point &position) const
+{
+	return position.distanceTo(m_center) - m_diameter/2;
+}
+

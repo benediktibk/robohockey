@@ -16,11 +16,13 @@ namespace DataAnalysis
 		CPPUNIT_TEST_SUITE(LidarObjectsTest);
 		CPPUNIT_TEST(addObject_onceCalled_objectCountIs1);
 		CPPUNIT_TEST(getObjectsWithDistanceBelow_twoObjectsBelowAndOneNot_resultSizeIs2);
+		CPPUNIT_TEST(getObjectsInRegionOfInterest_twoInsideAndThreeNot_resultSizeIs2);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
 		void addObject_onceCalled_objectCountIs1();
 		void getObjectsWithDistanceBelow_twoObjectsBelowAndOneNot_resultSizeIs2();
+		void getObjectsInRegionOfInterest_twoInsideAndThreeNot_resultSizeIs2();
 	};
 }
 }

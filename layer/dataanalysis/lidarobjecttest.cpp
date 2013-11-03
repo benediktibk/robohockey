@@ -15,7 +15,7 @@ void LidarObjectTest::constructor_validPosition_positionIsSetOne()
 {
 	LidarObject object(Point(4, 3), 5);
 
-	CPPUNIT_ASSERT_EQUAL(Point(4, 3), object.getPosition());
+	CPPUNIT_ASSERT_EQUAL(Point(4, 3), object.getCenter());
 }
 
 void LidarObjectTest::constructor_diameterOf5_diameterIs5()
@@ -23,14 +23,4 @@ void LidarObjectTest::constructor_diameterOf5_diameterIs5()
 	LidarObject object(Point(4, 3), 5);
 
 	CPPUNIT_ASSERT_DOUBLES_EQUAL(5, object.getDiameter(), 0.00001);
-}
-
-void LidarObjectTest::getDistanceTo_euclideanDistance5AndDiameter2_4()
-{
-	LidarObject object(Point(0, 0), 2);
-	Point point(4, 3);
-
-	double distance = object.getDistanceTo(point);
-
-	CPPUNIT_ASSERT_DOUBLES_EQUAL(4, distance, 0.00001);
 }

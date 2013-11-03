@@ -51,3 +51,14 @@ void CircleTest::getBoundingRectangle_validCircle_correctResult()
 	CPPUNIT_ASSERT_EQUAL(Point(1, 0), result.getLeftLower());
 	CPPUNIT_ASSERT_EQUAL(Point(3, 2), result.getRightUpper());
 }
+
+
+void CircleTest::getDistanceTo_euclideanDistance5AndDiameter2_4()
+{
+	Circle object(Point(0, 0), 2);
+	Point point(4, 3);
+
+	double distance = object.getDistanceTo(point);
+
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(4, distance, 0.00001);
+}

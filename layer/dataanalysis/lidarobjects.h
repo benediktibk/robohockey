@@ -7,6 +7,11 @@
 
 namespace RoboHockey
 {
+namespace Common
+{
+	class Rectangle;
+}
+
 namespace Layer
 {
 namespace DataAnalysis
@@ -22,6 +27,7 @@ namespace DataAnalysis
 
 		void addObject(const LidarObject &object);
 		std::vector<LidarObject> getObjectsWithDistanceBelow(double distance) const;
+		std::list<LidarObject> getObjectsInRegionOfInterest(const Common::Rectangle &rectangle) const;
 		size_t getObjectCount() const;
 
 		void operator=(const LidarObjects &objects);
