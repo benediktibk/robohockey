@@ -8,6 +8,7 @@ namespace RoboHockey
 namespace Common
 {
 	class Compare;
+	class Circle;
 
 	class Rectangle
 	{
@@ -16,7 +17,11 @@ namespace Common
 
 		const Point &getLeftLower() const;
 		const Point &getRightUpper() const;
+		double getWidth() const;
+		double getHeight() const;
 		bool isInside(const Point &point, const Compare &compare) const;
+		bool overlapsApproximately(const Circle &circle, const Compare &compare) const;
+		bool overlaps(const Rectangle &rectangle, const Compare &compare) const;
 
 	private:
 		Point m_leftLower;

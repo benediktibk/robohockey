@@ -30,3 +30,9 @@ double Circle::getDiameter() const
 {
 	return m_diameter;
 }
+
+Rectangle Circle::getBoundingRectangle() const
+{
+	double radius = m_diameter/2;
+	return Rectangle(m_center - Point(radius, radius), m_center + Point(radius, radius));
+}

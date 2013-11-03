@@ -41,3 +41,13 @@ void CircleTest::setDiameter_3_diameterIs3()
 
 	CPPUNIT_ASSERT_DOUBLES_EQUAL(3, circle.getDiameter(), 0.00001);
 }
+
+void CircleTest::getBoundingRectangle_validCircle_correctResult()
+{
+	Circle circle(Point(2, 1), 2);
+
+	Rectangle result = circle.getBoundingRectangle();
+
+	CPPUNIT_ASSERT_EQUAL(Point(1, 0), result.getLeftLower());
+	CPPUNIT_ASSERT_EQUAL(Point(3, 2), result.getRightUpper());
+}

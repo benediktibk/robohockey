@@ -17,6 +17,7 @@ namespace Common
 	CPPUNIT_TEST(constructor_centerAndDiameter_diameterIsCorrect);
 	CPPUNIT_TEST(setCenter_4And5_centerIs4And5);
 	CPPUNIT_TEST(setDiameter_3_diameterIs3);
+	CPPUNIT_TEST(getBoundingRectangle_validCircle_correctResult);
 	CPPUNIT_TEST_SUITE_END();
 
 	private:
@@ -25,6 +26,7 @@ namespace Common
 		void constructor_centerAndDiameter_diameterIsCorrect();
 		void setCenter_4And5_centerIs4And5();
 		void setDiameter_3_diameterIs3();
+		void getBoundingRectangle_validCircle_correctResult();
 	};
 }
 }

@@ -2,6 +2,7 @@
 #define ROBOHOCKEY_COMMON_CIRCLE_H
 
 #include "common/point.h"
+#include "common/rectangle.h"
 
 namespace RoboHockey
 {
@@ -17,6 +18,7 @@ namespace Common
 		const Point& getCenter() const;
 		void setDiameter(double value);
 		double getDiameter() const;
+		Rectangle getBoundingRectangle() const;
 
 	private:
 		Point m_center;
