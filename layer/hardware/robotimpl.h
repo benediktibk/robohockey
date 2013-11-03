@@ -26,6 +26,7 @@ namespace Hardware
 		virtual Camera& getCamera();
 		virtual Odometry& getOdometry();
 		virtual Engine& getEngine();
+		void updateSensorData();
 
 	private:
 		Sonar *m_sonar;

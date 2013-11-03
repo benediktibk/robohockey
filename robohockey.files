@@ -149,3 +149,6 @@ common/circle.h
 common/circle.cpp
 common/circletest.h
 common/circletest.cpp
+threading/threadreadloop.h
+threading/threadreadloop.cpp
+
