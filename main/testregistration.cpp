@@ -2,6 +2,7 @@
 #include "common/pointtest.h"
 #include "common/discretefunctiontest.h"
 #include "common/rectangletest.h"
+#include "common/circletest.h"
 #include "threading/threadtest.h"
 #include "threading/mutextest.h"
 #include "threading/signaltest.h"
@@ -21,6 +22,7 @@ CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Common::CompareTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Common::PointTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Common::DiscreteFunctionTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Common::RectangleTest);
+CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Common::CircleTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Threading::ThreadTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Threading::MutexTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Threading::SignalTest);

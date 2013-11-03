@@ -145,3 +145,7 @@ common/rectangle.h
 common/rectangle.cpp
 common/rectangletest.h
 common/rectangletest.cpp
+common/circle.h
+common/circle.cpp
+common/circletest.h
+common/circletest.cpp
