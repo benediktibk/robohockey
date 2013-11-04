@@ -152,3 +152,7 @@ common/circletest.cpp
 threading/threadreadloop.h
 threading/threadreadloop.cpp
 
+layer/view/CMakeLists.txt
+layer/view/viewer.h
+layer/view/viewer.cpp
+layer/view/viewer.ui
