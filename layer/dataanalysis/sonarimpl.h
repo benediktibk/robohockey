@@ -18,12 +18,12 @@ namespace DataAnalysis
 			public Sonar
 	{
 	public:
-		SonarImpl(const Hardware::Sonar &sonar);
+        SonarImpl(Hardware::Sonar &sonar);
 
-		virtual bool isObstacleDirectInFront() const;
+        virtual bool isObstacleDirectInFront();
 
 	private:
-		const Hardware::Sonar &m_sonar;
+        Hardware::Sonar &m_sonar;
 	};
 }
 }

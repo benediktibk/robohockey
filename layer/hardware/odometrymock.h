@@ -17,13 +17,16 @@ namespace Hardware
 
 		virtual void setCurrentPosition(const Common::Point &position);
 		virtual const Common::Point& getCurrentPosition();
+        virtual double getCurrentOrientation();
 
 		unsigned int getCallsToSetCurrentPosition() const;
 		unsigned int getCallsToGetCurrentPosition() const;
+        unsigned int getCallsToGetCurrentOrientation() const;
 
 	private:
 		unsigned int m_callsToSetCurrentPosition;
 		unsigned int m_callsToGetCurrentPosition;
+        unsigned int m_callsToGetCurrentOrientation;
 	};
 }
 }

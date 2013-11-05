@@ -11,3 +11,8 @@ const Point &OdometryStub::getCurrentPosition()
 {
 	return Point::zero();
 }
+
+double OdometryStub::getCurrentOrientation()
+{
+    return 0;
+}
