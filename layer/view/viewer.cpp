@@ -1,9 +1,8 @@
 #include "layer/view/viewer.h"
-#include "layer/view/ui_viewer.h"
-
+#include "ui_viewer.h"
 
 viewer::viewer(QWidget *parent) :
-    QDialog(parent),
+    QDialog(parent  ),
     ui(new Ui::viewer)
 {
     ui->setupUi(this);

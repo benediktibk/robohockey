@@ -1,8 +1,7 @@
 #ifndef ROBOHOCKEY_LAYER_VIEW_VIEWER_H
 #define ROBOHOCKEY_LAYER_VIEW_VIEWER_H
 
-
-#include <QDialog>
+#include <QtGui/QDialog>
 
 namespace Ui {
 class viewer;
