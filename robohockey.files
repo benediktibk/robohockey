@@ -134,7 +134,7 @@ layer/dataanalysis/lidarobjectdistancecomparator.h
 layer/dataanalysis/lidarobjectdistancecomparator.cpp
 layer/dataanalysis/lidarobjectdistancecomparatortest.h
 layer/dataanalysis/lidarobjectdistancecomparatortest.cpp
-main/cameracalibration.cpp
+main/maincameracalibration.cpp
 layer/autonomous/CMakeLists.txt
 layer/autonomous/robotimpl.h
 layer/autonomous/robotimpl.cpp
