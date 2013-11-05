@@ -26,3 +26,7 @@ Engine &DataAnalyserStub::getEngine()
 {
 	return m_engine;
 }
+
+void DataAnalyserStub::updateSensorData()
+{
+}
