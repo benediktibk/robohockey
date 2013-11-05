@@ -17,8 +17,6 @@ RobotImpl::RobotImpl()
 	m_camera = new CameraImpl(0);
 	m_odometry = new OdometryImpl(m_playerClient);
 	m_engine = new EngineImpl(m_playerClient);
-
-	m_playerClient->Read();
 }
 
 RobotImpl::~RobotImpl()
@@ -65,4 +63,9 @@ Engine &RobotImpl::getEngine()
 void RobotImpl::updateSensorData()
 {
 	m_playerClient->Read();
+}
+
+bool RobotImpl::isValid() const
+{
+	return m_playerClient->Connected();
 }

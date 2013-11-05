@@ -26,6 +26,7 @@ namespace DataAnalysis
 		virtual const Camera& getCamera() const;
 		virtual Odometry& getOdometry();
 		virtual Engine& getEngine();
+		virtual void updateSensorData();
 
 	private:
 		Hardware::Robot *m_robot;

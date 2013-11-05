@@ -5,6 +5,8 @@ set(LAYER_HARDWARE_SRC
 	cameraimpl.cpp
 	odometryimpl.cpp
 	engineimpl.cpp
+	lidar.cpp
+	sonar.cpp
 )
 
 set(LAYER_HARDWARE_TEST_SRC
