@@ -40,6 +40,11 @@ Engine &RobotMock::getEngine()
 	return RobotStub::getEngine();
 }
 
+bool RobotMock::isValid() const
+{
+	return true;
+}
+
 unsigned int RobotMock::getCallsToGetSonar() const
 {
 	return m_callsToGetSonar;

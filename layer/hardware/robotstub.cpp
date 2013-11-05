@@ -26,3 +26,8 @@ Engine &RobotStub::getEngine()
 {
 	return m_engine;
 }
+
+bool RobotStub::isValid() const
+{
+	return true;
+}

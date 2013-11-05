@@ -10,10 +10,12 @@ namespace Hardware
 	class Lidar
 	{
 	public:
-		virtual ~Lidar() { }
+		virtual ~Lidar();
 
 		//! angle means actually the sensor number, therefore the real angle is angle/2
 		virtual double getDistance(unsigned int angle) = 0;
+		unsigned int getMinimumSensorNumber() const;
+		unsigned int getMaximumSensorNumber() const;
 	};
 }
 }

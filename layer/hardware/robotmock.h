@@ -20,6 +20,7 @@ namespace Hardware
 		virtual Camera& getCamera();
 		virtual Odometry& getOdometry();
 		virtual Engine& getEngine();
+		virtual bool isValid() const;
 
 		unsigned int getCallsToGetSonar() const;
 		unsigned int getCallsToGetLidar() const;
