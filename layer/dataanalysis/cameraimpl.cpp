@@ -12,13 +12,11 @@ CameraImpl::CameraImpl(Hardware::Camera &camera) :
 void CameraImpl::getColor() const
 { }
 
-Mat CameraImpl::getFilteredFrame()
+Mat CameraImpl::getsmoothFrame()
 {
 	Mat frame = m_camera.getFrame();
-	Mat filteredFrame = frame;
+	Mat smoothFrame = frame;
 
-	cvSmooth(&frame, &filteredFrame, CV_MEDIAN, 9 , 9);
-
-
-	return filteredFrame;
+	cvSmooth(&frame, &smoothFrame, CV_MEDIAN, 9 , 9);
+	return smoothFrame;
 }
