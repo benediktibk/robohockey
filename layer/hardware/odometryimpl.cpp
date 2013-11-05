@@ -20,7 +20,11 @@ OdometryImpl::~OdometryImpl()
 void OdometryImpl::setCurrentPosition(const Point &position)
 {
 	m_odometry->ResetOdometry();
-	m_odometry->SetOdometry(position.getX(), position.getY(), 0);
+    m_odometry->SetOdometry(position.getX(), position.getY(), 0);
+}
+double OdometryImpl::getCurrentOrientation()
+{
+    return m_odometry->GetYaw();
 }
 
 const Point &OdometryImpl::getCurrentPosition()

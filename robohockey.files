@@ -155,3 +155,6 @@ layer/view/viewer.h
 layer/view/viewer.cpp
 layer/view/viewer.ui
 main/remotecontrol.cpp
+main/datalogger.cpp
+layer/hardware/lidar.cpp
+layer/hardware/sonar.cpp

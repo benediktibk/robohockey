@@ -27,6 +27,7 @@ namespace Hardware
 		virtual Odometry& getOdometry();
 		virtual Engine& getEngine();
 		virtual void updateSensorData();
+		virtual bool isValid() const;
 
 	private:
 		Sonar *m_sonar;

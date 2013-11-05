@@ -10,9 +10,11 @@ namespace Hardware
 	class Sonar
 	{
 	public:
-		virtual ~Sonar() { }
+		virtual ~Sonar();
 
 		virtual double getDistanceForSensor(unsigned int sensorNumber) = 0;
+		unsigned int getMinimumSensorNumber() const;
+		unsigned int getMaximumSensorNumber() const;
 	};
 }
 }
