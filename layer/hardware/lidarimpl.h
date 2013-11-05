@@ -6,7 +6,7 @@
 namespace PlayerCc
 {
 	class PlayerClient;
-	class LaserProxy;
+	class RangerProxy;
 }
 namespace RoboHockey
 {
@@ -24,7 +24,7 @@ namespace Hardware
 		virtual double getDistance(unsigned int angle);
 
 	private:
-		PlayerCc::LaserProxy *m_laser;
+		PlayerCc::RangerProxy *m_laser;
 	};
 }
 }
