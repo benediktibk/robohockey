@@ -2,7 +2,7 @@
 
 using namespace RoboHockey::Layer::DataAnalysis;
 
-bool SonarStub::isObstacleDirectInFront() const
+bool SonarStub::isObstacleDirectInFront()
 {
 	return false;
 }
