@@ -1,5 +1,4 @@
 set(THREADING_SRC
-	threadreadloop.cpp
 	thread.cpp
 	mutex.cpp
 	signal.cpp

@@ -20,6 +20,7 @@ namespace Hardware
 		virtual Camera& getCamera();
 		virtual Odometry& getOdometry();
 		virtual Engine& getEngine();
+		virtual void updateSensorData();	
 		virtual bool isValid() const;
 
 		unsigned int getCallsToGetSonar() const;
@@ -27,6 +28,7 @@ namespace Hardware
 		unsigned int getCallsToGetCamera() const;
 		unsigned int getCallsToGetOdometry() const;
 		unsigned int getCallsToGetEngine() const;
+		unsigned int getCallsToGetSensorData() const;
 
 	private:
 		unsigned int m_callsToGetSonar;
@@ -34,6 +36,7 @@ namespace Hardware
 		unsigned int m_callsToGetCamera;
 		unsigned int m_callsToGetOdometry;
 		unsigned int m_callsToGetEngine;
+		unsigned int m_callsToGetSensorData;
 	};
 }
 }

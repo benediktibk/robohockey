@@ -7,7 +7,8 @@ RobotMock::RobotMock() :
 	m_callsToGetLidar(0),
 	m_callsToGetCamera(0),
 	m_callsToGetOdometry(0),
-	m_callsToGetEngine(0)
+	m_callsToGetEngine(0),
+	m_callsToGetSensorData(0)
 { }
 
 Sonar &RobotMock::getSonar()
@@ -40,6 +41,13 @@ Engine &RobotMock::getEngine()
 	return RobotStub::getEngine();
 }
 
+void RobotMock::updateSensorData()
+{
+	++m_callsToGetSensorData;
+	RobotStub::updateSensorData();
+}
+
+
 bool RobotMock::isValid() const
 {
 	return true;
@@ -68,4 +76,9 @@ unsigned int RobotMock::getCallsToGetOdometry() const
 unsigned int RobotMock::getCallsToGetEngine() const
 {
 	return m_callsToGetEngine;
+}
+
+unsigned int RobotMock::getCallsToGetSensorData() const
+{
+	return m_callsToGetSensorData;
 }

@@ -27,7 +27,11 @@ Engine &RobotStub::getEngine()
 	return m_engine;
 }
 
+void RobotStub::updateSensorData()
+{ }
+
 bool RobotStub::isValid() const
 {
 	return true;
 }
+

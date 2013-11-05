@@ -61,3 +61,8 @@ Engine &DataAnalyserImpl::getEngine()
 {
 	return *m_engine;
 }
+
+void DataAnalyserImpl::updateSensorData()
+{
+	m_robot->updateSensorData();
+}

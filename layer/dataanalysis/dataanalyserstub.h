@@ -23,6 +23,7 @@ namespace DataAnalysis
 		virtual const Camera& getCamera() const;
 		virtual Odometry& getOdometry();
 		virtual Engine& getEngine();
+		virtual void updateSensorData();
 
 	private:
 		SonarStub m_sonar;
