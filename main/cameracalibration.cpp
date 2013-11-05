@@ -26,12 +26,12 @@ int main(int /*argc*/, char **/*argv*/)
 	}
 
 	Mat frame;
+
 	int pictureNumber = 0;
 	stringstream pictureName;
-
 	namedWindow( "Video", CV_WINDOW_AUTOSIZE );
-
 	char key;
+
 	while(true)
 	{
 		frame = camera->getFrame();
@@ -52,3 +52,23 @@ int main(int /*argc*/, char **/*argv*/)
 	return 0;
 }
 
+void calibrateOnOurChessboard(Mat &frame, bool &found)
+{
+	Size chessboardSize(6,9);
+	vector<Point2f> pointBuf;
+
+	found = findChessboardCorners(frame, chessboardSize, pointBuf, CALIB_CB_ADAPTIVE_THRESH | CALIB_CB_FAST_CHECK | CALIB_CB_NORMALIZE_IMAGE);
+
+	if (found)
+	{
+		Mat viewGray;
+		cvtColor(frame, viewGray, COLOR_BGR2GRAY);
+		cornerSubPix( viewGray, pointBuf, Size(11,11),Size(-1,-1), TermCriteria(TermCriteria::EPS+TermCriteria::COUNT, 30, 0.1 ));
+	}
+
+}
+
+void calibrateOurCamera()
+{
+
+}
