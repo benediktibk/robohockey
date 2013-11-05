@@ -1,4 +1,5 @@
 #include "layer/hardware/lidarstub.h"
+#include <assert.h>
 
 using namespace RoboHockey::Layer::Hardware;
 using namespace std;
@@ -13,6 +14,9 @@ LidarStub::LidarStub(double defaultDistance) :
 
 double LidarStub::getDistance(unsigned int angle)
 {
+	assert(angle >= getMinimumSensorNumber());
+	assert(angle <= getMaximumSensorNumber());
+
 	map<unsigned int, double>::const_iterator value = m_valueForAngle.find(angle);
 
 	if (value == m_valueForAngle.end())

@@ -16,5 +16,7 @@ LidarImpl::~LidarImpl()
 
 double LidarImpl::getDistance(unsigned int angle)
 {
+	assert(angle >= getMinimumSensorNumber());
+	assert(angle <= getMaximumSensorNumber());
 	return m_laser->GetRange(angle);
 }
