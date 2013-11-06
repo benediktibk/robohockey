@@ -29,8 +29,3 @@ void LidarStub::setValueForAngle(unsigned int angle, double value)
 {
 	m_valueForAngle[angle] = value;
 }
-
-bool LidarStub::isValid() const
-{
-	return true;
-}

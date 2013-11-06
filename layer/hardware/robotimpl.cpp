@@ -19,11 +19,7 @@ RobotImpl::RobotImpl()
 
 	updateSensorData();
 	sleep(5);
-	while (!m_lidar->isValid())
-	{
-		usleep(200000);
-		updateSensorData();
-	}
+	updateSensorData();
 }
 
 RobotImpl::~RobotImpl()

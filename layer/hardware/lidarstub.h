@@ -19,7 +19,6 @@ namespace Hardware
 
 		virtual double getDistance(unsigned int angle);
 		void setValueForAngle(unsigned int angle, double value);
-		virtual bool isValid() const;
 
 	private:
 		std::map<unsigned int, double> m_valueForAngle;

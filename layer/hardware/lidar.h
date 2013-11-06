@@ -14,7 +14,6 @@ namespace Hardware
 
 		//! angle means actually the sensor number, therefore the real angle is angle/2
 		virtual double getDistance(unsigned int angle) = 0;
-		virtual bool isValid() const = 0;
 		unsigned int getMinimumSensorNumber() const;
 		unsigned int getMaximumSensorNumber() const;
 	};

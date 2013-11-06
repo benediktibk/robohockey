@@ -16,8 +16,3 @@ unsigned int LidarMock::getCallsToGetDistance() const
 {
 	return m_callsToGetDistance;
 }
-
-bool LidarMock::isValid() const
-{
-	return true;
-}
