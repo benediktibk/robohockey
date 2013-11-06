@@ -16,7 +16,12 @@ RobotImpl::RobotImpl()
 	m_camera = new CameraImpl(0);
 	m_odometry = new OdometryImpl(m_playerClient);
 	m_engine = new EngineImpl(m_playerClient);
-	m_lidar->waitTillStartUpFinished();
+
+	while (!m_lidar->isValid())
+	{
+		usleep(200000);
+		updateSensorData();
+	}
 }
 
 RobotImpl::~RobotImpl()

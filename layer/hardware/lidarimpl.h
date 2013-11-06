@@ -22,7 +22,7 @@ namespace Hardware
 		~LidarImpl();
 
 		virtual double getDistance(unsigned int angle);
-		virtual void waitTillStartUpFinished() const;
+		virtual bool isValid() const;
 
 	private:
 		PlayerCc::LaserProxy *m_laser;

@@ -17,7 +17,7 @@ namespace Hardware
 
 		virtual double getDistance(unsigned int angle);
 		unsigned int getCallsToGetDistance() const;
-		virtual void waitTillStartUpFinished() const;
+		virtual bool isValid() const;
 
 	private:
 		unsigned int m_callsToGetDistance;
