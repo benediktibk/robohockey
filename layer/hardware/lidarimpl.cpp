@@ -7,7 +7,7 @@ using namespace PlayerCc;
 using namespace std;
 
 LidarImpl::LidarImpl(PlayerClient *playerClient) :
-	m_laser(new LaserProxy(playerClient, 0))
+	m_laser(new RangerProxy(playerClient, 1))
 { }
 
 LidarImpl::~LidarImpl()
@@ -25,7 +25,7 @@ double LidarImpl::getDistance(unsigned int angle)
 
 bool LidarImpl::isValid() const
 {
-	cout << "cout of sensors of the lidar is " << m_laser->GetCount() << endl;
+	cout << "cout of sensors of the lidar is " << m_laser->GetElementCount() << endl;
 
-	return m_laser->GetCount() == getMaximumSensorNumber() - getMinimumSensorNumber() + 1;
+	return m_laser->GetElementCount() == getMaximumSensorNumber() - getMinimumSensorNumber() + 1;
 }

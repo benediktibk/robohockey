@@ -6,7 +6,7 @@
 namespace PlayerCc
 {
 	class PlayerClient;
-	class LaserProxy;
+	class RangerProxy;
 }
 namespace RoboHockey
 {
@@ -25,7 +25,7 @@ namespace Hardware
 		virtual bool isValid() const;
 
 	private:
-		PlayerCc::LaserProxy *m_laser;
+		PlayerCc::RangerProxy *m_laser;
 	};
 }
 }
