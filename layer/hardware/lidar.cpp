@@ -12,5 +12,5 @@ unsigned int Lidar::getMinimumSensorNumber() const
 
 unsigned int Lidar::getMaximumSensorNumber() const
 {
-	return 179;
+	return 361;
 }
