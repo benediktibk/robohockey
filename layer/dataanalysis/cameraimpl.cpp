@@ -1,5 +1,6 @@
 #include "layer/dataanalysis/cameraimpl.h"
 #include "layer/hardware/camera.h"
+#include <opencv/cv.h>
 
 using namespace RoboHockey::Layer;
 using namespace RoboHockey::Layer::DataAnalysis;
@@ -23,12 +24,11 @@ Mat CameraImpl::getSmoothFrame()
 
 Mat CameraImpl::getFilteredFrame(unsigned int threshold)
 {
-	//CvMemStorage* storage = cvCreateMemStorage(0);
-	//CvSeq* comp = NULL;
-	Mat filteredFrame = getSmoothFrame();
+	Mat frame = getSmoothFrame();
+	Mat filteredFrame = frame;
 
 	//threshold used for building
 	threshold = threshold + 1;
-	//cvPyrSegmentation(getSmoothFrame(), filteredFrame, storage, &comp, 4, 200, 50);
+	cvPyrMeanShiftFiltering(&frame, &filteredFrame, 10, 35, 3);
 	return filteredFrame;
 }
