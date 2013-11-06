@@ -3,21 +3,21 @@
 #include <iostream>
 #include "layer/hardware/cameraimpl.h"
 
-// Including these files manually as <highgui.h> is missing on robot.
-#include "opencv2/core/core_c.h"
-#include "opencv2/core/core.hpp"
-#include "opencv2/highgui/highgui_c.h"
-#include "opencv2/highgui/highgui.hpp"
-
 using namespace std;
 using namespace cv;
-using namespace RoboHockey;
+using namespace RoboHockey::Layer::Hardware;
 
-int main(int /*argc*/, char **/*argv*/)
+bool findOurChessboard(Mat &frame, vector<Point2f> &pointBuf);
+void initializeAndCalibrateCamera();
+Size g_boardSize(10,7);
+
+
+int main()
 {
+
 	cout << "##\n## Take a picture to current dir with 'p'.\n## Exit with 'q'\n##"<< endl;
 
-	Layer::Hardware::Camera *camera = new Layer::Hardware::CameraImpl(0);
+	Camera *camera = new CameraImpl(0);
 
 	if (!camera->isValid())
 	{
@@ -26,49 +26,62 @@ int main(int /*argc*/, char **/*argv*/)
 	}
 
 	Mat frame;
-
 	int pictureNumber = 0;
 	stringstream pictureName;
-	namedWindow( "Video", CV_WINDOW_AUTOSIZE );
-	char key;
+	vector<Point2f> chessBoardPoints;
 
+	namedWindow( "Video", CV_WINDOW_AUTOSIZE );
+
+	char key;
 	while(true)
 	{
+		chessBoardPoints.clear();
+
 		frame = camera->getFrame();
+
+		if (findOurChessboard(frame, chessBoardPoints))
+		{
+			cout << "Chessboard found!!! Points: " << chessBoardPoints.size() << endl;
+			cout << chessBoardPoints.front() << chessBoardPoints.back() << endl;
+		}
+
+
 		imshow( "Video", frame );
+
 
 		key = cvWaitKey(25);
 		if (key == 'q') break;
 
 		if (key == 'p')
 		{
-			pictureName << "image" << setfill('0') << setw(3) << pictureNumber << ".png";
+			pictureName << "image" << pictureNumber << ".png";
 			imwrite(pictureName.str(), frame);
 			pictureName.str("");
 			pictureNumber++;
 		}
 	}
 
+
 	return 0;
 }
 
-void calibrateOnOurChessboard(Mat &frame, bool &found)
+bool findOurChessboard(Mat &frame, vector<Point2f> &resultPoints)
 {
-	Size chessboardSize(6,9);
-	vector<Point2f> pointBuf;
-
-	found = findChessboardCorners(frame, chessboardSize, pointBuf, CALIB_CB_ADAPTIVE_THRESH | CALIB_CB_FAST_CHECK | CALIB_CB_NORMALIZE_IMAGE);
+	bool found;
+	found = findChessboardCorners(frame, g_boardSize, resultPoints,CV_CALIB_CB_ADAPTIVE_THRESH | CV_CALIB_CB_FAST_CHECK | CV_CALIB_CB_NORMALIZE_IMAGE);
 
 	if (found)
 	{
 		Mat viewGray;
-		cvtColor(frame, viewGray, COLOR_BGR2GRAY);
-		cornerSubPix( viewGray, pointBuf, Size(11,11),Size(-1,-1), TermCriteria(TermCriteria::EPS+TermCriteria::COUNT, 30, 0.1 ));
+		cvtColor(frame, viewGray, CV_BGR2GRAY);
+		cornerSubPix( viewGray, resultPoints, Size(11,11),Size(-1,-1), TermCriteria( CV_TERMCRIT_EPS+CV_TERMCRIT_ITER, 30, 0.1 ));
+		drawChessboardCorners( frame, g_boardSize, Mat(resultPoints), found );
 	}
 
+	return found;
 }
 
-void calibrateOurCamera()
+void initializeAndCalibrateCamera()
 {
 
 }
