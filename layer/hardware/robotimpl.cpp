@@ -18,6 +18,8 @@ RobotImpl::RobotImpl()
 	m_engine = new EngineImpl(m_playerClient);
 
 	updateSensorData();
+	sleep(5);
+
 	while (!m_lidar->isValid())
 	{
 		usleep(200000);
