@@ -25,7 +25,7 @@ double LidarImpl::getDistance(unsigned int angle)
 
 bool LidarImpl::isValid() const
 {
-	if (m_laser->GetCount() == getMaximumSensorNumber())
+	if (m_laser->GetCount() == getMaximumSensorNumber() - getMinimumSensorNumber() + 1)
 		return true;
 
 	cout << "maximum sensor number of the lidar is " << m_laser->GetCount() << endl;
