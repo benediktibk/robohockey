@@ -17,9 +17,9 @@ RobotImpl::RobotImpl()
 	m_odometry = new OdometryImpl(m_playerClient);
 	m_engine = new EngineImpl(m_playerClient);
 
+	updateSensorData();
 	sleep(2);
 
-	updateSensorData();
 	while (!m_lidar->isValid())
 	{
 		usleep(200000);
