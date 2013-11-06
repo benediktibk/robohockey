@@ -7,7 +7,7 @@ using namespace PlayerCc;
 using namespace std;
 
 LidarImpl::LidarImpl(PlayerClient *playerClient) :
-	m_laser(new LaserProxy(playerClient, 1))
+	m_laser(new LaserProxy(playerClient, 0))
 { }
 
 LidarImpl::~LidarImpl()
