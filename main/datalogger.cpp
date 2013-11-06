@@ -23,12 +23,6 @@ int main(int, char**)
 	fstream fileLidar("lidar.txt", ios_base::out | ios_base::trunc);
 	fstream fileOdometry("odometry.txt", ios_base::out | ios_base::trunc);
 
-	if (!robot.isValid())
-	{
-		cout << "couldn't connect to the player server" << endl;
-		return 1;
-	}
-
 	cout << "updating the current sensor data" << endl;
 	robot.updateSensorData();
 

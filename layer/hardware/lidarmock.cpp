@@ -16,3 +16,6 @@ unsigned int LidarMock::getCallsToGetDistance() const
 {
 	return m_callsToGetDistance;
 }
+
+void LidarMock::waitTillStartUpFinished() const
+{ }

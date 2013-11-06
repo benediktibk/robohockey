@@ -29,9 +29,3 @@ Engine &RobotStub::getEngine()
 
 void RobotStub::updateSensorData()
 { }
-
-bool RobotStub::isValid() const
-{
-	return true;
-}
-

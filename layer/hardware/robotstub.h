@@ -23,9 +23,7 @@ namespace Hardware
 		virtual Camera& getCamera();
 		virtual Odometry& getOdometry();
 		virtual Engine& getEngine();
-		virtual void updateSensorData();	
-		virtual bool isValid() const;
-
+		virtual void updateSensorData();
 
 	private:
 		SonarStub m_sonar;

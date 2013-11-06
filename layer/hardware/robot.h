@@ -25,8 +25,7 @@ public:
 	virtual Camera& getCamera() = 0;
 	virtual Odometry& getOdometry() = 0;
 	virtual Engine& getEngine() = 0;
-	virtual void updateSensorData() = 0;	
-	virtual bool isValid() const = 0;
+	virtual void updateSensorData() = 0;
 };
 }
 }

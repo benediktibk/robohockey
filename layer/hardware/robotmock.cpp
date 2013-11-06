@@ -47,12 +47,6 @@ void RobotMock::updateSensorData()
 	RobotStub::updateSensorData();
 }
 
-
-bool RobotMock::isValid() const
-{
-	return true;
-}
-
 unsigned int RobotMock::getCallsToGetSonar() const
 {
 	return m_callsToGetSonar;
