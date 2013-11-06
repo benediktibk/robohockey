@@ -26,3 +26,6 @@ Engine &RobotStub::getEngine()
 {
 	return m_engine;
 }
+
+void RobotStub::updateSensorData()
+{ }

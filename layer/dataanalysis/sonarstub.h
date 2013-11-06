@@ -13,7 +13,7 @@ namespace DataAnalysis
 			public Sonar
 	{
 	public:
-		virtual bool isObstacleDirectInFront() const;
+        virtual bool isObstacleDirectInFront();
 	};
 }
 }

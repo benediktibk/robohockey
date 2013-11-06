@@ -12,11 +12,12 @@ using namespace std;
 using namespace boost;
 
 const double LidarImpl::m_edgeTreshold = 0.5;
-const int LidarImpl::m_maximumSensorNumber = 360;
 const int LidarImpl::m_minimumWidthInSensorNumbers = 3;
 
 LidarImpl::LidarImpl(Hardware::Lidar &lidar) :
-	m_lidar(lidar)
+	m_lidar(lidar),
+	m_minimumSensorNumber(lidar.getMinimumSensorNumber()),
+	m_maximumSensorNumber(lidar.getMaximumSensorNumber())
 { }
 
 LidarObjects LidarImpl::getAllObjects(const Point &ownPosition, double ownOrientation) const
@@ -105,15 +106,15 @@ DiscreteFunction *LidarImpl::readInData() const
 {
 	DiscreteFunction *distances = new DiscreteFunction(0, m_maximumSensorNumber);
 
-	for (int i = 0; i <= m_maximumSensorNumber; ++i)
+	for (unsigned int i = m_minimumSensorNumber; i <= m_maximumSensorNumber; ++i)
 		distances->setValue(i, m_lidar.getDistance(i));
 
 	return distances;
 }
 
-double LidarImpl::calculateOrientationFromSensorNumber(int value)
+double LidarImpl::calculateOrientationFromSensorNumber(unsigned int value) const
 {
-	return static_cast<double>(value)/m_maximumSensorNumber*M_PI - M_PI/2;
+	return static_cast<double>(value)/(static_cast<double>(m_maximumSensorNumber) - m_minimumSensorNumber)*M_PI - M_PI/2;
 }
 
 double LidarImpl::calculateWidthFromAngleAndDistance(double angle, double distance)

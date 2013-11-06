@@ -1,5 +1,6 @@
 #include "layer/dataanalysis/odometryimpl.h"
 #include "common/point.h"
+#include "layer/hardware/odometryimpl.h"
 
 using namespace RoboHockey::Common;
 using namespace RoboHockey::Layer;
@@ -9,12 +10,12 @@ OdometryImpl::OdometryImpl(Hardware::Odometry &odometry) :
 	m_odometry(odometry)
 { }
 
-void OdometryImpl::setCurrentPosition(const Point &/*position*/) const
+void OdometryImpl::setCurrentPosition(const Point &position) const
 {
-
+    m_odometry.setCurrentPosition(position);
 }
 
 const Point &OdometryImpl::getCurrentPosition() const
 {
-	return Point::zero();
+    return m_odometry.getCurrentPosition();
 }

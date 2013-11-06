@@ -6,7 +6,7 @@
 namespace PlayerCc
 {
 	class PlayerClient;
-	class SonarProxy;
+	class RangerProxy;
 }
 
 namespace RoboHockey
@@ -25,7 +25,7 @@ namespace Hardware
 		virtual double getDistanceForSensor(unsigned int sensorNumber);
 
 	private:
-		PlayerCc::SonarProxy *m_sonar;
+		PlayerCc::RangerProxy *m_sonar;
 	};
 }
 }

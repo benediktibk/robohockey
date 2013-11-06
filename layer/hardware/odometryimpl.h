@@ -24,6 +24,7 @@ namespace Hardware
 
 		virtual void setCurrentPosition(const Common::Point &position);
 		virtual const Common::Point& getCurrentPosition();
+        virtual double getCurrentOrientation();
 
 	private:
 		PlayerCc::Position2dProxy *m_odometry;

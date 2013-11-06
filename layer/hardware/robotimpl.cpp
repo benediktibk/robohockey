@@ -11,14 +11,15 @@ using namespace RoboHockey::Layer::Hardware;
 RobotImpl::RobotImpl()
 {
 	m_playerClient = new PlayerCc::PlayerClient("localhost", 6665);
-
 	m_sonar = new SonarImpl(m_playerClient);
 	m_lidar = new LidarImpl(m_playerClient);
 	m_camera = new CameraImpl(0);
 	m_odometry = new OdometryImpl(m_playerClient);
 	m_engine = new EngineImpl(m_playerClient);
 
-	m_playerClient->Read();
+	updateSensorData();
+	sleep(5);
+	updateSensorData();
 }
 
 RobotImpl::~RobotImpl()

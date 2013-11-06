@@ -149,11 +149,12 @@ common/circle.h
 common/circle.cpp
 common/circletest.h
 common/circletest.cpp
-threading/threadreadloop.h
-threading/threadreadloop.cpp
 
 layer/view/CMakeLists.txt
 layer/view/viewer.h
 layer/view/viewer.cpp
 layer/view/viewer.ui
 main/remotecontrol.cpp
+main/datalogger.cpp
+layer/hardware/lidar.cpp
+layer/hardware/sonar.cpp
