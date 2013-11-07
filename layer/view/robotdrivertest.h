@@ -23,6 +23,7 @@ namespace View
 		CPPUNIT_TEST(update_newTargetPositionsAndTargetNotReached_targetOfRobotIsUnchanged);
 		CPPUNIT_TEST(update_empty_robotGotAtLeastOneCallToUpdateSensorData);
 		CPPUNIT_TEST(update_empty_robotGotAtLeastOneCallToUpdateActuators);
+		CPPUNIT_TEST(update_stuckAtObstacle_robotGotAtLeastOneCallToStop);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
@@ -35,6 +36,7 @@ namespace View
 		void update_newTargetPositionsAndTargetNotReached_targetOfRobotIsUnchanged();
 		void update_empty_robotGotAtLeastOneCallToUpdateSensorData();
 		void update_empty_robotGotAtLeastOneCallToUpdateActuators();
+		void update_stuckAtObstacle_robotGotAtLeastOneCallToStop();
 	};
 }
 }

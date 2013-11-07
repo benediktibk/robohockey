@@ -143,3 +143,15 @@ void RobotDriverTest::update_empty_robotGotAtLeastOneCallToUpdateActuators()
 
 	CPPUNIT_ASSERT(robot.getCallsToUpdateActuators() > 0);
 }
+
+void RobotDriverTest::update_stuckAtObstacle_robotGotAtLeastOneCallToStop()
+{
+	RobotMock robot;
+	robot.setStuckAtObstacle(true);
+	Model model;
+	RobotDriver driver(robot, model);
+
+	driver.update();
+
+	CPPUNIT_ASSERT(robot.getCallsToStop() > 0);
+}
