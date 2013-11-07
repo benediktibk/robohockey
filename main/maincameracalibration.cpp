@@ -9,8 +9,12 @@ using namespace cv;
 using namespace RoboHockey::Layer::Hardware;
 
 bool findOurChessboard(Mat &frame, vector<Point2f> &pointBuf);
-void initializeAndCalibrateCamera();
+bool compareCurrentPointsWithDefault(vector<Point2f> &resultPoints, double tolerance);
+void loadDefaultChessboardPoints();
+
 Size g_boardSize(10,7);
+vector<Point2f> defaultChessboardPoints;
+double g_tolerance = 2.0;
 
 
 int main()
@@ -25,6 +29,8 @@ int main()
 		cout << "\n\n###\n### Could not open camera!\n###" << endl;
 		return 1;
 	}
+
+	loadDefaultChessboardPoints();
 
 	Mat frame;
 	int pictureNumber = 0;
@@ -44,7 +50,13 @@ int main()
 		{
 			fstream fileChessboardPoints("chessboardpoints.txt", ios_base::out | ios_base::trunc);
 			cout << "Chessboard found!!! Points: " << chessBoardPoints.size() << endl;
-			cout << chessBoardPoints.front() << chessBoardPoints.back() << endl;
+			//cout << chessBoardPoints.front() << chessBoardPoints.back() << endl;
+
+			if (compareCurrentPointsWithDefault(chessBoardPoints, g_tolerance))
+				cout << "GOOD CAMERA POSITION!" << endl;
+			else
+				cout << "Camera Position not correct" << endl;
+
 
 			for(std::vector<Point2f>::iterator i = chessBoardPoints.begin(); i != chessBoardPoints.end(); ++i)
 			{
@@ -88,7 +100,25 @@ bool findOurChessboard(Mat &frame, vector<Point2f> &resultPoints)
 	return found;
 }
 
-void initializeAndCalibrateCamera()
+void loadDefaultChessboardPoints()
+{
+	defaultChessboardPoints.push_back(Point2f(1,1));
+}
+
+bool compareCurrentPointsWithDefault(vector<Point2f> &resultPoints, double tolerance)
 {
 
+	if (! resultPoints.size() == defaultChessboardPoints.size())
+	{
+		cout << "Number of Points does not equal preset" << endl;
+		return false;
+	}
+
+	for(unsigned int i =0; i < defaultChessboardPoints.size(); i++)
+	{
+		if (((resultPoints[i] - defaultChessboardPoints[i]).x > tolerance) || ((resultPoints[i] - defaultChessboardPoints[i]).y > tolerance))
+			return false;
+	}
+
+	return true;
 }
