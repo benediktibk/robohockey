@@ -1,5 +1,5 @@
-#ifndef ROBOHOCKEY_LAYER_DATAANALYSIS_ODOMETRYSTUB_H
-#define ROBOHOCKEY_LAYER_DATAANALYSIS_ODOMETRYSTUB_H
+#ifndef ROBOHOCKEY_LAYER_DATAANALYSIS_ODOMETRYMOCK_H
+#define ROBOHOCKEY_LAYER_DATAANALYSIS_ODOMETRYMOCK_H
 
 #include "layer/dataanalysis/odometry.h"
 #include "common/point.h"
@@ -10,7 +10,7 @@ namespace Layer
 {
 namespace DataAnalysis
 {
-	class OdometryStub :
+	class OdometryMock :
 			public Odometry
 	{
 	public:

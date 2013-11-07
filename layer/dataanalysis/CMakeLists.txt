@@ -12,10 +12,10 @@ set(LAYER_DATAANALYSIS_SRC
 
 set(LAYER_DATAANALYSIS_TEST_SRC
 	enginemock.cpp
-	odometrystub.cpp
-	lidarstub.cpp
+	odometrymock.cpp
+	lidarmock.cpp
 	sonarmock.cpp
-	camerastub.cpp
+	cameramock.cpp
 	dataanalysermock.cpp
 	dataanalysertest.cpp
 	cameratest.cpp

@@ -1,5 +1,5 @@
-#ifndef ROBOHOCKEY_LAYER_DATAANALYSIS_LIDARSTUB_H
-#define ROBOHOCKEY_LAYER_DATAANALYSIS_LIDARSTUB_H
+#ifndef ROBOHOCKEY_LAYER_DATAANALYSIS_LIDARMOCK_H
+#define ROBOHOCKEY_LAYER_DATAANALYSIS_LIDARMOCK_H
 
 #include "layer/dataanalysis/lidar.h"
 
@@ -9,7 +9,7 @@ namespace Layer
 {
 namespace DataAnalysis
 {
-	class LidarStub :
+	class LidarMock :
 			public Lidar
 	{
 	public:

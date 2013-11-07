@@ -1,9 +1,9 @@
-#include "layer/dataanalysis/lidarstub.h"
+#include "layer/dataanalysis/lidarmock.h"
 
 using namespace RoboHockey::Layer::DataAnalysis;
 using namespace RoboHockey::Common;
 
-LidarObjects LidarStub::getAllObjects(const Point &ownPosition, double) const
+LidarObjects LidarMock::getAllObjects(const Point &ownPosition, double) const
 {
 	return LidarObjects(ownPosition);
 }

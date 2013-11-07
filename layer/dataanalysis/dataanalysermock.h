@@ -3,9 +3,9 @@
 
 #include "layer/dataanalysis/dataanalyser.h"
 #include "layer/dataanalysis/sonarmock.h"
-#include "layer/dataanalysis/lidarstub.h"
-#include "layer/dataanalysis/camerastub.h"
-#include "layer/dataanalysis/odometrystub.h"
+#include "layer/dataanalysis/lidarmock.h"
+#include "layer/dataanalysis/cameramock.h"
+#include "layer/dataanalysis/odometrymock.h"
 #include "layer/dataanalysis/enginemock.h"
 
 namespace RoboHockey
@@ -35,9 +35,9 @@ namespace DataAnalysis
 
 	private:
 		SonarMock m_sonar;
-		LidarStub m_lidar;
-		CameraStub m_camera;
-		OdometryStub m_odometry;
+		LidarMock m_lidar;
+		CameraMock m_camera;
+		OdometryMock m_odometry;
 		EngineMock m_engine;
 		unsigned int m_callsToUpdateSensorData;
 		unsigned int m_callsToUpdateActuators;

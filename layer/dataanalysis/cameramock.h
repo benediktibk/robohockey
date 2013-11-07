@@ -1,5 +1,5 @@
-#ifndef ROBOHOCKEY_LAYER_DATAANALYSIS_CAMERASTUB_H
-#define ROBOHOCKEY_LAYER_DATAANALYSIS_CAMERASTUB_H
+#ifndef ROBOHOCKEY_LAYER_DATAANALYSIS_CAMERAMOCK_H
+#define ROBOHOCKEY_LAYER_DATAANALYSIS_CAMERAMOCK_H
 
 #include "layer/dataanalysis/camera.h"
 
@@ -9,7 +9,7 @@ namespace Layer
 {
 namespace DataAnalysis
 {
-	class CameraStub :
+	class CameraMock :
 			public Camera
 	{
 	public:

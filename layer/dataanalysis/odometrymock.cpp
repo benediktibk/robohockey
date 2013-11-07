@@ -1,15 +1,15 @@
-#include "layer/dataanalysis/odometrystub.h"
+#include "layer/dataanalysis/odometrymock.h"
 #include "common/point.h"
 
 using namespace RoboHockey::Layer::DataAnalysis;
 using namespace RoboHockey::Common;
 
-void OdometryStub::setCurrentPosition(const Point &position, double)
+void OdometryMock::setCurrentPosition(const Point &position, double)
 {
 	m_position = position;
 }
 
-Point OdometryStub::getCurrentPosition() const
+Point OdometryMock::getCurrentPosition() const
 {
 	return m_position;
 }
