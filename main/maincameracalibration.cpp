@@ -102,7 +102,23 @@ bool findOurChessboard(Mat &frame, vector<Point2f> &resultPoints)
 
 void loadDefaultChessboardPoints()
 {
-	defaultChessboardPoints.push_back(Point2f(1,1));
+	defaultChessboardPoints.push_back(Point2f(115,184));
+	defaultChessboardPoints.push_back(Point2f(133,184));
+	defaultChessboardPoints.push_back(Point2f(152,184));
+	defaultChessboardPoints.push_back(Point2f(171,184));
+	defaultChessboardPoints.push_back(Point2f(190,184));
+
+	defaultChessboardPoints.push_back(Point2f(112,201));
+	defaultChessboardPoints.push_back(Point2f(132,201));
+	defaultChessboardPoints.push_back(Point2f(152,201));
+	defaultChessboardPoints.push_back(Point2f(172,201));
+	defaultChessboardPoints.push_back(Point2f(192,201));
+
+	defaultChessboardPoints.push_back(Point2f(110,219));
+	defaultChessboardPoints.push_back(Point2f(131,219));
+	defaultChessboardPoints.push_back(Point2f(152,219));
+	defaultChessboardPoints.push_back(Point2f(173,219));
+	defaultChessboardPoints.push_back(Point2f(195,219));
 }
 
 bool compareCurrentPointsWithDefault(vector<Point2f> &resultPoints, double tolerance)
