@@ -66,3 +66,8 @@ void DataAnalyserImpl::updateSensorData()
 {
 	m_robot->updateSensorData();
 }
+
+void DataAnalyserImpl::updateActuators()
+{
+	m_engine->updateSpeedAndMagnitude();
+}

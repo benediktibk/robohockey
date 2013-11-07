@@ -14,6 +14,7 @@ namespace DataAnalysis
 	{
 	public:
 		virtual void goToStraight(const Common::Point &position);
+		virtual void updateSpeedAndMagnitude();
 	};
 }
 }

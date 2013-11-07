@@ -18,6 +18,7 @@ namespace DataAnalysis
 		virtual ~Engine() { }
 
 		virtual void goToStraight(const Common::Point &targetPosition) = 0;
+		virtual void updateSpeedAndMagnitude() = 0;
 	};
 }
 }

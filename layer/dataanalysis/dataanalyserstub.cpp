@@ -28,5 +28,7 @@ Engine &DataAnalyserStub::getEngine()
 }
 
 void DataAnalyserStub::updateSensorData()
-{
-}
+{ }
+
+void DataAnalyserStub::updateActuators()
+{ }

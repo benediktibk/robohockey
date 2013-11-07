@@ -24,6 +24,7 @@ namespace DataAnalysis
 		virtual Odometry& getOdometry() = 0;
 		virtual Engine& getEngine() = 0;
 		virtual void updateSensorData() = 0;
+		virtual void updateActuators() = 0;
 	};
 }
 }

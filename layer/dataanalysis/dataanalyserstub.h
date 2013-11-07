@@ -24,6 +24,7 @@ namespace DataAnalysis
 		virtual Odometry& getOdometry();
 		virtual Engine& getEngine();
 		virtual void updateSensorData();
+		virtual void updateActuators();
 
 	private:
 		SonarStub m_sonar;

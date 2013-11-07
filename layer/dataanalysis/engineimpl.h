@@ -2,6 +2,7 @@
 #define ROBOHOCKEY_LAYER_DATAANALYSIS_ENGINEIMPL_H
 
 #include "layer/dataanalysis/engine.h"
+#include "common/point.h"
 
 namespace RoboHockey
 {
@@ -21,11 +22,13 @@ namespace DataAnalysis
 	public:
 		EngineImpl(Hardware::Engine &engine, Hardware::Odometry &odometry);
 
-	virtual void goToStraight(const Common::Point &position);
+		virtual void goToStraight(const Common::Point &position);
+		virtual void updateSpeedAndMagnitude();
 
 	private:
 		Hardware::Engine &m_engine;
 		Hardware::Odometry &m_odometry;
+		Common::Point m_target;
 	};
 }
 }

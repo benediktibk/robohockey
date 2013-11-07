@@ -16,14 +16,21 @@ EngineImpl::EngineImpl(Hardware::Engine &engine, Hardware::Odometry &odometry) :
 
 void EngineImpl::goToStraight(const Common::Point &position)
 {
+	m_target = position;
+
+}
+
+void EngineImpl::updateSpeedAndMagnitude()
+{
+	//! @todo implement a control as we can not rely on the real hardware to do exactly what we want
 	const Point &currentPosition = m_odometry.getCurrentPosition();
 	Compare positionCompare(0.05);
 
-	if (positionCompare.isFuzzyEqual(currentPosition, position))
+	if (positionCompare.isFuzzyEqual(currentPosition, m_target))
 		return;
 
 	Compare angleCompare(0.01);
-	Point positionDifference = position - currentPosition;
+	Point positionDifference = m_target - currentPosition;
 	double targetOrientation = atan2(positionDifference.getY(), positionDifference.getX());
 	double currentOrientation = m_odometry.getCurrentOrientation();
 
@@ -31,5 +38,4 @@ void EngineImpl::goToStraight(const Common::Point &position)
 		m_engine.setSpeed(0, targetOrientation);
 	else
 		m_engine.setSpeed(10, targetOrientation);
-
 }

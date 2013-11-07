@@ -22,6 +22,10 @@ namespace Autonomous
 		virtual ~RobotImpl();
 
 		virtual void goTo(const Common::Point &position);
+		virtual bool stuckAtObstacle();
+		virtual bool reachedTarget();
+		virtual std::vector<FieldObject> getAllFieldObjects();
+		virtual void updateActuators();
 
 	private:
 		DataAnalysis::DataAnalyser *m_dataAnalyser;

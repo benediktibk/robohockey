@@ -27,6 +27,7 @@ namespace DataAnalysis
 		virtual Odometry& getOdometry();
 		virtual Engine& getEngine();
 		virtual void updateSensorData();
+		virtual void updateActuators();
 
 	private:
 		Hardware::Robot *m_robot;
