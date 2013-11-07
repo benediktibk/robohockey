@@ -23,9 +23,7 @@ namespace DataAnalysis
 		virtual void getColor() const;
 
 	private:
-		cv::Mat getSmoothFrame();
 		cv::Mat getFilteredFrame();
-
 
 	private:
 		Hardware::Camera &m_camera;
