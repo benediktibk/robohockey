@@ -1,6 +1,7 @@
 set(LAYER_AUTONOMOUS_SRC
 	robotimpl.cpp
 	fieldobject.cpp
+	fieldimpl.cpp
 )
 
 set(LAYER_AUTONOMOUS_TEST_SRC

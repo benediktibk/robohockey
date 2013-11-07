@@ -163,3 +163,6 @@ layer/autonomous/fieldobject.cpp
 layer/autonomous/fieldobjectcolor.h
 layer/autonomous/fieldobjecttest.h
 layer/autonomous/fieldobjecttest.cpp
+layer/autonomous/field.h
+layer/autonomous/fieldimpl.h
+layer/autonomous/fieldimpl.cpp
