@@ -161,5 +161,12 @@ bool compareCurrentPointsWithDefault(vector<Point2f> &resultPoints, double toler
 
 bool compareToPointsWithTolerance(Point2f &point1, Point2f &point2, double tolerance)
 {
-	return !(fabs(((point1 - point2).x) > tolerance) || fabs(((point1 - point2).y) > tolerance));
+	double sum1 = fabs(((point1 - point2).x));
+	double sum2 = fabs(((point1 - point2).y));
+
+	bool answer = !((sum1 > tolerance) || (sum2 > tolerance));
+
+	if (!answer)
+		cout << "Sum1: " << sum1 << " Sum2: " << sum2 << endl;
+	return answer;
 }
