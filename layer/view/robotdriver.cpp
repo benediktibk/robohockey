@@ -18,7 +18,10 @@ void RobotDriver::update()
 	vector<Point> targets = m_model.getAllTargetPoints();
 
 	if (m_robot.stuckAtObstacle())
+	{
 		m_model.setData(vector<Point>());
+		m_robot.stop();
+	}
 	else if (m_robot.reachedTarget() && targets.size() > 0)
 	{
 		vector<Point> targetsWithoutFirstOne(targets.begin() + 1, targets.end());

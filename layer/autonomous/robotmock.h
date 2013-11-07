@@ -26,12 +26,14 @@ namespace Autonomous
 		virtual std::vector<FieldObject> getAllFieldObjects();
 		virtual void updateActuators();
 		virtual void updateSensorData();
+		virtual void stop();
 		unsigned int getCallsToUpdateActuators() const;
 		unsigned int getCallsToUpdateSensorData() const;
 		void setStuckAtObstacle(bool value);
 		void setReachedTarget(bool value);
 		void setFieldObjects(const std::vector<FieldObject> &objects);
 		const Common::Point& getLastTarget() const;
+		unsigned int getCallsToStop() const;
 
 	private:
 		Common::Point m_lastTarget;
@@ -40,6 +42,7 @@ namespace Autonomous
 		std::vector<FieldObject> m_fieldObjects;
 		unsigned int m_callsToUpdateActuators;
 		unsigned int m_callsToUpdateSensorData;
+		unsigned int m_callsToStop;
 	};
 }
 }

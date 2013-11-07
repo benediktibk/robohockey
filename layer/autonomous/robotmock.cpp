@@ -8,7 +8,8 @@ RobotMock::RobotMock() :
 	m_stuckAtObstacle(false),
 	m_reachedTarget(false),
 	m_callsToUpdateActuators(0),
-	m_callsToUpdateSensorData(0)
+	m_callsToUpdateSensorData(0),
+	m_callsToStop(0)
 { }
 
 void RobotMock::goTo(const Point &position)
@@ -41,6 +42,11 @@ void RobotMock::updateSensorData()
 	++m_callsToUpdateSensorData;
 }
 
+void RobotMock::stop()
+{
+	++m_callsToStop;
+}
+
 unsigned int RobotMock::getCallsToUpdateActuators() const
 {
 	return m_callsToUpdateActuators;
@@ -69,4 +75,9 @@ void RobotMock::setFieldObjects(const vector<FieldObject> &objects)
 const Point &RobotMock::getLastTarget() const
 {
 	return m_lastTarget;
+}
+
+unsigned int RobotMock::getCallsToStop() const
+{
+	return m_callsToStop;
 }

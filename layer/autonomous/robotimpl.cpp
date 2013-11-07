@@ -56,3 +56,9 @@ void RobotImpl::updateSensorData()
 	DataAnalysis::Odometry &odometry = m_dataAnalyser->getOdometry();
 	m_currentPosition = odometry.getCurrentPosition();
 }
+
+void RobotImpl::stop()
+{
+	DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
+	engine.stop();
+}

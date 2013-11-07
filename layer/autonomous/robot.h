@@ -26,6 +26,7 @@ namespace Autonomous
 		virtual std::vector<FieldObject> getAllFieldObjects() = 0;
 		virtual void updateActuators() = 0;
 		virtual void updateSensorData() = 0;
+		virtual void stop() = 0;
 	};
 }
 }

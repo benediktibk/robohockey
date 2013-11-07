@@ -34,6 +34,9 @@ namespace Hardware
 		unsigned int getCallsToGetEngine() const;
 		unsigned int getCallsToGetSensorData() const;
 
+		EngineMock& getEngineMock();
+		OdometryMock& getOdometryMock();
+
 	private:
 		unsigned int m_callsToGetSonar;
 		unsigned int m_callsToGetLidar;

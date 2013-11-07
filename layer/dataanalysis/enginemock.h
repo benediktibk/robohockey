@@ -20,9 +20,13 @@ namespace DataAnalysis
 		virtual void stop();
 
 		unsigned int getCallsToGoToStraight() const;
+		unsigned int getCallsToStop() const;
+		unsigned int getCallsToUpdateSpeedAndMagnitude() const;
 
 	private:
 		unsigned int m_callsToGoToStraight;
+		unsigned int m_callsToStop;
+		unsigned int m_callsToUpdateSpeedAndMagnitude;
 	};
 }
 }

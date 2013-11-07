@@ -82,3 +82,14 @@ void RobotTest::updateSensorData_empty_layerBelowGotAtLeastOneCallToUpdateSensor
 
 	CPPUNIT_ASSERT(dataAnalyser->getCallsToUpdateSensorData() > 0);
 }
+
+void RobotTest::stop_empty_engineGotAtLeastOneCallToStop()
+{
+	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
+	DataAnalysis::EngineMock &engine = dataAnalyser->getEngineMock();
+	RobotImpl robot(dataAnalyser);
+
+	robot.stop();
+
+	CPPUNIT_ASSERT(engine.getCallsToStop() > 0);
+}

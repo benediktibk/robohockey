@@ -75,3 +75,13 @@ unsigned int RobotMock::getCallsToGetSensorData() const
 {
 	return m_callsToGetSensorData;
 }
+
+EngineMock &RobotMock::getEngineMock()
+{
+	return m_engine;
+}
+
+OdometryMock &RobotMock::getOdometryMock()
+{
+	return m_odometry;
+}

@@ -21,6 +21,7 @@ namespace Autonomous
 		CPPUNIT_TEST(reachedTarget_currentPositionIsTargetPosition_true);
 		CPPUNIT_TEST(updateActuators_empty_layerBelowGotAtLeastOneCallToUpdateActuators);
 		CPPUNIT_TEST(updateSensorData_empty_layerBelowGotAtLeastOneCallToUpdateSensorData);
+		CPPUNIT_TEST(stop_empty_engineGotAtLeastOneCallToStop);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
@@ -31,6 +32,7 @@ namespace Autonomous
 		void reachedTarget_currentPositionIsTargetPosition_true();
 		void updateActuators_empty_layerBelowGotAtLeastOneCallToUpdateActuators();
 		void updateSensorData_empty_layerBelowGotAtLeastOneCallToUpdateSensorData();
+		void stop_empty_engineGotAtLeastOneCallToStop();
 	};
 }
 }

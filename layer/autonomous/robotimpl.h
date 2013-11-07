@@ -28,6 +28,7 @@ namespace Autonomous
 		virtual std::vector<FieldObject> getAllFieldObjects();
 		virtual void updateActuators();
 		virtual void updateSensorData();
+		virtual void stop();
 
 	private:
 		DataAnalysis::DataAnalyser *m_dataAnalyser;
