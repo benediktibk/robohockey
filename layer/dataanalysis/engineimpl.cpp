@@ -24,18 +24,18 @@ void EngineImpl::goToStraight(const Common::Point &position)
 void EngineImpl::updateSpeedAndMagnitude()
 {
 	//! @todo implement a control as we can not rely on the real hardware to do exactly what we want
-	Point currentPosition = m_odometry.getCurrentPosition();
-	Compare positionCompare(0.05);
-
-	if (positionCompare.isFuzzyEqual(currentPosition, m_target))
-	{
-		m_enabled = false;
-		return;
-	}
 
 	if (!m_enabled)
 	{
-		m_engine.setSpeed(0, m_odometry.getCurrentOrientation());
+		m_engine.setSpeed(0, 0);
+		return;
+	}
+
+	Point currentPosition = m_odometry.getCurrentPosition();
+	Compare positionCompare(0.05);
+	if (positionCompare.isFuzzyEqual(currentPosition, m_target))
+	{
+		m_enabled = false;
 		return;
 	}
 
@@ -44,10 +44,21 @@ void EngineImpl::updateSpeedAndMagnitude()
 	double targetOrientation = atan2(positionDifference.getY(), positionDifference.getX());
 	double currentOrientation = m_odometry.getCurrentOrientation();
 
-	if (!angleCompare.isFuzzyEqual(currentOrientation, currentOrientation))
-		m_engine.setSpeed(0, targetOrientation);
+	if (targetOrientation < 0)
+		targetOrientation += 2*M_PI;
+	if (currentOrientation < 0)
+		currentOrientation += 2*M_PI;
+
+	if (!angleCompare.isFuzzyEqual(targetOrientation, currentOrientation))
+	{
+		double angleDifference = targetOrientation - currentOrientation;
+		if ((angleDifference < M_PI && angleDifference > 0) || angleDifference < (-1)*M_PI)
+			m_engine.setSpeed(0, 0.1);
+		else
+			m_engine.setSpeed(0, -0.1);
+	}
 	else
-		m_engine.setSpeed(10, targetOrientation);
+		m_engine.setSpeed(10, 0);
 }
 
 void EngineImpl::stop()

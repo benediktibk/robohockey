@@ -15,14 +15,14 @@ namespace DataAnalysis
 	{
 		CPPUNIT_TEST_SUITE(EngineTest);
 		CPPUNIT_TEST(goToStraight_currentPositionDifferentToTarget_atLeastOneCallToSetSpeed);
-		CPPUNIT_TEST(goToStraight_lookingRightButHaveToGoLeftUp_lastRotationIsLeftUp);
-		CPPUNIT_TEST(goToStraight_lookingRightButHaveToGoRightUp_lastRotationIsRightUp);
+		CPPUNIT_TEST(goToStraight_lookingRightButHaveToGoLeftUp_lastRotationIsLeft);
+		CPPUNIT_TEST(goToStraight_lookingRightButHaveToGoDown_lastRotationIsRight);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
 		void goToStraight_currentPositionDifferentToTarget_atLeastOneCallToSetSpeed();
-		void goToStraight_lookingRightButHaveToGoLeftUp_lastRotationIsLeftUp();
-		void goToStraight_lookingRightButHaveToGoRightUp_lastRotationIsRightUp();
+		void goToStraight_lookingRightButHaveToGoLeftUp_lastRotationIsLeft();
+		void goToStraight_lookingRightButHaveToGoDown_lastRotationIsRight();
 	};
 }
 }

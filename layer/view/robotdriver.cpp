@@ -28,6 +28,8 @@ void RobotDriver::update()
 		m_model.setData(targetsWithoutFirstOne);
 		m_robot.goTo(targets.front());
 	}
+	else if (m_robot.reachedTarget())
+		m_robot.stop();
 
 	m_model.setData(m_robot.getAllFieldObjects(), m_robot.stuckAtObstacle(), m_robot.reachedTarget());
 

@@ -25,9 +25,13 @@ int main(int argc, char **argv)
 	RobotDriver robotDriver(autonomousRobot, model);
 	RobotDriverLoop loop(robotDriver);
 
-	std::vector<RoboHockey::Common::Point> targets;
-	targets.push_back(RoboHockey::Common::Point(-2, 0));
-	model.setData(targets);
+	// uncomment this to see some movement
+//	std::vector<RoboHockey::Common::Point> targets;
+//	targets.push_back(RoboHockey::Common::Point(-1, 0));
+//	targets.push_back(RoboHockey::Common::Point(0, 4));
+//	targets.push_back(RoboHockey::Common::Point(1, 4));
+//	targets.push_back(RoboHockey::Common::Point(0, 4));
+//	model.setData(targets);
 
 	view.show();
 	return application.exec();
