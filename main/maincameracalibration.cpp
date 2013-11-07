@@ -11,6 +11,7 @@ using namespace RoboHockey::Layer::Hardware;
 bool findOurChessboard(Mat &frame, vector<Point2f> &pointBuf);
 bool compareCurrentPointsWithDefault(vector<Point2f> &resultPoints, double tolerance);
 void loadDefaultChessboardPoints();
+bool compareToPointsWithTolerance(Point2f &point1, Point2f &point2, double tolerance);
 
 Size g_boardSize(5,3);
 vector<Point2f> defaultChessboardPoints;
@@ -135,7 +136,7 @@ bool compareCurrentPointsWithDefault(vector<Point2f> &resultPoints, double toler
 
 	for(unsigned int i =0; i < defaultChessboardPoints.size(); i++)
 	{
-		if (((resultPoints[i] - defaultChessboardPoints[i]).x > tolerance) || ((resultPoints[i] - defaultChessboardPoints[i]).y > tolerance))
+		if (compareToPointsWithTolerance(resultPoints[i], defaultChessboardPoints[i], tolerance))
 		{
 			positionCorrect = false;
 			break;
@@ -147,7 +148,7 @@ bool compareCurrentPointsWithDefault(vector<Point2f> &resultPoints, double toler
 		positionCorrect = true;
 		for(unsigned int i =0; i < defaultChessboardPoints.size(); i++)
 		{
-			if (((resultPoints[defaultChessboardPoints.size() - (i+1)] - defaultChessboardPoints[i]).x > tolerance) || ((resultPoints[defaultChessboardPoints.size() - (i+1)] - defaultChessboardPoints[i]).y > tolerance))
+			if (compareToPointsWithTolerance(resultPoints[defaultChessboardPoints.size() - (i+1)], defaultChessboardPoints[i], tolerance))
 			{
 				positionCorrect = false;
 				break;
@@ -156,4 +157,9 @@ bool compareCurrentPointsWithDefault(vector<Point2f> &resultPoints, double toler
 	}
 
 	return positionCorrect;
+}
+
+bool compareToPointsWithTolerance(Point2f &point1, Point2f &point2, double tolerance)
+{
+	return !(fabs(((point1 - point2).x) > tolerance) || fabs(((point1 - point2).y) > tolerance));
 }
