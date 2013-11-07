@@ -26,6 +26,7 @@ namespace Autonomous
 		virtual bool reachedTarget();
 		virtual std::vector<FieldObject> getAllFieldObjects();
 		virtual void updateActuators();
+		virtual void updateSensorData();
 
 	private:
 		DataAnalysis::DataAnalyser *m_dataAnalyser;

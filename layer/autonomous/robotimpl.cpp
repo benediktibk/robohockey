@@ -42,3 +42,8 @@ void RobotImpl::updateActuators()
 {
 	m_dataAnalyser->updateActuators();
 }
+
+void RobotImpl::updateSensorData()
+{
+	m_dataAnalyser->updateSensorData();
+}

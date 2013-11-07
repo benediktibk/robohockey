@@ -6,10 +6,12 @@ INCLUDE_DIRECTORIES(${CMAKE_CURRENT_BINARY_DIR})
 SET(LAYER_VIEW_SRC
 	viewer.cpp
 	model.cpp
+	robotdriver.cpp
 )
 
 SET(LAYER_VIEW_TEST_SRC
 	modeltest.cpp
+	robotdrivertest.cpp
 )
 
 SET(LAYER_VIEW_HEADER viewer.h)
