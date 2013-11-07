@@ -136,7 +136,7 @@ bool compareCurrentPointsWithDefault(vector<Point2f> &resultPoints, double toler
 
 	for(unsigned int i =0; i < defaultChessboardPoints.size(); i++)
 	{
-		if (compareToPointsWithTolerance(resultPoints[i], defaultChessboardPoints[i], tolerance))
+		if (!compareToPointsWithTolerance(resultPoints[i], defaultChessboardPoints[i], tolerance))
 		{
 			positionCorrect = false;
 			break;
@@ -148,7 +148,7 @@ bool compareCurrentPointsWithDefault(vector<Point2f> &resultPoints, double toler
 		positionCorrect = true;
 		for(unsigned int i =0; i < defaultChessboardPoints.size(); i++)
 		{
-			if (compareToPointsWithTolerance(resultPoints[defaultChessboardPoints.size() - (i+1)], defaultChessboardPoints[i], tolerance))
+			if (!compareToPointsWithTolerance(resultPoints[defaultChessboardPoints.size() - (i+1)], defaultChessboardPoints[i], tolerance))
 			{
 				positionCorrect = false;
 				break;
