@@ -1,4 +1,5 @@
 #include "common/circle.h"
+#include "common/compare.h"
 
 using namespace RoboHockey::Common;
 

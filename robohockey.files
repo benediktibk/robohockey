@@ -158,3 +158,8 @@ main/remotecontrol.cpp
 main/datalogger.cpp
 layer/hardware/lidar.cpp
 layer/hardware/sonar.cpp
+layer/autonomous/fieldobject.h
+layer/autonomous/fieldobject.cpp
+layer/autonomous/fieldobjectcolor.h
+layer/autonomous/fieldobjecttest.h
+layer/autonomous/fieldobjecttest.cpp

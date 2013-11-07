@@ -1,5 +1,6 @@
 #include "common/pointtest.h"
 #include "common/point.h"
+#include "common/compare.h"
 #include <sstream>
 
 using namespace RoboHockey::Common;
@@ -94,38 +95,14 @@ void PointTest::operatorMinus_5And3From9And4_4And1()
 	CPPUNIT_ASSERT_EQUAL(Point(4, 1), result);
 }
 
-void PointTest::fuzzyEqual_totallyEqual_true()
-{
-	Point pointOne(4, 3);
-	Point pointTwo(4, 3);
-
-	CPPUNIT_ASSERT(pointOne.fuzzyEqual(pointTwo, 0.001));
-}
-
-void PointTest::fuzzyEqual_totallyUnEqual_false()
-{
-	Point pointOne(4, 3);
-	Point pointTwo(5, 1);
-
-
-	CPPUNIT_ASSERT(!pointOne.fuzzyEqual(pointTwo, 0.001));
-}
-
-void PointTest::fuzzyEqual_nearlyEqual_true()
-{
-	Point pointOne(4, 3.0001);
-	Point pointTwo(3.9999, 3);
-
-	CPPUNIT_ASSERT(pointOne.fuzzyEqual(pointTwo, 0.001));
-}
-
 void PointTest::operatorMultpliyAndAssign_3And5With2_6And10()
 {
 	Point point(3, 5);
 
 	point *= 2;
 
-	CPPUNIT_ASSERT(Point(6, 10).fuzzyEqual(point, 0.0001));
+	Compare compare(0.0001);
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(6, 10), point));
 }
 
 void PointTest::zero_empty_bothCoordinatesZero()
