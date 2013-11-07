@@ -23,7 +23,7 @@ void EngineImpl::goToStraight(const Common::Point &position)
 void EngineImpl::updateSpeedAndMagnitude()
 {
 	//! @todo implement a control as we can not rely on the real hardware to do exactly what we want
-	const Point &currentPosition = m_odometry.getCurrentPosition();
+	Point currentPosition = m_odometry.getCurrentPosition();
 	Compare positionCompare(0.05);
 
 	if (positionCompare.isFuzzyEqual(currentPosition, m_target))

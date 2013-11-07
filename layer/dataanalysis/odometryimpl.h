@@ -20,7 +20,7 @@ namespace DataAnalysis
 	public:
 		OdometryImpl(Hardware::Odometry &odometry);
 
-		virtual void setCurrentPosition(const Common::Point &position) const;
+		virtual void setCurrentPosition(const Common::Point &position, double orientation) const;
 		virtual Common::Point getCurrentPosition() const;
 
 	private:

@@ -11,21 +11,17 @@ OdometryMock::OdometryMock() :
 	m_currentOrientation(0)
 { }
 
-void OdometryMock::setCurrentPosition(const Point &position)
+void OdometryMock::setCurrentPosition(const Point &position, double orientation)
 {
 	++m_callsToSetCurrentPosition;
 	m_currentPosition = position;
+	m_currentOrientation = orientation;
 }
 
 double OdometryMock::getCurrentOrientation()
 {
 	++m_callsToGetCurrentOrientation;
 	return m_currentOrientation;
-}
-
-void OdometryMock::setCurrentOrientation(double value)
-{
-	m_currentOrientation = value;
 }
 
 Point OdometryMock::getCurrentPosition()

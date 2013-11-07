@@ -4,7 +4,7 @@
 using namespace RoboHockey::Layer::DataAnalysis;
 using namespace RoboHockey::Common;
 
-void OdometryStub::setCurrentPosition(const Point &/*position*/) const
+void OdometryStub::setCurrentPosition(const Point &, double) const
 { }
 
 Point OdometryStub::getCurrentPosition() const

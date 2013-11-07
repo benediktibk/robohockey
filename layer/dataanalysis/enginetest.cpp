@@ -14,7 +14,7 @@ void EngineTest::goToStraight_currentPositionDifferentToTarget_atLeastOneCallToS
 	Hardware::EngineMock hardwareEngine;
 	Hardware::OdometryMock hardwareOdometry;
 	EngineImpl engine(hardwareEngine, hardwareOdometry);
-	hardwareOdometry.setCurrentPosition(Point(1, 2));
+	hardwareOdometry.setCurrentPosition(Point(1, 2), 0);
 
 	engine.goToStraight(Point(4, 20));
 	engine.updateSpeedAndMagnitude();
@@ -27,7 +27,7 @@ void EngineTest::goToStraight_lookingRightButHaveToGoLeftUp_lastRotationIsLeftUp
 	Hardware::EngineMock hardwareEngine;
 	Hardware::OdometryMock hardwareOdometry;
 	EngineImpl engine(hardwareEngine, hardwareOdometry);
-	hardwareOdometry.setCurrentPosition(Point(1, 1));
+	hardwareOdometry.setCurrentPosition(Point(1, 1), 0);
 
 	engine.goToStraight(Point(0, 2));
 	engine.updateSpeedAndMagnitude();
@@ -41,7 +41,7 @@ void EngineTest::goToStraight_lookingRightButHaveToGoRightUp_lastRotationIsRight
 	Hardware::EngineMock hardwareEngine;
 	Hardware::OdometryMock hardwareOdometry;
 	EngineImpl engine(hardwareEngine, hardwareOdometry);
-	hardwareOdometry.setCurrentPosition(Point(1, 1));
+	hardwareOdometry.setCurrentPosition(Point(1, 1), 0);
 
 	engine.goToStraight(Point(2, 2));
 	engine.updateSpeedAndMagnitude();
