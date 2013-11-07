@@ -11,10 +11,20 @@ namespace Common
 	{
 	public:
 		RobotPosition();
+		RobotPosition(double x, double y);
 		RobotPosition(double x, double y, double orientation);
 
 		void setOrientation(double orientation);
-		double getOrientation();
+		double getOrientation() const;
+
+		bool operator ==(const RobotPosition &position) const;
+		RobotPosition operator*(double value) const;
+		RobotPosition operator/(double value) const;
+		RobotPosition operator+(const RobotPosition &point) const;
+		RobotPosition operator-(const RobotPosition &point) const;
+		void operator*=(double value);
+		double distanceTo(const RobotPosition &point) const;
+
 
 	private:
 		double m_orientation;

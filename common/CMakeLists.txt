@@ -13,6 +13,7 @@ set(COMMON_TEST_SRC
 	discretefunctiontest.cpp
 	rectangletest.cpp
 	circletest.cpp
+	robotpositiontest.cpp
 )
 
 add_library(common ${COMMON_SRC})
