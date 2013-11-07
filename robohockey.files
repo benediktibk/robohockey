@@ -173,3 +173,5 @@ layer/view/robotdrivertest.h
 layer/view/robotdrivertest.cpp
 layer/autonomous/robotmock.h
 layer/autonomous/robotmock.cpp
+layer/view/robotdriverloop.h
+layer/view/robotdriverloop.cpp

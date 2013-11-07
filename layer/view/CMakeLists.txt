@@ -7,6 +7,7 @@ SET(LAYER_VIEW_SRC
 	viewer.cpp
 	model.cpp
 	robotdriver.cpp
+	robotdriverloop.cpp
 )
 
 SET(LAYER_VIEW_TEST_SRC
@@ -14,8 +15,14 @@ SET(LAYER_VIEW_TEST_SRC
 	robotdrivertest.cpp
 )
 
-SET(LAYER_VIEW_HEADER viewer.h)
-SET(LAYER_VIEW_FORMS viewer.ui)
+SET(LAYER_VIEW_HEADER
+	viewer.h
+	robotdriverloop.h
+)
+
+SET(LAYER_VIEW_FORMS
+	viewer.ui
+)
 
 QT4_WRAP_CPP(LAYER_VIEW_HEADER_MOC ${LAYER_VIEW_HEADER})
 QT4_WRAP_UI(LAYER_VIEW_FORMS_MOC ${LAYER_VIEW_FORMS})
