@@ -1,6 +1,7 @@
 #include <cv.h>
 #include <sstream>
 #include <iostream>
+#include <fstream>
 #include "layer/hardware/cameraimpl.h"
 
 using namespace std;
@@ -41,8 +42,14 @@ int main()
 
 		if (findOurChessboard(frame, chessBoardPoints))
 		{
+			fstream fileChessboardPoints("chessboardpoints.txt", ios_base::out | ios_base::trunc);
 			cout << "Chessboard found!!! Points: " << chessBoardPoints.size() << endl;
 			cout << chessBoardPoints.front() << chessBoardPoints.back() << endl;
+
+			for(std::vector<Point2f>::iterator i = chessBoardPoints.begin(); i != chessBoardPoints.end(); ++i)
+			{
+				fileChessboardPoints << *i << endl;
+			}
 		}
 
 
