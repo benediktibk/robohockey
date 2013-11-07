@@ -13,10 +13,13 @@ CameraImpl::CameraImpl(Hardware::Camera &camera) :
 void CameraImpl::getColor() const
 { }
 
-Mat CameraImpl::getFilteredFrame()
+bool CameraImpl::isGoalYellow() const
 {
-	Mat frame = m_camera.getFrame();
+	//inRange(img, cv::Scalar(105, 185, 200), cv::Scalar(130, 215, 240), img);
+	return false;
+}
 
-	medianBlur(frame, frame, 9);
-	return frame;
+void CameraImpl::filterFrame()
+{
+	medianBlur(m_camera.getFrame(), m_fileredFrame, 9);
 }
