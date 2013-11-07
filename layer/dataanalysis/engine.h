@@ -3,6 +3,11 @@
 
 namespace RoboHockey
 {
+namespace Common
+{
+	class Point;
+}
+
 namespace Layer
 {
 namespace DataAnalysis
@@ -12,7 +17,7 @@ namespace DataAnalysis
 	public:
 		virtual ~Engine() { }
 
-		virtual void setSpeed(double magnitude, double rotation) = 0;
+		virtual void goToStraight(const Common::Point &targetPosition) = 0;
 	};
 }
 }

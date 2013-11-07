@@ -10,6 +10,7 @@ namespace Layer
 namespace Hardware
 {
 	class Engine;
+	class Odometry;
 }
 
 namespace DataAnalysis
@@ -18,12 +19,13 @@ namespace DataAnalysis
 			public Engine
 	{
 	public:
-		EngineImpl(Hardware::Engine &engine);
+		EngineImpl(Hardware::Engine &engine, Hardware::Odometry &odometry);
 
-		virtual void setSpeed(double magnitude, double rotation);
+	virtual void goToStraight(const Common::Point &position);
 
 	private:
 		Hardware::Engine &m_engine;
+		Hardware::Odometry &m_odometry;
 	};
 }
 }

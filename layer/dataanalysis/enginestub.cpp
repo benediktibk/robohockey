@@ -2,5 +2,5 @@
 
 using namespace RoboHockey::Layer::DataAnalysis;
 
-void EngineStub::setSpeed(double /*magnitude*/, double /*rotation*/)
+void EngineStub::goToStraight(const Common::Point &)
 { }

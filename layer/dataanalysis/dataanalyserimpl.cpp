@@ -16,7 +16,7 @@ DataAnalyserImpl::DataAnalyserImpl(Hardware::Robot *robot) :
 	m_lidar(new LidarImpl(m_robot->getLidar())),
 	m_camera(new CameraImpl(m_robot->getCamera())),
 	m_odometry(new OdometryImpl(m_robot->getOdometry())),
-	m_engine(new EngineImpl(m_robot->getEngine()))
+	m_engine(new EngineImpl(m_robot->getEngine(), m_robot->getOdometry()))
 {
 	assert(m_robot != 0);
 }

@@ -13,7 +13,7 @@ namespace DataAnalysis
 			public Engine
 	{
 	public:
-		virtual void setSpeed(double magnitude, double rotation);
+		virtual void goToStraight(const Common::Point &position);
 	};
 }
 }

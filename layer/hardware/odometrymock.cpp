@@ -6,25 +6,32 @@ using namespace RoboHockey::Layer::Hardware;
 
 OdometryMock::OdometryMock() :
 	m_callsToSetCurrentPosition(0),
-    m_callsToGetCurrentPosition(0),
-    m_callsToGetCurrentOrientation(0)
+	m_callsToGetCurrentPosition(0),
+	m_callsToGetCurrentOrientation(0),
+	m_currentOrientation(0)
 { }
 
-void OdometryMock::setCurrentPosition(const Point &)
+void OdometryMock::setCurrentPosition(const Point &position)
 {
 	++m_callsToSetCurrentPosition;
+	m_currentPosition = position;
 }
 
 double OdometryMock::getCurrentOrientation()
 {
-    ++m_callsToGetCurrentOrientation;
-    return 0;
+	++m_callsToGetCurrentOrientation;
+	return m_currentOrientation;
+}
+
+void OdometryMock::setCurrentOrientation(double value)
+{
+	m_currentOrientation = value;
 }
 
 const Point &OdometryMock::getCurrentPosition()
 {
 	++m_callsToGetCurrentPosition;
-	return Point::zero();
+	return m_currentPosition;
 }
 
 unsigned int OdometryMock::getCallsToSetCurrentPosition() const
@@ -34,7 +41,7 @@ unsigned int OdometryMock::getCallsToSetCurrentPosition() const
 
 unsigned int OdometryMock::getCallsToGetCurrentOrientation() const
 {
-    return m_callsToGetCurrentOrientation;
+	return m_callsToGetCurrentOrientation;
 }
 
 unsigned int OdometryMock::getCallsToGetCurrentPosition() const
