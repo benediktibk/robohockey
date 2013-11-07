@@ -24,7 +24,6 @@ namespace Common
 		Point operator+(const Point &point) const;
 		Point operator-(const Point &point) const;
 		void operator*=(double value);
-		bool fuzzyEqual(const Point &point, double epsilon) const;
 		double distanceTo(const Point &point) const;
 
 	public:

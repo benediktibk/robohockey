@@ -24,7 +24,7 @@ namespace DataAnalysis
 
 	private:
 		cv::Mat getSmoothFrame();
-		cv::Mat getFilteredFrame(unsigned int threshold);
+		cv::Mat getFilteredFrame();
 
 
 	private:

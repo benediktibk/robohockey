@@ -39,7 +39,8 @@ double Point::getY() const
 
 bool Point::operator ==(const Point &point) const
 {
-	return	fuzzyEqual(point, 0.00001);
+	Compare compare(0.00001);
+	return compare.isFuzzyEqual(*this, point);
 }
 
 Point Point::operator *(double value) const
@@ -71,12 +72,6 @@ ostream& operator<<(ostream &stream, const Point &point)
 {
 	stream << "(" << point.getX() << ", " << point.getY() << ")";
 	return stream;
-}
-
-bool Point::fuzzyEqual(const Point &point, double epsilon) const
-{
-	Compare compare(epsilon);
-	return	compare.isFuzzyEqual(getX(), point.getX()) && compare.isFuzzyEqual(getY(), point.getY());
 }
 
 double Point::distanceTo(const Point &point) const

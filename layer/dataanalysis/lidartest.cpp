@@ -71,7 +71,8 @@ void LidarTest::getAllObjects_oneObjectInFront_onlyObjectIsCorrect()
 	CPPUNIT_ASSERT_EQUAL((size_t)1, objects.size());
 	LidarObject object = objects.front();
 	CPPUNIT_ASSERT_DOUBLES_EQUAL(1, object.getDiameter(), 0.05);
-	CPPUNIT_ASSERT(Point(4, 1).fuzzyEqual(object.getCenter(), 0.05));
+	Compare compare(0.05);
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(4, 1), object.getCenter()));
 }
 
 void LidarTest::getAllObjects_lookingIntoLeftUpperDirectionAndObjectSlightlyLeft_onlyObjectIsCorrect()
@@ -91,7 +92,8 @@ void LidarTest::getAllObjects_lookingIntoLeftUpperDirectionAndObjectSlightlyLeft
 	CPPUNIT_ASSERT_EQUAL((size_t)1, objects.size());
 	LidarObject object = objects.front();
 	CPPUNIT_ASSERT_DOUBLES_EQUAL(0.15, object.getDiameter(), 0.1);
-	CPPUNIT_ASSERT(Point(-1.4, 4).fuzzyEqual(object.getCenter(), 0.1));
+	Compare compare(0.1);
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(-1.4, 4), object.getCenter()));
 }
 
 void LidarTest::getAllObjects_twoObjects_objectCountIs2()
