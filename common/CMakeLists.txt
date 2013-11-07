@@ -4,6 +4,7 @@ set(COMMON_SRC
 	discretefunction.cpp
 	rectangle.cpp
 	circle.cpp
+	robotposition.cpp
 )
 
 set(COMMON_TEST_SRC

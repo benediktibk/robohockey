@@ -2,7 +2,8 @@
 #define ROBOHOCKEY_LAYER_AUTONOMOUS_FIELD_H
 
 
-
+namespace RoboHockey
+{
 namespace Layer
 {
 namespace Autonomous
@@ -14,6 +15,7 @@ namespace Autonomous
 
 		virtual void updateField() = 0;
 	};
+}
 }
 }
 

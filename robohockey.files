@@ -166,3 +166,5 @@ layer/autonomous/fieldobjecttest.cpp
 layer/autonomous/field.h
 layer/autonomous/fieldimpl.h
 layer/autonomous/fieldimpl.cpp
+common/robotposition.h
+common/robotposition.cpp

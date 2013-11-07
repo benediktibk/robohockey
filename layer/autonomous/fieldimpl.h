@@ -1,7 +1,7 @@
 #ifndef ROBOHOCKEY_LAYER_AUTONOMOUS_FIELDIMPL_H
 #define ROBOHOCKEY_LAYER_AUTONOMOUS_FIELDIMPL_H
 
-#include "field.h"
+#include "layer/autonomous/field.h"
 
 namespace RoboHockey
 {
@@ -22,6 +22,13 @@ namespace Autonomous
 	{
 	public:
 		FieldImpl();
+		virtual void update();
+
+	private:
+		virtual void updateWithLidarData();
+		virtual void updateWithOdometryData();
+
+
 	};
 }
 }
