@@ -1,4 +1,14 @@
-int main(int, char **)
+#include <QtGui/QApplication>
+#include "layer/view/viewer.h"
+//#include "layer/view/model.h"
+
+using namespace RoboHockey::Layer::View;
+
+int main(int argc, char **argv)
 {
-	return 0;
+	QApplication application(argc, argv);
+	Viewer view;
+
+	view.show();
+	return application.exec();
 }

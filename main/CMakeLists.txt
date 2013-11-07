@@ -4,7 +4,7 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 find_library(CPPUNIT_LIBRARY cppunit)
 include(UsePlayerC++)
 find_package(OpenCV REQUIRED)
-find_package(Qt4 REQUIRED)
+find_package(Qt4 COMPONENTS QtCore QtGui QtDeclarative REQUIRED)
 include(${QT_USE_FILE})
 ADD_DEFINITIONS(${QT_DEFINITIONS})
 
@@ -14,10 +14,13 @@ set(LIBRARIES
 	layerhardware
 	threading
 	common
+	${QT_LIBRARIES}
 	${PLAYERCPP_LINK_LIBS}
 	${OpenCV_LIBS}
 	boost_thread-mt
 )
+
+message(${QT_LIBRARIES})
 
 set(LIBRARIES_REMOTECONTROL
 	layerview
