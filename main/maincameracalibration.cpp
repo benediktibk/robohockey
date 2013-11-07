@@ -12,7 +12,7 @@ bool findOurChessboard(Mat &frame, vector<Point2f> &pointBuf);
 bool compareCurrentPointsWithDefault(vector<Point2f> &resultPoints, double tolerance);
 void loadDefaultChessboardPoints();
 
-Size g_boardSize(10,7);
+Size g_boardSize(5,3);
 vector<Point2f> defaultChessboardPoints;
 double g_tolerance = 2.0;
 
