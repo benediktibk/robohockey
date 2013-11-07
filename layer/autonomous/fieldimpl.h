@@ -5,6 +5,10 @@
 
 namespace RoboHockey
 {
+namespace Common
+{
+	class RobotPosition;
+}
 namespace Layer
 {
 namespace DataAnalysis
@@ -21,14 +25,19 @@ namespace Autonomous
 			public Field
 	{
 	public:
-		FieldImpl();
+		FieldImpl(DataAnalysis::OdometryImpl &odometry, DataAnalysis::LidarImpl &lidar, DataAnalysis::CameraImpl &camera);
 		virtual void update();
 
 	private:
 		virtual void updateWithLidarData();
 		virtual void updateWithOdometryData();
 
+	private:
+		DataAnalysis::OdometryImpl *m_odometry;
+		DataAnalysis::LidarImpl *m_lidar;
+		DataAnalysis::CameraImpl *m_camera;
 
+		Common::RobotPosition *m_position;
 	};
 }
 }

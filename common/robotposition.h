@@ -12,6 +12,7 @@ namespace Common
 	public:
 		RobotPosition();
 		RobotPosition(double x, double y);
+		RobotPosition(const Point &point);
 		RobotPosition(double x, double y, double orientation);
 
 		void setOrientation(double orientation);

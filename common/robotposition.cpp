@@ -14,6 +14,11 @@ RobotPosition::RobotPosition(double x, double y):
 	m_orientation(0)
 { }
 
+RobotPosition::RobotPosition(const Point &point):
+	Point(point.getX(), point.getY()),
+	m_orientation(0)
+{ }
+
 RobotPosition::RobotPosition(double x, double y, double orientation):
 	Point(x, y),
 	m_orientation(orientation)
