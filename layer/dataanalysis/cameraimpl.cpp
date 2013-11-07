@@ -13,22 +13,15 @@ CameraImpl::CameraImpl(Hardware::Camera &camera) :
 void CameraImpl::getColor() const
 { }
 
-Mat CameraImpl::getSmoothFrame()
+bool CameraImpl::isGoalYellow() const
 {
-	Mat frame = m_camera.getFrame();
-	Mat smoothFrame = frame;
-
-	cvSmooth(&frame, &smoothFrame, CV_MEDIAN, 9 , 9);
-	return smoothFrame;
+	Mat goal;
+	inRange(m_fileredFrame, cv::Scalar(105, 185, 200), cv::Scalar(130, 215, 240), goal);
+	//ausarbeiten
+	return false;
 }
 
-Mat CameraImpl::getFilteredFrame(unsigned int threshold)
+void CameraImpl::filterFrame()
 {
-	Mat frame = getSmoothFrame();
-	Mat filteredFrame = frame;
-
-	//threshold used for building but will be used for parameter 3 and 4
-	threshold = threshold + 1;
-	cvPyrMeanShiftFiltering(&frame, &filteredFrame, 10, 35, 3);
-	return filteredFrame;
+	medianBlur(m_camera.getFrame(), m_fileredFrame, 9);
 }
