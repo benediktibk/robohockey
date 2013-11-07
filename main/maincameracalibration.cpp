@@ -156,6 +156,16 @@ bool compareCurrentPointsWithDefault(vector<Point2f> &resultPoints, double toler
 		}
 	}
 
+	if (!positionCorrect)
+	{
+		if (fabs((resultPoints[0]).x - (defaultChessboardPoints[0]).x) < fabs((resultPoints[defaultChessboardPoints.size() - 1]).x - (defaultChessboardPoints[0]).x))
+		{
+			cout << "X: " << (resultPoints[0]).x - (defaultChessboardPoints[0]).x << " Y: " << (resultPoints[0]).y - (defaultChessboardPoints[0]).y << endl;
+		} else {
+			cout << "X: " << (resultPoints[0]).x - (defaultChessboardPoints[defaultChessboardPoints.size() - 1]).x << " Y: " << (resultPoints[defaultChessboardPoints.size() - 1]).y - (defaultChessboardPoints[0]).y << endl;
+		}
+	}
+
 	return positionCorrect;
 }
 
@@ -166,7 +176,5 @@ bool compareToPointsWithTolerance(Point2f &point1, Point2f &point2, double toler
 
 	bool answer = !((sum1 > tolerance) || (sum2 > tolerance));
 
-	if (!answer)
-		cout << "Sum1: " << sum1 << " Sum2: " << sum2 << endl;
 	return answer;
 }
