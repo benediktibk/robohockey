@@ -3,20 +3,30 @@
 
 #include <QtGui/QDialog>
 
-namespace Ui {
-class viewer;
+namespace Ui
+{
+	class viewer;
 }
 
-class viewer : public QDialog
+namespace RoboHockey
 {
-    Q_OBJECT
-    
-public:
-    explicit viewer(QWidget *parent = 0);
-    ~viewer();
-    
-private:
-    Ui::viewer *ui;
-};
+namespace Layer
+{
+namespace View
+{
+	class Viewer : public QDialog
+	{
+		Q_OBJECT
 
-#endif // VIEWER_H
+	public:
+		explicit Viewer(QWidget *parent = 0);
+		~Viewer();
+
+	private:
+		Ui::viewer *ui;
+	};
+}
+}
+}
+
+#endif

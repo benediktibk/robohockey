@@ -21,10 +21,10 @@ set(LIBRARIES
 
 set(LIBRARIES_REMOTECONTROL
 	layerview
-	${LIBRARIES}
 )
 
 set(LIBRARIES_TEST
+	layerviewtest
 	layerautonomoustest
 	layerdataanalysistest
 	layerhardwaretest
@@ -37,8 +37,10 @@ add_executable(robot main.cpp)
 add_executable(testrunner testregistration.cpp testrunner.cpp)
 add_executable(calibratecamera maincameracalibration.cpp)
 add_executable(datalogger datalogger.cpp)
+add_executable(remotecontrol remotecontrol.cpp)
 
 target_link_libraries(robot ${LIBRARIES})
 target_link_libraries(testrunner ${LIBRARIES_TEST} ${LIBRARIES})
 target_link_libraries(calibratecamera ${LIBRARIES})
 target_link_libraries(datalogger ${LIBRARIES})
+target_link_libraries(remotecontrol ${LIBRARIES} ${LIBRARIES_REMOTECONTROL})

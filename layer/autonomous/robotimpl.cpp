@@ -1,5 +1,6 @@
 #include "layer/autonomous/robotimpl.h"
 #include "layer/dataanalysis/dataanalyser.h"
+#include "layer/dataanalysis/engine.h"
 
 using namespace RoboHockey::Layer::Autonomous;
 using namespace RoboHockey::Layer;
@@ -14,9 +15,12 @@ RobotImpl::~RobotImpl()
 	delete m_dataAnalyser;
 }
 
-void RobotImpl::goTo(const RoboHockey::Common::Point &/*position*/)
+void RobotImpl::goTo(const RoboHockey::Common::Point &position)
 {
+	DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
 
+	//! @todo imlement a router to find a path to the target without tackling obstacles
+	engine.goToStraight(position);
 }
 
 bool RobotImpl::stuckAtObstacle()
