@@ -2,6 +2,7 @@
 #define ROBOHOCKEY_LAYER_AUTONOMOUS_ROBOTIMPL_H
 
 #include "layer/autonomous/robot.h"
+#include "common/point.h"
 
 namespace RoboHockey
 {
@@ -30,6 +31,8 @@ namespace Autonomous
 
 	private:
 		DataAnalysis::DataAnalyser *m_dataAnalyser;
+		Common::Point m_currentPosition;
+		Common::Point m_targetPosition;
 	};
 }
 }

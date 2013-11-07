@@ -2,6 +2,7 @@
 #define ROBOHOCKEY_LAYER_DATAANALYSIS_ODOMETRYSTUB_H
 
 #include "layer/dataanalysis/odometry.h"
+#include "common/point.h"
 
 namespace RoboHockey
 {
@@ -13,8 +14,11 @@ namespace DataAnalysis
 			public Odometry
 	{
 	public:
-		virtual void setCurrentPosition(const Common::Point &position, double orientation) const;
+		virtual void setCurrentPosition(const Common::Point &position, double orientation);
 		virtual Common::Point getCurrentPosition() const;
+
+	private:
+		Common::Point m_position;
 	};
 }
 }

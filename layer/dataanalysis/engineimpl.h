@@ -24,11 +24,13 @@ namespace DataAnalysis
 
 		virtual void goToStraight(const Common::Point &position);
 		virtual void updateSpeedAndMagnitude();
+		virtual void stop();
 
 	private:
 		Hardware::Engine &m_engine;
 		Hardware::Odometry &m_odometry;
 		Common::Point m_target;
+		bool m_enabled;
 	};
 }
 }

@@ -37,7 +37,7 @@ DataAnalyserImpl::~DataAnalyserImpl()
 	m_robot = 0;
 }
 
-const Sonar &DataAnalyserImpl::getSonar() const
+Sonar &DataAnalyserImpl::getSonar()
 {
 	return *m_sonar;
 }

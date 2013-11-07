@@ -17,7 +17,7 @@ namespace DataAnalysis
 	public:
 		virtual ~Odometry() { }
 
-		virtual void setCurrentPosition(const Common::Point &position, double orientation) const = 0;
+		virtual void setCurrentPosition(const Common::Point &position, double orientation) = 0;
 		virtual Common::Point getCurrentPosition() const = 0;
 	};
 }

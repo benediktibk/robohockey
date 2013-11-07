@@ -1,12 +1,12 @@
-#ifndef ROBOHOCKEY_LAYER_DATAANALYSIS_DATAANALYSERSTUB_H
-#define ROBOHOCKEY_LAYER_DATAANALYSIS_DATAANALYSERSTUB_H
+#ifndef ROBOHOCKEY_LAYER_DATAANALYSIS_DATAANALYSERMOCK_H
+#define ROBOHOCKEY_LAYER_DATAANALYSIS_DATAANALYSERMOCK_H
 
 #include "layer/dataanalysis/dataanalyser.h"
-#include "layer/dataanalysis/sonarstub.h"
+#include "layer/dataanalysis/sonarmock.h"
 #include "layer/dataanalysis/lidarstub.h"
 #include "layer/dataanalysis/camerastub.h"
 #include "layer/dataanalysis/odometrystub.h"
-#include "layer/dataanalysis/enginestub.h"
+#include "layer/dataanalysis/enginemock.h"
 
 namespace RoboHockey
 {
@@ -14,11 +14,13 @@ namespace Layer
 {
 namespace DataAnalysis
 {
-	class DataAnalyserStub:
+	class DataAnalyserMock:
 			public DataAnalyser
 	{
 	public:
-		virtual const Sonar& getSonar() const;
+		DataAnalyserMock();
+
+		virtual Sonar& getSonar();
 		virtual const Lidar& getLidar() const;
 		virtual const Camera& getCamera() const;
 		virtual Odometry& getOdometry();
@@ -26,12 +28,19 @@ namespace DataAnalysis
 		virtual void updateSensorData();
 		virtual void updateActuators();
 
+		EngineMock& getEngineMock();
+		SonarMock& getSonarMock();
+		unsigned int getCallsToUpdateSensorData() const;
+		unsigned int getCallsToUpdateActuators() const;
+
 	private:
-		SonarStub m_sonar;
+		SonarMock m_sonar;
 		LidarStub m_lidar;
 		CameraStub m_camera;
 		OdometryStub m_odometry;
-		EngineStub m_engine;
+		EngineMock m_engine;
+		unsigned int m_callsToUpdateSensorData;
+		unsigned int m_callsToUpdateActuators;
 	};
 }
 }

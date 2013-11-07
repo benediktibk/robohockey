@@ -21,7 +21,7 @@ namespace DataAnalysis
 		DataAnalyserImpl(Hardware::Robot *robot);
 		virtual ~DataAnalyserImpl();
 
-		virtual const Sonar& getSonar() const;
+		virtual Sonar& getSonar();
 		virtual const Lidar& getLidar() const;
 		virtual const Camera& getCamera() const;
 		virtual Odometry& getOdometry();

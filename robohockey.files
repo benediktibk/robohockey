@@ -65,8 +65,8 @@ threading/locktest.h
 threading/lock.h
 layer/dataanalysis/CMakeLists.txt
 layer/dataanalysis/engine.h
-layer/dataanalysis/enginestub.h
-layer/dataanalysis/enginestub.cpp
+layer/dataanalysis/enginemock.h
+layer/dataanalysis/enginemock.cpp
 layer/dataanalysis/engineimpl.cpp
 layer/dataanalysis/engineimpl.h
 layer/dataanalysis/odometrystub.cpp
@@ -79,9 +79,9 @@ layer/dataanalysis/lidarimpl.cpp
 layer/dataanalysis/lidarstub.h
 layer/dataanalysis/lidarimpl.h
 layer/dataanalysis/lidar.h
-layer/dataanalysis/sonarstub.cpp
+layer/dataanalysis/sonarmock.cpp
 layer/dataanalysis/sonarimpl.cpp
-layer/dataanalysis/sonarstub.h
+layer/dataanalysis/sonarmock.h
 layer/dataanalysis/sonarimpl.h
 layer/dataanalysis/sonar.h
 layer/dataanalysis/camerastub.cpp
@@ -92,8 +92,8 @@ layer/dataanalysis/camera.h
 layer/dataanalysis/dataanalyser.h
 layer/dataanalysis/dataanalyserimpl.h
 layer/dataanalysis/dataanalyserimpl.cpp
-layer/dataanalysis/dataanalyserstub.cpp
-layer/dataanalysis/dataanalyserstub.h
+layer/dataanalysis/dataanalysermock.cpp
+layer/dataanalysis/dataanalysermock.h
 layer/hardware/cameramock.h
 layer/hardware/cameramock.cpp
 layer/hardware/enginemock.h
