@@ -11,6 +11,13 @@ namespace Common
 	{
 	public:
 		RobotPosition();
+		RobotPosition(double x, double y, double orientation);
+
+		void setOrientation(double orientation);
+		double getOrientation();
+
+	private:
+		double m_orientation;
 	};
 }
 }
