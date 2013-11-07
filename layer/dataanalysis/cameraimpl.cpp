@@ -15,7 +15,9 @@ void CameraImpl::getColor() const
 
 bool CameraImpl::isGoalYellow() const
 {
-	//inRange(img, cv::Scalar(105, 185, 200), cv::Scalar(130, 215, 240), img);
+	Mat goal;
+	inRange(m_fileredFrame, cv::Scalar(105, 185, 200), cv::Scalar(130, 215, 240), goal);
+	//ausarbeiten
 	return false;
 }
 
