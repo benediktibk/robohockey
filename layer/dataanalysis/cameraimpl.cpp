@@ -18,7 +18,7 @@ Mat CameraImpl::getSmoothFrame()
 	Mat frame = m_camera.getFrame();
 	Mat smoothFrame = frame;
 
-	medianBlur(frame, smoothFrame, 11);
+	medianBlur(frame, smoothFrame, 9);
 	return smoothFrame;
 }
 
