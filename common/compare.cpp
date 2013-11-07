@@ -1,4 +1,6 @@
 #include "common/compare.h"
+#include "common/point.h"
+#include "common/circle.h"
 #include <math.h>
 
 using namespace RoboHockey::Common;
@@ -26,6 +28,18 @@ bool Compare::isFuzzyEqual(const vector<double> &one, const vector<double> &two)
 			return false;
 
 	return true;
+}
+
+bool Compare::isFuzzyEqual(const Point &one, const Point &two) const
+{
+	return	isFuzzyEqual(one.getX(), two.getX()) &&
+			isFuzzyEqual(one.getY(), two.getY());
+}
+
+bool Compare::isFuzzyEqual(const Circle &one, const Circle &two) const
+{
+	return	isFuzzyEqual(one.getCenter(), two.getCenter()) &&
+			isFuzzyEqual(one.getDiameter(), two.getDiameter());
 }
 
 bool Compare::isFuzzyGreater(double value1, double value2) const

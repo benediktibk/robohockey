@@ -23,9 +23,6 @@ namespace Common
 		 CPPUNIT_TEST(operatorDivide_3And6With3_1And2);
 		 CPPUNIT_TEST(operatorAdd_4And3To5And1_9And4);
 		 CPPUNIT_TEST(operatorMinus_5And3From9And4_4And1);
-		 CPPUNIT_TEST(fuzzyEqual_totallyEqual_true);
-		 CPPUNIT_TEST(fuzzyEqual_totallyUnEqual_false);
-		 CPPUNIT_TEST(fuzzyEqual_nearlyEqual_true);
 		 CPPUNIT_TEST(operatorMultpliyAndAssign_3And5With2_6And10);
 		 CPPUNIT_TEST(zero_empty_bothCoordinatesZero);
 		 CPPUNIT_TEST(distanceTo_from4And5To8And2_5);
@@ -43,9 +40,6 @@ namespace Common
 		 void operatorDivide_3And6With3_1And2();
 		 void operatorAdd_4And3To5And1_9And4();
 		 void operatorMinus_5And3From9And4_4And1();
-		 void fuzzyEqual_totallyEqual_true();
-		 void fuzzyEqual_totallyUnEqual_false();
-		 void fuzzyEqual_nearlyEqual_true();
 		 void operatorMultpliyAndAssign_3And5With2_6And10();
 		 void zero_empty_bothCoordinatesZero();
 		 void distanceTo_from4And5To8And2_5();

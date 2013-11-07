@@ -7,6 +7,9 @@ namespace RoboHockey
 {
 namespace Common
 {
+	class Point;
+	class Circle;
+
 	class Compare
 	{
 	public:
@@ -14,6 +17,8 @@ namespace Common
 
 		bool isFuzzyEqual(double value1, double value2) const;
 		bool isFuzzyEqual(const std::vector<double> &one, const std::vector<double> &two) const;
+		bool isFuzzyEqual(const Point &one, const Point &two) const;
+		bool isFuzzyEqual(const Circle &one, const Circle &two) const;
 		bool isFuzzyGreater(double value1, double value2) const;
 		bool isFuzzySmaller(double value1, double value2) const;
 		bool isStrictFuzzyGreater(double value1, double value2) const;
