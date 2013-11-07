@@ -28,7 +28,7 @@ void OdometryMock::setCurrentOrientation(double value)
 	m_currentOrientation = value;
 }
 
-const Point &OdometryMock::getCurrentPosition()
+Point OdometryMock::getCurrentPosition()
 {
 	++m_callsToGetCurrentPosition;
 	return m_currentPosition;

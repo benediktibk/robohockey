@@ -21,7 +21,7 @@ namespace DataAnalysis
 		OdometryImpl(Hardware::Odometry &odometry);
 
 		virtual void setCurrentPosition(const Common::Point &position) const;
-		virtual const Common::Point& getCurrentPosition() const;
+		virtual Common::Point getCurrentPosition() const;
 
 	private:
 		Hardware::Odometry &m_odometry;

@@ -14,7 +14,7 @@ namespace DataAnalysis
 	{
 	public:
 		virtual void setCurrentPosition(const Common::Point &position) const;
-		virtual const Common::Point& getCurrentPosition() const;
+		virtual Common::Point getCurrentPosition() const;
 	};
 }
 }

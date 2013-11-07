@@ -14,8 +14,8 @@ class OdometryStub :
 {
 public:
 	virtual void setCurrentPosition(const Common::Point &position);
-	virtual const Common::Point& getCurrentPosition();
-    virtual double getCurrentOrientation();
+	virtual Common::Point getCurrentPosition();
+	virtual double getCurrentOrientation();
 };
 }
 }

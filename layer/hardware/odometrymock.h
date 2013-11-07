@@ -17,7 +17,7 @@ namespace Hardware
 		OdometryMock();
 
 		virtual void setCurrentPosition(const Common::Point &position);
-		virtual const Common::Point& getCurrentPosition();
+		virtual Common::Point getCurrentPosition();
 		virtual double getCurrentOrientation();
 
 		void setCurrentOrientation(double value);

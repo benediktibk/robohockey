@@ -7,12 +7,12 @@ using namespace RoboHockey::Common;
 void OdometryStub::setCurrentPosition(const Point &/*position*/)
 { }
 
-const Point &OdometryStub::getCurrentPosition()
+Point OdometryStub::getCurrentPosition()
 {
 	return Point::zero();
 }
 
 double OdometryStub::getCurrentOrientation()
 {
-    return 0;
+	return 0;
 }
