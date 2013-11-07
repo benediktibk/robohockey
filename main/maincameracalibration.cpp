@@ -87,7 +87,8 @@ int main()
 bool findOurChessboard(Mat &frame, vector<Point2f> &resultPoints)
 {
 	bool found;
-	found = findChessboardCorners(frame, g_boardSize, resultPoints,CV_CALIB_CB_ADAPTIVE_THRESH | CV_CALIB_CB_FAST_CHECK | CV_CALIB_CB_NORMALIZE_IMAGE);
+	found = findChessboardCorners(frame, g_boardSize, resultPoints,
+								  CV_CALIB_CB_ADAPTIVE_THRESH | CV_CALIB_CB_FAST_CHECK | CV_CALIB_CB_NORMALIZE_IMAGE);
 
 	if (found)
 	{
@@ -130,11 +131,29 @@ bool compareCurrentPointsWithDefault(vector<Point2f> &resultPoints, double toler
 		return false;
 	}
 
+	bool positionCorrect = true;
+
 	for(unsigned int i =0; i < defaultChessboardPoints.size(); i++)
 	{
 		if (((resultPoints[i] - defaultChessboardPoints[i]).x > tolerance) || ((resultPoints[i] - defaultChessboardPoints[i]).y > tolerance))
-			return false;
+		{
+			positionCorrect = false;
+			break;
+		}
 	}
 
-	return true;
+	if (!positionCorrect)
+	{
+		positionCorrect = true;
+		for(unsigned int i =0; i < defaultChessboardPoints.size(); i++)
+		{
+			if (((resultPoints[defaultChessboardPoints.size() - (i+1)] - defaultChessboardPoints[i]).x > tolerance) || ((resultPoints[defaultChessboardPoints.size() - (i+1)] - defaultChessboardPoints[i]).y > tolerance))
+			{
+				positionCorrect = false;
+				break;
+			}
+		}
+	}
+
+	return positionCorrect;
 }
