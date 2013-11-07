@@ -11,16 +11,21 @@ Model::Model() :
 { }
 
 void Model::setData(
-		const vector<FieldObject> &fieldObjects, bool stuckAtObstacle, bool reachedTarget)
+		const vector<FieldObject> &fieldObjects,
+		bool stuckAtObstacle, bool reachedTarget)
 {
 	m_fieldObjects = fieldObjects;
 	m_stuckAtObstacle = stuckAtObstacle;
 	m_reachedTarget = reachedTarget;
+
+	emit robotDataChanged();
 }
 
 void Model::setData(const vector<Point> &targetPositions)
 {
 	m_targetPositions = targetPositions;
+
+	emit targetPositionsChanged();
 }
 
 const vector<FieldObject> &Model::getAllFieldObjects() const

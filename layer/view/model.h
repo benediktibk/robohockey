@@ -1,6 +1,7 @@
 #ifndef ROBOHOCKEY_LAYER_VIEW_MODEL_H
 #define ROBOHOCKEY_LAYER_VIEW_MODEL_H
 
+#include <QtCore/QObject>
 #include "layer/autonomous/fieldobject.h"
 #include "common/point.h"
 #include <vector>
@@ -11,8 +12,11 @@ namespace Layer
 {
 namespace View
 {
-	class Model
+	class Model :
+			public QObject
 	{
+		Q_OBJECT
+
 	public:
 		Model();
 
@@ -22,6 +26,10 @@ namespace View
 		const std::vector<Common::Point>& getAllTargetPoints() const;
 		bool stuckAtObstacle() const;
 		bool reachedTarget() const;
+
+	signals:
+		void targetPositionsChanged();
+		void robotDataChanged();
 
 	private:
 		std::vector<Autonomous::FieldObject> m_fieldObjects;

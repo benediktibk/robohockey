@@ -18,6 +18,7 @@ SET(LAYER_VIEW_TEST_SRC
 SET(LAYER_VIEW_HEADER
 	viewer.h
 	robotdriverloop.h
+	model.h
 )
 
 SET(LAYER_VIEW_FORMS
