@@ -1,7 +1,6 @@
 #include "layer/dataanalysis/lidartest.h"
 #include "layer/dataanalysis/lidarimpl.h"
 #include "layer/hardware/lidarmock.h"
-#include "layer/hardware/lidarstub.h"
 #include "common/compare.h"
 #include <math.h>
 
@@ -22,7 +21,7 @@ void LidarTest::getAllObjects_mockHardwareLidar_atLeastOneCallToGetDistance()
 
 void LidarTest::getAllObjects_oneObjectInFront_onlyObjectIsCorrect()
 {
-	Hardware::LidarStub hardwareLidar(10);
+	Hardware::LidarMock hardwareLidar(10);
 	hardwareLidar.setValueForAngle(161, 3.04);
 	hardwareLidar.setValueForAngle(162, 3.02);
 	hardwareLidar.setValueForAngle(163, 2.99);
@@ -77,7 +76,7 @@ void LidarTest::getAllObjects_oneObjectInFront_onlyObjectIsCorrect()
 
 void LidarTest::getAllObjects_lookingIntoLeftUpperDirectionAndObjectSlightlyLeft_onlyObjectIsCorrect()
 {
-	Hardware::LidarStub hardwareLidar(10);
+	Hardware::LidarMock hardwareLidar(10);
 	hardwareLidar.setValueForAngle(150, 3.04);
 	hardwareLidar.setValueForAngle(151, 3.02);
 	hardwareLidar.setValueForAngle(152, 2.99);
@@ -98,7 +97,7 @@ void LidarTest::getAllObjects_lookingIntoLeftUpperDirectionAndObjectSlightlyLeft
 
 void LidarTest::getAllObjects_twoObjects_objectCountIs2()
 {
-	Hardware::LidarStub hardwareLidar(10);
+	Hardware::LidarMock hardwareLidar(10);
 	hardwareLidar.setValueForAngle(150, 3.04);
 	hardwareLidar.setValueForAngle(151, 3.02);
 	hardwareLidar.setValueForAngle(152, 2.99);
@@ -120,7 +119,7 @@ void LidarTest::getAllObjects_twoObjects_objectCountIs2()
 
 void LidarTest::getAllObjects_oneObjectBehindAnotherOneLeft_objectCountIs2()
 {
-	Hardware::LidarStub hardwareLidar(10);
+	Hardware::LidarMock hardwareLidar(10);
 	hardwareLidar.setValueForAngle(150, 3.04);
 	hardwareLidar.setValueForAngle(151, 3.02);
 	hardwareLidar.setValueForAngle(152, 2.99);
@@ -142,7 +141,7 @@ void LidarTest::getAllObjects_oneObjectBehindAnotherOneLeft_objectCountIs2()
 
 void LidarTest::getAllObjects_oneObjectBehindAnotherOneRight_objectCountIs2()
 {
-	Hardware::LidarStub hardwareLidar(10);
+	Hardware::LidarMock hardwareLidar(10);
 	hardwareLidar.setValueForAngle(150, 2.04);
 	hardwareLidar.setValueForAngle(151, 2.02);
 	hardwareLidar.setValueForAngle(152, 1.99);
@@ -164,7 +163,7 @@ void LidarTest::getAllObjects_oneObjectBehindAnotherOneRight_objectCountIs2()
 
 void LidarTest::getAllObjects_objectAtLeftBorder_objectCountIs1()
 {
-	Hardware::LidarStub hardwareLidar(10);
+	Hardware::LidarMock hardwareLidar(10);
 	hardwareLidar.setValueForAngle(0, 2.5);
 	hardwareLidar.setValueForAngle(1, 2.5);
 	hardwareLidar.setValueForAngle(2, 2.5);
@@ -179,7 +178,7 @@ void LidarTest::getAllObjects_objectAtLeftBorder_objectCountIs1()
 
 void LidarTest::getAllObjects_objectAtRightBorder_objectCountIs1()
 {
-	Hardware::LidarStub hardwareLidar(10);
+	Hardware::LidarMock hardwareLidar(10);
 	hardwareLidar.setValueForAngle(358, 2.5);
 	hardwareLidar.setValueForAngle(359, 2.5);
 	hardwareLidar.setValueForAngle(360, 2.5);

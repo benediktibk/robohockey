@@ -1,7 +1,12 @@
 #ifndef ROBOHOCKEY_LAYER_HARDWARE_ROBOTMOCK_H
 #define ROBOHOCKEY_LAYER_HARDWARE_ROBOTMOCK_H
 
-#include "layer/hardware/robotstub.h"
+#include "layer/hardware/robot.h"
+#include "layer/hardware/sonarmock.h"
+#include "layer/hardware/lidarmock.h"
+#include "layer/hardware/cameramock.h"
+#include "layer/hardware/odometrymock.h"
+#include "layer/hardware/enginemock.h"
 
 namespace RoboHockey
 {
@@ -10,7 +15,7 @@ namespace Layer
 namespace Hardware
 {
 	class RobotMock :
-			public RobotStub
+			public Robot
 	{
 	public:
 		RobotMock();
@@ -36,6 +41,11 @@ namespace Hardware
 		unsigned int m_callsToGetOdometry;
 		unsigned int m_callsToGetEngine;
 		unsigned int m_callsToGetSensorData;
+		SonarMock m_sonar;
+		LidarMock m_lidar;
+		CameraMock m_camera;
+		OdometryMock m_odometry;
+		EngineMock m_engine;
 	};
 }
 }
