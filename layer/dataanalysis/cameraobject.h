@@ -16,4 +16,4 @@ namespace DataAnalysis
 }
 }
 
-#endif // CAMERAOBJECT_H
+#endif

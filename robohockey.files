@@ -167,3 +167,4 @@ layer/dataanalysis/cameraobject.h
 layer/dataanalysis/cameraobject.cpp
 layer/dataanalysis/cameraobjectstest.h
 layer/dataanalysis/cameraobjectstest.cpp
+common/ColorType.h
