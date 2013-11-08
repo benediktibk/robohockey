@@ -22,6 +22,7 @@ set(LIBRARIES
 
 set(LIBRARIES_REMOTECONTROL
 	layerview
+	QtDeclarative
 )
 
 set(LIBRARIES_TEST
