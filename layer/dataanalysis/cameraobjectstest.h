@@ -14,10 +14,11 @@ namespace DataAnalysis
 			public CPPUNIT_NS::TestFixture
 	{
 		CPPUNIT_TEST_SUITE(CameraObjectsTest);
+		CPPUNIT_TEST(getObjectCount_add1Object_objectCountIs1);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
-
+		void getObjectCount_add1Object_objectCountIs1();
 	};
 }
 }
