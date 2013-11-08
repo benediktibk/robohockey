@@ -31,6 +31,7 @@ namespace DataAnalysis
 		Hardware::Odometry &m_odometry;
 		Common::Point m_target;
 		bool m_enabled;
+		bool m_rotationReached;
 	};
 }
 }
