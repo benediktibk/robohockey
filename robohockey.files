@@ -163,3 +163,7 @@ layer/autonomous/robotmock.h
 layer/autonomous/robotmock.cpp
 layer/view/robotdriverloop.h
 layer/view/robotdriverloop.cpp
+layer/dataanalysis/cameraobject.h
+layer/dataanalysis/cameraobject.cpp
+layer/dataanalysis/cameraobjectstest.h
+layer/dataanalysis/cameraobjectstest.cpp

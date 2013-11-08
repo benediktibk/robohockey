@@ -20,6 +20,7 @@
 #include "layer/autonomous/fieldobjecttest.h"
 #include "layer/view/modeltest.h"
 #include "layer/view/robotdrivertest.h"
+#include "layer/dataanalysis/cameraobjectstest.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Common::CompareTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Common::PointTest);
@@ -43,3 +44,4 @@ CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Autonomous::RobotTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Autonomous::FieldObjectTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::View::ModelTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::View::RobotDriverTest);
+CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::DataAnalysis::CameraObjectsTest);

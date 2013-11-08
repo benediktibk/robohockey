@@ -8,6 +8,7 @@ set(LAYER_DATAANALYSIS_SRC
 	lidarobject.cpp
 	lidarobjects.cpp
 	lidarobjectdistancecomparator.cpp
+	cameraobject.cpp
 )
 
 set(LAYER_DATAANALYSIS_TEST_SRC
@@ -26,6 +27,7 @@ set(LAYER_DATAANALYSIS_TEST_SRC
 	lidarobjecttest.cpp
 	lidarobjectstest.cpp
 	lidarobjectdistancecomparatortest.cpp
+	cameraobjectstest.cpp
 )
 
 add_library(layerdataanalysis ${LAYER_DATAANALYSIS_SRC})
