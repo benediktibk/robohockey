@@ -12,9 +12,18 @@ using namespace RoboHockey::Layer::Hardware;
 using namespace RoboHockey::Common;
 using namespace std;
 
-int main(int, char**)
+int main(int argc, char **argv)
 {
-	RobotImpl robot;
+	string playerServer;
+	if (argc == 2)
+		playerServer = argv[1];
+	else
+	{
+		cout << "no player server selected, using localhost" << endl;
+		playerServer = "localhost";
+	}
+
+	RobotImpl robot(playerServer);
 	Sonar &sonar = robot.getSonar();
 	Lidar &lidar = robot.getLidar();
 	Camera &camera = robot.getCamera();

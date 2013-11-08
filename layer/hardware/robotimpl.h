@@ -2,6 +2,7 @@
 #define ROBOHOCKEY_LAYER_HARDWARE_ROBOTIMPL_H
 
 #include "layer/hardware/robot.h"
+#include <string>
 
 namespace PlayerCc
 {
@@ -18,7 +19,7 @@ namespace Hardware
 			public Robot
 	{
 	public:
-		RobotImpl();
+		RobotImpl(const std::string &playerServer);
 		~RobotImpl();
 
 		virtual Sonar& getSonar();
