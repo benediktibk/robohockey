@@ -19,6 +19,7 @@ namespace DataAnalysis
 	public:
 		virtual ~Camera() { }
 
+		///@todo change to getAllObjects with vector of cameraobjects
 		virtual CameraObject& getCameraObject() const = 0;
 		virtual bool isGoalYellow() const = 0;
 	};
