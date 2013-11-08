@@ -172,3 +172,16 @@ layer/dataanalysis/cameraobjects.h
 layer/dataanalysis/cameraobjects.cpp
 layer/dataanalysis/cameraobjectstest.h
 layer/dataanalysis/cameraobjectstest.cpp
+layer/strategy/CMakeLists.txt
+layer/strategy/state.h
+layer/strategy/state.cpp
+layer/strategy/statemachine.h
+layer/strategy/statemachine.cpp
+layer/strategy/statemock.h
+layer/strategy/statemock.cpp
+layer/strategy/statemachinetest.h
+layer/strategy/statemachinetest.cpp
+layer/strategy/initialstate.h
+layer/strategy/initialstate.cpp
+layer/strategy/initialstatetest.h
+layer/strategy/initialstatetest.cpp

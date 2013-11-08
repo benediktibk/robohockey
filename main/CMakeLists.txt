@@ -9,6 +9,7 @@ include(${QT_USE_FILE})
 ADD_DEFINITIONS(${QT_DEFINITIONS})
 
 set(LIBRARIES
+	layerstrategy
 	layerautonomous
 	layerdataanalysis
 	layerhardware
@@ -26,6 +27,7 @@ set(LIBRARIES_REMOTECONTROL
 )
 
 set(LIBRARIES_TEST
+	layerstrategytest
 	layerviewtest
 	layerautonomoustest
 	layerdataanalysistest

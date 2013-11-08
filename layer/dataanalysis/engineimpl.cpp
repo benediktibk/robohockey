@@ -12,7 +12,8 @@ using namespace RoboHockey::Layer::DataAnalysis;
 EngineImpl::EngineImpl(Hardware::Engine &engine, Hardware::Odometry &odometry) :
 	m_engine(engine),
 	m_odometry(odometry),
-	m_enabled(false)
+	m_enabled(false),
+	m_rotationReached(false)
 { }
 
 void EngineImpl::goToStraight(const Common::Point &position)
@@ -35,11 +36,11 @@ void EngineImpl::updateSpeedAndMagnitude()
 	Compare positionCompare(0.05);
 	if (positionCompare.isFuzzyEqual(currentPosition, m_target))
 	{
-		m_enabled = false;
+		stop();
 		return;
 	}
 
-	Compare angleCompare(0.01);
+	Compare angleCompare(0.05);
 	Point positionDifference = m_target - currentPosition;
 	double targetOrientation = atan2(positionDifference.getY(), positionDifference.getX());
 	double currentOrientation = m_odometry.getCurrentOrientation();
@@ -49,19 +50,27 @@ void EngineImpl::updateSpeedAndMagnitude()
 	if (currentOrientation < 0)
 		currentOrientation += 2*M_PI;
 
-	if (!angleCompare.isFuzzyEqual(targetOrientation, currentOrientation))
+	if (angleCompare.isFuzzyEqual(targetOrientation, currentOrientation))
+		m_rotationReached = true;
+
+	if (!m_rotationReached)
 	{
 		double angleDifference = targetOrientation - currentOrientation;
+		double rotationSpeed = M_PI/5;
 		if ((angleDifference < M_PI && angleDifference > 0) || angleDifference < (-1)*M_PI)
-			m_engine.setSpeed(0, 0.1);
+			m_engine.setSpeed(0, rotationSpeed);
 		else
-			m_engine.setSpeed(0, -0.1);
+			m_engine.setSpeed(0, (-1)*rotationSpeed);
 	}
 	else
-		m_engine.setSpeed(10, 0);
+	{
+		m_rotationReached = true;
+		m_engine.setSpeed(0.5, 0);
+	}
 }
 
 void EngineImpl::stop()
 {
 	m_enabled = false;
+	m_rotationReached = false;
 }

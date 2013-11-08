@@ -17,9 +17,20 @@ int main(int argc, char **argv)
 	cout << "starting the remote control" << endl;
 
 	QApplication application(argc, argv);
+	QStringList arguments = application.arguments();
+	string playerServer;
+
+	if (arguments.size() == 2)
+		playerServer = arguments[1].toStdString();
+	else
+	{
+		cout << "no server selected, using localhost" << endl;
+		playerServer = "localhost";
+	}
+
 	Viewer view;
 	Model model;
-	Hardware::Robot *hardwareRobot = new Hardware::RobotImpl();
+	Hardware::Robot *hardwareRobot = new Hardware::RobotImpl(playerServer);
 	DataAnalysis::DataAnalyser *dataAnalyser = new DataAnalysis::DataAnalyserImpl(hardwareRobot);
 	Autonomous::RobotImpl autonomousRobot(dataAnalyser);
 	RobotDriver robotDriver(autonomousRobot, model);
