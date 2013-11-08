@@ -1,6 +1,8 @@
 #ifndef ROBOHOCKEY_LAYER_DATAANALYSIS_CAMERA_H
 #define ROBOHOCKEY_LAYER_DATAANALYSIS_CAMERA_H
 
+#include "layer/dataanalysis/cameraobject.h"
+
 namespace cv
 {
 class Mat;
@@ -17,7 +19,7 @@ namespace DataAnalysis
 	public:
 		virtual ~Camera() { }
 
-		virtual void getColor() const = 0;
+		virtual CameraObject& getCameraObject() const = 0;
 		virtual bool isGoalYellow() const = 0;
 	};
 }

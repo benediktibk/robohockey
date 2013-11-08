@@ -10,8 +10,10 @@ CameraImpl::CameraImpl(Hardware::Camera &camera) :
 	m_camera(camera)
 { }
 
-void CameraImpl::getColor() const
-{ }
+CameraObject &CameraImpl::getCameraObject() const
+{
+	return *m_cameraObject;
+}
 
 bool CameraImpl::isGoalYellow() const
 {
