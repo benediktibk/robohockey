@@ -7,6 +7,7 @@ using namespace PlayerCc;
 EngineImpl::EngineImpl(PlayerCc::PlayerClient *playerClient) :
 	m_engine(new Position2dProxy(playerClient, 0))
 {
+	m_engine->SetMotorEnable(true);
 }
 
 EngineImpl::~EngineImpl()
