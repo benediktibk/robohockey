@@ -21,7 +21,7 @@ namespace Strategy
 		virtual State* nextState() = 0;
 		virtual void update() = 0;
 
-	private:
+	protected:
 		Autonomous::Robot &m_robot;
 	};
 }

@@ -172,3 +172,7 @@ layer/strategy/statemock.h
 layer/strategy/statemock.cpp
 layer/strategy/statemachinetest.h
 layer/strategy/statemachinetest.cpp
+layer/strategy/initialstate.h
+layer/strategy/initialstate.cpp
+layer/strategy/initialstatetest.h
+layer/strategy/initialstatetest.cpp
