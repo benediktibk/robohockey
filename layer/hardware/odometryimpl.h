@@ -28,6 +28,10 @@ namespace Hardware
 		virtual double getCurrentOrientation();
 
 	private:
+		OdometryImpl(const OdometryImpl &odometry);
+		void operator=(const OdometryImpl &odometry);
+
+	private:
 		PlayerCc::Position2dProxy *m_odometry;
 		Common::Point m_playerPositionOffset;
 		Common::Point m_ownPositionOffset;

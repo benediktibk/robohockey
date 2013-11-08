@@ -62,3 +62,9 @@ void RobotImpl::stop()
 	DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
 	engine.stop();
 }
+
+RobotImpl::RobotImpl(const RobotImpl &)
+{ }
+
+void RobotImpl::operator=(const RobotImpl &)
+{ }

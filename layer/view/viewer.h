@@ -14,13 +14,19 @@ namespace Layer
 {
 namespace View
 {
-	class Viewer : public QDialog
+	class Viewer :
+			public QDialog
 	{
 		Q_OBJECT
 
 	public:
-		explicit Viewer(QWidget *parent = 0);
+		Viewer();
 		~Viewer();
+
+	private:
+		// forbid copies
+		Viewer(const Viewer &viewer);
+		void operator=(const Viewer &viewer);
 
 	private:
 		Ui::viewer *ui;

@@ -30,6 +30,11 @@ namespace DataAnalysis
 		virtual void updateActuators();
 
 	private:
+		// forbid copies
+		DataAnalyserImpl(const DataAnalyserImpl &robot);
+		void operator=(const DataAnalyserImpl &robot);
+
+	private:
 		Hardware::Robot *m_robot;
 		Sonar *m_sonar;
 		Lidar *m_lidar;

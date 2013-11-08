@@ -71,3 +71,9 @@ void DataAnalyserImpl::updateActuators()
 {
 	m_engine->updateSpeedAndMagnitude();
 }
+
+DataAnalyserImpl::DataAnalyserImpl(const DataAnalyserImpl &)
+{ }
+
+void DataAnalyserImpl::operator=(const DataAnalyserImpl &)
+{ }

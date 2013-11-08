@@ -67,3 +67,9 @@ void RobotImpl::updateSensorData()
 {
 	m_playerClient->Read();
 }
+
+RobotImpl::RobotImpl(const RobotImpl &)
+{ }
+
+void RobotImpl::operator=(const RobotImpl &)
+{ }

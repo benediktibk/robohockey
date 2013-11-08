@@ -34,3 +34,9 @@ bool CameraImpl::isValid() const
 {
 	return m_capture->isOpened();
 }
+
+CameraImpl::CameraImpl(const CameraImpl &)
+{ }
+
+void CameraImpl::operator=(const CameraImpl &)
+{ }

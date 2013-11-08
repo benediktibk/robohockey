@@ -20,3 +20,9 @@ void EngineImpl::setSpeed(double magnitude, double rotation)
 {
 	return m_engine->SetSpeed(magnitude, rotation);
 }
+
+EngineImpl::EngineImpl(const EngineImpl &)
+{ }
+
+void EngineImpl::operator=(const EngineImpl &)
+{ }

@@ -25,6 +25,10 @@ namespace Hardware
 		virtual double getDistanceForSensor(unsigned int sensorNumber);
 
 	private:
+		SonarImpl(const SonarImpl &sonar);
+		void operator=(const SonarImpl &sonar);
+
+	private:
 		PlayerCc::RangerProxy *m_sonar;
 	};
 }

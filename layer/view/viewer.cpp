@@ -3,8 +3,8 @@
 
 using namespace RoboHockey::Layer::View;
 
-Viewer::Viewer(QWidget *parent) :
-	QDialog(parent  ),
+Viewer::Viewer() :
+	QDialog(0),
 	ui(new Ui::viewer)
 {
 	ui->setupUi(this);
@@ -14,3 +14,10 @@ Viewer::~Viewer()
 {
 	delete ui;
 }
+
+Viewer::Viewer(const Viewer &) :
+	QDialog(0)
+{ }
+
+void Viewer::operator=(const Viewer &)
+{ }

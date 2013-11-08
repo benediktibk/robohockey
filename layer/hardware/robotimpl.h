@@ -29,6 +29,11 @@ namespace Hardware
 		virtual void updateSensorData();
 
 	private:
+		// forbid copies
+		RobotImpl(const RobotImpl &robot);
+		void operator=(const RobotImpl &robot);
+
+	private:
 		Sonar *m_sonar;
 		Lidar *m_lidar;
 		Camera *m_camera;

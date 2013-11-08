@@ -31,6 +31,11 @@ namespace Autonomous
 		virtual void stop();
 
 	private:
+		// forbid copies
+		RobotImpl(const RobotImpl &robot);
+		void operator=(const RobotImpl &robot);
+
+	private:
 		DataAnalysis::DataAnalyser *m_dataAnalyser;
 		Common::Point m_currentPosition;
 		Common::Point m_targetPosition;

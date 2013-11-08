@@ -34,6 +34,12 @@ double OdometryImpl::getCurrentOrientation()
 	return m_odometry->GetYaw() - m_playerOrientationOffset - m_ownOrientationOffset;
 }
 
+OdometryImpl::OdometryImpl(const OdometryImpl &)
+{ }
+
+void OdometryImpl::operator=(const OdometryImpl &)
+{ }
+
 Point OdometryImpl::getCurrentPosition()
 {
 	return Point(m_odometry->GetXPos(), m_odometry->GetYPos()) - m_playerPositionOffset - m_ownPositionOffset;

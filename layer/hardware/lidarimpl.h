@@ -24,6 +24,11 @@ namespace Hardware
 		virtual double getDistance(unsigned int angle);
 
 	private:
+		// forbid copies
+		LidarImpl(const LidarImpl &lidar);
+		void operator=(const LidarImpl &lidar);
+
+	private:
 		PlayerCc::RangerProxy *m_laser;
 	};
 }
