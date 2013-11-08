@@ -13,6 +13,37 @@ CameraImpl::CameraImpl(Hardware::Camera &camera) :
 CameraObjects CameraImpl::getAllCameraObjects() const
 {
 	CameraObjects cameraObjects;
+	Mat yellowGoalPic, yellowPukPic, bluePukPic;
+	vector<vector<Point> > contours;
+	vector<Vec4i> hierarchy;
+	filterFrame();
+
+	inRange(m_fileredFrame, cv::Scalar(105, 185, 200), cv::Scalar(130, 215, 240), yellowGoalPic);
+	findContours( yellowGoalPic, contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE, Point(0, 0) );
+	vector<Rect> boundRect( contours.size() );
+	for(unsigned int i = 0; i < contours.size(); i++ )
+	   {
+		///@todo assert only one yellow goal
+		 boundRect[i] = boundingRect( Mat(contours[i]) );
+		 cameraObjects.addObject(CameraObject(Common::ColorTypeYellowGoal, boundRect[i]));
+	   }
+
+	inRange(m_fileredFrame, cv::Scalar(40, 155, 200), cv::Scalar(80, 195, 240), yellowPukPic);
+	findContours( yellowGoalPic, contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE, Point(0, 0) );
+	for(unsigned int i = 0; i < contours.size(); i++ )
+	   {
+		 boundRect[i] = boundingRect( Mat(contours[i]) );
+		 cameraObjects.addObject(CameraObject(Common::ColorTypeYellowGoal, boundRect[i]));
+	   }
+
+	inRange(m_fileredFrame, cv::Scalar(95, 60, 15), cv::Scalar(135, 100, 55), bluePukPic);
+	findContours( yellowGoalPic, contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE, Point(0, 0) );
+	for(unsigned int i = 0; i < contours.size(); i++ )
+	   {
+		 boundRect[i] = boundingRect( Mat(contours[i]) );
+		 cameraObjects.addObject(CameraObject(Common::ColorTypeYellowGoal, boundRect[i]));
+	   }
+
 	return cameraObjects;
 }
 
