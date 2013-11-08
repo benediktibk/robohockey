@@ -19,6 +19,9 @@ int main(int argc, char **argv)
 		playerServer = "localhost";
 	}
 
+	cout << "starting the robot" << endl;
+	cout << "program can be closed with 'q'" << endl;
+
 	Hardware::Robot *hardwareRobot = new Hardware::RobotImpl(playerServer);
 	DataAnalysis::DataAnalyser *dataAnalyser = new DataAnalysis::DataAnalyserImpl(hardwareRobot);
 	Autonomous::Robot *autonomousRobot = new Autonomous::RobotImpl(dataAnalyser);
