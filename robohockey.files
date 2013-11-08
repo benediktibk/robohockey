@@ -163,3 +163,12 @@ layer/autonomous/robotmock.h
 layer/autonomous/robotmock.cpp
 layer/view/robotdriverloop.h
 layer/view/robotdriverloop.cpp
+layer/strategy/CMakeLists.txt
+layer/strategy/state.h
+layer/strategy/state.cpp
+layer/strategy/statemachine.h
+layer/strategy/statemachine.cpp
+layer/strategy/statemock.h
+layer/strategy/statemock.cpp
+layer/strategy/statemachinetest.h
+layer/strategy/statemachinetest.cpp
