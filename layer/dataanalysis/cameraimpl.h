@@ -25,7 +25,7 @@ namespace DataAnalysis
 		virtual bool isGoalYellow() const;
 
 	private:
-		void filterFrame();
+		void filterFrame() const;
 
 	private:
 		Hardware::Camera &m_camera;

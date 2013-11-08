@@ -17,6 +17,7 @@ bool CameraImpl::isGoalYellow() const
 {
 	Mat goal;
 	int white;
+	filterFrame();
 	//Filter parameter 2 und 3: untere Grenze (b,g,r), obere Grenze (b,g,r)
 	inRange(m_fileredFrame, cv::Scalar(105, 185, 200), cv::Scalar(130, 215, 240), goal);
 	Rect range(0, 130, 320, 110);
@@ -35,7 +36,7 @@ bool CameraImpl::isGoalYellow() const
 		return false;
 }
 
-void CameraImpl::filterFrame()
+void CameraImpl::filterFrame() const
 {
 	medianBlur(m_camera.getFrame(), m_fileredFrame, 9);
 }
