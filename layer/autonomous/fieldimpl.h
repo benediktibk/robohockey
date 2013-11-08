@@ -2,6 +2,7 @@
 #define ROBOHOCKEY_LAYER_AUTONOMOUS_FIELDIMPL_H
 
 #include "layer/autonomous/field.h"
+#include <vector>
 
 namespace RoboHockey
 {
@@ -21,12 +22,17 @@ namespace DataAnalysis
 
 namespace Autonomous
 {
+	class FieldObject;
+
 	class FieldImpl :
 			public Field
 	{
 	public:
 		FieldImpl(DataAnalysis::OdometryImpl &odometry, DataAnalysis::LidarImpl &lidar, DataAnalysis::CameraImpl &camera);
+		virtual ~FieldImpl();
+
 		virtual void update();
+		virtual std::vector<FieldObject> &getAllFieldObjects();
 
 	private:
 		virtual void updateWithLidarData();
@@ -38,6 +44,7 @@ namespace Autonomous
 		DataAnalysis::CameraImpl *m_camera;
 
 		Common::RobotPosition *m_position;
+		std::vector<FieldObject> m_fieldObjects;
 	};
 }
 }
