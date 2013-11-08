@@ -20,6 +20,7 @@ namespace DataAnalysis
 	{
 	public:
 		CameraImpl(Hardware::Camera &camera);
+
 		virtual void getColor() const;
 		virtual bool isGoalYellow() const;
 
