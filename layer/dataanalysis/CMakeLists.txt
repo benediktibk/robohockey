@@ -9,6 +9,7 @@ set(LAYER_DATAANALYSIS_SRC
 	lidarobjects.cpp
 	lidarobjectdistancecomparator.cpp
 	cameraobject.cpp
+	cameraobjects.cpp
 )
 
 set(LAYER_DATAANALYSIS_TEST_SRC
