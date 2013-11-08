@@ -10,7 +10,7 @@ do
 		headerFile=${headerFileWithoutPath%.h}
 		path=${headerFileWithPath%/*}
 		subProjectPath=${path##*./}
-		echo "checking include guard of ${subProjectPath}/${headerFile}.h"
+		#echo "checking include guard of ${subProjectPath}/${headerFile}.h"
 
 		firstLine=$(head --lines 1 ${headerFileWithPath})
 		secondLine=$(head --lines 2 ${headerFileWithPath} | tail --lines 1)
