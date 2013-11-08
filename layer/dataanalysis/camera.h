@@ -18,6 +18,7 @@ namespace DataAnalysis
 		virtual ~Camera() { }
 
 		virtual void getColor() const = 0;
+		virtual bool isGoalYellow() const = 0;
 	};
 }
 }

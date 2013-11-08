@@ -15,12 +15,3 @@ void CameraTest::getColor_mockHardwareCamera_atLeastOneCallToGetFrame()
 	CPPUNIT_ASSERT(hardwareCamera.getCallsToGetFrame() > 0);
 }
 
-/*void CameraTest::isGoalYellow_mockHardwareCamera_atLeastOneCallToGetFrame()
-{
-	Hardware::CameraMock hardwareCamera;
-	CameraImpl camera(hardwareCamera);
-
-	camera.isGoalYellow();
-
-	CPPUNIT_ASSERT(hardwareCamera.getCallsToGetFrame() > 0);
-}*/
