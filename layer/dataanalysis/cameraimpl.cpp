@@ -16,7 +16,7 @@ void CameraImpl::getColor() const
 bool CameraImpl::isGoalYellow() const
 {
 	Mat goal;
-	int withe;
+	int white;
 	//Filter parameter 2 und 3: untere Grenze (b,g,r), obere Grenze (b,g,r)
 	inRange(m_fileredFrame, cv::Scalar(105, 185, 200), cv::Scalar(130, 215, 240), goal);
 	Rect range(0, 130, 320, 110);
@@ -25,11 +25,11 @@ bool CameraImpl::isGoalYellow() const
 		for (int j = 0; j < range.width; j++)
 		{
 			if (goal.at<uchar>(i, j) == 255.0)
-				withe++;
+				white++;
 		}
 	}
 	//mehr als 70% der pixel sind weiß
-	if(withe > 0.7*range.area())
+	if(white > 0.7*range.area())
 		return true;
 	else
 		return false;
