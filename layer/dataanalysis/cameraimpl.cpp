@@ -10,9 +10,10 @@ CameraImpl::CameraImpl(Hardware::Camera &camera) :
 	m_camera(camera)
 { }
 
-CameraObject &CameraImpl::getCameraObject() const
+CameraObjects CameraImpl::getAllCameraObjects() const
 {
-	return *m_cameraObject;
+	CameraObjects cameraObjects;
+	return cameraObjects;
 }
 
 bool CameraImpl::isGoalYellow() const

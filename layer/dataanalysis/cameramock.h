@@ -15,14 +15,13 @@ namespace DataAnalysis
 	public:
 		CameraMock();
 
-		virtual CameraObject& getCameraObject() const;
+		virtual CameraObjects getAllCameraObjects() const;
 		virtual bool isGoalYellow() const;
 
 		void setIsGoalYellow(bool value);
 
 	private:
 		bool m_isGoalYellow;
-		CameraObject *m_cameraObject;
 	};
 }
 }

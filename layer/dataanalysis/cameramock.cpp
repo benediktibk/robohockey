@@ -4,13 +4,14 @@ using namespace RoboHockey::Layer::DataAnalysis;
 
 
 CameraMock::CameraMock() :
-	m_isGoalYellow(false),
-	m_cameraObject(new CameraObject(Common::ColorTypeFalse, cv::Rect(0,0,1,1)))
+	m_isGoalYellow(false)
 { }
 
-CameraObject &CameraMock::getCameraObject() const
+CameraObjects CameraMock::getAllCameraObjects() const
 {
-	return *m_cameraObject;
+	CameraObjects objects;
+	objects.addObject(CameraObject(Common::ColorTypeFalse,cv::Rect(0,0,1,1)));
+	return objects;
 }
 
 bool CameraMock::isGoalYellow() const

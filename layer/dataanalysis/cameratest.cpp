@@ -10,7 +10,7 @@ void CameraTest::getCameraObject_mockHardwareCamera_atLeastOneCallToGetFrame()
 	Hardware::CameraMock hardwareCamera;
 	CameraImpl camera(hardwareCamera);
 
-	camera.getCameraObject();
+	camera.getAllCameraObjects();
 
 	CPPUNIT_ASSERT(hardwareCamera.getCallsToGetFrame() > 0);
 }

@@ -21,7 +21,7 @@ namespace DataAnalysis
 	public:
 		CameraImpl(Hardware::Camera &camera);
 
-		virtual CameraObject& getCameraObject() const;
+		virtual CameraObjects getAllCameraObjects() const;
 		virtual bool isGoalYellow() const;
 
 	private:
@@ -30,7 +30,6 @@ namespace DataAnalysis
 	private:
 		Hardware::Camera &m_camera;
 		cv::Mat m_fileredFrame;
-		CameraObject *m_cameraObject;
 	};
 }
 }
