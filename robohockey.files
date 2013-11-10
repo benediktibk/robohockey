@@ -185,3 +185,7 @@ layer/strategy/initialstate.h
 layer/strategy/initialstate.cpp
 layer/strategy/initialstatetest.h
 layer/strategy/initialstatetest.cpp
+layer/view/graphicshow.h
+layer/view/graphicshow.cpp
+layer/view/window.h
+layer/view/window.cpp

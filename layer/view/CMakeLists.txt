@@ -8,6 +8,8 @@ SET(LAYER_VIEW_SRC
 	model.cpp
 	robotdriver.cpp
 	robotdriverloop.cpp
+        window.cpp
+        graphicshow.cpp
 )
 
 SET(LAYER_VIEW_TEST_SRC
@@ -19,6 +21,8 @@ SET(LAYER_VIEW_HEADER
 	viewer.h
 	robotdriverloop.h
 	model.h
+        window.h
+        graphicshow.h
 )
 
 SET(LAYER_VIEW_FORMS
