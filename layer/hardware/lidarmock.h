@@ -3,6 +3,7 @@
 
 #include "layer/hardware/lidar.h"
 #include <map>
+#include <string>
 
 namespace RoboHockey
 {
@@ -20,6 +21,7 @@ namespace Hardware
 		virtual double getDistance(unsigned int angle);
 		unsigned int getCallsToGetDistance() const;
 		void setValueForAngle(unsigned int angle, double value);
+		void readSensorDataFromFile(const std::string &fileName);
 
 	private:
 		unsigned int m_callsToGetDistance;

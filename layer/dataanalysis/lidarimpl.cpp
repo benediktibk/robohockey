@@ -13,6 +13,7 @@ using namespace boost;
 
 const double LidarImpl::m_edgeTreshold = 0.5;
 const int LidarImpl::m_minimumWidthInSensorNumbers = 3;
+const double LidarImpl::m_maximumWidthInRadiants = 1;
 
 LidarImpl::LidarImpl(Hardware::Lidar &lidar) :
 	m_lidar(lidar),
@@ -47,6 +48,10 @@ LidarObjects LidarImpl::getAllObjects(const Point &ownPosition, double ownOrient
 		double orientationOfObjectRelativeToOwnOrientation = calculateOrientationFromSensorNumber(middleSensorNumber);
 		double orientationOfObject = ownOrientation - orientationOfObjectRelativeToOwnOrientation;
 		double widthInAngle = calculateOrientationFromSensorNumber(end - 1) - calculateOrientationFromSensorNumber(start + 1);
+
+		if (widthInAngle > m_maximumWidthInRadiants)
+			continue;
+
 		double widthOfObject = calculateWidthFromAngleAndDistance(widthInAngle, distance);
 		double totalDistance = distance + widthOfObject/2;
 		Point positionOfObjectRelativeToOwnPosition =

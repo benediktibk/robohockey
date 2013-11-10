@@ -54,3 +54,13 @@ add_custom_target(
 
 )
 endif(DOXYGEN_FOUND)
+
+set(TESTFILES
+	lidar_1.txt
+)
+
+foreach(file ${TESTFILES})
+	file(	COPY
+			${CMAKE_CURRENT_SOURCE_DIR}/resources/testfiles/${file}
+			DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/main/bin/resources/testfiles/)
+endforeach()

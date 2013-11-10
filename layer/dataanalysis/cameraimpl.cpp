@@ -5,6 +5,7 @@
 using namespace RoboHockey::Layer;
 using namespace RoboHockey::Layer::DataAnalysis;
 using namespace cv;
+using namespace std;
 
 CameraImpl::CameraImpl(Hardware::Camera &camera) :
 	m_camera(camera)

@@ -189,3 +189,4 @@ layer/view/graphicshow.h
 layer/view/graphicshow.cpp
 layer/view/window.h
 layer/view/window.cpp
+resources/testfiles/lidar_1.txt

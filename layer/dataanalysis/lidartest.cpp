@@ -3,6 +3,7 @@
 #include "layer/hardware/lidarmock.h"
 #include "common/compare.h"
 #include <math.h>
+#include <assert.h>
 
 using namespace RoboHockey::Common;
 using namespace RoboHockey::Layer;
@@ -189,4 +190,16 @@ void LidarTest::getAllObjects_objectAtRightBorder_objectCountIs1()
 
 	vector<LidarObject> objectsInForeground = objects.getObjectsWithDistanceBelow(5);
 	CPPUNIT_ASSERT_EQUAL((size_t)1, objectsInForeground.size());
+}
+
+void LidarTest::getAllObjects_realWorldExample_runsThroughWithoutACrash()
+{
+	Hardware::LidarMock hardwareLidar(10);
+	hardwareLidar.readSensorDataFromFile("resources/testfiles/lidar_1.txt");
+	LidarImpl lidar(hardwareLidar);
+	Point ownPosition(0, 0);
+
+	lidar.getAllObjects(ownPosition, 0);
+
+	CPPUNIT_ASSERT(true);
 }

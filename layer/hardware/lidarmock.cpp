@@ -1,4 +1,6 @@
 #include "layer/hardware/lidarmock.h"
+#include <fstream>
+#include <sstream>
 #include <assert.h>
 
 using namespace RoboHockey::Layer::Hardware;
@@ -30,6 +32,35 @@ double LidarMock::getDistance(unsigned int angle)
 void LidarMock::setValueForAngle(unsigned int angle, double value)
 {
 	m_valueForAngle[angle] = value;
+}
+
+void LidarMock::readSensorDataFromFile(const string &fileName)
+{
+	ifstream file(fileName.c_str());
+
+	assert(file.is_open());
+	while (!file.eof())
+	{
+		string line;
+		char lastCharacter = 'a';
+
+		while (!file.eof() && lastCharacter != '\n')
+		{
+			file.get(lastCharacter);
+			if (lastCharacter != '\n')
+				line += lastCharacter;
+		}
+
+		stringstream lineStream(line);
+
+		unsigned int sensorNumber;
+		double value;
+		lineStream >> sensorNumber;
+		char buffer[2];
+		lineStream.get(buffer, 2);
+		lineStream >> value;
+		setValueForAngle(sensorNumber, value);
+	}
 }
 
 unsigned int LidarMock::getCallsToGetDistance() const

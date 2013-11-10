@@ -3,11 +3,17 @@
 
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
+#include <string>
 
 namespace RoboHockey
 {
 namespace Layer
 {
+namespace Hardware
+{
+	class LidarMock;
+}
+
 namespace DataAnalysis
 {
 	class LidarTest :
@@ -22,6 +28,7 @@ namespace DataAnalysis
 		CPPUNIT_TEST(getAllObjects_oneObjectBehindAnotherOneRight_objectCountIs2);
 		CPPUNIT_TEST(getAllObjects_objectAtLeftBorder_objectCountIs1);
 		CPPUNIT_TEST(getAllObjects_objectAtRightBorder_objectCountIs1);
+		CPPUNIT_TEST(getAllObjects_realWorldExample_runsThroughWithoutACrash);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
@@ -33,6 +40,7 @@ namespace DataAnalysis
 		void getAllObjects_oneObjectBehindAnotherOneRight_objectCountIs2();
 		void getAllObjects_objectAtLeftBorder_objectCountIs1();
 		void getAllObjects_objectAtRightBorder_objectCountIs1();
+		void getAllObjects_realWorldExample_runsThroughWithoutACrash();
 	};
 }
 }
