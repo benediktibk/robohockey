@@ -1,5 +1,6 @@
 #include "layer/autonomous/fieldimpl.h"
 #include "common/robotposition.h"
+#include "common/compare.h"
 #include "layer/dataanalysis/odometryimpl.h"
 #include "layer/dataanalysis/lidarimpl.h"
 #include "layer/dataanalysis/cameraimpl.h"
@@ -40,7 +41,7 @@ std::vector<FieldObject>& FieldImpl::getAllFieldObjects()
 void FieldImpl::updateWithLidarData()
 {
 	DataAnalysis::LidarObjects lidarObjects =  m_lidar->getAllObjects(Point(m_position->getX(), m_position->getY()), m_position->getOrientation());
-	vector<DataAnalysis::LidarObject> objectsInRange = lidarObjects.getObjectsWithDistanceBelow(5);
+	vector<DataAnalysis::LidarObject> objectsInRange = lidarObjects.getObjectsWithDistanceBelow(4);
 
 	removeAllFieldObjectsInVisibleArea();
 
@@ -65,9 +66,71 @@ void FieldImpl::updateWithCameraData()
 
 }
 
-void FieldImpl::transformCoordinateSystem(Point &, double )
+void FieldImpl::transformCoordinateSystem(Point &newOrigin, double rotation)
 {
-	//! @todo Transform all Objects to new Coordinate Origin
+	moveCoordinateSystem(newOrigin);
+	rotateCoordinateSystem(rotation);
+}
+
+void FieldImpl::rotateCoordinateSystem(double alpha)
+{
+	//! @todo test and implement rotation of coordinate system
+
+	vector<FieldObject> newSystem;
+
+	for (vector<FieldObject>::iterator i = m_fieldObjects.begin(); i != m_fieldObjects.end(); ++i)
+	{
+		Point currentCenter = ((*i).getCircle()).getCenter();
+		double currentDiameter = ((*i).getCircle()).getDiameter();
+		FieldObjectColor color = (*i).getColor();
+
+		Point newCenter;
+		newCenter.setX( cos(alpha)*currentCenter.getX() - sin(alpha)*currentCenter.getY() );
+		newCenter.setY( sin(alpha)*currentCenter.getX() + cos(alpha)*currentCenter.getY() );
+
+		newSystem.push_back(FieldObject(Circle(newCenter, currentDiameter), color));
+	}
+
+	m_fieldObjects.clear();
+	m_fieldObjects = newSystem;
+
+}
+
+void FieldImpl::moveCoordinateSystem(Point &newOrigin)
+{
+	//! @todo test and implement movment of coordinate system
+
+	vector<FieldObject> newSystem;
+
+	for (vector<FieldObject>::iterator i = m_fieldObjects.begin(); i != m_fieldObjects.end(); ++i)
+	{
+		Point currentCenter = ((*i).getCircle()).getCenter();
+		double currentDiameter = ((*i).getCircle()).getDiameter();
+		Point newCenter = newOrigin - currentCenter;
+		FieldObjectColor color = (*i).getColor();
+
+		newSystem.push_back(FieldObject(Circle(newCenter, currentDiameter), color));
+	}
+
+	m_fieldObjects.clear();
+	m_fieldObjects = newSystem;
+
+}
+
+std::vector<Point> &FieldImpl::getPointsOfObjectsWithDiameterAndColor(double diameter, FieldObjectColor color)
+{
+	vector<Point> *resultObjects = new vector<Point>;
+
+	Compare compare(0.02);
+	for (vector<FieldObject>::iterator i = m_fieldObjects.begin(); i != m_fieldObjects.end(); ++i)
+	{
+		if (compare.isFuzzyEqual(((*i).getCircle()).getDiameter(), diameter) && (*i).getColor() == color)
+		{
+			resultObjects->push_back(((*i).getCircle()).getCenter());
+		}
+	}
+
+	return *resultObjects;
 }
 
 void FieldImpl::removeAllFieldObjectsInVisibleArea()
@@ -87,7 +150,7 @@ void FieldImpl::removeAllFieldObjectsInVisibleArea()
 		Point currentCenter = ((*i).getCircle()).getCenter();
 
 		//! @todo Use a global parameter for distance filtering
-		if (isTargetPointRightOfLineWithParameters(referencePoint, directionVector, currentCenter) && currentCenter.distanceTo(referencePoint) < 3)
+		if (isTargetPointRightOfLineWithParameters(referencePoint, directionVector, currentCenter) && currentCenter.distanceTo(referencePoint) < 4)
 		{
 			m_fieldObjects.erase(i);
 		}
