@@ -8,6 +8,7 @@ namespace RoboHockey
 {
 namespace Common
 {
+	class Point;
 	class RobotPosition;
 }
 namespace Layer
@@ -37,6 +38,8 @@ namespace Autonomous
 	private:
 		virtual void updateWithLidarData();
 		virtual void updateWithOdometryData();
+
+		virtual void transformCoordinateSystem(Common::Point &origin, double orientation);
 
 	private:
 		DataAnalysis::OdometryImpl *m_odometry;
