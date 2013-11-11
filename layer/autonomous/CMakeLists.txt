@@ -9,6 +9,7 @@ set(LAYER_AUTONOMOUS_TEST_SRC
 	fieldobjecttest.cpp
 	robotmock.cpp
 	fieldmock.cpp
+	fieldtest.cpp
 )
 
 add_library(layerautonomous ${LAYER_AUTONOMOUS_SRC})
