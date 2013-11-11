@@ -57,6 +57,7 @@ endif(DOXYGEN_FOUND)
 
 set(TESTFILES
 	lidar_1.txt
+	blue_goal.png
 )
 
 foreach(file ${TESTFILES})
