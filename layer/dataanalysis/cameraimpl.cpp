@@ -14,15 +14,14 @@ CameraImpl::CameraImpl(Hardware::Camera &camera) :
 CameraObjects CameraImpl::getAllCameraObjects()
 {
 	CameraObjects cameraObjects;
-	Mat yellowGoalPic, yellowPukPic, bluePukPic;
+	Mat yellowPic, bluePic;
 	vector<vector<Point> > contours;
 	vector<Vec4i> hierarchy;
 	vector<Rect> boundRect;
 	filterFrameAndConvertToHLS();
 
-	///@todo wegen hls keine unterscheidung zwischen puck und goal mehr => nur zwei schleifen
-	inRange(m_fileredFrame, cv::Scalar(20, 100, 50), cv::Scalar(30, 200, 255), yellowGoalPic);
-	findContours( yellowGoalPic, contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE, Point(0, 0) );
+	inRange(m_fileredFrame, cv::Scalar(20, 100, 50), cv::Scalar(30, 200, 255), yellowPic);
+	findContours( yellowPic, contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE, Point(0, 0) );
 	if (!contours.empty())
 	{
 		for(unsigned int i = 0; i < contours.size(); i++ )
@@ -34,21 +33,9 @@ CameraObjects CameraImpl::getAllCameraObjects()
 		contours.clear();
 	}
 
-	inRange(m_fileredFrame, cv::Scalar(40, 155, 200), cv::Scalar(80, 195, 240), yellowPukPic);
-	findContours( yellowPukPic, contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE, Point(0, 0) );
-	if (!contours.empty())
-	{
-		for(unsigned int i = 0; i < contours.size(); i++ )
-		{
-			boundRect.push_back(boundingRect( Mat(contours[i])));
-			cameraObjects.addObject(CameraObject(Common::ColorTypeYellowGoal, boundRect[i]));
-		}
-		boundRect.clear();
-		contours.clear();
-	}
-
-	inRange(m_fileredFrame, cv::Scalar(95, 60, 15), cv::Scalar(135, 100, 55), bluePukPic);
-	findContours( bluePukPic, contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE, Point(0, 0) );
+	///@todo find color values for blue objects
+	inRange(m_fileredFrame, cv::Scalar(95, 60, 15), cv::Scalar(135, 100, 55), bluePic);
+	findContours( bluePic, contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE, Point(0, 0) );
 	if (!contours.empty())
 	{
 		for(unsigned int i = 0; i < contours.size(); i++ )
