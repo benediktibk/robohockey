@@ -170,3 +170,5 @@ common/robotposition.h
 common/robotposition.cpp
 common/robotpositiontest.h
 common/robotpositiontest.cpp
+layer/autonomous/fieldmock.h
+layer/autonomous/fieldmock.cpp

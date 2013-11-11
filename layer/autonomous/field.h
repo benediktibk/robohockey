@@ -13,7 +13,7 @@ namespace Autonomous
 	public:
 		virtual ~Field() { }
 
-		virtual void updateField() = 0;
+		virtual void update() = 0;
 	};
 }
 }
