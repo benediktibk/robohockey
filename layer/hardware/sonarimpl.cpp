@@ -6,8 +6,7 @@ using namespace PlayerCc;
 
 SonarImpl::SonarImpl(PlayerCc::PlayerClient *playerClient) :
 	m_sonar(new RangerProxy(playerClient, 0))
-{
-}
+{ }
 
 SonarImpl::~SonarImpl()
 {
@@ -19,3 +18,9 @@ double SonarImpl::getDistanceForSensor(unsigned int sensorNumber)
 {
 	return m_sonar->GetRange(sensorNumber);
 }
+
+SonarImpl::SonarImpl(const SonarImpl &)
+{ }
+
+void SonarImpl::operator=(const SonarImpl &)
+{ }

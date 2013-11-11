@@ -1,8 +1,10 @@
 #include "layer/hardware/lidarimpl.h"
 #include <libplayerc++/playerc++.h>
+#include <iostream>
 
 using namespace RoboHockey::Layer::Hardware;
 using namespace PlayerCc;
+using namespace std;
 
 LidarImpl::LidarImpl(PlayerClient *playerClient) :
 	m_laser(new RangerProxy(playerClient, 1))
@@ -16,5 +18,13 @@ LidarImpl::~LidarImpl()
 
 double LidarImpl::getDistance(unsigned int angle)
 {
+	assert(angle >= getMinimumSensorNumber());
+	assert(angle <= getMaximumSensorNumber());
 	return m_laser->GetRange(angle);
 }
+
+LidarImpl::LidarImpl(const LidarImpl &)
+{ }
+
+void LidarImpl::operator=(const LidarImpl &)
+{ }

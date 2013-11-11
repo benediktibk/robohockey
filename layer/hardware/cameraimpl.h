@@ -25,6 +25,11 @@ namespace Hardware
 		virtual bool isValid() const;
 
 	private:
+		// forbid copies
+		CameraImpl(const CameraImpl &camera);
+		void operator=(const CameraImpl &camera);
+
+	private:
 		cv::VideoCapture *m_capture;
 
 	};

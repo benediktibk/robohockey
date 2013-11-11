@@ -10,12 +10,18 @@ OdometryImpl::OdometryImpl(Hardware::Odometry &odometry) :
 	m_odometry(odometry)
 { }
 
-void OdometryImpl::setCurrentPosition(const Point &position) const
+void OdometryImpl::setCurrentPosition(const Point &position, double orientation)
 {
-    m_odometry.setCurrentPosition(position);
+	m_odometry.setCurrentPosition(position, orientation);
 }
 
-const Point &OdometryImpl::getCurrentPosition() const
+Point OdometryImpl::getCurrentPosition() const
 {
-    return m_odometry.getCurrentPosition();
+	return m_odometry.getCurrentPosition();
 }
+
+double OdometryImpl::getCurrentOrientation() const
+{
+	return m_odometry.getCurrentOrientation();
+}
+

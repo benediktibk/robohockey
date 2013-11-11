@@ -31,19 +31,21 @@ namespace DataAnalysis
 		std::list<std::pair<int, int> > findStartAndEndOfObjects(
 				const std::list<int> &positiveEdges, const std::list<int> &negativeEdges) const;
 		Common::DiscreteFunction* readInData() const;
+		double calculateOrientationFromSensorNumber(unsigned int value) const;
 
 	private:
-		static double calculateOrientationFromSensorNumber(int value);
 		static double calculateWidthFromAngleAndDistance(double angle, double distance);
 		static std::list<int> replaceFollowingEdgesWithMiddlePosition(const std::list<int> &edges);
 
 	private:
 		Hardware::Lidar &m_lidar;
+		unsigned int m_minimumSensorNumber;
+		unsigned int m_maximumSensorNumber;
 
 	private:
 		static const double m_edgeTreshold;
-		static const int m_maximumSensorNumber;
 		static const int m_minimumWidthInSensorNumbers;
+		static const double m_maximumWidthInRadiants;
 	};
 }
 }

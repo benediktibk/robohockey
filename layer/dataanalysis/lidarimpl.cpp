@@ -12,11 +12,13 @@ using namespace std;
 using namespace boost;
 
 const double LidarImpl::m_edgeTreshold = 0.5;
-const int LidarImpl::m_maximumSensorNumber = 360;
 const int LidarImpl::m_minimumWidthInSensorNumbers = 3;
+const double LidarImpl::m_maximumWidthInRadiants = 1;
 
 LidarImpl::LidarImpl(Hardware::Lidar &lidar) :
-	m_lidar(lidar)
+	m_lidar(lidar),
+	m_minimumSensorNumber(lidar.getMinimumSensorNumber()),
+	m_maximumSensorNumber(lidar.getMaximumSensorNumber())
 { }
 
 LidarObjects LidarImpl::getAllObjects(const Point &ownPosition, double ownOrientation) const
@@ -24,8 +26,8 @@ LidarObjects LidarImpl::getAllObjects(const Point &ownPosition, double ownOrient
 	LidarObjects objects(ownPosition);
 	scoped_ptr<DiscreteFunction> distances(readInData());
 
-	distances->suppressNoise();
 	DiscreteFunction distanceEdges(*distances);
+	distanceEdges.suppressNoise();
 	distanceEdges.differentiate(1);
 	list<int> positiveEdges = distanceEdges.getPositionsWithValuesAbove(m_edgeTreshold);
 	list<int> negativeEdges = distanceEdges.getPositionsWithValuesBelow((-1)*m_edgeTreshold);
@@ -41,11 +43,15 @@ LidarObjects LidarImpl::getAllObjects(const Point &ownPosition, double ownOrient
 		if (widthInSensorNumbers < m_minimumWidthInSensorNumbers)
 			continue;
 
+		double widthInAngle = calculateOrientationFromSensorNumber(end - 1) - calculateOrientationFromSensorNumber(start + 1);
+		if (widthInAngle > m_maximumWidthInRadiants)
+			continue;
+
+		distances->suppressNoiseInRange(start + 1, end - 1);
 		double distance = distances->getMinimumInRange(start + 1, end - 1);
 		int middleSensorNumber = (end + start)/2;
 		double orientationOfObjectRelativeToOwnOrientation = calculateOrientationFromSensorNumber(middleSensorNumber);
-		double orientationOfObject = ownOrientation - orientationOfObjectRelativeToOwnOrientation;
-		double widthInAngle = calculateOrientationFromSensorNumber(end - 1) - calculateOrientationFromSensorNumber(start + 1);
+		double orientationOfObject = ownOrientation + orientationOfObjectRelativeToOwnOrientation;
 		double widthOfObject = calculateWidthFromAngleAndDistance(widthInAngle, distance);
 		double totalDistance = distance + widthOfObject/2;
 		Point positionOfObjectRelativeToOwnPosition =
@@ -105,15 +111,17 @@ DiscreteFunction *LidarImpl::readInData() const
 {
 	DiscreteFunction *distances = new DiscreteFunction(0, m_maximumSensorNumber);
 
-	for (int i = 0; i <= m_maximumSensorNumber; ++i)
+	for (unsigned int i = m_minimumSensorNumber; i <= m_maximumSensorNumber; ++i)
 		distances->setValue(i, m_lidar.getDistance(i));
 
 	return distances;
 }
 
-double LidarImpl::calculateOrientationFromSensorNumber(int value)
+double LidarImpl::calculateOrientationFromSensorNumber(unsigned int value) const
 {
-	return static_cast<double>(value)/m_maximumSensorNumber*M_PI - M_PI/2;
+	double k = M_PI/(static_cast<double>(m_maximumSensorNumber) - m_minimumSensorNumber);
+	double d = (-1)*M_PI/2;
+	return value*k + d;
 }
 
 double LidarImpl::calculateWidthFromAngleAndDistance(double angle, double distance)

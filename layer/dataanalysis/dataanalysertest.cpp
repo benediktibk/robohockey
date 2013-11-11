@@ -2,6 +2,7 @@
 #include "layer/dataanalysis/dataanalyserimpl.h"
 #include "layer/hardware/robotmock.h"
 
+using namespace RoboHockey::Common;
 using namespace RoboHockey::Layer;
 using namespace RoboHockey::Layer::DataAnalysis;
 

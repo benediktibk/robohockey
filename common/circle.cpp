@@ -1,4 +1,6 @@
 #include "common/circle.h"
+#include "common/compare.h"
+#include <assert.h>
 
 using namespace RoboHockey::Common;
 
@@ -9,7 +11,9 @@ Circle::Circle() :
 Circle::Circle(const Point &center, double diameter) :
 	m_center(center),
 	m_diameter(diameter)
-{ }
+{
+	assert(m_diameter >= 0);
+}
 
 void Circle::setCenter(const Point &point)
 {
@@ -24,6 +28,7 @@ const Point &Circle::getCenter() const
 void Circle::setDiameter(double value)
 {
 	m_diameter = value;
+	assert(m_diameter >= 0);
 }
 
 double Circle::getDiameter() const
@@ -41,4 +46,3 @@ double Circle::getDistanceTo(const Point &position) const
 {
 	return position.distanceTo(m_center) - m_diameter/2;
 }
-

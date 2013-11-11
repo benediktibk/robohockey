@@ -1,7 +1,6 @@
 cmake_minimum_required(VERSION 2.8)
 project(robohockey)
 
-
 if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE debug)
 endif()
@@ -55,3 +54,28 @@ add_custom_target(
 
 )
 endif(DOXYGEN_FOUND)
+
+set(TESTFILES
+	lidar_1.txt
+	lidar_2.txt
+	lidar_3.txt
+	lidar_4.txt
+	lidar_5.txt
+	lidar_6.txt
+	lidar_7.txt
+	lidar_8.txt
+	lidar_9.txt
+	blue_goal.png
+	blue_puck_1.png
+	nothing.png
+	yellow_and_blue_puck_1.png
+	yellow_goal.png
+	yellow_puck_1.png
+	yellow_puck_twice.png
+)
+
+foreach(file ${TESTFILES})
+	file(	COPY
+			${CMAKE_CURRENT_SOURCE_DIR}/resources/testfiles/${file}
+			DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/main/bin/resources/testfiles/)
+endforeach()

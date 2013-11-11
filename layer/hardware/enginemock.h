@@ -17,9 +17,13 @@ namespace Hardware
 
 		virtual void setSpeed(double magnitude, double rotation);
 		unsigned int getCallsToSetSpeed() const;
+		double getLastMagnitude() const;
+		double getLastRotation() const;
 
 	private:
 		unsigned int m_callsToSetSpeed;
+		double m_lastMagnitude;
+		double m_lastRotation;
 	};
 }
 }

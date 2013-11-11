@@ -18,12 +18,13 @@ namespace DataAnalysis
 	public:
 		virtual ~DataAnalyser() { }
 
-		virtual const Sonar& getSonar() const = 0;
+		virtual Sonar& getSonar() = 0;
 		virtual const Lidar& getLidar() const = 0;
 		virtual const Camera& getCamera() const = 0;
 		virtual Odometry& getOdometry() = 0;
 		virtual Engine& getEngine() = 0;
 		virtual void updateSensorData() = 0;
+		virtual void updateActuators() = 0;
 	};
 }
 }

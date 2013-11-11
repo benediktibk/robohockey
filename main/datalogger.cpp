@@ -12,9 +12,18 @@ using namespace RoboHockey::Layer::Hardware;
 using namespace RoboHockey::Common;
 using namespace std;
 
-int main(int, char**)
+int main(int argc, char **argv)
 {
-	RobotImpl robot;
+	string playerServer;
+	if (argc == 2)
+		playerServer = argv[1];
+	else
+	{
+		cout << "no player server selected, using localhost" << endl;
+		playerServer = "localhost";
+	}
+
+	RobotImpl robot(playerServer);
 	Sonar &sonar = robot.getSonar();
 	Lidar &lidar = robot.getLidar();
 	Camera &camera = robot.getCamera();
@@ -22,12 +31,6 @@ int main(int, char**)
 	fstream fileSonar("sonar.txt", ios_base::out | ios_base::trunc);
 	fstream fileLidar("lidar.txt", ios_base::out | ios_base::trunc);
 	fstream fileOdometry("odometry.txt", ios_base::out | ios_base::trunc);
-
-	if (!robot.isValid())
-	{
-		cout << "couldn't connect to the player server" << endl;
-		return 1;
-	}
 
 	cout << "updating the current sensor data" << endl;
 	robot.updateSensorData();

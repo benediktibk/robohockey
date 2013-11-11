@@ -2,6 +2,7 @@
 #define ROBOHOCKEY_LAYER_DATAANALYSIS_CAMERAIMPL_H
 
 #include "layer/dataanalysis/camera.h"
+#include <opencv2/opencv.hpp>
 
 namespace RoboHockey
 {
@@ -18,11 +19,17 @@ namespace DataAnalysis
 			public Camera
 	{
 	public:
-		CameraImpl(const Hardware::Camera &camera);
-		virtual void getColor() const;
+		CameraImpl(Hardware::Camera &camera);
+
+		virtual CameraObjects getAllCameraObjects();
+		virtual bool isGoalYellow();
 
 	private:
-		const Hardware::Camera &m_camera;
+		void filterFrame();
+
+	private:
+		Hardware::Camera &m_camera;
+		cv::Mat m_fileredFrame;
 	};
 }
 }
