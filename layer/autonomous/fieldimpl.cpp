@@ -71,14 +71,32 @@ void FieldImpl::transformCoordinateSystem(Point &newOrigin, double orientation)
 	moveCoordinateSystem(newOrigin);
 }
 
-void FieldImpl::rotateCoordinateSystem(double /*rotation*/)
+void FieldImpl::rotateCoordinateSystem(double rotation)
 {
-	//! @todo Implement Rotation of Coordinate sysetm
+	//! @todo test and implement rotation of coordinate system
+
+	vector<FieldObject> newSystem;
+	double alpha = rotation;
+
+	for (vector<FieldObject>::iterator i = m_fieldObjects.begin(); i != m_fieldObjects.end(); ++i)
+	{
+		Point currentCenter = ((*i).getCircle()).getCenter();
+		double currentDiameter = ((*i).getCircle()).getDiameter();
+		FieldObjectColor color = (*i).getColor();
+
+		Point newCenter;
+		newCenter.setX( cos(alpha)*currentCenter.getX() - sin(alpha)*currentCenter.getY() );
+		newCenter.setY( sin(alpha)*currentCenter.getX() + cos(alpha)*currentCenter.getY() );
+
+		newSystem.push_back(FieldObject(Circle(newCenter, currentDiameter), color));
+	}
 
 }
 
 void FieldImpl::moveCoordinateSystem(Point &newOrigin)
 {
+	//! @todo test and implement movment of coordinate system
+
 	vector<FieldObject> newSystem;
 
 	for (vector<FieldObject>::iterator i = m_fieldObjects.begin(); i != m_fieldObjects.end(); ++i)
