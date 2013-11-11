@@ -25,8 +25,6 @@ void EngineImpl::goToStraight(const Common::Point &position)
 
 void EngineImpl::updateSpeedAndMagnitude()
 {
-	//! @todo implement a control as we can not rely on the real hardware to do exactly what we want
-
 	if (!m_enabled)
 	{
 		m_engine.setSpeed(0, 0);

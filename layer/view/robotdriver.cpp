@@ -1,6 +1,7 @@
 #include "layer/view/robotdriver.h"
 #include "layer/view/model.h"
 #include "layer/autonomous/robot.h"
+#include <iostream>
 
 using namespace RoboHockey::Common;
 using namespace RoboHockey::Layer::View;
@@ -19,6 +20,7 @@ void RobotDriver::update()
 
 	if (m_robot.stuckAtObstacle())
 	{
+		std::cout << "stuck at obstacle" << std::endl;
 		m_model.setData(vector<Point>());
 		m_robot.stop();
 	}

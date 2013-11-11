@@ -38,8 +38,6 @@ void EngineImpl::setSpeed(double magnitude, double rotation)
 	if (fabs(magnitude) < 0.001)
 		magnitude = 0;
 
-	std::cout << "magnitude: " << magnitude << ", rotation: " << rotation << std::endl;
-
 	return m_engine->SetSpeed(magnitude, rotation);
 }
 

@@ -47,8 +47,7 @@ int main(int argc, char **argv)
 //	targets.push_back(RoboHockey::Common::Point(0, 3));
 //	targets.push_back(RoboHockey::Common::Point(0.5, 3));
 //	targets.push_back(RoboHockey::Common::Point(0, 0));
-	targets.push_back(RoboHockey::Common::Point(1, 0));
-	targets.push_back(RoboHockey::Common::Point(1, -3));
+	targets.push_back(RoboHockey::Common::Point(3, 0));
 	model.setData(targets);
 
 	//view.show();
