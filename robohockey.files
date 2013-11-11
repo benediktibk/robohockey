@@ -160,6 +160,15 @@ layer/view/robotdriver.cpp
 layer/view/robotdrivertest.h
 layer/view/robotdrivertest.cpp
 layer/autonomous/robotmock.h
+layer/autonomous/field.h
+layer/autonomous/fieldimpl.h
+layer/autonomous/fieldimpl.cpp
+common/robotposition.h
+common/robotposition.cpp
+common/robotpositiontest.h
+common/robotpositiontest.cpp
+layer/autonomous/fieldmock.h
+layer/autonomous/fieldmock.cpp
 layer/autonomous/robotmock.cpp
 layer/view/robotdriverloop.h
 layer/view/robotdriverloop.cpp
