@@ -41,6 +41,8 @@ namespace Autonomous
 
 		virtual void transformCoordinateSystem(Common::Point &origin, double orientation);
 
+		virtual std::vector<FieldObject> &getAllFieldObjectsInVisibleArea();
+
 	private:
 		DataAnalysis::OdometryImpl *m_odometry;
 		DataAnalysis::LidarImpl *m_lidar;

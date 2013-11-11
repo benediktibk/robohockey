@@ -4,6 +4,7 @@
 #include "layer/dataanalysis/lidarimpl.h"
 #include "layer/dataanalysis/cameraimpl.h"
 #include "layer/autonomous/fieldobject.h"
+#include "math.h"
 
 using namespace RoboHockey::Layer::Autonomous;
 using namespace RoboHockey::Common;
@@ -61,4 +62,32 @@ void FieldImpl::updateWithOdometryData()
 void FieldImpl::transformCoordinateSystem(Point &, double )
 {
 	//! @todo: Transform all Objects to new Coordinate Origin
+}
+
+std::vector<FieldObject> &FieldImpl::getAllFieldObjectsInVisibleArea()
+{
+	vector<FieldObject> *visibleObjects = new vector<FieldObject>;
+	Point directionVector;
+	Point referencePoint(m_position->getX(), m_position->getY());
+	double orientation = m_position->getOrientation();
+	double pi = M_PI;
+
+	double alpha = (0.5*pi) - orientation;
+	directionVector.setX(-(cos(alpha)));
+	directionVector.setY(sin(alpha));
+
+
+	for (vector<FieldObject>::iterator i = m_fieldObjects.begin(); i != m_fieldObjects.end(); ++i)
+	{
+		Point currentCenter = ((*i).getCircle()).getCenter();
+
+		// Liegt der Punkt rechts von der Geraden?
+		if (0 < ( directionVector.getY()*(currentCenter.getX() - referencePoint.getX()) - directionVector.getX()*(currentCenter.getY() - referencePoint.getY()) ))
+		{
+			visibleObjects->push_back(*i);
+		}
+
+	}
+
+	return *visibleObjects;
 }
