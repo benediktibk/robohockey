@@ -45,6 +45,7 @@ void FieldImpl::updateWithLidarData()
 
 	for (vector<DataAnalysis::LidarObject>::iterator i = objectsInRange.begin(); i != objectsInRange.end(); ++i)
 	{
+		//! todo: Check color of all Objects with Camera!
 		FieldObject *object = new FieldObject(*i,FieldObjectColorUnknown);
 		m_fieldObjects.push_back(*object);
 	}

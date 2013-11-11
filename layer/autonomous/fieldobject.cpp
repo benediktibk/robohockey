@@ -18,3 +18,8 @@ FieldObjectColor FieldObject::getColor() const
 {
 	return m_color;
 }
+
+void FieldObject::setColor(FieldObjectColor color)
+{
+	m_color = color;
+}
