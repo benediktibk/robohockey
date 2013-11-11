@@ -190,3 +190,7 @@ layer/view/graphicshow.cpp
 layer/view/window.h
 layer/view/window.cpp
 resources/testfiles/lidar_1.txt
+resources/testfiles/lidar_2.txt
+resources/testfiles/lidar_3.txt
+resources/testfiles/lidar_4.txt
+resources/testfiles/lidar_5.txt

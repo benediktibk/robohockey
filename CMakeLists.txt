@@ -58,6 +58,9 @@ endif(DOXYGEN_FOUND)
 set(TESTFILES
 	lidar_1.txt
 	lidar_2.txt
+	lidar_3.txt
+	lidar_4.txt
+	lidar_5.txt
 )
 
 foreach(file ${TESTFILES})
