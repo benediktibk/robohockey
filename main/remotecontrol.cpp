@@ -43,10 +43,12 @@ int main(int argc, char **argv)
 
 	// uncomment this to see some movement
 	std::vector<RoboHockey::Common::Point> targets;
-	targets.push_back(RoboHockey::Common::Point(-1, 0));
-	targets.push_back(RoboHockey::Common::Point(0, 4));
-	targets.push_back(RoboHockey::Common::Point(1, 4));
-	targets.push_back(RoboHockey::Common::Point(0, 4));
+//	targets.push_back(RoboHockey::Common::Point(-1, 0));
+//	targets.push_back(RoboHockey::Common::Point(0, 3));
+//	targets.push_back(RoboHockey::Common::Point(0.5, 3));
+//	targets.push_back(RoboHockey::Common::Point(0, 0));
+	targets.push_back(RoboHockey::Common::Point(1, 0));
+	targets.push_back(RoboHockey::Common::Point(1, -3));
 	model.setData(targets);
 
 	//view.show();

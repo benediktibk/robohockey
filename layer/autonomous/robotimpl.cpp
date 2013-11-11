@@ -36,7 +36,7 @@ bool RobotImpl::stuckAtObstacle()
 
 bool RobotImpl::reachedTarget()
 {
-	Compare compare(0.05);
+	Compare compare(0.1);
 	return compare.isFuzzyEqual(m_currentPosition, m_targetPosition);
 }
 

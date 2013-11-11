@@ -34,14 +34,14 @@ void EngineImpl::updateSpeedAndMagnitude()
 	}
 
 	Point currentPosition = m_odometry.getCurrentPosition();
-	Compare positionCompare(0.05);
+	Compare positionCompare(0.1);
 	if (positionCompare.isFuzzyEqual(currentPosition, m_target))
 	{
 		stop();
 		return;
 	}
 
-	Compare angleCompare(0.05);
+	Compare angleCompare(0.1);
 	Point positionDifference = m_target - currentPosition;
 	double targetOrientation = atan2(positionDifference.getY(), positionDifference.getX());
 	double currentOrientation = m_odometry.getCurrentOrientation();
@@ -77,8 +77,8 @@ void EngineImpl::driveAndTurn(const Point &currentPosition, double targetOrienta
 {
 	double distance = currentPosition.distanceTo(m_target);
 	double orientationDifference = calculateOrientationDifference(targetOrientation, currentOrientation);
-	double distanceAmplification = 1.0/2;
-	double orientationAmplification = 1;
+	double distanceAmplification = 0.5;
+	double orientationAmplification = 0.5;
 	m_engine.setSpeed(distanceAmplification*distance, orientationAmplification*orientationDifference);
 }
 

@@ -33,7 +33,7 @@ void EngineImpl::setSpeed(double magnitude, double rotation)
 		rotation = (-1)*M_PI;
 
 	// minimum tresholds
-	if (fabs(rotation) < 0.001*M_PI)
+	if (fabs(rotation) < 0.1)
 		rotation = 0;
 	if (fabs(magnitude) < 0.001)
 		magnitude = 0;
