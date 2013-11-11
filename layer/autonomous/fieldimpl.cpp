@@ -40,7 +40,7 @@ std::vector<FieldObject>& FieldImpl::getAllFieldObjects()
 void FieldImpl::updateWithLidarData()
 {
 	DataAnalysis::LidarObjects lidarObjects =  m_lidar->getAllObjects(Point(m_position->getX(), m_position->getY()), m_position->getOrientation());
-	vector<DataAnalysis::LidarObject> objectsInRange = lidarObjects.getObjectsWithDistanceBelow(5);
+	vector<DataAnalysis::LidarObject> objectsInRange = lidarObjects.getObjectsWithDistanceBelow(4);
 
 	removeAllFieldObjectsInVisibleArea();
 
@@ -65,18 +65,17 @@ void FieldImpl::updateWithCameraData()
 
 }
 
-void FieldImpl::transformCoordinateSystem(Point &newOrigin, double orientation)
+void FieldImpl::transformCoordinateSystem(Point &newOrigin, double rotation)
 {
-	rotateCoordinateSystem(orientation);
 	moveCoordinateSystem(newOrigin);
+	rotateCoordinateSystem(rotation);
 }
 
-void FieldImpl::rotateCoordinateSystem(double rotation)
+void FieldImpl::rotateCoordinateSystem(double alpha)
 {
 	//! @todo test and implement rotation of coordinate system
 
 	vector<FieldObject> newSystem;
-	double alpha = rotation;
 
 	for (vector<FieldObject>::iterator i = m_fieldObjects.begin(); i != m_fieldObjects.end(); ++i)
 	{
@@ -90,6 +89,9 @@ void FieldImpl::rotateCoordinateSystem(double rotation)
 
 		newSystem.push_back(FieldObject(Circle(newCenter, currentDiameter), color));
 	}
+
+	m_fieldObjects.clear();
+	m_fieldObjects = newSystem;
 
 }
 
@@ -108,6 +110,9 @@ void FieldImpl::moveCoordinateSystem(Point &newOrigin)
 
 		newSystem.push_back(FieldObject(Circle(newCenter, currentDiameter), color));
 	}
+
+	m_fieldObjects.clear();
+	m_fieldObjects = newSystem;
 
 }
 
@@ -128,7 +133,7 @@ void FieldImpl::removeAllFieldObjectsInVisibleArea()
 		Point currentCenter = ((*i).getCircle()).getCenter();
 
 		//! @todo Use a global parameter for distance filtering
-		if (isTargetPointRightOfLineWithParameters(referencePoint, directionVector, currentCenter) && currentCenter.distanceTo(referencePoint) < 3)
+		if (isTargetPointRightOfLineWithParameters(referencePoint, directionVector, currentCenter) && currentCenter.distanceTo(referencePoint) < 4)
 		{
 			m_fieldObjects.erase(i);
 		}
