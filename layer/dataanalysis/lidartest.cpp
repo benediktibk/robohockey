@@ -341,3 +341,29 @@ void LidarTest::getAllObjects_onePuckInQuiteADistanceVersion2_distanceAndDiamete
 	CPPUNIT_ASSERT(compare.isFuzzyEqual(2.26, distance));
 	CPPUNIT_ASSERT(compare.isFuzzyEqual(0.04, object.getDiameter()));
 }
+
+void LidarTest::getAllObjects_maximumDistanceToBoundaryPostOfOwnFieldPart_distanceAndDiameterIsCorrect()
+{
+	Hardware::LidarMock hardwareLidar;
+	hardwareLidar.readSensorDataFromFile("resources/testfiles/lidar_9.txt");
+	LidarImpl lidar(hardwareLidar);
+	Point ownPosition(0, 0);
+
+	LidarObjects objects = lidar.getAllObjects(ownPosition, 0);
+
+	vector<LidarObject> objectsInForeground = objects.getObjectsWithDistanceBelow(3.2);
+	vector<LidarObject> farDistantObjects;
+
+	for (vector<LidarObject>::const_iterator i = objectsInForeground.begin(); i != objectsInForeground.end(); ++i)
+	{
+		double distance = ownPosition.distanceTo(i->getCenter());
+		if (distance > 2.5)
+			farDistantObjects.push_back(*i);
+	}
+	CPPUNIT_ASSERT_EQUAL((size_t)1, farDistantObjects.size());
+	const LidarObject &object = farDistantObjects.front();
+	double distance = ownPosition.distanceTo(object.getCenter());
+	Compare compare(0.05);
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(3.06, distance));
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(0.06, object.getDiameter()));
+}

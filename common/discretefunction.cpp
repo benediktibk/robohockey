@@ -49,9 +49,9 @@ void DiscreteFunction::suppressNoiseInRange(int start, int end)
 	assert(withinRange(start));
 	assert(withinRange(end));
 	size_t range = end - start;
-	if (range >= m_coreNoiseSuppressionBig.size())
+	if (range >= m_coreNoiseSuppressionBig.size() + 2)
 		applyCore(m_coreNoiseSuppressionBig, start, end);
-	else if (range >= m_coreNoiseSuppressionSmall.size())
+	else if (range >= m_coreNoiseSuppressionSmall.size() + 2)
 		applyCore(m_coreNoiseSuppressionSmall, start, end);
 }
 
