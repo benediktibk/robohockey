@@ -24,6 +24,11 @@ namespace Hardware
 		virtual void setSpeed(double magnitude, double rotation);
 
 	private:
+		// forbid copies
+		EngineImpl(const EngineImpl &engine);
+		void operator=(const EngineImpl &engine);
+
+	private:
 		PlayerCc::Position2dProxy *m_engine;
 	};
 }

@@ -12,7 +12,7 @@ void OdometryTest::setCurrentPosition_mockHardwareOdometry_atLeastOneCallToSetCu
 	Hardware::OdometryMock hardwareOdometry;
 	OdometryImpl odometry(hardwareOdometry);
 
-	odometry.setCurrentPosition(Point(3, 4));
+	odometry.setCurrentPosition(Point(3, 4), 2);
 
 	CPPUNIT_ASSERT(hardwareOdometry.getCallsToSetCurrentPosition() > 0);
 }

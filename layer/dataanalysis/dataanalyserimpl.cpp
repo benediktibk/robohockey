@@ -16,7 +16,7 @@ DataAnalyserImpl::DataAnalyserImpl(Hardware::Robot *robot) :
 	m_lidar(new LidarImpl(m_robot->getLidar())),
 	m_camera(new CameraImpl(m_robot->getCamera())),
 	m_odometry(new OdometryImpl(m_robot->getOdometry())),
-	m_engine(new EngineImpl(m_robot->getEngine()))
+	m_engine(new EngineImpl(m_robot->getEngine(), m_robot->getOdometry()))
 {
 	assert(m_robot != 0);
 }
@@ -37,7 +37,7 @@ DataAnalyserImpl::~DataAnalyserImpl()
 	m_robot = 0;
 }
 
-const Sonar &DataAnalyserImpl::getSonar() const
+Sonar &DataAnalyserImpl::getSonar()
 {
 	return *m_sonar;
 }
@@ -66,3 +66,14 @@ void DataAnalyserImpl::updateSensorData()
 {
 	m_robot->updateSensorData();
 }
+
+void DataAnalyserImpl::updateActuators()
+{
+	m_engine->updateSpeedAndMagnitude();
+}
+
+DataAnalyserImpl::DataAnalyserImpl(const DataAnalyserImpl &)
+{ }
+
+void DataAnalyserImpl::operator=(const DataAnalyserImpl &)
+{ }

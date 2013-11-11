@@ -1,14 +1,23 @@
 #include "layer/view/viewer.h"
 #include "ui_viewer.h"
 
-viewer::viewer(QWidget *parent) :
-    QDialog(parent  ),
-    ui(new Ui::viewer)
+using namespace RoboHockey::Layer::View;
+
+Viewer::Viewer() :
+	QDialog(0),
+	ui(new Ui::viewer)
 {
-    ui->setupUi(this);
+	ui->setupUi(this);
 }
 
-viewer::~viewer()
+Viewer::~Viewer()
 {
-    delete ui;
+	delete ui;
 }
+
+Viewer::Viewer(const Viewer &) :
+	QDialog(0)
+{ }
+
+void Viewer::operator=(const Viewer &)
+{ }

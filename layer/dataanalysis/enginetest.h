@@ -14,11 +14,15 @@ namespace DataAnalysis
 			public CPPUNIT_NS::TestFixture
 	{
 		CPPUNIT_TEST_SUITE(EngineTest);
-		CPPUNIT_TEST(setSpeed_mockHardwareEngine_atLeastOneCallToSetSpeed);
+		CPPUNIT_TEST(goToStraight_currentPositionDifferentToTarget_atLeastOneCallToSetSpeed);
+		CPPUNIT_TEST(goToStraight_lookingRightButHaveToGoLeftUp_lastRotationIsLeft);
+		CPPUNIT_TEST(goToStraight_lookingRightButHaveToGoDown_lastRotationIsRight);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
-		void setSpeed_mockHardwareEngine_atLeastOneCallToSetSpeed();
+		void goToStraight_currentPositionDifferentToTarget_atLeastOneCallToSetSpeed();
+		void goToStraight_lookingRightButHaveToGoLeftUp_lastRotationIsLeft();
+		void goToStraight_lookingRightButHaveToGoDown_lastRotationIsRight();
 	};
 }
 }

@@ -20,15 +20,16 @@ namespace DataAnalysis
 	{
 	public:
 		CameraImpl(Hardware::Camera &camera);
-		virtual void getColor() const;
+
+		virtual CameraObjects getAllCameraObjects();
+		virtual bool isGoalYellow();
 
 	private:
-		cv::Mat getSmoothFrame();
-		cv::Mat getFilteredFrame();
-
+		void filterFrame();
 
 	private:
 		Hardware::Camera &m_camera;
+		cv::Mat m_fileredFrame;
 	};
 }
 }

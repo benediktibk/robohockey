@@ -18,3 +18,9 @@ double SonarImpl::getDistanceForSensor(unsigned int sensorNumber)
 {
 	return m_sonar->GetRange(sensorNumber);
 }
+
+SonarImpl::SonarImpl(const SonarImpl &)
+{ }
+
+void SonarImpl::operator=(const SonarImpl &)
+{ }

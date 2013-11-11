@@ -17,9 +17,9 @@ namespace Hardware
 	public:
 		virtual ~Odometry() { }
 
-		virtual void setCurrentPosition(const Common::Point &position) = 0;
-        virtual double getCurrentOrientation() = 0;
-		virtual const Common::Point& getCurrentPosition() = 0;
+		virtual void setCurrentPosition(const Common::Point &position, double orientation) = 0;
+		virtual double getCurrentOrientation() = 0;
+		virtual Common::Point getCurrentPosition() = 0;
 	};
 }
 }

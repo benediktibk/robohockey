@@ -8,15 +8,17 @@ set(LAYER_DATAANALYSIS_SRC
 	lidarobject.cpp
 	lidarobjects.cpp
 	lidarobjectdistancecomparator.cpp
+	cameraobject.cpp
+	cameraobjects.cpp
 )
 
 set(LAYER_DATAANALYSIS_TEST_SRC
-	enginestub.cpp
-	odometrystub.cpp
-	lidarstub.cpp
-	sonarstub.cpp
-	camerastub.cpp
-	dataanalyserstub.cpp
+	enginemock.cpp
+	odometrymock.cpp
+	lidarmock.cpp
+	sonarmock.cpp
+	cameramock.cpp
+	dataanalysermock.cpp
 	dataanalysertest.cpp
 	cameratest.cpp
 	enginetest.cpp
@@ -26,6 +28,8 @@ set(LAYER_DATAANALYSIS_TEST_SRC
 	lidarobjecttest.cpp
 	lidarobjectstest.cpp
 	lidarobjectdistancecomparatortest.cpp
+	cameraobjecttest.cpp
+	cameraobjectstest.cpp
 )
 
 add_library(layerdataanalysis ${LAYER_DATAANALYSIS_SRC})

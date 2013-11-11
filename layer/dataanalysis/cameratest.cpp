@@ -5,12 +5,13 @@
 using namespace RoboHockey::Layer;
 using namespace RoboHockey::Layer::DataAnalysis;
 
-void CameraTest::getColor_mockHardwareCamera_atLeastOneCallToGetFrame()
+void CameraTest::getCameraObject_mockHardwareCamera_atLeastOneCallToGetFrame()
 {
 	Hardware::CameraMock hardwareCamera;
 	CameraImpl camera(hardwareCamera);
 
-	camera.getColor();
+	camera.getAllCameraObjects();
 
 	CPPUNIT_ASSERT(hardwareCamera.getCallsToGetFrame() > 0);
 }
+

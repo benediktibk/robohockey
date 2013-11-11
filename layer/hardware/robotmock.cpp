@@ -14,37 +14,36 @@ RobotMock::RobotMock() :
 Sonar &RobotMock::getSonar()
 {
 	++m_callsToGetSonar;
-	return RobotStub::getSonar();
+	return m_sonar;
 }
 
 Lidar &RobotMock::getLidar()
 {
 	++m_callsToGetLidar;
-	return RobotStub::getLidar();
+	return m_lidar;
 }
 
 Camera &RobotMock::getCamera()
 {
 	++m_callsToGetCamera;
-	return RobotStub::getCamera();
+	return m_camera;
 }
 
 Odometry &RobotMock::getOdometry()
 {
 	++m_callsToGetOdometry;
-	return RobotStub::getOdometry();
+	return m_odometry;
 }
 
 Engine &RobotMock::getEngine()
 {
 	++m_callsToGetEngine;
-	return RobotStub::getEngine();
+	return m_engine;
 }
 
 void RobotMock::updateSensorData()
 {
 	++m_callsToGetSensorData;
-	RobotStub::updateSensorData();
 }
 
 unsigned int RobotMock::getCallsToGetSonar() const
@@ -75,4 +74,14 @@ unsigned int RobotMock::getCallsToGetEngine() const
 unsigned int RobotMock::getCallsToGetSensorData() const
 {
 	return m_callsToGetSensorData;
+}
+
+EngineMock &RobotMock::getEngineMock()
+{
+	return m_engine;
+}
+
+OdometryMock &RobotMock::getOdometryMock()
+{
+	return m_odometry;
 }

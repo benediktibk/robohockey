@@ -22,3 +22,9 @@ double LidarImpl::getDistance(unsigned int angle)
 	assert(angle <= getMaximumSensorNumber());
 	return m_laser->GetRange(angle);
 }
+
+LidarImpl::LidarImpl(const LidarImpl &)
+{ }
+
+void LidarImpl::operator=(const LidarImpl &)
+{ }

@@ -7,10 +7,11 @@
 #include <libplayerc++/playerc++.h>
 
 using namespace RoboHockey::Layer::Hardware;
+using namespace std;
 
-RobotImpl::RobotImpl()
+RobotImpl::RobotImpl(const string &playerServer)
 {
-	m_playerClient = new PlayerCc::PlayerClient("localhost", 6665);
+	m_playerClient = new PlayerCc::PlayerClient(playerServer.c_str(), 6665);
 	m_sonar = new SonarImpl(m_playerClient);
 	m_lidar = new LidarImpl(m_playerClient);
 	m_camera = new CameraImpl(0);
@@ -67,3 +68,9 @@ void RobotImpl::updateSensorData()
 {
 	m_playerClient->Read();
 }
+
+RobotImpl::RobotImpl(const RobotImpl &)
+{ }
+
+void RobotImpl::operator=(const RobotImpl &)
+{ }
