@@ -163,6 +163,10 @@ layer/autonomous/robotmock.h
 layer/autonomous/field.h
 layer/autonomous/fieldimpl.h
 layer/autonomous/fieldimpl.cpp
+common/watch.h
+common/watch.cpp
+common/watchtest.h
+common/watchtest.cpp
 common/robotposition.h
 common/robotposition.cpp
 common/robotpositiontest.h
