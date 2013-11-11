@@ -43,15 +43,14 @@ LidarObjects LidarImpl::getAllObjects(const Point &ownPosition, double ownOrient
 		if (widthInSensorNumbers < m_minimumWidthInSensorNumbers)
 			continue;
 
-		double distance = distances->getMinimumInRange(start + 1, end - 1);
-		int middleSensorNumber = (end + start)/2;
-		double orientationOfObjectRelativeToOwnOrientation = calculateOrientationFromSensorNumber(middleSensorNumber);
-		double orientationOfObject = ownOrientation - orientationOfObjectRelativeToOwnOrientation;
 		double widthInAngle = calculateOrientationFromSensorNumber(end - 1) - calculateOrientationFromSensorNumber(start + 1);
-
 		if (widthInAngle > m_maximumWidthInRadiants)
 			continue;
 
+		double distance = distances->getMinimumInRange(start + 1, end - 1);
+		int middleSensorNumber = (end + start)/2;
+		double orientationOfObjectRelativeToOwnOrientation = calculateOrientationFromSensorNumber(middleSensorNumber);
+		double orientationOfObject = ownOrientation + orientationOfObjectRelativeToOwnOrientation;
 		double widthOfObject = calculateWidthFromAngleAndDistance(widthInAngle, distance);
 		double totalDistance = distance + widthOfObject/2;
 		Point positionOfObjectRelativeToOwnPosition =
@@ -119,7 +118,9 @@ DiscreteFunction *LidarImpl::readInData() const
 
 double LidarImpl::calculateOrientationFromSensorNumber(unsigned int value) const
 {
-	return static_cast<double>(value)/(static_cast<double>(m_maximumSensorNumber) - m_minimumSensorNumber)*M_PI - M_PI/2;
+	double k = M_PI/(static_cast<double>(m_maximumSensorNumber) - m_minimumSensorNumber);
+	double d = (-1)*M_PI/2;
+	return value*k + d;
 }
 
 double LidarImpl::calculateWidthFromAngleAndDistance(double angle, double distance)

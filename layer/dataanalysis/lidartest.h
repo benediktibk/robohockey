@@ -29,6 +29,8 @@ namespace DataAnalysis
 		CPPUNIT_TEST(getAllObjects_objectAtLeftBorder_objectCountIs1);
 		CPPUNIT_TEST(getAllObjects_objectAtRightBorder_objectCountIs1);
 		CPPUNIT_TEST(getAllObjects_realWorldExample_runsThroughWithoutACrash);
+		CPPUNIT_TEST(getAllObjects_objectRightOfView_positionOfOnlyObjectIsCorrect);
+		CPPUNIT_TEST(getAllObjects_objectLeftOfView_positionOfOnlyObjectIsCorrect);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
@@ -41,6 +43,8 @@ namespace DataAnalysis
 		void getAllObjects_objectAtLeftBorder_objectCountIs1();
 		void getAllObjects_objectAtRightBorder_objectCountIs1();
 		void getAllObjects_realWorldExample_runsThroughWithoutACrash();
+		void getAllObjects_objectRightOfView_positionOfOnlyObjectIsCorrect();
+		void getAllObjects_objectLeftOfView_positionOfOnlyObjectIsCorrect();
 	};
 }
 }
