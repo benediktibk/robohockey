@@ -1,6 +1,6 @@
 
 DOXYFILE_ENCODING      = UTF-8
-PROJECT_NAME           = "Ultimate Bomberman"
+PROJECT_NAME           = "RoboHockey"
 PROJECT_NUMBER         = rev. @HG_CURRENT_REV@
 PROJECT_BRIEF          =
 PROJECT_LOGO           =
@@ -86,13 +86,13 @@ WARN_IF_DOC_ERROR      = YES
 WARN_NO_PARAMDOC       = NO
 WARN_FORMAT            = "$file:$line: $text"
 WARN_LOGFILE           =
-INPUT                  = @CMAKE_CURRENT_SOURCE_DIR@/README.md @CMAKE_CURRENT_SOURCE_DIR@/common @CMAKE_CURRENT_SOURCE_DIR@/gameengine @CMAKE_CURRENT_SOURCE_DIR@/graphic @CMAKE_CURRENT_SOURCE_DIR@/main @CMAKE_CURRENT_SOURCE_DIR@/physic @CMAKE_CURRENT_SOURCE_DIR@/sound @CMAKE_CURRENT_SOURCE_DIR@/threading
+INPUT                  = @CMAKE_CURRENT_SOURCE_DIR@
 INPUT_ENCODING         = UTF-8
 FILE_PATTERNS          =
-RECURSIVE              = NO
+RECURSIVE              = YES
 EXCLUDE                =
 EXCLUDE_SYMLINKS       = NO
-EXCLUDE_PATTERNS       =
+EXCLUDE_PATTERNS       = *build/*
 EXCLUDE_SYMBOLS        =
 EXAMPLE_PATH           =
 EXAMPLE_PATTERNS       =

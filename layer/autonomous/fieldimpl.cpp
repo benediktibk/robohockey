@@ -67,7 +67,7 @@ void FieldImpl::updateWithCameraData()
 
 void FieldImpl::transformCoordinateSystem(Point &, double )
 {
-	//! @todo: Transform all Objects to new Coordinate Origin
+	//! @todo Transform all Objects to new Coordinate Origin
 }
 
 void FieldImpl::removeAllFieldObjectsInVisibleArea()
@@ -86,7 +86,7 @@ void FieldImpl::removeAllFieldObjectsInVisibleArea()
 	{
 		Point currentCenter = ((*i).getCircle()).getCenter();
 
-		//! @todo: Use a global parameter for distance filtering
+		//! @todo Use a global parameter for distance filtering
 		if (isTargetPointRightOfLineWithParameters(referencePoint, directionVector, currentCenter) && currentCenter.distanceTo(referencePoint) < 3)
 		{
 			m_fieldObjects.erase(i);
