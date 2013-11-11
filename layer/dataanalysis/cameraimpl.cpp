@@ -11,7 +11,7 @@ CameraImpl::CameraImpl(Hardware::Camera &camera) :
 	m_camera(camera)
 { }
 
-CameraObjects CameraImpl::getAllCameraObjects() const
+CameraObjects CameraImpl::getAllCameraObjects()
 {
 	CameraObjects cameraObjects;
 	Mat yellowGoalPic, yellowPukPic, bluePukPic;
@@ -65,7 +65,7 @@ CameraObjects CameraImpl::getAllCameraObjects() const
 	return cameraObjects;
 }
 
-bool CameraImpl::isGoalYellow() const
+bool CameraImpl::isGoalYellow()
 {
 	Mat goal;
 	int white;
@@ -88,7 +88,7 @@ bool CameraImpl::isGoalYellow() const
 		return false;
 }
 
-void CameraImpl::filterFrame() const
+void CameraImpl::filterFrame()
 {
 	medianBlur(m_camera.getFrame(), m_fileredFrame, 9);
 }

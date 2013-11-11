@@ -19,8 +19,8 @@ namespace DataAnalysis
 	public:
 		virtual ~Camera() { }
 
-		virtual CameraObjects getAllCameraObjects() const = 0;
-		virtual bool isGoalYellow() const = 0;
+		virtual CameraObjects getAllCameraObjects() = 0;
+		virtual bool isGoalYellow() = 0;
 	};
 }
 }

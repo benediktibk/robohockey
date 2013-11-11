@@ -21,11 +21,11 @@ namespace DataAnalysis
 	public:
 		CameraImpl(Hardware::Camera &camera);
 
-		virtual CameraObjects getAllCameraObjects() const;
-		virtual bool isGoalYellow() const;
+		virtual CameraObjects getAllCameraObjects();
+		virtual bool isGoalYellow();
 
 	private:
-		void filterFrame() const;
+		void filterFrame();
 
 	private:
 		Hardware::Camera &m_camera;

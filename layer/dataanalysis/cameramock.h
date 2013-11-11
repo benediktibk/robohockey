@@ -15,8 +15,8 @@ namespace DataAnalysis
 	public:
 		CameraMock();
 
-		virtual CameraObjects getAllCameraObjects() const;
-		virtual bool isGoalYellow() const;
+		virtual CameraObjects getAllCameraObjects();
+		virtual bool isGoalYellow();
 
 		void setIsGoalYellow(bool value);
 
