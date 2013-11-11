@@ -40,7 +40,9 @@ namespace Autonomous
 		virtual void updateWithOdometryData();
 		virtual void updateWithCameraData();
 
-		virtual void transformCoordinateSystem(Common::Point &origin, double orientation);
+		virtual void transformCoordinateSystem(Common::Point &newOrigin, double orientation);
+		virtual void rotateCoordinateSystem(double rotation);
+		virtual void moveCoordinateSystem(Common::Point &newOrigin);
 
 		virtual void removeAllFieldObjectsInVisibleArea();
 		bool isTargetPointRightOfLineWithParameters(Common::Point &referencePoint, Common::Point &directionVector, Common::Point &target);

@@ -65,9 +65,32 @@ void FieldImpl::updateWithCameraData()
 
 }
 
-void FieldImpl::transformCoordinateSystem(Point &, double )
+void FieldImpl::transformCoordinateSystem(Point &newOrigin, double orientation)
 {
-	//! @todo Transform all Objects to new Coordinate Origin
+	rotateCoordinateSystem(orientation);
+	moveCoordinateSystem(newOrigin);
+}
+
+void FieldImpl::rotateCoordinateSystem(double /*rotation*/)
+{
+	//! @todo Implement Rotation of Coordinate sysetm
+
+}
+
+void FieldImpl::moveCoordinateSystem(Point &newOrigin)
+{
+	vector<FieldObject> newSystem;
+
+	for (vector<FieldObject>::iterator i = m_fieldObjects.begin(); i != m_fieldObjects.end(); ++i)
+	{
+		Point currentCenter = ((*i).getCircle()).getCenter();
+		double currentDiameter = ((*i).getCircle()).getDiameter();
+		Point newCenter = newOrigin - currentCenter;
+		FieldObjectColor color = (*i).getColor();
+
+		newSystem.push_back(FieldObject(Circle(newCenter, currentDiameter), color));
+	}
+
 }
 
 void FieldImpl::removeAllFieldObjectsInVisibleArea()
