@@ -220,3 +220,5 @@ resources/testfiles/yellow_goal.png
 resources/testfiles/lidar_8.txt
 resources/testfiles/lidar_9.txt
 main/sonartest.cpp
+layer/autonomous/fieldtest.h
+layer/autonomous/fieldtest.cpp
