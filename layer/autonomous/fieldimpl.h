@@ -2,6 +2,7 @@
 #define ROBOHOCKEY_LAYER_AUTONOMOUS_FIELDIMPL_H
 
 #include "layer/autonomous/field.h"
+#include "layer/autonomous/fieldobjectcolor.h"
 #include <vector>
 
 namespace RoboHockey
@@ -40,12 +41,16 @@ namespace Autonomous
 		virtual void updateWithOdometryData();
 		virtual void updateWithCameraData();
 
-		virtual void transformCoordinateSystem(Common::Point &newOrigin, double rotation);
-		virtual void rotateCoordinateSystem(double alpha);
-		virtual void moveCoordinateSystem(Common::Point &newOrigin);
+		void transformCoordinateSystem(Common::Point &newOrigin, double rotation);
+		void rotateCoordinateSystem(double alpha);
+		void moveCoordinateSystem(Common::Point &newOrigin);
+
+		std::vector<Common::Point> &getPointsOfObjectsWithDiameterAndColor(double diameter, FieldObjectColor color);
 
 		virtual void removeAllFieldObjectsInVisibleArea();
 		bool isTargetPointRightOfLineWithParameters(Common::Point &referencePoint, Common::Point &directionVector, Common::Point &target);
+
+
 
 	private:
 		DataAnalysis::OdometryImpl *m_odometry;

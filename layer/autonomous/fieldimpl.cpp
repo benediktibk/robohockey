@@ -1,5 +1,6 @@
 #include "layer/autonomous/fieldimpl.h"
 #include "common/robotposition.h"
+#include "common/compare.h"
 #include "layer/dataanalysis/odometryimpl.h"
 #include "layer/dataanalysis/lidarimpl.h"
 #include "layer/dataanalysis/cameraimpl.h"
@@ -114,6 +115,22 @@ void FieldImpl::moveCoordinateSystem(Point &newOrigin)
 	m_fieldObjects.clear();
 	m_fieldObjects = newSystem;
 
+}
+
+std::vector<Point> &FieldImpl::getPointsOfObjectsWithDiameterAndColor(double diameter, FieldObjectColor color)
+{
+	vector<Point> *resultObjects = new vector<Point>;
+
+	Compare compare(0.02);
+	for (vector<FieldObject>::iterator i = m_fieldObjects.begin(); i != m_fieldObjects.end(); ++i)
+	{
+		if (compare.isFuzzyEqual(((*i).getCircle()).getDiameter(), diameter) && (*i).getColor() == color)
+		{
+			resultObjects->push_back(((*i).getCircle()).getCenter());
+		}
+	}
+
+	return *resultObjects;
 }
 
 void FieldImpl::removeAllFieldObjectsInVisibleArea()
