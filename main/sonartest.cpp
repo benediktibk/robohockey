@@ -1,15 +1,16 @@
 #include "layer/dataanalysis/dataanalyserimpl.h"
-#include "layer/hardware/robotimpl.h"
 #include "layer/dataanalysis/sonar.h"
+#include "layer/hardware/robotimpl.h"
 #include <iostream>
+#include <stdio.h>
 
-using namespace RoboHockey::Layer::DataAnalysis;
 using namespace RoboHockey::Layer;
+using namespace RoboHockey::Layer::DataAnalysis;
 using namespace std;
 
 int main(int, char**)
 {
-	DataAnalyserImpl dataAnalyser(new Hardware::RobotImpl("192.168.1.102"));
+	DataAnalyserImpl dataAnalyser(new Hardware::RobotImpl("localhost"));
 	Sonar &sonar = dataAnalyser.getSonar();
 	char key = 0;
 
@@ -25,7 +26,7 @@ int main(int, char**)
 		else
 			cout << "no obstacle in front" << endl;
 
-		cin >> key;
+		key = getchar();
 	}
 
 	return 0;
