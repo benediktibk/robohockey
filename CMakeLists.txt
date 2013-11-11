@@ -62,6 +62,13 @@ set(TESTFILES
 	lidar_4.txt
 	lidar_5.txt
 	lidar_6.txt
+	blue_goal.png
+	blue_puck_1.png
+	nothing.png
+	yellow_and_blue_puck_1.png
+	yellow_goal.png
+	yellow_puck_1.png
+	yellow_puck_twice.png
 )
 
 foreach(file ${TESTFILES})
