@@ -6,10 +6,8 @@
 #include "layer/autonomous/robotimpl.h"
 #include "layer/dataanalysis/dataanalyserimpl.h"
 #include "layer/hardware/robotimpl.h"
-
 #include "layer/view/graphicshow.h"
 #include "layer/view/window.h"
-
 #include <iostream>
 
 using namespace RoboHockey::Layer;
@@ -32,7 +30,6 @@ int main(int argc, char **argv)
 		playerServer = "localhost";
 	}
 
-	//Viewer view;
 	Window window;
 	Model model;
 	Hardware::Robot *hardwareRobot = new Hardware::RobotImpl(playerServer);
@@ -41,16 +38,6 @@ int main(int argc, char **argv)
 	RobotDriver robotDriver(autonomousRobot, model);
 	RobotDriverLoop loop(robotDriver);
 
-	// uncomment this to see some movement
-	std::vector<RoboHockey::Common::Point> targets;
-//	targets.push_back(RoboHockey::Common::Point(-1, 0));
-//	targets.push_back(RoboHockey::Common::Point(0, 3));
-//	targets.push_back(RoboHockey::Common::Point(0.5, 3));
-//	targets.push_back(RoboHockey::Common::Point(0, 0));
-	targets.push_back(RoboHockey::Common::Point(3, 0));
-	model.setData(targets);
-
-	//view.show();
-	//window.showMaximized();
+	window.showMaximized();
 	return application.exec();
 }
