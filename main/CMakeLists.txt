@@ -8,6 +8,13 @@ find_package(Qt4 COMPONENTS QtCore QtGui QtDeclarative REQUIRED)
 include(${QT_USE_FILE})
 ADD_DEFINITIONS(${QT_DEFINITIONS})
 
+# on some machines this one seems not to be set properly
+set(QT_LIBRARIES
+	${QT_QTCORE_LIBRARY}
+	${QT_QTGUI_LIBRARY}
+	${QT_QTDECLARATIVE_LIBRARY}
+)
+
 set(LIBRARIES
 	layerstrategy
 	layerautonomous
