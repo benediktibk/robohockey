@@ -62,6 +62,7 @@ set(TESTFILES
 	lidar_4.txt
 	lidar_5.txt
 	lidar_6.txt
+	lidar_7.txt
 )
 
 foreach(file ${TESTFILES})
