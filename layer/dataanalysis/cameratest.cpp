@@ -5,7 +5,7 @@
 using namespace RoboHockey::Layer;
 using namespace RoboHockey::Layer::DataAnalysis;
 
-void CameraTest::getCameraObject_mockHardwareCamera_atLeastOneCallToGetFrame()
+void CameraTest::getAllCameraObjects_mockHardwareCamera_atLeastOneCallToGetFrame()
 {
 	Hardware::CameraMock hardwareCamera;
 	CameraImpl camera(hardwareCamera);
@@ -29,4 +29,12 @@ void CameraTest::isGoalYellow_blueGoal_resultIsFalse()
 	CameraImpl camera(hardwareCamera);
 
 	CPPUNIT_ASSERT(!camera.isGoalYellow());
+}
+
+void CameraTest::getAllCameraObjects_yellowPukTwice_cameraObjectsCountIs2()
+{
+	Hardware::CameraMock hardwareCamera("yellow_puck_twice");
+	CameraImpl camera(hardwareCamera);
+
+	CPPUNIT_ASSERT_EQUAL((size_t)2, camera.getAllCameraObjects().getObjectCount());
 }
