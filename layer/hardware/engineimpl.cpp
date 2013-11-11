@@ -4,6 +4,13 @@
 using namespace RoboHockey::Layer::Hardware;
 using namespace PlayerCc;
 
+// physical maximum is something around 0.5 m/s
+const double EngineImpl::m_maximumMagnitude = 0.3;
+const double EngineImpl::m_minimumMagnitude = 0.001;
+// physical maximum is something around pi rad/s
+const double EngineImpl::m_maximumRotation = M_PI;
+const double EngineImpl::m_minimumRotation = 0.1;
+
 EngineImpl::EngineImpl(PlayerCc::PlayerClient *playerClient) :
 	m_engine(new Position2dProxy(playerClient, 0))
 {
@@ -20,25 +27,22 @@ EngineImpl::~EngineImpl()
 
 void EngineImpl::setSpeed(double magnitude, double rotation)
 {
-	// tresholds for the speed magnitude
-	if (magnitude > 0.3)
-		magnitude = 0.3;
-	else if (magnitude < -0.5)
-		magnitude = -0.5;
-
-	// tresholds for the rotation
-	if (rotation > M_PI)
-		rotation = M_PI;
-	else if (rotation < (-1)*M_PI)
-		rotation = (-1)*M_PI;
-
-	// minimum tresholds
-	if (fabs(rotation) < 0.1)
-		rotation = 0;
-	if (fabs(magnitude) < 0.001)
-		magnitude = 0;
-
+	magnitude = limitToTresholds(magnitude, m_minimumMagnitude, m_maximumMagnitude);
+	rotation = limitToTresholds(rotation, m_minimumRotation, m_maximumRotation);
 	return m_engine->SetSpeed(magnitude, rotation);
+}
+
+double EngineImpl::limitToTresholds(double value, double lowerBound, double upperBound) const
+{
+	if (value > upperBound)
+		value = upperBound;
+	else if (value < (-1)*upperBound)
+		value = (-1)*upperBound;
+
+	if (fabs(value) < lowerBound)
+		value = 0;
+
+	return value;
 }
 
 EngineImpl::EngineImpl(const EngineImpl &)
