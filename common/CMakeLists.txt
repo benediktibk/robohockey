@@ -4,6 +4,7 @@ set(COMMON_SRC
 	discretefunction.cpp
 	rectangle.cpp
 	circle.cpp
+        watch.cpp
 )
 
 set(COMMON_TEST_SRC
@@ -12,6 +13,7 @@ set(COMMON_TEST_SRC
 	discretefunctiontest.cpp
 	rectangletest.cpp
 	circletest.cpp
+        watchtest.cpp
 )
 
 add_library(common ${COMMON_SRC})

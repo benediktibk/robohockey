@@ -11,8 +11,12 @@ SonarImpl::SonarImpl(Hardware::Sonar &sonar) :
 bool SonarImpl::isObstacleDirectInFront()
 {
     double sum = 0;
+    double distance = 0;
+    bool isDirectInFront = false;
     for(int i = 2; i < 6; i++)
         sum += m_sonar.getDistanceForSensor(i);
-    sum = sum/4;
-    return false;
+    distance = sum/4;
+    if (distance < 0.2)
+        isDirectInFront = true;
+    return isDirectInFront;
 }

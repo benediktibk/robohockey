@@ -1,4 +1,5 @@
 #include "common/comparetest.h"
+#include "common/watchtest.h"
 #include "common/pointtest.h"
 #include "common/discretefunctiontest.h"
 #include "common/rectangletest.h"
@@ -19,6 +20,7 @@
 #include "layer/autonomous/robottest.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Common::CompareTest);
+CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Common::WatchTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Common::PointTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Common::DiscreteFunctionTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Common::RectangleTest);

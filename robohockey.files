@@ -158,3 +158,7 @@ main/remotecontrol.cpp
 main/datalogger.cpp
 layer/hardware/lidar.cpp
 layer/hardware/sonar.cpp
+common/watch.h
+common/watch.cpp
+common/watchtest.h
+common/watchtest.cpp
