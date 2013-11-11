@@ -22,3 +22,11 @@ void CameraTest::isGoalYellow_yellowGoal_resultIsTrue()
 
 	CPPUNIT_ASSERT(camera.isGoalYellow());
 }
+
+void CameraTest::isGoalYellow_blueGoal_resultIsFalse()
+{
+	Hardware::CameraMock hardwareCamera("blue_goal");
+	CameraImpl camera(hardwareCamera);
+
+	CPPUNIT_ASSERT(!camera.isGoalYellow());
+}

@@ -20,6 +20,7 @@ CameraObjects CameraImpl::getAllCameraObjects()
 	vector<Rect> boundRect;
 	filterFrameAndConvertToHLS();
 
+	///@todo wegen hls keine unterscheidung zwischen puck und goal mehr => nur zwei schleifen
 	inRange(m_fileredFrame, cv::Scalar(20, 100, 50), cv::Scalar(30, 200, 255), yellowGoalPic);
 	findContours( yellowGoalPic, contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE, Point(0, 0) );
 	if (!contours.empty())

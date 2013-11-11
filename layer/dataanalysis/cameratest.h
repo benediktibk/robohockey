@@ -16,11 +16,13 @@ namespace DataAnalysis
 		CPPUNIT_TEST_SUITE(CameraTest);
 		CPPUNIT_TEST(getCameraObject_mockHardwareCamera_atLeastOneCallToGetFrame);
 		CPPUNIT_TEST(isGoalYellow_yellowGoal_resultIsTrue);
+		CPPUNIT_TEST(isGoalYellow_blueGoal_resultIsFalse);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
 		void getCameraObject_mockHardwareCamera_atLeastOneCallToGetFrame();
 		void isGoalYellow_yellowGoal_resultIsTrue();
+		void isGoalYellow_blueGoal_resultIsFalse();
 	};
 }
 }
