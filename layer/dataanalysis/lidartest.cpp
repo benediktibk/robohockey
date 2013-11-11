@@ -282,7 +282,7 @@ void LidarTest::getAllObjects_onePuckALittleBitDistant_diameterIsCorrect()
 
 	LidarObjects objects = lidar.getAllObjects(ownPosition, 0);
 
-	vector<LidarObject> objectsInForeground = objects.getObjectsWithDistanceBelow(2);
+	vector<LidarObject> objectsInForeground = objects.getObjectsWithDistanceBelow(1);
 	CPPUNIT_ASSERT_EQUAL((size_t)1, objectsInForeground.size());
 	const LidarObject &object = objectsInForeground.front();
 	Compare compare(0.01);
@@ -298,10 +298,10 @@ void LidarTest::getAllObjects_onePuck_positionAndDiameterIsCorrect()
 
 	LidarObjects objects = lidar.getAllObjects(ownPosition, 0);
 
-	vector<LidarObject> objectsInForeground = objects.getObjectsWithDistanceBelow(2);
+	vector<LidarObject> objectsInForeground = objects.getObjectsWithDistanceBelow(1);
 	CPPUNIT_ASSERT_EQUAL((size_t)1, objectsInForeground.size());
 	const LidarObject &object = objectsInForeground.front();
-	Compare compare(0.025);
+	Compare compare(0.04);
 	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(0.505, -0.325), object.getCenter()));
 	CPPUNIT_ASSERT(compare.isFuzzyEqual(0.04, object.getDiameter()));
 }
@@ -321,5 +321,23 @@ void LidarTest::getAllObjects_onePuckInQuiteADistanceVersion1_distanceAndDiamete
 	double distance = ownPosition.distanceTo(object.getCenter());
 	Compare compare(0.025);
 	CPPUNIT_ASSERT(compare.isFuzzyEqual(1.375, distance));
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(0.04, object.getDiameter()));
+}
+
+void LidarTest::getAllObjects_onePuckInQuiteADistanceVersion2_distanceAndDiameterIsCorrect()
+{
+	Hardware::LidarMock hardwareLidar;
+	hardwareLidar.readSensorDataFromFile("resources/testfiles/lidar_8.txt");
+	LidarImpl lidar(hardwareLidar);
+	Point ownPosition(0, 0);
+
+	LidarObjects objects = lidar.getAllObjects(ownPosition, 0);
+
+	vector<LidarObject> objectsInForeground = objects.getObjectsWithDistanceBelow(2.5);
+	CPPUNIT_ASSERT_EQUAL((size_t)1, objectsInForeground.size());
+	const LidarObject &object = objectsInForeground.front();
+	double distance = ownPosition.distanceTo(object.getCenter());
+	Compare compare(0.05);
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(2.26, distance));
 	CPPUNIT_ASSERT(compare.isFuzzyEqual(0.04, object.getDiameter()));
 }

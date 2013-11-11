@@ -26,8 +26,8 @@ LidarObjects LidarImpl::getAllObjects(const Point &ownPosition, double ownOrient
 	LidarObjects objects(ownPosition);
 	scoped_ptr<DiscreteFunction> distances(readInData());
 
-	distances->suppressNoise();
 	DiscreteFunction distanceEdges(*distances);
+	distanceEdges.suppressNoise();
 	distanceEdges.differentiate(1);
 	list<int> positiveEdges = distanceEdges.getPositionsWithValuesAbove(m_edgeTreshold);
 	list<int> negativeEdges = distanceEdges.getPositionsWithValuesBelow((-1)*m_edgeTreshold);
@@ -47,6 +47,7 @@ LidarObjects LidarImpl::getAllObjects(const Point &ownPosition, double ownOrient
 		if (widthInAngle > m_maximumWidthInRadiants)
 			continue;
 
+		distances->suppressNoiseInRange(start + 1, end - 1);
 		double distance = distances->getMinimumInRange(start + 1, end - 1);
 		int middleSensorNumber = (end + start)/2;
 		double orientationOfObjectRelativeToOwnOrientation = calculateOrientationFromSensorNumber(middleSensorNumber);
