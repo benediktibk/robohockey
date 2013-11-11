@@ -21,8 +21,8 @@ EngineImpl::~EngineImpl()
 void EngineImpl::setSpeed(double magnitude, double rotation)
 {
 	// tresholds for the speed magnitude
-	if (magnitude > 0.5)
-		magnitude = 0.5;
+	if (magnitude > 0.3)
+		magnitude = 0.3;
 	else if (magnitude < -0.5)
 		magnitude = -0.5;
 

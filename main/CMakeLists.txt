@@ -49,11 +49,12 @@ add_executable(testrunner testregistration.cpp testrunner.cpp)
 add_executable(calibratecamera maincameracalibration.cpp)
 add_executable(datalogger datalogger.cpp)
 add_executable(remotecontrol remotecontrol.cpp)
-
+add_executable(sonartest sonartest.cpp)
 
 target_link_libraries(robot ${LIBRARIES})
 target_link_libraries(testrunner ${LIBRARIES_TEST} ${LIBRARIES} ${LIBRARIES_REMOTECONTROL})
 target_link_libraries(calibratecamera ${LIBRARIES})
 target_link_libraries(datalogger ${LIBRARIES})
 target_link_libraries(remotecontrol ${LIBRARIES} ${LIBRARIES_REMOTECONTROL})
+target_link_libraries(sonartest ${LIBRARIES})
 

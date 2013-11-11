@@ -219,3 +219,4 @@ resources/testfiles/lidar_7.txt
 resources/testfiles/yellow_goal.png
 resources/testfiles/lidar_8.txt
 resources/testfiles/lidar_9.txt
+main/sonartest.cpp

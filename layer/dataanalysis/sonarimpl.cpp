@@ -26,7 +26,7 @@ bool SonarImpl::isObstacleDirectInFront()
 	sum += m_sonar.getDistanceForSensor(4);
 	distance = sum/6;
 
-	if (distance < 1.5)
+	if (distance < 0.7)
 		isDirectInFront = true;
 	else if(counter >= 2)
 		isDirectInFront = true;
