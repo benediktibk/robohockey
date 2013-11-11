@@ -18,9 +18,9 @@ CameraObjects CameraImpl::getAllCameraObjects()
 	vector<vector<Point> > contours;
 	vector<Vec4i> hierarchy;
 	vector<Rect> boundRect;
-	filterFrame();
+	filterFrameAndConvertToHLS();
 
-	inRange(m_fileredFrame, cv::Scalar(105, 185, 200), cv::Scalar(130, 215, 240), yellowGoalPic);
+	inRange(m_fileredFrame, cv::Scalar(20, 100, 50), cv::Scalar(30, 200, 255), yellowGoalPic);
 	findContours( yellowGoalPic, contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE, Point(0, 0) );
 	if (!contours.empty())
 	{
@@ -66,9 +66,8 @@ bool CameraImpl::isGoalYellow()
 {
 	Mat goal;
 	int white = 0;
-	filterFrame();
-	//Filter parameter 2 und 3: untere Grenze (b,g,r), obere Grenze (b,g,r)
-	inRange(m_fileredFrame, cv::Scalar(90, 130, 140), cv::Scalar(140, 190, 200), goal);
+	filterFrameAndConvertToHLS();
+	inRange(m_fileredFrame, cv::Scalar(20, 100, 50), cv::Scalar(30, 200, 255), goal);
 	Rect range(0, 130, 320, 110);
 	goal = goal(range);
 	for (int i = 0; i < range.height; ++i) {
@@ -78,6 +77,7 @@ bool CameraImpl::isGoalYellow()
 				white++;
 		}
 	}
+	imwrite("goal.png",goal);
 	//mehr als 70% der pixel sind weiß
 	if(white > 0.7*range.area())
 		return true;
@@ -85,7 +85,8 @@ bool CameraImpl::isGoalYellow()
 		return false;
 }
 
-void CameraImpl::filterFrame()
+void CameraImpl::filterFrameAndConvertToHLS()
 {
 	medianBlur(m_camera.getFrame(), m_fileredFrame, 9);
+	cvtColor(m_fileredFrame, m_fileredFrame, CV_BGR2HLS);
 }
