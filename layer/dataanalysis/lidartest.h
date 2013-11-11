@@ -34,6 +34,7 @@ namespace DataAnalysis
 		CPPUNIT_TEST(getAllObjects_puckDirectInFront_onlyObjectIsCorrect);
 		CPPUNIT_TEST(getAllobjects_oneBoundaryPostInRange_diameterIsCorrect);
 		CPPUNIT_TEST(getAllObjects_onePuckALittleBitDistant_diameterIsCorrect);
+		CPPUNIT_TEST(getAllObjects_onePuck_positionAndDiameterIsCorrect);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
@@ -51,6 +52,7 @@ namespace DataAnalysis
 		void getAllObjects_puckDirectInFront_onlyObjectIsCorrect();
 		void getAllobjects_oneBoundaryPostInRange_diameterIsCorrect();
 		void getAllObjects_onePuckALittleBitDistant_diameterIsCorrect();
+		void getAllObjects_onePuck_positionAndDiameterIsCorrect();
 	};
 }
 }
