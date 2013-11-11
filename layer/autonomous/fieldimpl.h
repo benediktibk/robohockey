@@ -38,6 +38,7 @@ namespace Autonomous
 	private:
 		virtual void updateWithLidarData();
 		virtual void updateWithOdometryData();
+		virtual void updateWithCameraData();
 
 		virtual void transformCoordinateSystem(Common::Point &origin, double orientation);
 

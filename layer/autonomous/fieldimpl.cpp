@@ -15,20 +15,21 @@ FieldImpl::FieldImpl(DataAnalysis::OdometryImpl &odometry, DataAnalysis::LidarIm
 	m_lidar(&lidar),
 	m_camera(&camera),
 	m_position(new Common::RobotPosition(m_odometry->getCurrentPosition()))
-{
-
-}
+{ }
 
 FieldImpl::~FieldImpl()
 {
 	delete m_position;
 	m_position = 0;
+
+	m_fieldObjects.clear();
 }
 
 void FieldImpl::update()
 {
 	updateWithOdometryData();
 	updateWithLidarData();
+	updateWithCameraData();
 }
 
 std::vector<FieldObject>& FieldImpl::getAllFieldObjects()
@@ -45,7 +46,6 @@ void FieldImpl::updateWithLidarData()
 
 	for (vector<DataAnalysis::LidarObject>::iterator i = objectsInRange.begin(); i != objectsInRange.end(); ++i)
 	{
-		//! todo: Check color of all Objects with Camera!
 		FieldObject *object = new FieldObject(*i,FieldObjectColorUnknown);
 		m_fieldObjects.push_back(*object);
 	}
@@ -57,6 +57,12 @@ void FieldImpl::updateWithOdometryData()
 	m_position->setX(currentPosition.getX());
 	m_position->setY(currentPosition.getY());
 	m_position->setOrientation(m_odometry->getCurrentOrientation());
+}
+
+void FieldImpl::updateWithCameraData()
+{
+	//! @todo Use Camera Data!
+
 }
 
 void FieldImpl::transformCoordinateSystem(Point &, double )
