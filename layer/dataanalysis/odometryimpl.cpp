@@ -19,3 +19,9 @@ Point OdometryImpl::getCurrentPosition() const
 {
 	return m_odometry.getCurrentPosition();
 }
+
+double OdometryImpl::getCurrentOrientation() const
+{
+	return m_odometry.getCurrentOrientation();
+}
+

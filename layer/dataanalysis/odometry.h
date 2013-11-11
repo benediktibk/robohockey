@@ -19,6 +19,7 @@ namespace DataAnalysis
 
 		virtual void setCurrentPosition(const Common::Point &position, double orientation) = 0;
 		virtual Common::Point getCurrentPosition() const = 0;
+		virtual double getCurrentOrientation() const = 0;
 	};
 }
 }
