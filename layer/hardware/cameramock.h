@@ -2,6 +2,7 @@
 #define ROBOHOCKEY_LAYER_HARDWARE_CAMERAMOCK_H
 
 #include "layer/hardware/camera.h"
+#include <string>
 
 namespace RoboHockey
 {
@@ -14,6 +15,7 @@ namespace Hardware
 	{
 	public:
 		CameraMock();
+		CameraMock(std::string filename);
 
 		virtual cv::Mat getFrame();
 		virtual bool isValid() const;
@@ -21,6 +23,7 @@ namespace Hardware
 
 	private:
 		unsigned int m_callsToGetFrame;
+		cv::Mat *m_testpicture;
 	};
 }
 }

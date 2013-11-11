@@ -239,3 +239,131 @@ void LidarTest::getAllObjects_objectLeftOfView_positionOfOnlyObjectIsCorrect()
 	Compare compare(0.1);
 	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(0, 3), object.getCenter()));
 }
+
+void LidarTest::getAllObjects_puckDirectInFront_onlyObjectIsCorrect()
+{
+	Hardware::LidarMock hardwareLidar;
+	hardwareLidar.readSensorDataFromFile("resources/testfiles/lidar_2.txt");
+	LidarImpl lidar(hardwareLidar);
+	Point ownPosition(0, 0);
+
+	LidarObjects objects = lidar.getAllObjects(ownPosition, 0);
+
+	vector<LidarObject> objectsInForeground = objects.getObjectsWithDistanceBelow(1);
+	CPPUNIT_ASSERT_EQUAL((size_t)1, objectsInForeground.size());
+	const LidarObject &object = objectsInForeground.front();
+	Compare compare(0.02);
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(0.2, 0), object.getCenter()));
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(0.04, object.getDiameter()));
+}
+
+void LidarTest::getAllobjects_oneBoundaryPostInRange_diameterIsCorrect()
+{
+	Hardware::LidarMock hardwareLidar;
+	hardwareLidar.readSensorDataFromFile("resources/testfiles/lidar_4.txt");
+	LidarImpl lidar(hardwareLidar);
+	Point ownPosition(0, 0);
+
+	LidarObjects objects = lidar.getAllObjects(ownPosition, 0);
+
+	vector<LidarObject> objectsInForeground = objects.getObjectsWithDistanceBelow(1);
+	CPPUNIT_ASSERT_EQUAL((size_t)1, objectsInForeground.size());
+	const LidarObject &object = objectsInForeground.front();
+	Compare compare(0.01);
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(0.06, object.getDiameter()));
+}
+
+void LidarTest::getAllObjects_onePuckALittleBitDistant_diameterIsCorrect()
+{
+	Hardware::LidarMock hardwareLidar;
+	hardwareLidar.readSensorDataFromFile("resources/testfiles/lidar_5.txt");
+	LidarImpl lidar(hardwareLidar);
+	Point ownPosition(0, 0);
+
+	LidarObjects objects = lidar.getAllObjects(ownPosition, 0);
+
+	vector<LidarObject> objectsInForeground = objects.getObjectsWithDistanceBelow(1);
+	CPPUNIT_ASSERT_EQUAL((size_t)1, objectsInForeground.size());
+	const LidarObject &object = objectsInForeground.front();
+	Compare compare(0.01);
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(0.04, object.getDiameter()));
+}
+
+void LidarTest::getAllObjects_onePuck_positionAndDiameterIsCorrect()
+{
+	Hardware::LidarMock hardwareLidar;
+	hardwareLidar.readSensorDataFromFile("resources/testfiles/lidar_6.txt");
+	LidarImpl lidar(hardwareLidar);
+	Point ownPosition(0, 0);
+
+	LidarObjects objects = lidar.getAllObjects(ownPosition, 0);
+
+	vector<LidarObject> objectsInForeground = objects.getObjectsWithDistanceBelow(1);
+	CPPUNIT_ASSERT_EQUAL((size_t)1, objectsInForeground.size());
+	const LidarObject &object = objectsInForeground.front();
+	Compare compare(0.04);
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(0.505, -0.325), object.getCenter()));
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(0.04, object.getDiameter()));
+}
+
+void LidarTest::getAllObjects_onePuckInQuiteADistanceVersion1_distanceAndDiameterIsCorrect()
+{
+	Hardware::LidarMock hardwareLidar;
+	hardwareLidar.readSensorDataFromFile("resources/testfiles/lidar_7.txt");
+	LidarImpl lidar(hardwareLidar);
+	Point ownPosition(0, 0);
+
+	LidarObjects objects = lidar.getAllObjects(ownPosition, 0);
+
+	vector<LidarObject> objectsInForeground = objects.getObjectsWithDistanceBelow(2);
+	CPPUNIT_ASSERT_EQUAL((size_t)1, objectsInForeground.size());
+	const LidarObject &object = objectsInForeground.front();
+	double distance = ownPosition.distanceTo(object.getCenter());
+	Compare compare(0.025);
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(1.375, distance));
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(0.04, object.getDiameter()));
+}
+
+void LidarTest::getAllObjects_onePuckInQuiteADistanceVersion2_distanceAndDiameterIsCorrect()
+{
+	Hardware::LidarMock hardwareLidar;
+	hardwareLidar.readSensorDataFromFile("resources/testfiles/lidar_8.txt");
+	LidarImpl lidar(hardwareLidar);
+	Point ownPosition(0, 0);
+
+	LidarObjects objects = lidar.getAllObjects(ownPosition, 0);
+
+	vector<LidarObject> objectsInForeground = objects.getObjectsWithDistanceBelow(2.5);
+	CPPUNIT_ASSERT_EQUAL((size_t)1, objectsInForeground.size());
+	const LidarObject &object = objectsInForeground.front();
+	double distance = ownPosition.distanceTo(object.getCenter());
+	Compare compare(0.05);
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(2.26, distance));
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(0.04, object.getDiameter()));
+}
+
+void LidarTest::getAllObjects_maximumDistanceToBoundaryPostOfOwnFieldPart_distanceAndDiameterIsCorrect()
+{
+	Hardware::LidarMock hardwareLidar;
+	hardwareLidar.readSensorDataFromFile("resources/testfiles/lidar_9.txt");
+	LidarImpl lidar(hardwareLidar);
+	Point ownPosition(0, 0);
+
+	LidarObjects objects = lidar.getAllObjects(ownPosition, 0);
+
+	vector<LidarObject> objectsInForeground = objects.getObjectsWithDistanceBelow(3.2);
+	vector<LidarObject> farDistantObjects;
+
+	for (vector<LidarObject>::const_iterator i = objectsInForeground.begin(); i != objectsInForeground.end(); ++i)
+	{
+		double distance = ownPosition.distanceTo(i->getCenter());
+		if (distance > 2.5)
+			farDistantObjects.push_back(*i);
+	}
+	CPPUNIT_ASSERT_EQUAL((size_t)1, farDistantObjects.size());
+	const LidarObject &object = farDistantObjects.front();
+	double distance = ownPosition.distanceTo(object.getCenter());
+	Compare compare(0.05);
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(3.06, distance));
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(0.06, object.getDiameter()));
+}

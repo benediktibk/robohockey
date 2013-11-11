@@ -10,12 +10,16 @@ DiscreteFunction::DiscreteFunction(int start, int end) :
 	m_end(end)
 {
 	m_values.resize(m_end - m_start + 1);
-	m_coreNoiseSuppression.resize(5);
-	m_coreNoiseSuppression[0] = 1.0/9;
-	m_coreNoiseSuppression[1] = 2.0/9;
-	m_coreNoiseSuppression[2] = 3.0/9;
-	m_coreNoiseSuppression[3] = 2.0/9;
-	m_coreNoiseSuppression[4] = 1.0/9;
+	m_coreNoiseSuppressionBig.resize(5);
+	m_coreNoiseSuppressionSmall.resize(3);
+	m_coreNoiseSuppressionBig[0] = 1.0/9;
+	m_coreNoiseSuppressionBig[1] = 2.0/9;
+	m_coreNoiseSuppressionBig[2] = 3.0/9;
+	m_coreNoiseSuppressionBig[3] = 2.0/9;
+	m_coreNoiseSuppressionBig[4] = 1.0/9;
+	m_coreNoiseSuppressionSmall[0] = 1.0/4;
+	m_coreNoiseSuppressionSmall[1] = 2.0/4;
+	m_coreNoiseSuppressionSmall[2] = 1.0/4;
 	m_coreDifferentiation.resize(3);
 	m_coreDifferentiation[0] = -0.5;
 	m_coreDifferentiation[1] = 0;
@@ -36,28 +40,44 @@ double DiscreteFunction::getValue(int x) const
 
 void DiscreteFunction::suppressNoise()
 {
-	applyCore(m_coreNoiseSuppression);
+	applyCore(m_coreNoiseSuppressionBig, m_start, m_end);
+}
+
+void DiscreteFunction::suppressNoiseInRange(int start, int end)
+{
+	assert(end >= start);
+	assert(withinRange(start));
+	assert(withinRange(end));
+	size_t range = end - start;
+	if (range >= m_coreNoiseSuppressionBig.size() + 2)
+		applyCore(m_coreNoiseSuppressionBig, start, end);
+	else if (range >= m_coreNoiseSuppressionSmall.size() + 2)
+		applyCore(m_coreNoiseSuppressionSmall, start, end);
 }
 
 void DiscreteFunction::differentiate(double stepSize)
 {
 	assert(m_values.size() > 2);
 	assert(stepSize != 0);
-	applyCore(m_coreDifferentiation);
+	applyCore(m_coreDifferentiation, m_start, m_end);
 	if (stepSize != 1)
 		*this *= (1/stepSize);
 	m_values[0] = m_values[1];
 	*(m_values.end() - 1) = *(m_values.end() - 2);
 }
 
-void DiscreteFunction::applyCore(const vector<double> &core)
+void DiscreteFunction::applyCore(const vector<double> &core, int start, int end)
 {
-	vector<double> values = m_values;
 	const size_t coreSize = core.size();
-	const size_t loopEnd = m_values.size() - 1 - coreSize/2;
+	assert(end >= start);
+	assert(static_cast<size_t>(end - start) >= coreSize);
+	vector<double> values = m_values;
+	const size_t startInVector = getVectorPosition(start);
+	const size_t endInVector = getVectorPosition(end);
+	const size_t loopEnd = endInVector - coreSize/2;
 	assert(coreSize%2 == 1);
 
-	for (size_t i = coreSize/2; i <= loopEnd; ++i)
+	for (size_t i = startInVector + coreSize/2; i <= loopEnd; ++i)
 	{
 		double value = 0;
 		for (size_t j = 0; j < coreSize; ++j)
