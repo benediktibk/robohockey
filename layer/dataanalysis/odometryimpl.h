@@ -22,6 +22,8 @@ namespace DataAnalysis
 
 		virtual void setCurrentPosition(const Common::Point &position, double orientation);
 		virtual Common::Point getCurrentPosition() const;
+		virtual double getCurrentOrientation() const;
+
 
 	private:
 		Hardware::Odometry &m_odometry;

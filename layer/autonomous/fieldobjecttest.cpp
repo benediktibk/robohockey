@@ -23,3 +23,14 @@ void FieldObjectTest::constructor_validColor_getCircleReturnsSameColor()
 
 	CPPUNIT_ASSERT_EQUAL(FieldObjectColorGreen, object.getColor());
 }
+
+void FieldObjectTest::setColor_blueColor_IsBlueColor()
+{
+	Circle circle(Point(2,3), 5);
+
+	FieldObject object(circle, FieldObjectColorUnknown);
+
+	object.setColor(FieldObjectColorBlue);
+
+	CPPUNIT_ASSERT_EQUAL(FieldObjectColorBlue, object.getColor());
+}
