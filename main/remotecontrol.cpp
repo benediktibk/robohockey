@@ -32,8 +32,8 @@ int main(int argc, char **argv)
 		playerServer = "localhost";
 	}
 
-    //Viewer view;
-    Window window;
+	//Viewer view;
+	Window window;
 	Model model;
 	Hardware::Robot *hardwareRobot = new Hardware::RobotImpl(playerServer);
 	DataAnalysis::DataAnalyser *dataAnalyser = new DataAnalysis::DataAnalyserImpl(hardwareRobot);
@@ -42,14 +42,14 @@ int main(int argc, char **argv)
 	RobotDriverLoop loop(robotDriver);
 
 	// uncomment this to see some movement
-//	std::vector<RoboHockey::Common::Point> targets;
-//	targets.push_back(RoboHockey::Common::Point(-1, 0));
-//	targets.push_back(RoboHockey::Common::Point(0, 4));
-//	targets.push_back(RoboHockey::Common::Point(1, 4));
-//	targets.push_back(RoboHockey::Common::Point(0, 4));
-//	model.setData(targets);
+	std::vector<RoboHockey::Common::Point> targets;
+	targets.push_back(RoboHockey::Common::Point(-1, 0));
+	targets.push_back(RoboHockey::Common::Point(0, 4));
+	targets.push_back(RoboHockey::Common::Point(1, 4));
+	targets.push_back(RoboHockey::Common::Point(0, 4));
+	model.setData(targets);
 
-    //view.show();
-    window.showMaximized();
+	//view.show();
+	//window.showMaximized();
 	return application.exec();
 }

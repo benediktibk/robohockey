@@ -32,6 +32,14 @@ void EngineImpl::setSpeed(double magnitude, double rotation)
 	else if (rotation < (-1)*M_PI)
 		rotation = (-1)*M_PI;
 
+	// minimum tresholds
+	if (fabs(rotation) < 0.001*M_PI)
+		rotation = 0;
+	if (fabs(magnitude) < 0.001)
+		magnitude = 0;
+
+	std::cout << "magnitude: " << magnitude << ", rotation: " << rotation << std::endl;
+
 	return m_engine->SetSpeed(magnitude, rotation);
 }
 

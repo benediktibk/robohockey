@@ -27,6 +27,11 @@ namespace DataAnalysis
 		virtual void stop();
 
 	private:
+		void turnOnly(double targetOrientation, double currentOrientation);
+		void driveAndTurn(const Common::Point &currentPosition, double targetOrientation, double currentOrientation);
+		double calculateOrientationDifference(double targetOrientation, double currentOrientation) const;
+
+	private:
 		Hardware::Engine &m_engine;
 		Hardware::Odometry &m_odometry;
 		Common::Point m_target;

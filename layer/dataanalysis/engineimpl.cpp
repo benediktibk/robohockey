@@ -20,6 +20,7 @@ void EngineImpl::goToStraight(const Common::Point &position)
 {
 	m_target = position;
 	m_enabled = true;
+	m_rotationReached = false;
 }
 
 void EngineImpl::updateSpeedAndMagnitude()
@@ -53,24 +54,42 @@ void EngineImpl::updateSpeedAndMagnitude()
 	if (angleCompare.isFuzzyEqual(targetOrientation, currentOrientation))
 		m_rotationReached = true;
 
-	if (!m_rotationReached)
-	{
-		double angleDifference = targetOrientation - currentOrientation;
-		double rotationSpeed = M_PI/5;
-		if ((angleDifference < M_PI && angleDifference > 0) || angleDifference < (-1)*M_PI)
-			m_engine.setSpeed(0, rotationSpeed);
-		else
-			m_engine.setSpeed(0, (-1)*rotationSpeed);
-	}
+	if (m_rotationReached)
+		driveAndTurn(currentPosition, targetOrientation, currentOrientation);
 	else
-	{
-		m_rotationReached = true;
-		m_engine.setSpeed(0.5, 0);
-	}
+		turnOnly(targetOrientation, currentOrientation);
 }
 
 void EngineImpl::stop()
 {
 	m_enabled = false;
 	m_rotationReached = false;
+}
+
+void EngineImpl::turnOnly(double targetOrientation, double currentOrientation)
+{
+	double orientationDifference = calculateOrientationDifference(targetOrientation, currentOrientation);
+	double amplification = 1;
+	m_engine.setSpeed(0, amplification*orientationDifference);
+}
+
+void EngineImpl::driveAndTurn(const Point &currentPosition, double targetOrientation, double currentOrientation)
+{
+	double distance = currentPosition.distanceTo(m_target);
+	double orientationDifference = calculateOrientationDifference(targetOrientation, currentOrientation);
+	double distanceAmplification = 1.0/2;
+	double orientationAmplification = 1;
+	m_engine.setSpeed(distanceAmplification*distance, orientationAmplification*orientationDifference);
+}
+
+double EngineImpl::calculateOrientationDifference(double targetOrientation, double currentOrientation) const
+{
+	double difference = targetOrientation - currentOrientation;
+
+	if (difference > M_PI)
+		difference -= 2*M_PI;
+	else if (difference < (-1)*M_PI)
+		difference += 2*M_PI;
+
+	return difference;
 }
