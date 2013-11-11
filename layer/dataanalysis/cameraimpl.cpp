@@ -68,10 +68,10 @@ CameraObjects CameraImpl::getAllCameraObjects()
 bool CameraImpl::isGoalYellow()
 {
 	Mat goal;
-	int white;
+	int white = 0;
 	filterFrame();
 	//Filter parameter 2 und 3: untere Grenze (b,g,r), obere Grenze (b,g,r)
-	inRange(m_fileredFrame, cv::Scalar(105, 185, 200), cv::Scalar(130, 215, 240), goal);
+	inRange(m_fileredFrame, cv::Scalar(90, 130, 140), cv::Scalar(140, 190, 200), goal);
 	Rect range(0, 130, 320, 110);
 	goal = goal(range);
 	for (int i = 0; i < range.height; ++i) {

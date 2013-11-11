@@ -14,7 +14,7 @@ CameraMock::CameraMock(std::string filename) :
 	m_callsToGetFrame(0),
 	m_testpicture(new Mat(240, 320, CV_8UC3))
 {
-	string filepath = "resources/" + filename + ".png";
+	string filepath = "resources/testfiles/" + filename + ".png";
 	Mat img = imread(filepath);
 	if(!img.data)
 		cout << "could not open file";
