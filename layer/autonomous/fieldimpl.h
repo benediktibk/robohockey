@@ -42,6 +42,7 @@ namespace Autonomous
 		virtual void transformCoordinateSystem(Common::Point &origin, double orientation);
 
 		virtual std::vector<FieldObject> &getAllFieldObjectsInVisibleArea();
+		bool isTargetPointRightOfLineWithParameters(Common::Point &referencePoint, Common::Point &directionVector, Common::Point &target);
 
 	private:
 		DataAnalysis::OdometryImpl *m_odometry;

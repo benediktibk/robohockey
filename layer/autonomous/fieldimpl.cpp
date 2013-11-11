@@ -81,8 +81,8 @@ std::vector<FieldObject> &FieldImpl::getAllFieldObjectsInVisibleArea()
 	{
 		Point currentCenter = ((*i).getCircle()).getCenter();
 
-		// Liegt der Punkt rechts von der Geraden?
-		if (0 < ( directionVector.getY()*(currentCenter.getX() - referencePoint.getX()) - directionVector.getX()*(currentCenter.getY() - referencePoint.getY()) ))
+		//! @todo: Use a global parameter for distance filtering
+		if (isTargetPointRightOfLineWithParameters(referencePoint, directionVector, currentCenter) && currentCenter.distanceTo(referencePoint) < 3)
 		{
 			visibleObjects->push_back(*i);
 		}
@@ -90,4 +90,9 @@ std::vector<FieldObject> &FieldImpl::getAllFieldObjectsInVisibleArea()
 	}
 
 	return *visibleObjects;
+}
+
+bool FieldImpl::isTargetPointRightOfLineWithParameters(Point &referencePoint, Point &directionVector, Point &target)
+{
+	return 0 < (directionVector.getY()*(target.getX() - referencePoint.getX()) - directionVector.getX()*(target.getY() - referencePoint.getY()));
 }
