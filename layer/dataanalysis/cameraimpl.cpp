@@ -37,7 +37,7 @@ CameraObjects CameraImpl::getAllCameraObjects()
 	}
 
 	inRange(m_fileredFrame, cv::Scalar(40, 155, 200), cv::Scalar(80, 195, 240), yellowPukPic);
-	findContours( yellowGoalPic, contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE, Point(0, 0) );
+	findContours( yellowPukPic, contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE, Point(0, 0) );
 	if (!contours.empty())
 	{
 		for(unsigned int i = 0; i < contours.size(); i++ )
@@ -50,7 +50,7 @@ CameraObjects CameraImpl::getAllCameraObjects()
 	}
 
 	inRange(m_fileredFrame, cv::Scalar(95, 60, 15), cv::Scalar(135, 100, 55), bluePukPic);
-	findContours( yellowGoalPic, contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE, Point(0, 0) );
+	findContours( bluePukPic, contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE, Point(0, 0) );
 	if (!contours.empty())
 	{
 		for(unsigned int i = 0; i < contours.size(); i++ )
