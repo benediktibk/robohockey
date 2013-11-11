@@ -41,7 +41,7 @@ namespace Autonomous
 
 		virtual void transformCoordinateSystem(Common::Point &origin, double orientation);
 
-		virtual std::vector<FieldObject> &getAllFieldObjectsInVisibleArea();
+		virtual void removeAllFieldObjectsInVisibleArea();
 		bool isTargetPointRightOfLineWithParameters(Common::Point &referencePoint, Common::Point &directionVector, Common::Point &target);
 
 	private:
