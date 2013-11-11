@@ -20,15 +20,12 @@ CameraObjects CameraImpl::getAllCameraObjects()
 	vector<Rect> boundRect;
 	filterFrame();
 
-	///@todo if find contours doesnt find any contours as in unit test --> test crashes
- /*
 	inRange(m_fileredFrame, cv::Scalar(105, 185, 200), cv::Scalar(130, 215, 240), yellowGoalPic);
 	findContours( yellowGoalPic, contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE, Point(0, 0) );
 	if (!contours.empty())
 	{
 		for(unsigned int i = 0; i < contours.size(); i++ )
 		{
-			///@todo assert only one yellow goal
 			boundRect.push_back(boundingRect( Mat(contours[i])));
 			cameraObjects.addObject(CameraObject(Common::ColorTypeYellowGoal, boundRect[i]));
 		}
@@ -61,7 +58,7 @@ CameraObjects CameraImpl::getAllCameraObjects()
 		boundRect.clear();
 		contours.clear();
 	}
-*/
+
 	return cameraObjects;
 }
 
