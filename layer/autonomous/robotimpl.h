@@ -29,6 +29,10 @@ namespace Autonomous
 		virtual void updateActuators();
 		virtual void updateSensorData();
 		virtual void stop();
+		virtual void collectPuckInFront();
+		virtual bool isMoving();
+		virtual void calibratePosition();
+		virtual void turnAround();
 
 	private:
 		// forbid copies

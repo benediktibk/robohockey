@@ -34,6 +34,10 @@ namespace Autonomous
 		void setFieldObjects(const std::vector<FieldObject> &objects);
 		const Common::Point& getLastTarget() const;
 		unsigned int getCallsToStop() const;
+		virtual void collectPuckInFront();
+		virtual bool isMoving();
+		virtual void calibratePosition();
+		virtual void turnAround();
 
 	private:
 		Common::Point m_lastTarget;

@@ -81,3 +81,23 @@ unsigned int RobotMock::getCallsToStop() const
 {
 	return m_callsToStop;
 }
+
+void RobotMock::collectPuckInFront()
+{
+
+}
+
+bool RobotMock::isMoving()
+{
+	return false;
+}
+
+void RobotMock::calibratePosition()
+{
+
+}
+
+void RobotMock::turnAround()
+{
+
+}

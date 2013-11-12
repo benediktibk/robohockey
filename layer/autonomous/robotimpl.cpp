@@ -63,6 +63,20 @@ void RobotImpl::stop()
 	engine.stop();
 }
 
+void RobotImpl::collectPuckInFront()
+{ }
+
+bool RobotImpl::isMoving()
+{
+	return false;
+}
+
+void RobotImpl::calibratePosition()
+{ }
+
+void RobotImpl::turnAround()
+{ }
+
 RobotImpl::RobotImpl(const RobotImpl &)
 { }
 
