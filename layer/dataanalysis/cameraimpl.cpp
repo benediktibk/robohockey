@@ -27,7 +27,7 @@ CameraObjects CameraImpl::getAllCameraObjects()
 		for(unsigned int i = 0; i < contours.size(); i++ )
 		{
 			boundRect.push_back(boundingRect( Mat(contours[i])));
-			cameraObjects.addObject(CameraObject(ColorTypeYellowGoal, boundRect[i]));
+			cameraObjects.addObject(CameraObject(ColorTypeYellow, boundRect[i]));
 		}
 		boundRect.clear();
 		contours.clear();
@@ -41,7 +41,7 @@ CameraObjects CameraImpl::getAllCameraObjects()
 		for(unsigned int i = 0; i < contours.size(); i++ )
 		{
 			boundRect.push_back(boundingRect( Mat(contours[i])));
-			cameraObjects.addObject(CameraObject(ColorTypeYellowGoal, boundRect[i]));
+			cameraObjects.addObject(CameraObject(ColorTypeYellow, boundRect[i]));
 		}
 		boundRect.clear();
 		contours.clear();

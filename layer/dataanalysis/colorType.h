@@ -9,11 +9,10 @@ namespace DataAnalysis
 {
 	enum ColorType
 	{
-		ColorTypeYellowPuk,
-		ColorTypeYellowGoal,
-		ColorTypeBluePuk,
-		ColortypeBlueGoal,
-		ColorTypeFalse
+		ColorTypeUnknown,
+		ColorTypeYellow,
+		ColorTypeBlue,
+		ColorTypeGreen
 	};
 }
 }

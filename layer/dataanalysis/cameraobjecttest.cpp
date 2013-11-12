@@ -7,14 +7,14 @@ using namespace RoboHockey::Layer::DataAnalysis;
 
 void CameraObjectTest::getColorType_ColorTypeYellowGoal()
 {
-	CameraObject cameraobject(ColorTypeYellowGoal, cv::Rect(0,0,1,1));
+	CameraObject cameraobject(ColorTypeYellow, cv::Rect(0,0,1,1));
 
-	CPPUNIT_ASSERT_EQUAL(ColorTypeYellowGoal, cameraobject.getColorType());
+	CPPUNIT_ASSERT_EQUAL(ColorTypeYellow, cameraobject.getColorType());
 }
 
 void CameraObjectTest::getImagePositionArea_RectArea100()
 {
-	CameraObject cameraobject(ColorTypeYellowGoal, cv::Rect(0,0,10,10));
+	CameraObject cameraobject(ColorTypeYellow, cv::Rect(0,0,10,10));
 
 	CPPUNIT_ASSERT_EQUAL(100, cameraobject.getImagePosition().area());
 }
