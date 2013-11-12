@@ -46,3 +46,43 @@ void CameraTest::getAllCameraObjects_yellowAndBluePuckTwice_cameraObjectsCountIs
 
 	CPPUNIT_ASSERT_EQUAL((size_t)2, camera.getAllCameraObjects().getObjectCount());
 }
+
+void CameraTest::getAllCameraObjects_nothing_cameraObjectCountIs0()
+{
+	Hardware::CameraMock hardwareCamera("nothing");
+	CameraImpl camera(hardwareCamera);
+
+	CPPUNIT_ASSERT_EQUAL((size_t)0, camera.getAllCameraObjects().getObjectCount());
+}
+
+void CameraTest::getAllCameraObjects_yellowPuck_cameraObjectCountIs1()
+{
+	Hardware::CameraMock hardwareCamera("yellow_puck");
+	CameraImpl camera(hardwareCamera);
+
+	CPPUNIT_ASSERT_EQUAL((size_t)1, camera.getAllCameraObjects().getObjectCount());
+}
+
+void CameraTest::getAllCameraObjects_bluePuck_cameraObjectCountIs1()
+{
+	Hardware::CameraMock hardwareCamera("blue_puck");
+	CameraImpl camera(hardwareCamera);
+
+	CPPUNIT_ASSERT_EQUAL((size_t)1, camera.getAllCameraObjects().getObjectCount());
+}
+
+void CameraTest::getAllCameraObjects_blueGoal_cameraObjectCountIs1()
+{
+	Hardware::CameraMock hardwareCamera("blue_goal");
+	CameraImpl camera(hardwareCamera);
+
+	CPPUNIT_ASSERT_EQUAL((size_t)1, camera.getAllCameraObjects().getObjectCount());
+}
+
+void CameraTest::getAllCameraObjects_yellowGoal_cameraObjectCountIs1()
+{
+	Hardware::CameraMock hardwareCamera("yellow_goal");
+	CameraImpl camera(hardwareCamera);
+
+	CPPUNIT_ASSERT_EQUAL((size_t)1, camera.getAllCameraObjects().getObjectCount());
+}
