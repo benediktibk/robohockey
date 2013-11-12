@@ -18,6 +18,7 @@ CameraObjects CameraImpl::getAllCameraObjects()
 	vector<vector<Point> > contours;
 	vector<Vec4i> hierarchy;
 	Rect boundRect;
+	//sint white = 0;
 	filterFrameAndConvertToHLS();
 
 	inRange(m_fileredFrame, Scalar(20, 100, 50), Scalar(30, 200, 255), yellowPic);
@@ -28,7 +29,17 @@ CameraObjects CameraImpl::getAllCameraObjects()
 		{
 			boundRect = boundingRect( Mat(contours[i]));
 			if (boundRect.area() > 1500)
-				cameraObjects.addObject(CameraObject(ColorTypeYellow, boundRect));
+			{
+				/*for (int i = 0; i < boundRect.height; ++i) {
+					for (int j = 0; j < boundRect.width; j++)
+					{
+						if (yellowPic.at<uchar>(i, j) == 255.0)
+							white++;
+					}
+				}
+				if(white > 0.7*boundRect.area())*/
+					cameraObjects.addObject(CameraObject(ColorTypeYellow, boundRect));
+			}
 		}
 		contours.clear();
 	}
@@ -64,8 +75,6 @@ bool CameraImpl::isGoalYellow()
 				white++;
 		}
 	}
-	imwrite("goal.png",goal);
-	//mehr als 70% der pixel sind weiß
 	if(white > 0.7*range.area())
 		return true;
 	else
