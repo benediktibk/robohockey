@@ -180,7 +180,6 @@ layer/dataanalysis/cameraobject.h
 layer/dataanalysis/cameraobject.cpp
 layer/dataanalysis/cameraobjecttest.h
 layer/dataanalysis/cameraobjecttest.cpp
-common/colorType.h
 layer/dataanalysis/cameraobjects.h
 layer/dataanalysis/cameraobjects.cpp
 layer/dataanalysis/cameraobjectstest.h
@@ -222,3 +221,4 @@ resources/testfiles/lidar_9.txt
 main/sonartest.cpp
 layer/autonomous/fieldtest.h
 layer/autonomous/fieldtest.cpp
+layer/dataanalysis/colorType.h

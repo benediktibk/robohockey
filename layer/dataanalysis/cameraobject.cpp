@@ -1,6 +1,5 @@
 #include "layer/dataanalysis/cameraobject.h"
 
-using namespace RoboHockey::Common;
 using namespace RoboHockey::Layer::DataAnalysis;
 using namespace cv;
 

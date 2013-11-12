@@ -2,7 +2,7 @@
 #define ROBOHOCKEY_LAYER_DATAANALYSIS_CAMERAOBJECT_H
 
 #include <opencv2/opencv.hpp>
-#include "common/colorType.h"
+#include "layer/dataanalysis/colorType.h"
 
 namespace RoboHockey
 {
@@ -13,13 +13,13 @@ namespace DataAnalysis
 	class CameraObject
 	{
 	public:
-		CameraObject(Common::ColorType color, cv::Rect position);
+		CameraObject(ColorType color, cv::Rect position);
 
 		cv::Rect getImagePosition() const;
-		Common::ColorType getColorType() const;
+		ColorType getColorType() const;
 
 	private:
-		Common::ColorType m_color;
+		ColorType m_color;
 		cv::Rect m_position;
 	};
 }

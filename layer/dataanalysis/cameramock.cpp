@@ -10,7 +10,7 @@ CameraMock::CameraMock() :
 CameraObjects CameraMock::getAllCameraObjects()
 {
 	CameraObjects objects;
-	objects.addObject(CameraObject(Common::ColorTypeFalse,cv::Rect(0,0,1,1)));
+	objects.addObject(CameraObject(ColorTypeFalse,cv::Rect(0,0,1,1)));
 	return objects;
 }
 

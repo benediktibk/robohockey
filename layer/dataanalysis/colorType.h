@@ -1,9 +1,11 @@
-#ifndef ROBOHOCKEY_COMMON_COLORTYPE_H
-#define ROBOHOCKEY_COMMON_COLORTYPE_H
+#ifndef ROBOHOCKEY_LAYER_DATAANALYSIS_COLORTYPE_H
+#define ROBOHOCKEY_LAYER_DATAANALYSIS_COLORTYPE_H
 
 namespace RoboHockey
 {
-namespace Common
+namespace Layer
+{
+namespace DataAnalysis
 {
 	enum ColorType
 	{
@@ -13,6 +15,7 @@ namespace Common
 		ColortypeBlueGoal,
 		ColorTypeFalse
 	};
+}
 }
 }
 
