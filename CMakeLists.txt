@@ -66,11 +66,11 @@ set(TESTFILES
 	lidar_8.txt
 	lidar_9.txt
 	blue_goal.png
-	blue_puck_1.png
+	blue_puck.png
 	nothing.png
-	yellow_and_blue_puck_1.png
+	yellow_and_blue_puck.png
 	yellow_goal.png
-	yellow_puck_1.png
+	yellow_puck.png
 	yellow_puck_twice.png
 )
 

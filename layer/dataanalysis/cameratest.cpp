@@ -31,9 +31,17 @@ void CameraTest::isGoalYellow_blueGoal_resultIsFalse()
 	CPPUNIT_ASSERT(!camera.isGoalYellow());
 }
 
-void CameraTest::getAllCameraObjects_yellowPukTwice_cameraObjectsCountIs2()
+void CameraTest::getAllCameraObjects_yellowPuckTwice_cameraObjectsCountIs2()
 {
 	Hardware::CameraMock hardwareCamera("yellow_puck_twice");
+	CameraImpl camera(hardwareCamera);
+
+	CPPUNIT_ASSERT_EQUAL((size_t)2, camera.getAllCameraObjects().getObjectCount());
+}
+
+void CameraTest::getAllCameraObjects_yellowAndBluePuckTwice_cameraObjectsCountIs2()
+{
+	Hardware::CameraMock hardwareCamera("yellow_and_blue_puck_twice");
 	CameraImpl camera(hardwareCamera);
 
 	CPPUNIT_ASSERT_EQUAL((size_t)2, camera.getAllCameraObjects().getObjectCount());
