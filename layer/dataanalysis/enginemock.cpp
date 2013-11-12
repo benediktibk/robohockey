@@ -23,6 +23,9 @@ void EngineMock::stop()
 	++m_callsToStop;
 }
 
+void EngineMock::turnAround()
+{ }
+
 unsigned int EngineMock::getCallsToGoToStraight() const
 {
 	return m_callsToGoToStraight;

@@ -75,7 +75,10 @@ void RobotImpl::calibratePosition()
 { }
 
 void RobotImpl::turnAround()
-{ }
+{
+	DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
+	engine.turnAround();
+}
 
 RobotImpl::RobotImpl(const RobotImpl &)
 { }

@@ -33,12 +33,6 @@ namespace Hardware
 
 	private:
 		PlayerCc::Position2dProxy *m_engine;
-
-	private:
-		static const double m_maximumMagnitude;
-		static const double m_minimumMagnitude;
-		static const double m_maximumRotation;
-		static const double m_minimumRotation;
 	};
 }
 }

@@ -4,13 +4,6 @@
 using namespace RoboHockey::Layer::Hardware;
 using namespace PlayerCc;
 
-// physical maximum is something around 0.5 m/s
-const double EngineImpl::m_maximumMagnitude = 0.3;
-const double EngineImpl::m_minimumMagnitude = 0.001;
-// physical maximum is something around pi rad/s
-const double EngineImpl::m_maximumRotation = M_PI;
-const double EngineImpl::m_minimumRotation = 0.1;
-
 EngineImpl::EngineImpl(PlayerCc::PlayerClient *playerClient) :
 	m_engine(new Position2dProxy(playerClient, 0))
 {
@@ -27,8 +20,8 @@ EngineImpl::~EngineImpl()
 
 void EngineImpl::setSpeed(double magnitude, double rotation)
 {
-	magnitude = limitToTresholds(magnitude, m_minimumMagnitude, m_maximumMagnitude);
-	rotation = limitToTresholds(rotation, m_minimumRotation, m_maximumRotation);
+	magnitude = limitToTresholds(magnitude, getMinimumSpeed(), getMaximumSpeed());
+	rotation = limitToTresholds(rotation, getMinimumRotation(), getMaximumRotation());
 	return m_engine->SetSpeed(magnitude, rotation);
 }
 
