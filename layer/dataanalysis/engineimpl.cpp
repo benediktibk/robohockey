@@ -70,7 +70,7 @@ void EngineImpl::updateSpeedAndMagnitudeForRotatingOnly()
 	}
 
 	double orientationDifferenceToTarget = 2*M_PI - fixAngleRange(orientationDifference);
-	m_engine.setSpeed(0, min(m_engine.getMaximumRotation(), orientationDifferenceToTarget));
+	m_engine.setSpeed(0, min(m_engine.getMaximumRotation(), orientationDifferenceToTarget + 1.1*m_engine.getMinimumSpeed()));
 }
 
 void EngineImpl::updateSpeedAndMagnitudeForDriving()
