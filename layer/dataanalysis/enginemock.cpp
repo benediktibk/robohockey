@@ -13,7 +13,7 @@ void EngineMock::goToStraight(const Common::Point &)
 	++m_callsToGoToStraight;
 }
 
-void EngineMock::updateSpeedAndMagnitude()
+void EngineMock::updateSpeedAndRotation()
 {
 	++m_callsToUpdateSpeedAndMagnitude;
 }
@@ -24,6 +24,9 @@ void EngineMock::stop()
 }
 
 void EngineMock::turnAround()
+{ }
+
+void EngineMock::turnToTarget(const Common::Point &)
 { }
 
 unsigned int EngineMock::getCallsToGoToStraight() const

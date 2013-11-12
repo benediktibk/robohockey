@@ -19,8 +19,9 @@ namespace DataAnalysis
 
 		virtual void goToStraight(const Common::Point &targetPosition) = 0;
 		virtual void stop() = 0;
-		virtual void updateSpeedAndMagnitude() = 0;
+		virtual void updateSpeedAndRotation() = 0;
 		virtual void turnAround() = 0;
+		virtual void turnToTarget(const Common::Point &position) = 0;
 	};
 }
 }

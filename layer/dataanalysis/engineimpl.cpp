@@ -25,13 +25,14 @@ void EngineImpl::goToStraight(const Common::Point &position)
 	m_engineState = EngineStateDriving;
 }
 
-void EngineImpl::updateSpeedAndMagnitude()
+void EngineImpl::updateSpeedAndRotation()
 {
 	switch(m_engineState)
 	{
-	case EngineStateStopped: updateSpeedAndMagnitudeForStopped(); break;
-	case EngineStateDriving: updateSpeedAndMagnitudeForDriving(); break;
-	case EngineStateRotatingOnly: updateSpeedAndMagnitudeForRotatingOnly(); break;
+	case EngineStateStopped: updateSpeedAndRotationForStopped(); break;
+	case EngineStateDriving: updateSpeedAndRotationForDriving(); break;
+	case EngineStateTurnAround: updateSpeedAndRotationForTurnAround(); break;
+	case EngineStateRotating: updateSpeedAndRotationForRotating(); break;
 	}
 }
 
@@ -44,15 +45,21 @@ void EngineImpl::turnAround()
 {
 	m_startOrientation = fixAngleRange(m_odometry.getCurrentOrientation());
 	m_oneHalfTurnDone = false;
-	m_engineState = EngineStateRotatingOnly;
+	m_engineState = EngineStateTurnAround;
 }
 
-void EngineImpl::updateSpeedAndMagnitudeForStopped()
+void EngineImpl::turnToTarget(const Point &position)
+{
+	m_target = position;
+	m_engineState = EngineStateRotating;
+}
+
+void EngineImpl::updateSpeedAndRotationForStopped()
 {
 	m_engine.setSpeed(0, 0);
 }
 
-void EngineImpl::updateSpeedAndMagnitudeForRotatingOnly()
+void EngineImpl::updateSpeedAndRotationForTurnAround()
 {
 	double currentOrientation = fixAngleRange(m_odometry.getCurrentOrientation());
 	double orientationDifference = currentOrientation - m_startOrientation;
@@ -73,10 +80,11 @@ void EngineImpl::updateSpeedAndMagnitudeForRotatingOnly()
 	m_engine.setSpeed(0, min(m_engine.getMaximumRotation(), orientationDifferenceToTarget + 1.1*m_engine.getMinimumSpeed()));
 }
 
-void EngineImpl::updateSpeedAndMagnitudeForDriving()
+void EngineImpl::updateSpeedAndRotationForDriving()
 {
 	Point currentPosition = m_odometry.getCurrentPosition();
 	Compare positionCompare(0.1);
+
 	if (positionCompare.isFuzzyEqual(currentPosition, m_target))
 	{
 		stop();
@@ -85,13 +93,8 @@ void EngineImpl::updateSpeedAndMagnitudeForDriving()
 
 	Compare angleCompare(0.1);
 	Point positionDifference = m_target - currentPosition;
-	double targetOrientation = atan2(positionDifference.getY(), positionDifference.getX());
-	double currentOrientation = m_odometry.getCurrentOrientation();
-
-	if (targetOrientation < 0)
-		targetOrientation += 2*M_PI;
-	if (currentOrientation < 0)
-		currentOrientation += 2*M_PI;
+	double targetOrientation = fixAngleRange(atan2(positionDifference.getY(), positionDifference.getX()));
+	double currentOrientation = fixAngleRange(m_odometry.getCurrentOrientation());
 
 	if (angleCompare.isFuzzyEqual(targetOrientation, currentOrientation))
 		m_rotationReached = true;
@@ -100,6 +103,23 @@ void EngineImpl::updateSpeedAndMagnitudeForDriving()
 		driveAndTurn(currentPosition, targetOrientation, currentOrientation);
 	else
 		turnOnly(targetOrientation, currentOrientation);
+}
+
+void EngineImpl::updateSpeedAndRotationForRotating()
+{
+	Compare angleCompare(0.1);
+	Point currentPosition = m_odometry.getCurrentPosition();
+	Point positionDifference = m_target - currentPosition;
+	double targetOrientation = fixAngleRange(atan2(positionDifference.getY(), positionDifference.getX()));
+	double currentOrientation = fixAngleRange(m_odometry.getCurrentOrientation());
+
+	if (angleCompare.isFuzzyEqual(targetOrientation, currentOrientation))
+	{
+		stop();
+		return;
+	}
+
+	turnOnly(targetOrientation, currentOrientation);
 }
 
 void EngineImpl::turnOnly(double targetOrientation, double currentOrientation)

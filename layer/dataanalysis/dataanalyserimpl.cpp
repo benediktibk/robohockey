@@ -69,7 +69,7 @@ void DataAnalyserImpl::updateSensorData()
 
 void DataAnalyserImpl::updateActuators()
 {
-	m_engine->updateSpeedAndMagnitude();
+	m_engine->updateSpeedAndRotation();
 }
 
 DataAnalyserImpl::DataAnalyserImpl(const DataAnalyserImpl &)

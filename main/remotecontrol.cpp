@@ -39,9 +39,10 @@ int main(int argc, char **argv)
 	RobotDriverLoop loop(robotDriver);
 
 //	vector<RoboHockey::Common::Point> targets;
-//	targets.push_back(RoboHockey::Common::Point(-1, 0));
+//	targets.push_back(RoboHockey::Common::Point(-4, 0));
 //	targets.push_back(RoboHockey::Common::Point(0, 3));
 //	model.setData(targets);
+	//autonomousRobot.turnTo(RoboHockey::Common::Point(-1, 0));
 
 	window.showMaximized();
 	return application.exec();

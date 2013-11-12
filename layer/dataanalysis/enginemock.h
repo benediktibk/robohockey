@@ -16,9 +16,10 @@ namespace DataAnalysis
 		EngineMock();
 
 		virtual void goToStraight(const Common::Point &position);
-		virtual void updateSpeedAndMagnitude();
+		virtual void updateSpeedAndRotation();
 		virtual void stop();
 		virtual void turnAround();
+		virtual void turnToTarget(const Common::Point &position);
 
 		unsigned int getCallsToGoToStraight() const;
 		unsigned int getCallsToStop() const;

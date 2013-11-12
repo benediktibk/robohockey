@@ -101,3 +101,6 @@ void RobotMock::turnAround()
 {
 
 }
+
+void RobotMock::turnTo(const Point &)
+{ }

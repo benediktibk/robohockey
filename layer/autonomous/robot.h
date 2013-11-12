@@ -21,6 +21,7 @@ namespace Autonomous
 		virtual ~Robot() { }
 
 		virtual void goTo(const Common::Point &position) = 0;
+		virtual void turnTo(const Common::Point &position) = 0;
 		virtual bool stuckAtObstacle() = 0;
 		virtual bool reachedTarget() = 0;
 		virtual std::vector<FieldObject> getAllFieldObjects() = 0;

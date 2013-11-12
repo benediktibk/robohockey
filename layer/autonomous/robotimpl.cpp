@@ -28,6 +28,12 @@ void RobotImpl::goTo(const RoboHockey::Common::Point &position)
 	m_targetPosition = position;
 }
 
+void RobotImpl::turnTo(const Point &position)
+{
+	DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
+	engine.turnToTarget(position);
+}
+
 bool RobotImpl::stuckAtObstacle()
 {
 	DataAnalysis::Sonar &sonar = m_dataAnalyser->getSonar();
