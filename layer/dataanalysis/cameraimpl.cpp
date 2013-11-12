@@ -23,7 +23,7 @@ CameraObjects CameraImpl::getAllCameraObjects()
 
 	inRange(m_fileredFrame, Scalar(21, 40, 50), Scalar(28, 255, 255), yellowPic);
 	yellowPic.copyTo(currentPic);
-	findContours( currentPic, contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE, Point(0, 0) );
+	findContours(currentPic, contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE, Point(0, 0));
 	if (!contours.empty())
 	{
 		for(unsigned int i = 0; i < contours.size(); i++ )
@@ -49,7 +49,7 @@ CameraObjects CameraImpl::getAllCameraObjects()
 
 	inRange(m_fileredFrame, Scalar(95, 40, 40), Scalar(105, 255, 255), bluePic);
 	bluePic.copyTo(currentPic);
-	findContours( bluePic, contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE, Point(0, 0) );
+	findContours(currentPic, contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE, Point(0, 0));
 	if (!contours.empty())
 	{
 		for(unsigned int i = 0; i < contours.size(); i++ )
@@ -72,7 +72,7 @@ CameraObjects CameraImpl::getAllCameraObjects()
 		}
 		contours.clear();
 	}
-
+///@todo grenzpfosten adden
 	return cameraObjects;
 }
 
