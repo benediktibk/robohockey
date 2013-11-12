@@ -14,30 +14,33 @@ CameraImpl::CameraImpl(Hardware::Camera &camera) :
 CameraObjects CameraImpl::getAllCameraObjects()
 {
 	CameraObjects cameraObjects;
-	Mat yellowPic, bluePic;
+	Mat yellowPic, bluePic, currentPic;
 	vector<vector<Point> > contours;
 	vector<Vec4i> hierarchy;
 	Rect boundRect;
-	//sint white = 0;
+	int white;
 	filterFrameAndConvertToHLS();
 
-	inRange(m_fileredFrame, Scalar(20, 100, 50), Scalar(30, 200, 255), yellowPic);
-	findContours( yellowPic, contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE, Point(0, 0) );
+	inRange(m_fileredFrame, Scalar(21, 40, 50), Scalar(28, 255, 255), yellowPic);
+	yellowPic.copyTo(currentPic);
+	findContours( currentPic, contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE, Point(0, 0) );
 	if (!contours.empty())
 	{
 		for(unsigned int i = 0; i < contours.size(); i++ )
 		{
+			white = 0;
 			boundRect = boundingRect( Mat(contours[i]));
 			if (boundRect.area() > 1500)
 			{
-				/*for (int i = 0; i < boundRect.height; ++i) {
+				currentPic = yellowPic(boundRect);
+				for (int i = 0; i < boundRect.height; ++i) {
 					for (int j = 0; j < boundRect.width; j++)
 					{
-						if (yellowPic.at<uchar>(i, j) == 255.0)
+						if (currentPic.at<uchar>(i, j) == 255.0)
 							white++;
 					}
 				}
-				if(white > 0.7*boundRect.area())*/
+				if(white > 0.5*boundRect.area())
 					cameraObjects.addObject(CameraObject(ColorTypeYellow, boundRect));
 			}
 		}
@@ -45,14 +48,27 @@ CameraObjects CameraImpl::getAllCameraObjects()
 	}
 
 	inRange(m_fileredFrame, Scalar(95, 40, 40), Scalar(105, 255, 255), bluePic);
+	bluePic.copyTo(currentPic);
 	findContours( bluePic, contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE, Point(0, 0) );
 	if (!contours.empty())
 	{
 		for(unsigned int i = 0; i < contours.size(); i++ )
 		{
+			white = 0;
 			boundRect = boundingRect( Mat(contours[i]));
 			if (boundRect.area() > 1500)
-				cameraObjects.addObject(CameraObject(ColorTypeYellow, boundRect));
+			{
+				currentPic = bluePic(boundRect);
+				for (int i = 0; i < boundRect.height; ++i) {
+					for (int j = 0; j < boundRect.width; j++)
+					{
+						if (currentPic.at<uchar>(i, j) == 255.0)
+							white++;
+					}
+				}
+				if(white > 0.5*boundRect.area())
+					cameraObjects.addObject(CameraObject(ColorTypeYellow, boundRect));
+			}
 		}
 		contours.clear();
 	}
