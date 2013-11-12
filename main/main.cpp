@@ -20,6 +20,7 @@ char kbhit(void)
   char key;
   int oldf;
 
+  // just copied from stackoverflow, got no idea what it actually does - Benedikt
   tcgetattr(STDIN_FILENO, &oldt);
   newt = oldt;
   newt.c_lflag &= ~(ICANON | ECHO);
