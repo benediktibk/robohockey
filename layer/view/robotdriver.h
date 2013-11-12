@@ -3,6 +3,11 @@
 
 namespace RoboHockey
 {
+namespace Common
+{
+	class Watch;
+}
+
 namespace Layer
 {
 namespace Autonomous
@@ -18,12 +23,16 @@ namespace View
 	{
 	public:
 		RobotDriver(Autonomous::Robot &robot, Model &model);
+		~RobotDriver();
 
 		void update();
 
 	private:
 		Autonomous::Robot &m_robot;
 		Model &m_model;
+		Common::Watch *m_watch;
+		double m_lastTime;
+		static const double m_maximumLoopTime;
 	};
 }
 }

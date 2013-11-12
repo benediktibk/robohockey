@@ -7,16 +7,17 @@ namespace RoboHockey
 {
 namespace Common
 {
-    class Watch
-    {
-    public:
-        Watch();
-        double getTime();
-        void restart();
+	class Watch
+	{
+	public:
+		Watch();
+		double getTime();
+		void restart();
 
-    private:
-        boost::timer m_start;
-    };
+	private:
+		boost::timer m_start;
+	};
 }
 }
-#endif // WATCH_H
+
+#endif

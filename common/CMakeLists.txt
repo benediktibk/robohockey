@@ -4,7 +4,7 @@ set(COMMON_SRC
 	discretefunction.cpp
 	rectangle.cpp
 	circle.cpp
-        watch.cpp
+	watch.cpp
 	robotposition.cpp
 )
 
@@ -14,7 +14,7 @@ set(COMMON_TEST_SRC
 	discretefunctiontest.cpp
 	rectangletest.cpp
 	circletest.cpp
-        watchtest.cpp
+	watchtest.cpp
 	robotpositiontest.cpp
 )
 
