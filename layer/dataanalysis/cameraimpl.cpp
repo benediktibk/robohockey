@@ -17,33 +17,32 @@ CameraObjects CameraImpl::getAllCameraObjects()
 	Mat yellowPic, bluePic;
 	vector<vector<Point> > contours;
 	vector<Vec4i> hierarchy;
-	vector<Rect> boundRect;
+	Rect boundRect;
 	filterFrameAndConvertToHLS();
 
-	inRange(m_fileredFrame, cv::Scalar(20, 100, 50), cv::Scalar(30, 200, 255), yellowPic);
+	inRange(m_fileredFrame, Scalar(20, 100, 50), Scalar(30, 200, 255), yellowPic);
 	findContours( yellowPic, contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE, Point(0, 0) );
 	if (!contours.empty())
 	{
 		for(unsigned int i = 0; i < contours.size(); i++ )
 		{
-			boundRect.push_back(boundingRect( Mat(contours[i])));
-			cameraObjects.addObject(CameraObject(ColorTypeYellow, boundRect[i]));
+			boundRect = boundingRect( Mat(contours[i]));
+			if (boundRect.area() > 1500)
+				cameraObjects.addObject(CameraObject(ColorTypeYellow, boundRect));
 		}
-		boundRect.clear();
 		contours.clear();
 	}
 
-	///@todo find color values for blue objects
-	inRange(m_fileredFrame, cv::Scalar(95, 60, 15), cv::Scalar(135, 100, 55), bluePic);
+	inRange(m_fileredFrame, Scalar(95, 40, 40), Scalar(105, 255, 255), bluePic);
 	findContours( bluePic, contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE, Point(0, 0) );
 	if (!contours.empty())
 	{
 		for(unsigned int i = 0; i < contours.size(); i++ )
 		{
-			boundRect.push_back(boundingRect( Mat(contours[i])));
-			cameraObjects.addObject(CameraObject(ColorTypeYellow, boundRect[i]));
+			boundRect = boundingRect( Mat(contours[i]));
+			if (boundRect.area() > 1500)
+				cameraObjects.addObject(CameraObject(ColorTypeYellow, boundRect));
 		}
-		boundRect.clear();
 		contours.clear();
 	}
 
