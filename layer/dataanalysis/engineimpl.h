@@ -30,6 +30,9 @@ namespace DataAnalysis
 		virtual void stop();
 		virtual void turnAround();
 		virtual void turnToTarget(const Common::Point &position);
+		virtual void lockForwardMovement();
+		virtual void unlockForwardMovement();
+		virtual bool tryingToTackleObstacle() const;
 
 	private:
 		void updateSpeedAndRotationForStopped();
@@ -49,6 +52,8 @@ namespace DataAnalysis
 		EngineState m_engineState;
 		double m_startOrientation;
 		bool m_oneHalfTurnDone;
+		bool m_forwardMovementLocked;
+		bool m_tryingToTackleObstacle;
 	};
 }
 }

@@ -29,6 +29,17 @@ void EngineMock::turnAround()
 void EngineMock::turnToTarget(const Common::Point &)
 { }
 
+void EngineMock::lockForwardMovement()
+{ }
+
+void EngineMock::unlockForwardMovement()
+{ }
+
+bool EngineMock::tryingToTackleObstacle() const
+{
+	return false;
+}
+
 unsigned int EngineMock::getCallsToGoToStraight() const
 {
 	return m_callsToGoToStraight;

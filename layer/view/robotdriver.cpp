@@ -42,7 +42,6 @@ void RobotDriver::update()
 	{
 		cout << "stuck at obstacle" << endl;
 		m_model.setData(vector<Point>());
-		m_robot.stop();
 	}
 	else if (m_robot.reachedTarget() && targets.size() > 0)
 	{

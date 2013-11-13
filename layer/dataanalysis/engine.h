@@ -22,6 +22,9 @@ namespace DataAnalysis
 		virtual void updateSpeedAndRotation() = 0;
 		virtual void turnAround() = 0;
 		virtual void turnToTarget(const Common::Point &position) = 0;
+		virtual void lockForwardMovement() = 0;
+		virtual void unlockForwardMovement() = 0;
+		virtual bool tryingToTackleObstacle() const = 0;
 	};
 }
 }

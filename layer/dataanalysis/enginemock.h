@@ -20,6 +20,9 @@ namespace DataAnalysis
 		virtual void stop();
 		virtual void turnAround();
 		virtual void turnToTarget(const Common::Point &position);
+		virtual void lockForwardMovement();
+		virtual void unlockForwardMovement();
+		virtual bool tryingToTackleObstacle() const;
 
 		unsigned int getCallsToGoToStraight() const;
 		unsigned int getCallsToStop() const;

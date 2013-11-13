@@ -39,8 +39,8 @@ void RobotImpl::turnTo(const Point &position)
 
 bool RobotImpl::stuckAtObstacle()
 {
-	DataAnalysis::Sonar &sonar = m_dataAnalyser->getSonar();
-	return sonar.isObstacleDirectInFront();
+	DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
+	return engine.tryingToTackleObstacle();
 }
 
 bool RobotImpl::reachedTarget()
@@ -61,10 +61,21 @@ void RobotImpl::updateActuators()
 
 void RobotImpl::updateSensorData()
 {
+	DataAnalysis::Odometry &odometry = m_dataAnalyser->getOdometry();
+	DataAnalysis::Sonar &sonar = m_dataAnalyser->getSonar();
+	DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
+
 	m_dataAnalyser->updateSensorData();
 	m_field->update();
-	DataAnalysis::Odometry &odometry = m_dataAnalyser->getOdometry();
 	m_currentPosition = odometry.getCurrentPosition();
+
+	if (sonar.isObstacleDirectInFront())
+	{
+		engine.lockForwardMovement();
+		m_targetPosition = m_currentPosition;
+	}
+	else
+		engine.unlockForwardMovement();
 }
 
 void RobotImpl::stop()

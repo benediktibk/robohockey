@@ -15,7 +15,9 @@ EngineImpl::EngineImpl(Hardware::Engine &engine, Hardware::Odometry &odometry) :
 	m_engine(engine),
 	m_odometry(odometry),
 	m_rotationReached(false),
-	m_engineState(EngineStateStopped)
+	m_engineState(EngineStateStopped),
+	m_forwardMovementLocked(false),
+	m_tryingToTackleObstacle(false)
 { }
 
 void EngineImpl::goToStraight(const Common::Point &position)
@@ -54,8 +56,24 @@ void EngineImpl::turnToTarget(const Point &position)
 	m_engineState = EngineStateRotating;
 }
 
+void EngineImpl::lockForwardMovement()
+{
+	m_forwardMovementLocked = true;
+}
+
+void EngineImpl::unlockForwardMovement()
+{
+	m_forwardMovementLocked = false;
+}
+
+bool EngineImpl::tryingToTackleObstacle() const
+{
+	return m_tryingToTackleObstacle;
+}
+
 void EngineImpl::updateSpeedAndRotationForStopped()
 {
+	m_tryingToTackleObstacle = false;
 	m_engine.setSpeed(0, 0);
 }
 
@@ -77,6 +95,7 @@ void EngineImpl::updateSpeedAndRotationForTurnAround()
 	}
 
 	double orientationDifferenceToTarget = 2*M_PI - fixAngleRange(orientationDifference);
+	m_tryingToTackleObstacle = false;
 	m_engine.setSpeed(0, min(m_engine.getMaximumRotation(), orientationDifferenceToTarget*0.75 + 1.1*m_engine.getMinimumSpeed()));
 }
 
@@ -126,6 +145,7 @@ void EngineImpl::turnOnly(double targetOrientation, double currentOrientation)
 {
 	double orientationDifference = calculateOrientationDifference(targetOrientation, currentOrientation);
 	double amplification = 1;
+	m_tryingToTackleObstacle = false;
 	m_engine.setSpeed(0, amplification*orientationDifference);
 }
 
@@ -136,7 +156,17 @@ void EngineImpl::driveAndTurn(const Point &currentPosition, double targetOrienta
 	double targetError = distance*sin(orientationDifference);
 	double distanceAmplification = 0.5;
 	double orientationAmplification = 1;
-	m_engine.setSpeed(distanceAmplification*distance, orientationAmplification*targetError);
+	double magnitude = distanceAmplification*distance;
+
+	if (magnitude > 0 && m_forwardMovementLocked)
+	{
+		magnitude = 0;
+		m_tryingToTackleObstacle = true;
+	}
+	else
+		m_tryingToTackleObstacle = false;
+
+	m_engine.setSpeed(magnitude, orientationAmplification*targetError);
 }
 
 double EngineImpl::calculateOrientationDifference(double targetOrientation, double currentOrientation) const
