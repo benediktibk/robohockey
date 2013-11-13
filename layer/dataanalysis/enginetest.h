@@ -23,6 +23,8 @@ namespace DataAnalysis
 		CPPUNIT_TEST(goToStraight_orientationReachedAfterSomeTime_lastMagnitudeIsNotZero);
 		CPPUNIT_TEST(stop_movingSomewhere_lastMagnitudeIsZero);
 		CPPUNIT_TEST(stop_movingSomewhere_lastRotationIsZero);
+		CPPUNIT_TEST(turnAround_empty_lastMagnitudeIsZero);
+		CPPUNIT_TEST(turnAround_empty_lastRotationIsNotZero);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
@@ -35,6 +37,8 @@ namespace DataAnalysis
 		void goToStraight_orientationReachedAfterSomeTime_lastMagnitudeIsNotZero();
 		void stop_movingSomewhere_lastMagnitudeIsZero();
 		void stop_movingSomewhere_lastRotationIsZero();
+		void turnAround_empty_lastMagnitudeIsZero();
+		void turnAround_empty_lastRotationIsNotZero();
 	};
 }
 }

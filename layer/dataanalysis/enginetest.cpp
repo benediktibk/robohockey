@@ -131,3 +131,29 @@ void EngineTest::stop_movingSomewhere_lastRotationIsZero()
 
 	CPPUNIT_ASSERT(hardwareEngine.getLastRotation() == 0);
 }
+
+void EngineTest::turnAround_empty_lastMagnitudeIsZero()
+{
+	Hardware::EngineMock hardwareEngine;
+	Hardware::OdometryMock hardwareOdometry;
+	EngineImpl engine(hardwareEngine, hardwareOdometry);
+	hardwareOdometry.setCurrentPosition(Point(0, 0), 0);
+
+	engine.turnAround();
+	engine.updateSpeedAndRotation();
+
+	CPPUNIT_ASSERT(hardwareEngine.getLastMagnitude() == 0);
+}
+
+void EngineTest::turnAround_empty_lastRotationIsNotZero()
+{
+	Hardware::EngineMock hardwareEngine;
+	Hardware::OdometryMock hardwareOdometry;
+	EngineImpl engine(hardwareEngine, hardwareOdometry);
+	hardwareOdometry.setCurrentPosition(Point(0, 0), 0);
+
+	engine.turnAround();
+	engine.updateSpeedAndRotation();
+
+	CPPUNIT_ASSERT(fabs(hardwareEngine.getLastRotation()) > 0.1);
+}
