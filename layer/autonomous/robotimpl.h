@@ -34,6 +34,7 @@ namespace Autonomous
 		virtual bool isMoving();
 		virtual void calibratePosition();
 		virtual void turnAround();
+		virtual Common::Point getCurrentPosition();
 
 	private:
 		// forbid copies

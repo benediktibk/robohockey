@@ -13,7 +13,6 @@ EngineImpl::EngineImpl(PlayerCc::PlayerClient *playerClient) :
 EngineImpl::~EngineImpl()
 {
 	setSpeed(0, 0);
-	m_engine->SetMotorEnable(false);
 	delete m_engine;
 	m_engine = 0;
 }

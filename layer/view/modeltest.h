@@ -20,6 +20,7 @@ namespace View
 		CPPUNIT_TEST(setData_stuckAtObstacle_stuckAtObstacle);
 		CPPUNIT_TEST(setData_reachedTarget_reachedTarget);
 		CPPUNIT_TEST(setData_twoTargetPositions_twoTargetPositions);
+		CPPUNIT_TEST(setData_currentPosition_currentPositionIsCorrect);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
@@ -29,6 +30,7 @@ namespace View
 		void setData_stuckAtObstacle_stuckAtObstacle();
 		void setData_reachedTarget_reachedTarget();
 		void setData_twoTargetPositions_twoTargetPositions();
+		void setData_currentPosition_currentPositionIsCorrect();
 	};
 }
 }

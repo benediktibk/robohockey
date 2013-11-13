@@ -77,7 +77,7 @@ void EngineImpl::updateSpeedAndRotationForTurnAround()
 	}
 
 	double orientationDifferenceToTarget = 2*M_PI - fixAngleRange(orientationDifference);
-	m_engine.setSpeed(0, min(m_engine.getMaximumRotation(), orientationDifferenceToTarget + 1.1*m_engine.getMinimumSpeed()));
+	m_engine.setSpeed(0, min(m_engine.getMaximumRotation(), orientationDifferenceToTarget*0.75 + 1.1*m_engine.getMinimumSpeed()));
 }
 
 void EngineImpl::updateSpeedAndRotationForDriving()
@@ -133,9 +133,10 @@ void EngineImpl::driveAndTurn(const Point &currentPosition, double targetOrienta
 {
 	double distance = currentPosition.distanceTo(m_target);
 	double orientationDifference = calculateOrientationDifference(targetOrientation, currentOrientation);
+	double targetError = distance*sin(orientationDifference);
 	double distanceAmplification = 0.5;
-	double orientationAmplification = 0.5;
-	m_engine.setSpeed(distanceAmplification*distance, orientationAmplification*orientationDifference);
+	double orientationAmplification = 1;
+	m_engine.setSpeed(distanceAmplification*distance, orientationAmplification*targetError);
 }
 
 double EngineImpl::calculateOrientationDifference(double targetOrientation, double currentOrientation) const

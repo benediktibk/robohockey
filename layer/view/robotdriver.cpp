@@ -53,7 +53,9 @@ void RobotDriver::update()
 	else if (m_robot.reachedTarget())
 		m_robot.stop();
 
-	m_model.setData(m_robot.getAllFieldObjects(), m_robot.stuckAtObstacle(), m_robot.reachedTarget());
+	m_model.setData(
+				m_robot.getAllFieldObjects(), m_robot.stuckAtObstacle(),
+				m_robot.reachedTarget(), m_robot.getCurrentPosition());
 
 	m_robot.updateActuators();
 }

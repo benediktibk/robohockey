@@ -39,6 +39,7 @@ namespace Autonomous
 		virtual void calibratePosition();
 		virtual void turnAround();
 		virtual void turnTo(const Common::Point &position);
+		virtual Common::Point getCurrentPosition();
 
 	private:
 		Common::Point m_lastTarget;
