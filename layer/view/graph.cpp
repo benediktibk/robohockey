@@ -12,52 +12,53 @@ using namespace RoboHockey::Layer::View;
 using namespace RoboHockey::Layer::Autonomous;
 
 Graph::Graph(Model &model) :
-    QGraphicsView(),
-    m_model(model),
+	QGraphicsView(),
+	m_model(model),
 	m_robot(new QGraphicsEllipseItem),
 	m_pixelPerMeter(80),
 	m_robotDiameter(0.5),
 	m_targetSpotDiameter(0.2)
 {
-    m_scene = new QGraphicsScene();
-    m_scene->addItem(m_robot);
+	m_scene = new QGraphicsScene();
+	m_scene->addItem(m_robot);
    // this->setSceneRect(50,50,350,350);
 
-    connect(&model, SIGNAL(targetPositionsChanged()), this, SLOT(updateTargets()));
-    connect(&model, SIGNAL(robotDataChanged()), this, SLOT(updateObjects()));
-    this->setScene(m_scene);
-    this->setSceneRect(0,0,4,6);
-    this->resize(900,600);
+	connect(&model, SIGNAL(targetPositionsChanged()), this, SLOT(updateTargets()));
+	connect(&model, SIGNAL(robotDataChanged()), this, SLOT(updateObjects()));
+	this->setScene(m_scene);
+	this->setSceneRect(0,0,4,6);
+	this->resize(900,600);
+	this->setBackgroundBrush(QBrush(Qt::white, Qt::SolidPattern));
 }
 
 Graph::~Graph()
 {
-    m_scene = 0;
-    delete m_scene;
+	m_scene = 0;
+	delete m_scene;
 
-     for (vector<QGraphicsEllipseItem*>::iterator i = m_targetPositions.begin(); i != m_targetPositions.end(); ++i)
-    {
-        delete *i;
-        m_targetPositions.clear();
-    }
+	 for (vector<QGraphicsEllipseItem*>::iterator i = m_targetPositions.begin(); i != m_targetPositions.end(); ++i)
+	{
+		delete *i;
+		m_targetPositions.clear();
+	}
 }
 
 void Graph::mousePressEvent(QMouseEvent *ev)
 {
-    QPointF point= mapToScene(ev->pos());
-    QGraphicsView::mousePressEvent(ev);
-    vector<Point> target = m_model.getAllTargetPoints();
+	QPointF point= mapToScene(ev->pos());
+	QGraphicsView::mousePressEvent(ev);
+	vector<Point> target = m_model.getAllTargetPoints();
 	target.push_back(Point(point.x() / (double) m_pixelPerMeter, point.y() / (double) m_pixelPerMeter));
-    m_model.setData(target);
+	m_model.setData(target);
 }
 
 void Graph::updateTargets()
 {
-    vector<Point> target = m_model.getAllTargetPoints();
-    size_t size_target = target.size();
+	vector<Point> target = m_model.getAllTargetPoints();
+	size_t size_target = target.size();
 
-    while (size_target < m_targetPositions.size())
-    {
+	while (size_target < m_targetPositions.size())
+	{
 		m_scene->removeItem(m_targetPositions.back());
 		m_targetPositions.pop_back();
 	}
