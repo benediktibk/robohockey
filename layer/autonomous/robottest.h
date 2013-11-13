@@ -24,6 +24,10 @@ namespace Autonomous
 		CPPUNIT_TEST(stop_empty_engineGotAtLeastOneCallToStop);
 		CPPUNIT_TEST(stuckAtObstacle_empty_engineGotAtLeastOneCallToTryingToTackleObstacle);
 		CPPUNIT_TEST(turnToTarget_validPoint_engineGotAtLeastOneCallToTurnToTarget);
+		CPPUNIT_TEST(updateActuators_notTryingToTackleObstacle_engineGotNoCallToStop);
+		CPPUNIT_TEST(updateActuators_notTryingToTackleObstacle_targetNotReached);
+		CPPUNIT_TEST(updateActuators_tryingToTackleObstacle_engineGotAtLeastOneCallToStop);
+		CPPUNIT_TEST(updateActuators_tryingToTackleObstacle_targetReached);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
@@ -37,6 +41,10 @@ namespace Autonomous
 		void stop_empty_engineGotAtLeastOneCallToStop();
 		void stuckAtObstacle_empty_engineGotAtLeastOneCallToTryingToTackleObstacle();
 		void turnToTarget_validPoint_engineGotAtLeastOneCallToTurnToTarget();
+		void updateActuators_notTryingToTackleObstacle_engineGotNoCallToStop();
+		void updateActuators_notTryingToTackleObstacle_targetNotReached();
+		void updateActuators_tryingToTackleObstacle_engineGotAtLeastOneCallToStop();
+		void updateActuators_tryingToTackleObstacle_targetReached();
 	};
 }
 }

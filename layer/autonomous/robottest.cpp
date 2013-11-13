@@ -117,3 +117,55 @@ void RobotTest::turnToTarget_validPoint_engineGotAtLeastOneCallToTurnToTarget()
 
 	CPPUNIT_ASSERT(engine.getCallsToTurnToTarget() > 0);
 }
+
+void RobotTest::updateActuators_notTryingToTackleObstacle_engineGotNoCallToStop()
+{
+	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
+	DataAnalysis::EngineMock &engine = dataAnalyser->getEngineMock();
+	engine.setTryingToTackleObstacle(false);
+	RobotImpl robot(dataAnalyser);
+	robot.goTo(Point(10, 0));
+
+	robot.updateActuators();
+
+	CPPUNIT_ASSERT(engine.getCallsToStop() == 0);
+}
+
+void RobotTest::updateActuators_notTryingToTackleObstacle_targetNotReached()
+{
+	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
+	DataAnalysis::EngineMock &engine = dataAnalyser->getEngineMock();
+	engine.setTryingToTackleObstacle(false);
+	RobotImpl robot(dataAnalyser);
+	robot.goTo(Point(10, 0));
+
+	robot.updateActuators();
+
+	CPPUNIT_ASSERT(!robot.reachedTarget());
+}
+
+void RobotTest::updateActuators_tryingToTackleObstacle_engineGotAtLeastOneCallToStop()
+{
+	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
+	DataAnalysis::EngineMock &engine = dataAnalyser->getEngineMock();
+	engine.setTryingToTackleObstacle(true);
+	RobotImpl robot(dataAnalyser);
+	robot.goTo(Point(10, 0));
+
+	robot.updateActuators();
+
+	CPPUNIT_ASSERT(engine.getCallsToStop() > 0);
+}
+
+void RobotTest::updateActuators_tryingToTackleObstacle_targetReached()
+{
+	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
+	DataAnalysis::EngineMock &engine = dataAnalyser->getEngineMock();
+	engine.setTryingToTackleObstacle(true);
+	RobotImpl robot(dataAnalyser);
+	robot.goTo(Point(10, 0));
+
+	robot.updateActuators();
+
+	CPPUNIT_ASSERT(robot.reachedTarget());
+}
