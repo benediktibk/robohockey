@@ -157,3 +157,42 @@ void EngineTest::turnAround_empty_lastRotationIsNotZero()
 
 	CPPUNIT_ASSERT(fabs(hardwareEngine.getLastRotation()) > 0.1);
 }
+
+void EngineTest::turnToTarget_differentToStartOrientation_lastMagnitudeIsZero()
+{
+	Hardware::EngineMock hardwareEngine;
+	Hardware::OdometryMock hardwareOdometry;
+	EngineImpl engine(hardwareEngine, hardwareOdometry);
+	hardwareOdometry.setCurrentPosition(Point(0, 0), 0);
+
+	engine.turnToTarget(Point(0, 1));
+	engine.updateSpeedAndRotation();
+
+	CPPUNIT_ASSERT(hardwareEngine.getLastMagnitude() == 0);
+}
+
+void EngineTest::turnToTarget_targetLeft_lastRotationIsGreaterZero()
+{
+	Hardware::EngineMock hardwareEngine;
+	Hardware::OdometryMock hardwareOdometry;
+	EngineImpl engine(hardwareEngine, hardwareOdometry);
+	hardwareOdometry.setCurrentPosition(Point(0, 0), 0);
+
+	engine.turnToTarget(Point(0, 1));
+	engine.updateSpeedAndRotation();
+
+	CPPUNIT_ASSERT(hardwareEngine.getLastRotation() > 0.1);
+}
+
+void EngineTest::turnToTarget_targetRight_lastRotationIsSmallerZero()
+{
+	Hardware::EngineMock hardwareEngine;
+	Hardware::OdometryMock hardwareOdometry;
+	EngineImpl engine(hardwareEngine, hardwareOdometry);
+	hardwareOdometry.setCurrentPosition(Point(0, 0), 0);
+
+	engine.turnToTarget(Point(0, -1));
+	engine.updateSpeedAndRotation();
+
+	CPPUNIT_ASSERT(hardwareEngine.getLastRotation() < -0.1);
+}
