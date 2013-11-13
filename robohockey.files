@@ -221,3 +221,7 @@ layer/dataanalysis/colorType.h
 layer/hardware/engine.cpp
 layer/view/graph.h
 layer/view/graph.cpp
+common/angle.h
+common/angle.cpp
+common/angletest.h
+common/angletest.cpp
