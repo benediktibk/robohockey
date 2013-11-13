@@ -93,3 +93,27 @@ void RobotTest::stop_empty_engineGotAtLeastOneCallToStop()
 
 	CPPUNIT_ASSERT(engine.getCallsToStop() > 0);
 }
+
+void RobotTest::stuckAtObstacle_empty_engineGotAtLeastOneCallToTryingToTackleObstacle()
+{
+	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
+	DataAnalysis::EngineMock &engine = dataAnalyser->getEngineMock();
+	RobotImpl robot(dataAnalyser);
+
+	robot.stuckAtObstacle();
+
+	CPPUNIT_ASSERT(engine.getCallsToTryingToTackleObstacle() > 0);
+}
+
+void RobotTest::turnToTarget_validPoint_engineGotAtLeastOneCallToTurnToTarget()
+{
+	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
+	DataAnalysis::EngineMock &engine = dataAnalyser->getEngineMock();
+	DataAnalysis::OdometryMock &odometry = dataAnalyser->getOdometryMock();
+	odometry.setCurrentPosition(Point(0, 0), 0);
+	RobotImpl robot(dataAnalyser);
+
+	robot.turnTo(Point(0, 1));
+
+	CPPUNIT_ASSERT(engine.getCallsToTurnToTarget() > 0);
+}

@@ -30,6 +30,7 @@ namespace DataAnalysis
 
 		EngineMock& getEngineMock();
 		SonarMock& getSonarMock();
+		OdometryMock& getOdometryMock();
 		unsigned int getCallsToUpdateSensorData() const;
 		unsigned int getCallsToUpdateActuators() const;
 

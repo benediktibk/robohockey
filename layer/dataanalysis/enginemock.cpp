@@ -6,6 +6,11 @@ EngineMock::EngineMock() :
 	m_callsToGoToStraight(0),
 	m_callsToStop(0),
 	m_callsToUpdateSpeedAndMagnitude(0),
+	m_callsToTryingToTackleObstacle(0),
+	m_callsToTurnToTarget(0),
+	m_callsToTurnAround(0),
+	m_callsToLockForwardMovement(0),
+	m_callsToUnlockForwardMovement(0),
 	m_tryingToTackleObstacle(false)
 { }
 
@@ -25,19 +30,28 @@ void EngineMock::stop()
 }
 
 void EngineMock::turnAround()
-{ }
+{
+	++m_callsToTurnAround;
+}
 
 void EngineMock::turnToTarget(const Common::Point &)
-{ }
+{
+	++m_callsToTurnToTarget;
+}
 
 void EngineMock::lockForwardMovement()
-{ }
+{
+	++m_callsToLockForwardMovement;
+}
 
 void EngineMock::unlockForwardMovement()
-{ }
-
-bool EngineMock::tryingToTackleObstacle() const
 {
+	++m_callsToUnlockForwardMovement;
+}
+
+bool EngineMock::tryingToTackleObstacle()
+{
+	++m_callsToTryingToTackleObstacle;
 	return m_tryingToTackleObstacle;
 }
 
@@ -54,6 +68,31 @@ unsigned int EngineMock::getCallsToStop() const
 unsigned int EngineMock::getCallsToUpdateSpeedAndMagnitude() const
 {
 	return m_callsToUpdateSpeedAndMagnitude;
+}
+
+unsigned int EngineMock::getCallsToTryingToTackleObstacle() const
+{
+	return m_callsToTryingToTackleObstacle;
+}
+
+unsigned int EngineMock::getCallsToTurnToTarget() const
+{
+	return m_callsToTurnToTarget;
+}
+
+unsigned int EngineMock::getCallsToTurnAround() const
+{
+	return m_callsToTurnAround;
+}
+
+unsigned int EngineMock::getCallsToLockForwardMovement() const
+{
+	return m_callsToLockForwardMovement;
+}
+
+unsigned int EngineMock::getCallsToUnlockForwardMovement() const
+{
+	return m_callsToUnlockForwardMovement;
 }
 
 void EngineMock::setTryingToTackleObstacle(bool value)

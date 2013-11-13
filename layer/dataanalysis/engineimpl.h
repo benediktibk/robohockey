@@ -32,7 +32,7 @@ namespace DataAnalysis
 		virtual void turnToTarget(const Common::Point &position);
 		virtual void lockForwardMovement();
 		virtual void unlockForwardMovement();
-		virtual bool tryingToTackleObstacle() const;
+		virtual bool tryingToTackleObstacle();
 
 	private:
 		void updateSpeedAndRotationForStopped();

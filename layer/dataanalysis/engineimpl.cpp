@@ -66,7 +66,7 @@ void EngineImpl::unlockForwardMovement()
 	m_forwardMovementLocked = false;
 }
 
-bool EngineImpl::tryingToTackleObstacle() const
+bool EngineImpl::tryingToTackleObstacle()
 {
 	return m_tryingToTackleObstacle;
 }

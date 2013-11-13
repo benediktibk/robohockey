@@ -52,6 +52,11 @@ SonarMock &DataAnalyserMock::getSonarMock()
 	return m_sonar;
 }
 
+OdometryMock &DataAnalyserMock::getOdometryMock()
+{
+	return m_odometry;
+}
+
 unsigned int DataAnalyserMock::getCallsToUpdateSensorData() const
 {
 	return m_callsToUpdateSensorData;

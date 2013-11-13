@@ -22,6 +22,8 @@ namespace Autonomous
 		CPPUNIT_TEST(updateActuators_empty_layerBelowGotAtLeastOneCallToUpdateActuators);
 		CPPUNIT_TEST(updateSensorData_empty_layerBelowGotAtLeastOneCallToUpdateSensorData);
 		CPPUNIT_TEST(stop_empty_engineGotAtLeastOneCallToStop);
+		CPPUNIT_TEST(stuckAtObstacle_empty_engineGotAtLeastOneCallToTryingToTackleObstacle);
+		CPPUNIT_TEST(turnToTarget_validPoint_engineGotAtLeastOneCallToTurnToTarget);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
@@ -33,6 +35,8 @@ namespace Autonomous
 		void updateActuators_empty_layerBelowGotAtLeastOneCallToUpdateActuators();
 		void updateSensorData_empty_layerBelowGotAtLeastOneCallToUpdateSensorData();
 		void stop_empty_engineGotAtLeastOneCallToStop();
+		void stuckAtObstacle_empty_engineGotAtLeastOneCallToTryingToTackleObstacle();
+		void turnToTarget_validPoint_engineGotAtLeastOneCallToTurnToTarget();
 	};
 }
 }
