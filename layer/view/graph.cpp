@@ -14,7 +14,10 @@ using namespace RoboHockey::Layer::Autonomous;
 Graph::Graph(Model &model) :
     QGraphicsView(),
     m_model(model),
-    m_robot(new QGraphicsEllipseItem)
+	m_robot(new QGraphicsEllipseItem),
+	m_pixelPerMeter(80),
+	m_robotDiameter(0.5),
+	m_targetSpotDiameter(0.2)
 {
     m_scene = new QGraphicsScene();
     m_scene->addItem(m_robot);
@@ -44,7 +47,7 @@ void Graph::mousePressEvent(QMouseEvent *ev)
     QPointF point= mapToScene(ev->pos());
     QGraphicsView::mousePressEvent(ev);
     vector<Point> target = m_model.getAllTargetPoints();
-    target.push_back(Point(point.x() / 15.0, point.y() / 15.0));
+	target.push_back(Point(point.x() / (double) m_pixelPerMeter, point.y() / (double) m_pixelPerMeter));
     m_model.setData(target);
 }
 
@@ -74,9 +77,9 @@ void Graph::updateTargets()
 		const Point &currentPoint = target[i];
 		double current_x_position = currentPoint.getX();
 		double current_y_position = currentPoint.getY();
-		current_x_position = current_x_position * 15.0;
-		current_y_position = current_y_position * 15.0;
-		currentItem.setRect(current_x_position - 5,current_y_position - 5,10,10);
+		current_x_position = current_x_position * m_pixelPerMeter;
+		current_y_position = current_y_position * m_pixelPerMeter;
+		currentItem.setRect(current_x_position - 5,current_y_position - 0.5 * m_targetSpotDiameter * m_pixelPerMeter, m_targetSpotDiameter * m_pixelPerMeter, m_targetSpotDiameter * m_pixelPerMeter);
 
 
 	}
@@ -92,8 +95,6 @@ void Graph::updateObjects()
 	{
 		m_scene->removeItem(*m_objectPositions.end());
 		m_objectPositions.erase(m_objectPositions.end());
-		//delete m_targetPositions.back();
-		//m_targetPositions.pop_back();
 	}
 
 	while(size_object > m_objectPositions.size())
@@ -110,8 +111,8 @@ void Graph::updateObjects()
 		const Circle &currentCircle = currentObject.getCircle();
 		double diameter = currentCircle.getDiameter();
 		Point center = currentCircle.getCenter();
-		diameter = diameter * 15;
-		center = center * 15;
+		diameter = diameter * m_pixelPerMeter;
+		center = center * m_pixelPerMeter;
 		double centerX = center.getX();
 		double centerY = center.getY();
 		currentItem.setRect(centerX - 0.5 * diameter, centerY - 0.5 * diameter, diameter, diameter);
@@ -120,7 +121,7 @@ void Graph::updateObjects()
 	}
 
 	const Point robotPosition = m_model.getCurrentPosition();
-	double positionX = robotPosition.getX();
-	double positionY = robotPosition.getY();
-	m_robot->setRect(positionX - 7,positionY - 7, 14, 14);
+	double positionX = robotPosition.getX() * m_pixelPerMeter;
+	double positionY = robotPosition.getY() * m_pixelPerMeter;
+	m_robot->setRect(positionX - 0.5 * m_pixelPerMeter * m_robotDiameter, positionY - 0.5 * m_pixelPerMeter * m_robotDiameter, m_pixelPerMeter * m_robotDiameter, m_pixelPerMeter * m_robotDiameter);
 }
