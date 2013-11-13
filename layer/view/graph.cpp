@@ -75,9 +75,9 @@ void Graph::updateTargets()
 		const Point &currentPoint = target[i];
 		double current_x_position = currentPoint.getX();
 		double current_y_position = currentPoint.getY();
-		current_x_position = current_x_position * m_pixelPerMeter;
-		current_y_position = current_y_position * m_pixelPerMeter;
-		currentItem.setRect(current_x_position - 5,current_y_position - 0.5 * m_targetSpotDiameter * m_pixelPerMeter, m_targetSpotDiameter * m_pixelPerMeter, m_targetSpotDiameter * m_pixelPerMeter);
+		current_x_position = current_x_position * m_pixelPerMeter - 0.5 * m_targetSpotDiameter * m_pixelPerMeter;
+		current_y_position = current_y_position * m_pixelPerMeter - 0.5 * m_targetSpotDiameter * m_pixelPerMeter;
+		currentItem.setRect(current_x_position, current_y_position, m_targetSpotDiameter * m_pixelPerMeter, m_targetSpotDiameter * m_pixelPerMeter);
 
 
 	}
@@ -119,7 +119,7 @@ void Graph::updateObjects()
 	}
 
 	const Point robotPosition = m_model.getCurrentPosition();
-	double positionX = robotPosition.getX() * m_pixelPerMeter;
-	double positionY = robotPosition.getY() * m_pixelPerMeter;
-	m_robot->setRect(positionX - 0.5 * m_pixelPerMeter * m_robotDiameter, positionY - 0.5 * m_pixelPerMeter * m_robotDiameter, m_pixelPerMeter * m_robotDiameter, m_pixelPerMeter * m_robotDiameter);
+	double positionX = robotPosition.getX() * m_pixelPerMeter - 0.5 * m_pixelPerMeter * m_robotDiameter;
+	double positionY = robotPosition.getY() * m_pixelPerMeter - 0.5 * m_pixelPerMeter * m_robotDiameter;
+	m_robot->setRect(positionX, positionY, m_pixelPerMeter * m_robotDiameter, m_pixelPerMeter * m_robotDiameter);
 }
