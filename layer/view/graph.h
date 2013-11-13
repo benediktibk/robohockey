@@ -20,7 +20,7 @@ namespace View
         Q_OBJECT
     public:
         Graph(Model &model);
-       // ~Graph();
+        ~Graph();
 
     public slots:
         void mousePressEvent(QMouseEvent *ev);

@@ -21,17 +21,17 @@ Graph::Graph(Model &model) :
     this->resize(900,600);
 }
 
-//Graph::~Graph()
-//{
-   // m_scene = 0;
-    //delete m_scene;
+Graph::~Graph()
+{
+    m_scene = 0;
+    delete m_scene;
 
-    /* for (vector<QGraphicsEllipseItem*>::iterator i = m_targetPositions.begin(); i != m_targetPositions.end(); ++i)
+     for (vector<QGraphicsEllipseItem*>::iterator i = m_targetPositions.begin(); i != m_targetPositions.end(); ++i)
     {
         delete *i;
         m_targetPositions.clear();
-    }*/
-//}
+    }
+}
 
 void Graph::mousePressEvent(QMouseEvent *ev)
 {
@@ -50,6 +50,7 @@ void Graph::updateTargets()
     while (size_target < m_targetPositions.size())
     {
         m_targetPositions.erase(m_targetPositions.end());
+        m_scene->removeItem(*m_targetPositions.end());
         //delete m_targetPositions.back();
         //m_targetPositions.pop_back();
     }
@@ -58,15 +59,19 @@ void Graph::updateTargets()
     {
         QGraphicsEllipseItem* item = new QGraphicsEllipseItem();
         m_targetPositions.push_back(item);
+        m_scene->addItem(item);
     }
 
     for (size_t i = 0; i < m_targetPositions.size(); ++i)
     {
-        //QGraphicsEllipseItem &currentItem = *(m_targetPositions[i]);
-        target = m_model.getAllTargetPoints();
-        //const Point &currentPoint = target[i];
-        //double current_x_position = currentPoint.getX();
-        //double current_y_posiiton = currentPoint.getY();
+        QGraphicsEllipseItem &currentItem = *(m_targetPositions[i]);
+        const Point &currentPoint = target[i];
+        double current_x_position = currentPoint.getX();
+        double current_y_position = currentPoint.getY();
+        current_x_position = current_x_position * 15;
+        current_y_position = current_y_position * 15;
+        currentItem.setRect(current_x_position,current_y_position,10,10);
+
 
     }
 
