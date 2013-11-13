@@ -4,21 +4,38 @@
 #include <QtGui/QMouseEvent>
 #include <QtGui/QGraphicsView>
 #include <QtGui/QGraphicsScene>
+#include <vector>
 
-class QGraph : public QGraphicsView
+namespace RoboHockey
 {
-    Q_OBJECT
-public:
-    explicit QGraph(QWidget *parent = 0);
-    
-signals:
-    
-public slots:
-    void mousePressEvent(QMouseEvent *ev);
+namespace Layer
+{
+namespace View
+{
+    class Model;
 
-private:
-    QGraphicsScene *scene;
-    
-};
+    class Graph :
+            public QGraphicsView
+    {
+        Q_OBJECT
+    public:
+        Graph(Model &model);
+       // ~Graph();
 
-#endif // QGRAPH_H
+    public slots:
+        void mousePressEvent(QMouseEvent *ev);
+        void updateTargets();
+
+    private:
+        QGraphicsScene *m_scene;
+        Model &m_model;
+        std::vector<QGraphicsEllipseItem*> m_targetPositions;
+
+
+
+    };
+
+}
+}
+}
+#endif
