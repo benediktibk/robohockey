@@ -13,9 +13,11 @@ using namespace RoboHockey::Layer::Autonomous;
 
 Graph::Graph(Model &model) :
     QGraphicsView(),
-    m_model(model)
+    m_model(model),
+    m_robot(new QGraphicsEllipseItem)
 {
     m_scene = new QGraphicsScene();
+    m_scene->addItem(m_robot);
    // this->setSceneRect(50,50,350,350);
 
     connect(&model, SIGNAL(targetPositionsChanged()), this, SLOT(updateTargets()));
@@ -116,4 +118,9 @@ void Graph::updateObjects()
 
 
     }
+
+    const Point robotPosition = m_model.getCurrentPosition();
+    double positionX = robotPosition.getX();
+    double positionY = robotPosition.getY();
+    m_robot->setRect(positionX - 7,positionY - 7, 14, 14);
 }

@@ -32,6 +32,7 @@ namespace View
         Model &m_model;
         std::vector<QGraphicsEllipseItem*> m_targetPositions;
         std::vector<QGraphicsEllipseItem*> m_objectPositions;
+        QGraphicsEllipseItem *m_robot;
 
 
 
