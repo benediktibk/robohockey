@@ -42,7 +42,7 @@ void Graph::mousePressEvent(QMouseEvent *ev)
     QPointF point= mapToScene(ev->pos());
     QGraphicsView::mousePressEvent(ev);
     vector<Point> target = m_model.getAllTargetPoints();
-    target.push_back(Point(point.x(),point.y()));
+    target.push_back(Point(point.x() / 15.0, point.y() / 15.0));
     m_model.setData(target);
 }
 
@@ -72,9 +72,9 @@ void Graph::updateTargets()
         const Point &currentPoint = target[i];
         double current_x_position = currentPoint.getX();
         double current_y_position = currentPoint.getY();
-        current_x_position = current_x_position * 15;
-        current_y_position = current_y_position * 15;
-        currentItem.setRect(current_x_position,current_y_position,10,10);
+        current_x_position = current_x_position * 15.0;
+        current_y_position = current_y_position * 15.0;
+        currentItem.setRect(current_x_position - 5,current_y_position - 5,10,10);
 
 
     }
