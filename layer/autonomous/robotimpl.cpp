@@ -56,7 +56,14 @@ vector<FieldObject> RobotImpl::getAllFieldObjects()
 
 void RobotImpl::updateActuators()
 {
+	DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
 	m_dataAnalyser->updateActuators();
+
+	if (engine.tryingToTackleObstacle())
+	{
+		m_targetPosition = m_currentPosition;
+		engine.stop();
+	}
 }
 
 void RobotImpl::updateSensorData()
@@ -70,10 +77,7 @@ void RobotImpl::updateSensorData()
 	m_currentPosition = odometry.getCurrentPosition();
 
 	if (sonar.isObstacleDirectInFront())
-	{
 		engine.lockForwardMovement();
-		m_targetPosition = m_currentPosition;
-	}
 	else
 		engine.unlockForwardMovement();
 }

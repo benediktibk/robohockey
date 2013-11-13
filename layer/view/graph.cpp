@@ -37,10 +37,8 @@ Graph::~Graph()
 	delete m_scene;
 
 	 for (vector<QGraphicsEllipseItem*>::iterator i = m_targetPositions.begin(); i != m_targetPositions.end(); ++i)
-	{
 		delete *i;
-		m_targetPositions.clear();
-	}
+	 m_targetPositions.clear();
 }
 
 void Graph::mousePressEvent(QMouseEvent *ev)
