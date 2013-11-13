@@ -19,6 +19,8 @@ namespace DataAnalysis
 		CPPUNIT_TEST(goToStraight_lookingRightButHaveToGoDown_lastRotationIsRight);
 		CPPUNIT_TEST(goToStraight_startOrientationCompletelyWrong_lastMagnitudeIsZero);
 		CPPUNIT_TEST(goToStraight_startOrientationCompletelyWrong_lastRotationIsNotZero);
+		CPPUNIT_TEST(stop_movingSomewhere_lastMagnitudeIsZero);
+		CPPUNIT_TEST(stop_movingSomewhere_lastRotationIsZero);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
@@ -27,6 +29,8 @@ namespace DataAnalysis
 		void goToStraight_lookingRightButHaveToGoDown_lastRotationIsRight();
 		void goToStraight_startOrientationCompletelyWrong_lastMagnitudeIsZero();
 		void goToStraight_startOrientationCompletelyWrong_lastRotationIsNotZero();
+		void stop_movingSomewhere_lastMagnitudeIsZero();
+		void stop_movingSomewhere_lastRotationIsZero();
 	};
 }
 }
