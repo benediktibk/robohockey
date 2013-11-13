@@ -6,9 +6,9 @@
 #include "layer/autonomous/robotimpl.h"
 #include "layer/dataanalysis/dataanalyserimpl.h"
 #include "layer/hardware/robotimpl.h"
-#include "layer/view/graphicshow.h"
-#include "layer/view/window.h"
 #include <iostream>
+#include "layer/view/viewer.h"
+#include "layer/view/graph.h"
 
 using namespace RoboHockey::Layer;
 using namespace RoboHockey::Layer::View;
@@ -30,7 +30,8 @@ int main(int argc, char **argv)
 		playerServer = "localhost";
 	}
 
-	Window window;
+    QGraph qshow;
+    //Viewer view;
 	Model model;
 	Hardware::Robot *hardwareRobot = new Hardware::RobotImpl(playerServer);
 	DataAnalysis::DataAnalyser *dataAnalyser = new DataAnalysis::DataAnalyserImpl(hardwareRobot);
@@ -44,6 +45,7 @@ int main(int argc, char **argv)
 //	model.setData(targets);
 	//autonomousRobot.turnTo(RoboHockey::Common::Point(-1, 0));
 
-	window.showMaximized();
+    //view.show();
+    qshow.show();
 	return application.exec();
 }

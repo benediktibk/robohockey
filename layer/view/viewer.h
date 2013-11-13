@@ -2,6 +2,7 @@
 #define ROBOHOCKEY_LAYER_VIEW_VIEWER_H
 
 #include <QtGui/QDialog>
+#include <QtGui/QGraphicsScene>
 
 namespace Ui
 {
@@ -20,7 +21,7 @@ namespace View
 		Q_OBJECT
 
 	public:
-		Viewer();
+        Viewer();
 		~Viewer();
 
 	private:
@@ -29,7 +30,8 @@ namespace View
 		void operator=(const Viewer &viewer);
 
 	private:
-		Ui::viewer *ui;
+        Ui::viewer *m_ui;
+        QGraphicsScene m_scene;
 	};
 }
 }

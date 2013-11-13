@@ -5,14 +5,15 @@ using namespace RoboHockey::Layer::View;
 
 Viewer::Viewer() :
 	QDialog(0),
-	ui(new Ui::viewer)
+	m_ui(new Ui::viewer)
 {
-	ui->setupUi(this);
+	m_ui->setupUi(this);
+    m_ui->graphicsView->setScene(&m_scene);
 }
 
 Viewer::~Viewer()
 {
-	delete ui;
+	delete m_ui;
 }
 
 Viewer::Viewer(const Viewer &) :
