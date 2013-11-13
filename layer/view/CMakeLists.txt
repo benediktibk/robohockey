@@ -4,7 +4,7 @@ ADD_DEFINITIONS(${QT_DEFINITIONS})
 INCLUDE_DIRECTORIES(${CMAKE_CURRENT_BINARY_DIR})
 
 SET(LAYER_VIEW_SRC
-	actionwindow.cpp
+	controller.cpp
 	model.cpp
 	robotdriver.cpp
 	robotdriverloop.cpp
@@ -17,14 +17,14 @@ SET(LAYER_VIEW_TEST_SRC
 )
 
 SET(LAYER_VIEW_HEADER
-	actionwindow.h
+	controller.h
 	robotdriverloop.h
 	model.h
 	graph.h
 )
 
 SET(LAYER_VIEW_FORMS
-	actionwindow.ui
+	view.ui
 )
 
 QT4_WRAP_CPP(LAYER_VIEW_HEADER_MOC ${LAYER_VIEW_HEADER})

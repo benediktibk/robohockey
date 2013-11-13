@@ -139,9 +139,9 @@ common/circletest.h
 common/circletest.cpp
 
 layer/view/CMakeLists.txt
-layer/view/actionwindow.h
-layer/view/actionwindow.cpp
-layer/view/actionwindow.ui
+layer/view/controller.h
+layer/view/controller.cpp
+layer/view/view.ui
 main/remotecontrol.cpp
 main/datalogger.cpp
 layer/hardware/lidar.cpp

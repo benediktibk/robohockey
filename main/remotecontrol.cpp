@@ -1,7 +1,7 @@
 #include "layer/view/model.h"
 #include "layer/view/robotdriver.h"
 #include "layer/view/robotdriverloop.h"
-#include "layer/view/actionwindow.h"
+#include "layer/view/controller.h"
 #include "layer/view/graph.h"
 #include "layer/autonomous/robotimpl.h"
 #include "layer/dataanalysis/dataanalyserimpl.h"
@@ -31,7 +31,7 @@ int main(int argc, char **argv)
 
 	Model model;
 	Graph graph(model);
-	ActionWindow actionWindow;
+	Controller controller;
 	Hardware::Robot *hardwareRobot = new Hardware::RobotImpl(playerServer);
 	DataAnalysis::DataAnalyser *dataAnalyser = new DataAnalysis::DataAnalyserImpl(hardwareRobot);
 	Autonomous::RobotImpl autonomousRobot(dataAnalyser);
@@ -48,7 +48,7 @@ int main(int argc, char **argv)
 	//autonomousRobot.turnTo(RoboHockey::Common::Point(0, 1));
 	//autonomousRobot.turnAround();
 
-	actionWindow.show();
+	controller.show();
 	graph.show();
 	return application.exec();
 }
