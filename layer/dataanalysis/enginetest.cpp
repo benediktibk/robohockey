@@ -196,3 +196,18 @@ void EngineTest::turnToTarget_targetRight_lastRotationIsSmallerZero()
 
 	CPPUNIT_ASSERT(hardwareEngine.getLastRotation() < -0.1);
 }
+
+void EngineTest::lockForwardMovement_tryingToDriveForward_lastMagnitudeIsZero()
+{
+	Hardware::EngineMock hardwareEngine;
+	Hardware::OdometryMock hardwareOdometry;
+	EngineImpl engine(hardwareEngine, hardwareOdometry);
+	hardwareOdometry.setCurrentPosition(Point(0, 0), 0);
+	engine.goToStraight(Point(10, 0));
+	engine.updateSpeedAndRotation();
+
+	engine.lockForwardMovement();
+	engine.updateSpeedAndRotation();
+
+	CPPUNIT_ASSERT(hardwareEngine.getLastMagnitude() == 0);
+}
