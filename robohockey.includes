@@ -7,3 +7,4 @@ layer/hardware
 /usr/include/opencv
 /usr/include/qt4
 build/layer/view
+build/debug/layer/view
