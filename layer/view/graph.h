@@ -25,11 +25,13 @@ namespace View
     public slots:
         void mousePressEvent(QMouseEvent *ev);
         void updateTargets();
+        void updateObjects();
 
     private:
         QGraphicsScene *m_scene;
         Model &m_model;
         std::vector<QGraphicsEllipseItem*> m_targetPositions;
+        std::vector<QGraphicsEllipseItem*> m_objectPositions;
 
 
 
