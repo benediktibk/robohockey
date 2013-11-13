@@ -6,6 +6,7 @@ set(COMMON_SRC
 	circle.cpp
 	watch.cpp
 	robotposition.cpp
+	angle.cpp
 )
 
 set(COMMON_TEST_SRC
@@ -16,6 +17,7 @@ set(COMMON_TEST_SRC
 	circletest.cpp
 	watchtest.cpp
 	robotpositiontest.cpp
+	angletest.cpp
 )
 
 add_library(common ${COMMON_SRC})
