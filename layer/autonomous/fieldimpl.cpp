@@ -155,6 +155,7 @@ void FieldImpl::removeAllFieldObjectsInVisibleArea()
 		if (isTargetPointRightOfLineWithParameters(referencePoint, directionVector, currentCenter) && currentCenter.distanceTo(referencePoint) < 4)
 		{
 			m_fieldObjects.erase(i);
+			i--;
 		}
 
 	}
