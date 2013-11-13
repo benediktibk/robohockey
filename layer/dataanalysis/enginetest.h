@@ -31,6 +31,10 @@ namespace DataAnalysis
 		CPPUNIT_TEST(lockForwardMovement_tryingToDriveForward_lastMagnitudeIsZero);
 		CPPUNIT_TEST(tryingToTackleObstacle_drivingForwardAndForwardMovementLocked_true);
 		CPPUNIT_TEST(tryingToTackleObstacle_drivingForwardAndForwardMovementNotLocked_false);
+		CPPUNIT_TEST(tryingToTackleObstacle_turningAroundAndForwardMovementLocked_false);
+		CPPUNIT_TEST(tryingToTackleObstacle_turningToTargetAndForwardMovementLocked_false);
+		CPPUNIT_TEST(tryingToTackleObstacle_turningToNewTargetAndForwardMovementLocked_false);
+		CPPUNIT_TEST(tryingToTackleObstacle_stoppedAndForwardMovementLocked_false);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
@@ -51,6 +55,10 @@ namespace DataAnalysis
 		void lockForwardMovement_tryingToDriveForward_lastMagnitudeIsZero();
 		void tryingToTackleObstacle_drivingForwardAndForwardMovementLocked_true();
 		void tryingToTackleObstacle_drivingForwardAndForwardMovementNotLocked_false();
+		void tryingToTackleObstacle_turningAroundAndForwardMovementLocked_false();
+		void tryingToTackleObstacle_turningToTargetAndForwardMovementLocked_false();
+		void tryingToTackleObstacle_turningToNewTargetAndForwardMovementLocked_false();
+		void tryingToTackleObstacle_stoppedAndForwardMovementLocked_false();
 	};
 }
 }

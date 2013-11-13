@@ -238,3 +238,56 @@ void EngineTest::tryingToTackleObstacle_drivingForwardAndForwardMovementNotLocke
 
 	CPPUNIT_ASSERT(!engine.tryingToTackleObstacle());
 }
+
+void EngineTest::tryingToTackleObstacle_turningAroundAndForwardMovementLocked_false()
+{
+	Hardware::EngineMock hardwareEngine;
+	Hardware::OdometryMock hardwareOdometry;
+	EngineImpl engine(hardwareEngine, hardwareOdometry);
+	hardwareOdometry.setCurrentPosition(Point(0, 0), 0);
+	engine.lockForwardMovement();
+	engine.goToStraight(Point(10, 0));
+	engine.updateSpeedAndRotation();
+
+	engine.turnAround();
+	engine.updateSpeedAndRotation();
+
+	CPPUNIT_ASSERT(!engine.tryingToTackleObstacle());
+}
+
+void EngineTest::tryingToTackleObstacle_turningToTargetAndForwardMovementLocked_false()
+{
+	Hardware::EngineMock hardwareEngine;
+	Hardware::OdometryMock hardwareOdometry;
+	EngineImpl engine(hardwareEngine, hardwareOdometry);
+	hardwareOdometry.setCurrentPosition(Point(0, 0), 0);
+	engine.lockForwardMovement();
+	engine.goToStraight(Point(10, 0));
+	engine.updateSpeedAndRotation();
+
+	engine.turnToTarget(Point(0, 1));
+	engine.updateSpeedAndRotation();
+
+	CPPUNIT_ASSERT(!engine.tryingToTackleObstacle());
+}
+
+void EngineTest::tryingToTackleObstacle_turningToNewTargetAndForwardMovementLocked_false()
+{
+	Hardware::EngineMock hardwareEngine;
+	Hardware::OdometryMock hardwareOdometry;
+	EngineImpl engine(hardwareEngine, hardwareOdometry);
+	hardwareOdometry.setCurrentPosition(Point(0, 0), 0);
+	engine.lockForwardMovement();
+	engine.goToStraight(Point(10, 0));
+	engine.updateSpeedAndRotation();
+
+	engine.goToStraight(Point(-1, 0));
+	engine.updateSpeedAndRotation();
+
+	CPPUNIT_ASSERT(!engine.tryingToTackleObstacle());
+}
+
+void EngineTest::tryingToTackleObstacle_stoppedAndForwardMovementLocked_false()
+{
+
+}
