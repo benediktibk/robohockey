@@ -19,6 +19,7 @@ RobotImpl::RobotImpl(DataAnalysis::DataAnalyser *dataAnalyser) :
 RobotImpl::~RobotImpl()
 {
 	delete m_dataAnalyser;
+	delete m_field;
 }
 
 void RobotImpl::goTo(const RoboHockey::Common::Point &position)
@@ -50,7 +51,7 @@ bool RobotImpl::reachedTarget()
 
 vector<FieldObject> RobotImpl::getAllFieldObjects()
 {
-	return vector<FieldObject>();
+	return m_field->getAllFieldObjects();
 }
 
 void RobotImpl::updateActuators()
@@ -61,6 +62,7 @@ void RobotImpl::updateActuators()
 void RobotImpl::updateSensorData()
 {
 	m_dataAnalyser->updateSensorData();
+	m_field->update();
 	DataAnalysis::Odometry &odometry = m_dataAnalyser->getOdometry();
 	m_currentPosition = odometry.getCurrentPosition();
 }
