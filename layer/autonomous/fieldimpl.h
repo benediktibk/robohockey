@@ -16,10 +16,10 @@ namespace Layer
 {
 namespace DataAnalysis
 {
-	class LidarImpl;
-	class SonarImpl;
-	class OdometryImpl;
-	class CameraImpl;
+	class Lidar;
+	class Sonar;
+	class Odometry;
+	class Camera;
 }
 
 namespace Autonomous
@@ -30,7 +30,7 @@ namespace Autonomous
 			public Field
 	{
 	public:
-		FieldImpl(DataAnalysis::OdometryImpl &odometry, DataAnalysis::LidarImpl &lidar, DataAnalysis::CameraImpl &camera);
+		FieldImpl(DataAnalysis::Odometry &odometry, const DataAnalysis::Lidar &lidar, const DataAnalysis::Camera &camera);
 		virtual ~FieldImpl();
 
 		virtual void update();
@@ -53,9 +53,9 @@ namespace Autonomous
 
 
 	private:
-		DataAnalysis::OdometryImpl *m_odometry;
-		DataAnalysis::LidarImpl *m_lidar;
-		DataAnalysis::CameraImpl *m_camera;
+		DataAnalysis::Odometry *m_odometry;
+		const DataAnalysis::Lidar *m_lidar;
+		const DataAnalysis::Camera *m_camera;
 
 		Common::RobotPosition *m_position;
 		std::vector<FieldObject> m_fieldObjects;

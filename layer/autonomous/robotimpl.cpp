@@ -4,6 +4,7 @@
 #include "layer/dataanalysis/sonar.h"
 #include "layer/dataanalysis/odometry.h"
 #include "common/compare.h"
+#include "layer/autonomous/fieldimpl.h"
 
 using namespace RoboHockey::Common;
 using namespace RoboHockey::Layer::Autonomous;
@@ -11,7 +12,8 @@ using namespace RoboHockey::Layer;
 using namespace std;
 
 RobotImpl::RobotImpl(DataAnalysis::DataAnalyser *dataAnalyser) :
-	m_dataAnalyser(dataAnalyser)
+	m_dataAnalyser(dataAnalyser),
+	m_field(new FieldImpl(dataAnalyser->getOdometry(), dataAnalyser->getLidar(), dataAnalyser->getCamera()))
 { }
 
 RobotImpl::~RobotImpl()

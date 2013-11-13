@@ -11,7 +11,7 @@ using namespace RoboHockey::Layer::Autonomous;
 using namespace RoboHockey::Common;
 using namespace std;
 
-FieldImpl::FieldImpl(DataAnalysis::OdometryImpl &odometry, DataAnalysis::LidarImpl &lidar, DataAnalysis::CameraImpl &camera):
+FieldImpl::FieldImpl(DataAnalysis::Odometry &odometry, const DataAnalysis::Lidar &lidar, const DataAnalysis::Camera &camera):
 	m_odometry(&odometry),
 	m_lidar(&lidar),
 	m_camera(&camera),
