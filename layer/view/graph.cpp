@@ -58,10 +58,8 @@ void Graph::updateTargets()
 
     while (size_target < m_targetPositions.size())
     {
-		m_scene->removeItem(*m_targetPositions.end());
-		m_targetPositions.erase(m_targetPositions.end());
-		//delete m_targetPositions.back();
-		//m_targetPositions.pop_back();
+		m_scene->removeItem(m_targetPositions.back());
+		m_targetPositions.pop_back();
 	}
 
 	while(size_target > m_targetPositions.size())
@@ -93,8 +91,8 @@ void Graph::updateObjects()
 
 	while (size_object < m_objectPositions.size())
 	{
-		m_scene->removeItem(*m_objectPositions.end());
-		m_objectPositions.erase(m_objectPositions.end());
+		m_scene->removeItem(m_objectPositions.back());
+		m_objectPositions.pop_back();
 	}
 
 	while(size_object > m_objectPositions.size())
