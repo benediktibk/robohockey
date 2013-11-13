@@ -20,6 +20,8 @@ namespace Common
 		CPPUNIT_TEST(getHalfRotation_empty_valueIsPi);
 		CPPUNIT_TEST(getQuarterRotation_empty_valueIsPiHalf);
 		CPPUNIT_TEST(getFullRotation_empty_valueIs0);
+		CPPUNIT_TEST(operatorPlus_3And5_valueIsCorrect);
+		CPPUNIT_TEST(operatorMinus_Minus3And4_valueIsCorrect);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
@@ -31,6 +33,8 @@ namespace Common
 		void getHalfRotation_empty_valueIsPi();
 		void getQuarterRotation_empty_valueIsPiHalf();
 		void getFullRotation_empty_valueIs0();
+		void operatorPlus_3And5_valueIsCorrect();
+		void operatorMinus_Minus3And4_valueIsCorrect();
 	};
 }
 }

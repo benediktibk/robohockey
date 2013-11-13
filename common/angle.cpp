@@ -28,6 +28,16 @@ double Angle::getValueBetweenZeroAndTwoPi() const
 	return value;
 }
 
+Angle Angle::operator+(const Angle &rhs) const
+{
+	return Angle(getValueBetweenMinusPiAndPi() + rhs.getValueBetweenMinusPiAndPi());
+}
+
+Angle Angle::operator-(const Angle &rhs) const
+{
+	return Angle(getValueBetweenMinusPiAndPi() - rhs.getValueBetweenMinusPiAndPi());
+}
+
 Angle Angle::getHalfRotation()
 {
 	return Angle(M_PI);

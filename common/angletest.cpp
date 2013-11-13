@@ -60,3 +60,17 @@ void AngleTest::getFullRotation_empty_valueIs0()
 
 	CPPUNIT_ASSERT_DOUBLES_EQUAL(0, angle.getValueBetweenMinusPiAndPi(), 0.00001);
 }
+
+void AngleTest::operatorPlus_3And5_valueIsCorrect()
+{
+	Angle angle = Angle(3) + Angle(5);
+
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(1.71681469282041352307, angle.getValueBetweenMinusPiAndPi(), 0.00001);
+}
+
+void AngleTest::operatorMinus_Minus3And4_valueIsCorrect()
+{
+	Angle angle = Angle(-3) - Angle(4);
+
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(-0.71681469282041352307, angle.getValueBetweenMinusPiAndPi(), 0.00001);
+}
