@@ -5,7 +5,8 @@ using namespace RoboHockey::Layer::DataAnalysis;
 EngineMock::EngineMock() :
 	m_callsToGoToStraight(0),
 	m_callsToStop(0),
-	m_callsToUpdateSpeedAndMagnitude(0)
+	m_callsToUpdateSpeedAndMagnitude(0),
+	m_tryingToTackleObstacle(false)
 { }
 
 void EngineMock::goToStraight(const Common::Point &)
@@ -37,7 +38,7 @@ void EngineMock::unlockForwardMovement()
 
 bool EngineMock::tryingToTackleObstacle() const
 {
-	return false;
+	return m_tryingToTackleObstacle;
 }
 
 unsigned int EngineMock::getCallsToGoToStraight() const
@@ -53,6 +54,11 @@ unsigned int EngineMock::getCallsToStop() const
 unsigned int EngineMock::getCallsToUpdateSpeedAndMagnitude() const
 {
 	return m_callsToUpdateSpeedAndMagnitude;
+}
+
+void EngineMock::setTryingToTackleObstacle(bool value)
+{
+	m_tryingToTackleObstacle = value;
 }
 
 

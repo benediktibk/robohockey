@@ -19,21 +19,21 @@ void RobotTest::goTo_positionDifferentToCurrentOne_engineGotAtLeastOneCallToGoTo
 	CPPUNIT_ASSERT(engine.getCallsToGoToStraight() > 0);
 }
 
-void RobotTest::stuckAtObstacle_obstacleDirectInFront_true()
+void RobotTest::stuckAtObstacle_tryingToTackleObstacle_true()
 {
 	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
-	DataAnalysis::SonarMock &sonar = dataAnalyser->getSonarMock();
-	sonar.setIsObstacleDirectInFront(true);
+	DataAnalysis::EngineMock &engine = dataAnalyser->getEngineMock();
+	engine.setTryingToTackleObstacle(true);
 	RobotImpl robot(dataAnalyser);
 
 	CPPUNIT_ASSERT(robot.stuckAtObstacle());
 }
 
-void RobotTest::stuckAtObstacle_noObstacleDirectInFront_false()
+void RobotTest::stuckAtObstacle_notTryingToTackleObstacle_false()
 {
 	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
-	DataAnalysis::SonarMock &sonar = dataAnalyser->getSonarMock();
-	sonar.setIsObstacleDirectInFront(false);
+	DataAnalysis::EngineMock &engine = dataAnalyser->getEngineMock();
+	engine.setTryingToTackleObstacle(false);
 	RobotImpl robot(dataAnalyser);
 
 	CPPUNIT_ASSERT(!robot.stuckAtObstacle());

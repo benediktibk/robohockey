@@ -144,14 +144,19 @@ void RobotDriverTest::update_empty_robotGotAtLeastOneCallToUpdateActuators()
 	CPPUNIT_ASSERT(robot.getCallsToUpdateActuators() > 0);
 }
 
-void RobotDriverTest::update_stuckAtObstacle_robotGotAtLeastOneCallToStop()
+void RobotDriverTest::update_stuckAtObstacle_noTargetsAnymore()
 {
 	RobotMock robot;
 	robot.setStuckAtObstacle(true);
 	Model model;
 	RobotDriver driver(robot, model);
+	vector<Point> targets;
+	targets.push_back(Point(3, 4));
+	targets.push_back(Point(5, 1));
+	model.setData(targets);
 
 	driver.update();
 
-	CPPUNIT_ASSERT(robot.getCallsToStop() > 0);
+	targets = model.getAllTargetPoints();
+	CPPUNIT_ASSERT_EQUAL((size_t)0, targets.size());
 }

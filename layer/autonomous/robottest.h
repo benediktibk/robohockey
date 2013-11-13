@@ -15,8 +15,8 @@ namespace Autonomous
 	{
 		CPPUNIT_TEST_SUITE(RobotTest);
 		CPPUNIT_TEST(goTo_positionDifferentToCurrentOne_engineGotAtLeastOneCallToGoToStraight);
-		CPPUNIT_TEST(stuckAtObstacle_obstacleDirectInFront_true);
-		CPPUNIT_TEST(stuckAtObstacle_noObstacleDirectInFront_false);
+		CPPUNIT_TEST(stuckAtObstacle_tryingToTackleObstacle_true);
+		CPPUNIT_TEST(stuckAtObstacle_notTryingToTackleObstacle_false);
 		CPPUNIT_TEST(reachedTarget_currentPositionDifferentToTarget_false);
 		CPPUNIT_TEST(reachedTarget_currentPositionIsTargetPosition_true);
 		CPPUNIT_TEST(updateActuators_empty_layerBelowGotAtLeastOneCallToUpdateActuators);
@@ -26,8 +26,8 @@ namespace Autonomous
 
 	private:
 		void goTo_positionDifferentToCurrentOne_engineGotAtLeastOneCallToGoToStraight();
-		void stuckAtObstacle_obstacleDirectInFront_true();
-		void stuckAtObstacle_noObstacleDirectInFront_false();
+		void stuckAtObstacle_tryingToTackleObstacle_true();
+		void stuckAtObstacle_notTryingToTackleObstacle_false();
 		void reachedTarget_currentPositionDifferentToTarget_false();
 		void reachedTarget_currentPositionIsTargetPosition_true();
 		void updateActuators_empty_layerBelowGotAtLeastOneCallToUpdateActuators();

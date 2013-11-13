@@ -27,11 +27,13 @@ namespace DataAnalysis
 		unsigned int getCallsToGoToStraight() const;
 		unsigned int getCallsToStop() const;
 		unsigned int getCallsToUpdateSpeedAndMagnitude() const;
+		void setTryingToTackleObstacle(bool value);
 
 	private:
 		unsigned int m_callsToGoToStraight;
 		unsigned int m_callsToStop;
 		unsigned int m_callsToUpdateSpeedAndMagnitude;
+		bool m_tryingToTackleObstacle;
 	};
 }
 }
