@@ -1,6 +1,7 @@
 #include "layer/autonomous/robottest.h"
 #include "layer/autonomous/robotimpl.h"
 #include "layer/dataanalysis/dataanalysermock.h"
+#include "common/compare.h"
 
 using namespace RoboHockey::Common;
 using namespace RoboHockey::Layer;
@@ -220,4 +221,26 @@ void RobotTest::updateSensorData_0bstacleDirectInFront_engineGotNoCallToUnlockFo
 	robot.updateSensorData();
 
 	CPPUNIT_ASSERT(engine.getCallsToUnlockForwardMovement() == 0);
+}
+
+void RobotTest::turnAround_empty_engineGotAtLeastOneCallToTurnAround()
+{
+	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
+	DataAnalysis::EngineMock &engine = dataAnalyser->getEngineMock();
+	RobotImpl robot(dataAnalyser);
+
+	robot.turnAround();
+
+	CPPUNIT_ASSERT(engine.getCallsToTurnAround() > 0);
+}
+
+void RobotTest::getCurrentPosition_position3And4InOdometry_3And4()
+{
+	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
+	DataAnalysis::OdometryMock &odometry = dataAnalyser->getOdometryMock();
+	RobotImpl robot(dataAnalyser);
+	odometry.setCurrentPosition(Point(3, 4), 2);
+
+	Compare compare(0.0001);
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(3, 4), robot.getCurrentPosition()));
 }
