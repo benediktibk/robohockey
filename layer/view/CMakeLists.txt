@@ -4,13 +4,11 @@ ADD_DEFINITIONS(${QT_DEFINITIONS})
 INCLUDE_DIRECTORIES(${CMAKE_CURRENT_BINARY_DIR})
 
 SET(LAYER_VIEW_SRC
-	viewer.cpp
+	actionwindow.cpp
 	model.cpp
 	robotdriver.cpp
 	robotdriverloop.cpp
-	window.cpp
-	graphicshow.cpp
-        graph.cpp
+	graph.cpp
 )
 
 SET(LAYER_VIEW_TEST_SRC
@@ -19,16 +17,14 @@ SET(LAYER_VIEW_TEST_SRC
 )
 
 SET(LAYER_VIEW_HEADER
-	viewer.h
+	actionwindow.h
 	robotdriverloop.h
 	model.h
-	window.h
-	graphicshow.h
-        graph.h
+	graph.h
 )
 
 SET(LAYER_VIEW_FORMS
-	viewer.ui
+	actionwindow.ui
 )
 
 QT4_WRAP_CPP(LAYER_VIEW_HEADER_MOC ${LAYER_VIEW_HEADER})

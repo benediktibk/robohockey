@@ -1,14 +1,13 @@
-#include <QtGui/QApplication>
-#include "layer/view/viewer.h"
 #include "layer/view/model.h"
 #include "layer/view/robotdriver.h"
 #include "layer/view/robotdriverloop.h"
+#include "layer/view/actionwindow.h"
+#include "layer/view/graph.h"
 #include "layer/autonomous/robotimpl.h"
 #include "layer/dataanalysis/dataanalyserimpl.h"
 #include "layer/hardware/robotimpl.h"
+#include <QtGui/QApplication>
 #include <iostream>
-#include "layer/view/viewer.h"
-#include "layer/view/graph.h"
 
 using namespace RoboHockey::Layer;
 using namespace RoboHockey::Layer::View;
@@ -30,8 +29,8 @@ int main(int argc, char **argv)
 		playerServer = "localhost";
 	}
 
-    QGraph qshow;
-    //Viewer view;
+	QGraph qshow;
+	ActionWindow actionWindow;
 	Model model;
 	Hardware::Robot *hardwareRobot = new Hardware::RobotImpl(playerServer);
 	DataAnalysis::DataAnalyser *dataAnalyser = new DataAnalysis::DataAnalyserImpl(hardwareRobot);
@@ -49,7 +48,7 @@ int main(int argc, char **argv)
 	//autonomousRobot.turnTo(RoboHockey::Common::Point(0, 1));
 	//autonomousRobot.turnAround();
 
-    //view.show();
-    qshow.show();
+	actionWindow.show();
+	qshow.show();
 	return application.exec();
 }
