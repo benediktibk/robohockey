@@ -91,6 +91,8 @@ void EngineImpl::updateSpeedAndRotationForTurnAround()
 	if (m_oneHalfTurnDone && orientationDifference > 0)
 	{
 		stop();
+		m_tryingToTackleObstacle = false;
+		m_engine.setSpeed(0, 0);
 		return;
 	}
 

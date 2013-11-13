@@ -37,6 +37,10 @@ namespace DataAnalysis
 		CPPUNIT_TEST(tryingToTackleObstacle_turningToTargetAndForwardMovementLocked_false);
 		CPPUNIT_TEST(tryingToTackleObstacle_turningToNewTargetAndForwardMovementLocked_false);
 		CPPUNIT_TEST(tryingToTackleObstacle_stoppedAndForwardMovementLocked_false);
+		CPPUNIT_TEST(turnAround_turnedNotAHalfYet_lastRotationIsGreaterThanZero);
+		CPPUNIT_TEST(turnAround_turnedMoreThanAHalft_lastRotationIsGreaterThanZero);
+		CPPUNIT_TEST(turnAround_turnedNearlyFull_lastRotationIsGreaterThanZero);
+		CPPUNIT_TEST(turnAround_turnedMoreThanOnce_lastRotationIsZero);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
@@ -63,6 +67,10 @@ namespace DataAnalysis
 		void tryingToTackleObstacle_turningToTargetAndForwardMovementLocked_false();
 		void tryingToTackleObstacle_turningToNewTargetAndForwardMovementLocked_false();
 		void tryingToTackleObstacle_stoppedAndForwardMovementLocked_false();
+		void turnAround_turnedNotAHalfYet_lastRotationIsGreaterThanZero();
+		void turnAround_turnedMoreThanAHalft_lastRotationIsGreaterThanZero();
+		void turnAround_turnedNearlyFull_lastRotationIsGreaterThanZero();
+		void turnAround_turnedMoreThanOnce_lastRotationIsZero();
 	};
 }
 }
