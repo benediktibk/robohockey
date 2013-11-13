@@ -14,7 +14,7 @@ CameraImpl::CameraImpl(Hardware::Camera &camera) :
 CameraObjects CameraImpl::getAllCameraObjects()
 {
 	CameraObjects cameraObjects;
-	Mat yellowPic, bluePic, currentPic;
+	Mat yellowPic, bluePic, greenPic, currentPic;
 	vector<vector<Point> > contours;
 	vector<Vec4i> hierarchy;
 	Rect boundRect;
@@ -72,7 +72,32 @@ CameraObjects CameraImpl::getAllCameraObjects()
 		}
 		contours.clear();
 	}
-///@todo grenzpfosten adden
+///@todo find colorspectrum for green objects
+	inRange(m_fileredFrame, Scalar(1, 1, 1), Scalar(1, 1, 1), greenPic);
+	greenPic.copyTo(currentPic);
+	findContours(currentPic, contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE, Point(0, 0));
+	if (!contours.empty())
+	{
+		for(unsigned int i = 0; i < contours.size(); i++ )
+		{
+			white = 0;
+			boundRect = boundingRect( Mat(contours[i]));
+			if (boundRect.area() > 1500)
+			{
+				currentPic = greenPic(boundRect);
+				for (int i = 0; i < boundRect.height; ++i) {
+					for (int j = 0; j < boundRect.width; j++)
+					{
+						if (currentPic.at<uchar>(i, j) == 255.0)
+							white++;
+					}
+				}
+				if(white > 0.5*boundRect.area())
+					cameraObjects.addObject(CameraObject(ColorTypeGreen, boundRect));
+			}
+		}
+		contours.clear();
+	}
 	return cameraObjects;
 }
 
