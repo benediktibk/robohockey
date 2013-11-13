@@ -28,6 +28,10 @@ namespace Autonomous
 		CPPUNIT_TEST(updateActuators_notTryingToTackleObstacle_targetNotReached);
 		CPPUNIT_TEST(updateActuators_tryingToTackleObstacle_engineGotAtLeastOneCallToStop);
 		CPPUNIT_TEST(updateActuators_tryingToTackleObstacle_targetReached);
+		CPPUNIT_TEST(updateSensorData_noObstacleDirectInFront_engineGotNoCallToLockForwardMovement);
+		CPPUNIT_TEST(updateSensorData_noObstacleDirectInFront_engineGotAtLeastOneCallToUnlockForwardMovement);
+		CPPUNIT_TEST(updateSensorData_obstacleDirectInFront_engineGotAtLeastOneCallToLockForwardMovement);
+		CPPUNIT_TEST(updateSensorData_0bstacleDirectInFront_engineGotNoCallToUnlockForwardMovement);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
@@ -45,6 +49,10 @@ namespace Autonomous
 		void updateActuators_notTryingToTackleObstacle_targetNotReached();
 		void updateActuators_tryingToTackleObstacle_engineGotAtLeastOneCallToStop();
 		void updateActuators_tryingToTackleObstacle_targetReached();
+		void updateSensorData_noObstacleDirectInFront_engineGotNoCallToLockForwardMovement();
+		void updateSensorData_noObstacleDirectInFront_engineGotAtLeastOneCallToUnlockForwardMovement();
+		void updateSensorData_obstacleDirectInFront_engineGotAtLeastOneCallToLockForwardMovement();
+		void updateSensorData_0bstacleDirectInFront_engineGotNoCallToUnlockForwardMovement();
 	};
 }
 }

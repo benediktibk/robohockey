@@ -169,3 +169,55 @@ void RobotTest::updateActuators_tryingToTackleObstacle_targetReached()
 
 	CPPUNIT_ASSERT(robot.reachedTarget());
 }
+
+void RobotTest::updateSensorData_noObstacleDirectInFront_engineGotNoCallToLockForwardMovement()
+{
+	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
+	DataAnalysis::EngineMock &engine = dataAnalyser->getEngineMock();
+	DataAnalysis::SonarMock &sonar = dataAnalyser->getSonarMock();
+	RobotImpl robot(dataAnalyser);
+	sonar.setIsObstacleDirectInFront(false);
+
+	robot.updateSensorData();
+
+	CPPUNIT_ASSERT(engine.getCallsToLockForwardMovement() == 0);
+}
+
+void RobotTest::updateSensorData_noObstacleDirectInFront_engineGotAtLeastOneCallToUnlockForwardMovement()
+{
+	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
+	DataAnalysis::EngineMock &engine = dataAnalyser->getEngineMock();
+	DataAnalysis::SonarMock &sonar = dataAnalyser->getSonarMock();
+	RobotImpl robot(dataAnalyser);
+	sonar.setIsObstacleDirectInFront(false);
+
+	robot.updateSensorData();
+
+	CPPUNIT_ASSERT(engine.getCallsToUnlockForwardMovement() > 0);
+}
+
+void RobotTest::updateSensorData_obstacleDirectInFront_engineGotAtLeastOneCallToLockForwardMovement()
+{
+	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
+	DataAnalysis::EngineMock &engine = dataAnalyser->getEngineMock();
+	DataAnalysis::SonarMock &sonar = dataAnalyser->getSonarMock();
+	RobotImpl robot(dataAnalyser);
+	sonar.setIsObstacleDirectInFront(true);
+
+	robot.updateSensorData();
+
+	CPPUNIT_ASSERT(engine.getCallsToLockForwardMovement() > 0);
+}
+
+void RobotTest::updateSensorData_0bstacleDirectInFront_engineGotNoCallToUnlockForwardMovement()
+{
+	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
+	DataAnalysis::EngineMock &engine = dataAnalyser->getEngineMock();
+	DataAnalysis::SonarMock &sonar = dataAnalyser->getSonarMock();
+	RobotImpl robot(dataAnalyser);
+	sonar.setIsObstacleDirectInFront(true);
+
+	robot.updateSensorData();
+
+	CPPUNIT_ASSERT(engine.getCallsToUnlockForwardMovement() == 0);
+}
