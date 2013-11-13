@@ -29,9 +29,9 @@ int main(int argc, char **argv)
 		playerServer = "localhost";
 	}
 
-	QGraph qshow;
+    Model model;
+    Graph qshow(model);
 	ActionWindow actionWindow;
-	Model model;
 	Hardware::Robot *hardwareRobot = new Hardware::RobotImpl(playerServer);
 	DataAnalysis::DataAnalyser *dataAnalyser = new DataAnalysis::DataAnalyserImpl(hardwareRobot);
 	Autonomous::RobotImpl autonomousRobot(dataAnalyser);
