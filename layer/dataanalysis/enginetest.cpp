@@ -212,6 +212,38 @@ void EngineTest::lockForwardMovement_tryingToDriveForward_lastMagnitudeIsZero()
 	CPPUNIT_ASSERT(hardwareEngine.getLastMagnitude() == 0);
 }
 
+void EngineTest::unlockForwardMovement_tryingToDriveForward_lastMagnitudeIsNotZero()
+{
+	Hardware::EngineMock hardwareEngine;
+	Hardware::OdometryMock hardwareOdometry;
+	EngineImpl engine(hardwareEngine, hardwareOdometry);
+	hardwareOdometry.setCurrentPosition(Point(0, 0), 0);
+	engine.lockForwardMovement();
+	engine.goToStraight(Point(10, 0));
+	engine.updateSpeedAndRotation();
+
+	engine.unlockForwardMovement();
+	engine.updateSpeedAndRotation();
+
+	CPPUNIT_ASSERT(hardwareEngine.getLastMagnitude() > 0.01);
+}
+
+void EngineTest::unlockForwardMovement_tryingToDriveForward_notTryingToTackleObstacle()
+{
+	Hardware::EngineMock hardwareEngine;
+	Hardware::OdometryMock hardwareOdometry;
+	EngineImpl engine(hardwareEngine, hardwareOdometry);
+	hardwareOdometry.setCurrentPosition(Point(0, 0), 0);
+	engine.lockForwardMovement();
+	engine.goToStraight(Point(10, 0));
+	engine.updateSpeedAndRotation();
+
+	engine.unlockForwardMovement();
+	engine.updateSpeedAndRotation();
+
+	CPPUNIT_ASSERT(!engine.tryingToTackleObstacle());
+}
+
 void EngineTest::tryingToTackleObstacle_drivingForwardAndForwardMovementLocked_true()
 {
 	Hardware::EngineMock hardwareEngine;
@@ -289,5 +321,16 @@ void EngineTest::tryingToTackleObstacle_turningToNewTargetAndForwardMovementLock
 
 void EngineTest::tryingToTackleObstacle_stoppedAndForwardMovementLocked_false()
 {
+	Hardware::EngineMock hardwareEngine;
+	Hardware::OdometryMock hardwareOdometry;
+	EngineImpl engine(hardwareEngine, hardwareOdometry);
+	hardwareOdometry.setCurrentPosition(Point(0, 0), 0);
+	engine.lockForwardMovement();
+	engine.goToStraight(Point(10, 0));
+	engine.updateSpeedAndRotation();
 
+	engine.stop();
+	engine.updateSpeedAndRotation();
+
+	CPPUNIT_ASSERT(!engine.tryingToTackleObstacle());
 }
