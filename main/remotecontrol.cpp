@@ -29,8 +29,8 @@ int main(int argc, char **argv)
 		playerServer = "localhost";
 	}
 
-    Model model;
-    Graph qshow(model);
+	Model model;
+	Graph graph(model);
 	ActionWindow actionWindow;
 	Hardware::Robot *hardwareRobot = new Hardware::RobotImpl(playerServer);
 	DataAnalysis::DataAnalyser *dataAnalyser = new DataAnalysis::DataAnalyserImpl(hardwareRobot);
@@ -49,6 +49,6 @@ int main(int argc, char **argv)
 	//autonomousRobot.turnAround();
 
 	actionWindow.show();
-	qshow.show();
+	graph.show();
 	return application.exec();
 }
