@@ -133,9 +133,10 @@ void EngineImpl::driveAndTurn(const Point &currentPosition, double targetOrienta
 {
 	double distance = currentPosition.distanceTo(m_target);
 	double orientationDifference = calculateOrientationDifference(targetOrientation, currentOrientation);
+	double targetError = distance*sin(orientationDifference);
 	double distanceAmplification = 0.5;
-	double orientationAmplification = 0.5;
-	m_engine.setSpeed(distanceAmplification*distance, orientationAmplification*orientationDifference);
+	double orientationAmplification = 1;
+	m_engine.setSpeed(distanceAmplification*distance, orientationAmplification*targetError);
 }
 
 double EngineImpl::calculateOrientationDifference(double targetOrientation, double currentOrientation) const

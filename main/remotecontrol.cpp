@@ -38,10 +38,9 @@ int main(int argc, char **argv)
 	RobotDriver robotDriver(autonomousRobot, model);
 	RobotDriverLoop loop(robotDriver);
 
-//	vector<RoboHockey::Common::Point> targets;
-//	targets.push_back(RoboHockey::Common::Point(3, 0));
-//	targets.push_back(RoboHockey::Common::Point(-1, 2));
-//	model.setData(targets);
+	vector<RoboHockey::Common::Point> targets;
+	targets.push_back(RoboHockey::Common::Point(0, 2));
+	model.setData(targets);
 	//autonomousRobot.turnTo(RoboHockey::Common::Point(0, 1));
 	//autonomousRobot.turnAround();
 
