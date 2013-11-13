@@ -74,6 +74,34 @@ void EngineTest::goToStraight_startOrientationCompletelyWrong_lastRotationIsNotZ
 	CPPUNIT_ASSERT(fabs(hardwareEngine.getLastRotation()) > 0.1);
 }
 
+void EngineTest::goToStraight_startOrientationCorrect_lastMagnitudeIsNotZero()
+{
+	Hardware::EngineMock hardwareEngine;
+	Hardware::OdometryMock hardwareOdometry;
+	EngineImpl engine(hardwareEngine, hardwareOdometry);
+	hardwareOdometry.setCurrentPosition(Point(0, 0), 0);
+
+	engine.goToStraight(Point(1, 0));
+	engine.updateSpeedAndRotation();
+
+	CPPUNIT_ASSERT(hardwareEngine.getLastMagnitude() > 0.01);
+}
+
+void EngineTest::goToStraight_orientationReachedAfterSomeTime_lastMagnitudeIsNotZero()
+{
+	Hardware::EngineMock hardwareEngine;
+	Hardware::OdometryMock hardwareOdometry;
+	EngineImpl engine(hardwareEngine, hardwareOdometry);
+	hardwareOdometry.setCurrentPosition(Point(0, 0), 0);
+
+	engine.goToStraight(Point(-1, 0));
+	engine.updateSpeedAndRotation();
+	hardwareOdometry.setCurrentPosition(Point(0, 0), M_PI);
+	engine.updateSpeedAndRotation();
+
+	CPPUNIT_ASSERT(hardwareEngine.getLastMagnitude() > 0.01);
+}
+
 void EngineTest::stop_movingSomewhere_lastMagnitudeIsZero()
 {
 	Hardware::EngineMock hardwareEngine;
