@@ -41,7 +41,7 @@ void CameraTest::getAllCameraObjects_yellowPuckTwice_cameraObjectsCountIs2()
 
 void CameraTest::getAllCameraObjects_yellowAndBluePuckTwice_cameraObjectsCountIs2()
 {
-	Hardware::CameraMock hardwareCamera("yellow_and_blue_puck_twice");
+	Hardware::CameraMock hardwareCamera("yellow_and_blue_puck");
 	CameraImpl camera(hardwareCamera);
 
 	CPPUNIT_ASSERT_EQUAL((size_t)2, camera.getAllCameraObjects().getObjectCount());
