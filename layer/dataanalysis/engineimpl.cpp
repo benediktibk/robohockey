@@ -126,7 +126,7 @@ void EngineImpl::updateSpeedAndRotationForDriving()
 		m_rotationReached = true;
 
 	if (m_rotationReached)
-		driveAndTurn(currentPosition, targetOrientation);
+		driveAndTurn(currentPosition);
 	else
 		turnOnly(targetOrientation, currentOrientation);
 }
@@ -155,14 +155,17 @@ void EngineImpl::turnOnly(const Angle &targetOrientation, const Angle &currentOr
 	m_engine.setSpeed(0, orientationDifference.getValueBetweenMinusPiAndPi()*amplification);
 }
 
-void EngineImpl::driveAndTurn(const RobotPosition &currentPosition, const Angle &targetOrientation)
+void EngineImpl::driveAndTurn(const RobotPosition &currentPosition)
 {
-	double distance = currentPosition.distanceTo(m_target);
+	double totalDistance = m_startPosition.distanceTo(m_target);
+	Angle alpha = Angle(m_target, currentPosition.getPosition(), m_startPosition);
+	Angle targetOrientation(currentPosition.getPosition(), m_target);
 	Angle orientationDifference = targetOrientation - currentPosition.getOrientation();
-	double targetError = distance*sin(orientationDifference.getValueBetweenMinusPiAndPi());
+	double forwardError = totalDistance*cos(alpha.getValueBetweenMinusPiAndPi());
 	double distanceAmplification = 0.5;
 	double orientationAmplification = 1;
-	double magnitude = distanceAmplification*distance;
+	double magnitude = distanceAmplification*forwardError;
+	double rotationSpeed = orientationAmplification*orientationDifference.getValueBetweenMinusPiAndPi();
 
 	if (magnitude > 0 && m_forwardMovementLocked)
 	{
@@ -172,5 +175,5 @@ void EngineImpl::driveAndTurn(const RobotPosition &currentPosition, const Angle 
 	else
 		m_tryingToTackleObstacle = false;
 
-	m_engine.setSpeed(magnitude, orientationAmplification*targetError);
+	m_engine.setSpeed(magnitude, rotationSpeed);
 }

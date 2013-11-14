@@ -26,6 +26,9 @@ namespace Common
 		 CPPUNIT_TEST(operatorMultpliyAndAssign_3And5With2_6And10);
 		 CPPUNIT_TEST(zero_empty_bothCoordinatesZero);
 		 CPPUNIT_TEST(distanceTo_from4And5To8And2_5);
+		 CPPUNIT_TEST(rotate_1And0ByPiHalf_0And1);
+		 CPPUNIT_TEST(rotate_1And0ByMinusPiHalf_0AndMinus1);
+		 CPPUNIT_TEST(rotate_3And4By2_correctResult);
 		 CPPUNIT_TEST_SUITE_END();
 
 	private:
@@ -43,6 +46,9 @@ namespace Common
 		 void operatorMultpliyAndAssign_3And5With2_6And10();
 		 void zero_empty_bothCoordinatesZero();
 		 void distanceTo_from4And5To8And2_5();
+		 void rotate_1And0ByPiHalf_0And1();
+		 void rotate_1And0ByMinusPiHalf_0AndMinus1();
+		 void rotate_3And4By2_correctResult();
 	};
 }
 }

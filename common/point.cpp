@@ -1,5 +1,6 @@
 #include "common/point.h"
 #include "common/compare.h"
+#include "common/angle.h"
 #include <math.h>
 
 using namespace RoboHockey::Common;
@@ -35,6 +36,15 @@ void Point::setY(double value)
 double Point::getY() const
 {
 	return m_y;
+}
+
+void Point::rotate(const Angle &angle)
+{
+	double angleValue = angle.getValueBetweenMinusPiAndPi();
+	double x = m_x*cos(angleValue) - m_y*sin(angleValue);
+	double y = m_x*sin(angleValue) + m_y*cos(angleValue);
+	m_x = x;
+	m_y = y;
 }
 
 bool Point::operator ==(const Point &point) const

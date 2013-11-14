@@ -129,3 +129,49 @@ void AngleTest::operatorMinus_Minus3And4_valueIsCorrect()
 
 	CPPUNIT_ASSERT_DOUBLES_EQUAL(-0.71681469282041352307, angle.getValueBetweenMinusPiAndPi(), 0.00001);
 }
+
+void AngleTest::operatorMultiply_2And3_valueIsCorrect()
+{
+	Angle angle(2);
+
+	Angle result = angle*3;
+
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(-0.28318530717958647693, result.getValueBetweenMinusPiAndPi(), 0.00001);
+}
+
+void AngleTest::operatorDivide_3And2_valueIsCorrect()
+{
+	Angle angle(3);
+
+	Angle result = angle/2;
+
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(1.5, result.getValueBetweenMinusPiAndPi(), 0.00001);
+}
+
+void AngleTest::operatorMinus_twoAnglesConstructedFromPoints_valueIsNegative()
+{
+	Angle one(Point(4, 7), Point(3, 3));
+	Angle two(Point(4, 7), Point(6, 2));
+
+	Angle result = one - two;
+
+	CPPUNIT_ASSERT(result.getValueBetweenMinusPiAndPi() < 0);
+}
+
+void AngleTest::abs_1_valueIs1()
+{
+	Angle angle(1);
+
+	angle.abs();
+
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(1, angle.getValueBetweenMinusPiAndPi(), 0.00001);
+}
+
+void AngleTest::abs_minus1_valueIs1()
+{
+	Angle angle(-1);
+
+	angle.abs();
+
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(1, angle.getValueBetweenMinusPiAndPi(), 0.00001);
+}

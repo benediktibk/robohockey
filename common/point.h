@@ -7,6 +7,8 @@ namespace RoboHockey
 {
 namespace Common
 {
+	class Angle;
+
 	class Point
 	{
 	public:
@@ -17,6 +19,7 @@ namespace Common
 		double getX() const;
 		void setY(double value);
 		double getY() const;
+		void rotate(const Angle &angle);
 
 		bool operator==(const Point &point) const;
 		Point operator*(double value) const;

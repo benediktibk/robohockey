@@ -19,9 +19,12 @@ namespace Common
 
 		double getValueBetweenMinusPiAndPi() const;
 		double getValueBetweenZeroAndTwoPi() const;
+		void abs();
 
 		Angle operator+(const Angle &rhs) const;
 		Angle operator-(const Angle &rhs) const;
+		Angle operator*(double value) const;
+		Angle operator/(double value) const;
 
 	public:
 		static Angle getHalfRotation();

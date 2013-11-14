@@ -58,6 +58,12 @@ double Angle::getValueBetweenZeroAndTwoPi() const
 	return value;
 }
 
+void Angle::abs()
+{
+	m_value = fabs(m_value);
+	fixRange();
+}
+
 Angle Angle::operator+(const Angle &rhs) const
 {
 	return Angle(getValueBetweenMinusPiAndPi() + rhs.getValueBetweenMinusPiAndPi());
@@ -66,6 +72,16 @@ Angle Angle::operator+(const Angle &rhs) const
 Angle Angle::operator-(const Angle &rhs) const
 {
 	return Angle(getValueBetweenMinusPiAndPi() - rhs.getValueBetweenMinusPiAndPi());
+}
+
+Angle Angle::operator*(double value) const
+{
+	return Angle(m_value*value);
+}
+
+Angle Angle::operator/(double value) const
+{
+	return Angle(m_value/value);
 }
 
 Angle Angle::getHalfRotation()

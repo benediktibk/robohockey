@@ -27,6 +27,11 @@ namespace Common
 		CPPUNIT_TEST(getFullRotation_empty_valueIs0);
 		CPPUNIT_TEST(operatorPlus_3And5_valueIsCorrect);
 		CPPUNIT_TEST(operatorMinus_Minus3And4_valueIsCorrect);
+		CPPUNIT_TEST(operatorMultiply_2And3_valueIsCorrect);
+		CPPUNIT_TEST(operatorDivide_3And2_valueIsCorrect);
+		CPPUNIT_TEST(operatorMinus_twoAnglesConstructedFromPoints_valueIsNegative);
+		CPPUNIT_TEST(abs_1_valueIs1);
+		CPPUNIT_TEST(abs_minus1_valueIs1);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
@@ -45,6 +50,11 @@ namespace Common
 		void getFullRotation_empty_valueIs0();
 		void operatorPlus_3And5_valueIsCorrect();
 		void operatorMinus_Minus3And4_valueIsCorrect();
+		void operatorMultiply_2And3_valueIsCorrect();
+		void operatorDivide_3And2_valueIsCorrect();
+		void operatorMinus_twoAnglesConstructedFromPoints_valueIsNegative();
+		void abs_1_valueIs1();
+		void abs_minus1_valueIs1();
 	};
 }
 }

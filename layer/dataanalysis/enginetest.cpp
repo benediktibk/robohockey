@@ -434,3 +434,43 @@ void EngineTest::goToStraight_moveAwayFromStartPosition_startPositionIsCorrect()
 	Compare compare(0.00001);
 	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(3, 5), engine.getStartPosition()));
 }
+
+void EngineTest::goToStraight_rotationDoneAndLittleBitLeftOfDirectConnection_lastRotationIsSmallerThanZero()
+{
+	Hardware::EngineMock hardwareEngine;
+	Hardware::OdometryMock hardwareOdometry;
+	EngineImpl engine(hardwareEngine, hardwareOdometry);
+	hardwareOdometry.setCurrentPosition(RobotPosition(Point(0, 0), 0));
+
+	engine.goToStraight(Point(5, 5));
+	engine.updateSpeedAndRotation();
+	hardwareOdometry.setCurrentPosition(RobotPosition(Point(0, 0), 0));
+	engine.updateSpeedAndRotation();
+	hardwareOdometry.setCurrentPosition(RobotPosition(Point(0, 0), Angle::getQuarterRotation()/2));
+	engine.updateSpeedAndRotation();
+	hardwareOdometry.setCurrentPosition(RobotPosition(Point(1, 1.1), Angle::getQuarterRotation()/2));
+	engine.updateSpeedAndRotation();
+
+	CPPUNIT_ASSERT(hardwareEngine.getLastMagnitude() > 0);
+	CPPUNIT_ASSERT(hardwareEngine.getLastRotation() < 0);
+}
+
+void EngineTest::goToStraight_rotationDoneAndLittleBitRightOfDirectConnection_lastRotationIsGreaterThanZero()
+{
+	Hardware::EngineMock hardwareEngine;
+	Hardware::OdometryMock hardwareOdometry;
+	EngineImpl engine(hardwareEngine, hardwareOdometry);
+	hardwareOdometry.setCurrentPosition(RobotPosition(Point(0, 0), 0));
+
+	engine.goToStraight(Point(5, 5));
+	engine.updateSpeedAndRotation();
+	hardwareOdometry.setCurrentPosition(RobotPosition(Point(0, 0), 0));
+	engine.updateSpeedAndRotation();
+	hardwareOdometry.setCurrentPosition(RobotPosition(Point(0, 0), Angle::getQuarterRotation()/2));
+	engine.updateSpeedAndRotation();
+	hardwareOdometry.setCurrentPosition(RobotPosition(Point(1.1, 1), Angle::getQuarterRotation()/2));
+	engine.updateSpeedAndRotation();
+
+	CPPUNIT_ASSERT(hardwareEngine.getLastMagnitude() > 0);
+	CPPUNIT_ASSERT(hardwareEngine.getLastRotation() > 0);
+}

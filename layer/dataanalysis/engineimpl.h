@@ -43,7 +43,7 @@ namespace DataAnalysis
 		void updateSpeedAndRotationForDriving();
 		void updateSpeedAndRotationForRotating();
 		void turnOnly(const Common::Angle &targetOrientation, const Common::Angle &currentOrientation);
-		void driveAndTurn(const Common::RobotPosition &currentPosition, const Common::Angle &targetOrientation);
+		void driveAndTurn(const Common::RobotPosition &currentPosition);
 
 	private:
 		Hardware::Engine &m_engine;
