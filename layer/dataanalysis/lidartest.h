@@ -21,7 +21,7 @@ namespace DataAnalysis
 	{
 		CPPUNIT_TEST_SUITE(LidarTest);
 		CPPUNIT_TEST(getAllObjects_mockHardwareLidar_atLeastOneCallToGetDistance);
-		CPPUNIT_TEST(getAllObjects_oneObjectInFront_onlyObjectIsCorrect);
+		CPPUNIT_TEST(getAllObjects_oneTooBigObjectInFront_objectCountIs0);
 		CPPUNIT_TEST(getAllObjects_lookingIntoLeftUpperDirectionAndObjectSlightlyLeft_onlyObjectIsCorrect);
 		CPPUNIT_TEST(getAllObjects_twoObjects_objectCountIs2);
 		CPPUNIT_TEST(getAllObjects_oneObjectBehindAnotherOneLeft_objectCountIs2);
@@ -42,7 +42,7 @@ namespace DataAnalysis
 
 	private:
 		void getAllObjects_mockHardwareLidar_atLeastOneCallToGetDistance();
-		void getAllObjects_oneObjectInFront_onlyObjectIsCorrect();
+		void getAllObjects_oneTooBigObjectInFront_objectCountIs0();
 		void getAllObjects_lookingIntoLeftUpperDirectionAndObjectSlightlyLeft_onlyObjectIsCorrect();
 		void getAllObjects_twoObjects_objectCountIs2();
 		void getAllObjects_oneObjectBehindAnotherOneLeft_objectCountIs2();

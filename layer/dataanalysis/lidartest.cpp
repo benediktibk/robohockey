@@ -20,7 +20,7 @@ void LidarTest::getAllObjects_mockHardwareLidar_atLeastOneCallToGetDistance()
 	CPPUNIT_ASSERT(hardwareLidar.getCallsToGetDistance() > 0);
 }
 
-void LidarTest::getAllObjects_oneObjectInFront_onlyObjectIsCorrect()
+void LidarTest::getAllObjects_oneTooBigObjectInFront_objectCountIs0()
 {
 	Hardware::LidarMock hardwareLidar(10);
 	hardwareLidar.setValueForAngle(161, 3.04);
@@ -68,11 +68,7 @@ void LidarTest::getAllObjects_oneObjectInFront_onlyObjectIsCorrect()
 	LidarObjects allObjects = lidar.getAllObjects(ownPosition, 0);
 
 	vector<LidarObject> objects = allObjects.getObjectsWithDistanceBelow(5);
-	CPPUNIT_ASSERT_EQUAL((size_t)1, objects.size());
-	LidarObject object = objects.front();
-	CPPUNIT_ASSERT_DOUBLES_EQUAL(1, object.getDiameter(), 0.05);
-	Compare compare(0.05);
-	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(4, 1), object.getCenter()));
+	CPPUNIT_ASSERT_EQUAL((size_t)0, objects.size());
 }
 
 void LidarTest::getAllObjects_lookingIntoLeftUpperDirectionAndObjectSlightlyLeft_onlyObjectIsCorrect()

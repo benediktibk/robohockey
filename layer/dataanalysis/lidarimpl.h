@@ -46,6 +46,7 @@ namespace DataAnalysis
 		static const double m_edgeTreshold;
 		static const int m_minimumWidthInSensorNumbers;
 		static const double m_maximumWidthInRadiants;
+		static const double m_maximumWidthInMeter;
 	};
 }
 }
