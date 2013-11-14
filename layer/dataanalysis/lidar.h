@@ -9,6 +9,8 @@ namespace Layer
 {
 namespace DataAnalysis
 {
+	class RobotPosition;
+
 	class Lidar
 	{
 	public:

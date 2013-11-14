@@ -12,12 +12,9 @@ namespace Common
 			public CPPUNIT_NS::TestFixture
 	{
 		CPPUNIT_TEST_SUITE(RobotPositionTest);
-		CPPUNIT_TEST(constructor_empty_xIs0);
-		CPPUNIT_TEST(constructor_empty_yIs0);
-		CPPUNIT_TEST(constructor_xIs4_xIs4);
-		CPPUNIT_TEST(constructor_yIs6_yIs6);
-		CPPUNIT_TEST(setX_5_xIs5);
-		CPPUNIT_TEST(setY_4_yIs4);
+		CPPUNIT_TEST(constructor_empty_positionIs0And0);
+		CPPUNIT_TEST(constructor_4And3_positionIs4And3);
+		CPPUNIT_TEST(setPosition_5And6_positionIs5And6);
 		CPPUNIT_TEST(streamOperator_3And2_32);
 		CPPUNIT_TEST(operatorMultiply_3And6With2_6And12);
 		CPPUNIT_TEST(operatorDivide_3And6With3_1And2);
@@ -26,17 +23,14 @@ namespace Common
 		CPPUNIT_TEST(operatorMultpliyAndAssign_3And5With2_6And10);
 		CPPUNIT_TEST(distanceTo_from4And5To8And2_5);
 		CPPUNIT_TEST(constructor_empty_orientationIs0);
-		CPPUNIT_TEST(constructor_orientationIs120_orientationIs120);
-		CPPUNIT_TEST(setOrientation_76_orientationIs76);
+		CPPUNIT_TEST(constructor_orientationIsPi_orientationIsPi);
+		CPPUNIT_TEST(setOrientation_3_orientationIs3);
 		CPPUNIT_TEST_SUITE_END();
 
    private:
-		void constructor_empty_xIs0();
-		void constructor_empty_yIs0();
-		void constructor_xIs4_xIs4();
-		void constructor_yIs6_yIs6();
-		void setX_5_xIs5();
-		void setY_4_yIs4();
+		void constructor_empty_positionIs0And0();
+		void constructor_4And3_positionIs4And3();
+		void setPosition_5And6_positionIs5And6();
 		void streamOperator_3And2_32();
 		void operatorMultiply_3And6With2_6And12();
 		void operatorDivide_3And6With3_1And2();
@@ -45,8 +39,8 @@ namespace Common
 		void operatorMultpliyAndAssign_3And5With2_6And10();
 		void distanceTo_from4And5To8And2_5();
 		void constructor_empty_orientationIs0();
-		void constructor_orientationIs120_orientationIs120();
-		void setOrientation_76_orientationIs76();
+		void constructor_orientationIsPi_orientationIsPi();
+		void setOrientation_3_orientationIs3();
 
 	};
 }

@@ -1,6 +1,8 @@
 #ifndef ROBOHOCKEY_COMMON_ANGLE_H
 #define ROBOHOCKEY_COMMON_ANGLE_H
 
+#include <ostream>
+
 namespace RoboHockey
 {
 namespace Common
@@ -34,5 +36,6 @@ namespace Common
 }
 }
 
+std::ostream& operator<<(std::ostream &stream, const RoboHockey::Common::Angle &angle);
 
 #endif

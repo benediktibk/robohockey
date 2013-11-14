@@ -5,6 +5,7 @@
 #include <assert.h>
 
 using namespace RoboHockey::Common;
+using namespace std;
 
 Angle::Angle() :
 	m_value(0)
@@ -83,4 +84,10 @@ void Angle::fixRange()
 
 	if (m_value > M_PI)
 		m_value -= 2*M_PI;
+}
+
+ostream &operator<<(ostream &stream, const Angle &angle)
+{
+	stream << angle.getValueBetweenMinusPiAndPi();
+	return stream;
 }

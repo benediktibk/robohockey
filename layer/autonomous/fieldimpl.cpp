@@ -40,9 +40,9 @@ std::vector<FieldObject>& FieldImpl::getAllFieldObjects()
 
 void FieldImpl::updateWithLidarData()
 {
-	double orientation = m_position->getOrientation();
+	Angle orientation = m_position->getOrientation();
 
-	const DataAnalysis::LidarObjects &lidarObjects =  m_lidar->getAllObjects(*m_position, orientation);
+	const DataAnalysis::LidarObjects &lidarObjects =  m_lidar->getAllObjects(m_position->getPosition(), orientation.getValueBetweenZeroAndTwoPi());
 	const vector<DataAnalysis::LidarObject> &objectsInRange = lidarObjects.getObjectsWithDistanceBelow(4);
 
 	removeAllFieldObjectsInVisibleArea();
@@ -57,8 +57,7 @@ void FieldImpl::updateWithLidarData()
 void FieldImpl::updateWithOdometryData()
 {
 	Point currentPosition = m_odometry->getCurrentPosition();
-	m_position->setX(currentPosition.getX());
-	m_position->setY(currentPosition.getY());
+	m_position->setPosition(currentPosition);
 	m_position->setOrientation(m_odometry->getCurrentOrientation());
 }
 
@@ -138,14 +137,13 @@ std::vector<Point> &FieldImpl::getPointsOfObjectsWithDiameterAndColor(double dia
 void FieldImpl::removeAllFieldObjectsInVisibleArea()
 {
 	Point directionVector;
-	Point referencePoint(m_position->getX(), m_position->getY());
-	double orientation = m_position->getOrientation();
+	Point referencePoint = m_position->getPosition();
+	Angle orientation = m_position->getOrientation();
 	double pi = M_PI;
 
-	double alpha = (0.5*pi) - orientation;
+	double alpha = (0.5*pi) - orientation.getValueBetweenZeroAndTwoPi();
 	directionVector.setX(-(cos(alpha)));
 	directionVector.setY(sin(alpha));
-
 
 	for (vector<FieldObject>::iterator i = m_fieldObjects.begin(); i != m_fieldObjects.end(); ++i)
 	{
@@ -157,7 +155,6 @@ void FieldImpl::removeAllFieldObjectsInVisibleArea()
 			m_fieldObjects.erase(i);
 			i--;
 		}
-
 	}
 }
 

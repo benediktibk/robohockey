@@ -2,21 +2,23 @@
 #define ROBOHOCKEY_COMMON_ROBOTPOSITION_H
 
 #include "common/point.h"
+#include "common/angle.h"
 
 namespace RoboHockey
 {
 namespace Common
 {
-	class RobotPosition : public Point
+	class RobotPosition
 	{
 	public:
 		RobotPosition();
-		RobotPosition(double x, double y);
 		RobotPosition(const Point &point);
-		RobotPosition(double x, double y, double orientation);
+		RobotPosition(const Point &point, const Angle &orientation);
 
-		void setOrientation(double orientation);
-		double getOrientation() const;
+		void setOrientation(const Angle &orientation);
+		const Angle& getOrientation() const;
+		void setPosition(const Point &position);
+		const Point& getPosition() const;
 
 		bool operator ==(const RobotPosition &position) const;
 		RobotPosition operator*(double value) const;
@@ -26,10 +28,13 @@ namespace Common
 		void operator*=(double value);
 		double distanceTo(const RobotPosition &point) const;
 
-
 	private:
-		double m_orientation;
+		Point m_position;
+		Angle m_orientation;
 	};
 }
 }
+
+std::ostream& operator<<(std::ostream &stream, const RoboHockey::Common::RobotPosition &point);
+
 #endif
