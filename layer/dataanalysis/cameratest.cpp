@@ -88,3 +88,11 @@ void CameraTest::getAllCameraObjects_yellowGoal_cameraObjectCountIs1()
 
 	CPPUNIT_ASSERT_EQUAL((size_t)1, camera.getAllCameraObjects().getObjectCount());
 }
+
+void CameraTest::getAllCameraObjects_yellowGoal1_cameraObjectCountIs1()
+{
+	Hardware::CameraMock hardwareCamera("yellow_goal_1");
+	CameraImpl camera(hardwareCamera);
+
+	CPPUNIT_ASSERT_EQUAL((size_t)1, camera.getAllCameraObjects().getObjectCount());
+}

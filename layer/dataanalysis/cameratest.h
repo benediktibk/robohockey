@@ -24,6 +24,7 @@ namespace DataAnalysis
 		CPPUNIT_TEST(getAllCameraObjects_bluePuck_cameraObjectCountIs1);
 		CPPUNIT_TEST(getAllCameraObjects_blueGoal_cameraObjectCountIs1);
 		CPPUNIT_TEST(getAllCameraObjects_yellowGoal_cameraObjectCountIs1);
+		CPPUNIT_TEST(getAllCameraObjects_yellowGoal1_cameraObjectCountIs1);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
@@ -37,7 +38,7 @@ namespace DataAnalysis
 		void getAllCameraObjects_bluePuck_cameraObjectCountIs1();
 		void getAllCameraObjects_blueGoal_cameraObjectCountIs1();
 		void getAllCameraObjects_yellowGoal_cameraObjectCountIs1();
-
+		void getAllCameraObjects_yellowGoal1_cameraObjectCountIs1();
 
 	};
 }
