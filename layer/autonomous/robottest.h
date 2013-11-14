@@ -34,6 +34,7 @@ namespace Autonomous
 		CPPUNIT_TEST(updateSensorData_0bstacleDirectInFront_engineGotNoCallToUnlockForwardMovement);
 		CPPUNIT_TEST(turnAround_empty_engineGotAtLeastOneCallToTurnAround);
 		CPPUNIT_TEST(getCurrentPosition_position3And4InOdometry_3And4);
+		CPPUNIT_TEST(reachedTarget_nearlyHitTargetButTookSomeAdditionalWayToStop_true);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
@@ -57,6 +58,7 @@ namespace Autonomous
 		void updateSensorData_0bstacleDirectInFront_engineGotNoCallToUnlockForwardMovement();
 		void turnAround_empty_engineGotAtLeastOneCallToTurnAround();
 		void getCurrentPosition_position3And4InOdometry_3And4();
+		void reachedTarget_nearlyHitTargetButTookSomeAdditionalWayToStop_true();
 	};
 }
 }

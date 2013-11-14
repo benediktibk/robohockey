@@ -244,3 +244,31 @@ void RobotTest::getCurrentPosition_position3And4InOdometry_3And4()
 	Compare compare(0.0001);
 	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(3, 4), robot.getCurrentPosition()));
 }
+
+void RobotTest::reachedTarget_nearlyHitTargetButTookSomeAdditionalWayToStop_true()
+{
+	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
+	DataAnalysis::OdometryMock &odometry = dataAnalyser->getOdometryMock();
+	DataAnalysis::EngineMock &engine = dataAnalyser->getEngineMock();
+	DataAnalysis::SonarMock &sonar = dataAnalyser->getSonarMock();
+	RobotImpl robot(dataAnalyser);
+
+	odometry.setCurrentPosition(Point(0, 0), 0);
+	robot.goTo(Point(10, 0));
+	sonar.setIsObstacleDirectInFront(false);
+	robot.updateSensorData();
+	robot.updateActuators();
+	odometry.setCurrentPosition(Point(5, 0), 0);
+	sonar.setIsObstacleDirectInFront(true);
+	robot.updateSensorData();
+	robot.updateActuators();
+	engine.setTryingToTackleObstacle(true);
+	robot.updateSensorData();
+	robot.updateActuators();
+	engine.setTryingToTackleObstacle(false);
+	odometry.setCurrentPosition(Point(5.2, 0), 0);
+	robot.updateSensorData();
+	robot.updateActuators();
+
+	CPPUNIT_ASSERT(robot.reachedTarget());
+}
