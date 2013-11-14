@@ -406,3 +406,31 @@ void EngineTest::turnAround_turnedMoreThanOnce_lastRotationIsZero()
 
 	CPPUNIT_ASSERT(hardwareEngine.getLastRotation() == 0);
 }
+
+void EngineTest::goToStraight_validTargetPosition_startPositionIsCorrect()
+{
+	Hardware::EngineMock hardwareEngine;
+	Hardware::OdometryMock hardwareOdometry;
+	EngineImpl engine(hardwareEngine, hardwareOdometry);
+	hardwareOdometry.setCurrentPosition(Point(3, 5), 0);
+
+	engine.goToStraight(Point(6, 7));
+
+	Compare compare(0.00001);
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(3, 5), engine.getStartPosition()));
+}
+
+void EngineTest::goToStraight_moveAwayFromStartPosition_startPositionIsCorrect()
+{
+	Hardware::EngineMock hardwareEngine;
+	Hardware::OdometryMock hardwareOdometry;
+	EngineImpl engine(hardwareEngine, hardwareOdometry);
+	hardwareOdometry.setCurrentPosition(Point(3, 5), 0);
+
+	engine.goToStraight(Point(6, 7));
+	hardwareOdometry.setCurrentPosition(Point(4, 5), 0);
+	engine.updateSpeedAndRotation();
+
+	Compare compare(0.00001);
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(3, 5), engine.getStartPosition()));
+}

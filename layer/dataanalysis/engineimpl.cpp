@@ -23,6 +23,7 @@ EngineImpl::EngineImpl(Hardware::Engine &engine, Hardware::Odometry &odometry) :
 void EngineImpl::goToStraight(const Common::Point &position)
 {
 	m_target = position;
+	m_startPosition = m_odometry.getCurrentPosition();
 	m_rotationReached = false;
 	m_engineState = EngineStateDriving;
 }
@@ -71,6 +72,11 @@ bool EngineImpl::tryingToTackleObstacle()
 	return m_tryingToTackleObstacle;
 }
 
+const Point &EngineImpl::getStartPosition() const
+{
+	return m_startPosition;
+}
+
 void EngineImpl::updateSpeedAndRotationForStopped()
 {
 	m_tryingToTackleObstacle = false;
@@ -104,7 +110,7 @@ void EngineImpl::updateSpeedAndRotationForTurnAround()
 void EngineImpl::updateSpeedAndRotationForDriving()
 {
 	Point currentPosition = m_odometry.getCurrentPosition();
-	Compare positionCompare(0.1);
+	Compare positionCompare(0.03);
 
 	if (positionCompare.isFuzzyEqual(currentPosition, m_target))
 	{
@@ -128,7 +134,7 @@ void EngineImpl::updateSpeedAndRotationForDriving()
 
 void EngineImpl::updateSpeedAndRotationForRotating()
 {
-	Compare angleCompare(0.1);
+	Compare angleCompare(0.05);
 	Point currentPosition = m_odometry.getCurrentPosition();
 	Point positionDifference = m_target - currentPosition;
 	double targetOrientation = fixAngleRange(atan2(positionDifference.getY(), positionDifference.getX()));

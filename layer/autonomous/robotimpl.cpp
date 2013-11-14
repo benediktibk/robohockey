@@ -70,6 +70,8 @@ void RobotImpl::updateActuators()
 	}
 }
 
+#include <iostream>
+
 void RobotImpl::updateSensorData()
 {
 	DataAnalysis::Odometry &odometry = m_dataAnalyser->getOdometry();
@@ -79,6 +81,8 @@ void RobotImpl::updateSensorData()
 	m_dataAnalyser->updateSensorData();
 	m_field->update();
 	m_currentPosition = odometry.getCurrentPosition();
+
+	cout << "distance to target " << m_currentPosition.distanceTo(m_targetPosition) << endl;
 
 	if (sonar.isObstacleDirectInFront())
 		engine.lockForwardMovement();
@@ -112,13 +116,13 @@ void RobotImpl::turnAround()
 Point RobotImpl::getCurrentPosition()
 {
 	DataAnalysis::Odometry &odometry = m_dataAnalyser->getOdometry();
-    return odometry.getCurrentPosition();
+	return odometry.getCurrentPosition();
 }
 
 double RobotImpl::getCurrentOrientation()
 {
-    DataAnalysis::Odometry &odometry = m_dataAnalyser->getOdometry();
-    return odometry.getCurrentOrientation();
+	DataAnalysis::Odometry &odometry = m_dataAnalyser->getOdometry();
+	return odometry.getCurrentOrientation();
 }
 
 RobotImpl::RobotImpl(const RobotImpl &)

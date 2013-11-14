@@ -34,6 +34,8 @@ namespace DataAnalysis
 		virtual void unlockForwardMovement();
 		virtual bool tryingToTackleObstacle();
 
+		const Common::Point& getStartPosition() const;
+
 	private:
 		void updateSpeedAndRotationForStopped();
 		void updateSpeedAndRotationForTurnAround();
@@ -48,6 +50,7 @@ namespace DataAnalysis
 		Hardware::Engine &m_engine;
 		Hardware::Odometry &m_odometry;
 		Common::Point m_target;
+		Common::Point m_startPosition;
 		bool m_rotationReached;
 		EngineState m_engineState;
 		double m_startOrientation;
