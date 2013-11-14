@@ -15,7 +15,7 @@ namespace DataAnalysis
 
 namespace Autonomous
 {
-	class FieldImpl;
+	class Field;
 
 	class RobotImpl :
 			public Robot
@@ -48,7 +48,7 @@ namespace Autonomous
 		Common::Point m_currentPosition;
 		Common::Point m_targetPosition;
 		bool m_reachedTarget;
-		FieldImpl *m_field;
+		Field *m_field;
 	};
 }
 }
