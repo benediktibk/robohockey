@@ -33,6 +33,7 @@ CameraObjects CameraImpl::getAllCameraObjects()
 			if (boundRect.area() > 1500)
 			{
 				currentPic = yellowPic(boundRect);
+				imwrite("a.png",currentPic);
 				for (int i = 0; i < boundRect.height; ++i) {
 					for (int j = 0; j < boundRect.width; j++)
 					{
@@ -40,7 +41,7 @@ CameraObjects CameraImpl::getAllCameraObjects()
 							white++;
 					}
 				}
-				if(white > 0.5*boundRect.area())
+				if(white > 0.45*boundRect.area())
 					cameraObjects.addObject(CameraObject(ColorTypeYellow, boundRect));
 			}
 		}
@@ -59,6 +60,7 @@ CameraObjects CameraImpl::getAllCameraObjects()
 			if (boundRect.area() > 1500)
 			{
 				currentPic = bluePic(boundRect);
+				imwrite("b.png",currentPic);
 				for (int i = 0; i < boundRect.height; ++i) {
 					for (int j = 0; j < boundRect.width; j++)
 					{
@@ -66,13 +68,13 @@ CameraObjects CameraImpl::getAllCameraObjects()
 							white++;
 					}
 				}
-				if(white > 0.5*boundRect.area())
-					cameraObjects.addObject(CameraObject(ColorTypeYellow, boundRect));
+				if(white > 0.45*boundRect.area())
+					cameraObjects.addObject(CameraObject(ColorTypeBlue, boundRect));
 			}
 		}
 		contours.clear();
 	}
-///@todo find colorspectrum for green objects
+//!@todo find colorspectrum for green objects
 	inRange(m_fileredFrame, Scalar(1, 1, 1), Scalar(1, 1, 1), greenPic);
 	greenPic.copyTo(currentPic);
 	findContours(currentPic, contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE, Point(0, 0));
@@ -92,7 +94,7 @@ CameraObjects CameraImpl::getAllCameraObjects()
 							white++;
 					}
 				}
-				if(white > 0.5*boundRect.area())
+				if(white > 0.45*boundRect.area())
 					cameraObjects.addObject(CameraObject(ColorTypeGreen, boundRect));
 			}
 		}
