@@ -2,7 +2,8 @@
 #define ROBOHOCKEY_LAYER_DATAANALYSIS_ENGINEIMPL_H
 
 #include "layer/dataanalysis/engine.h"
-#include "common/point.h"
+#include "common/robotposition.h"
+#include "common/angle.h"
 
 namespace RoboHockey
 {
@@ -41,10 +42,8 @@ namespace DataAnalysis
 		void updateSpeedAndRotationForTurnAround();
 		void updateSpeedAndRotationForDriving();
 		void updateSpeedAndRotationForRotating();
-		void turnOnly(double targetOrientation, double currentOrientation);
-		void driveAndTurn(const Common::Point &currentPosition, double targetOrientation, double currentOrientation);
-		double calculateOrientationDifference(double targetOrientation, double currentOrientation) const;
-		static double fixAngleRange(double value);
+		void turnOnly(const Common::Angle &targetOrientation, const Common::Angle &currentOrientation);
+		void driveAndTurn(const Common::RobotPosition &currentPosition, const Common::Angle &targetOrientation);
 
 	private:
 		Hardware::Engine &m_engine;
@@ -53,7 +52,7 @@ namespace DataAnalysis
 		Common::Point m_startPosition;
 		bool m_rotationReached;
 		EngineState m_engineState;
-		double m_startOrientation;
+		Common::Angle m_startOrientation;
 		bool m_oneHalfTurnDone;
 		bool m_forwardMovementLocked;
 		bool m_tryingToTackleObstacle;

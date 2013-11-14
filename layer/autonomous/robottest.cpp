@@ -2,6 +2,7 @@
 #include "layer/autonomous/robotimpl.h"
 #include "layer/dataanalysis/dataanalysermock.h"
 #include "common/compare.h"
+#include "common/robotposition.h"
 
 using namespace RoboHockey::Common;
 using namespace RoboHockey::Layer;
@@ -12,7 +13,7 @@ void RobotTest::goTo_positionDifferentToCurrentOne_engineGotAtLeastOneCallToGoTo
 	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
 	DataAnalysis::Odometry &odometry = dataAnalyser->getOdometry();
 	DataAnalysis::EngineMock &engine = dataAnalyser->getEngineMock();
-	odometry.setCurrentPosition(Point(2, 3), 1);
+	odometry.setCurrentPosition(RobotPosition(Point(2, 3), 1));
 	RobotImpl robot(dataAnalyser);
 
 	robot.goTo(Point(5, 4));
@@ -44,7 +45,7 @@ void RobotTest::reachedTarget_currentPositionDifferentToTarget_false()
 {
 	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
 	DataAnalysis::Odometry &odometry = dataAnalyser->getOdometry();
-	odometry.setCurrentPosition(Point(2, 3), 1);
+	odometry.setCurrentPosition(RobotPosition(Point(2, 3), 1));
 	RobotImpl robot(dataAnalyser);
 	robot.goTo(Point(5, 4));
 	robot.updateSensorData();
@@ -56,7 +57,7 @@ void RobotTest::reachedTarget_currentPositionIsTargetPosition_true()
 {
 	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
 	DataAnalysis::Odometry &odometry = dataAnalyser->getOdometry();
-	odometry.setCurrentPosition(Point(2, 3), 1);
+	odometry.setCurrentPosition(RobotPosition(Point(2, 3), 1));
 	RobotImpl robot(dataAnalyser);
 	robot.goTo(Point(2, 3));
 	robot.updateSensorData();
@@ -111,7 +112,7 @@ void RobotTest::turnToTarget_validPoint_engineGotAtLeastOneCallToTurnToTarget()
 	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
 	DataAnalysis::EngineMock &engine = dataAnalyser->getEngineMock();
 	DataAnalysis::OdometryMock &odometry = dataAnalyser->getOdometryMock();
-	odometry.setCurrentPosition(Point(0, 0), 0);
+	odometry.setCurrentPosition(RobotPosition(Point(0, 0), 0));
 	RobotImpl robot(dataAnalyser);
 
 	robot.turnTo(Point(0, 1));
@@ -239,10 +240,10 @@ void RobotTest::getCurrentPosition_position3And4InOdometry_3And4()
 	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
 	DataAnalysis::OdometryMock &odometry = dataAnalyser->getOdometryMock();
 	RobotImpl robot(dataAnalyser);
-	odometry.setCurrentPosition(Point(3, 4), 2);
+	odometry.setCurrentPosition(RobotPosition(Point(3, 4), 2));
 
 	Compare compare(0.0001);
-	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(3, 4), robot.getCurrentPosition()));
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(RobotPosition(Point(3, 4), 2), robot.getCurrentPosition()));
 }
 
 void RobotTest::reachedTarget_nearlyHitTargetButTookSomeAdditionalWayToStop_true()
@@ -253,12 +254,12 @@ void RobotTest::reachedTarget_nearlyHitTargetButTookSomeAdditionalWayToStop_true
 	DataAnalysis::SonarMock &sonar = dataAnalyser->getSonarMock();
 	RobotImpl robot(dataAnalyser);
 
-	odometry.setCurrentPosition(Point(0, 0), 0);
+	odometry.setCurrentPosition(RobotPosition(Point(0, 0), 0));
 	robot.goTo(Point(10, 0));
 	sonar.setIsObstacleDirectInFront(false);
 	robot.updateSensorData();
 	robot.updateActuators();
-	odometry.setCurrentPosition(Point(5, 0), 0);
+	odometry.setCurrentPosition(RobotPosition(Point(5, 0), 0));
 	sonar.setIsObstacleDirectInFront(true);
 	robot.updateSensorData();
 	robot.updateActuators();
@@ -266,7 +267,7 @@ void RobotTest::reachedTarget_nearlyHitTargetButTookSomeAdditionalWayToStop_true
 	robot.updateSensorData();
 	robot.updateActuators();
 	engine.setTryingToTackleObstacle(false);
-	odometry.setCurrentPosition(Point(5.2, 0), 0);
+	odometry.setCurrentPosition(RobotPosition(Point(5.2, 0), 0));
 	robot.updateSensorData();
 	robot.updateActuators();
 

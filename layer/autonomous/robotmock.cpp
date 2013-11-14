@@ -1,4 +1,5 @@
 #include "layer/autonomous/robotmock.h"
+#include "common/robotposition.h"
 
 using namespace RoboHockey::Common;
 using namespace RoboHockey::Layer::Autonomous;
@@ -105,13 +106,7 @@ void RobotMock::turnAround()
 void RobotMock::turnTo(const Point &)
 { }
 
-Point RobotMock::getCurrentPosition()
+RobotPosition RobotMock::getCurrentPosition()
 {
-    return Point();
+	return RobotPosition();
 }
-
-double RobotMock::getCurrentOrientation()
-{
-    return 0.0;
-}
-

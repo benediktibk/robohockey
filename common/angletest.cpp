@@ -77,6 +77,16 @@ void AngleTest::constructor_targetsEqual_0()
 	CPPUNIT_ASSERT_DOUBLES_EQUAL(0, angle.getValueBetweenMinusPiAndPi(), 0.00001);
 }
 
+void AngleTest::constructor_startAt1And3EndAtMinus2And1_correctResult()
+{
+	Point start(1, 3);
+	Point end(-2, 1);
+
+	Angle angle(start, end);
+
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(-2.55359, angle.getValueBetweenMinusPiAndPi(), 0.001);
+}
+
 void AngleTest::getValueBetweenZeroAndTwoPi_negativeValue_correctPositiveValue()
 {
 	Angle angle(-3);

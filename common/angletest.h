@@ -20,6 +20,7 @@ namespace Common
 		CPPUNIT_TEST(constructor_from1And1To2And0And0And1_valueIs3PiQuarters);
 		CPPUNIT_TEST(constructor_threePointsAndOneTargetEqualToSource_0);
 		CPPUNIT_TEST(constructor_targetsEqual_0);
+		CPPUNIT_TEST(constructor_startAt1And3EndAtMinus2And1_correctResult);
 		CPPUNIT_TEST(getValueBetweenZeroAndTwoPi_negativeValue_correctPositiveValue);
 		CPPUNIT_TEST(getHalfRotation_empty_valueIsPi);
 		CPPUNIT_TEST(getQuarterRotation_empty_valueIsPiHalf);
@@ -37,6 +38,7 @@ namespace Common
 		void constructor_from1And1To2And0And0And1_valueIs3PiQuarters();
 		void constructor_threePointsAndOneTargetEqualToSource_0();
 		void constructor_targetsEqual_0();
+		void constructor_startAt1And3EndAtMinus2And1_correctResult();
 		void getValueBetweenZeroAndTwoPi_negativeValue_correctPositiveValue();
 		void getHalfRotation_empty_valueIsPi();
 		void getQuarterRotation_empty_valueIsPiHalf();

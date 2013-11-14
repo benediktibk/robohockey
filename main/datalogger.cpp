@@ -4,6 +4,7 @@
 #include "layer/hardware/camera.h"
 #include "layer/hardware/odometry.h"
 #include "common/point.h"
+#include "common/robotposition.h"
 #include <opencv2/highgui/highgui.hpp>
 #include <fstream>
 #include <iostream>
@@ -44,10 +45,8 @@ int main(int argc, char **argv)
 		fileLidar << i << ": " << lidar.getDistance(i) << endl;
 
 	cout << "writing data for the odometry to odometry.txt" << endl;
-	Point currentPosition = odometry.getCurrentPosition();
-	fileOdometry << "x: " << currentPosition.getX() << endl;
-	fileOdometry << "y: " << currentPosition.getY() << endl;
-	fileOdometry << "orientation: " /*<< odometry.getCurrentOrientation()*/ << endl;
+	RobotPosition currentPosition = odometry.getCurrentPosition();
+	fileOdometry << "(x, y, alpha): " << currentPosition << endl;
 
 	if (camera.isValid())
 	{

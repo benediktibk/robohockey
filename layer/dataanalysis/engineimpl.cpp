@@ -2,7 +2,7 @@
 #include "layer/hardware/engine.h"
 #include "layer/hardware/odometry.h"
 #include "common/compare.h"
-#include "common/point.h"
+#include "common/robotposition.h"
 #include <math.h>
 #include <algorithm>
 
@@ -23,7 +23,8 @@ EngineImpl::EngineImpl(Hardware::Engine &engine, Hardware::Odometry &odometry) :
 void EngineImpl::goToStraight(const Common::Point &position)
 {
 	m_target = position;
-	m_startPosition = m_odometry.getCurrentPosition();
+	RobotPosition currentRobotPosition = m_odometry.getCurrentPosition();
+	m_startPosition = currentRobotPosition.getPosition();
 	m_rotationReached = false;
 	m_engineState = EngineStateDriving;
 }
@@ -46,7 +47,8 @@ void EngineImpl::stop()
 
 void EngineImpl::turnAround()
 {
-	m_startOrientation = fixAngleRange(m_odometry.getCurrentOrientation());
+	RobotPosition currentRobotPosition = m_odometry.getCurrentPosition();
+	m_startOrientation = currentRobotPosition.getOrientation();
 	m_oneHalfTurnDone = false;
 	m_engineState = EngineStateTurnAround;
 }
@@ -85,16 +87,14 @@ void EngineImpl::updateSpeedAndRotationForStopped()
 
 void EngineImpl::updateSpeedAndRotationForTurnAround()
 {
-	double currentOrientation = fixAngleRange(m_odometry.getCurrentOrientation());
-	double orientationDifference = currentOrientation - m_startOrientation;
+	RobotPosition currentRobotPosition = m_odometry.getCurrentPosition();
+	Angle currentOrientation = currentRobotPosition.getOrientation();
+	Angle orientationDifference = currentOrientation - m_startOrientation;
 
-	if (orientationDifference > M_PI)
-		orientationDifference -= 2*M_PI;
-
-	if (orientationDifference < 0)
+	if (orientationDifference.getValueBetweenMinusPiAndPi() < 0)
 		m_oneHalfTurnDone = true;
 
-	if (m_oneHalfTurnDone && orientationDifference > 0)
+	if (m_oneHalfTurnDone && orientationDifference.getValueBetweenMinusPiAndPi() > 0)
 	{
 		stop();
 		m_tryingToTackleObstacle = false;
@@ -102,32 +102,32 @@ void EngineImpl::updateSpeedAndRotationForTurnAround()
 		return;
 	}
 
-	double orientationDifferenceToTarget = 2*M_PI - fixAngleRange(orientationDifference);
+	double orientationDifferenceToTarget = 2*M_PI - orientationDifference.getValueBetweenZeroAndTwoPi();
 	m_tryingToTackleObstacle = false;
 	m_engine.setSpeed(0, min(m_engine.getMaximumRotation(), orientationDifferenceToTarget*0.75 + 1.1*m_engine.getMinimumSpeed()));
 }
 
 void EngineImpl::updateSpeedAndRotationForDriving()
 {
-	Point currentPosition = m_odometry.getCurrentPosition();
+	RobotPosition currentPosition = m_odometry.getCurrentPosition();
 	Compare positionCompare(0.03);
 
-	if (positionCompare.isFuzzyEqual(currentPosition, m_target))
+	if (positionCompare.isFuzzyEqual(currentPosition.getPosition(), m_target))
 	{
 		stop();
 		return;
 	}
 
 	Compare angleCompare(0.1);
-	Point positionDifference = m_target - currentPosition;
-	double targetOrientation = fixAngleRange(atan2(positionDifference.getY(), positionDifference.getX()));
-	double currentOrientation = fixAngleRange(m_odometry.getCurrentOrientation());
+	Point positionDifference = m_target - currentPosition.getPosition();
+	Angle targetOrientation(atan2(positionDifference.getY(), positionDifference.getX()));
+	Angle currentOrientation = currentPosition.getOrientation();
 
 	if (angleCompare.isFuzzyEqual(targetOrientation, currentOrientation))
 		m_rotationReached = true;
 
 	if (m_rotationReached)
-		driveAndTurn(currentPosition, targetOrientation, currentOrientation);
+		driveAndTurn(currentPosition, targetOrientation);
 	else
 		turnOnly(targetOrientation, currentOrientation);
 }
@@ -135,10 +135,9 @@ void EngineImpl::updateSpeedAndRotationForDriving()
 void EngineImpl::updateSpeedAndRotationForRotating()
 {
 	Compare angleCompare(0.05);
-	Point currentPosition = m_odometry.getCurrentPosition();
-	Point positionDifference = m_target - currentPosition;
-	double targetOrientation = fixAngleRange(atan2(positionDifference.getY(), positionDifference.getX()));
-	double currentOrientation = fixAngleRange(m_odometry.getCurrentOrientation());
+	RobotPosition currentPosition = m_odometry.getCurrentPosition();
+	Angle targetOrientation(currentPosition.getPosition(), m_target);
+	Angle currentOrientation = currentPosition.getOrientation();
 
 	if (angleCompare.isFuzzyEqual(targetOrientation, currentOrientation))
 	{
@@ -149,19 +148,19 @@ void EngineImpl::updateSpeedAndRotationForRotating()
 	turnOnly(targetOrientation, currentOrientation);
 }
 
-void EngineImpl::turnOnly(double targetOrientation, double currentOrientation)
+void EngineImpl::turnOnly(const Angle &targetOrientation, const Angle &currentOrientation)
 {
-	double orientationDifference = calculateOrientationDifference(targetOrientation, currentOrientation);
+	Angle orientationDifference = targetOrientation - currentOrientation;
 	double amplification = 1;
 	m_tryingToTackleObstacle = false;
-	m_engine.setSpeed(0, amplification*orientationDifference);
+	m_engine.setSpeed(0, orientationDifference.getValueBetweenMinusPiAndPi()*amplification);
 }
 
-void EngineImpl::driveAndTurn(const Point &currentPosition, double targetOrientation, double currentOrientation)
+void EngineImpl::driveAndTurn(const RobotPosition &currentPosition, const Angle &targetOrientation)
 {
 	double distance = currentPosition.distanceTo(m_target);
-	double orientationDifference = calculateOrientationDifference(targetOrientation, currentOrientation);
-	double targetError = distance*sin(orientationDifference);
+	Angle orientationDifference = targetOrientation - currentPosition.getOrientation();
+	double targetError = distance*sin(orientationDifference.getValueBetweenMinusPiAndPi());
 	double distanceAmplification = 0.5;
 	double orientationAmplification = 1;
 	double magnitude = distanceAmplification*distance;
@@ -175,26 +174,4 @@ void EngineImpl::driveAndTurn(const Point &currentPosition, double targetOrienta
 		m_tryingToTackleObstacle = false;
 
 	m_engine.setSpeed(magnitude, orientationAmplification*targetError);
-}
-
-double EngineImpl::calculateOrientationDifference(double targetOrientation, double currentOrientation) const
-{
-	double difference = targetOrientation - currentOrientation;
-
-	if (difference > M_PI)
-		difference -= 2*M_PI;
-	else if (difference < (-1)*M_PI)
-		difference += 2*M_PI;
-
-	return difference;
-}
-
-double EngineImpl::fixAngleRange(double value)
-{
-	while (value < 0)
-		value += 2*M_PI;
-
-	unsigned int timesToHigh = value/(2*M_PI);
-	value -= timesToHigh*2*M_PI;
-	return value;
 }

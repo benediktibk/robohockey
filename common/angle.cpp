@@ -32,6 +32,15 @@ Angle::Angle(const Point &source, const Point &targetOne, const Point &targetTwo
 		double denominator = 2*a*b;
 		m_value = acos(numerator/denominator);
 	}
+
+	fixRange();
+}
+
+Angle::Angle(const Point &start, const Point &end)
+{
+	Point positionDifference = end - start;
+	m_value = atan2(positionDifference.getY(), positionDifference.getX());
+	fixRange();
 }
 
 double Angle::getValueBetweenMinusPiAndPi() const

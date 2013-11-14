@@ -56,9 +56,7 @@ void FieldImpl::updateWithLidarData()
 
 void FieldImpl::updateWithOdometryData()
 {
-	Point currentPosition = m_odometry->getCurrentPosition();
-	m_position->setPosition(currentPosition);
-	m_position->setOrientation(m_odometry->getCurrentOrientation());
+	*m_position = m_odometry->getCurrentPosition();
 }
 
 void FieldImpl::updateWithCameraData()

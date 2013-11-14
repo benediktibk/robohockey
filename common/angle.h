@@ -15,6 +15,7 @@ namespace Common
 		Angle();
 		Angle(double value);
 		Angle(const Common::Point &source, const Common::Point &targetOne, const Common::Point &targetTwo);
+		Angle(const Common::Point &start, const Common::Point &end);
 
 		double getValueBetweenMinusPiAndPi() const;
 		double getValueBetweenZeroAndTwoPi() const;

@@ -48,7 +48,7 @@ bool RobotImpl::stuckAtObstacle()
 bool RobotImpl::reachedTarget()
 {
 	Compare compare(0.1);
-	if (compare.isFuzzyEqual(m_currentPosition, m_targetPosition))
+	if (compare.isFuzzyEqual(m_currentPosition.getPosition(), m_targetPosition))
 		m_reachedTarget = true;
 	return m_reachedTarget;
 }
@@ -70,8 +70,6 @@ void RobotImpl::updateActuators()
 	}
 }
 
-#include <iostream>
-
 void RobotImpl::updateSensorData()
 {
 	DataAnalysis::Odometry &odometry = m_dataAnalyser->getOdometry();
@@ -81,8 +79,6 @@ void RobotImpl::updateSensorData()
 	m_dataAnalyser->updateSensorData();
 	m_field->update();
 	m_currentPosition = odometry.getCurrentPosition();
-
-	cout << "distance to target " << m_currentPosition.distanceTo(m_targetPosition) << endl;
 
 	if (sonar.isObstacleDirectInFront())
 		engine.lockForwardMovement();
@@ -113,16 +109,10 @@ void RobotImpl::turnAround()
 	engine.turnAround();
 }
 
-Point RobotImpl::getCurrentPosition()
+RobotPosition RobotImpl::getCurrentPosition()
 {
 	DataAnalysis::Odometry &odometry = m_dataAnalyser->getOdometry();
 	return odometry.getCurrentPosition();
-}
-
-double RobotImpl::getCurrentOrientation()
-{
-	DataAnalysis::Odometry &odometry = m_dataAnalyser->getOdometry();
-	return odometry.getCurrentOrientation();
 }
 
 RobotImpl::RobotImpl(const RobotImpl &)
