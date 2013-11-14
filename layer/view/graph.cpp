@@ -85,6 +85,7 @@ void Graph::updateTargets()
 		current_x_position = current_x_position * m_pixelPerMeter - 0.5 * m_targetSpotDiameter * m_pixelPerMeter;
 		current_y_position = current_y_position * m_pixelPerMeter - 0.5 * m_targetSpotDiameter * m_pixelPerMeter;
         currentItem.setRect(current_x_position, -1.0 * current_y_position, m_targetSpotDiameter * m_pixelPerMeter, m_targetSpotDiameter * m_pixelPerMeter);
+        currentItem.setBrush(Qt::green);
 
 
 	}
@@ -121,6 +122,7 @@ void Graph::updateObjects()
 		double centerX = center.getX();
 		double centerY = center.getY();
         currentItem.setRect(centerX - 0.5 * diameter, -1.0 * centerY + 0.5 * diameter, diameter, diameter);
+        currentItem.setBrush(Qt::red);
 
 
 	}
@@ -129,6 +131,6 @@ void Graph::updateObjects()
 	double positionX = robotPosition.getX() * m_pixelPerMeter - 0.5 * m_pixelPerMeter * m_robotDiameter;
 	double positionY = robotPosition.getY() * m_pixelPerMeter - 0.5 * m_pixelPerMeter * m_robotDiameter;
     m_triangle->setPos(positionX, -1.0 * positionY);
-    m_triangle->setRotation(360 * m_model.getOrientation() / (2 * M_PI));
-
+    m_triangle->setRotation(-1.0 * 360 * m_model.getOrientation() / (2 * M_PI));
+    m_triangle->setBrush(Qt::blue);
 }
