@@ -112,7 +112,13 @@ void RobotImpl::turnAround()
 Point RobotImpl::getCurrentPosition()
 {
 	DataAnalysis::Odometry &odometry = m_dataAnalyser->getOdometry();
-	return odometry.getCurrentPosition();
+    return odometry.getCurrentPosition();
+}
+
+double RobotImpl::getCurrentOrientation()
+{
+    DataAnalysis::Odometry &odometry = m_dataAnalyser->getOdometry();
+    return odometry.getCurrentOrientation();
 }
 
 RobotImpl::RobotImpl(const RobotImpl &)

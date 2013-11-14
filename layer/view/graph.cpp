@@ -18,9 +18,16 @@ Graph::Graph(Model &model) :
 	m_pixelPerMeter(80),
 	m_robotDiameter(0.5),
 	m_targetSpotDiameter(0.2)
+
 {
 	m_scene = new QGraphicsScene();
 	m_scene->addItem(m_robot);
+    QPolygonF triangle;
+    triangle.append(QPointF(-25,-12));
+    triangle.append(QPointF(-25,12));
+    triangle.append(QPointF(25,0));
+    triangle.append(QPointF(-25,-12));
+    m_triangle = m_scene->addPolygon(triangle);
    // this->setSceneRect(50,50,350,350);
 
 	connect(&model, SIGNAL(targetPositionsChanged()), this, SLOT(updateTargets()));
@@ -120,5 +127,7 @@ void Graph::updateObjects()
 	const Point robotPosition = m_model.getCurrentPosition();
 	double positionX = robotPosition.getX() * m_pixelPerMeter - 0.5 * m_pixelPerMeter * m_robotDiameter;
 	double positionY = robotPosition.getY() * m_pixelPerMeter - 0.5 * m_pixelPerMeter * m_robotDiameter;
-    m_robot->setRect(positionX, -1.0 * positionY, m_pixelPerMeter * m_robotDiameter, m_pixelPerMeter * m_robotDiameter);
+    m_triangle->setPos(positionX, -1.0 * positionY);
+    m_triangle->setRotation(m_model.getOrientation());
+
 }

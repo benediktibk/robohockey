@@ -33,6 +33,7 @@ namespace Autonomous
 		virtual void calibratePosition() = 0;
 		virtual void turnAround() = 0;
 		virtual Common::Point getCurrentPosition() = 0;
+        virtual double getCurrentOrientation() = 0;
 	};
 }
 }

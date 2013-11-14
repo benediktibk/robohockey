@@ -37,6 +37,7 @@ namespace Autonomous
 		virtual void calibratePosition();
 		virtual void turnAround();
 		virtual Common::Point getCurrentPosition();
+        virtual double getCurrentOrientation();
 
 	private:
 		// forbid copies
