@@ -67,9 +67,8 @@ void CameraImpl::addObjects(ColorType color)
 		maxValue = Scalar(107, 255, 255);
 		break;
 	case ColorTypeGreen:
-		//!@todo find green values
-		minValue = Scalar(1, 1, 1);
-		maxValue = Scalar(1, 255, 255);
+		minValue = Scalar(75, 40, 55);
+		maxValue = Scalar(85, 255, 255);
 		break;
 	default:
 		break;

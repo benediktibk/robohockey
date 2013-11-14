@@ -96,3 +96,19 @@ void CameraTest::getAllCameraObjects_yellowGoal1_cameraObjectCountIs1()
 
 	CPPUNIT_ASSERT_EQUAL((size_t)1, camera.getAllCameraObjects().getObjectCount());
 }
+
+void CameraTest::getAllCameraObjects_greenBorderstone_cameraObjectCountIs1()
+{
+	Hardware::CameraMock hardwareCamera("green_borderstone");
+	CameraImpl camera(hardwareCamera);
+
+	CPPUNIT_ASSERT_EQUAL((size_t)1, camera.getAllCameraObjects().getObjectCount());
+}
+
+void CameraTest::getAllCameraObjects_greenBorderstoneTriple_cameraObjectCountIs3()
+{
+	Hardware::CameraMock hardwareCamera("green_borderstone_triple");
+	CameraImpl camera(hardwareCamera);
+
+	CPPUNIT_ASSERT_EQUAL((size_t)3, camera.getAllCameraObjects().getObjectCount());
+}
