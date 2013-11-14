@@ -12,6 +12,8 @@ set(LAYER_AUTONOMOUS_TEST_SRC
 	robotmock.cpp
 	fieldmock.cpp
 	fieldtest.cpp
+	borderstonetest.cpp
+	borderstonedistancestest.cpp
 )
 
 add_library(layerautonomous ${LAYER_AUTONOMOUS_SRC})

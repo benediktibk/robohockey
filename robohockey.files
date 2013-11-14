@@ -235,3 +235,7 @@ layer/autonomous/borderstone.h
 layer/autonomous/borderstone.cpp
 layer/autonomous/borderstonedistances.h
 layer/autonomous/borderstonedistances.cpp
+layer/autonomous/borderstonetest.h
+layer/autonomous/borderstonetest.cpp
+layer/autonomous/borderstonedistancestest.h
+layer/autonomous/borderstonedistancestest.cpp
