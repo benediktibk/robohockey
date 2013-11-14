@@ -47,19 +47,23 @@ void CameraImpl::addObjects(ColorType color)
 	vector<Vec4i> hierarchy;
 	Rect boundRect;
 	Scalar minValue, maxValue;
+	int areaThreshold;
 
 	switch (color) {
 	case ColorTypeYellow:
 		minValue = Scalar(21, 40, 50);
 		maxValue = Scalar(28, 255, 255);
+		areaThreshold = 2000;
 		break;
 	case ColorTypeBlue:
 		minValue = Scalar(95, 40, 40);
 		maxValue = Scalar(107, 255, 255);
+		areaThreshold = 2000;
 		break;
 	case ColorTypeGreen:
 		minValue = Scalar(75, 40, 55);
 		maxValue = Scalar(85, 255, 255);
+		areaThreshold = 750;
 		break;
 	default:
 		break;
@@ -73,7 +77,7 @@ void CameraImpl::addObjects(ColorType color)
 		for(unsigned int i = 0; i < contours.size(); i++ )
 		{
 			boundRect = boundingRect(Mat(contours[i]));
-			if (contourArea(contours[i]) > 750)
+			if (contourArea(contours[i]) > areaThreshold)
 			{
 				currentPic = colorPic(boundRect);
 				if(countNonZero(currentPic) > 0.9*contourArea(contours[i]))
