@@ -65,4 +65,14 @@ void Controller::update()
 	QString distanceToTargetString = QString("%1").arg(position.distanceTo(target));
 	m_ui->targetPosition->setText(targetString);
 	m_ui->distanceToTarget->setText(distanceToTargetString);
+	
+    if(m_model.isMoving() == 1)
+    {
+        m_ui->isMoving->setText("TRUE");
+    }
+    else
+    {
+        m_ui->isMoving->setText("FALSE");
+    }
+
 }

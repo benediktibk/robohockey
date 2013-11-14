@@ -6,6 +6,7 @@
 #include "layer/dataanalysis/dataanalyserimpl.h"
 #include "layer/view/model.h"
 
+
 namespace Ui
 {
 	class View;
