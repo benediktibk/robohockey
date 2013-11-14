@@ -119,8 +119,7 @@ void EngineImpl::updateSpeedAndRotationForDriving()
 	}
 
 	Compare angleCompare(0.1);
-	Point positionDifference = m_target - currentPosition.getPosition();
-	Angle targetOrientation(atan2(positionDifference.getY(), positionDifference.getX()));
+	Angle targetOrientation(currentPosition.getPosition(), m_target);
 	Angle currentOrientation = currentPosition.getOrientation();
 
 	if (angleCompare.isFuzzyEqual(targetOrientation, currentOrientation))
