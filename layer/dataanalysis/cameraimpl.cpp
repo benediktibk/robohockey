@@ -54,7 +54,6 @@ void CameraImpl::addObjects(ColorType color)
 	vector<vector<Point> > contours;
 	vector<Vec4i> hierarchy;
 	Rect boundRect;
-	int white;
 	Scalar minValue, maxValue;
 
 	switch (color) {
@@ -81,19 +80,11 @@ void CameraImpl::addObjects(ColorType color)
 	{
 		for(unsigned int i = 0; i < contours.size(); i++ )
 		{
-			white = 0;
 			boundRect = boundingRect( Mat(contours[i]));
 			if (contourArea(contours[i]) > 2500)
 			{
 				currentPic = colorPic(boundRect);
-				for (int i = 0; i < boundRect.height; ++i) {
-					for (int j = 0; j < boundRect.width; j++)
-					{
-						if (currentPic.at<uchar>(i, j) == 255.0)
-							white++;
-					}
-				}
-				if(white > 0.45*boundRect.area())
+				if(countNonZero(currentPic) > 0.45*boundRect.area())
 					m_cameraObjects.addObject(CameraObject(color, boundRect));
 			}
 		}
