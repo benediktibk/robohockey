@@ -6,6 +6,7 @@
 #include "layer/dataanalysis/dataanalyserimpl.h"
 #include "layer/view/model.h"
 
+
 namespace Ui
 {
 	class View;
@@ -18,8 +19,6 @@ namespace Layer
 namespace View
 {
     class Model;
-
-    class DataAnalysis;
 
 	class Controller :
 			public QDialog

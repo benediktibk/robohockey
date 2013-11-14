@@ -67,4 +67,13 @@ void Controller::update()
         m_ui->reachedTarget->setText("FLASE");
     }
 
+    if(m_model.isMoving() == 1)
+    {
+        m_ui->isMoving->setText("TRUE");
+    }
+    else
+    {
+        m_ui->isMoving->setText("FALSE");
+    }
+
 }
