@@ -13,94 +13,12 @@ CameraImpl::CameraImpl(Hardware::Camera &camera) :
 
 CameraObjects CameraImpl::getAllCameraObjects()
 {
-	CameraObjects cameraObjects;
-	Mat yellowPic, bluePic, greenPic, currentPic;
-	vector<vector<Point> > contours;
-	vector<Vec4i> hierarchy;
-	Rect boundRect;
-	int white;
 	filterFrameAndConvertToHLS();
+	addObjects(ColorTypeYellow);
+	addObjects(ColorTypeBlue);
+	addObjects(ColorTypeGreen);
 
-	inRange(m_fileredFrame, Scalar(21, 40, 50), Scalar(28, 255, 255), yellowPic);
-	yellowPic.copyTo(currentPic);
-	findContours(currentPic, contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE, Point(0, 0));
-	if (!contours.empty())
-	{
-		for(unsigned int i = 0; i < contours.size(); i++ )
-		{
-			white = 0;
-			boundRect = boundingRect( Mat(contours[i]));
-			if (boundRect.area() > 1500)
-			{
-				currentPic = yellowPic(boundRect);
-				imwrite("a.png",currentPic);
-				for (int i = 0; i < boundRect.height; ++i) {
-					for (int j = 0; j < boundRect.width; j++)
-					{
-						if (currentPic.at<uchar>(i, j) == 255.0)
-							white++;
-					}
-				}
-				if(white > 0.45*boundRect.area())
-					cameraObjects.addObject(CameraObject(ColorTypeYellow, boundRect));
-			}
-		}
-		contours.clear();
-	}
-
-	inRange(m_fileredFrame, Scalar(95, 40, 40), Scalar(107, 255, 255), bluePic);
-	bluePic.copyTo(currentPic);
-	findContours(currentPic, contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE, Point(0, 0));
-	if (!contours.empty())
-	{
-		for(unsigned int i = 0; i < contours.size(); i++ )
-		{
-			white = 0;
-			boundRect = boundingRect( Mat(contours[i]));
-			if (boundRect.area() > 1500)
-			{
-				currentPic = bluePic(boundRect);
-				imwrite("b.png",currentPic);
-				for (int i = 0; i < boundRect.height; ++i) {
-					for (int j = 0; j < boundRect.width; j++)
-					{
-						if (currentPic.at<uchar>(i, j) == 255.0)
-							white++;
-					}
-				}
-				if(white > 0.45*boundRect.area())
-					cameraObjects.addObject(CameraObject(ColorTypeBlue, boundRect));
-			}
-		}
-		contours.clear();
-	}
-//!@todo find colorspectrum for green objects
-	inRange(m_fileredFrame, Scalar(1, 1, 1), Scalar(1, 1, 1), greenPic);
-	greenPic.copyTo(currentPic);
-	findContours(currentPic, contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE, Point(0, 0));
-	if (!contours.empty())
-	{
-		for(unsigned int i = 0; i < contours.size(); i++ )
-		{
-			white = 0;
-			boundRect = boundingRect( Mat(contours[i]));
-			if (boundRect.area() > 1500)
-			{
-				currentPic = greenPic(boundRect);
-				for (int i = 0; i < boundRect.height; ++i) {
-					for (int j = 0; j < boundRect.width; j++)
-					{
-						if (currentPic.at<uchar>(i, j) == 255.0)
-							white++;
-					}
-				}
-				if(white > 0.45*boundRect.area())
-					cameraObjects.addObject(CameraObject(ColorTypeGreen, boundRect));
-			}
-		}
-		contours.clear();
-	}
-	return cameraObjects;
+	return m_cameraObjects;
 }
 
 bool CameraImpl::isGoalYellow()
@@ -128,4 +46,58 @@ void CameraImpl::filterFrameAndConvertToHLS()
 {
 	medianBlur(m_camera.getFrame(), m_fileredFrame, 9);
 	cvtColor(m_fileredFrame, m_fileredFrame, CV_BGR2HLS);
+}
+
+void CameraImpl::addObjects(ColorType color)
+{
+	Mat colorPic, currentPic;
+	vector<vector<Point> > contours;
+	vector<Vec4i> hierarchy;
+	Rect boundRect;
+	int white;
+	Scalar minValue, maxValue;
+
+	switch (color) {
+	case ColorTypeYellow:
+		minValue = Scalar(21, 40, 50);
+		maxValue = Scalar(28, 255, 255);
+		break;
+	case ColorTypeBlue:
+		minValue = Scalar(95, 40, 40);
+		maxValue = Scalar(107, 255, 255);
+		break;
+	case ColorTypeGreen:
+		//!@todo find green values
+		minValue = Scalar(1, 1, 1);
+		maxValue = Scalar(1, 255, 255);
+		break;
+	default:
+		break;
+	}
+
+	inRange(m_fileredFrame, minValue, maxValue, colorPic);
+	colorPic.copyTo(currentPic);
+	findContours(currentPic, contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE, Point(0, 0));
+	if (!contours.empty())
+	{
+		for(unsigned int i = 0; i < contours.size(); i++ )
+		{
+			white = 0;
+			boundRect = boundingRect( Mat(contours[i]));
+			if (boundRect.area() > 1500)
+			{
+				currentPic = colorPic(boundRect);
+				for (int i = 0; i < boundRect.height; ++i) {
+					for (int j = 0; j < boundRect.width; j++)
+					{
+						if (currentPic.at<uchar>(i, j) == 255.0)
+							white++;
+					}
+				}
+				if(white > 0.45*boundRect.area())
+					m_cameraObjects.addObject(CameraObject(color, boundRect));
+			}
+		}
+		contours.clear();
+	}
 }

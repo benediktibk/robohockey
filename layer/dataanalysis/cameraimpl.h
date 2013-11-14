@@ -26,10 +26,12 @@ namespace DataAnalysis
 
 	private:
 		void filterFrameAndConvertToHLS();
+		void addObjects(ColorType color);
 
 	private:
 		Hardware::Camera &m_camera;
 		cv::Mat m_fileredFrame;
+		CameraObjects m_cameraObjects;
 	};
 }
 }
