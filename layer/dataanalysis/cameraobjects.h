@@ -18,6 +18,7 @@ namespace DataAnalysis
 
 		void addObject(const CameraObject &object);
 		size_t getObjectCount() const;
+		std::list<CameraObject> getAllCameraObjects();
 
 	private:
 		std::list<CameraObject> m_objects;
