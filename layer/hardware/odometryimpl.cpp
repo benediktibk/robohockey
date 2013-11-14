@@ -9,10 +9,10 @@ using namespace PlayerCc;
 OdometryImpl::OdometryImpl(PlayerClient *playerClient) :
 	m_odometry(new Position2dProxy(playerClient)),
 	m_playerOrientationOffset(0),
-	m_ownOrientationOffset(0)
+    m_ownOrientationOffset(0)
 {
-	m_odometry->ResetOdometry();
 	playerClient->Read();
+    m_odometry->ResetOdometry();
 	m_playerPositionOffset = getCurrentPosition();
 	m_playerOrientationOffset = getCurrentOrientation();
 }

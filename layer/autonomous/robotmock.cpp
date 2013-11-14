@@ -107,5 +107,11 @@ void RobotMock::turnTo(const Point &)
 
 Point RobotMock::getCurrentPosition()
 {
-	return Point();
+    return Point();
 }
+
+double RobotMock::getCurrentOrientation()
+{
+    return 0.0;
+}
+

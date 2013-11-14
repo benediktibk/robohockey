@@ -15,7 +15,7 @@ namespace DataAnalysis
 
 namespace Autonomous
 {
-	class FieldImpl;
+	class Field;
 
 	class RobotImpl :
 			public Robot
@@ -37,6 +37,7 @@ namespace Autonomous
 		virtual void calibratePosition();
 		virtual void turnAround();
 		virtual Common::Point getCurrentPosition();
+        virtual double getCurrentOrientation();
 
 	private:
 		// forbid copies
@@ -48,7 +49,7 @@ namespace Autonomous
 		Common::Point m_currentPosition;
 		Common::Point m_targetPosition;
 		bool m_reachedTarget;
-		FieldImpl *m_field;
+		Field *m_field;
 	};
 }
 }

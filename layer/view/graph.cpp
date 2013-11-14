@@ -1,5 +1,6 @@
 #include <QPointF>
 #include <vector>
+#include <math.h>
 #include "layer/view/model.h"
 #include "layer/view/graph.h"
 #include "common/point.h"
@@ -18,9 +19,16 @@ Graph::Graph(Model &model) :
 	m_pixelPerMeter(80),
 	m_robotDiameter(0.5),
 	m_targetSpotDiameter(0.2)
+
 {
 	m_scene = new QGraphicsScene();
 	m_scene->addItem(m_robot);
+    QPolygonF triangle;
+    triangle.append(QPointF(-0.225 * m_pixelPerMeter,-0.175 * m_pixelPerMeter));
+    triangle.append(QPointF(-0.225 * m_pixelPerMeter,0.175 * m_pixelPerMeter));
+    triangle.append(QPointF(0.225 * m_pixelPerMeter,0));
+    triangle.append(QPointF(-0.225 * m_pixelPerMeter,-0.175 * m_pixelPerMeter));
+    m_triangle = m_scene->addPolygon(triangle);
    // this->setSceneRect(50,50,350,350);
 
 	connect(&model, SIGNAL(targetPositionsChanged()), this, SLOT(updateTargets()));
@@ -46,7 +54,7 @@ void Graph::mousePressEvent(QMouseEvent *ev)
 	QPointF point= mapToScene(ev->pos());
 	QGraphicsView::mousePressEvent(ev);
 	vector<Point> target = m_model.getAllTargetPoints();
-	target.push_back(Point(point.x() / (double) m_pixelPerMeter, point.y() / (double) m_pixelPerMeter));
+    target.push_back(Point(point.x() / (double) m_pixelPerMeter, -1.0 * point.y() / (double) m_pixelPerMeter));
 	m_model.setData(target);
 }
 
@@ -75,10 +83,9 @@ void Graph::updateTargets()
 		double current_x_position = currentPoint.getX();
 		double current_y_position = currentPoint.getY();
 		current_x_position = current_x_position * m_pixelPerMeter - 0.5 * m_targetSpotDiameter * m_pixelPerMeter;
-		current_y_position = current_y_position * m_pixelPerMeter - 0.5 * m_targetSpotDiameter * m_pixelPerMeter;
-		currentItem.setRect(current_x_position, current_y_position, m_targetSpotDiameter * m_pixelPerMeter, m_targetSpotDiameter * m_pixelPerMeter);
-
-
+        current_y_position = current_y_position * m_pixelPerMeter + 0.5 * m_targetSpotDiameter * m_pixelPerMeter;
+        currentItem.setRect(current_x_position, -1.0 * current_y_position, m_targetSpotDiameter * m_pixelPerMeter, m_targetSpotDiameter * m_pixelPerMeter);
+        currentItem.setBrush(Qt::green);
 	}
 
 }
@@ -112,13 +119,14 @@ void Graph::updateObjects()
 		center = center * m_pixelPerMeter;
 		double centerX = center.getX();
 		double centerY = center.getY();
-		currentItem.setRect(centerX - 0.5 * diameter, centerY - 0.5 * diameter, diameter, diameter);
-
-
+        currentItem.setRect(centerX - 0.5 * diameter, -1.0 * centerY + 0.5 * diameter, diameter, diameter);
+        currentItem.setBrush(Qt::red);
 	}
 
 	const Point robotPosition = m_model.getCurrentPosition();
 	double positionX = robotPosition.getX() * m_pixelPerMeter - 0.5 * m_pixelPerMeter * m_robotDiameter;
-	double positionY = robotPosition.getY() * m_pixelPerMeter - 0.5 * m_pixelPerMeter * m_robotDiameter;
-	m_robot->setRect(positionX, positionY, m_pixelPerMeter * m_robotDiameter, m_pixelPerMeter * m_robotDiameter);
+    double positionY = robotPosition.getY() * m_pixelPerMeter - 0.5 * m_pixelPerMeter * m_robotDiameter;
+    m_triangle->setPos(positionX, -1.0 * positionY);
+    m_triangle->setRotation(-1.0 * 360 * m_model.getOrientation() / (2 * M_PI));
+    m_triangle->setBrush(Qt::blue);
 }
