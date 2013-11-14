@@ -128,6 +128,6 @@ void Graph::updateObjects()
 	double positionX = robotPosition.getX() * m_pixelPerMeter - 0.5 * m_pixelPerMeter * m_robotDiameter;
 	double positionY = robotPosition.getY() * m_pixelPerMeter - 0.5 * m_pixelPerMeter * m_robotDiameter;
     m_triangle->setPos(positionX, -1.0 * positionY);
-    m_triangle->setRotation(m_model.getOrientation());
+    m_triangle->setRotation(360 * m_model.getOrientation() / 6.28);
 
 }
