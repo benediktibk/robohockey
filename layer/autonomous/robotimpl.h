@@ -46,9 +46,6 @@ namespace Autonomous
 
 	private:
 		DataAnalysis::DataAnalyser *m_dataAnalyser;
-		Common::RobotPosition m_currentPosition;
-		Common::Point m_targetPosition;
-		bool m_reachedTarget;
 		Field *m_field;
 	};
 }

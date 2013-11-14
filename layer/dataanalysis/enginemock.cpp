@@ -11,7 +11,8 @@ EngineMock::EngineMock() :
 	m_callsToTurnAround(0),
 	m_callsToLockForwardMovement(0),
 	m_callsToUnlockForwardMovement(0),
-	m_tryingToTackleObstacle(false)
+	m_tryingToTackleObstacle(false),
+	m_reachedTarget(true)
 { }
 
 void EngineMock::goToStraight(const Common::Point &)
@@ -53,6 +54,11 @@ bool EngineMock::tryingToTackleObstacle()
 {
 	++m_callsToTryingToTackleObstacle;
 	return m_tryingToTackleObstacle;
+}
+
+bool EngineMock::reachedTarget() const
+{
+	return m_reachedTarget;
 }
 
 unsigned int EngineMock::getCallsToGoToStraight() const
@@ -98,6 +104,11 @@ unsigned int EngineMock::getCallsToUnlockForwardMovement() const
 void EngineMock::setTryingToTackleObstacle(bool value)
 {
 	m_tryingToTackleObstacle = value;
+}
+
+void EngineMock::setReachedTarget(bool value)
+{
+	m_reachedTarget = value;
 }
 
 

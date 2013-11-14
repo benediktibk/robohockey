@@ -25,6 +25,7 @@ namespace DataAnalysis
 		virtual void lockForwardMovement() = 0;
 		virtual void unlockForwardMovement() = 0;
 		virtual bool tryingToTackleObstacle() = 0;
+		virtual bool reachedTarget() const = 0;
 	};
 }
 }

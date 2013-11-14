@@ -13,7 +13,6 @@ using namespace std;
 
 RobotImpl::RobotImpl(DataAnalysis::DataAnalyser *dataAnalyser) :
 	m_dataAnalyser(dataAnalyser),
-	m_reachedTarget(true),
 	m_field(new FieldImpl(dataAnalyser->getOdometry(), dataAnalyser->getLidar(), dataAnalyser->getCamera()))
 { }
 
@@ -29,8 +28,6 @@ void RobotImpl::goTo(const RoboHockey::Common::Point &position)
 
 	//! @todo imlement a router to find a path to the target without tackling obstacles
 	engine.goToStraight(position);
-	m_targetPosition = position;
-	m_reachedTarget = false;
 }
 
 void RobotImpl::turnTo(const Point &position)
@@ -47,10 +44,9 @@ bool RobotImpl::stuckAtObstacle()
 
 bool RobotImpl::reachedTarget()
 {
-	Compare compare(0.1);
-	if (compare.isFuzzyEqual(m_currentPosition.getPosition(), m_targetPosition))
-		m_reachedTarget = true;
-	return m_reachedTarget;
+	//! @todo won't be enough if we try to reach the target in more than one step
+	DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
+	return engine.reachedTarget();
 }
 
 vector<FieldObject> RobotImpl::getAllFieldObjects()
@@ -64,21 +60,16 @@ void RobotImpl::updateActuators()
 	m_dataAnalyser->updateActuators();
 
 	if (engine.tryingToTackleObstacle())
-	{
-		m_reachedTarget = true;
 		engine.stop();
-	}
 }
 
 void RobotImpl::updateSensorData()
 {
-	DataAnalysis::Odometry &odometry = m_dataAnalyser->getOdometry();
 	DataAnalysis::Sonar &sonar = m_dataAnalyser->getSonar();
 	DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
 
 	m_dataAnalyser->updateSensorData();
 	m_field->update();
-	m_currentPosition = odometry.getCurrentPosition();
 
 	if (sonar.isObstacleDirectInFront())
 		engine.lockForwardMovement();

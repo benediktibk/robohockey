@@ -23,6 +23,7 @@ namespace DataAnalysis
 		virtual void lockForwardMovement();
 		virtual void unlockForwardMovement();
 		virtual bool tryingToTackleObstacle();
+		virtual bool reachedTarget() const;
 
 		unsigned int getCallsToGoToStraight() const;
 		unsigned int getCallsToStop() const;
@@ -33,6 +34,7 @@ namespace DataAnalysis
 		unsigned int getCallsToLockForwardMovement() const;
 		unsigned int getCallsToUnlockForwardMovement() const;
 		void setTryingToTackleObstacle(bool value);
+		void setReachedTarget(bool value);
 
 	private:
 		unsigned int m_callsToGoToStraight;
@@ -44,6 +46,7 @@ namespace DataAnalysis
 		unsigned int m_callsToLockForwardMovement;
 		unsigned int m_callsToUnlockForwardMovement;
 		bool m_tryingToTackleObstacle;
+		bool m_reachedTarget;
 	};
 }
 }

@@ -34,6 +34,7 @@ namespace DataAnalysis
 		virtual void lockForwardMovement();
 		virtual void unlockForwardMovement();
 		virtual bool tryingToTackleObstacle();
+		virtual bool reachedTarget() const;
 
 		const Common::Point& getStartPosition() const;
 

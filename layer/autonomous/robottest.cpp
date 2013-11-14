@@ -41,14 +41,12 @@ void RobotTest::stuckAtObstacle_notTryingToTackleObstacle_false()
 	CPPUNIT_ASSERT(!robot.stuckAtObstacle());
 }
 
-void RobotTest::reachedTarget_currentPositionDifferentToTarget_false()
+void RobotTest::reachedTarget_engineSaysNotReached_false()
 {
 	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
-	DataAnalysis::Odometry &odometry = dataAnalyser->getOdometry();
-	odometry.setCurrentPosition(RobotPosition(Point(2, 3), 1));
+	DataAnalysis::EngineMock &engine = dataAnalyser->getEngineMock();
 	RobotImpl robot(dataAnalyser);
-	robot.goTo(Point(5, 4));
-	robot.updateSensorData();
+	engine.setReachedTarget(false);
 
 	CPPUNIT_ASSERT(!robot.reachedTarget());
 }
@@ -56,11 +54,9 @@ void RobotTest::reachedTarget_currentPositionDifferentToTarget_false()
 void RobotTest::reachedTarget_currentPositionIsTargetPosition_true()
 {
 	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
-	DataAnalysis::Odometry &odometry = dataAnalyser->getOdometry();
-	odometry.setCurrentPosition(RobotPosition(Point(2, 3), 1));
+	DataAnalysis::EngineMock &engine = dataAnalyser->getEngineMock();
 	RobotImpl robot(dataAnalyser);
-	robot.goTo(Point(2, 3));
-	robot.updateSensorData();
+	engine.setReachedTarget(true);
 
 	CPPUNIT_ASSERT(robot.reachedTarget());
 }
@@ -131,19 +127,6 @@ void RobotTest::updateActuators_notTryingToTackleObstacle_engineGotNoCallToStop(
 	robot.updateActuators();
 
 	CPPUNIT_ASSERT(engine.getCallsToStop() == 0);
-}
-
-void RobotTest::updateActuators_notTryingToTackleObstacle_targetNotReached()
-{
-	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
-	DataAnalysis::EngineMock &engine = dataAnalyser->getEngineMock();
-	engine.setTryingToTackleObstacle(false);
-	RobotImpl robot(dataAnalyser);
-	robot.goTo(Point(10, 0));
-
-	robot.updateActuators();
-
-	CPPUNIT_ASSERT(!robot.reachedTarget());
 }
 
 void RobotTest::updateActuators_tryingToTackleObstacle_engineGotAtLeastOneCallToStop()
