@@ -121,8 +121,6 @@ void Graph::updateObjects()
 		double centerY = center.getY();
         currentItem.setRect(centerX - 0.5 * diameter, -1.0 * centerY + 0.5 * diameter, diameter, diameter);
         currentItem.setBrush(Qt::red);
-
-
 	}
 
 	const Point robotPosition = m_model.getCurrentPosition();
