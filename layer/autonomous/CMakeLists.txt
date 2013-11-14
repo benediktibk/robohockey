@@ -2,6 +2,8 @@ set(LAYER_AUTONOMOUS_SRC
 	robotimpl.cpp
 	fieldobject.cpp
 	fieldimpl.cpp
+	borderstone.cpp
+	borderstonedistances.cpp
 )
 
 set(LAYER_AUTONOMOUS_TEST_SRC
