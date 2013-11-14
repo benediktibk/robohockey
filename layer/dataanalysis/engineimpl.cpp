@@ -81,6 +81,11 @@ bool EngineImpl::reachedTarget() const
 	return m_engineState == EngineStateStopped;
 }
 
+Point EngineImpl::getCurrentTarget() const
+{
+	return m_target;
+}
+
 const Point &EngineImpl::getStartPosition() const
 {
 	return m_startPosition;

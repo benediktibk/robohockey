@@ -55,7 +55,8 @@ void RobotDriver::update()
 
 	m_model.setData(
 				m_robot.getAllFieldObjects(), m_robot.stuckAtObstacle(),
-				m_robot.reachedTarget(), m_robot.getCurrentPosition());
+				m_robot.reachedTarget(), m_robot.getCurrentPosition(),
+				m_robot.getCurrentTarget());
 
 	m_robot.updateActuators();
 }

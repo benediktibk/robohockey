@@ -59,4 +59,10 @@ void Controller::update()
 		m_ui->reachedTarget->setText("TRUE");
 	else
 		m_ui->reachedTarget->setText("FLASE");
+
+	const Point &target = m_model.getCurrentTarget();
+	QString targetString = QString("%1, %2").arg(target.getX()).arg(target.getY());
+	QString distanceToTargetString = QString("%1").arg(position.distanceTo(target));
+	m_ui->targetPosition->setText(targetString);
+	m_ui->distanceToTarget->setText(distanceToTargetString);
 }

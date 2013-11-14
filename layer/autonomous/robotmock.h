@@ -40,6 +40,7 @@ namespace Autonomous
 		virtual void turnAround();
 		virtual void turnTo(const Common::Point &position);
 		virtual Common::RobotPosition getCurrentPosition();
+		virtual Common::Point getCurrentTarget() const;
 
 	private:
 		Common::Point m_lastTarget;

@@ -106,6 +106,12 @@ RobotPosition RobotImpl::getCurrentPosition()
 	return odometry.getCurrentPosition();
 }
 
+Point RobotImpl::getCurrentTarget() const
+{
+	DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
+	return engine.getCurrentTarget();
+}
+
 RobotImpl::RobotImpl(const RobotImpl &)
 { }
 

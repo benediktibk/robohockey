@@ -1,5 +1,7 @@
 #include "layer/dataanalysis/enginemock.h"
+#include "common/point.h"
 
+using namespace RoboHockey::Common;
 using namespace RoboHockey::Layer::DataAnalysis;
 
 EngineMock::EngineMock() :
@@ -15,7 +17,7 @@ EngineMock::EngineMock() :
 	m_reachedTarget(true)
 { }
 
-void EngineMock::goToStraight(const Common::Point &)
+void EngineMock::goToStraight(const Point &)
 {
 	++m_callsToGoToStraight;
 }
@@ -35,7 +37,7 @@ void EngineMock::turnAround()
 	++m_callsToTurnAround;
 }
 
-void EngineMock::turnToTarget(const Common::Point &)
+void EngineMock::turnToTarget(const Point &)
 {
 	++m_callsToTurnToTarget;
 }
@@ -59,6 +61,11 @@ bool EngineMock::tryingToTackleObstacle()
 bool EngineMock::reachedTarget() const
 {
 	return m_reachedTarget;
+}
+
+Point EngineMock::getCurrentTarget() const
+{
+	return Point();
 }
 
 unsigned int EngineMock::getCallsToGoToStraight() const

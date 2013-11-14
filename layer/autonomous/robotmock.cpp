@@ -84,9 +84,7 @@ unsigned int RobotMock::getCallsToStop() const
 }
 
 void RobotMock::collectPuckInFront()
-{
-
-}
+{ }
 
 bool RobotMock::isMoving()
 {
@@ -94,14 +92,10 @@ bool RobotMock::isMoving()
 }
 
 void RobotMock::calibratePosition()
-{
-
-}
+{ }
 
 void RobotMock::turnAround()
-{
-
-}
+{ }
 
 void RobotMock::turnTo(const Point &)
 { }
@@ -109,4 +103,9 @@ void RobotMock::turnTo(const Point &)
 RobotPosition RobotMock::getCurrentPosition()
 {
 	return RobotPosition();
+}
+
+Point RobotMock::getCurrentTarget() const
+{
+	return Point();
 }

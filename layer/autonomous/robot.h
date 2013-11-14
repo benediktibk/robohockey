@@ -34,6 +34,7 @@ namespace Autonomous
 		virtual void calibratePosition() = 0;
 		virtual void turnAround() = 0;
 		virtual Common::RobotPosition getCurrentPosition() = 0;
+		virtual Common::Point getCurrentTarget() const = 0;
 	};
 }
 }

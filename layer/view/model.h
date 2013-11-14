@@ -21,13 +21,17 @@ namespace View
 	public:
 		Model();
 
-		void setData(const std::vector<Autonomous::FieldObject> &fieldObjects, bool stuckAtObstacle, bool reachedTarget, const Common::RobotPosition &currentPosition);
+		void setData(
+				const std::vector<Autonomous::FieldObject> &fieldObjects,
+				bool stuckAtObstacle, bool reachedTarget, const Common::RobotPosition &currentPosition,
+				const Common::Point &currentTarget);
 		void setData(const std::vector<Common::Point> &targetPositions);
 		const std::vector<Autonomous::FieldObject>& getAllFieldObjects() const;
 		const std::vector<Common::Point>& getAllTargetPoints() const;
 		bool stuckAtObstacle() const;
 		bool reachedTarget() const;
 		const Common::RobotPosition& getCurrentPosition() const;
+		const Common::Point getCurrentTarget() const;
 
 	signals:
 		void targetPositionsChanged();
@@ -40,6 +44,7 @@ namespace View
 		bool m_reachedTarget;
 		double m_currentOrientation;
 		Common::RobotPosition m_currentPosition;
+		Common::Point m_currentTarget;
 	};
 }
 }

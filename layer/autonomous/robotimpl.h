@@ -38,6 +38,7 @@ namespace Autonomous
 		virtual void calibratePosition();
 		virtual void turnAround();
 		virtual Common::RobotPosition getCurrentPosition();
+		virtual Common::Point getCurrentTarget() const;
 
 	private:
 		// forbid copies

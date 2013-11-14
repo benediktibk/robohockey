@@ -14,12 +14,13 @@ Model::Model() :
 void Model::setData(
 		const vector<FieldObject> &fieldObjects,
 		bool stuckAtObstacle, bool reachedTarget,
-		const RobotPosition &currentPosition)
+		const RobotPosition &currentPosition, const Point &currentTarget)
 {
 	m_fieldObjects = fieldObjects;
 	m_stuckAtObstacle = stuckAtObstacle;
 	m_reachedTarget = reachedTarget;
 	m_currentPosition = currentPosition;
+	m_currentTarget = currentTarget;
 
 	emit robotDataChanged();
 }
@@ -54,4 +55,9 @@ bool Model::reachedTarget() const
 const RobotPosition &Model::getCurrentPosition() const
 {
 	return m_currentPosition;
+}
+
+const Point Model::getCurrentTarget() const
+{
+	return m_currentTarget;
 }
