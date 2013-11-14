@@ -9,6 +9,7 @@
 #include <QtGui/QApplication>
 #include <iostream>
 
+using namespace RoboHockey;
 using namespace RoboHockey::Layer;
 using namespace RoboHockey::Layer::View;
 using namespace std;
@@ -31,7 +32,7 @@ int main(int argc, char **argv)
 
 	Model model;
 	Graph graph(model);
-    Controller controller(model);
+	Controller controller(model);
 	Hardware::Robot *hardwareRobot = new Hardware::RobotImpl(playerServer);
 	DataAnalysis::DataAnalyser *dataAnalyser = new DataAnalysis::DataAnalyserImpl(hardwareRobot);
 	Autonomous::RobotImpl autonomousRobot(dataAnalyser);
@@ -46,7 +47,7 @@ int main(int argc, char **argv)
 //	targets.push_back(RoboHockey::Common::Point(-2, 2));
 //	model.setData(targets);
 	//autonomousRobot.turnTo(RoboHockey::Common::Point(0, 1));
-    //autonomousRobot.turnAround();
+	//autonomousRobot.turnAround();
 
 	controller.show();
 	graph.show();
