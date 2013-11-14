@@ -38,7 +38,7 @@ void RoboHockey::Layer::Autonomous::BorderStoneDistancesTest::distanceIsStandard
 	BorderStoneDistances distancesChecker;
 	double testValue = 1.79;
 
-	CPPUNIT_ASSERT_EQUAL(distancesChecker.distanceIsStandardDistance(testValue), false);
+	CPPUNIT_ASSERT_EQUAL(distancesChecker.isDistanceStandardDistance(testValue), false);
 }
 
 void RoboHockey::Layer::Autonomous::BorderStoneDistancesTest::distanceIsStandardDistance_StandardDistance_true()
@@ -46,7 +46,7 @@ void RoboHockey::Layer::Autonomous::BorderStoneDistancesTest::distanceIsStandard
 	BorderStoneDistances distancesChecker;
 	double testValue = 0.41;
 
-	CPPUNIT_ASSERT_EQUAL(distancesChecker.distanceIsStandardDistance(testValue), true);
+	CPPUNIT_ASSERT_EQUAL(distancesChecker.isDistanceStandardDistance(testValue), true);
 }
 
 void RoboHockey::Layer::Autonomous::BorderStoneDistancesTest::checkForStandardDistance_fuzzyDistanceC_distanceC()
@@ -54,7 +54,7 @@ void RoboHockey::Layer::Autonomous::BorderStoneDistancesTest::checkForStandardDi
 	BorderStoneDistances distancesChecker;
 	double testValue = 0.83;
 
-	CPPUNIT_ASSERT_EQUAL(distancesChecker.checkForStandardDistance(testValue), BorderStoneFieldDistanceC);
+	CPPUNIT_ASSERT_EQUAL(distancesChecker.getStandardDistanceType(testValue), BorderStoneFieldDistanceC);
 }
 
 void RoboHockey::Layer::Autonomous::BorderStoneDistancesTest::checkForStandardDistance_nonStandardDistance_falseDistance()
@@ -62,5 +62,5 @@ void RoboHockey::Layer::Autonomous::BorderStoneDistancesTest::checkForStandardDi
 	BorderStoneDistances distancesChecker;
 	double testValue = 0.01;
 
-	CPPUNIT_ASSERT_EQUAL(distancesChecker.checkForStandardDistance(testValue), BorderStoneFieldDistanceFalse);
+	CPPUNIT_ASSERT_EQUAL(distancesChecker.getStandardDistanceType(testValue), BorderStoneFieldDistanceFalse);
 }

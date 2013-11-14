@@ -19,9 +19,9 @@ void BorderStone::searchNeighbourBorderStones(vector<Point> &candidates)
 
 	for (vector<Point>::iterator i = candidates.begin(); i != candidates.end(); ++i)
 	{
-		if(m_distances.distanceIsStandardDistance(this->distanceTo(*i)))
+		if(m_distances.isDistanceStandardDistance(this->distanceTo(*i)))
 		{
-			BorderStoneFieldDistance type = m_distances.checkForStandardDistance(this->distanceTo(*i));
+			BorderStoneFieldDistance type = m_distances.getStandardDistanceType(this->distanceTo(*i));
 
 			double distanceDirect = m_father.distanceTo(*i);
 			double distanceViaThis = m_father.distanceTo(*this) + this->distanceTo(*i);

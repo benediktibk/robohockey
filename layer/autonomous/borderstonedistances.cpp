@@ -44,7 +44,7 @@ double BorderStoneDistances::getStandardFieldDistance(BorderStoneFieldDistance d
 	return result;
 }
 
-bool BorderStoneDistances::distanceIsStandardDistance(double distance) const
+bool BorderStoneDistances::isDistanceStandardDistance(double distance) const
 {
 	for (int i = BorderStoneFieldDistanceA; i <= BorderStoneFieldDistanceD; ++i)
 		if (m_compare->isFuzzyEqual(distance, getStandardFieldDistance(static_cast<BorderStoneFieldDistance>(i))))
@@ -53,7 +53,7 @@ bool BorderStoneDistances::distanceIsStandardDistance(double distance) const
 	return false;
 }
 
-BorderStoneFieldDistance BorderStoneDistances::checkForStandardDistance(double distance) const
+BorderStoneFieldDistance BorderStoneDistances::getStandardDistanceType(double distance) const
 {
 	for (int i = BorderStoneFieldDistanceA; i != BorderStoneFieldDistanceD; i++)
 		if (m_compare->isFuzzyEqual(distance, getStandardFieldDistance(static_cast<BorderStoneFieldDistance>(i))))

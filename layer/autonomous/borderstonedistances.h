@@ -29,8 +29,8 @@ namespace Autonomous
 		~BorderStoneDistances();
 
 		double getStandardFieldDistance(BorderStoneFieldDistance distanceType) const;
-		bool distanceIsStandardDistance(double distance) const;
-		BorderStoneFieldDistance checkForStandardDistance(double distance) const;
+		bool isDistanceStandardDistance(double distance) const;
+		BorderStoneFieldDistance getStandardDistanceType(double distance) const;
 
 	private:
 		Common::Compare *m_compare;
