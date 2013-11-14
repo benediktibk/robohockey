@@ -28,7 +28,7 @@ bool CameraImpl::isGoalYellow()
 	inRange(m_fileredFrame, cv::Scalar(20, 100, 50), cv::Scalar(30, 200, 255), goal);
 	Rect range(0, 130, 320, 110);
 	goal = goal(range);
-	if(countNonZero(goal) > 0.7*range.area())
+	if(countNonZero(goal) > 0.8*range.area())
 		return true;
 	else
 		return false;
@@ -73,7 +73,7 @@ void CameraImpl::addObjects(ColorType color)
 		for(unsigned int i = 0; i < contours.size(); i++ )
 		{
 			boundRect = boundingRect(Mat(contours[i]));
-			if (contourArea(contours[i]) > 1000)
+			if (contourArea(contours[i]) > 750)
 			{
 				currentPic = colorPic(boundRect);
 				if(countNonZero(currentPic) > 0.9*contourArea(contours[i]))
