@@ -48,4 +48,23 @@ void Controller::update()
     resultPosition.append(", ");
     resultPosition.append(positionYstring);
     m_ui->currentPosition->setText(resultPosition);
+
+    if(m_model.stuckAtObstacle() == 1)
+    {
+        m_ui->stuckAtObstacle->setText("TRUE");
+    }
+    else
+    {
+        m_ui->stuckAtObstacle->setText("FALSE");
+    }
+
+    if(m_model.reachedTarget() == 1)
+    {
+        m_ui->reachedTarget->setText("TRUE");
+    }
+    else
+    {
+        m_ui->reachedTarget->setText("FLASE");
+    }
+
 }

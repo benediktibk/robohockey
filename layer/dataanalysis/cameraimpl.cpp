@@ -24,19 +24,11 @@ CameraObjects CameraImpl::getAllCameraObjects()
 bool CameraImpl::isGoalYellow()
 {
 	Mat goal;
-	int white = 0;
 	filterFrameAndConvertToHLS();
 	inRange(m_fileredFrame, cv::Scalar(20, 100, 50), cv::Scalar(30, 200, 255), goal);
 	Rect range(0, 130, 320, 110);
 	goal = goal(range);
-	for (int i = 0; i < range.height; ++i) {
-		for (int j = 0; j < range.width; j++)
-		{
-			if (goal.at<uchar>(i, j) == 255.0)
-				white++;
-		}
-	}
-	if(white > 0.7*range.area())
+	if(countNonZero(goal) > 0.8*range.area())
 		return true;
 	else
 		return false;
@@ -54,22 +46,24 @@ void CameraImpl::addObjects(ColorType color)
 	vector<vector<Point> > contours;
 	vector<Vec4i> hierarchy;
 	Rect boundRect;
-	int white;
 	Scalar minValue, maxValue;
+	int areaThreshold;
 
 	switch (color) {
 	case ColorTypeYellow:
 		minValue = Scalar(21, 40, 50);
 		maxValue = Scalar(28, 255, 255);
+		areaThreshold = 2000;
 		break;
 	case ColorTypeBlue:
 		minValue = Scalar(95, 40, 40);
 		maxValue = Scalar(107, 255, 255);
+		areaThreshold = 2000;
 		break;
 	case ColorTypeGreen:
-		//!@todo find green values
-		minValue = Scalar(1, 1, 1);
-		maxValue = Scalar(1, 255, 255);
+		minValue = Scalar(75, 40, 55);
+		maxValue = Scalar(85, 255, 255);
+		areaThreshold = 750;
 		break;
 	default:
 		break;
@@ -82,19 +76,11 @@ void CameraImpl::addObjects(ColorType color)
 	{
 		for(unsigned int i = 0; i < contours.size(); i++ )
 		{
-			white = 0;
-			boundRect = boundingRect( Mat(contours[i]));
-			if (boundRect.area() > 1500)
+			boundRect = boundingRect(Mat(contours[i]));
+			if (contourArea(contours[i]) > areaThreshold)
 			{
 				currentPic = colorPic(boundRect);
-				for (int i = 0; i < boundRect.height; ++i) {
-					for (int j = 0; j < boundRect.width; j++)
-					{
-						if (currentPic.at<uchar>(i, j) == 255.0)
-							white++;
-					}
-				}
-				if(white > 0.45*boundRect.area())
+				if(countNonZero(currentPic) > 0.9*contourArea(contours[i]))
 					m_cameraObjects.addObject(CameraObject(color, boundRect));
 			}
 		}

@@ -96,3 +96,43 @@ void CameraTest::getAllCameraObjects_yellowGoal1_cameraObjectCountIs1()
 
 	CPPUNIT_ASSERT_EQUAL((size_t)1, camera.getAllCameraObjects().getObjectCount());
 }
+
+void CameraTest::getAllCameraObjects_greenBorderstone_cameraObjectCountIs1()
+{
+	Hardware::CameraMock hardwareCamera("green_borderstone");
+	CameraImpl camera(hardwareCamera);
+
+	CPPUNIT_ASSERT_EQUAL((size_t)1, camera.getAllCameraObjects().getObjectCount());
+}
+
+void CameraTest::getAllCameraObjects_greenBorderstoneTriple_cameraObjectCountIs3()
+{
+	Hardware::CameraMock hardwareCamera("green_borderstone_triple");
+	CameraImpl camera(hardwareCamera);
+
+	CPPUNIT_ASSERT_EQUAL((size_t)3, camera.getAllCameraObjects().getObjectCount());
+}
+
+void CameraTest::getAllCameraObjects_yellowAndBluePuckAndGreenBorderstone_cameraObjectsCountIs3()
+{
+	Hardware::CameraMock hardwareCamera("yellow_and_blue_puck_and_green_borderstone");
+	CameraImpl camera(hardwareCamera);
+
+	CPPUNIT_ASSERT_EQUAL((size_t)3, camera.getAllCameraObjects().getObjectCount());
+}
+
+void CameraTest::getAllCameraObjects_yellowPuckTwiceAndGreenBorderstone_cameraObjectsCountIs3()
+{
+	Hardware::CameraMock hardwareCamera("yellow_puck_twice_and_green_borderstone");
+	CameraImpl camera(hardwareCamera);
+
+	CPPUNIT_ASSERT_EQUAL((size_t)3, camera.getAllCameraObjects().getObjectCount());
+}
+
+void CameraTest::getAllCameraObjects_yellowPuckTwiceAndGreenBorderstone1_cameraObjectsCountIs3()
+{
+	Hardware::CameraMock hardwareCamera("yellow_puck_twice_and_green_borderstone_1");
+	CameraImpl camera(hardwareCamera);
+
+	CPPUNIT_ASSERT_EQUAL((size_t)3, camera.getAllCameraObjects().getObjectCount());
+}
