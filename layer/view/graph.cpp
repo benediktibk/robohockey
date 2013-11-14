@@ -46,7 +46,7 @@ void Graph::mousePressEvent(QMouseEvent *ev)
 	QPointF point= mapToScene(ev->pos());
 	QGraphicsView::mousePressEvent(ev);
 	vector<Point> target = m_model.getAllTargetPoints();
-	target.push_back(Point(point.x() / (double) m_pixelPerMeter, point.y() / (double) m_pixelPerMeter));
+    target.push_back(Point(point.x() / (double) m_pixelPerMeter, -1.0 * point.y() / (double) m_pixelPerMeter));
 	m_model.setData(target);
 }
 
@@ -76,7 +76,7 @@ void Graph::updateTargets()
 		double current_y_position = currentPoint.getY();
 		current_x_position = current_x_position * m_pixelPerMeter - 0.5 * m_targetSpotDiameter * m_pixelPerMeter;
 		current_y_position = current_y_position * m_pixelPerMeter - 0.5 * m_targetSpotDiameter * m_pixelPerMeter;
-		currentItem.setRect(current_x_position, current_y_position, m_targetSpotDiameter * m_pixelPerMeter, m_targetSpotDiameter * m_pixelPerMeter);
+        currentItem.setRect(current_x_position, -1.0 * current_y_position, m_targetSpotDiameter * m_pixelPerMeter, m_targetSpotDiameter * m_pixelPerMeter);
 
 
 	}
@@ -112,7 +112,7 @@ void Graph::updateObjects()
 		center = center * m_pixelPerMeter;
 		double centerX = center.getX();
 		double centerY = center.getY();
-		currentItem.setRect(centerX - 0.5 * diameter, centerY - 0.5 * diameter, diameter, diameter);
+        currentItem.setRect(centerX - 0.5 * diameter, -1.0 * centerY + 0.5 * diameter, diameter, diameter);
 
 
 	}
@@ -120,5 +120,5 @@ void Graph::updateObjects()
 	const Point robotPosition = m_model.getCurrentPosition();
 	double positionX = robotPosition.getX() * m_pixelPerMeter - 0.5 * m_pixelPerMeter * m_robotDiameter;
 	double positionY = robotPosition.getY() * m_pixelPerMeter - 0.5 * m_pixelPerMeter * m_robotDiameter;
-	m_robot->setRect(positionX, positionY, m_pixelPerMeter * m_robotDiameter, m_pixelPerMeter * m_robotDiameter);
+    m_robot->setRect(positionX, -1.0 * positionY, m_pixelPerMeter * m_robotDiameter, m_pixelPerMeter * m_robotDiameter);
 }
