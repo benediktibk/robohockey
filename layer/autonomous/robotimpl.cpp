@@ -13,6 +13,7 @@ using namespace std;
 
 RobotImpl::RobotImpl(DataAnalysis::DataAnalyser *dataAnalyser) :
 	m_dataAnalyser(dataAnalyser),
+	m_reachedTarget(true),
 	m_field(new FieldImpl(dataAnalyser->getOdometry(), dataAnalyser->getLidar(), dataAnalyser->getCamera()))
 { }
 
@@ -29,6 +30,7 @@ void RobotImpl::goTo(const RoboHockey::Common::Point &position)
 	//! @todo imlement a router to find a path to the target without tackling obstacles
 	engine.goToStraight(position);
 	m_targetPosition = position;
+	m_reachedTarget = false;
 }
 
 void RobotImpl::turnTo(const Point &position)
@@ -46,7 +48,9 @@ bool RobotImpl::stuckAtObstacle()
 bool RobotImpl::reachedTarget()
 {
 	Compare compare(0.1);
-	return compare.isFuzzyEqual(m_currentPosition, m_targetPosition);
+	if (compare.isFuzzyEqual(m_currentPosition, m_targetPosition))
+		m_reachedTarget = true;
+	return m_reachedTarget;
 }
 
 vector<FieldObject> RobotImpl::getAllFieldObjects()
@@ -61,7 +65,7 @@ void RobotImpl::updateActuators()
 
 	if (engine.tryingToTackleObstacle())
 	{
-		m_targetPosition = m_currentPosition;
+		m_reachedTarget = true;
 		engine.stop();
 	}
 }

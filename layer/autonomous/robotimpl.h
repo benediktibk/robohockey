@@ -47,6 +47,7 @@ namespace Autonomous
 		DataAnalysis::DataAnalyser *m_dataAnalyser;
 		Common::Point m_currentPosition;
 		Common::Point m_targetPosition;
+		bool m_reachedTarget;
 		FieldImpl *m_field;
 	};
 }
