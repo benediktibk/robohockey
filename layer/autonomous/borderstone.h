@@ -15,13 +15,14 @@ namespace Autonomous
 			public Common::Point
 	{
 	public:
-		BorderStone(BorderStoneFieldDistance distanceToFather, BorderStoneDistances &distances, Point &point);
+		BorderStone(Common::Point &father, BorderStoneFieldDistance distanceToFather, BorderStoneDistances &distances, Point &point);
 		virtual void searchNeighbourBorderStones(std::vector<Point> &candidates);
 		virtual std::vector<BorderStone> &getAllChildren();
 
 	private:
 		std::vector<BorderStone> m_children;
-		BorderStoneDistances &m_distances;
+		BorderStoneDistances m_distances;
+		Common::Point m_father;
 		BorderStoneFieldDistance m_distanceToFather;
 
 	};
