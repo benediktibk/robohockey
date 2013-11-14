@@ -21,7 +21,7 @@ double BorderStoneDistances::getStandardFieldDistance(BorderStoneFieldDistance d
 	switch (distanceType)
 	{
 		case BorderStoneFieldDistanceA:
-			result = 0.25 * 5.0 / 3.0;
+			result = 5.0 / 12.0;
 			break;
 
 		case BorderStoneFieldDistanceB:
@@ -46,7 +46,7 @@ double BorderStoneDistances::getStandardFieldDistance(BorderStoneFieldDistance d
 
 bool BorderStoneDistances::distanceIsStandardDistance(double distance) const
 {
-	for (int i = BorderStoneFieldDistanceA; i != BorderStoneFieldDistanceD; i++)
+	for (int i = BorderStoneFieldDistanceA; i <= BorderStoneFieldDistanceD; ++i)
 		if (m_compare->isFuzzyEqual(distance, getStandardFieldDistance(static_cast<BorderStoneFieldDistance>(i))))
 			return true;
 
