@@ -18,7 +18,7 @@ namespace Layer
 {
 namespace View
 {
-    class Model;
+	class Model;
 
 	class Controller :
 			public QDialog
@@ -26,23 +26,23 @@ namespace View
 		Q_OBJECT
 
 	public:
-        Controller(Model &model);
+		Controller(Model &model);
 		~Controller();
 
-    private slots:
-        void on_turnAround_clicked();
+	private slots:
+		void on_turnAround_clicked();
 
-    public slots:
-        void update();
+	public slots:
+		void update();
 
-    private:
+	private:
 		// forbid copies
 		Controller(const Controller &viewer);
 		void operator=(const Controller &viewer);
 
 	private:
 		Ui::View *m_ui;
-        Model &m_model;
+		Model &m_model;
 	};
 }
 }

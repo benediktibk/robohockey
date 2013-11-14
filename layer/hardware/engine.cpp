@@ -8,8 +8,7 @@ const double Engine::m_maximumMagnitude = 0.3;
 const double Engine::m_minimumMagnitude = 0.001;
 // physical maximum is something around pi rad/s
 const double Engine::m_maximumRotation = M_PI;
-const double Engine::m_minimumRotation = 0.1;
-
+const double Engine::m_minimumRotation = 0.1; // actually it seems to be something around pi/25
 
 double Engine::getMaximumRotation() const
 {
