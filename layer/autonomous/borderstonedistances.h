@@ -4,6 +4,10 @@
 
 namespace RoboHockey
 {
+namespace Common
+{
+	class Compare;
+}
 namespace Layer
 {
 namespace Autonomous
@@ -22,8 +26,14 @@ namespace Autonomous
 	{
 	public:
 		BorderStoneDistances();
+		~BorderStoneDistances();
+
 		double getStandardFieldDistance(BorderStoneFieldDistance distanceType) const;
-		BorderStoneFieldDistance checkForStandardDistance() const;
+		bool distanceIsStandardDistance(double distance) const;
+		BorderStoneFieldDistance checkForStandardDistance(double distance) const;
+
+	private:
+		Common::Compare *m_compare;
 	};
 }
 }
