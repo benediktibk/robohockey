@@ -43,6 +43,8 @@ void EngineImpl::updateSpeedAndRotation()
 void EngineImpl::stop()
 {
 	m_engineState = EngineStateStopped;
+	m_tryingToTackleObstacle = false;
+	m_engine.setSpeed(0, 0);
 }
 
 void EngineImpl::turnAround()
@@ -102,8 +104,6 @@ void EngineImpl::updateSpeedAndRotationForTurnAround()
 	if (m_oneHalfTurnDone && orientationDifference.getValueBetweenMinusPiAndPi() > 0)
 	{
 		stop();
-		m_tryingToTackleObstacle = false;
-		m_engine.setSpeed(0, 0);
 		return;
 	}
 
@@ -154,12 +154,12 @@ void EngineImpl::turnOnly(const Angle &targetOrientation, const Angle &currentOr
 
 void EngineImpl::driveAndTurn(const RobotPosition &currentPosition)
 {
-	Compare positionCompare(0.03);
+	Compare positionCompare(0.05);
 	double totalDistance = m_startPosition.distanceTo(m_target);
 	Angle alpha = Angle(m_target, currentPosition.getPosition(), m_startPosition);
 	Angle targetOrientation(currentPosition.getPosition(), m_target);
 	Angle orientationDifference = targetOrientation - currentPosition.getOrientation();
-	double forwardError = totalDistance*cos(alpha.getValueBetweenMinusPiAndPi());
+	double forwardError = max(0.0, totalDistance*cos(alpha.getValueBetweenMinusPiAndPi()));
 
 	if (positionCompare.isFuzzyEqual(forwardError, 0))
 	{
@@ -168,9 +168,10 @@ void EngineImpl::driveAndTurn(const RobotPosition &currentPosition)
 	}
 
 	double distanceAmplification = 0.5;
-	double orientationAmplification = 1;
+	double orientationAmplification = 0.5;
+	double rotationModifier = 4*min(0.25, forwardError);
 	double magnitude = distanceAmplification*forwardError;
-	double rotationSpeed = orientationAmplification*orientationDifference.getValueBetweenMinusPiAndPi();
+	double rotationSpeed = orientationAmplification*orientationDifference.getValueBetweenMinusPiAndPi()*rotationModifier;
 
 	if (magnitude > 0 && m_forwardMovementLocked)
 	{
