@@ -225,3 +225,9 @@ common/angle.h
 common/angle.cpp
 common/angletest.h
 common/angletest.cpp
+resources/testfiles/yellow_goal_1.png
+resources/testfiles/yellow_puck_twice_and_green_borderstone.png
+resources/testfiles/yellow_puck_twice_and_green_borderstone_1.png
+resources/testfiles/yellow_and_blue_puck_and_green_borderstone.png
+resources/testfiles/green_borderstone_triple.png
+resources/testfiles/green_borderstone.png
