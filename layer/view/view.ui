@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>356</width>
-    <height>256</height>
+    <height>264</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -52,7 +52,7 @@
        <item>
         <widget class="QLabel" name="isMovingLabel">
          <property name="text">
-          <string>stuck at obstacle: </string>
+          <string>is moving</string>
          </property>
         </widget>
        </item>
