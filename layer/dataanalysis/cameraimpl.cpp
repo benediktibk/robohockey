@@ -72,11 +72,11 @@ void CameraImpl::addObjects(ColorType color)
 	{
 		for(unsigned int i = 0; i < contours.size(); i++ )
 		{
-			boundRect = boundingRect( Mat(contours[i]));
-			if (contourArea(contours[i]) > 2500)
+			boundRect = boundingRect(Mat(contours[i]));
+			if (contourArea(contours[i]) > 1000)
 			{
 				currentPic = colorPic(boundRect);
-				if(countNonZero(currentPic) > 0.45*boundRect.area())
+				if(countNonZero(currentPic) > 0.9*contourArea(contours[i]))
 					m_cameraObjects.addObject(CameraObject(color, boundRect));
 			}
 		}
