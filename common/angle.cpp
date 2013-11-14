@@ -1,5 +1,8 @@
 #include "common/angle.h"
+#include "common/point.h"
+#include "common/compare.h"
 #include <math.h>
+#include <assert.h>
 
 using namespace RoboHockey::Common;
 
@@ -11,6 +14,23 @@ Angle::Angle(double value) :
 	m_value(value)
 {
 	fixRange();
+}
+
+Angle::Angle(const Point &source, const Point &targetOne, const Point &targetTwo)
+{
+	double a = source.distanceTo(targetOne);
+	double b = source.distanceTo(targetTwo);
+	double c = targetOne.distanceTo(targetTwo);
+	Compare compare(0.001);
+
+	if (compare.isFuzzyEqual(a, 0) || compare.isFuzzyEqual(b, 0))
+		m_value = 0;
+	else
+	{
+		double numerator = a*a + b*b - c*c;
+		double denominator = 2*a*b;
+		m_value = acos(numerator/denominator);
+	}
 }
 
 double Angle::getValueBetweenMinusPiAndPi() const

@@ -1,5 +1,6 @@
 #include "common/angletest.h"
 #include "common/angle.h"
+#include "common/point.h"
 #include <math.h>
 
 using namespace RoboHockey::Common;
@@ -30,6 +31,50 @@ void AngleTest::constructor_10_valueIsMinus256()
 	Angle angle(10);
 
 	CPPUNIT_ASSERT_DOUBLES_EQUAL(-2.56637061435917295385, angle.getValueBetweenMinusPiAndPi(), 0.00001);
+}
+
+void AngleTest::constructor_from0And0To1And0And0And1_valueIsPiHalf()
+{
+	Point source(0, 0);
+	Point targetOne(1, 0);
+	Point targetTwo(0, 1);
+
+	Angle angle(source, targetOne, targetTwo);
+
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(M_PI/2, angle.getValueBetweenMinusPiAndPi(), 0.00001);
+}
+
+void AngleTest::constructor_from1And1To2And0And0And1_valueIs3PiQuarters()
+{
+	Point source(1, 1);
+	Point targetOne(2, 0);
+	Point targetTwo(0, 1);
+
+	Angle angle(source, targetOne, targetTwo);
+
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(3*M_PI/4, angle.getValueBetweenMinusPiAndPi(), 0.00001);
+}
+
+void AngleTest::constructor_threePointsAndOneTargetEqualToSource_0()
+{
+	Point source(1, 1);
+	Point targetOne(1, 1);
+	Point targetTwo(0, 1);
+
+	Angle angle(source, targetOne, targetTwo);
+
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(0, angle.getValueBetweenMinusPiAndPi(), 0.00001);
+}
+
+void AngleTest::constructor_targetsEqual_0()
+{
+	Point source(0, 0);
+	Point targetOne(1, 1);
+	Point targetTwo(1, 1);
+
+	Angle angle(source, targetOne, targetTwo);
+
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(0, angle.getValueBetweenMinusPiAndPi(), 0.00001);
 }
 
 void AngleTest::getValueBetweenZeroAndTwoPi_negativeValue_correctPositiveValue()

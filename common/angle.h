@@ -5,11 +5,14 @@ namespace RoboHockey
 {
 namespace Common
 {
+	class Point;
+
 	class Angle
 	{
 	public:
 		Angle();
 		Angle(double value);
+		Angle(const Common::Point &source, const Common::Point &targetOne, const Common::Point &targetTwo);
 
 		double getValueBetweenMinusPiAndPi() const;
 		double getValueBetweenZeroAndTwoPi() const;
