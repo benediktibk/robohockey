@@ -157,13 +157,19 @@ void EngineImpl::turnOnly(const Angle &targetOrientation, const Angle &currentOr
 	m_engine.setSpeed(0, orientationDifference.getValueBetweenMinusPiAndPi()*amplification);
 }
 
+#include <iostream>
+
 void EngineImpl::driveAndTurn(const RobotPosition &currentPosition)
 {
-	Compare positionCompare(0.05);
+	Compare positionCompare(0.02);
 	double totalDistance = m_startPosition.distanceTo(m_target);
-	Angle alpha = Angle(m_target, currentPosition.getPosition(), m_startPosition);
-	Angle targetOrientation(currentPosition.getPosition(), m_target);
-	Angle orientationDifference = targetOrientation - currentPosition.getOrientation();
+	const Point &currentPositionPoint = currentPosition.getPosition();
+	Angle alpha = Angle(m_target, currentPositionPoint, m_startPosition);
+	Angle ownOrientation = currentPosition.getOrientation();
+	Angle targetOrientation(currentPositionPoint, m_target);
+	Angle orientationDifference = targetOrientation - ownOrientation;
+	double distanceToTarget = currentPositionPoint.distanceTo(m_target);
+	double orthogonalError = distanceToTarget*sin(orientationDifference.getValueBetweenMinusPiAndPi());
 	double forwardError = max(0.0, totalDistance*cos(alpha.getValueBetweenMinusPiAndPi()));
 
 	if (positionCompare.isFuzzyEqual(forwardError, 0))
@@ -172,11 +178,10 @@ void EngineImpl::driveAndTurn(const RobotPosition &currentPosition)
 		return;
 	}
 
-	double distanceAmplification = 0.5;
-	double orientationAmplification = 0.5;
-	double rotationModifier = 4*min(0.25, forwardError);
+	double distanceAmplification = 0.1;
+	double orientationAmplification = 1.5;
 	double magnitude = distanceAmplification*forwardError;
-	double rotationSpeed = orientationAmplification*orientationDifference.getValueBetweenMinusPiAndPi()*rotationModifier;
+	double rotationSpeed = orientationAmplification*orthogonalError;
 
 	if (magnitude > 0 && m_forwardMovementLocked)
 	{
@@ -185,6 +190,8 @@ void EngineImpl::driveAndTurn(const RobotPosition &currentPosition)
 	}
 	else
 		m_tryingToTackleObstacle = false;
+
+	cout << "magnitude: " << magnitude << ", rotation: " << rotationSpeed << endl;
 
 	m_engine.setSpeed(magnitude, rotationSpeed);
 }
