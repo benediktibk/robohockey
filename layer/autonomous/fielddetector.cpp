@@ -1,5 +1,6 @@
 #include "layer/autonomous/fielddetector.h"
 #include "layer/autonomous/borderstone.h"
+#include <iostream>
 
 using namespace std;
 using namespace RoboHockey::Common;
@@ -22,11 +23,15 @@ bool FieldDetector::tryToDetectField()
 
 		BorderStone root(*i, BorderStoneFieldDistanceRoot, m_distanceChecker, *i);
 		root.searchNeighbourBorderStones(currentPoints);
-		int numberOfFoundBorderStones = root.getNumberOfChildrenRecursive();
+
+		// Add One, as root is a BorderStone, too
+		int numberOfFoundBorderStones = 1 + root.getNumberOfChildrenRecursive();
 
 		if (numberOfFoundBorderStones > 2)
 		{
-			return true;
+			cout << "Found " << numberOfFoundBorderStones << " BorderStones!" << endl;
+			//if (tryToFigureOutNewOrigin(root))
+				return true;
 		}
 
 	}
@@ -44,4 +49,9 @@ Point FieldDetector::getNewOrigin()
 double FieldDetector::getRotation()
 {
 	return m_rotation;
+}
+
+bool FieldDetector::tryToFigureOutNewOrigin(BorderStone &/*root*/)
+{
+	return false;
 }

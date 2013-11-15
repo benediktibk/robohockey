@@ -11,6 +11,8 @@ namespace Layer
 {
 namespace Autonomous
 {
+	class BorderStone;
+
 	class FieldDetector
 	{
 	public:
@@ -19,6 +21,9 @@ namespace Autonomous
 		bool tryToDetectField();
 		Common::Point getNewOrigin();
 		double getRotation();
+
+	private:
+		bool tryToFigureOutNewOrigin(BorderStone &root);
 
 	private:
 		std::vector<Common::Point> m_points;
