@@ -132,13 +132,9 @@ std::vector<Point> &FieldImpl::getPointsOfObjectsWithDiameterAndColor(double dia
 
 void FieldImpl::removeAllFieldObjectsInVisibleArea()
 {
-	Point directionVector;
 	Point referencePoint = m_position->getPosition();
-	Angle orientation = m_position->getOrientation();
-
-	Angle alpha = Angle::getQuarterRotation() - orientation;
-	directionVector.setX(-(cos(alpha.getValueBetweenMinusPiAndPi())));
-	directionVector.setY(sin(alpha.getValueBetweenMinusPiAndPi()));
+	Point directionVector(1, m_position->getOrientation());
+	directionVector.rotate(Angle::getQuarterRotation());
 
 	for (vector<FieldObject>::iterator i = m_fieldObjects.begin(); i != m_fieldObjects.end(); ++i)
 	{
