@@ -1,13 +1,10 @@
 #ifndef ROBOHOCKEY_LAYER_AUTONOMOUS_BORDERSTONEDISTANCES_H
 #define ROBOHOCKEY_LAYER_AUTONOMOUS_BORDERSTONEDISTANCES_H
 
+#include "common/compare.h"
 
 namespace RoboHockey
 {
-namespace Common
-{
-	class Compare;
-}
 namespace Layer
 {
 namespace Autonomous
@@ -26,14 +23,13 @@ namespace Autonomous
 	{
 	public:
 		BorderStoneDistances();
-		~BorderStoneDistances();
 
 		double getStandardFieldDistance(BorderStoneFieldDistance distanceType) const;
 		bool isDistanceStandardDistance(double distance) const;
 		BorderStoneFieldDistance getStandardDistanceType(double distance) const;
 
 	private:
-		Common::Compare *m_compare;
+		Common::Compare m_compare;
 	};
 }
 }

@@ -5,14 +5,8 @@ using namespace RoboHockey::Common;
 using namespace RoboHockey::Layer::Autonomous;
 
 BorderStoneDistances::BorderStoneDistances():
-	m_compare(new Compare(0.02))
+	m_compare(0.02)
 { }
-
-BorderStoneDistances::~BorderStoneDistances()
-{
-	delete m_compare;
-	m_compare = 0;
-}
 
 double BorderStoneDistances::getStandardFieldDistance(BorderStoneFieldDistance distanceType) const
 {
@@ -47,7 +41,7 @@ double BorderStoneDistances::getStandardFieldDistance(BorderStoneFieldDistance d
 bool BorderStoneDistances::isDistanceStandardDistance(double distance) const
 {
 	for (int i = BorderStoneFieldDistanceA; i <= BorderStoneFieldDistanceD; ++i)
-		if (m_compare->isFuzzyEqual(distance, getStandardFieldDistance(static_cast<BorderStoneFieldDistance>(i))))
+		if (m_compare.isFuzzyEqual(distance, getStandardFieldDistance(static_cast<BorderStoneFieldDistance>(i))))
 			return true;
 
 	return false;
@@ -56,7 +50,7 @@ bool BorderStoneDistances::isDistanceStandardDistance(double distance) const
 BorderStoneFieldDistance BorderStoneDistances::getStandardDistanceType(double distance) const
 {
 	for (int i = BorderStoneFieldDistanceA; i != BorderStoneFieldDistanceD; i++)
-		if (m_compare->isFuzzyEqual(distance, getStandardFieldDistance(static_cast<BorderStoneFieldDistance>(i))))
+		if (m_compare.isFuzzyEqual(distance, getStandardFieldDistance(static_cast<BorderStoneFieldDistance>(i))))
 			return static_cast<BorderStoneFieldDistance>(i);
 
 	return BorderStoneFieldDistanceFalse;

@@ -14,9 +14,13 @@ namespace Autonomous
 			public CPPUNIT_NS::TestFixture
 	{
 		CPPUNIT_TEST_SUITE(FieldDetectorTest);
+		CPPUNIT_TEST(tryToDetectField_4validFieldPoints_true);
+		CPPUNIT_TEST(tryToDetectField_5unvalidPoints_false);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
+		void tryToDetectField_4validFieldPoints_true();
+		void tryToDetectField_5unvalidPoints_false();
 
 	};
 }

@@ -24,6 +24,7 @@
 #include "layer/autonomous/fieldtest.h"
 #include "layer/autonomous/borderstonetest.h"
 #include "layer/autonomous/borderstonedistancestest.h"
+#include "layer/autonomous/fielddetectortest.h"
 #include "layer/view/modeltest.h"
 #include "layer/view/robotdrivertest.h"
 #include "layer/dataanalysis/cameraobjecttest.h"
@@ -57,6 +58,7 @@ CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Autonomous::FieldObjectTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Autonomous::FieldTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Autonomous::BorderStoneTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Autonomous::BorderStoneDistancesTest);
+CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Autonomous::FieldDetectorTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::View::ModelTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::View::RobotDriverTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::DataAnalysis::CameraObjectTest);
