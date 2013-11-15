@@ -33,7 +33,7 @@ namespace DataAnalysis
 		Hardware::Camera &m_camera;
 		cv::Mat m_fileredFrame;
 		CameraObjects m_cameraObjects;
-		Common::RobotPosition m_position;
+		Common::RobotPosition m_ownPosition;
 	};
 }
 }
