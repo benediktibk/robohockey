@@ -67,6 +67,7 @@ void CameraImpl::addObjects(ColorType color)
 	Rect boundRect;
 	Scalar minValue, maxValue;
 	int areaThreshold;
+	Point objectFootPixel;
 
 	switch (color) {
 	case ColorTypeYellow:
@@ -100,8 +101,11 @@ void CameraImpl::addObjects(ColorType color)
 			{
 				currentPic = colorPic(boundRect);
 				if(countNonZero(currentPic) > 0.9*contourArea(contours[i]))
-					//!@todo correct position for Point
-					m_cameraObjects.addObject(CameraObject(color, Common::Point(0,0)));
+				{
+					objectFootPixel.x = boundRect.x + 0.5*boundRect.width;
+					objectFootPixel.y = boundRect.y + boundRect.height;
+					m_cameraObjects.addObject(CameraObject(color, getCalculatedPosition(objectFootPixel)));
+				}
 			}
 		}
 		contours.clear();
