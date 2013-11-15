@@ -10,8 +10,9 @@ CameraImpl::CameraImpl(Hardware::Camera &camera) :
 	m_camera(camera)
 { }
 
-CameraObjects CameraImpl::getAllCameraObjects(const Common::RobotPosition &/*position*/)
+CameraObjects CameraImpl::getAllCameraObjects(const Common::RobotPosition &position)
 {
+	m_position = position;
 	filterFrameAndConvertToHLS();
 	addObjects(ColorTypeYellow);
 	addObjects(ColorTypeBlue);
@@ -86,4 +87,11 @@ void CameraImpl::addObjects(ColorType color)
 		}
 		contours.clear();
 	}
+}
+
+const RoboHockey::Common::Point CameraImpl::getCalculatedPosition() const
+{
+	Common::Point location;
+	location = location + m_position.getPosition();
+	return location;
 }

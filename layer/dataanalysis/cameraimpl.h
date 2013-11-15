@@ -27,11 +27,13 @@ namespace DataAnalysis
 	private:
 		void filterFrameAndConvertToHLS();
 		void addObjects(ColorType color);
+		const Common::Point getCalculatedPosition() const;
 
 	private:
 		Hardware::Camera &m_camera;
 		cv::Mat m_fileredFrame;
 		CameraObjects m_cameraObjects;
+		Common::RobotPosition m_position;
 	};
 }
 }
