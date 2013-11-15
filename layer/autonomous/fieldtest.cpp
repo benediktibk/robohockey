@@ -90,3 +90,22 @@ void FieldTest::update_oneObjectFromLidarRightNotInViewAnymoreDuringSecondCall_n
 	vector<FieldObject> fieldObjects = field.getAllFieldObjects();
 	CPPUNIT_ASSERT_EQUAL((size_t)0, fieldObjects.size());
 }
+
+void FieldTest::update_objectFromLidarNotInViewAnymoreThroughRotation_oneFieldObject()
+{
+	DataAnalysis::OdometryMock odometry;
+	DataAnalysis::LidarMock lidar;
+	DataAnalysis::CameraMock camera;
+	FieldImpl field(odometry, lidar, camera);
+	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, -1), 0.1));
+	lidar.setAllObjects(lidarObjects);
+
+	field.update();
+	lidar.setAllObjects(DataAnalysis::LidarObjects(Point()));
+	odometry.setCurrentPosition(RobotPosition(Point(0, 0), Angle::getHalfRotation()));
+	field.update();
+
+	vector<FieldObject> fieldObjects = field.getAllFieldObjects();
+	CPPUNIT_ASSERT_EQUAL((size_t)1, fieldObjects.size());
+}
