@@ -47,3 +47,17 @@ std::vector<BorderStone> &BorderStone::getAllChildren()
 {
 	return m_children;
 }
+
+int BorderStone::getNumberOfChildrenRecursive()
+{
+	int result = 0;
+
+	for (vector<BorderStone>::iterator i = m_children.begin(); i != m_children.end(); ++i)
+	{
+		result += (*i).getNumberOfChildrenRecursive();
+	}
+
+	result += m_children.size();
+
+	return result;
+}
