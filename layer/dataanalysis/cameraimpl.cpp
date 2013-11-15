@@ -27,7 +27,7 @@ bool CameraImpl::isGoalYellow()
 	Mat goal;
 	filterFrameAndConvertToHLS();
 	inRange(m_fileredFrame, cv::Scalar(20, 100, 50), cv::Scalar(30, 200, 255), goal);
-	Rect range(0, 130, 320, 110);
+	Rect range(103, 180, 114, 60);
 	goal = goal(range);
 	if(countNonZero(goal) > 0.8*range.area())
 		return true;
@@ -37,7 +37,25 @@ bool CameraImpl::isGoalYellow()
 
 void CameraImpl::filterFrameAndConvertToHLS()
 {
-	medianBlur(m_camera.getFrame(), m_fileredFrame, 9);
+	m_fileredFrame = m_camera.getFrame();
+	cv::Point2f destinationPoints[4];
+	cv::Point2f sourcePoints[4];
+	Mat transform_matrix;
+
+	sourcePoints[0] = Point2f(0,0);
+	sourcePoints[1] = Point2f(320,0);
+	sourcePoints[2] = Point2f(320,240);
+	sourcePoints[3] = Point2f(0,240);
+
+	destinationPoints[0] = Point2f(0,0);
+	destinationPoints[1] = Point2f(320,0);
+	destinationPoints[2] = Point2f(217,240);
+	destinationPoints[3] = Point2f(103,240);
+
+	transform_matrix = getPerspectiveTransform(sourcePoints, destinationPoints);
+	cv::warpPerspective(m_fileredFrame, m_fileredFrame, transform_matrix, cv::Size(320,240));
+
+	medianBlur(m_fileredFrame, m_fileredFrame, 9);
 	cvtColor(m_fileredFrame, m_fileredFrame, CV_BGR2HLS);
 }
 
@@ -93,8 +111,9 @@ void CameraImpl::addObjects(ColorType color)
 const RoboHockey::Common::Point CameraImpl::getCalculatedPosition(Point /*pixel*/) const
 {
 	double distanceToObject = 0;
+	double orientation = 0;
 
+	orientation = m_ownPosition.getOrientation().getValueBetweenZeroAndTwoPi() + orientation;
 	return (m_ownPosition.getPosition() +
-			Common::Point(distanceToObject*cos(m_ownPosition.getOrientation().getValueBetweenZeroAndTwoPi()),
-						  distanceToObject*sin(m_ownPosition.getOrientation().getValueBetweenZeroAndTwoPi())));
+			Common::Point(distanceToObject*cos(orientation), distanceToObject*sin(orientation)));
 }
