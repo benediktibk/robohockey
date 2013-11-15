@@ -157,8 +157,6 @@ void EngineImpl::turnOnly(const Angle &targetOrientation, const Angle &currentOr
 	m_engine.setSpeed(0, orientationDifference.getValueBetweenMinusPiAndPi()*amplification);
 }
 
-#include <iostream>
-
 void EngineImpl::driveAndTurn(const RobotPosition &currentPosition)
 {
 	Compare positionCompare(0.02);
@@ -190,8 +188,6 @@ void EngineImpl::driveAndTurn(const RobotPosition &currentPosition)
 	}
 	else
 		m_tryingToTackleObstacle = false;
-
-	cout << "magnitude: " << magnitude << ", rotation: " << rotationSpeed << endl;
 
 	m_engine.setSpeed(magnitude, rotationSpeed);
 }
