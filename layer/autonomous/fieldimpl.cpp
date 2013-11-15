@@ -40,9 +40,7 @@ std::vector<FieldObject>& FieldImpl::getAllFieldObjects()
 
 void FieldImpl::updateWithLidarData()
 {
-	Angle orientation = m_position->getOrientation();
-
-	const DataAnalysis::LidarObjects &lidarObjects =  m_lidar->getAllObjects(m_position->getPosition(), orientation.getValueBetweenZeroAndTwoPi());
+	const DataAnalysis::LidarObjects &lidarObjects =  m_lidar->getAllObjects(*m_position);
 	const vector<DataAnalysis::LidarObject> &objectsInRange = lidarObjects.getObjectsWithDistanceBelow(4);
 
 	removeAllFieldObjectsInVisibleArea();

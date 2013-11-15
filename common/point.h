@@ -14,6 +14,7 @@ namespace Common
 	public:
 		Point();
 		Point(double x, double y);
+		Point(double distance, const Angle &angle);
 
 		void setX(double value);
 		double getX() const;

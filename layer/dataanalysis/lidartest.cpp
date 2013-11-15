@@ -2,6 +2,7 @@
 #include "layer/dataanalysis/lidarimpl.h"
 #include "layer/hardware/lidarmock.h"
 #include "common/compare.h"
+#include "common/robotposition.h"
 #include <math.h>
 #include <assert.h>
 
@@ -15,7 +16,7 @@ void LidarTest::getAllObjects_mockHardwareLidar_atLeastOneCallToGetDistance()
 	Hardware::LidarMock hardwareLidar;
 	LidarImpl lidar(hardwareLidar);
 
-	lidar.getAllObjects(Point(), 0);
+	lidar.getAllObjects(RobotPosition());
 
 	CPPUNIT_ASSERT(hardwareLidar.getCallsToGetDistance() > 0);
 }
@@ -65,7 +66,7 @@ void LidarTest::getAllObjects_oneTooBigObjectInFront_objectCountIs0()
 	LidarImpl lidar(hardwareLidar);
 	Point ownPosition(1, 1);
 
-	LidarObjects allObjects = lidar.getAllObjects(ownPosition, 0);
+	LidarObjects allObjects = lidar.getAllObjects(RobotPosition(ownPosition, 0));
 
 	vector<LidarObject> objects = allObjects.getObjectsWithDistanceBelow(5);
 	CPPUNIT_ASSERT_EQUAL((size_t)0, objects.size());
@@ -82,7 +83,7 @@ void LidarTest::getAllObjects_lookingIntoLeftUpperDirectionAndObjectSlightlyLeft
 	LidarImpl lidar(hardwareLidar);
 	Point ownPosition(1, 2);
 
-	LidarObjects allObjects = lidar.getAllObjects(ownPosition, M_PI*0.7);
+	LidarObjects allObjects = lidar.getAllObjects(RobotPosition(ownPosition, M_PI*0.7));
 
 	vector<LidarObject> objects = allObjects.getObjectsWithDistanceBelow(5);
 	CPPUNIT_ASSERT_EQUAL((size_t)1, objects.size());
@@ -108,7 +109,7 @@ void LidarTest::getAllObjects_twoObjects_objectCountIs2()
 	LidarImpl lidar(hardwareLidar);
 	Point ownPosition(1, 2);
 
-	LidarObjects objects = lidar.getAllObjects(ownPosition, M_PI*0.7);
+	LidarObjects objects = lidar.getAllObjects(RobotPosition(ownPosition, M_PI*0.7));
 
 	vector<LidarObject> objectsInForeground = objects.getObjectsWithDistanceBelow(5);
 	CPPUNIT_ASSERT_EQUAL((size_t)2, objectsInForeground.size());
@@ -130,7 +131,7 @@ void LidarTest::getAllObjects_oneObjectBehindAnotherOneLeft_objectCountIs2()
 	LidarImpl lidar(hardwareLidar);
 	Point ownPosition(1, 2);
 
-	LidarObjects objects = lidar.getAllObjects(ownPosition, M_PI*(-0.5));
+	LidarObjects objects = lidar.getAllObjects(RobotPosition(ownPosition, M_PI*(-0.5)));
 
 	vector<LidarObject> objectsInForeground = objects.getObjectsWithDistanceBelow(5);
 	CPPUNIT_ASSERT_EQUAL((size_t)2, objectsInForeground.size());
@@ -152,7 +153,7 @@ void LidarTest::getAllObjects_oneObjectBehindAnotherOneRight_objectCountIs2()
 	LidarImpl lidar(hardwareLidar);
 	Point ownPosition(1, 2);
 
-	LidarObjects objects = lidar.getAllObjects(ownPosition, M_PI*(-0.5));
+	LidarObjects objects = lidar.getAllObjects(RobotPosition(ownPosition, M_PI*(-0.5)));
 
 	vector<LidarObject> objectsInForeground = objects.getObjectsWithDistanceBelow(5);
 	CPPUNIT_ASSERT_EQUAL((size_t)2, objectsInForeground.size());
@@ -167,7 +168,7 @@ void LidarTest::getAllObjects_objectAtLeftBorder_objectCountIs1()
 	LidarImpl lidar(hardwareLidar);
 	Point ownPosition(1, 2);
 
-	LidarObjects objects = lidar.getAllObjects(ownPosition, M_PI*(-0.5));
+	LidarObjects objects = lidar.getAllObjects(RobotPosition(ownPosition, M_PI*(-0.5)));
 
 	vector<LidarObject> objectsInForeground = objects.getObjectsWithDistanceBelow(5);
 	CPPUNIT_ASSERT_EQUAL((size_t)1, objectsInForeground.size());
@@ -182,7 +183,7 @@ void LidarTest::getAllObjects_objectAtRightBorder_objectCountIs1()
 	LidarImpl lidar(hardwareLidar);
 	Point ownPosition(1, 2);
 
-	LidarObjects objects = lidar.getAllObjects(ownPosition, M_PI*(-0.5));
+	LidarObjects objects = lidar.getAllObjects(RobotPosition(ownPosition, M_PI*(-0.5)));
 
 	vector<LidarObject> objectsInForeground = objects.getObjectsWithDistanceBelow(5);
 	CPPUNIT_ASSERT_EQUAL((size_t)1, objectsInForeground.size());
@@ -195,7 +196,7 @@ void LidarTest::getAllObjects_realWorldExample_runsThroughWithoutACrash()
 	LidarImpl lidar(hardwareLidar);
 	Point ownPosition(0, 0);
 
-	lidar.getAllObjects(ownPosition, 0);
+	lidar.getAllObjects(RobotPosition(ownPosition, 0));
 
 	CPPUNIT_ASSERT(true);
 }
@@ -209,7 +210,7 @@ void LidarTest::getAllObjects_objectRightOfView_positionOfOnlyObjectIsCorrect()
 	LidarImpl lidar(hardwareLidar);
 	Point ownPosition(0, 0);
 
-	LidarObjects objects = lidar.getAllObjects(ownPosition, 0);
+	LidarObjects objects = lidar.getAllObjects(RobotPosition(ownPosition, 0));
 
 	vector<LidarObject> objectsInForeground = objects.getObjectsWithDistanceBelow(5);
 	CPPUNIT_ASSERT_EQUAL((size_t)1, objectsInForeground.size());
@@ -227,7 +228,7 @@ void LidarTest::getAllObjects_objectLeftOfView_positionOfOnlyObjectIsCorrect()
 	LidarImpl lidar(hardwareLidar);
 	Point ownPosition(0, 0);
 
-	LidarObjects objects = lidar.getAllObjects(ownPosition, 0);
+	LidarObjects objects = lidar.getAllObjects(RobotPosition(ownPosition, 0));
 
 	vector<LidarObject> objectsInForeground = objects.getObjectsWithDistanceBelow(5);
 	CPPUNIT_ASSERT_EQUAL((size_t)1, objectsInForeground.size());
@@ -243,7 +244,7 @@ void LidarTest::getAllObjects_puckDirectInFront_onlyObjectIsCorrect()
 	LidarImpl lidar(hardwareLidar);
 	Point ownPosition(0, 0);
 
-	LidarObjects objects = lidar.getAllObjects(ownPosition, 0);
+	LidarObjects objects = lidar.getAllObjects(RobotPosition(ownPosition, 0));
 
 	vector<LidarObject> objectsInForeground = objects.getObjectsWithDistanceBelow(1);
 	CPPUNIT_ASSERT_EQUAL((size_t)1, objectsInForeground.size());
@@ -260,7 +261,7 @@ void LidarTest::getAllobjects_oneBoundaryPostInRange_diameterIsCorrect()
 	LidarImpl lidar(hardwareLidar);
 	Point ownPosition(0, 0);
 
-	LidarObjects objects = lidar.getAllObjects(ownPosition, 0);
+	LidarObjects objects = lidar.getAllObjects(RobotPosition(ownPosition, 0));
 
 	vector<LidarObject> objectsInForeground = objects.getObjectsWithDistanceBelow(1);
 	CPPUNIT_ASSERT_EQUAL((size_t)1, objectsInForeground.size());
@@ -276,7 +277,7 @@ void LidarTest::getAllObjects_onePuckALittleBitDistant_diameterIsCorrect()
 	LidarImpl lidar(hardwareLidar);
 	Point ownPosition(0, 0);
 
-	LidarObjects objects = lidar.getAllObjects(ownPosition, 0);
+	LidarObjects objects = lidar.getAllObjects(RobotPosition(ownPosition, 0));
 
 	vector<LidarObject> objectsInForeground = objects.getObjectsWithDistanceBelow(1);
 	CPPUNIT_ASSERT_EQUAL((size_t)1, objectsInForeground.size());
@@ -292,7 +293,7 @@ void LidarTest::getAllObjects_onePuck_positionAndDiameterIsCorrect()
 	LidarImpl lidar(hardwareLidar);
 	Point ownPosition(0, 0);
 
-	LidarObjects objects = lidar.getAllObjects(ownPosition, 0);
+	LidarObjects objects = lidar.getAllObjects(RobotPosition(ownPosition, 0));
 
 	vector<LidarObject> objectsInForeground = objects.getObjectsWithDistanceBelow(1);
 	CPPUNIT_ASSERT_EQUAL((size_t)1, objectsInForeground.size());
@@ -309,7 +310,7 @@ void LidarTest::getAllObjects_onePuckInQuiteADistanceVersion1_distanceAndDiamete
 	LidarImpl lidar(hardwareLidar);
 	Point ownPosition(0, 0);
 
-	LidarObjects objects = lidar.getAllObjects(ownPosition, 0);
+	LidarObjects objects = lidar.getAllObjects(RobotPosition(ownPosition, 0));
 
 	vector<LidarObject> objectsInForeground = objects.getObjectsWithDistanceBelow(2);
 	CPPUNIT_ASSERT_EQUAL((size_t)1, objectsInForeground.size());
@@ -327,7 +328,7 @@ void LidarTest::getAllObjects_onePuckInQuiteADistanceVersion2_distanceAndDiamete
 	LidarImpl lidar(hardwareLidar);
 	Point ownPosition(0, 0);
 
-	LidarObjects objects = lidar.getAllObjects(ownPosition, 0);
+	LidarObjects objects = lidar.getAllObjects(RobotPosition(ownPosition, 0));
 
 	vector<LidarObject> objectsInForeground = objects.getObjectsWithDistanceBelow(2.5);
 	CPPUNIT_ASSERT_EQUAL((size_t)1, objectsInForeground.size());
@@ -345,7 +346,7 @@ void LidarTest::getAllObjects_maximumDistanceToBoundaryPostOfOwnFieldPart_distan
 	LidarImpl lidar(hardwareLidar);
 	Point ownPosition(0, 0);
 
-	LidarObjects objects = lidar.getAllObjects(ownPosition, 0);
+	LidarObjects objects = lidar.getAllObjects(RobotPosition(ownPosition, 0));
 
 	vector<LidarObject> objectsInForeground = objects.getObjectsWithDistanceBelow(3.2);
 	vector<LidarObject> farDistantObjects;
@@ -356,6 +357,7 @@ void LidarTest::getAllObjects_maximumDistanceToBoundaryPostOfOwnFieldPart_distan
 		if (distance > 2.5)
 			farDistantObjects.push_back(*i);
 	}
+
 	CPPUNIT_ASSERT_EQUAL((size_t)1, farDistantObjects.size());
 	const LidarObject &object = farDistantObjects.front();
 	double distance = ownPosition.distanceTo(object.getCenter());
