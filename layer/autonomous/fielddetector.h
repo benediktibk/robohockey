@@ -23,6 +23,8 @@ namespace Autonomous
 	private:
 		std::vector<Common::Point> m_points;
 		BorderStoneDistances m_distanceChecker;
+		Common::Point m_newOrigin;
+		double m_rotation;
 	};
 }
 }
