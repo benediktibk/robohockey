@@ -2,6 +2,7 @@
 #define ROBOHOCKEY_LAYER_DATAANALYSIS_CAMERA_H
 
 #include "layer/dataanalysis/cameraobjects.h"
+#include "common/robotposition.h"
 
 namespace cv
 {
@@ -19,7 +20,7 @@ namespace DataAnalysis
 	public:
 		virtual ~Camera() { }
 
-		virtual CameraObjects getAllCameraObjects() = 0;
+		virtual CameraObjects getAllCameraObjects(const Common::RobotPosition &position) = 0;
 		virtual bool isGoalYellow() = 0;
 	};
 }

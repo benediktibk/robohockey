@@ -3,6 +3,7 @@
 
 #include <opencv2/opencv.hpp>
 #include "layer/dataanalysis/colorType.h"
+#include "common/point.h"
 
 namespace RoboHockey
 {
@@ -13,14 +14,14 @@ namespace DataAnalysis
 	class CameraObject
 	{
 	public:
-		CameraObject(ColorType color, cv::Rect position);
+		CameraObject(ColorType color, const Common::Point &position);
 
-		cv::Rect getImagePosition() const;
+		Common::Point getPosition() const;
 		ColorType getColorType() const;
 
 	private:
 		ColorType m_color;
-		cv::Rect m_position;
+		Common::Point m_position;
 	};
 }
 }
