@@ -62,3 +62,8 @@ int BorderStone::getNumberOfChildrenRecursive()
 
 	return result;
 }
+
+BorderStoneFieldDistance BorderStone::getDistanceToFather()
+{
+	return m_distanceToFather;
+}

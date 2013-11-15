@@ -51,7 +51,44 @@ double FieldDetector::getRotation()
 	return m_rotation;
 }
 
-bool FieldDetector::tryToFigureOutNewOrigin(BorderStone &/*root*/)
+bool FieldDetector::tryToFigureOutNewOrigin(BorderStone &root)
 {
+	BorderStoneDistances distancesChecker;
+	BorderStoneFieldDistance firstDistance;
+	BorderStoneFieldDistance secondDistance;
+
+	Point *oneCorner = new Point;
+	BorderStone *firstChild;
+	BorderStone *secondChild;
+	bool linear = false;
+
+	if (root.getAllChildren().size() < 2)
+	{
+		linear = true;
+		firstChild = &root.getAllChildren().front();
+		secondChild = &firstChild->getAllChildren().front();
+		firstDistance = firstChild->getDistanceToFather();
+		secondDistance = secondChild->getDistanceToFather();
+	} else
+	{
+		linear = false;
+		firstChild = &root.getAllChildren().front();
+		secondChild = &root.getAllChildren().back();
+		firstDistance = firstChild->getDistanceToFather();
+		secondDistance = secondChild->getDistanceToFather();
+	}
+
+	if (firstDistance == secondDistance && firstDistance == BorderStoneFieldDistanceC)
+	{
+		if (linear)
+			*oneCorner = ((Point(*firstChild) - Point(root)) *
+						  (distancesChecker.getStandardFieldDistance(BorderStoneFieldDistanceA) + distancesChecker.getStandardFieldDistance(BorderStoneFieldDistanceB)))
+							/ (distancesChecker.getStandardFieldDistance(BorderStoneFieldDistanceC));
+
+		m_rotation = 0.0;
+		m_newOrigin = *oneCorner;
+		return true;
+	}
+
 	return false;
 }

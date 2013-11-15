@@ -19,6 +19,7 @@ namespace Autonomous
 		virtual void searchNeighbourBorderStones(std::vector<Point*> &candidates);
 		virtual std::vector<BorderStone> &getAllChildren();
 		virtual int getNumberOfChildrenRecursive();
+		virtual BorderStoneFieldDistance getDistanceToFather();
 
 	private:
 		std::vector<BorderStone> m_children;
