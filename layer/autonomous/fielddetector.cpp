@@ -1,6 +1,7 @@
 #include "layer/autonomous/fielddetector.h"
 #include "layer/autonomous/borderstone.h"
 #include <iostream>
+#include <math.h>
 
 using namespace std;
 using namespace RoboHockey::Common;
@@ -57,7 +58,15 @@ bool FieldDetector::tryToFigureOutNewOrigin(BorderStone &root)
 	BorderStoneFieldDistance firstDistance;
 	BorderStoneFieldDistance secondDistance;
 
-	Point *oneCorner = new Point;
+	double standardDistanceA = distancesChecker.getStandardFieldDistance(BorderStoneFieldDistanceA);
+	double standardDistanceB = distancesChecker.getStandardFieldDistance(BorderStoneFieldDistanceB);
+	double standardDistanceC = distancesChecker.getStandardFieldDistance(BorderStoneFieldDistanceC);
+
+
+	double rotationOne = 0.0;
+	double rotationTwo = 0.0;
+	Point cornerOne;
+	Point cornerTwo;
 	BorderStone *firstChild;
 	BorderStone *secondChild;
 	bool linear = false;
@@ -81,13 +90,37 @@ bool FieldDetector::tryToFigureOutNewOrigin(BorderStone &root)
 	if (firstDistance == secondDistance && firstDistance == BorderStoneFieldDistanceC)
 	{
 		if (linear)
-			*oneCorner = ((Point(*firstChild) - Point(root)) *
-						  (distancesChecker.getStandardFieldDistance(BorderStoneFieldDistanceA) + distancesChecker.getStandardFieldDistance(BorderStoneFieldDistanceB)))
-							/ (distancesChecker.getStandardFieldDistance(BorderStoneFieldDistanceC));
+		{
+			cornerOne = root +
+						((Point(*firstChild) - Point(root)) * (standardDistanceA + standardDistanceB)) / standardDistanceC;
+			cornerTwo = root +
+						((Point(root) - Point(*firstChild)) * (standardDistanceA + standardDistanceB)) / standardDistanceC;
+		} else
+		{
+			cornerOne = root +
+						((Point(*firstChild) - Point(root)) * (standardDistanceA + standardDistanceB + standardDistanceC)) / standardDistanceC;
+			cornerTwo = root +
+						((Point(root) - Point(*firstChild)) * (standardDistanceA + standardDistanceB + standardDistanceC)) / standardDistanceC;
+		}
 
-		m_rotation = 0.0;
-		m_newOrigin = *oneCorner;
-		return true;
+		rotationOne = -1.0 * atan(((Point(*firstChild) - Point(root)).getY() / (Point(*firstChild) - Point(root)).getX()));
+		rotationTwo = M_PI + rotationOne;
+	}
+
+	Point possibleNewOrigin;
+
+	if (cornerOne.distanceTo(Point()) < cornerTwo.distanceTo(Point()))
+		possibleNewOrigin = cornerOne;
+	else
+		possibleNewOrigin = cornerTwo;
+
+	if (fabs(rotationOne) < M_PI)
+	{
+		m_rotation = rotationOne;
+	}
+	else
+	{
+		m_rotation = rotationTwo;
 	}
 
 	return false;
