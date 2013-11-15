@@ -21,7 +21,7 @@ namespace DataAnalysis
 	public:
 		CameraImpl(Hardware::Camera &camera);
 
-		virtual CameraObjects getAllCameraObjects();
+		virtual CameraObjects getAllCameraObjects(const Common::RobotPosition &position);
 		virtual bool isGoalYellow();
 
 	private:

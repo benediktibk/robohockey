@@ -8,7 +8,7 @@ CameraMock::CameraMock() :
 	m_isGoalYellow(false)
 { }
 
-CameraObjects CameraMock::getAllCameraObjects()
+CameraObjects CameraMock::getAllCameraObjects(const RobotPosition &)
 {
 	return CameraObjects();
 }
