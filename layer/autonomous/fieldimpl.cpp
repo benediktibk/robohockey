@@ -135,11 +135,10 @@ void FieldImpl::removeAllFieldObjectsInVisibleArea()
 	Point directionVector;
 	Point referencePoint = m_position->getPosition();
 	Angle orientation = m_position->getOrientation();
-	double pi = M_PI;
 
-	double alpha = (0.5*pi) - orientation.getValueBetweenZeroAndTwoPi();
-	directionVector.setX(-(cos(alpha)));
-	directionVector.setY(sin(alpha));
+	Angle alpha = Angle::getQuarterRotation() - orientation;
+	directionVector.setX(-(cos(alpha.getValueBetweenMinusPiAndPi())));
+	directionVector.setY(sin(alpha.getValueBetweenMinusPiAndPi()));
 
 	for (vector<FieldObject>::iterator i = m_fieldObjects.begin(); i != m_fieldObjects.end(); ++i)
 	{
