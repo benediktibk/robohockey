@@ -135,7 +135,7 @@ void EngineImpl::updateSpeedAndRotationForDriving()
 
 void EngineImpl::updateSpeedAndRotationForRotating()
 {
-	Compare angleCompare(0.05);
+	Compare angleCompare(0.1);
 	RobotPosition currentPosition = m_odometry.getCurrentPosition();
 	Angle targetOrientation(currentPosition.getPosition(), m_target);
 	Angle currentOrientation = currentPosition.getOrientation();
@@ -160,7 +160,6 @@ void EngineImpl::turnOnly(const Angle &targetOrientation, const Angle &currentOr
 void EngineImpl::driveAndTurn(const RobotPosition &currentPosition)
 {
 	Compare positionCompare(0.02);
-	double totalDistance = m_startPosition.distanceTo(m_target);
 	const Point &currentPositionPoint = currentPosition.getPosition();
 	Angle alpha = Angle(m_target, currentPositionPoint, m_startPosition);
 	Angle ownOrientation = currentPosition.getOrientation();
@@ -168,7 +167,7 @@ void EngineImpl::driveAndTurn(const RobotPosition &currentPosition)
 	Angle orientationDifference = targetOrientation - ownOrientation;
 	double distanceToTarget = currentPositionPoint.distanceTo(m_target);
 	double orthogonalError = distanceToTarget*sin(orientationDifference.getValueBetweenMinusPiAndPi());
-	double forwardError = max(0.0, totalDistance*cos(alpha.getValueBetweenMinusPiAndPi()));
+	double forwardError = max(0.0, distanceToTarget*cos(alpha.getValueBetweenMinusPiAndPi()));
 
 	if (positionCompare.isFuzzyEqual(forwardError, 0))
 	{
@@ -176,7 +175,7 @@ void EngineImpl::driveAndTurn(const RobotPosition &currentPosition)
 		return;
 	}
 
-	double distanceAmplification = 0.5;
+	double distanceAmplification = 1;
 	double orientationAmplification = 1.5;
 	double magnitude = distanceAmplification*forwardError;
 	double rotationSpeed = orientationAmplification*orthogonalError;
