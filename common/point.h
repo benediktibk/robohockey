@@ -14,6 +14,7 @@ namespace Common
 	public:
 		Point();
 		Point(double x, double y);
+		Point(double distance, const Angle &angle);
 
 		void setX(double value);
 		double getX() const;
@@ -31,6 +32,7 @@ namespace Common
 
 	public:
 		static const Point& zero();
+		static bool isTargetPointRightOfLine(const Point &start, const Point &direction, const Point &target);
 
 	private:
 		double m_x;

@@ -40,9 +40,7 @@ std::vector<FieldObject>& FieldImpl::getAllFieldObjects()
 
 void FieldImpl::updateWithLidarData()
 {
-	Angle orientation = m_position->getOrientation();
-
-	const DataAnalysis::LidarObjects &lidarObjects =  m_lidar->getAllObjects(m_position->getPosition(), orientation.getValueBetweenZeroAndTwoPi());
+	const DataAnalysis::LidarObjects &lidarObjects =  m_lidar->getAllObjects(*m_position);
 	const vector<DataAnalysis::LidarObject> &objectsInRange = lidarObjects.getObjectsWithDistanceBelow(4);
 
 	removeAllFieldObjectsInVisibleArea();
@@ -134,29 +132,19 @@ std::vector<Point> &FieldImpl::getPointsOfObjectsWithDiameterAndColor(double dia
 
 void FieldImpl::removeAllFieldObjectsInVisibleArea()
 {
-	Point directionVector;
 	Point referencePoint = m_position->getPosition();
-	Angle orientation = m_position->getOrientation();
-	double pi = M_PI;
-
-	double alpha = (0.5*pi) - orientation.getValueBetweenZeroAndTwoPi();
-	directionVector.setX(-(cos(alpha)));
-	directionVector.setY(sin(alpha));
+	Point directionVector(1, m_position->getOrientation());
+	directionVector.rotate(Angle::getQuarterRotation());
 
 	for (vector<FieldObject>::iterator i = m_fieldObjects.begin(); i != m_fieldObjects.end(); ++i)
 	{
 		Point currentCenter = ((*i).getCircle()).getCenter();
 
 		//! @todo Use a global parameter for distance filtering
-		if (isTargetPointRightOfLineWithParameters(referencePoint, directionVector, currentCenter) && true )
+		if (Point::isTargetPointRightOfLine(referencePoint, directionVector, currentCenter))
 		{
 			m_fieldObjects.erase(i);
 			i--;
 		}
 	}
-}
-
-bool FieldImpl::isTargetPointRightOfLineWithParameters(Point &referencePoint, Point &directionVector, Point &target)
-{
-	return 0 < (directionVector.getY()*(target.getX() - referencePoint.getX()) - directionVector.getX()*(target.getY() - referencePoint.getY()));
 }

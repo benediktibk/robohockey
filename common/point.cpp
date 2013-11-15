@@ -18,6 +18,11 @@ Point::Point(double x, double y) :
 	m_y(y)
 { }
 
+Point::Point(double distance, const Angle &angle) :
+	m_x(distance*cos(angle.getValueBetweenMinusPiAndPi())),
+	m_y(distance*sin(angle.getValueBetweenMinusPiAndPi()))
+{ }
+
 void Point::setX(double value)
 {
 	m_x = value;
@@ -93,4 +98,9 @@ double Point::distanceTo(const Point &point) const
 const Point &Point::zero()
 {
 	return m_zero;
+}
+
+bool Point::isTargetPointRightOfLine(const Point &start, const Point &direction, const Point &target)
+{
+	return 0 < (direction.getY()*(target.getX() - start.getX()) - direction.getX()*(target.getY() - start.getY()));
 }
