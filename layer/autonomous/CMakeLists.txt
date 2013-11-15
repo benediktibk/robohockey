@@ -4,6 +4,7 @@ set(LAYER_AUTONOMOUS_SRC
 	fieldimpl.cpp
 	borderstone.cpp
 	borderstonedistances.cpp
+	fielddetector.cpp
 )
 
 set(LAYER_AUTONOMOUS_TEST_SRC
@@ -14,6 +15,7 @@ set(LAYER_AUTONOMOUS_TEST_SRC
 	fieldtest.cpp
 	borderstonetest.cpp
 	borderstonedistancestest.cpp
+	fielddetectortest.cpp
 )
 
 add_library(layerautonomous ${LAYER_AUTONOMOUS_SRC})

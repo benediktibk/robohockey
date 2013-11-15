@@ -239,3 +239,7 @@ layer/autonomous/borderstonetest.h
 layer/autonomous/borderstonetest.cpp
 layer/autonomous/borderstonedistancestest.h
 layer/autonomous/borderstonedistancestest.cpp
+layer/autonomous/fielddetector.h
+layer/autonomous/fielddetector.cpp
+layer/autonomous/fielddetectortest.h
+layer/autonomous/fielddetectortest.cpp
