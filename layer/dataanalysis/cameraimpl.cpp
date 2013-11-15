@@ -120,7 +120,7 @@ const RoboHockey::Common::Point CameraImpl::getCalculatedPosition(Point pixel) c
 	pixel.x = pixel.x -robotMatPosition.x;
 	pixel.y = robotMatPosition.y - pixel.y;
 	objectPosition.setX(pixel.x * (1.9/320));
-	objectPosition.setY(pixel.y * (2.0/240) + 0.34);
+	objectPosition.setY(pixel.y * (1.66/240) + 0.34);
 
 	objectPosition.rotate(Common::Angle(-0.5 * M_PI) + m_ownPosition.getOrientation());
 	objectPosition = objectPosition + m_ownPosition.getPosition();
