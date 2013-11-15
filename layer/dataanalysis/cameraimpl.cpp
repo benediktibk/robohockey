@@ -89,7 +89,7 @@ void CameraImpl::addObjects(ColorType color)
 	}
 }
 
-const RoboHockey::Common::Point CameraImpl::getCalculatedPosition() const
+const RoboHockey::Common::Point CameraImpl::getCalculatedPosition(Point /*pixel*/) const
 {
 	Common::Point location;
 	location = location + m_position.getPosition();

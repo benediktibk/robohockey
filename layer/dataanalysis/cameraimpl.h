@@ -27,7 +27,7 @@ namespace DataAnalysis
 	private:
 		void filterFrameAndConvertToHLS();
 		void addObjects(ColorType color);
-		const Common::Point getCalculatedPosition() const;
+		const Common::Point getCalculatedPosition(cv::Point pixel) const;
 
 	private:
 		Hardware::Camera &m_camera;
