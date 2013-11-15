@@ -13,7 +13,7 @@ void CameraObjectTest::getColorType_ColorTypeYellowGoal()
 	CPPUNIT_ASSERT_EQUAL(ColorTypeYellow, cameraobject.getColorType());
 }
 
-void CameraObjectTest::getImagePosition_positionIs0And0()
+void CameraObjectTest::getPosition_positionIs0And0()
 {
 	CameraObject cameraobject(ColorTypeYellow, Point(0,0));
 
