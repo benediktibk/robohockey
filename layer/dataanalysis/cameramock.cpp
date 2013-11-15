@@ -1,6 +1,7 @@
 #include "layer/dataanalysis/cameramock.h"
 
 using namespace RoboHockey::Layer::DataAnalysis;
+using namespace RoboHockey::Common;
 
 
 CameraMock::CameraMock() :
@@ -9,9 +10,7 @@ CameraMock::CameraMock() :
 
 CameraObjects CameraMock::getAllCameraObjects()
 {
-	CameraObjects objects;
-	objects.addObject(CameraObject(ColorTypeUnknown,cv::Rect(0,0,1,1)));
-	return objects;
+	return CameraObjects();
 }
 
 bool CameraMock::isGoalYellow()

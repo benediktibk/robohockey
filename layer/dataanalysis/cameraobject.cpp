@@ -1,15 +1,15 @@
 #include "layer/dataanalysis/cameraobject.h"
 
 using namespace RoboHockey::Layer::DataAnalysis;
-using namespace cv;
+using namespace RoboHockey::Common;
 
-CameraObject::CameraObject(ColorType color, Rect position) :
+CameraObject::CameraObject(ColorType color, const Point &position) :
 	m_color(color),
 	m_position(position)
 {
 }
 
-Rect CameraObject::getImagePosition() const
+Point CameraObject::getPosition() const
 {
 	return m_position;
 }

@@ -3,18 +3,19 @@
 
 using namespace std;
 using namespace RoboHockey::Layer::DataAnalysis;
+using namespace RoboHockey::Common;
 
 
 void CameraObjectTest::getColorType_ColorTypeYellowGoal()
 {
-	CameraObject cameraobject(ColorTypeYellow, cv::Rect(0,0,1,1));
+	CameraObject cameraobject(ColorTypeYellow, Point(0,0));
 
 	CPPUNIT_ASSERT_EQUAL(ColorTypeYellow, cameraobject.getColorType());
 }
 
-void CameraObjectTest::getImagePositionArea_RectArea100()
+void CameraObjectTest::getImagePosition_positionIs0And0()
 {
-	CameraObject cameraobject(ColorTypeYellow, cv::Rect(0,0,10,10));
+	CameraObject cameraobject(ColorTypeYellow, Point(0,0));
 
-	CPPUNIT_ASSERT_EQUAL(100, cameraobject.getImagePosition().area());
+	CPPUNIT_ASSERT_EQUAL(Point(0,0), cameraobject.getPosition());
 }

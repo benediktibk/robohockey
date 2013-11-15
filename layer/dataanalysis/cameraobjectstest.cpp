@@ -3,12 +3,13 @@
 
 using namespace std;
 using namespace RoboHockey::Layer::DataAnalysis;
+using namespace RoboHockey::Common;
 
 
 void CameraObjectsTest::getObjectCount_add1Object_objectCountIs1()
 {
 	CameraObjects objects;
-	CameraObject objectOne(ColorTypeUnknown, cv::Rect(0,0,1,1));
+	CameraObject objectOne(ColorTypeUnknown, Point(0,0));
 
 	objects.addObject(objectOne);
 
@@ -18,8 +19,8 @@ void CameraObjectsTest::getObjectCount_add1Object_objectCountIs1()
 void CameraObjectsTest::getAllCameraObjects_add2Objects_secondObjectIsYellow()
 {
 	CameraObjects objects;
-	CameraObject objectOne(ColorTypeUnknown, cv::Rect(0,0,1,1));
-	CameraObject objectTwo(ColorTypeYellow, cv::Rect(0,0,1,1));
+	CameraObject objectOne(ColorTypeUnknown, Point(0,0));
+	CameraObject objectTwo(ColorTypeYellow, Point(0,1));
 
 	objects.addObject(objectOne);
 	objects.addObject(objectTwo);

@@ -15,12 +15,12 @@ namespace DataAnalysis
 	{
 		CPPUNIT_TEST_SUITE(CameraObjectTest);
 		CPPUNIT_TEST(getColorType_ColorTypeYellowGoal);
-		CPPUNIT_TEST(getImagePositionArea_RectArea100);
+		CPPUNIT_TEST(getImagePosition_positionIs0And0);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
 		void getColorType_ColorTypeYellowGoal();
-		void getImagePositionArea_RectArea100();
+		void getImagePosition_positionIs0And0();
 
 	};
 }

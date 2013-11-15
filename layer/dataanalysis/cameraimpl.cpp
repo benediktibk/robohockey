@@ -2,7 +2,6 @@
 #include "layer/hardware/camera.h"
 #include <opencv/cv.h>
 
-using namespace RoboHockey::Layer;
 using namespace RoboHockey::Layer::DataAnalysis;
 using namespace cv;
 using namespace std;
@@ -81,7 +80,8 @@ void CameraImpl::addObjects(ColorType color)
 			{
 				currentPic = colorPic(boundRect);
 				if(countNonZero(currentPic) > 0.9*contourArea(contours[i]))
-					m_cameraObjects.addObject(CameraObject(color, boundRect));
+					//!@todo correct position for Point
+					m_cameraObjects.addObject(CameraObject(color, Common::Point(0,0)));
 			}
 		}
 		contours.clear();
