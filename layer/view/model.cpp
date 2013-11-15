@@ -7,22 +7,22 @@ using namespace std;
 
 Model::Model() :
 	m_stuckAtObstacle(false),
-    m_reachedTarget(false),
-    m_currentOrientation(0)
+	m_reachedTarget(false),
+	m_isMoving(false)
 { }
 
 void Model::setData(
 		const vector<FieldObject> &fieldObjects,
 		bool stuckAtObstacle, bool reachedTarget,
-        const Point &currentPosition,
-        const double currentOrientation)
+		const RobotPosition &currentPosition, const Point &currentTarget,
+		bool isMoving)
 {
 	m_fieldObjects = fieldObjects;
 	m_stuckAtObstacle = stuckAtObstacle;
 	m_reachedTarget = reachedTarget;
 	m_currentPosition = currentPosition;
-    m_currentOrientation = currentOrientation;
-
+	m_currentTarget = currentTarget;
+	m_isMoving = isMoving;
 
 	emit robotDataChanged();
 }
@@ -54,12 +54,17 @@ bool Model::reachedTarget() const
 	return m_reachedTarget;
 }
 
-const Point &Model::getCurrentPosition() const
+bool Model::isMoving() const
 {
-    return m_currentPosition;
+	return m_isMoving;
 }
 
-double Model::getOrientation() const
+const RobotPosition &Model::getCurrentPosition() const
 {
-    return m_currentOrientation;
+	return m_currentPosition;
+}
+
+const Point Model::getCurrentTarget() const
+{
+	return m_currentTarget;
 }

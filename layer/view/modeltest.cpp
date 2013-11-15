@@ -28,7 +28,7 @@ void ModelTest::setData_twoFieldObjects_twoFieldObjects()
 	fieldObjects.push_back(FieldObject(Circle(), FieldObjectColorUnknown));
 	fieldObjects.push_back(FieldObject(Circle(), FieldObjectColorUnknown));
 
-    model.setData(fieldObjects, false, false, Point(),0.0);
+	model.setData(fieldObjects, false, false, RobotPosition(), Point(), false);
 
 	vector<FieldObject> result = model.getAllFieldObjects();
 	CPPUNIT_ASSERT_EQUAL((size_t)2, result.size());
@@ -39,7 +39,7 @@ void ModelTest::setData_stuckAtObstacle_stuckAtObstacle()
 	Model model;
 	vector<FieldObject> fieldObjects;
 
-    model.setData(fieldObjects, true, false, Point(),0.0);
+	model.setData(fieldObjects, true, false, RobotPosition(), Point(), false);
 
 	CPPUNIT_ASSERT(model.stuckAtObstacle());
 }
@@ -49,7 +49,7 @@ void ModelTest::setData_reachedTarget_reachedTarget()
 	Model model;
 	vector<FieldObject> fieldObjects;
 
-    model.setData(fieldObjects, false, true, Point(),0.0);
+	model.setData(fieldObjects, false, true, RobotPosition(), Point(), false);
 
 	CPPUNIT_ASSERT(model.reachedTarget());
 }
@@ -72,8 +72,8 @@ void ModelTest::setData_currentPosition_currentPositionIsCorrect()
 	Model model;
 	vector<FieldObject> fieldObjects;
 
-    model.setData(fieldObjects, true, false, Point(3, 2),0.0);
+	model.setData(fieldObjects, true, false, RobotPosition(Point(3, 2), 1), Point(), false);
 
 	Compare compare(0.0001);
-	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(3, 2), model.getCurrentPosition()));
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(RobotPosition(Point(3, 2), 1), model.getCurrentPosition()));
 }

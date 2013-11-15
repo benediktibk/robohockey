@@ -37,6 +37,7 @@ int main()
 	int pictureNumber = 0;
 	stringstream pictureName;
 	vector<Point2f> chessBoardPoints;
+	double updatePicture = true;
 
 	namedWindow( "Video", CV_WINDOW_AUTOSIZE );
 
@@ -65,11 +66,19 @@ int main()
 			}
 		}
 
-
-		imshow( "Video", frame );
+		if (updatePicture)
+			imshow( "Video", frame );
 
 
 		key = cvWaitKey(25);
+		if (key == 'u')
+		{
+			if(updatePicture)
+				updatePicture = false;
+			else
+				updatePicture = true;
+		}
+
 		if (key == 'q') break;
 
 		if (key == 'p')

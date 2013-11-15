@@ -1,4 +1,5 @@
 #include "layer/autonomous/robotmock.h"
+#include "common/robotposition.h"
 
 using namespace RoboHockey::Common;
 using namespace RoboHockey::Layer::Autonomous;
@@ -83,9 +84,7 @@ unsigned int RobotMock::getCallsToStop() const
 }
 
 void RobotMock::collectPuckInFront()
-{
-
-}
+{ }
 
 bool RobotMock::isMoving()
 {
@@ -93,25 +92,20 @@ bool RobotMock::isMoving()
 }
 
 void RobotMock::calibratePosition()
-{
-
-}
+{ }
 
 void RobotMock::turnAround()
-{
-
-}
+{ }
 
 void RobotMock::turnTo(const Point &)
 { }
 
-Point RobotMock::getCurrentPosition()
+RobotPosition RobotMock::getCurrentPosition()
 {
-    return Point();
+	return RobotPosition();
 }
 
-double RobotMock::getCurrentOrientation()
+Point RobotMock::getCurrentTarget() const
 {
-    return 0.0;
+	return Point();
 }
-

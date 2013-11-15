@@ -9,6 +9,7 @@ namespace RoboHockey
 namespace Common
 {
 	class Point;
+	class RobotPosition;
 }
 
 namespace Layer
@@ -32,8 +33,8 @@ namespace Autonomous
 		virtual bool isMoving() = 0;
 		virtual void calibratePosition() = 0;
 		virtual void turnAround() = 0;
-		virtual Common::Point getCurrentPosition() = 0;
-        virtual double getCurrentOrientation() = 0;
+		virtual Common::RobotPosition getCurrentPosition() = 0;
+		virtual Common::Point getCurrentTarget() const = 0;
 	};
 }
 }

@@ -1,8 +1,8 @@
 #include "layer/dataanalysis/cameraimpl.h"
 #include "layer/hardware/camera.h"
 #include <opencv/cv.h>
+#include "math.h"
 
-using namespace RoboHockey::Layer;
 using namespace RoboHockey::Layer::DataAnalysis;
 using namespace cv;
 using namespace std;
@@ -11,8 +11,9 @@ CameraImpl::CameraImpl(Hardware::Camera &camera) :
 	m_camera(camera)
 { }
 
-CameraObjects CameraImpl::getAllCameraObjects()
+CameraObjects CameraImpl::getAllCameraObjects(const Common::RobotPosition &position)
 {
+	m_ownPosition = position;
 	filterFrameAndConvertToHLS();
 	addObjects(ColorTypeYellow);
 	addObjects(ColorTypeBlue);
@@ -24,19 +25,11 @@ CameraObjects CameraImpl::getAllCameraObjects()
 bool CameraImpl::isGoalYellow()
 {
 	Mat goal;
-	int white = 0;
 	filterFrameAndConvertToHLS();
 	inRange(m_fileredFrame, cv::Scalar(20, 100, 50), cv::Scalar(30, 200, 255), goal);
-	Rect range(0, 130, 320, 110);
+	Rect range(103, 180, 114, 60);
 	goal = goal(range);
-	for (int i = 0; i < range.height; ++i) {
-		for (int j = 0; j < range.width; j++)
-		{
-			if (goal.at<uchar>(i, j) == 255.0)
-				white++;
-		}
-	}
-	if(white > 0.7*range.area())
+	if(countNonZero(goal) > 0.8*range.area())
 		return true;
 	else
 		return false;
@@ -44,7 +37,25 @@ bool CameraImpl::isGoalYellow()
 
 void CameraImpl::filterFrameAndConvertToHLS()
 {
-	medianBlur(m_camera.getFrame(), m_fileredFrame, 9);
+	m_fileredFrame = m_camera.getFrame();
+	cv::Point2f destinationPoints[4];
+	cv::Point2f sourcePoints[4];
+	Mat transform_matrix;
+
+	sourcePoints[0] = Point2f(0,0);
+	sourcePoints[1] = Point2f(320,0);
+	sourcePoints[2] = Point2f(320,240);
+	sourcePoints[3] = Point2f(0,240);
+
+	destinationPoints[0] = Point2f(0,0);
+	destinationPoints[1] = Point2f(320,0);
+	destinationPoints[2] = Point2f(217,240);
+	destinationPoints[3] = Point2f(103,240);
+
+	transform_matrix = getPerspectiveTransform(sourcePoints, destinationPoints);
+	cv::warpPerspective(m_fileredFrame, m_fileredFrame, transform_matrix, cv::Size(320,240));
+
+	medianBlur(m_fileredFrame, m_fileredFrame, 9);
 	cvtColor(m_fileredFrame, m_fileredFrame, CV_BGR2HLS);
 }
 
@@ -54,22 +65,25 @@ void CameraImpl::addObjects(ColorType color)
 	vector<vector<Point> > contours;
 	vector<Vec4i> hierarchy;
 	Rect boundRect;
-	int white;
 	Scalar minValue, maxValue;
+	int areaThreshold;
+	Point objectFootPixel;
 
 	switch (color) {
 	case ColorTypeYellow:
-		minValue = Scalar(21, 40, 50);
+		minValue = Scalar(18, 40, 50);
 		maxValue = Scalar(28, 255, 255);
+		areaThreshold = 1500;
 		break;
 	case ColorTypeBlue:
 		minValue = Scalar(95, 40, 40);
 		maxValue = Scalar(107, 255, 255);
+		areaThreshold = 1500;
 		break;
 	case ColorTypeGreen:
-		//!@todo find green values
-		minValue = Scalar(1, 1, 1);
-		maxValue = Scalar(1, 255, 255);
+		minValue = Scalar(75, 40, 55);
+		maxValue = Scalar(85, 255, 255);
+		areaThreshold = 750;
 		break;
 	default:
 		break;
@@ -82,22 +96,34 @@ void CameraImpl::addObjects(ColorType color)
 	{
 		for(unsigned int i = 0; i < contours.size(); i++ )
 		{
-			white = 0;
-			boundRect = boundingRect( Mat(contours[i]));
-			if (boundRect.area() > 1500)
+			boundRect = boundingRect(Mat(contours[i]));
+			if (contourArea(contours[i]) > areaThreshold)
 			{
 				currentPic = colorPic(boundRect);
-				for (int i = 0; i < boundRect.height; ++i) {
-					for (int j = 0; j < boundRect.width; j++)
-					{
-						if (currentPic.at<uchar>(i, j) == 255.0)
-							white++;
-					}
+				if(countNonZero(currentPic) > 0.9*contourArea(contours[i]))
+				{
+					objectFootPixel.x = boundRect.x + 0.5*boundRect.width;
+					objectFootPixel.y = boundRect.y + boundRect.height;
+					m_cameraObjects.addObject(CameraObject(color, getCalculatedPosition(objectFootPixel)));
 				}
-				if(white > 0.45*boundRect.area())
-					m_cameraObjects.addObject(CameraObject(color, boundRect));
 			}
 		}
 		contours.clear();
 	}
+}
+
+const RoboHockey::Common::Point CameraImpl::getCalculatedPosition(Point pixel) const
+{
+	Point robotMatPosition(160,240);
+	Common::Point objectPosition;
+
+	pixel.x = pixel.x -robotMatPosition.x;
+	pixel.y = robotMatPosition.y - pixel.y;
+	objectPosition.setX(pixel.x * (1.9/320));
+	objectPosition.setY(pixel.y * (2.0/240) + 0.34);
+
+	objectPosition.rotate(Common::Angle(-0.5 * M_PI) + m_ownPosition.getOrientation());
+	objectPosition = objectPosition + m_ownPosition.getPosition();
+
+	return objectPosition;
 }

@@ -2,6 +2,7 @@
 #include "layer/view/model.h"
 #include "layer/autonomous/robot.h"
 #include "common/watch.h"
+#include "common/robotposition.h"
 #include <iostream>
 
 using namespace RoboHockey::Common;
@@ -54,7 +55,8 @@ void RobotDriver::update()
 
 	m_model.setData(
 				m_robot.getAllFieldObjects(), m_robot.stuckAtObstacle(),
-                m_robot.reachedTarget(), m_robot.getCurrentPosition(), m_robot.getCurrentOrientation());
+				m_robot.reachedTarget(), m_robot.getCurrentPosition(),
+				m_robot.getCurrentTarget(), m_robot.isMoving());
 
 	m_robot.updateActuators();
 }

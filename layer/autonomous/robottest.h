@@ -17,7 +17,7 @@ namespace Autonomous
 		CPPUNIT_TEST(goTo_positionDifferentToCurrentOne_engineGotAtLeastOneCallToGoToStraight);
 		CPPUNIT_TEST(stuckAtObstacle_tryingToTackleObstacle_true);
 		CPPUNIT_TEST(stuckAtObstacle_notTryingToTackleObstacle_false);
-		CPPUNIT_TEST(reachedTarget_currentPositionDifferentToTarget_false);
+		CPPUNIT_TEST(reachedTarget_engineSaysNotReached_false);
 		CPPUNIT_TEST(reachedTarget_currentPositionIsTargetPosition_true);
 		CPPUNIT_TEST(updateActuators_empty_layerBelowGotAtLeastOneCallToUpdateActuators);
 		CPPUNIT_TEST(updateSensorData_empty_layerBelowGotAtLeastOneCallToUpdateSensorData);
@@ -25,7 +25,6 @@ namespace Autonomous
 		CPPUNIT_TEST(stuckAtObstacle_empty_engineGotAtLeastOneCallToTryingToTackleObstacle);
 		CPPUNIT_TEST(turnToTarget_validPoint_engineGotAtLeastOneCallToTurnToTarget);
 		CPPUNIT_TEST(updateActuators_notTryingToTackleObstacle_engineGotNoCallToStop);
-		CPPUNIT_TEST(updateActuators_notTryingToTackleObstacle_targetNotReached);
 		CPPUNIT_TEST(updateActuators_tryingToTackleObstacle_engineGotAtLeastOneCallToStop);
 		CPPUNIT_TEST(updateActuators_tryingToTackleObstacle_targetReached);
 		CPPUNIT_TEST(updateSensorData_noObstacleDirectInFront_engineGotNoCallToLockForwardMovement);
@@ -41,7 +40,7 @@ namespace Autonomous
 		void goTo_positionDifferentToCurrentOne_engineGotAtLeastOneCallToGoToStraight();
 		void stuckAtObstacle_tryingToTackleObstacle_true();
 		void stuckAtObstacle_notTryingToTackleObstacle_false();
-		void reachedTarget_currentPositionDifferentToTarget_false();
+		void reachedTarget_engineSaysNotReached_false();
 		void reachedTarget_currentPositionIsTargetPosition_true();
 		void updateActuators_empty_layerBelowGotAtLeastOneCallToUpdateActuators();
 		void updateSensorData_empty_layerBelowGotAtLeastOneCallToUpdateSensorData();
@@ -49,7 +48,6 @@ namespace Autonomous
 		void stuckAtObstacle_empty_engineGotAtLeastOneCallToTryingToTackleObstacle();
 		void turnToTarget_validPoint_engineGotAtLeastOneCallToTurnToTarget();
 		void updateActuators_notTryingToTackleObstacle_engineGotNoCallToStop();
-		void updateActuators_notTryingToTackleObstacle_targetNotReached();
 		void updateActuators_tryingToTackleObstacle_engineGotAtLeastOneCallToStop();
 		void updateActuators_tryingToTackleObstacle_targetReached();
 		void updateSensorData_noObstacleDirectInFront_engineGotNoCallToLockForwardMovement();

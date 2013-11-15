@@ -3,35 +3,39 @@
 #include <math.h>
 
 using namespace RoboHockey::Common;
+using namespace std;
 
-RobotPosition::RobotPosition():
-	Point(),
-	m_orientation(0)
-{ }
-
-RobotPosition::RobotPosition(double x, double y):
-	Point(x, y),
-	m_orientation(0)
+RobotPosition::RobotPosition()
 { }
 
 RobotPosition::RobotPosition(const Point &point):
-	Point(point.getX(), point.getY()),
+	m_position(point),
 	m_orientation(0)
 { }
 
-RobotPosition::RobotPosition(double x, double y, double orientation):
-	Point(x, y),
+RobotPosition::RobotPosition(const Point &point, const Angle &orientation):
+	m_position(point),
 	m_orientation(orientation)
 { }
 
-void RobotPosition::setOrientation(double orientation)
+void RobotPosition::setOrientation(const Angle &orientation)
 {
 	m_orientation = orientation;
 }
 
-double RobotPosition::getOrientation() const
+const Angle& RobotPosition::getOrientation() const
 {
 	return m_orientation;
+}
+
+void RobotPosition::setPosition(const Point &position)
+{
+	m_position = position;
+}
+
+const Point &RobotPosition::getPosition() const
+{
+	return m_position;
 }
 
 bool RobotPosition::operator ==(const RobotPosition &position) const
@@ -40,36 +44,39 @@ bool RobotPosition::operator ==(const RobotPosition &position) const
 	return compare.isFuzzyEqual(*this, position);
 }
 
-RobotPosition RobotPosition::operator *(double value) const
+RobotPosition RobotPosition::operator*(double value) const
 {
-	return RobotPosition(getX()*value, getY()*value, m_orientation);
+	return RobotPosition(m_position*value, m_orientation);
 }
 
-RobotPosition RobotPosition::operator /(double value) const
+RobotPosition RobotPosition::operator/(double value) const
 {
-	return RobotPosition(getX()/value, getY()/value, m_orientation);
+	return RobotPosition(m_position/value, m_orientation);
 }
 
-RobotPosition RobotPosition::operator +(const RobotPosition &point) const
+RobotPosition RobotPosition::operator+(const RobotPosition &point) const
 {
-	return RobotPosition(getX()+point.getX(), getY()+point.getY(), 0);
-
+	return RobotPosition(m_position + point.getPosition(), 0);
 }
 
-RobotPosition RobotPosition::operator -(const RobotPosition &point) const
+RobotPosition RobotPosition::operator-(const RobotPosition &point) const
 {
-	return RobotPosition(getX()-point.getX(), getY()-point.getY(), 0);
-
+	return RobotPosition(m_position - point.getPosition(), 0);
 }
 
 void RobotPosition::operator *=(double value)
 {
-	*this = *this*value;
+	m_position *= value;
 }
 
 double RobotPosition::distanceTo(const RobotPosition &point) const
 {
-	Point difference = *this - point;
-	return sqrt(difference.getX()*difference.getX() + difference.getY()*difference.getY());
+	return m_position.distanceTo(point.getPosition());
+}
 
+ostream &operator<<(ostream &stream, const RobotPosition &point)
+{
+	const Point &position = point.getPosition();
+	stream << "(" << position.getX() << ", " << position.getY() << ", " << point.getOrientation() << ")";
+	return stream;
 }

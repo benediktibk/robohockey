@@ -19,6 +19,11 @@ bool Compare::isFuzzyEqual(double value1, double value2) const
 		return false;
 }
 
+bool Compare::isFuzzyEqual(const Angle &one, const Angle &two) const
+{
+	return isFuzzyEqual(one.getValueBetweenMinusPiAndPi(), two.getValueBetweenMinusPiAndPi());
+}
+
 bool Compare::isFuzzyEqual(const vector<double> &one, const vector<double> &two) const
 {
 	if (one.size() != two.size())
@@ -45,8 +50,7 @@ bool Compare::isFuzzyEqual(const Circle &one, const Circle &two) const
 
 bool Compare::isFuzzyEqual(const RobotPosition &one, const RobotPosition &two) const
 {
-	return	isFuzzyEqual(one.getX(), two.getX()) &&
-			isFuzzyEqual(one.getY(), two.getY()) &&
+	return	isFuzzyEqual(one.getPosition(), two.getPosition()) &&
 			isFuzzyEqual(one.getOrientation(), two.getOrientation());
 }
 

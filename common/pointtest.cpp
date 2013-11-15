@@ -1,6 +1,7 @@
 #include "common/pointtest.h"
 #include "common/point.h"
 #include "common/compare.h"
+#include "common/angle.h"
 #include <sstream>
 
 using namespace RoboHockey::Common;
@@ -116,4 +117,52 @@ void PointTest::distanceTo_from4And5To8And2_5()
 	Point two(8, 2);
 
 	CPPUNIT_ASSERT_DOUBLES_EQUAL(5, one.distanceTo(two), 0.00001);
+}
+
+void PointTest::rotate_1And0ByPiHalf_0And1()
+{
+	Point point(1, 0);
+
+	point.rotate(Angle::getQuarterRotation());
+
+	Compare compare(0.00001);
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(0, 1), point));
+}
+
+void PointTest::rotate_1And0ByMinusPiHalf_0AndMinus1()
+{
+	Point point(1, 0);
+
+	point.rotate(Angle::getQuarterRotation()*(-1));
+
+	Compare compare(0.00001);
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(0, -1), point));
+}
+
+void PointTest::rotate_3And4By2_correctResult()
+{
+	Point point(3, 4);
+
+	point.rotate(2);
+
+	Compare compare(0.00001);
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(-4.8856302169442, 1.0633049342885), point));
+}
+
+void PointTest::isTargetPointRightOfLine_rightOfLine_true()
+{
+	Point start(1, 2);
+	Point direction(1, 1.5);
+	Point target(5, -10);
+
+	CPPUNIT_ASSERT(Point::isTargetPointRightOfLine(start, direction, target));
+}
+
+void PointTest::isTargetPointRightOfLine_leftOfLine_false()
+{
+	Point start(1, 2);
+	Point direction(1, 1.5);
+	Point target(-15, 10);
+
+	CPPUNIT_ASSERT(!Point::isTargetPointRightOfLine(start, direction, target));
 }

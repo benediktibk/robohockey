@@ -7,16 +7,20 @@ namespace RoboHockey
 {
 namespace Common
 {
+	class Angle;
+
 	class Point
 	{
 	public:
 		Point();
 		Point(double x, double y);
+		Point(double distance, const Angle &angle);
 
 		void setX(double value);
 		double getX() const;
 		void setY(double value);
 		double getY() const;
+		void rotate(const Angle &angle);
 
 		bool operator==(const Point &point) const;
 		Point operator*(double value) const;
@@ -28,6 +32,7 @@ namespace Common
 
 	public:
 		static const Point& zero();
+		static bool isTargetPointRightOfLine(const Point &start, const Point &direction, const Point &target);
 
 	private:
 		double m_x;

@@ -3,6 +3,7 @@
 
 #include "layer/autonomous/robot.h"
 #include "common/point.h"
+#include "common/robotposition.h"
 
 namespace RoboHockey
 {
@@ -36,8 +37,8 @@ namespace Autonomous
 		virtual bool isMoving();
 		virtual void calibratePosition();
 		virtual void turnAround();
-		virtual Common::Point getCurrentPosition();
-        virtual double getCurrentOrientation();
+		virtual Common::RobotPosition getCurrentPosition();
+		virtual Common::Point getCurrentTarget() const;
 
 	private:
 		// forbid copies
@@ -46,9 +47,6 @@ namespace Autonomous
 
 	private:
 		DataAnalysis::DataAnalyser *m_dataAnalyser;
-		Common::Point m_currentPosition;
-		Common::Point m_targetPosition;
-		bool m_reachedTarget;
 		Field *m_field;
 	};
 }

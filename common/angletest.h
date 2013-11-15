@@ -16,12 +16,22 @@ namespace Common
 		CPPUNIT_TEST(constructor_2_valueIs2);
 		CPPUNIT_TEST(constructor_minus2_valueIsMinus2);
 		CPPUNIT_TEST(constructor_10_valueIsMinus256);
+		CPPUNIT_TEST(constructor_from0And0To1And0And0And1_valueIsPiHalf);
+		CPPUNIT_TEST(constructor_from1And1To2And0And0And1_valueIs3PiQuarters);
+		CPPUNIT_TEST(constructor_threePointsAndOneTargetEqualToSource_0);
+		CPPUNIT_TEST(constructor_targetsEqual_0);
+		CPPUNIT_TEST(constructor_startAt1And3EndAtMinus2And1_correctResult);
 		CPPUNIT_TEST(getValueBetweenZeroAndTwoPi_negativeValue_correctPositiveValue);
 		CPPUNIT_TEST(getHalfRotation_empty_valueIsPi);
 		CPPUNIT_TEST(getQuarterRotation_empty_valueIsPiHalf);
 		CPPUNIT_TEST(getFullRotation_empty_valueIs0);
 		CPPUNIT_TEST(operatorPlus_3And5_valueIsCorrect);
 		CPPUNIT_TEST(operatorMinus_Minus3And4_valueIsCorrect);
+		CPPUNIT_TEST(operatorMultiply_2And3_valueIsCorrect);
+		CPPUNIT_TEST(operatorDivide_3And2_valueIsCorrect);
+		CPPUNIT_TEST(operatorMinus_twoAnglesConstructedFromPoints_valueIsNegative);
+		CPPUNIT_TEST(abs_1_valueIs1);
+		CPPUNIT_TEST(abs_minus1_valueIs1);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
@@ -29,12 +39,22 @@ namespace Common
 		void constructor_2_valueIs2();
 		void constructor_minus2_valueIsMinus2();
 		void constructor_10_valueIsMinus256();
+		void constructor_from0And0To1And0And0And1_valueIsPiHalf();
+		void constructor_from1And1To2And0And0And1_valueIs3PiQuarters();
+		void constructor_threePointsAndOneTargetEqualToSource_0();
+		void constructor_targetsEqual_0();
+		void constructor_startAt1And3EndAtMinus2And1_correctResult();
 		void getValueBetweenZeroAndTwoPi_negativeValue_correctPositiveValue();
 		void getHalfRotation_empty_valueIsPi();
 		void getQuarterRotation_empty_valueIsPiHalf();
 		void getFullRotation_empty_valueIs0();
 		void operatorPlus_3And5_valueIsCorrect();
 		void operatorMinus_Minus3And4_valueIsCorrect();
+		void operatorMultiply_2And3_valueIsCorrect();
+		void operatorDivide_3And2_valueIsCorrect();
+		void operatorMinus_twoAnglesConstructedFromPoints_valueIsNegative();
+		void abs_1_valueIs1();
+		void abs_minus1_valueIs1();
 	};
 }
 }

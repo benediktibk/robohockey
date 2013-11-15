@@ -4,18 +4,12 @@
 using namespace RoboHockey::Layer::DataAnalysis;
 using namespace RoboHockey::Common;
 
-void OdometryMock::setCurrentPosition(const Point &position, double orientation)
+void OdometryMock::setCurrentPosition(const RobotPosition &position)
 {
 	m_position = position;
-	m_orientation = orientation;
 }
 
-Point OdometryMock::getCurrentPosition() const
+RobotPosition OdometryMock::getCurrentPosition() const
 {
 	return m_position;
-}
-
-double OdometryMock::getCurrentOrientation() const
-{
-	return m_orientation;
 }

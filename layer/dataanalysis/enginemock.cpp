@@ -1,5 +1,7 @@
 #include "layer/dataanalysis/enginemock.h"
+#include "common/point.h"
 
+using namespace RoboHockey::Common;
 using namespace RoboHockey::Layer::DataAnalysis;
 
 EngineMock::EngineMock() :
@@ -11,10 +13,11 @@ EngineMock::EngineMock() :
 	m_callsToTurnAround(0),
 	m_callsToLockForwardMovement(0),
 	m_callsToUnlockForwardMovement(0),
-	m_tryingToTackleObstacle(false)
+	m_tryingToTackleObstacle(false),
+	m_reachedTarget(true)
 { }
 
-void EngineMock::goToStraight(const Common::Point &)
+void EngineMock::goToStraight(const Point &)
 {
 	++m_callsToGoToStraight;
 }
@@ -34,7 +37,7 @@ void EngineMock::turnAround()
 	++m_callsToTurnAround;
 }
 
-void EngineMock::turnToTarget(const Common::Point &)
+void EngineMock::turnToTarget(const Point &)
 {
 	++m_callsToTurnToTarget;
 }
@@ -53,6 +56,16 @@ bool EngineMock::tryingToTackleObstacle()
 {
 	++m_callsToTryingToTackleObstacle;
 	return m_tryingToTackleObstacle;
+}
+
+bool EngineMock::reachedTarget() const
+{
+	return m_reachedTarget;
+}
+
+Point EngineMock::getCurrentTarget() const
+{
+	return Point();
 }
 
 unsigned int EngineMock::getCallsToGoToStraight() const
@@ -98,6 +111,11 @@ unsigned int EngineMock::getCallsToUnlockForwardMovement() const
 void EngineMock::setTryingToTackleObstacle(bool value)
 {
 	m_tryingToTackleObstacle = value;
+}
+
+void EngineMock::setReachedTarget(bool value)
+{
+	m_reachedTarget = value;
 }
 
 

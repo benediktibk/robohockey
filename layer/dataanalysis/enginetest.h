@@ -41,6 +41,10 @@ namespace DataAnalysis
 		CPPUNIT_TEST(turnAround_turnedMoreThanAHalft_lastRotationIsGreaterThanZero);
 		CPPUNIT_TEST(turnAround_turnedNearlyFull_lastRotationIsGreaterThanZero);
 		CPPUNIT_TEST(turnAround_turnedMoreThanOnce_lastRotationIsZero);
+		CPPUNIT_TEST(goToStraight_validTargetPosition_startPositionIsCorrect);
+		CPPUNIT_TEST(goToStraight_moveAwayFromStartPosition_startPositionIsCorrect);
+		CPPUNIT_TEST(goToStraight_rotationDoneAndLittleBitLeftOfDirectConnection_lastRotationIsSmallerThanZero);
+		CPPUNIT_TEST(goToStraight_rotationDoneAndLittleBitRightOfDirectConnection_lastRotationIsGreaterThanZero);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
@@ -71,6 +75,10 @@ namespace DataAnalysis
 		void turnAround_turnedMoreThanAHalft_lastRotationIsGreaterThanZero();
 		void turnAround_turnedNearlyFull_lastRotationIsGreaterThanZero();
 		void turnAround_turnedMoreThanOnce_lastRotationIsZero();
+		void goToStraight_validTargetPosition_startPositionIsCorrect();
+		void goToStraight_moveAwayFromStartPosition_startPositionIsCorrect();
+		void goToStraight_rotationDoneAndLittleBitLeftOfDirectConnection_lastRotationIsSmallerThanZero();
+		void goToStraight_rotationDoneAndLittleBitRightOfDirectConnection_lastRotationIsGreaterThanZero();
 	};
 }
 }

@@ -8,6 +8,7 @@ namespace RoboHockey
 namespace Common
 {
 	class DiscreteFunction;
+	class Angle;
 }
 
 namespace Layer
@@ -25,16 +26,16 @@ namespace DataAnalysis
 	public:
 		LidarImpl(Hardware::Lidar &lidar);
 
-		virtual LidarObjects getAllObjects(const Common::Point &ownPosition, double ownOrientation) const;
+		virtual LidarObjects getAllObjects(const Common::RobotPosition &ownPosition) const;
 
 	private:
 		std::list<std::pair<int, int> > findStartAndEndOfObjects(
 				const std::list<int> &positiveEdges, const std::list<int> &negativeEdges) const;
 		Common::DiscreteFunction* readInData() const;
-		double calculateOrientationFromSensorNumber(unsigned int value) const;
+		Common::Angle calculateOrientationFromSensorNumber(unsigned int value) const;
 
 	private:
-		static double calculateWidthFromAngleAndDistance(double angle, double distance);
+		static double calculateWidthFromAngleAndDistance(const Common::Angle &angle, double distance);
 		static std::list<int> replaceFollowingEdgesWithMiddlePosition(const std::list<int> &edges);
 
 	private:

@@ -21,17 +21,19 @@ namespace DataAnalysis
 	public:
 		CameraImpl(Hardware::Camera &camera);
 
-		virtual CameraObjects getAllCameraObjects();
+		virtual CameraObjects getAllCameraObjects(const Common::RobotPosition &position);
 		virtual bool isGoalYellow();
 
 	private:
 		void filterFrameAndConvertToHLS();
 		void addObjects(ColorType color);
+		const Common::Point getCalculatedPosition(cv::Point pixel) const;
 
 	private:
 		Hardware::Camera &m_camera;
 		cv::Mat m_fileredFrame;
 		CameraObjects m_cameraObjects;
+		Common::RobotPosition m_ownPosition;
 	};
 }
 }

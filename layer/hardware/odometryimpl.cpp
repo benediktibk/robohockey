@@ -7,14 +7,11 @@ using namespace RoboHockey::Common;
 using namespace PlayerCc;
 
 OdometryImpl::OdometryImpl(PlayerClient *playerClient) :
-	m_odometry(new Position2dProxy(playerClient)),
-	m_playerOrientationOffset(0),
-	m_ownOrientationOffset(0)
+	m_odometry(new Position2dProxy(playerClient))
 {
-	m_odometry->ResetOdometry();
 	playerClient->Read();
-	m_playerPositionOffset = getCurrentPosition();
-	m_playerOrientationOffset = getCurrentOrientation();
+	m_odometry->ResetOdometry();
+	m_playerOffset = getCurrentPosition();
 }
 
 OdometryImpl::~OdometryImpl()
@@ -23,15 +20,9 @@ OdometryImpl::~OdometryImpl()
 	m_odometry = 0;
 }
 
-void OdometryImpl::setCurrentPosition(const Point &position, double orientation)
+void OdometryImpl::setCurrentPosition(const RobotPosition &position)
 {
-	m_ownPositionOffset = position;
-	m_ownOrientationOffset = orientation;
-}
-
-double OdometryImpl::getCurrentOrientation()
-{
-	return m_odometry->GetYaw() - m_playerOrientationOffset - m_ownOrientationOffset;
+	m_ownOffset = position;
 }
 
 OdometryImpl::OdometryImpl(const OdometryImpl &)
@@ -40,7 +31,9 @@ OdometryImpl::OdometryImpl(const OdometryImpl &)
 void OdometryImpl::operator=(const OdometryImpl &)
 { }
 
-Point OdometryImpl::getCurrentPosition()
+RobotPosition OdometryImpl::getCurrentPosition()
 {
-	return Point(m_odometry->GetXPos(), m_odometry->GetYPos()) - m_playerPositionOffset - m_ownPositionOffset;
+	Point position = Point(m_odometry->GetXPos(), m_odometry->GetYPos()) - m_playerOffset.getPosition() - m_ownOffset.getPosition();
+	Angle orientation = Angle(m_odometry->GetYaw()) - m_playerOffset.getOrientation() - m_ownOffset.getOrientation();
+	return RobotPosition(position, orientation);
 }

@@ -2,7 +2,7 @@
 #define ROBOHOCKEY_LAYER_HARDWARE_ODOMETRYIMPL_H
 
 #include "layer/hardware/odometry.h"
-#include "common/point.h"
+#include "common/robotposition.h"
 
 namespace PlayerCc
 {
@@ -23,9 +23,8 @@ namespace Hardware
 		OdometryImpl(PlayerCc::PlayerClient *playerClient);
 		~OdometryImpl();
 
-		virtual void setCurrentPosition(const Common::Point &position, double orientation);
-		virtual Common::Point getCurrentPosition();
-		virtual double getCurrentOrientation();
+		virtual void setCurrentPosition(const Common::RobotPosition &position);
+		virtual Common::RobotPosition getCurrentPosition();
 
 	private:
 		OdometryImpl(const OdometryImpl &odometry);
@@ -33,10 +32,8 @@ namespace Hardware
 
 	private:
 		PlayerCc::Position2dProxy *m_odometry;
-		Common::Point m_playerPositionOffset;
-		Common::Point m_ownPositionOffset;
-		double m_playerOrientationOffset;
-		double m_ownOrientationOffset;
+		Common::RobotPosition m_playerOffset;
+		Common::RobotPosition m_ownOffset;
 	};
 }
 }

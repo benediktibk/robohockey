@@ -5,7 +5,7 @@ namespace RoboHockey
 {
 namespace Common
 {
-	class Point;
+	class RobotPosition;
 }
 
 namespace Layer
@@ -17,9 +17,8 @@ namespace DataAnalysis
 	public:
 		virtual ~Odometry() { }
 
-		virtual void setCurrentPosition(const Common::Point &position, double orientation) = 0;
-		virtual Common::Point getCurrentPosition() const = 0;
-		virtual double getCurrentOrientation() const = 0;
+		virtual void setCurrentPosition(const Common::RobotPosition &position) = 0;
+		virtual Common::RobotPosition getCurrentPosition() const = 0;
 	};
 }
 }
