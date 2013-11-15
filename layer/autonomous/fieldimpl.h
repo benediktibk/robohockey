@@ -48,7 +48,6 @@ namespace Autonomous
 		std::vector<Common::Point> &getPointsOfObjectsWithDiameterAndColor(double diameter, FieldObjectColor color);
 
 		virtual void removeAllFieldObjectsInVisibleArea();
-		bool isTargetPointRightOfLineWithParameters(Common::Point &referencePoint, Common::Point &directionVector, Common::Point &target);
 
 	private:
 		DataAnalysis::Odometry *m_odometry;

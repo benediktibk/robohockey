@@ -99,3 +99,8 @@ const Point &Point::zero()
 {
 	return m_zero;
 }
+
+bool Point::isTargetPointRightOfLine(const Point &start, const Point &direction, const Point &target)
+{
+	return 0 < (direction.getY()*(target.getX() - start.getX()) - direction.getX()*(target.getY() - start.getY()));
+}

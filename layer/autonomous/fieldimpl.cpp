@@ -145,15 +145,10 @@ void FieldImpl::removeAllFieldObjectsInVisibleArea()
 		Point currentCenter = ((*i).getCircle()).getCenter();
 
 		//! @todo Use a global parameter for distance filtering
-		if (isTargetPointRightOfLineWithParameters(referencePoint, directionVector, currentCenter) && true )
+		if (Point::isTargetPointRightOfLine(referencePoint, directionVector, currentCenter))
 		{
 			m_fieldObjects.erase(i);
 			i--;
 		}
 	}
-}
-
-bool FieldImpl::isTargetPointRightOfLineWithParameters(Point &referencePoint, Point &directionVector, Point &target)
-{
-	return 0 < (directionVector.getY()*(target.getX() - referencePoint.getX()) - directionVector.getX()*(target.getY() - referencePoint.getY()));
 }

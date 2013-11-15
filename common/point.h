@@ -32,6 +32,7 @@ namespace Common
 
 	public:
 		static const Point& zero();
+		static bool isTargetPointRightOfLine(const Point &start, const Point &direction, const Point &target);
 
 	private:
 		double m_x;
