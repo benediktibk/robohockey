@@ -70,7 +70,7 @@ void CameraImpl::addObjects(ColorType color)
 
 	switch (color) {
 	case ColorTypeYellow:
-		minValue = Scalar(21, 40, 50);
+		minValue = Scalar(18, 40, 50);
 		maxValue = Scalar(28, 255, 255);
 		areaThreshold = 1500;
 		break;
@@ -89,7 +89,6 @@ void CameraImpl::addObjects(ColorType color)
 	}
 
 	inRange(m_fileredFrame, minValue, maxValue, colorPic);
-	imwrite("test.png",colorPic);
 	colorPic.copyTo(currentPic);
 	findContours(currentPic, contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE, Point(0, 0));
 	if (!contours.empty())
