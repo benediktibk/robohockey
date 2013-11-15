@@ -50,8 +50,6 @@ namespace Autonomous
 		virtual void removeAllFieldObjectsInVisibleArea();
 		bool isTargetPointRightOfLineWithParameters(Common::Point &referencePoint, Common::Point &directionVector, Common::Point &target);
 
-
-
 	private:
 		DataAnalysis::Odometry *m_odometry;
 		const DataAnalysis::Lidar *m_lidar;

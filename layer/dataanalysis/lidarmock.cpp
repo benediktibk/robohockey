@@ -4,7 +4,16 @@
 using namespace RoboHockey::Layer::DataAnalysis;
 using namespace RoboHockey::Common;
 
-LidarObjects LidarMock::getAllObjects(const RobotPosition &ownPosition) const
+LidarMock::LidarMock() :
+	m_objects(Point())
+{ }
+
+LidarObjects LidarMock::getAllObjects(const RobotPosition &) const
 {
-	return LidarObjects(ownPosition.getPosition());
+	return m_objects;
+}
+
+void LidarMock::setAllObjects(const LidarObjects &objects)
+{
+	m_objects = objects;
 }

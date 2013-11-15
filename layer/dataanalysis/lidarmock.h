@@ -13,7 +13,14 @@ namespace DataAnalysis
 			public Lidar
 	{
 	public:
+		LidarMock();
+
 		virtual LidarObjects getAllObjects(const Common::RobotPosition &ownPosition) const;
+
+		void setAllObjects(const LidarObjects &objects);
+
+	private:
+		LidarObjects m_objects;
 	};
 }
 }
