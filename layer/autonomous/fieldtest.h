@@ -17,12 +17,16 @@ namespace Autonomous
 		CPPUNIT_TEST(update_noLidarObjects_noFieldObjects);
 		CPPUNIT_TEST(update_oneObjectFromLidarInView_oneObject);
 		CPPUNIT_TEST(update_oneObjectFromLidarNotInViewAnymoreDuringSecondCall_noFieldObjects);
+		CPPUNIT_TEST(update_oneObjectFromLidarLeftNotInViewAnymoreDuringSecondCall_noFieldObjects);
+		CPPUNIT_TEST(update_oneObjectFromLidarRightNotInViewAnymoreDuringSecondCall_noFieldObjects);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
 		void update_noLidarObjects_noFieldObjects();
 		void update_oneObjectFromLidarInView_oneObject();
 		void update_oneObjectFromLidarNotInViewAnymoreDuringSecondCall_noFieldObjects();
+		void update_oneObjectFromLidarLeftNotInViewAnymoreDuringSecondCall_noFieldObjects();
+		void update_oneObjectFromLidarRightNotInViewAnymoreDuringSecondCall_noFieldObjects();
 	};
 }
 }

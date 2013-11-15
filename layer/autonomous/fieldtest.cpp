@@ -54,3 +54,39 @@ void FieldTest::update_oneObjectFromLidarNotInViewAnymoreDuringSecondCall_noFiel
 	vector<FieldObject> fieldObjects = field.getAllFieldObjects();
 	CPPUNIT_ASSERT_EQUAL((size_t)0, fieldObjects.size());
 }
+
+void FieldTest::update_oneObjectFromLidarLeftNotInViewAnymoreDuringSecondCall_noFieldObjects()
+{
+	DataAnalysis::OdometryMock odometry;
+	DataAnalysis::LidarMock lidar;
+	DataAnalysis::CameraMock camera;
+	FieldImpl field(odometry, lidar, camera);
+	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 1), 0.1));
+	lidar.setAllObjects(lidarObjects);
+
+	field.update();
+	lidar.setAllObjects(DataAnalysis::LidarObjects(Point()));
+	field.update();
+
+	vector<FieldObject> fieldObjects = field.getAllFieldObjects();
+	CPPUNIT_ASSERT_EQUAL((size_t)0, fieldObjects.size());
+}
+
+void FieldTest::update_oneObjectFromLidarRightNotInViewAnymoreDuringSecondCall_noFieldObjects()
+{
+	DataAnalysis::OdometryMock odometry;
+	DataAnalysis::LidarMock lidar;
+	DataAnalysis::CameraMock camera;
+	FieldImpl field(odometry, lidar, camera);
+	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, -1), 0.1));
+	lidar.setAllObjects(lidarObjects);
+
+	field.update();
+	lidar.setAllObjects(DataAnalysis::LidarObjects(Point()));
+	field.update();
+
+	vector<FieldObject> fieldObjects = field.getAllFieldObjects();
+	CPPUNIT_ASSERT_EQUAL((size_t)0, fieldObjects.size());
+}
