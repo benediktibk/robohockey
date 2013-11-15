@@ -108,12 +108,18 @@ void CameraImpl::addObjects(ColorType color)
 	}
 }
 
-const RoboHockey::Common::Point CameraImpl::getCalculatedPosition(Point /*pixel*/) const
+const RoboHockey::Common::Point CameraImpl::getCalculatedPosition(Point pixel) const
 {
-	double distanceToObject = 0;
-	double orientation = 0;
+	Point robotMatPosition(160,240);
+	Common::Point objectPosition;
 
-	orientation = m_ownPosition.getOrientation().getValueBetweenZeroAndTwoPi() + orientation;
-	return (m_ownPosition.getPosition() +
-			Common::Point(distanceToObject*cos(orientation), distanceToObject*sin(orientation)));
+	pixel.x = pixel.x -robotMatPosition.x;
+	pixel.y = robotMatPosition.y - pixel.y;
+	objectPosition.setX(pixel.x * (1.9/320));
+	objectPosition.setY(pixel.y * (2.0/240) + 0.34);
+
+	objectPosition.rotate(Common::Angle(-0.5 * M_PI) + m_ownPosition.getOrientation());
+	objectPosition = objectPosition + m_ownPosition.getPosition();
+
+	return objectPosition;
 }
