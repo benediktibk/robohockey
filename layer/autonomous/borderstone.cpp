@@ -25,10 +25,11 @@ void BorderStone::searchNeighbourBorderStones(std::vector<Point*> &candidates)
 
 			double distanceDirect = m_father.distanceTo(**i);
 			double distanceViaThis = m_father.distanceTo(*this) + this->distanceTo(**i);
-			double distanceHypotenuse = sqrt(m_father.distanceTo(*this) * m_father.distanceTo(*this) + this->distanceTo(**i) * this->distanceTo(**i));
+//			double distanceHypotenuse = sqrt(m_father.distanceTo(*this) * m_father.distanceTo(*this) + this->distanceTo(**i) * this->distanceTo(**i));
 
 			if((compare.isFuzzyEqual(distanceDirect, distanceViaThis) && type != BorderStoneFieldDistanceD)
-					|| (compare.isFuzzyEqual(distanceDirect, distanceHypotenuse) && type == BorderStoneFieldDistanceD) )
+//					|| (compare.isFuzzyEqual(distanceDirect, distanceHypotenuse) && type == BorderStoneFieldDistanceD)
+					)
 			{
 				m_children.push_back(BorderStone(*this, type, m_distances, **i));
 				candidates.erase(i);
