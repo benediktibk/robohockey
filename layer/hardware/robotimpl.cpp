@@ -13,7 +13,7 @@ RobotImpl::RobotImpl(const string &playerServer)
 {
 	m_playerClient = new PlayerCc::PlayerClient(playerServer.c_str(), 6665);
 	m_engine = new EngineImpl(m_playerClient);
-	updateSensorData();
+	updateSensorData(); // don't call this before any proxy is subscribed, otherwise it will wait forever
 	m_sonar = new SonarImpl(m_playerClient);
 	m_lidar = new LidarImpl(m_playerClient);
 	m_camera = new CameraImpl(0);
