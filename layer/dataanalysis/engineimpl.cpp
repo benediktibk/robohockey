@@ -176,7 +176,7 @@ void EngineImpl::driveAndTurn(const RobotPosition &currentPosition)
 	}
 
 	double distanceAmplification = 1;
-	double orientationAmplification = 1.5;
+	double orientationAmplification = 1;
 	double magnitude = distanceAmplification*forwardError;
 	double rotationSpeed = orientationAmplification*orthogonalError;
 
