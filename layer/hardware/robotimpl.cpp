@@ -12,13 +12,13 @@ using namespace std;
 RobotImpl::RobotImpl(const string &playerServer)
 {
 	m_playerClient = new PlayerCc::PlayerClient(playerServer.c_str(), 6665);
+	m_engine = new EngineImpl(m_playerClient);
+	updateSensorData();
 	m_sonar = new SonarImpl(m_playerClient);
 	m_lidar = new LidarImpl(m_playerClient);
 	m_camera = new CameraImpl(0);
 	m_odometry = new OdometryImpl(m_playerClient);
-	m_engine = new EngineImpl(m_playerClient);
 
-	updateSensorData();
 	sleep(5);
 	updateSensorData();
 }

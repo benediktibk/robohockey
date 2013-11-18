@@ -9,7 +9,6 @@ using namespace PlayerCc;
 OdometryImpl::OdometryImpl(PlayerClient *playerClient) :
 	m_odometry(new Position2dProxy(playerClient))
 {
-	playerClient->Read();
 	m_odometry->ResetOdometry();
 	m_playerOffset = getCurrentPosition();
 }
