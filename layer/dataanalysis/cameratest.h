@@ -30,7 +30,7 @@ namespace DataAnalysis
 		CPPUNIT_TEST(getAllCameraObjects_yellowAndBluePuckAndGreenBorderstone_cameraObjectsCountIs3);
 		CPPUNIT_TEST(getAllCameraObjects_yellowPuckTwiceAndGreenBorderstone_cameraObjectsCountIs3);
 		CPPUNIT_TEST(getAllCameraObjects_yellowPuckTwiceAndGreenBorderstone1_cameraObjectsCountIs3);
-		CPPUNIT_TEST(getAllCameraObjects_yellowPuck_cameraObjectPositonIsUnknown);
+		CPPUNIT_TEST(getAllCameraObjects_yellowPuck_cameraObjectPositonIs0p6And0p1);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
@@ -52,7 +52,7 @@ namespace DataAnalysis
 		void getAllCameraObjects_yellowPuckTwiceAndGreenBorderstone1_cameraObjectsCountIs3();
 		//!@todo alte testbilder durhc neue ersetzten mit abgemessenen entfernungen
 		// test für erste ausgabe von getPosition --> werte sehen plausibel aus
-		void getAllCameraObjects_yellowPuck_cameraObjectPositonIsUnknown();
+		void getAllCameraObjects_yellowPuck_cameraObjectPositonIs0p6And0p1();
 
 	};
 }

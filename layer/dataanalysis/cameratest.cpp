@@ -138,10 +138,10 @@ void CameraTest::getAllCameraObjects_yellowPuckTwiceAndGreenBorderstone1_cameraO
 	CPPUNIT_ASSERT_EQUAL((size_t)3, camera.getAllCameraObjects(RobotPosition()).getObjectCount());
 }
 
-void CameraTest::getAllCameraObjects_yellowPuck_cameraObjectPositonIsUnknown()
+void CameraTest::getAllCameraObjects_yellowPuck_cameraObjectPositonIs0p6And0p1()
 {
 	Hardware::CameraMock hardwareCamera("yellow_puck");
 	CameraImpl camera(hardwareCamera);
 
-	CPPUNIT_ASSERT_EQUAL(Point(0,0), camera.getAllCameraObjects(RobotPosition(Point(0,0))).getAllCameraObjects().front().getPosition());
+	CPPUNIT_ASSERT_EQUAL(Point(0.6,0.1), camera.getAllCameraObjects(RobotPosition(Point(0,0))).getAllCameraObjects().front().getPosition());
 }
