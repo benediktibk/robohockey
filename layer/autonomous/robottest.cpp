@@ -177,6 +177,7 @@ void RobotTest::updateSensorData_noObstacleDirectInFront_engineGotAtLeastOneCall
 	sonar.setIsObstacleDirectInFront(false);
 
 	robot.updateSensorData();
+	robot.updateActuators();
 
 	CPPUNIT_ASSERT(engine.getCallsToUnlockForwardMovement() > 0);
 }
@@ -190,6 +191,7 @@ void RobotTest::updateSensorData_obstacleDirectInFront_engineGotAtLeastOneCallTo
 	sonar.setIsObstacleDirectInFront(true);
 
 	robot.updateSensorData();
+	robot.updateActuators();
 
 	CPPUNIT_ASSERT(engine.getCallsToLockForwardMovement() > 0);
 }

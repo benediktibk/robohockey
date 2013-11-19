@@ -57,6 +57,13 @@ vector<FieldObject> RobotImpl::getAllFieldObjects()
 void RobotImpl::updateActuators()
 {
 	DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
+	DataAnalysis::Sonar &sonar = m_dataAnalyser->getSonar();
+
+	if (sonar.isObstacleDirectInFront())
+		engine.lockForwardMovement();
+	else
+		engine.unlockForwardMovement();
+
 	m_dataAnalyser->updateActuators();
 
 	if (engine.tryingToTackleObstacle())
@@ -65,16 +72,8 @@ void RobotImpl::updateActuators()
 
 void RobotImpl::updateSensorData()
 {
-	DataAnalysis::Sonar &sonar = m_dataAnalyser->getSonar();
-	DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
-
 	m_dataAnalyser->updateSensorData();
 	m_field->update();
-
-	if (sonar.isObstacleDirectInFront())
-		engine.lockForwardMovement();
-	else
-		engine.unlockForwardMovement();
 }
 
 void RobotImpl::stop()
