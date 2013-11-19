@@ -145,3 +145,19 @@ void CameraTest::getAllCameraObjects_yellowPuck_cameraObjectPositonIs0p6And0p1()
 
 	CPPUNIT_ASSERT_EQUAL(Point(0.6,0.1), camera.getAllCameraObjects(RobotPosition(Point(0,0))).getAllCameraObjects().front().getPosition());
 }
+
+void CameraTest::getAllCameraObjects_yellowPuckTwice_cameraObjectPositonOfObjectOneIs0p6And0p0()
+{
+	Hardware::CameraMock hardwareCamera("yellow_puck_twice");
+	CameraImpl camera(hardwareCamera);
+
+	CPPUNIT_ASSERT_EQUAL(Point(0.6,0.0), camera.getAllCameraObjects(RobotPosition(Point(0,0))).getAllCameraObjects().front().getPosition());
+}
+
+void CameraTest::getAllCameraObjects_yellowPuckTwice_cameraObjectPositonOfObjectTwoIs0p7And0p2()
+{
+	Hardware::CameraMock hardwareCamera("yellow_puck_twice");
+	CameraImpl camera(hardwareCamera);
+
+	CPPUNIT_ASSERT_EQUAL(Point(0.7,0.2), camera.getAllCameraObjects(RobotPosition(Point(0,0))).getAllCameraObjects().back().getPosition());
+}
