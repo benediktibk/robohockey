@@ -217,3 +217,12 @@ void CameraTest::getAllCameraObjects_greenBorderstoneTriple1_cameraObjectPositon
 	Compare compare(0.05);
 	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(0.7,0.05), camera.getAllCameraObjects(RobotPosition(Point(0,0))).getAllCameraObjects()[1].getPosition()));
 }
+
+void CameraTest::getAllCameraObjects_yellowPuckTwiceAndRobotAt1And1AndHalfPi_cameraObjectPositonOfRightObjectIs1p0And1p6()
+{
+	Hardware::CameraMock hardwareCamera("yellow_puck_twice");
+	CameraImpl camera(hardwareCamera);
+
+	Compare compare(0.05);
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(1.0,1.6), camera.getAllCameraObjects(RobotPosition(Point(1,1),Angle::getQuarterRotation())).getAllCameraObjects().front().getPosition()));
+}
