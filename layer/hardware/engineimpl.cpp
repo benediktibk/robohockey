@@ -27,7 +27,7 @@ void EngineImpl::setSpeed(double magnitude, double rotation)
 
 bool EngineImpl::isMoving() const
 {
-	return m_engine->GetXSpeed() != 0;
+	return (m_engine->GetXSpeed() != 0) && (m_engine->GetYawSpeed() != 0);
 }
 
 double EngineImpl::limitToTresholds(double value, double lowerBound, double upperBound) const
