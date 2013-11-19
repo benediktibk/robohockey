@@ -17,6 +17,7 @@ namespace Hardware
 		double getMaximumSpeed() const;
 		double getMinimumRotation() const;
 		double getMinimumSpeed() const;
+		virtual bool isMoving() const = 0;
 
 	private:
 		static const double m_maximumMagnitude;

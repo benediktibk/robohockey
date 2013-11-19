@@ -25,6 +25,11 @@ void EngineImpl::setSpeed(double magnitude, double rotation)
 	return m_engine->SetSpeed(magnitude, rotation);
 }
 
+bool EngineImpl::isMoving() const
+{
+	return m_engine->GetXSpeed() != 0;
+}
+
 double EngineImpl::limitToTresholds(double value, double lowerBound, double upperBound) const
 {
 	if (value > upperBound)
