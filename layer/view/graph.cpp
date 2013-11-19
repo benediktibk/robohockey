@@ -119,7 +119,7 @@ void Graph::updateObjects()
 		center = center * m_pixelPerMeter;
 		double centerX = center.getX();
 		double centerY = center.getY();
-		currentItem.setRect(centerX - 0.5 * diameter, -1.0 * centerY + 0.5 * diameter, diameter, diameter);
+        currentItem.setRect(centerX, -1.0 * centerY, diameter, diameter);
 		currentItem.setBrush(Qt::red);
 	}
 
