@@ -63,5 +63,6 @@ void RobotDriver::update()
 	{
 		cout << "stuck at obstacle" << endl;
 		m_model.setData(vector<Point>(), false);
+		m_robot.stop();
 	}
 }
