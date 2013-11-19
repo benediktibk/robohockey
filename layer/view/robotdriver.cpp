@@ -39,22 +39,28 @@ void RobotDriver::update()
 	m_robot.updateSensorData();
 	vector<Point> targets = m_model.getAllTargetPoints();
 
+    if(m_model.getTurnAround() && targets.size() == 0 && m_robot.reachedTarget())
+    {
+        m_robot.turnAround();
+        m_model.setData(targets,false);
+    }
+
 	if (m_robot.stuckAtObstacle())
 	{
 		cout << "stuck at obstacle" << endl;
-		m_model.setData(vector<Point>());
+        m_model.setData(vector<Point>(), false);
 	}
 	else if (m_robot.reachedTarget() && targets.size() > 0)
 	{
 		vector<Point> targetsWithoutFirstOne(targets.begin() + 1, targets.end());
-		m_model.setData(targetsWithoutFirstOne);
+        m_model.setData(targetsWithoutFirstOne, false);
 		m_robot.goTo(targets.front());
 	}
 
 	m_model.setData(
 				m_robot.getAllFieldObjects(), m_robot.stuckAtObstacle(),
 				m_robot.reachedTarget(), m_robot.getCurrentPosition(),
-				m_robot.getCurrentTarget(), m_robot.isMoving());
+                m_robot.getCurrentTarget(), m_robot.isMoving());
 
 	m_robot.updateActuators();
 }
