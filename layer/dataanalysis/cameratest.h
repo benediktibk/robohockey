@@ -26,6 +26,7 @@ namespace DataAnalysis
 		CPPUNIT_TEST(getAllCameraObjects_yellowGoal_cameraObjectCountIs1);
 		CPPUNIT_TEST(getAllCameraObjects_yellowGoal1_cameraObjectCountIs1);
 		CPPUNIT_TEST(getAllCameraObjects_greenBorderstone_cameraObjectCountIs1);
+		CPPUNIT_TEST(getAllCameraObjects_greenBorderstone1_cameraObjectCountIs1);
 		CPPUNIT_TEST(getAllCameraObjects_greenBorderstoneTriple_cameraObjectCountIs3);
 		CPPUNIT_TEST(getAllCameraObjects_yellowAndBluePuckAndGreenBorderstone_cameraObjectsCountIs3);
 		CPPUNIT_TEST(getAllCameraObjects_yellowPuckTwiceAndGreenBorderstone_cameraObjectsCountIs3);
@@ -48,6 +49,7 @@ namespace DataAnalysis
 		void getAllCameraObjects_yellowGoal_cameraObjectCountIs1();
 		void getAllCameraObjects_yellowGoal1_cameraObjectCountIs1();
 		void getAllCameraObjects_greenBorderstone_cameraObjectCountIs1();
+		void getAllCameraObjects_greenBorderstone1_cameraObjectCountIs1();
 		void getAllCameraObjects_greenBorderstoneTriple_cameraObjectCountIs3();
 		void getAllCameraObjects_yellowAndBluePuckAndGreenBorderstone_cameraObjectsCountIs3();
 		void getAllCameraObjects_yellowPuckTwiceAndGreenBorderstone_cameraObjectsCountIs3();

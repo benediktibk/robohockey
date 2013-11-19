@@ -243,3 +243,4 @@ layer/autonomous/fielddetector.h
 layer/autonomous/fielddetector.cpp
 layer/autonomous/fielddetectortest.h
 layer/autonomous/fielddetectortest.cpp
+resources/testfiles/green_borderstone_1.png
