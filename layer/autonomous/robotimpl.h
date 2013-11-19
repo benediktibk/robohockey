@@ -48,6 +48,7 @@ namespace Autonomous
 	private:
 		DataAnalysis::DataAnalyser *m_dataAnalyser;
 		Field *m_field;
+		bool m_tryingToTackleObstacle;
 	};
 }
 }
