@@ -243,3 +243,7 @@ layer/autonomous/fielddetector.h
 layer/autonomous/fielddetector.cpp
 layer/autonomous/fielddetectortest.h
 layer/autonomous/fielddetectortest.cpp
+layer/dataanalysis/speedtresholder.h
+layer/dataanalysis/speedtresholder.cpp
+layer/dataanalysis/speedtresholdertest.h
+layer/dataanalysis/speedtresholdertest.cpp

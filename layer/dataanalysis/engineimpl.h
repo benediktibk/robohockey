@@ -17,6 +17,8 @@ namespace Hardware
 
 namespace DataAnalysis
 {
+	class SpeedTresholder;
+
 	class EngineImpl :
 			public Engine
 	{
@@ -25,6 +27,7 @@ namespace DataAnalysis
 
 	public:
 		EngineImpl(Hardware::Engine &engine, Hardware::Odometry &odometry);
+		virtual ~EngineImpl();
 
 		virtual void goToStraight(const Common::Point &position);
 		virtual void updateSpeedAndRotation();
@@ -46,6 +49,7 @@ namespace DataAnalysis
 		void updateSpeedAndRotationForRotating();
 		void turnOnly(const Common::Angle &targetOrientation, const Common::Angle &currentOrientation);
 		void driveAndTurn(const Common::RobotPosition &currentPosition);
+		void setSpeed(double magnitude, double rotationSpeed);
 
 	private:
 		Hardware::Engine &m_engine;
@@ -58,6 +62,7 @@ namespace DataAnalysis
 		bool m_oneHalfTurnDone;
 		bool m_forwardMovementLocked;
 		bool m_tryingToTackleObstacle;
+		SpeedTresholder *m_speedTresholder;
 	};
 }
 }
