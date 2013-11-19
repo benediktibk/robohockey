@@ -37,6 +37,8 @@ void EngineImpl::goToStraight(const Common::Point &position)
 	m_engineState = EngineStateDriving;
 }
 
+#include <iostream>
+
 void EngineImpl::updateSpeedAndRotation()
 {
 	switch(m_engineState)
@@ -46,6 +48,8 @@ void EngineImpl::updateSpeedAndRotation()
 	case EngineStateTurnAround: updateSpeedAndRotationForTurnAround(); break;
 	case EngineStateRotating: updateSpeedAndRotationForRotating(); break;
 	}
+
+	std::cout << m_engineState << std::endl;
 }
 
 void EngineImpl::stop()
@@ -114,15 +118,17 @@ void EngineImpl::updateSpeedAndRotationForTurnAround()
 	if (orientationDifference.getValueBetweenMinusPiAndPi() < 0)
 		m_oneHalfTurnDone = true;
 
-	if (m_oneHalfTurnDone && orientationDifference.getValueBetweenMinusPiAndPi() > 0)
+	Compare angleCompare(0.1);
+
+	if (m_oneHalfTurnDone && angleCompare.isFuzzyEqual(orientationDifference.getValueBetweenMinusPiAndPi(), 0))
 	{
 		stop();
 		return;
 	}
 
-	double orientationDifferenceToTarget = 2*M_PI - orientationDifference.getValueBetweenZeroAndTwoPi();
+	double orientationDifferenceToTarget = min(M_PI/3, 2*M_PI - orientationDifference.getValueBetweenZeroAndTwoPi());
 	m_tryingToTackleObstacle = false;
-	setSpeed(0, orientationDifferenceToTarget*0.75);
+	setSpeed(0, orientationDifferenceToTarget);
 }
 
 void EngineImpl::updateSpeedAndRotationForDriving()
