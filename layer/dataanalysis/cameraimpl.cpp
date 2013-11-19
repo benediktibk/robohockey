@@ -94,7 +94,7 @@ void CameraImpl::addObjects(ColorType color)
 	findContours(currentPic, contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE, Point(0, 0));
 	if (!contours.empty())
 	{
-		for(unsigned int i = 0; i < contours.size(); i++ )
+		for(unsigned int i = 0; i < contours.size(); i++)
 		{
 			boundRect = boundingRect(Mat(contours[i]));
 			if (contourArea(contours[i]) > areaThreshold)
@@ -102,8 +102,16 @@ void CameraImpl::addObjects(ColorType color)
 				currentPic = colorPic(boundRect);
 				if(countNonZero(currentPic) > 0.9*contourArea(contours[i]))
 				{
-					objectFootPixel.x = boundRect.x + 0.5*boundRect.width;
-					objectFootPixel.y = boundRect.y + boundRect.height;
+					for (unsigned int j = 0; j < contours[i].size(); j++)
+					{
+						if(objectFootPixel.y < contours[i][j].y)
+						{
+							objectFootPixel.x = contours[i][j].x;
+							objectFootPixel.y = contours[i][j].y;
+						}
+					}
+					//objectFootPixel.x = contours[i][contours[i].size()/2].x;boundRect.x + 0.5*boundRect.width;
+					//objectFootPixel.y = boundRect.y + boundRect.height;
 					m_cameraObjects.addObject(CameraObject(color, getCalculatedPosition(objectFootPixel)));
 				}
 			}
