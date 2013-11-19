@@ -11,6 +11,7 @@ namespace DataAnalysis
 	{
 	public:
 		SpeedTresholder();
+		virtual ~SpeedTresholder();
 
 		virtual void tresholdWheelSpeeds(double &magnitude, double &rotation) const;
 
