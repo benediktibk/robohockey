@@ -1,11 +1,11 @@
 #ifndef ROBOHOCKEY_LAYER_VIEW_CONTROLLER_H
 #define ROBOHOCKEY_LAYER_VIEW_CONTROLLER_H
 
-#include <QtGui/QDialog>
+#include <QtGui/QMainWindow>
 #include "layer/autonomous/robot.h"
 #include "layer/dataanalysis/dataanalyserimpl.h"
 #include "layer/view/model.h"
-
+#include "layer/view/graph.h"
 
 namespace Ui
 {
@@ -21,7 +21,7 @@ namespace View
 	class Model;
 
 	class Controller :
-			public QDialog
+            public QMainWindow
 	{
 		Q_OBJECT
 
@@ -30,9 +30,9 @@ namespace View
 		~Controller();
 
 	private slots:
-		void on_turnAround_clicked();
+        void on_turnAround_clicked();
 
-	public slots:
+    public slots:
 		void update();
 
     private:
@@ -43,6 +43,8 @@ namespace View
 	private:
 		Ui::View *m_ui;
 		Model &m_model;
+        Graph *m_graph;
+
 	};
 }
 }

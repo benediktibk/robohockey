@@ -8,11 +8,15 @@ using namespace RoboHockey::Layer::View;
 using namespace std;
 
 Controller::Controller(Model &model) :
-	QDialog(0),
+    QMainWindow(0),
 	m_ui(new Ui::View),
-	m_model(model)
+    m_model(model),
+    m_graph(new Graph(model))
 {
-	m_ui->setupUi(this);
+    m_ui->setupUi(this);
+    m_ui->centralwidget->layout()->addWidget(m_graph);
+    m_ui->centralwidget->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
+    m_graph->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 	m_ui->currentPosition->setText("0, 0");
 	connect(&model, SIGNAL(robotDataChanged()), this, SLOT(update()));
 }
@@ -20,11 +24,13 @@ Controller::Controller(Model &model) :
 Controller::~Controller()
 {
 	delete m_ui;
+    delete m_graph;
+    m_graph = 0;
 	m_ui = 0;
 }
 
 Controller::Controller(const Controller &) :
-	QDialog(0),
+    QMainWindow(0),
 	m_model(*new Model)
 { }
 
@@ -76,3 +82,5 @@ void Controller::update()
     }
 
 }
+
+

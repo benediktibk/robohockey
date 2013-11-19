@@ -31,7 +31,7 @@ int main(int argc, char **argv)
 	}
 
 	Model model;
-	Graph graph(model);
+    //Graph graph(model);
 	Controller controller(model);
 	Hardware::Robot *hardwareRobot = new Hardware::RobotImpl(playerServer);
 	DataAnalysis::DataAnalyser *dataAnalyser = new DataAnalysis::DataAnalyserImpl(hardwareRobot);
@@ -40,6 +40,6 @@ int main(int argc, char **argv)
 	RobotDriverLoop loop(robotDriver);
 
     controller.show();
-	graph.show();
+    //graph.show();
 	return application.exec();
 }

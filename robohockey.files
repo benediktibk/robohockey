@@ -137,11 +137,9 @@ common/circle.h
 common/circle.cpp
 common/circletest.h
 common/circletest.cpp
-
 layer/view/CMakeLists.txt
 layer/view/controller.h
 layer/view/controller.cpp
-layer/view/view.ui
 main/remotecontrol.cpp
 main/datalogger.cpp
 layer/hardware/lidar.cpp
@@ -243,7 +241,4 @@ layer/autonomous/fielddetector.h
 layer/autonomous/fielddetector.cpp
 layer/autonomous/fielddetectortest.h
 layer/autonomous/fielddetectortest.cpp
-layer/dataanalysis/speedtresholder.h
-layer/dataanalysis/speedtresholder.cpp
-layer/dataanalysis/speedtresholdertest.h
-layer/dataanalysis/speedtresholdertest.cpp
+layer/view/view.ui
