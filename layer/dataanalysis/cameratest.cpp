@@ -169,3 +169,19 @@ void CameraTest::getAllCameraObjects_yellowPuckTwice_cameraObjectPositonOfObject
 
 	CPPUNIT_ASSERT_EQUAL(Point(0.7,0.2), camera.getAllCameraObjects(RobotPosition(Point(0,0))).getAllCameraObjects().back().getPosition());
 }
+
+void CameraTest::getAllCameraObjects_bluePuck_cameraObjectPositonIs0p5AndMinus0p1()
+{
+	Hardware::CameraMock hardwareCamera("blue_puck");
+	CameraImpl camera(hardwareCamera);
+
+	CPPUNIT_ASSERT_EQUAL(Point(0.5,-0.1), camera.getAllCameraObjects(RobotPosition(Point(0,0))).getAllCameraObjects().back().getPosition());
+}
+
+void CameraTest::getAllCameraObjects_greenBorderstone_cameraObjectPositonIs0p5AndMinus0p2()
+{
+	Hardware::CameraMock hardwareCamera("green_borderstone");
+	CameraImpl camera(hardwareCamera);
+
+	CPPUNIT_ASSERT_EQUAL(Point(0.5,-0.2), camera.getAllCameraObjects(RobotPosition(Point(0,0))).getAllCameraObjects().back().getPosition());
+}

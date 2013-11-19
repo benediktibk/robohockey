@@ -34,6 +34,8 @@ namespace DataAnalysis
 		CPPUNIT_TEST(getAllCameraObjects_yellowPuck_cameraObjectPositonIs0p6And0p1);
 		CPPUNIT_TEST(getAllCameraObjects_yellowPuckTwice_cameraObjectPositonOfObjectOneIs0p6And0p0);
 		CPPUNIT_TEST(getAllCameraObjects_yellowPuckTwice_cameraObjectPositonOfObjectTwoIs0p7And0p2);
+		CPPUNIT_TEST(getAllCameraObjects_bluePuck_cameraObjectPositonIs0p5AndMinus0p1);
+		CPPUNIT_TEST(getAllCameraObjects_greenBorderstone_cameraObjectPositonIs0p5AndMinus0p2);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
@@ -59,6 +61,8 @@ namespace DataAnalysis
 		void getAllCameraObjects_yellowPuck_cameraObjectPositonIs0p6And0p1();
 		void getAllCameraObjects_yellowPuckTwice_cameraObjectPositonOfObjectOneIs0p6And0p0();
 		void getAllCameraObjects_yellowPuckTwice_cameraObjectPositonOfObjectTwoIs0p7And0p2();
+		void getAllCameraObjects_bluePuck_cameraObjectPositonIs0p5AndMinus0p1();
+		void getAllCameraObjects_greenBorderstone_cameraObjectPositonIs0p5AndMinus0p2();
 
 	};
 }
