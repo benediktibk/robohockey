@@ -71,17 +71,17 @@ void CameraImpl::addObjects(ColorType color)
 
 	switch (color) {
 	case ColorTypeYellow:
-		minValue = Scalar(18, 40, 50);
+		minValue = Scalar(18, 20, 50);
 		maxValue = Scalar(28, 255, 255);
 		areaThreshold = 1500;
 		break;
 	case ColorTypeBlue:
-		minValue = Scalar(95, 40, 40);
+		minValue = Scalar(95, 20, 40);
 		maxValue = Scalar(107, 255, 255);
 		areaThreshold = 1500;
 		break;
 	case ColorTypeGreen:
-		minValue = Scalar(75, 40, 55);
+		minValue = Scalar(75, 20, 55);
 		maxValue = Scalar(85, 255, 255);
 		areaThreshold = 750;
 		break;
@@ -94,7 +94,7 @@ void CameraImpl::addObjects(ColorType color)
 	findContours(currentPic, contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE, Point(0, 0));
 	if (!contours.empty())
 	{
-		for(unsigned int i = 0; i < contours.size(); i++ )
+		for(unsigned int i = 0; i < contours.size(); i++)
 		{
 			boundRect = boundingRect(Mat(contours[i]));
 			if (contourArea(contours[i]) > areaThreshold)
@@ -102,8 +102,15 @@ void CameraImpl::addObjects(ColorType color)
 				currentPic = colorPic(boundRect);
 				if(countNonZero(currentPic) > 0.9*contourArea(contours[i]))
 				{
-					objectFootPixel.x = boundRect.x + 0.5*boundRect.width;
-					objectFootPixel.y = boundRect.y + boundRect.height;
+					objectFootPixel = Point(0,0);
+					for (unsigned int j = 0; j < contours[i].size(); j++)
+					{
+						if(objectFootPixel.y < contours[i][j].y)
+						{
+							objectFootPixel.x = contours[i][j].x;
+							objectFootPixel.y = contours[i][j].y;
+						}
+					}
 					m_cameraObjects.addObject(CameraObject(color, getCalculatedPosition(objectFootPixel)));
 				}
 			}

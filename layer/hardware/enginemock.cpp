@@ -32,3 +32,8 @@ double EngineMock::getLastRotation() const
 	assert(getCallsToSetSpeed() > 0);
 	return m_lastRotation;
 }
+
+bool EngineMock::isMoving() const
+{
+	return true;
+}

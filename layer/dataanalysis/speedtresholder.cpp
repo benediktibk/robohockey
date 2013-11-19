@@ -11,6 +11,9 @@ SpeedTresholder::SpeedTresholder() :
 	m_maximumWheelSpeed(1.7*M_PI)
 { }
 
+SpeedTresholder::~SpeedTresholder()
+{ }
+
 void SpeedTresholder::tresholdWheelSpeeds(double &magnitude, double &rotationSpeed) const
 {
 	const double leftWheelSpeed = calculateLeftWheelSpeed(magnitude, rotationSpeed);

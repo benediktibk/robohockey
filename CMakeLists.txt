@@ -74,7 +74,9 @@ set(TESTFILES
 	yellow_puck_twice.png
 	yellow_goal_1.png
 	green_borderstone.png
+	green_borderstone_1.png
 	green_borderstone_triple.png
+	green_borderstone_triple_1.png
 	yellow_and_blue_puck_and_green_borderstone.png
 	yellow_puck_twice_and_green_borderstone.png
 	yellow_puck_twice_and_green_borderstone_1.png

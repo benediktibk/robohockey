@@ -25,6 +25,7 @@ namespace DataAnalysis
 		virtual bool tryingToTackleObstacle();
 		virtual bool reachedTarget() const;
 		virtual Common::Point getCurrentTarget() const;
+		virtual bool isMoving() const;
 
 		unsigned int getCallsToGoToStraight() const;
 		unsigned int getCallsToStop() const;
