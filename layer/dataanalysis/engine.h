@@ -27,6 +27,7 @@ namespace DataAnalysis
 		virtual bool tryingToTackleObstacle() = 0;
 		virtual bool reachedTarget() const = 0;
 		virtual Common::Point getCurrentTarget() const = 0;
+		virtual bool isMoving() const = 0;
 	};
 }
 }

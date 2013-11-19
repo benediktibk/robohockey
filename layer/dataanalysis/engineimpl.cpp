@@ -98,6 +98,11 @@ Point EngineImpl::getCurrentTarget() const
 	return m_target;
 }
 
+bool EngineImpl::isMoving() const
+{
+	return m_engine.isMoving();
+}
+
 const Point &EngineImpl::getStartPosition() const
 {
 	return m_startPosition;
