@@ -88,7 +88,7 @@ void RobotImpl::collectPuckInFront()
 
 bool RobotImpl::isMoving()
 {
-	return false;
+	return m_dataAnalyser->getEngine().isMoving();
 }
 
 void RobotImpl::calibratePosition()

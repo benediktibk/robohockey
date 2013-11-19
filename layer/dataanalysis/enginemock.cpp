@@ -68,6 +68,11 @@ Point EngineMock::getCurrentTarget() const
 	return Point();
 }
 
+bool EngineMock::isMoving() const
+{
+	return true;
+}
+
 unsigned int EngineMock::getCallsToGoToStraight() const
 {
 	return m_callsToGoToStraight;

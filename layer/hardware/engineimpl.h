@@ -22,6 +22,7 @@ namespace Hardware
 		~EngineImpl();
 
 		virtual void setSpeed(double magnitude, double rotation);
+		virtual bool isMoving() const;
 
 	private:
 		double limitToTresholds(double value, double lowerBound, double upperBound) const;
