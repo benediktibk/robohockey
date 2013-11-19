@@ -32,10 +32,13 @@ namespace DataAnalysis
 		CPPUNIT_TEST(getAllCameraObjects_yellowPuckTwiceAndGreenBorderstone_cameraObjectsCountIs3);
 		CPPUNIT_TEST(getAllCameraObjects_yellowPuckTwiceAndGreenBorderstone1_cameraObjectsCountIs3);
 		CPPUNIT_TEST(getAllCameraObjects_yellowPuck_cameraObjectPositonIs0p6And0p1);
-		CPPUNIT_TEST(getAllCameraObjects_yellowPuckTwice_cameraObjectPositonOfObjectOneIs0p6And0p0);
-		CPPUNIT_TEST(getAllCameraObjects_yellowPuckTwice_cameraObjectPositonOfObjectTwoIs0p7And0p2);
+		CPPUNIT_TEST(getAllCameraObjects_yellowPuckTwice_cameraObjectPositonOfRightObjectIs0p6And0p0);
+		CPPUNIT_TEST(getAllCameraObjects_yellowPuckTwice_cameraObjectPositonOfRightObjectIs0p7And0p2);
 		CPPUNIT_TEST(getAllCameraObjects_bluePuck_cameraObjectPositonIs0p5AndMinus0p1);
 		CPPUNIT_TEST(getAllCameraObjects_greenBorderstone_cameraObjectPositonIs0p5AndMinus0p2);
+		CPPUNIT_TEST(getAllCameraObjects_greenBorderstoneTriple1_cameraObjectCountIs3);
+		CPPUNIT_TEST(getAllCameraObjects_greenBorderstoneTriple1_cameraObjectPositonOfLeftObjectIs0p8And0p2);
+		CPPUNIT_TEST(getAllCameraObjects_greenBorderstoneTriple1_cameraObjectPositonOfObjectInTheMiddleIs0p7And0p05);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
@@ -59,10 +62,13 @@ namespace DataAnalysis
 		//!@todo alte testbilder durhc neue ersetzten mit abgemessenen entfernungen
 		// test für erste ausgabe von getPosition --> werte sehen plausibel aus
 		void getAllCameraObjects_yellowPuck_cameraObjectPositonIs0p6And0p1();
-		void getAllCameraObjects_yellowPuckTwice_cameraObjectPositonOfObjectOneIs0p6And0p0();
-		void getAllCameraObjects_yellowPuckTwice_cameraObjectPositonOfObjectTwoIs0p7And0p2();
+		void getAllCameraObjects_yellowPuckTwice_cameraObjectPositonOfRightObjectIs0p6And0p0();
+		void getAllCameraObjects_yellowPuckTwice_cameraObjectPositonOfRightObjectIs0p7And0p2();
 		void getAllCameraObjects_bluePuck_cameraObjectPositonIs0p5AndMinus0p1();
 		void getAllCameraObjects_greenBorderstone_cameraObjectPositonIs0p5AndMinus0p2();
+		void getAllCameraObjects_greenBorderstoneTriple1_cameraObjectCountIs3();
+		void getAllCameraObjects_greenBorderstoneTriple1_cameraObjectPositonOfLeftObjectIs0p8And0p2();
+		void getAllCameraObjects_greenBorderstoneTriple1_cameraObjectPositonOfObjectInTheMiddleIs0p7And0p05();
 
 	};
 }

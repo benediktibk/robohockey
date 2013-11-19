@@ -154,7 +154,7 @@ void CameraTest::getAllCameraObjects_yellowPuck_cameraObjectPositonIs0p6And0p1()
 	CPPUNIT_ASSERT_EQUAL(Point(0.6,0.1), camera.getAllCameraObjects(RobotPosition(Point(0,0))).getAllCameraObjects().front().getPosition());
 }
 
-void CameraTest::getAllCameraObjects_yellowPuckTwice_cameraObjectPositonOfObjectOneIs0p6And0p0()
+void CameraTest::getAllCameraObjects_yellowPuckTwice_cameraObjectPositonOfRightObjectIs0p6And0p0()
 {
 	Hardware::CameraMock hardwareCamera("yellow_puck_twice");
 	CameraImpl camera(hardwareCamera);
@@ -162,7 +162,7 @@ void CameraTest::getAllCameraObjects_yellowPuckTwice_cameraObjectPositonOfObject
 	CPPUNIT_ASSERT_EQUAL(Point(0.6,0.0), camera.getAllCameraObjects(RobotPosition(Point(0,0))).getAllCameraObjects().front().getPosition());
 }
 
-void CameraTest::getAllCameraObjects_yellowPuckTwice_cameraObjectPositonOfObjectTwoIs0p7And0p2()
+void CameraTest::getAllCameraObjects_yellowPuckTwice_cameraObjectPositonOfRightObjectIs0p7And0p2()
 {
 	Hardware::CameraMock hardwareCamera("yellow_puck_twice");
 	CameraImpl camera(hardwareCamera);
@@ -175,7 +175,7 @@ void CameraTest::getAllCameraObjects_bluePuck_cameraObjectPositonIs0p5AndMinus0p
 	Hardware::CameraMock hardwareCamera("blue_puck");
 	CameraImpl camera(hardwareCamera);
 
-	CPPUNIT_ASSERT_EQUAL(Point(0.5,-0.1), camera.getAllCameraObjects(RobotPosition(Point(0,0))).getAllCameraObjects().back().getPosition());
+	CPPUNIT_ASSERT_EQUAL(Point(0.5,-0.1), camera.getAllCameraObjects(RobotPosition(Point(0,0))).getAllCameraObjects().front().getPosition());
 }
 
 void CameraTest::getAllCameraObjects_greenBorderstone_cameraObjectPositonIs0p5AndMinus0p2()
@@ -183,5 +183,30 @@ void CameraTest::getAllCameraObjects_greenBorderstone_cameraObjectPositonIs0p5An
 	Hardware::CameraMock hardwareCamera("green_borderstone");
 	CameraImpl camera(hardwareCamera);
 
-	CPPUNIT_ASSERT_EQUAL(Point(0.5,-0.2), camera.getAllCameraObjects(RobotPosition(Point(0,0))).getAllCameraObjects().back().getPosition());
+	CPPUNIT_ASSERT_EQUAL(Point(0.5,-0.2), camera.getAllCameraObjects(RobotPosition(Point(0,0))).getAllCameraObjects().front().getPosition());
+}
+
+void CameraTest::getAllCameraObjects_greenBorderstoneTriple1_cameraObjectCountIs3()
+{
+	Hardware::CameraMock hardwareCamera("green_borderstone_triple_1");
+	CameraImpl camera(hardwareCamera);
+
+	CPPUNIT_ASSERT_EQUAL((size_t)3, camera.getAllCameraObjects(RobotPosition()).getObjectCount());
+}
+
+void CameraTest::getAllCameraObjects_greenBorderstoneTriple1_cameraObjectPositonOfLeftObjectIs0p8And0p2()
+{
+	Hardware::CameraMock hardwareCamera("green_borderstone_triple_1");
+	CameraImpl camera(hardwareCamera);
+
+	CPPUNIT_ASSERT_EQUAL(Point(0.8,0.2), camera.getAllCameraObjects(RobotPosition(Point(0,0))).getAllCameraObjects().back().getPosition());
+}
+
+void CameraTest::getAllCameraObjects_greenBorderstoneTriple1_cameraObjectPositonOfObjectInTheMiddleIs0p7And0p05()
+{
+	Hardware::CameraMock hardwareCamera("green_borderstone_triple_1");
+	CameraImpl camera(hardwareCamera);
+
+	//!@todo operator anpassen
+	CPPUNIT_ASSERT_EQUAL(Point(0.7,0.05), camera.getAllCameraObjects(RobotPosition(Point(0,0))).getAllCameraObjects().back().getPosition());
 }
