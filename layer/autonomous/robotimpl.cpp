@@ -13,7 +13,8 @@ using namespace std;
 
 RobotImpl::RobotImpl(DataAnalysis::DataAnalyser *dataAnalyser) :
 	m_dataAnalyser(dataAnalyser),
-	m_field(new FieldImpl(dataAnalyser->getOdometry(), dataAnalyser->getLidar(), dataAnalyser->getCamera()))
+	m_field(new FieldImpl(dataAnalyser->getOdometry(), dataAnalyser->getLidar(), dataAnalyser->getCamera())),
+	m_tryingToTackleObstacle(false)
 { }
 
 RobotImpl::~RobotImpl()
@@ -38,8 +39,7 @@ void RobotImpl::turnTo(const Point &position)
 
 bool RobotImpl::stuckAtObstacle()
 {
-	DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
-	return engine.tryingToTackleObstacle();
+	return m_tryingToTackleObstacle;
 }
 
 bool RobotImpl::reachedTarget()
@@ -66,7 +66,8 @@ void RobotImpl::updateActuators()
 
 	m_dataAnalyser->updateActuators();
 
-	if (engine.tryingToTackleObstacle())
+	m_tryingToTackleObstacle = engine.tryingToTackleObstacle();
+	if (m_tryingToTackleObstacle)
 		engine.stop();
 }
 
