@@ -2,7 +2,6 @@
 #define ROBOHOCKEY_LAYER_DATAANALYSIS_CAMERAOBJECTS_H
 
 #include "layer/dataanalysis/cameraobject.h"
-#include <list>
 #include <vector>
 
 namespace RoboHockey
@@ -18,10 +17,12 @@ namespace DataAnalysis
 
 		void addObject(const CameraObject &object);
 		size_t getObjectCount() const;
-		std::list<CameraObject> getAllCameraObjects();
+		std::vector<CameraObject> getAllCameraObjects();
+
+		const CameraObject& operator[](size_t index) const;
 
 	private:
-		std::list<CameraObject> m_objects;
+		std::vector<CameraObject> m_objects;
 	};
 }
 }
