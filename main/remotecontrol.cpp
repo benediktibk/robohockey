@@ -39,7 +39,7 @@ int main(int argc, char **argv)
 	RobotDriver robotDriver(autonomousRobot, model);
 	RobotDriverLoop loop(robotDriver);
 
-    controller.show();
+	controller.show();
 	graph.show();
 	return application.exec();
 }

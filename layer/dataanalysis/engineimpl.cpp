@@ -37,8 +37,6 @@ void EngineImpl::goToStraight(const Common::Point &position)
 	m_engineState = EngineStateDriving;
 }
 
-#include <iostream>
-
 void EngineImpl::updateSpeedAndRotation()
 {
 	switch(m_engineState)
@@ -48,8 +46,6 @@ void EngineImpl::updateSpeedAndRotation()
 	case EngineStateTurnAround: updateSpeedAndRotationForTurnAround(); break;
 	case EngineStateRotating: updateSpeedAndRotationForRotating(); break;
 	}
-
-	std::cout << m_engineState << std::endl;
 }
 
 void EngineImpl::stop()
