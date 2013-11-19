@@ -207,6 +207,5 @@ void CameraTest::getAllCameraObjects_greenBorderstoneTriple1_cameraObjectPositon
 	Hardware::CameraMock hardwareCamera("green_borderstone_triple_1");
 	CameraImpl camera(hardwareCamera);
 
-	//!@todo operator anpassen
-	CPPUNIT_ASSERT_EQUAL(Point(0.7,0.05), camera.getAllCameraObjects(RobotPosition(Point(0,0))).getAllCameraObjects().back().getPosition());
+	CPPUNIT_ASSERT_EQUAL(Point(0.7,0.05), camera.getAllCameraObjects(RobotPosition(Point(0,0))).getAllCameraObjects()[1].getPosition());
 }
