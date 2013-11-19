@@ -71,17 +71,17 @@ void CameraImpl::addObjects(ColorType color)
 
 	switch (color) {
 	case ColorTypeYellow:
-		minValue = Scalar(18, 40, 50);
+		minValue = Scalar(18, 20, 50);
 		maxValue = Scalar(28, 255, 255);
 		areaThreshold = 1500;
 		break;
 	case ColorTypeBlue:
-		minValue = Scalar(95, 40, 40);
+		minValue = Scalar(95, 20, 40);
 		maxValue = Scalar(107, 255, 255);
 		areaThreshold = 1500;
 		break;
 	case ColorTypeGreen:
-		minValue = Scalar(75, 40, 55);
+		minValue = Scalar(75, 20, 55);
 		maxValue = Scalar(85, 255, 255);
 		areaThreshold = 750;
 		break;
