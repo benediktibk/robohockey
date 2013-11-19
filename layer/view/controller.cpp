@@ -33,7 +33,7 @@ void Controller::operator=(const Controller &)
 
 void Controller::on_turnAround_clicked()
 {
-	//turnAround();
+    m_model.turnAround();
 }
 
 void Controller::update()

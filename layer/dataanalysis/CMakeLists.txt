@@ -10,6 +10,7 @@ set(LAYER_DATAANALYSIS_SRC
 	lidarobjectdistancecomparator.cpp
 	cameraobject.cpp
 	cameraobjects.cpp
+	speedtresholder.cpp
 )
 
 set(LAYER_DATAANALYSIS_TEST_SRC
@@ -30,6 +31,7 @@ set(LAYER_DATAANALYSIS_TEST_SRC
 	lidarobjectdistancecomparatortest.cpp
 	cameraobjecttest.cpp
 	cameraobjectstest.cpp
+	speedtresholdertest.cpp
 )
 
 add_library(layerdataanalysis ${LAYER_DATAANALYSIS_SRC})

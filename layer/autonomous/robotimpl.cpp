@@ -13,7 +13,8 @@ using namespace std;
 
 RobotImpl::RobotImpl(DataAnalysis::DataAnalyser *dataAnalyser) :
 	m_dataAnalyser(dataAnalyser),
-	m_field(new FieldImpl(dataAnalyser->getOdometry(), dataAnalyser->getLidar(), dataAnalyser->getCamera()))
+	m_field(new FieldImpl(dataAnalyser->getOdometry(), dataAnalyser->getLidar(), dataAnalyser->getCamera())),
+	m_tryingToTackleObstacle(false)
 { }
 
 RobotImpl::~RobotImpl()
@@ -38,8 +39,7 @@ void RobotImpl::turnTo(const Point &position)
 
 bool RobotImpl::stuckAtObstacle()
 {
-	DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
-	return engine.tryingToTackleObstacle();
+	return m_tryingToTackleObstacle;
 }
 
 bool RobotImpl::reachedTarget()
@@ -57,24 +57,24 @@ vector<FieldObject> RobotImpl::getAllFieldObjects()
 void RobotImpl::updateActuators()
 {
 	DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
-	m_dataAnalyser->updateActuators();
-
-	if (engine.tryingToTackleObstacle())
-		engine.stop();
-}
-
-void RobotImpl::updateSensorData()
-{
 	DataAnalysis::Sonar &sonar = m_dataAnalyser->getSonar();
-	DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
-
-	m_dataAnalyser->updateSensorData();
-	m_field->update();
 
 	if (sonar.isObstacleDirectInFront())
 		engine.lockForwardMovement();
 	else
 		engine.unlockForwardMovement();
+
+	m_dataAnalyser->updateActuators();
+
+	m_tryingToTackleObstacle = engine.tryingToTackleObstacle();
+	if (m_tryingToTackleObstacle)
+		engine.stop();
+}
+
+void RobotImpl::updateSensorData()
+{
+	m_dataAnalyser->updateSensorData();
+	m_field->update();
 }
 
 void RobotImpl::stop()

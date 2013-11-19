@@ -245,3 +245,7 @@ layer/autonomous/fielddetectortest.h
 layer/autonomous/fielddetectortest.cpp
 resources/testfiles/green_borderstone_1.png
 resources/testfiles/green_borderstone_triple_1.png
+layer/dataanalysis/speedtresholder.h
+layer/dataanalysis/speedtresholder.cpp
+layer/dataanalysis/speedtresholdertest.h
+layer/dataanalysis/speedtresholdertest.cpp

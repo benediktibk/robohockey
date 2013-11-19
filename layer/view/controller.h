@@ -35,7 +35,7 @@ namespace View
 	public slots:
 		void update();
 
-	private:
+    private:
 		// forbid copies
 		Controller(const Controller &viewer);
 		void operator=(const Controller &viewer);

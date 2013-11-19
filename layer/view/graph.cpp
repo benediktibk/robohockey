@@ -55,7 +55,7 @@ void Graph::mousePressEvent(QMouseEvent *ev)
 	QGraphicsView::mousePressEvent(ev);
 	vector<Point> target = m_model.getAllTargetPoints();
 	target.push_back(Point(point.x() / (double) m_pixelPerMeter, -1.0 * point.y() / (double) m_pixelPerMeter));
-	m_model.setData(target);
+    m_model.setData(target, false);
 }
 
 void Graph::updateTargets()
@@ -119,7 +119,7 @@ void Graph::updateObjects()
 		center = center * m_pixelPerMeter;
 		double centerX = center.getX();
 		double centerY = center.getY();
-		currentItem.setRect(centerX - 0.5 * diameter, -1.0 * centerY + 0.5 * diameter, diameter, diameter);
+        currentItem.setRect(centerX, -1.0 * centerY, diameter, diameter);
 		currentItem.setBrush(Qt::red);
 	}
 
