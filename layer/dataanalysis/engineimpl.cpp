@@ -1,4 +1,5 @@
 #include "layer/dataanalysis/engineimpl.h"
+#include "layer/dataanalysis/speedtresholder.h"
 #include "layer/hardware/engine.h"
 #include "layer/hardware/odometry.h"
 #include "common/compare.h"
@@ -17,8 +18,15 @@ EngineImpl::EngineImpl(Hardware::Engine &engine, Hardware::Odometry &odometry) :
 	m_rotationReached(false),
 	m_engineState(EngineStateStopped),
 	m_forwardMovementLocked(false),
-	m_tryingToTackleObstacle(false)
+	m_tryingToTackleObstacle(false),
+	m_speedTresholder(new SpeedTresholder())
 { }
+
+EngineImpl::~EngineImpl()
+{
+	delete m_speedTresholder;
+	m_speedTresholder = 0;
+}
 
 void EngineImpl::goToStraight(const Common::Point &position)
 {
@@ -44,7 +52,7 @@ void EngineImpl::stop()
 {
 	m_engineState = EngineStateStopped;
 	m_tryingToTackleObstacle = false;
-	m_engine.setSpeed(0, 0);
+	setSpeed(0, 0);
 }
 
 void EngineImpl::turnAround()
@@ -94,7 +102,7 @@ const Point &EngineImpl::getStartPosition() const
 void EngineImpl::updateSpeedAndRotationForStopped()
 {
 	m_tryingToTackleObstacle = false;
-	m_engine.setSpeed(0, 0);
+	setSpeed(0, 0);
 }
 
 void EngineImpl::updateSpeedAndRotationForTurnAround()
@@ -114,7 +122,7 @@ void EngineImpl::updateSpeedAndRotationForTurnAround()
 
 	double orientationDifferenceToTarget = 2*M_PI - orientationDifference.getValueBetweenZeroAndTwoPi();
 	m_tryingToTackleObstacle = false;
-	m_engine.setSpeed(0, min(m_engine.getMaximumRotation(), orientationDifferenceToTarget*0.75 + 1.1*m_engine.getMinimumSpeed()));
+	setSpeed(0, orientationDifferenceToTarget*0.75);
 }
 
 void EngineImpl::updateSpeedAndRotationForDriving()
@@ -154,7 +162,7 @@ void EngineImpl::turnOnly(const Angle &targetOrientation, const Angle &currentOr
 	Angle orientationDifference = targetOrientation - currentOrientation;
 	double amplification = 1;
 	m_tryingToTackleObstacle = false;
-	m_engine.setSpeed(0, orientationDifference.getValueBetweenMinusPiAndPi()*amplification);
+	setSpeed(0, orientationDifference.getValueBetweenMinusPiAndPi()*amplification);
 }
 
 void EngineImpl::driveAndTurn(const RobotPosition &currentPosition)
@@ -188,5 +196,11 @@ void EngineImpl::driveAndTurn(const RobotPosition &currentPosition)
 	else
 		m_tryingToTackleObstacle = false;
 
+	setSpeed(magnitude, rotationSpeed);
+}
+
+void EngineImpl::setSpeed(double magnitude, double rotationSpeed)
+{
+	m_speedTresholder->tresholdWheelSpeeds(magnitude, rotationSpeed);
 	m_engine.setSpeed(magnitude, rotationSpeed);
 }
