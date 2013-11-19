@@ -102,6 +102,7 @@ void CameraImpl::addObjects(ColorType color)
 				currentPic = colorPic(boundRect);
 				if(countNonZero(currentPic) > 0.9*contourArea(contours[i]))
 				{
+					objectFootPixel = Point(0,0);
 					for (unsigned int j = 0; j < contours[i].size(); j++)
 					{
 						if(objectFootPixel.y < contours[i][j].y)
@@ -110,8 +111,6 @@ void CameraImpl::addObjects(ColorType color)
 							objectFootPixel.y = contours[i][j].y;
 						}
 					}
-					//objectFootPixel.x = contours[i][contours[i].size()/2].x;boundRect.x + 0.5*boundRect.width;
-					//objectFootPixel.y = boundRect.y + boundRect.height;
 					m_cameraObjects.addObject(CameraObject(color, getCalculatedPosition(objectFootPixel)));
 				}
 			}

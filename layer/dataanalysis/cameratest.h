@@ -33,7 +33,7 @@ namespace DataAnalysis
 		CPPUNIT_TEST(getAllCameraObjects_yellowPuckTwiceAndGreenBorderstone1_cameraObjectsCountIs3);
 		CPPUNIT_TEST(getAllCameraObjects_yellowPuck_cameraObjectPositonIs0p6And0p1);
 		CPPUNIT_TEST(getAllCameraObjects_yellowPuckTwice_cameraObjectPositonOfRightObjectIs0p6And0p0);
-		CPPUNIT_TEST(getAllCameraObjects_yellowPuckTwice_cameraObjectPositonOfRightObjectIs0p7And0p2);
+		CPPUNIT_TEST(getAllCameraObjects_yellowPuckTwice_cameraObjectPositonOfLeftObjectIs0p7And0p2);
 		CPPUNIT_TEST(getAllCameraObjects_bluePuck_cameraObjectPositonIs0p5AndMinus0p1);
 		CPPUNIT_TEST(getAllCameraObjects_greenBorderstone_cameraObjectPositonIs0p5AndMinus0p2);
 		CPPUNIT_TEST(getAllCameraObjects_greenBorderstoneTriple1_cameraObjectCountIs3);
@@ -61,7 +61,7 @@ namespace DataAnalysis
 		void getAllCameraObjects_yellowPuckTwiceAndGreenBorderstone1_cameraObjectsCountIs3();
 		void getAllCameraObjects_yellowPuck_cameraObjectPositonIs0p6And0p1();
 		void getAllCameraObjects_yellowPuckTwice_cameraObjectPositonOfRightObjectIs0p6And0p0();
-		void getAllCameraObjects_yellowPuckTwice_cameraObjectPositonOfRightObjectIs0p7And0p2();
+		void getAllCameraObjects_yellowPuckTwice_cameraObjectPositonOfLeftObjectIs0p7And0p2();
 		void getAllCameraObjects_bluePuck_cameraObjectPositonIs0p5AndMinus0p1();
 		void getAllCameraObjects_greenBorderstone_cameraObjectPositonIs0p5AndMinus0p2();
 		void getAllCameraObjects_greenBorderstoneTriple1_cameraObjectCountIs3();

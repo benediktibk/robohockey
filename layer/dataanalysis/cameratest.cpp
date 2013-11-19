@@ -152,7 +152,7 @@ void CameraTest::getAllCameraObjects_yellowPuck_cameraObjectPositonIs0p6And0p1()
 	Hardware::CameraMock hardwareCamera("yellow_puck");
 	CameraImpl camera(hardwareCamera);
 
-	Compare compare(0.05);
+	Compare compare(0.06);
 	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(0.6,0.1), camera.getAllCameraObjects(RobotPosition(Point(0,0))).getAllCameraObjects().front().getPosition()));
 }
 
@@ -165,12 +165,12 @@ void CameraTest::getAllCameraObjects_yellowPuckTwice_cameraObjectPositonOfRightO
 	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(0.6,0.0), camera.getAllCameraObjects(RobotPosition(Point(0,0))).getAllCameraObjects().front().getPosition()));
 }
 
-void CameraTest::getAllCameraObjects_yellowPuckTwice_cameraObjectPositonOfRightObjectIs0p7And0p2()
+void CameraTest::getAllCameraObjects_yellowPuckTwice_cameraObjectPositonOfLeftObjectIs0p7And0p2()
 {
 	Hardware::CameraMock hardwareCamera("yellow_puck_twice");
 	CameraImpl camera(hardwareCamera);
 
-	Compare compare(0.05);
+	Compare compare(0.06);
 	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(0.7,0.2), camera.getAllCameraObjects(RobotPosition(Point(0,0))).getAllCameraObjects().back().getPosition()));
 }
 
@@ -205,7 +205,7 @@ void CameraTest::getAllCameraObjects_greenBorderstoneTriple1_cameraObjectPositon
 	Hardware::CameraMock hardwareCamera("green_borderstone_triple_1");
 	CameraImpl camera(hardwareCamera);
 
-	Compare compare(0.05);
+	Compare compare(0.06);
 	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(0.8,0.2), camera.getAllCameraObjects(RobotPosition(Point(0,0))).getAllCameraObjects().back().getPosition()));
 }
 
