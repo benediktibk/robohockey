@@ -59,8 +59,6 @@ namespace DataAnalysis
 		void getAllCameraObjects_yellowAndBluePuckAndGreenBorderstone_cameraObjectsCountIs3();
 		void getAllCameraObjects_yellowPuckTwiceAndGreenBorderstone_cameraObjectsCountIs3();
 		void getAllCameraObjects_yellowPuckTwiceAndGreenBorderstone1_cameraObjectsCountIs3();
-		//!@todo alte testbilder durhc neue ersetzten mit abgemessenen entfernungen
-		// test für erste ausgabe von getPosition --> werte sehen plausibel aus
 		void getAllCameraObjects_yellowPuck_cameraObjectPositonIs0p6And0p1();
 		void getAllCameraObjects_yellowPuckTwice_cameraObjectPositonOfRightObjectIs0p6And0p0();
 		void getAllCameraObjects_yellowPuckTwice_cameraObjectPositonOfRightObjectIs0p7And0p2();
