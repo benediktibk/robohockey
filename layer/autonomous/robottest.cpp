@@ -28,6 +28,9 @@ void RobotTest::stuckAtObstacle_tryingToTackleObstacle_true()
 	engine.setTryingToTackleObstacle(true);
 	RobotImpl robot(dataAnalyser);
 
+	robot.updateSensorData();
+	robot.updateActuators();
+
 	CPPUNIT_ASSERT(robot.stuckAtObstacle());
 }
 
@@ -98,6 +101,7 @@ void RobotTest::stuckAtObstacle_empty_engineGotAtLeastOneCallToTryingToTackleObs
 	DataAnalysis::EngineMock &engine = dataAnalyser->getEngineMock();
 	RobotImpl robot(dataAnalyser);
 
+	robot.updateActuators();
 	robot.stuckAtObstacle();
 
 	CPPUNIT_ASSERT(engine.getCallsToTryingToTackleObstacle() > 0);
