@@ -86,22 +86,66 @@ bool FieldDetector::tryToFigureOutNewOrigin(BorderStone &root)
 		secondDistance = secondChild->getDistanceToFather();
 	}
 
+	Point normFromRoot = (Point(*firstChild) - Point(root)) / distancesChecker.getStandardFieldDistance(firstDistance);
+	Point normToRoot = (Point(root) - Point(*firstChild)) / distancesChecker.getStandardFieldDistance(firstDistance);
+
+
 	if (firstDistance == secondDistance && firstDistance == BorderStoneFieldDistanceC)
 	{
 		if (linear)
 		{
-			cornerOne = root +
-						((Point(*firstChild) - Point(root)) * (standardDistanceA + standardDistanceB)) / standardDistanceC;
-			cornerTwo = root +
-						((Point(root) - Point(*firstChild)) * (standardDistanceA + standardDistanceB)) / standardDistanceC;
+			cornerOne = root + normFromRoot * (standardDistanceA + standardDistanceB);
+			cornerTwo = root + normToRoot * (standardDistanceA + standardDistanceB);
 		} else
 		{
-			cornerOne = root +
-						((Point(*firstChild) - Point(root)) * (standardDistanceA + standardDistanceB + standardDistanceC)) / standardDistanceC;
-			cornerTwo = root +
-						((Point(root) - Point(*firstChild)) * (standardDistanceA + standardDistanceB + standardDistanceC)) / standardDistanceC;
+			cornerOne = root + normFromRoot * (standardDistanceA + standardDistanceB + standardDistanceC);
+			cornerTwo = root + normToRoot * (standardDistanceA + standardDistanceB + standardDistanceC);
 		}
 
+	} else if (firstDistance == BorderStoneFieldDistanceB && secondDistance == BorderStoneFieldDistanceC)
+	{
+		if (linear)
+		{
+			cornerOne = root + normFromRoot * (standardDistanceA + 2*standardDistanceB + 2*standardDistanceC);
+			cornerTwo = root + normToRoot * (standardDistanceA);
+		} else
+		{
+			cornerOne = root + normFromRoot * (standardDistanceB + standardDistanceA);
+			cornerTwo = root + normToRoot * (2*standardDistanceC + standardDistanceB + standardDistanceA);
+		}
+	} else if (firstDistance == BorderStoneFieldDistanceC && secondDistance == BorderStoneFieldDistanceB)
+	{
+		if (linear)
+		{
+			cornerOne = root + normFromRoot * (standardDistanceA);
+			cornerTwo = root + normToRoot * (standardDistanceA + 2*standardDistanceB + 2*standardDistanceC);
+		} else
+		{
+			cornerOne = root + normFromRoot * (2*standardDistanceC + standardDistanceB + standardDistanceA);
+			cornerTwo = root + normToRoot * (standardDistanceB + standardDistanceA);
+		}
+	} else if (firstDistance == BorderStoneFieldDistanceA && secondDistance == BorderStoneFieldDistanceB)
+	{
+		if (linear)
+		{
+			cornerOne = root + normFromRoot * (2*standardDistanceA + 2*standardDistanceB + 2*standardDistanceC);
+			cornerTwo = root;
+		} else
+		{
+			cornerOne = root + normFromRoot * (standardDistanceA);
+			cornerTwo = root + normToRoot * (2*standardDistanceB + 2*standardDistanceC + standardDistanceA);
+		}
+	} else if (firstDistance == BorderStoneFieldDistanceB && secondDistance == BorderStoneFieldDistanceA)
+	{
+		if (linear)
+		{
+			cornerOne = root + normFromRoot * (standardDistanceA + standardDistanceB);
+			cornerTwo = root + normToRoot * (standardDistanceA + standardDistanceB + 2*standardDistanceC);
+		} else
+		{
+			cornerOne = root + normFromRoot * (2*standardDistanceC + 2*standardDistanceB + standardDistanceA);
+			cornerTwo = root + normToRoot * (standardDistanceA);
+		}
 	}
 
 	Point possibleNewOrigin;
