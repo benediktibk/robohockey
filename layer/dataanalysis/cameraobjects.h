@@ -17,7 +17,8 @@ namespace DataAnalysis
 
 		void addObject(const CameraObject &object);
 		size_t getObjectCount() const;
-		std::vector<CameraObject> getAllCameraObjects();
+		const CameraObject& front() const;
+		const CameraObject& back() const;
 
 		const CameraObject& operator[](size_t index) const;
 

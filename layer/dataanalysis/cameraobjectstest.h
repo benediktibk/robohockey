@@ -15,12 +15,12 @@ namespace DataAnalysis
 	{
 		CPPUNIT_TEST_SUITE(CameraObjectsTest);
 		CPPUNIT_TEST(getObjectCount_add1Object_objectCountIs1);
-		CPPUNIT_TEST(getAllCameraObjects_add2Objects_secondObjectIsYellow);
+		CPPUNIT_TEST(getColorType_add2Objects_secondObjectIsYellow);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
 		void getObjectCount_add1Object_objectCountIs1();
-		void getAllCameraObjects_add2Objects_secondObjectIsYellow();
+		void getColorType_add2Objects_secondObjectIsYellow();
 	};
 }
 }
