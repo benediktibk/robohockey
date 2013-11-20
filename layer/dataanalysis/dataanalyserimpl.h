@@ -36,6 +36,7 @@ namespace DataAnalysis
 
 	private:
 		Hardware::Robot *m_robot;
+		const double m_minimumDistanceToObstacle;
 		Sonar *m_sonar;
 		Lidar *m_lidar;
 		Camera *m_camera;

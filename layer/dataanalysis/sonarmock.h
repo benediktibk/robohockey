@@ -15,7 +15,7 @@ namespace DataAnalysis
 	public:
 		SonarMock();
 
-		virtual bool isObstacleDirectInFront(double minimumDistanceToObstacle);
+		virtual bool isObstacleDirectInFront();
 
 		void setIsObstacleDirectInFront(bool value);
 

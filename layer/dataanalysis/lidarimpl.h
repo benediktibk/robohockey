@@ -24,7 +24,7 @@ namespace DataAnalysis
 			public Lidar
 	{
 	public:
-		LidarImpl(Hardware::Lidar &lidar);
+		LidarImpl(Hardware::Lidar &lidar, double minimumDistanceToObstacle);
 
 		virtual LidarObjects getAllObjects(const Common::RobotPosition &ownPosition) const;
 
@@ -40,14 +40,13 @@ namespace DataAnalysis
 
 	private:
 		Hardware::Lidar &m_lidar;
-		unsigned int m_minimumSensorNumber;
-		unsigned int m_maximumSensorNumber;
-
-	private:
-		static const double m_edgeTreshold;
-		static const int m_minimumWidthInSensorNumbers;
-		static const double m_maximumWidthInRadiants;
-		static const double m_maximumWidthInMeter;
+		const unsigned int m_minimumSensorNumber;
+		const unsigned int m_maximumSensorNumber;
+		const double m_minimumDistanceToObstacle;
+		const double m_edgeTreshold;
+		const int m_minimumWidthInSensorNumbers;
+		const double m_maximumWidthInRadiants;
+		const double m_maximumWidthInMeter;
 	};
 }
 }

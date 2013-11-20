@@ -12,15 +12,15 @@ using namespace RoboHockey::Layer::DataAnalysis;
 using namespace std;
 using namespace boost;
 
-const double LidarImpl::m_edgeTreshold = 0.5;
-const int LidarImpl::m_minimumWidthInSensorNumbers = 3;
-const double LidarImpl::m_maximumWidthInRadiants = 1;
-const double LidarImpl::m_maximumWidthInMeter = 0.7;
-
-LidarImpl::LidarImpl(Hardware::Lidar &lidar) :
+LidarImpl::LidarImpl(Hardware::Lidar &lidar, double minimumDistanceToObstacle) :
 	m_lidar(lidar),
 	m_minimumSensorNumber(lidar.getMinimumSensorNumber()),
-	m_maximumSensorNumber(lidar.getMaximumSensorNumber())
+	m_maximumSensorNumber(lidar.getMaximumSensorNumber()),
+	m_minimumDistanceToObstacle(minimumDistanceToObstacle),
+	m_edgeTreshold(0.5),
+	m_minimumWidthInSensorNumbers(3),
+	m_maximumWidthInRadiants(1),
+	m_maximumWidthInMeter(0.7)
 { }
 
 LidarObjects LidarImpl::getAllObjects(const RobotPosition &ownPosition) const

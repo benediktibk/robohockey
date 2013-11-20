@@ -19,7 +19,7 @@ int main(int, char**)
 	while(key != 'q')
 	{
 		dataAnalyser.updateSensorData();
-		bool value = sonar.isObstacleDirectInFront(0.3);
+		bool value = sonar.isObstacleDirectInFront();
 
 		if (value)
 			cout << "obstacle is in front" << endl;

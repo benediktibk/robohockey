@@ -6,7 +6,7 @@ SonarMock::SonarMock() :
 	m_isObstacleDirectInFront(false)
 { }
 
-bool SonarMock::isObstacleDirectInFront(double)
+bool SonarMock::isObstacleDirectInFront()
 {
 	return m_isObstacleDirectInFront;
 }
