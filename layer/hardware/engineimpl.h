@@ -25,9 +25,6 @@ namespace Hardware
 		virtual bool isMoving() const;
 
 	private:
-		double limitToTresholds(double value, double lowerBound, double upperBound) const;
-
-	private:
 		// forbid copies
 		EngineImpl(const EngineImpl &engine);
 		void operator=(const EngineImpl &engine);

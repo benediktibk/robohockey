@@ -216,7 +216,6 @@ main/sonartest.cpp
 layer/autonomous/fieldtest.h
 layer/autonomous/fieldtest.cpp
 layer/dataanalysis/colorType.h
-layer/hardware/engine.cpp
 layer/view/graph.h
 layer/view/graph.cpp
 common/angle.h

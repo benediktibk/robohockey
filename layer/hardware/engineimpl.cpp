@@ -7,8 +7,7 @@ using namespace PlayerCc;
 EngineImpl::EngineImpl(PlayerCc::PlayerClient *playerClient) :
 	m_engine(new Position2dProxy(playerClient, 0))
 {
-	m_engine->SetSpeed(0, 0);
-	m_engine->SetMotorEnable(true);
+	setSpeed(0, 0);
 }
 
 EngineImpl::~EngineImpl()
@@ -20,27 +19,17 @@ EngineImpl::~EngineImpl()
 
 void EngineImpl::setSpeed(double magnitude, double rotation)
 {
-	magnitude = limitToTresholds(magnitude, getMinimumSpeed(), getMaximumSpeed());
-	rotation = limitToTresholds(rotation, getMinimumRotation(), getMaximumRotation());
-	return m_engine->SetSpeed(magnitude, rotation);
+	bool enableMotor = false;
+	if (magnitude != 0 || rotation != 0)
+		enableMotor = true;
+
+	m_engine->SetMotorEnable(enableMotor);
+	m_engine->SetSpeed(magnitude, rotation);
 }
 
 bool EngineImpl::isMoving() const
 {
 	return (m_engine->GetXSpeed() != 0) && (m_engine->GetYawSpeed() != 0);
-}
-
-double EngineImpl::limitToTresholds(double value, double lowerBound, double upperBound) const
-{
-	if (value > upperBound)
-		value = upperBound;
-	else if (value < (-1)*upperBound)
-		value = (-1)*upperBound;
-
-	if (fabs(value) < lowerBound)
-		value = 0;
-
-	return value;
 }
 
 EngineImpl::EngineImpl(const EngineImpl &)

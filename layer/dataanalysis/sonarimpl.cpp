@@ -10,25 +10,15 @@ SonarImpl::SonarImpl(Hardware::Sonar &sonar) :
 
 bool SonarImpl::isObstacleDirectInFront()
 {
-	double sum = 0;
-	int counter = 0;
-	double distance = 0;
-	bool isDirectInFront = false;
+	double leftFrontValue = m_sonar.getDistanceForSensor(3);
+	double rightFrontValue = m_sonar.getDistanceForSensor(4);
+	double meanDistance = (leftFrontValue + rightFrontValue)/2;
+	double breakingWay = 0.2;
+	double lengthOfRobot = 0.1;
+	double angst = 0.1;
 
-	for(int i = 2; i < 6; i++)
-	{
-		if(m_sonar.getDistanceForSensor(i) < 0.5)
-			counter += 1;
-		sum += m_sonar.getDistanceForSensor(i);
-	}
-
-	sum += m_sonar.getDistanceForSensor(3);
-	sum += m_sonar.getDistanceForSensor(4);
-	distance = sum/6;
-
-	if (distance < 0.7)
-		isDirectInFront = true;
-	else if(counter >= 2)
-		isDirectInFront = true;
-	return isDirectInFront;
+	if (meanDistance < breakingWay + lengthOfRobot + angst)
+		return true;
+	else
+		return false;
 }
