@@ -1,5 +1,6 @@
 #include "layer/autonomous/fielddetector.h"
 #include "layer/autonomous/borderstone.h"
+#include "common/angle.h"
 #include <iostream>
 #include <math.h>
 
@@ -31,7 +32,7 @@ bool FieldDetector::tryToDetectField()
 		if (numberOfFoundBorderStones > 2)
 		{
 			cout << "Found " << numberOfFoundBorderStones << " BorderStones!" << endl;
-			//if (tryToFigureOutNewOrigin(root))
+			if (tryToFigureOutNewOrigin(root))
 				return true;
 		}
 
@@ -63,8 +64,6 @@ bool FieldDetector::tryToFigureOutNewOrigin(BorderStone &root)
 	double standardDistanceC = distancesChecker.getStandardFieldDistance(BorderStoneFieldDistanceC);
 
 
-	double rotationOne = 0.0;
-	double rotationTwo = 0.0;
 	Point cornerOne;
 	Point cornerTwo;
 	BorderStone *firstChild;
@@ -103,8 +102,6 @@ bool FieldDetector::tryToFigureOutNewOrigin(BorderStone &root)
 						((Point(root) - Point(*firstChild)) * (standardDistanceA + standardDistanceB + standardDistanceC)) / standardDistanceC;
 		}
 
-		rotationOne = -1.0 * atan(((Point(*firstChild) - Point(root)).getY() / (Point(*firstChild) - Point(root)).getX()));
-		rotationTwo = M_PI + rotationOne;
 	}
 
 	Point possibleNewOrigin;
@@ -114,14 +111,20 @@ bool FieldDetector::tryToFigureOutNewOrigin(BorderStone &root)
 	else
 		possibleNewOrigin = cornerTwo;
 
-	if (fabs(rotationOne) < M_PI)
+	Point pointOfRoot(root.getX(), root.getY());
+
+	if (!(pointOfRoot == possibleNewOrigin))
 	{
-		m_rotation = rotationOne;
-	}
-	else
+		Angle angle(possibleNewOrigin, pointOfRoot);
+		m_rotation = -1.0 * angle.getValueBetweenZeroAndTwoPi();
+	} else
 	{
-		m_rotation = rotationTwo;
+		Point onePointFound(root.getAllChildren().front().getX(), root.getAllChildren().front().getY());
+		Angle angle(possibleNewOrigin, onePointFound);
+		m_rotation = -1.0 * angle.getValueBetweenZeroAndTwoPi();
 	}
 
-	return false;
+	m_newOrigin = possibleNewOrigin;
+
+	return true;
 }
