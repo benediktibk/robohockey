@@ -47,6 +47,7 @@ void RobotDriver::update()
 
     if(m_model.getStop())
     {
+        targets.clear();
         m_robot.stop();
         m_model.setData(targets, false, false, false);
     }
