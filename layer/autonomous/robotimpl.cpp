@@ -58,8 +58,11 @@ void RobotImpl::updateActuators()
 {
 	DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
 	DataAnalysis::Sonar &sonar = m_dataAnalyser->getSonar();
+	double brakingDistance = 0.2;
+	double lengthOfRobot = 0.1;
+	double minimumDistanceToObstacle = brakingDistance + lengthOfRobot;
 
-	if (sonar.isObstacleDirectInFront())
+	if (sonar.isObstacleDirectInFront(minimumDistanceToObstacle))
 		engine.lockForwardMovement();
 	else
 		engine.unlockForwardMovement();

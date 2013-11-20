@@ -12,7 +12,7 @@ namespace DataAnalysis
 	public:
 		virtual ~Sonar() { }
 
-        virtual bool isObstacleDirectInFront() = 0;
+		virtual bool isObstacleDirectInFront(double minimumDistanceToObstacle) = 0;
 	};
 }
 }

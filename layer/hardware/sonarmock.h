@@ -16,6 +16,7 @@ namespace Hardware
 	public:
 		SonarMock();
 
+		virtual void updateSensorData();
 		virtual double getDistanceForSensor(unsigned int sensorNumber);
 		unsigned int getCallsToGetDistanceForSensor() const;
 		void setValue(unsigned int sensorNumber, double value);

@@ -18,12 +18,12 @@ namespace DataAnalysis
 			public Sonar
 	{
 	public:
-        SonarImpl(Hardware::Sonar &sonar);
+		SonarImpl(Hardware::Sonar &sonar);
 
-        virtual bool isObstacleDirectInFront();
+		virtual bool isObstacleDirectInFront(double minimumDistanceToObstacle);
 
 	private:
-        Hardware::Sonar &m_sonar;
+		Hardware::Sonar &m_sonar;
 	};
 }
 }

@@ -10,7 +10,7 @@ void SonarTest::isObstacleInFront_mockHardwareSonar_atLeastOneCallToGetDistanceF
 	Hardware::SonarMock hardwareSonar;
 	SonarImpl sonar(hardwareSonar);
 
-	sonar.isObstacleDirectInFront();
+	sonar.isObstacleDirectInFront(0.3);
 
 	CPPUNIT_ASSERT(hardwareSonar.getCallsToGetDistanceForSensor() > 0);
 }
@@ -22,7 +22,7 @@ void SonarTest::isObstacleInFront_nothingInFront_false()
 	hardwareSonar.setValue(3, 5);
 	hardwareSonar.setValue(4, 5);
 
-	CPPUNIT_ASSERT(!sonar.isObstacleDirectInFront());
+	CPPUNIT_ASSERT(!sonar.isObstacleDirectInFront(0.3));
 }
 
 void SonarTest::isObstacleInFront_obstacleIn01meter_true()
@@ -32,5 +32,5 @@ void SonarTest::isObstacleInFront_obstacleIn01meter_true()
 	hardwareSonar.setValue(3, 0.1);
 	hardwareSonar.setValue(4, 0.1);
 
-	CPPUNIT_ASSERT(sonar.isObstacleDirectInFront());
+	CPPUNIT_ASSERT(sonar.isObstacleDirectInFront(0.3));
 }

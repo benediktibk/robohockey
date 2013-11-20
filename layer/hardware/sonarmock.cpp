@@ -6,6 +6,9 @@ SonarMock::SonarMock() :
 	m_callsToGetDistanceForSensor(0)
 { }
 
+void SonarMock::updateSensorData()
+{ }
+
 double SonarMock::getDistanceForSensor(unsigned int sensorNumber)
 {
 	++m_callsToGetDistanceForSensor;

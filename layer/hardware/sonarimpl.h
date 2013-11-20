@@ -2,6 +2,7 @@
 #define ROBOHOCKEY_LAYER_HARDWARE_SONARIMPL_H
 
 #include "layer/hardware/sonar.h"
+#include <map>
 
 namespace PlayerCc
 {
@@ -22,6 +23,7 @@ namespace Hardware
 		SonarImpl(PlayerCc::PlayerClient *playerClient);
 		~SonarImpl();
 
+		virtual void updateSensorData();
 		virtual double getDistanceForSensor(unsigned int sensorNumber);
 
 	private:
@@ -30,6 +32,8 @@ namespace Hardware
 
 	private:
 		PlayerCc::RangerProxy *m_sonar;
+		std::map<unsigned int, double> m_lastValues;
+		std::map<unsigned int, double> m_currentValues;
 	};
 }
 }

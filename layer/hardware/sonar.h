@@ -12,6 +12,7 @@ namespace Hardware
 	public:
 		virtual ~Sonar();
 
+		virtual void updateSensorData() = 0;
 		virtual double getDistanceForSensor(unsigned int sensorNumber) = 0;
 		unsigned int getMinimumSensorNumber() const;
 		unsigned int getMaximumSensorNumber() const;

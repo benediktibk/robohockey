@@ -13,14 +13,15 @@ RobotImpl::RobotImpl(const string &playerServer)
 {
 	m_playerClient = new PlayerCc::PlayerClient(playerServer.c_str(), 6665);
 	m_engine = new EngineImpl(m_playerClient);
-	updateSensorData(); // don't call this before any proxy is subscribed, otherwise it will wait forever
+	m_playerClient->Read(); // don't call this before any proxy is subscribed, otherwise it will wait forever
 	m_sonar = new SonarImpl(m_playerClient);
 	m_lidar = new LidarImpl(m_playerClient);
 	m_camera = new CameraImpl(0);
 	m_odometry = new OdometryImpl(m_playerClient);
 
-	sleep(5);
-	updateSensorData();
+	sleep(5); // wait till the lidar startup is done
+	updateSensorData(); // fetch reasonable values
+	updateSensorData(); // call it a second time to have current and last values in the sonar
 }
 
 RobotImpl::~RobotImpl()
@@ -67,6 +68,7 @@ Engine &RobotImpl::getEngine()
 void RobotImpl::updateSensorData()
 {
 	m_playerClient->Read();
+	m_sonar->updateSensorData();
 }
 
 RobotImpl::RobotImpl(const RobotImpl &)
