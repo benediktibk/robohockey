@@ -17,8 +17,14 @@ SonarImpl::~SonarImpl()
 void SonarImpl::updateSensorData()
 {
 	m_lastValues = m_currentValues;
+
 	for (unsigned int i = getMinimumSensorNumber(); i <= getMaximumSensorNumber(); ++i)
-		m_currentValues[i] = m_sonar->GetRange(i);
+	{
+		double newValue = m_sonar->GetRange(i);
+
+		if (newValue < 2 || m_currentValues.count(i) == 0)
+			m_currentValues[i] = newValue;
+	}
 }
 
 double SonarImpl::getDistanceForSensor(unsigned int sensorNumber)

@@ -12,10 +12,11 @@ bool SonarImpl::isObstacleDirectInFront(double minimumDistanceToObstacle)
 {
 	double leftFrontValue = m_sonar.getDistanceForSensor(3);
 	double rightFrontValue = m_sonar.getDistanceForSensor(4);
-	double meanDistance = (leftFrontValue + rightFrontValue)/2;
 	double angst = 0.1;
+	double minimumDistanceWithAngst = minimumDistanceToObstacle + angst;
 
-	if (meanDistance < minimumDistanceToObstacle + angst)
+	if (	leftFrontValue < minimumDistanceWithAngst ||
+			rightFrontValue < minimumDistanceWithAngst)
 		return true;
 	else
 		return false;
