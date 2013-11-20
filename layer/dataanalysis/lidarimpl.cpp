@@ -12,7 +12,7 @@ using namespace RoboHockey::Layer::DataAnalysis;
 using namespace std;
 using namespace boost;
 
-LidarImpl::LidarImpl(Hardware::Lidar &lidar, double minimumDistanceToObstacle) :
+LidarImpl::LidarImpl(Hardware::Lidar &lidar, double minimumDistanceToObstacle, double axisLength) :
 	m_lidar(lidar),
 	m_minimumSensorNumber(lidar.getMinimumSensorNumber()),
 	m_maximumSensorNumber(lidar.getMaximumSensorNumber()),
@@ -20,8 +20,34 @@ LidarImpl::LidarImpl(Hardware::Lidar &lidar, double minimumDistanceToObstacle) :
 	m_edgeTreshold(0.5),
 	m_minimumWidthInSensorNumbers(3),
 	m_maximumWidthInRadiants(1),
-	m_maximumWidthInMeter(0.7)
-{ }
+	m_maximumWidthInMeter(0.7),
+	m_axisLength(axisLength)
+{
+	const double possibleBlindAngle = 20*M_PI/180; // more than the necessary 12°, just to be sure
+	const unsigned int possibleBlindSensorNumberRight = ceil((M_PI/2 + possibleBlindAngle)*361/M_PI);
+	const unsigned int possibleBlindSensorNumberLeft = floor((M_PI/2 - possibleBlindAngle)*361/M_PI);
+	const size_t capacity = m_maximumSensorNumber - m_minimumSensorNumber - (possibleBlindSensorNumberRight - possibleBlindSensorNumberLeft);
+	m_minimumDistances.reserve(capacity);
+
+	assert(possibleBlindSensorNumberRight < m_maximumSensorNumber);
+	assert(possibleBlindSensorNumberLeft < m_maximumSensorNumber);
+
+	for (unsigned int i = m_minimumSensorNumber; i < possibleBlindSensorNumberLeft; ++i)
+	{
+		Angle angle = calculateOrientationFromSensorNumber(i);
+		double minimumDistance = calculateMinimumDistanceToObstacle(angle);
+		m_minimumDistances.push_back(DistanceForSensor(i, minimumDistance));
+	}
+
+	for (unsigned int i = possibleBlindSensorNumberRight; i < m_maximumSensorNumber; ++i)
+	{
+		Angle angle = calculateOrientationFromSensorNumber(i);
+		double minimumDistance = calculateMinimumDistanceToObstacle(angle);
+		m_minimumDistances.push_back(DistanceForSensor(i, minimumDistance));
+	}
+
+	assert(m_minimumDistances.capacity() <= capacity);
+}
 
 LidarObjects LidarImpl::getAllObjects(const RobotPosition &ownPosition) const
 {
@@ -65,6 +91,21 @@ LidarObjects LidarImpl::getAllObjects(const RobotPosition &ownPosition) const
 	}
 
 	return objects;
+}
+
+bool LidarImpl::isObstacleInFront() const
+{
+	for (vector<DistanceForSensor>::const_iterator i = m_minimumDistances.begin(); i != m_minimumDistances.end(); ++i)
+	{
+		unsigned int sensorNumber = i->first;
+		double minimumDistance = i->second;
+		double distance = m_lidar.getDistance(sensorNumber);
+
+		if (distance < minimumDistance)
+			return true;
+	}
+
+	return false;
 }
 
 list<pair<int, int> > LidarImpl::findStartAndEndOfObjects(
@@ -126,6 +167,17 @@ Angle LidarImpl::calculateOrientationFromSensorNumber(unsigned int value) const
 	double k = M_PI/(static_cast<double>(m_maximumSensorNumber) - m_minimumSensorNumber);
 	double d = (-1)*M_PI/2;
 	return Angle(value*k + d);
+}
+
+double LidarImpl::calculateMinimumDistanceToObstacle(const Angle &angle) const
+{
+	const double anglePositive = fabs(angle.getValueBetweenMinusPiAndPi());
+	const double orthogonalDistance = m_axisLength/(2*tan(anglePositive));
+
+	if (orthogonalDistance <= m_minimumDistanceToObstacle)
+		return m_axisLength/(2*sin(anglePositive));
+	else
+		return m_minimumDistanceToObstacle/cos(anglePositive);
 }
 
 double LidarImpl::calculateWidthFromAngleAndDistance(const Angle &angle, double distance)

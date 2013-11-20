@@ -24,6 +24,7 @@ namespace DataAnalysis
 		 * All other orientations are in mathematical positive direction.
 		 */
 		virtual LidarObjects getAllObjects(const Common::RobotPosition &ownPosition) const = 0;
+		virtual bool isObstacleInFront() const = 0;
 	};
 }
 }

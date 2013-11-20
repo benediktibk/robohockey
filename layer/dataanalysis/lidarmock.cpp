@@ -13,6 +13,11 @@ LidarObjects LidarMock::getAllObjects(const RobotPosition &) const
 	return m_objects;
 }
 
+bool LidarMock::isObstacleInFront() const
+{
+	return false;
+}
+
 void LidarMock::setAllObjects(const LidarObjects &objects)
 {
 	m_objects = objects;

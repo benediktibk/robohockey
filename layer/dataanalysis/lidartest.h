@@ -38,6 +38,10 @@ namespace DataAnalysis
 		CPPUNIT_TEST(getAllObjects_onePuckInQuiteADistanceVersion1_distanceAndDiameterIsCorrect);
 		CPPUNIT_TEST(getAllObjects_onePuckInQuiteADistanceVersion2_distanceAndDiameterIsCorrect);
 		CPPUNIT_TEST(getAllObjects_maximumDistanceToBoundaryPostOfOwnFieldPart_distanceAndDiameterIsCorrect);
+		CPPUNIT_TEST(isObstacleInFront_noObstacleInFront_false);
+		CPPUNIT_TEST(isObstacleInFront_puckCollected_false);
+		CPPUNIT_TEST(isObstacleInFront_obstacleOnLeftSide_true);
+		CPPUNIT_TEST(isObstacleInFront_obstacleOnRightSide_true);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
@@ -59,6 +63,10 @@ namespace DataAnalysis
 		void getAllObjects_onePuckInQuiteADistanceVersion1_distanceAndDiameterIsCorrect();
 		void getAllObjects_onePuckInQuiteADistanceVersion2_distanceAndDiameterIsCorrect();
 		void getAllObjects_maximumDistanceToBoundaryPostOfOwnFieldPart_distanceAndDiameterIsCorrect();
+		void isObstacleInFront_noObstacleInFront_false();
+		void isObstacleInFront_puckCollected_false();
+		void isObstacleInFront_obstacleOnLeftSide_true();
+		void isObstacleInFront_obstacleOnRightSide_true();
 	};
 }
 }

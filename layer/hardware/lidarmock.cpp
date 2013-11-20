@@ -7,7 +7,8 @@ using namespace RoboHockey::Layer::Hardware;
 using namespace std;
 
 LidarMock::LidarMock() :
-	m_callsToGetDistance(0)
+	m_callsToGetDistance(0),
+	m_defaultDistance(10)
 { }
 
 LidarMock::LidarMock(double defaultDistance) :
