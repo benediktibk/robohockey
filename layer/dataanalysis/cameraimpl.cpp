@@ -14,17 +14,22 @@ CameraImpl::CameraImpl(Hardware::Camera &camera) :
 CameraObjects CameraImpl::getAllCameraObjects(const Common::RobotPosition &position)
 {
 	m_cameraObjects.clear();
-	m_ownPosition = position;
-	filterFrameAndConvertToHLS();
-	addObjects(ColorTypeYellow);
-	addObjects(ColorTypeBlue);
-	addObjects(ColorTypeGreen);
+
+	if (m_camera.isValid())
+	{
+		m_ownPosition = position;
+		filterFrameAndConvertToHLS();
+		addObjects(ColorTypeYellow);
+		addObjects(ColorTypeBlue);
+		addObjects(ColorTypeGreen);
+	}
 
 	return m_cameraObjects;
 }
 
 bool CameraImpl::isGoalYellow()
 {
+	assert(m_camera.isValid());
 	Mat goal;
 	filterFrameAndConvertToHLS();
 	inRange(m_filteredFrame, cv::Scalar(20, 100, 50), cv::Scalar(30, 200, 255), goal);
