@@ -13,6 +13,7 @@ CameraImpl::CameraImpl(Hardware::Camera &camera) :
 
 CameraObjects CameraImpl::getAllCameraObjects(const Common::RobotPosition &position)
 {
+	m_cameraObjects.clear();
 	m_ownPosition = position;
 	filterFrameAndConvertToHLS();
 	addObjects(ColorTypeYellow);

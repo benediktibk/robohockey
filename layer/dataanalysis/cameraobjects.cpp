@@ -51,3 +51,8 @@ const CameraObject &CameraObjects::operator [](size_t index) const
 {
 	return m_objects[index];
 }
+
+void CameraObjects::clear()
+{
+	m_objects.clear();
+}

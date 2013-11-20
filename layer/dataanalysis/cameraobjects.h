@@ -22,6 +22,7 @@ namespace DataAnalysis
 		const CameraObject& getCameraObjectAtPosition(const Common::Point &position) const;
 
 		const CameraObject& operator[](size_t index) const;
+		void clear();
 
 	private:
 		std::vector<CameraObject> m_objects;
