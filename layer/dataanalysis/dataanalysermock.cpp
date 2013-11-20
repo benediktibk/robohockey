@@ -17,7 +17,7 @@ const Lidar &DataAnalyserMock::getLidar() const
 	return m_lidar;
 }
 
-const Camera &DataAnalyserMock::getCamera() const
+Camera &DataAnalyserMock::getCamera()
 {
 	return m_camera;
 }

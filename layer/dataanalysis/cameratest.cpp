@@ -153,7 +153,7 @@ void CameraTest::getAllCameraObjects_yellowPuck_cameraObjectPositonIs0p6And0p1()
 	CameraImpl camera(hardwareCamera);
 
 	Compare compare(0.06);
-	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(0.6,0.1), camera.getAllCameraObjects(RobotPosition(Point(0,0))).getAllCameraObjects().front().getPosition()));
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(0.6,0.1), camera.getAllCameraObjects(RobotPosition(Point(0,0))).front().getPosition()));
 }
 
 void CameraTest::getAllCameraObjects_yellowPuckTwice_cameraObjectPositonOfRightObjectIs0p6And0p0()
@@ -162,7 +162,7 @@ void CameraTest::getAllCameraObjects_yellowPuckTwice_cameraObjectPositonOfRightO
 	CameraImpl camera(hardwareCamera);
 
 	Compare compare(0.05);
-	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(0.6,0.0), camera.getAllCameraObjects(RobotPosition(Point(0,0))).getAllCameraObjects().front().getPosition()));
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(0.6,0.0), camera.getAllCameraObjects(RobotPosition(Point(0,0))).front().getPosition()));
 }
 
 void CameraTest::getAllCameraObjects_yellowPuckTwice_cameraObjectPositonOfLeftObjectIs0p7And0p2()
@@ -171,7 +171,7 @@ void CameraTest::getAllCameraObjects_yellowPuckTwice_cameraObjectPositonOfLeftOb
 	CameraImpl camera(hardwareCamera);
 
 	Compare compare(0.06);
-	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(0.7,0.2), camera.getAllCameraObjects(RobotPosition(Point(0,0))).getAllCameraObjects().back().getPosition()));
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(0.7,0.2), camera.getAllCameraObjects(RobotPosition(Point(0,0))).back().getPosition()));
 }
 
 void CameraTest::getAllCameraObjects_bluePuck_cameraObjectPositonIs0p5AndMinus0p1()
@@ -180,7 +180,7 @@ void CameraTest::getAllCameraObjects_bluePuck_cameraObjectPositonIs0p5AndMinus0p
 	CameraImpl camera(hardwareCamera);
 
 	Compare compare(0.05);
-	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(0.5,-0.1), camera.getAllCameraObjects(RobotPosition(Point(0,0))).getAllCameraObjects().front().getPosition()));
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(0.5,-0.1), camera.getAllCameraObjects(RobotPosition(Point(0,0))).front().getPosition()));
 }
 
 void CameraTest::getAllCameraObjects_greenBorderstone_cameraObjectPositonIs0p5AndMinus0p2()
@@ -189,7 +189,7 @@ void CameraTest::getAllCameraObjects_greenBorderstone_cameraObjectPositonIs0p5An
 	CameraImpl camera(hardwareCamera);
 
 	Compare compare(0.05);
-	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(0.5,-0.2), camera.getAllCameraObjects(RobotPosition(Point(0,0))).getAllCameraObjects().front().getPosition()));
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(0.5,-0.2), camera.getAllCameraObjects(RobotPosition(Point(0,0))).front().getPosition()));
 }
 
 void CameraTest::getAllCameraObjects_greenBorderstoneTriple1_cameraObjectCountIs3()
@@ -206,7 +206,7 @@ void CameraTest::getAllCameraObjects_greenBorderstoneTriple1_cameraObjectPositon
 	CameraImpl camera(hardwareCamera);
 
 	Compare compare(0.06);
-	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(0.8,0.2), camera.getAllCameraObjects(RobotPosition(Point(0,0))).getAllCameraObjects().back().getPosition()));
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(0.8,0.2), camera.getAllCameraObjects(RobotPosition(Point(0,0))).back().getPosition()));
 }
 
 void CameraTest::getAllCameraObjects_greenBorderstoneTriple1_cameraObjectPositonOfObjectInTheMiddleIs0p7And0p05()
@@ -215,7 +215,7 @@ void CameraTest::getAllCameraObjects_greenBorderstoneTriple1_cameraObjectPositon
 	CameraImpl camera(hardwareCamera);
 
 	Compare compare(0.05);
-	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(0.7,0.05), camera.getAllCameraObjects(RobotPosition(Point(0,0))).getAllCameraObjects()[1].getPosition()));
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(0.7,0.05), camera.getAllCameraObjects(RobotPosition(Point(0,0)))[1].getPosition()));
 }
 
 void CameraTest::getAllCameraObjects_yellowPuckTwiceAndRobotAt1And1AndHalfPi_cameraObjectPositonOfRightObjectIs1p0And1p6()
@@ -224,5 +224,5 @@ void CameraTest::getAllCameraObjects_yellowPuckTwiceAndRobotAt1And1AndHalfPi_cam
 	CameraImpl camera(hardwareCamera);
 
 	Compare compare(0.05);
-	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(1.0,1.6), camera.getAllCameraObjects(RobotPosition(Point(1,1),Angle::getQuarterRotation())).getAllCameraObjects().front().getPosition()));
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(1.0,1.6), camera.getAllCameraObjects(RobotPosition(Point(1,1),Angle::getQuarterRotation())).front().getPosition()));
 }

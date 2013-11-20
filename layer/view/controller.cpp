@@ -42,6 +42,26 @@ void Controller::on_turnAround_clicked()
     m_model.turnAround();
 }
 
+void Controller::on_turnToButton_clicked()
+{
+    QString textPosX;
+    QString textPosY;
+    double turnPosX;
+    double turnPosY;
+    textPosX = m_ui->turnToEditX->displayText();
+    turnPosX = textPosX.toDouble();
+    textPosY = m_ui->turnToEditY->displayText();
+    turnPosY = textPosY.toDouble();
+    m_model.turnTo();
+    m_model.turnToPoint(turnPosX, turnPosY);
+}
+
+
+void Controller::on_stop_clicked()
+{
+    m_model.stop();
+}
+
 void Controller::update()
 {
 	const RobotPosition &robotPosition = m_model.getCurrentPosition();
@@ -56,15 +76,15 @@ void Controller::update()
 	resultPosition.append(positionYstring);
 	m_ui->currentPosition->setText(resultPosition);
 
-	if(m_model.stuckAtObstacle() == 1)
+    if(m_model.stuckAtObstacle())
 		m_ui->stuckAtObstacle->setText("TRUE");
 	else
 		m_ui->stuckAtObstacle->setText("FALSE");
 
-	if(m_model.reachedTarget() == 1)
+    if(m_model.reachedTarget())
 		m_ui->reachedTarget->setText("TRUE");
 	else
-		m_ui->reachedTarget->setText("FLASE");
+        m_ui->reachedTarget->setText("FALSE");
 
 	const Point &target = m_model.getCurrentTarget();
 	QString targetString = QString("%1, %2").arg(target.getX()).arg(target.getY());
@@ -82,5 +102,3 @@ void Controller::update()
     }
 
 }
-
-

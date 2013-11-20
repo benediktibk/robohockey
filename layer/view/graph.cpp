@@ -55,7 +55,7 @@ void Graph::mousePressEvent(QMouseEvent *ev)
 	QGraphicsView::mousePressEvent(ev);
 	vector<Point> target = m_model.getAllTargetPoints();
 	target.push_back(Point(point.x() / (double) m_pixelPerMeter, -1.0 * point.y() / (double) m_pixelPerMeter));
-    m_model.setData(target, false);
+    m_model.setData(target, false, false, false);
 }
 
 void Graph::updateTargets()
@@ -120,7 +120,15 @@ void Graph::updateObjects()
 		double centerX = center.getX();
 		double centerY = center.getY();
         currentItem.setRect(centerX, -1.0 * centerY, diameter, diameter);
-		currentItem.setBrush(Qt::red);
+
+		if (currentObject.getColor() == FieldObjectColorBlue)
+			currentItem.setBrush(Qt::blue);
+		else if (currentObject.getColor() == FieldObjectColorGreen)
+			currentItem.setBrush(Qt::green);
+		else if (currentObject.getColor() == FieldObjectColorYellow)
+			currentItem.setBrush(Qt::yellow);
+		else
+			currentItem.setBrush(Qt::gray);
 	}
 
 	const RobotPosition &robotPosition = m_model.getCurrentPosition();

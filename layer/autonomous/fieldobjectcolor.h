@@ -7,7 +7,13 @@ namespace Layer
 {
 namespace Autonomous
 {
-	enum FieldObjectColor {FieldObjectColorUnknown, FieldObjectColorBlue, FieldObjectColorYellow, FieldObjectColorGreen};
+	enum FieldObjectColor
+	{
+		FieldObjectColorUnknown,
+		FieldObjectColorYellow,
+		FieldObjectColorBlue,
+		FieldObjectColorGreen
+	};
 }
 }
 }
