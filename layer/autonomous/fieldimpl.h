@@ -41,6 +41,8 @@ namespace Autonomous
 		virtual void updateWithOdometryData();
 		virtual void updateWithCameraData();
 
+		FieldObject& getNextObjectFromPosition(Common::Point position);
+
 		void transformCoordinateSystem(Common::Point &newOrigin, double rotation);
 		void rotateCoordinateSystem(double alpha);
 		void moveCoordinateSystem(Common::Point &newOrigin);

@@ -60,8 +60,31 @@ void FieldImpl::updateWithOdometryData()
 void FieldImpl::updateWithCameraData()
 {
 	//! @todo Use Camera Data!
+	const DataAnalysis::CameraObjects &allCameraObjects = m_camera->getAllCameraObjects(*m_position);
 
+	if (m_fieldObjects.size() < allCameraObjects.getObjectCount())
+		return;
 
+	for (size_t i = 0; i < allCameraObjects.getObjectCount(); ++i)
+	{
+		const DataAnalysis::CameraObject &currentObject = allCameraObjects[i];
+		FieldObject &nextFieldObject = getNextObjectFromPosition(currentObject.getPosition());
+		if (currentObject.getPosition().distanceTo(nextFieldObject.getCircle().getCenter()) < 0.05)
+			nextFieldObject.setColor(static_cast<FieldObjectColor>(currentObject.getColorType()));
+	}
+
+}
+
+FieldObject &FieldImpl::getNextObjectFromPosition(Point position)
+{
+	//! @todo Test!
+	FieldObject &nextFieldObject = m_fieldObjects.front();
+	for (vector<FieldObject>::iterator i = m_fieldObjects.begin(); i != m_fieldObjects.end(); ++i)
+	{
+		if ( position.distanceTo((*i).getCircle().getCenter()) < position.distanceTo(nextFieldObject.getCircle().getCenter()))
+			nextFieldObject = *i;
+	}
+	return nextFieldObject;
 }
 
 void FieldImpl::transformCoordinateSystem(Point &newOrigin, double rotation)
