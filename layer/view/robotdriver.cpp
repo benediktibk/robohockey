@@ -42,13 +42,27 @@ void RobotDriver::update()
 	if(m_model.getTurnAround() && targets.size() == 0 && m_robot.reachedTarget())
 	{
 		m_robot.turnAround();
-		m_model.setData(targets, false);
+        m_model.setData(targets, false, false, false);
 	}
+
+    if(m_model.getStop())
+    {
+        m_robot.stop();
+        m_model.setData(targets, false, false, false);
+    }
+
+    if(m_model.getTurnTo() && targets.size() == 0 && m_robot.reachedTarget())
+    {
+        Point turnToPoint;
+        turnToPoint = m_model.getTurnPoint();
+        m_robot.turnTo(turnToPoint);
+        m_model.setData(targets, false, false, false);
+    }
 
 	if (m_robot.reachedTarget() && targets.size() > 0 && !m_model.getTurnAround())
 	{
 		vector<Point> targetsWithoutFirstOne(targets.begin() + 1, targets.end());
-		m_model.setData(targetsWithoutFirstOne, false);
+        m_model.setData(targetsWithoutFirstOne, false, false, false);
 		m_robot.goTo(targets.front());
 	}
 
@@ -62,7 +76,7 @@ void RobotDriver::update()
 	if (m_robot.stuckAtObstacle())
 	{
 		cout << "stuck at obstacle" << endl;
-		m_model.setData(vector<Point>(), false);
+        m_model.setData(vector<Point>(), false, false, false);
 		m_robot.stop();
 	}
 }

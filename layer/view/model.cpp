@@ -9,7 +9,9 @@ Model::Model() :
 	m_stuckAtObstacle(false),
 	m_reachedTarget(false),
 	m_isMoving(false),
-	m_turnAround(false)
+    m_turnAround(false),
+    m_stop(false),
+    m_turn(false)
 {}
 
 void Model::setData(
@@ -28,10 +30,12 @@ void Model::setData(
 	emit robotDataChanged();
 }
 
-void Model::setData(const vector<Point> &targetPositions, bool turnAround)
+void Model::setData(const vector<Point> &targetPositions, bool turnAround, bool turnTo, bool stop)
 {
 	m_targetPositions = targetPositions;
 	m_turnAround = turnAround;
+    m_turn = turnTo;
+    m_stop = stop;
 
 	emit targetPositionsChanged();
 }
@@ -65,6 +69,40 @@ bool Model::turnAround()
 {
 	m_turnAround = true;
 	return m_turnAround;
+}
+
+Point Model::turnToPoint(double turnToX, double turnToY)
+{
+    m_turnToPosition.setX(turnToX);
+    m_turnToPosition.setY(turnToY);
+    return m_turnToPosition;
+}
+
+bool Model::turnTo()
+{
+    m_turn = true;
+    return m_turn;
+}
+
+bool Model::stop()
+{
+    m_stop = true;
+    return m_stop;
+}
+
+bool Model::getStop()
+{
+    return m_stop;
+}
+
+bool Model::getTurnTo()
+{
+    return m_turn;
+}
+
+Point Model::getTurnPoint()
+{
+    return m_turnToPosition;
 }
 
 bool Model::getTurnAround()

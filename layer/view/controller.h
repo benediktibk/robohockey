@@ -32,6 +32,10 @@ namespace View
 	private slots:
         void on_turnAround_clicked();
 
+        void on_turnToButton_clicked();
+
+        void on_stop_clicked();
+
     public slots:
 		void update();
 

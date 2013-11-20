@@ -55,7 +55,7 @@ void Graph::mousePressEvent(QMouseEvent *ev)
 	QGraphicsView::mousePressEvent(ev);
 	vector<Point> target = m_model.getAllTargetPoints();
 	target.push_back(Point(point.x() / (double) m_pixelPerMeter, -1.0 * point.y() / (double) m_pixelPerMeter));
-    m_model.setData(target, false);
+    m_model.setData(target, false, false, false);
 }
 
 void Graph::updateTargets()
