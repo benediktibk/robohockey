@@ -23,7 +23,7 @@ namespace DataAnalysis
 
 		virtual Sonar& getSonar();
 		virtual const Lidar& getLidar() const;
-		virtual const Camera& getCamera() const;
+		virtual Camera& getCamera();
 		virtual Odometry& getOdometry();
 		virtual Engine& getEngine();
 		virtual void updateSensorData();

@@ -47,7 +47,7 @@ const Lidar &DataAnalyserImpl::getLidar() const
 	return *m_lidar;
 }
 
-const Camera &DataAnalyserImpl::getCamera() const
+Camera &DataAnalyserImpl::getCamera()
 {
 	return *m_camera;
 }

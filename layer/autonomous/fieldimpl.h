@@ -30,7 +30,7 @@ namespace Autonomous
 			public Field
 	{
 	public:
-		FieldImpl(DataAnalysis::Odometry &odometry, const DataAnalysis::Lidar &lidar, const DataAnalysis::Camera &camera);
+		FieldImpl(DataAnalysis::Odometry &odometry, const DataAnalysis::Lidar &lidar, DataAnalysis::Camera &camera);
 		virtual ~FieldImpl();
 
 		virtual void update();
@@ -52,7 +52,7 @@ namespace Autonomous
 	private:
 		DataAnalysis::Odometry *m_odometry;
 		const DataAnalysis::Lidar *m_lidar;
-		const DataAnalysis::Camera *m_camera;
+		DataAnalysis::Camera *m_camera;
 
 		Common::RobotPosition *m_position;
 		std::vector<FieldObject> m_fieldObjects;
