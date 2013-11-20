@@ -2,7 +2,7 @@
 #define ROBOHOCKEY_LAYER_DATAANALYSIS_CAMERAOBJECT_H
 
 #include <opencv2/opencv.hpp>
-#include "layer/dataanalysis/colorType.h"
+#include "layer/dataanalysis/colortype.h"
 #include "common/point.h"
 
 namespace RoboHockey
