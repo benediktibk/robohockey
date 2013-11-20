@@ -31,7 +31,7 @@ namespace DataAnalysis
 
 	private:
 		Hardware::Camera &m_camera;
-		cv::Mat m_fileredFrame;
+		cv::Mat m_filteredFrame;
 		CameraObjects m_cameraObjects;
 		Common::RobotPosition m_ownPosition;
 	};

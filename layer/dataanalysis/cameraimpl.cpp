@@ -26,7 +26,7 @@ bool CameraImpl::isGoalYellow()
 {
 	Mat goal;
 	filterFrameAndConvertToHLS();
-	inRange(m_fileredFrame, cv::Scalar(20, 100, 50), cv::Scalar(30, 200, 255), goal);
+	inRange(m_filteredFrame, cv::Scalar(20, 100, 50), cv::Scalar(30, 200, 255), goal);
 	Rect range(103, 180, 114, 60);
 	goal = goal(range);
 	if(countNonZero(goal) > 0.8*range.area())
@@ -37,10 +37,11 @@ bool CameraImpl::isGoalYellow()
 
 void CameraImpl::filterFrameAndConvertToHLS()
 {
-	m_fileredFrame = m_camera.getFrame();
+	m_filteredFrame = m_camera.getFrame();
 	cv::Point2f destinationPoints[4];
 	cv::Point2f sourcePoints[4];
 	Mat transform_matrix;
+	Mat temp;
 
 	sourcePoints[0] = Point2f(0,0);
 	sourcePoints[1] = Point2f(320,0);
@@ -52,11 +53,12 @@ void CameraImpl::filterFrameAndConvertToHLS()
 	destinationPoints[2] = Point2f(217,240);
 	destinationPoints[3] = Point2f(103,240);
 
+	temp = m_filteredFrame.clone();
 	transform_matrix = getPerspectiveTransform(sourcePoints, destinationPoints);
-	cv::warpPerspective(m_fileredFrame, m_fileredFrame, transform_matrix, cv::Size(320,240));
+	cv::warpPerspective(temp, m_filteredFrame, transform_matrix, cv::Size(320,240));
 
-	medianBlur(m_fileredFrame, m_fileredFrame, 9);
-	cvtColor(m_fileredFrame, m_fileredFrame, CV_BGR2HLS);
+	medianBlur(m_filteredFrame, m_filteredFrame, 9);
+	cvtColor(m_filteredFrame, m_filteredFrame, CV_BGR2HLS);
 }
 
 void CameraImpl::addObjects(ColorType color)
@@ -89,7 +91,7 @@ void CameraImpl::addObjects(ColorType color)
 		break;
 	}
 
-	inRange(m_fileredFrame, minValue, maxValue, colorPic);
+	inRange(m_filteredFrame, minValue, maxValue, colorPic);
 	colorPic.copyTo(currentPic);
 	findContours(currentPic, contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE, Point(0, 0));
 	if (!contours.empty())
