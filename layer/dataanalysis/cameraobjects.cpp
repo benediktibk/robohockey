@@ -17,9 +17,14 @@ size_t CameraObjects::getObjectCount() const
 	return m_objects.size();
 }
 
-std::vector<CameraObject> CameraObjects::getAllCameraObjects()
+const CameraObject &CameraObjects::front() const
 {
-	return m_objects;
+	return m_objects.front();
+}
+
+const CameraObject &CameraObjects::back() const
+{
+	return m_objects.back();
 }
 
 const CameraObject &CameraObjects::operator [](size_t index) const
