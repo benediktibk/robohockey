@@ -146,6 +146,9 @@ bool FieldDetector::tryToFigureOutNewOrigin(BorderStone &root)
 			cornerOne = root + normFromRoot * (2*standardDistanceC + 2*standardDistanceB + standardDistanceA);
 			cornerTwo = root + normToRoot * (standardDistanceA);
 		}
+	} else
+	{
+		return false;
 	}
 
 	Point possibleNewOrigin;
