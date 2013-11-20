@@ -44,6 +44,12 @@
         </item>
         <item>
          <widget class="QLabel" name="stuckAtObstacle">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
           <property name="text">
            <string>NOTSET</string>
           </property>
@@ -78,6 +84,12 @@
         </item>
         <item>
          <widget class="QLabel" name="reachedTarget">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
           <property name="text">
            <string>NOTSET</string>
           </property>
@@ -162,7 +174,7 @@
           </property>
           <property name="sizeHint" stdset="0">
            <size>
-            <width>40</width>
+            <width>80</width>
             <height>20</height>
            </size>
           </property>
@@ -171,7 +183,7 @@
         <item>
          <widget class="QLabel" name="currentPosition">
           <property name="sizePolicy">
-           <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+           <sizepolicy hsizetype="Expanding" vsizetype="Minimum">
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
