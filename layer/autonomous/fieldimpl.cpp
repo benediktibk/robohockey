@@ -61,7 +61,7 @@ void FieldImpl::updateWithCameraData()
 {
 	//! @todo Use Camera Data!
 	const DataAnalysis::CameraObjects &allCameraObjects = m_camera->getAllCameraObjects(*m_position);
-
+	cout << "Number of CameraObjects: " << allCameraObjects.getObjectCount() << endl;
 	if (m_fieldObjects.size() < allCameraObjects.getObjectCount())
 		return;
 
@@ -69,8 +69,18 @@ void FieldImpl::updateWithCameraData()
 	{
 		const DataAnalysis::CameraObject &currentObject = allCameraObjects[i];
 		FieldObject &nextFieldObject = getNextObjectFromPosition(currentObject.getPosition());
+		cout << "Camera: " << currentObject.getPosition() << " Laser: " << nextFieldObject.getCircle().getCenter() << " delta: " << currentObject.getPosition().distanceTo(nextFieldObject.getCircle().getCenter()) << endl;
 		if (currentObject.getPosition().distanceTo(nextFieldObject.getCircle().getCenter()) < 0.1)
-			nextFieldObject.setColor(static_cast<FieldObjectColor>(currentObject.getColorType()));
+		{
+			if (currentObject.getColorType() == DataAnalysis::ColorTypeYellow)
+				nextFieldObject.setColor(FieldObjectColorYellow);
+
+			else if (currentObject.getColorType() == DataAnalysis::ColorTypeBlue)
+				nextFieldObject.setColor(FieldObjectColorBlue);
+
+			else if (currentObject.getColorType() == DataAnalysis::ColorTypeGreen)
+				nextFieldObject.setColor(FieldObjectColorGreen);
+		}
 	}
 
 }
