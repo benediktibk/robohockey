@@ -69,7 +69,7 @@ void FieldImpl::updateWithCameraData()
 	{
 		const DataAnalysis::CameraObject &currentObject = allCameraObjects[i];
 		FieldObject &nextFieldObject = getNextObjectFromPosition(currentObject.getPosition());
-		if (currentObject.getPosition().distanceTo(nextFieldObject.getCircle().getCenter()) < 0.05)
+		if (currentObject.getPosition().distanceTo(nextFieldObject.getCircle().getCenter()) < 0.1)
 			nextFieldObject.setColor(static_cast<FieldObjectColor>(currentObject.getColorType()));
 	}
 
