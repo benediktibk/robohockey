@@ -16,12 +16,14 @@ LidarImpl::LidarImpl(Hardware::Lidar &lidar, double minimumDistanceToObstacle, d
 	m_lidar(lidar),
 	m_minimumSensorNumber(lidar.getMinimumSensorNumber()),
 	m_maximumSensorNumber(lidar.getMaximumSensorNumber()),
-	m_minimumDistanceToObstacle(minimumDistanceToObstacle),
+	m_minimumDistanceToObstacleAngst(0.05),
+	m_minimumDistanceToObstacle(minimumDistanceToObstacle + m_minimumDistanceToObstacleAngst),
 	m_edgeTreshold(0.5),
 	m_minimumWidthInSensorNumbers(3),
 	m_maximumWidthInRadiants(1),
 	m_maximumWidthInMeter(0.7),
-	m_axisLength(axisLength)
+	m_axisLengthAngst(0.03),
+	m_axisLength(axisLength + m_axisLengthAngst)
 {
 	const double possibleBlindAngle = 20*M_PI/180; // more than the necessary 12°, just to be sure
 	const unsigned int possibleBlindSensorNumberRight = ceil((M_PI/2 + possibleBlindAngle)*361/M_PI);

@@ -49,11 +49,13 @@ namespace DataAnalysis
 		Hardware::Lidar &m_lidar;
 		const unsigned int m_minimumSensorNumber;
 		const unsigned int m_maximumSensorNumber;
+		const double m_minimumDistanceToObstacleAngst;
 		const double m_minimumDistanceToObstacle;
 		const double m_edgeTreshold;
 		const int m_minimumWidthInSensorNumbers;
 		const double m_maximumWidthInRadiants;
 		const double m_maximumWidthInMeter;
+		const double m_axisLengthAngst;
 		const double m_axisLength;
 		std::vector<DistanceForSensor> m_minimumDistances;
 	};

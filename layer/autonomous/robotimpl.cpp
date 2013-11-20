@@ -3,6 +3,7 @@
 #include "layer/dataanalysis/engine.h"
 #include "layer/dataanalysis/sonar.h"
 #include "layer/dataanalysis/odometry.h"
+#include "layer/dataanalysis/lidar.h"
 #include "common/compare.h"
 #include "layer/autonomous/fieldimpl.h"
 
@@ -58,8 +59,9 @@ void RobotImpl::updateActuators()
 {
 	DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
 	DataAnalysis::Sonar &sonar = m_dataAnalyser->getSonar();
+	const DataAnalysis::Lidar &lidar = m_dataAnalyser->getLidar();
 
-	if (sonar.isObstacleDirectInFront())
+	if (sonar.isObstacleDirectInFront() || lidar.isObstacleInFront())
 		engine.lockForwardMovement();
 	else
 		engine.unlockForwardMovement();

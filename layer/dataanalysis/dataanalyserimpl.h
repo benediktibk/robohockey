@@ -38,6 +38,7 @@ namespace DataAnalysis
 		Hardware::Robot *m_robot;
 		const double m_minimumDistanceToObstacle;
 		const double m_axisLength;
+		const double m_widthOfRobotBesideLidar;
 		Sonar *m_sonar;
 		Lidar *m_lidar;
 		Camera *m_camera;
