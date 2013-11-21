@@ -26,8 +26,8 @@ int main(int argc, char **argv)
 	while(key != 'q')
 	{
 		dataAnalyser.updateSensorData();
-		bool sonarValue = sonar.isObstacleDirectInFront();
-		bool lidarValue = lidar.isObstacleInFront();
+		bool sonarValue = sonar.isObstacleDirectInFront(0.5);
+		bool lidarValue = lidar.isObstacleInFront(0.5);
 
 		if (sonarValue)
 			cout << "obstacle is in front of sonar" << endl;

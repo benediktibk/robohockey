@@ -18,15 +18,16 @@ namespace DataAnalysis
 			public Sonar
 	{
 	public:
-		SonarImpl(Hardware::Sonar &sonar, double minimumDistanceToObstacle);
+		SonarImpl(Hardware::Sonar &sonar, double minimumDistanceToObstacle, double timeToStop);
 
-		virtual bool isObstacleDirectInFront();
+		virtual bool isObstacleDirectInFront(double speed);
 
 	private:
 		Hardware::Sonar &m_sonar;
 		const double m_distanceOfSensorsToMiddleOfRobot;
 		const double m_minimumDistanceToObstacle;
 		const double m_minimumDistanceWithAngst;
+		const double m_timeToStop;
 	};
 }
 }

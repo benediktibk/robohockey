@@ -73,6 +73,11 @@ bool EngineMock::isMoving() const
 	return true;
 }
 
+double EngineMock::getCurrentSpeed() const
+{
+	return 0;
+}
+
 unsigned int EngineMock::getCallsToGoToStraight() const
 {
 	return m_callsToGoToStraight;

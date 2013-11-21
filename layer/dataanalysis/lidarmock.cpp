@@ -13,7 +13,7 @@ LidarObjects LidarMock::getAllObjects(const RobotPosition &) const
 	return m_objects;
 }
 
-bool LidarMock::isObstacleInFront() const
+bool LidarMock::isObstacleInFront(double) const
 {
 	return false;
 }

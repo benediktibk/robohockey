@@ -8,9 +8,9 @@ using namespace RoboHockey::Layer::DataAnalysis;
 void SonarTest::isObstacleInFront_mockHardwareSonar_atLeastOneCallToGetDistanceForSensor()
 {
 	Hardware::SonarMock hardwareSonar;
-	SonarImpl sonar(hardwareSonar, 0.3);
+	SonarImpl sonar(hardwareSonar, 0.3, 0.2);
 
-	sonar.isObstacleDirectInFront();
+	sonar.isObstacleDirectInFront(1);
 
 	CPPUNIT_ASSERT(hardwareSonar.getCallsToGetDistanceForSensor() > 0);
 }
@@ -18,19 +18,19 @@ void SonarTest::isObstacleInFront_mockHardwareSonar_atLeastOneCallToGetDistanceF
 void SonarTest::isObstacleInFront_nothingInFront_false()
 {
 	Hardware::SonarMock hardwareSonar;
-	SonarImpl sonar(hardwareSonar, 0.3);
+	SonarImpl sonar(hardwareSonar, 0.3, 0.2);
 	hardwareSonar.setValue(3, 5);
 	hardwareSonar.setValue(4, 5);
 
-	CPPUNIT_ASSERT(!sonar.isObstacleDirectInFront());
+	CPPUNIT_ASSERT(!sonar.isObstacleDirectInFront(1));
 }
 
 void SonarTest::isObstacleInFront_obstacleIn01meter_true()
 {
 	Hardware::SonarMock hardwareSonar;
-	SonarImpl sonar(hardwareSonar, 0.3);
+	SonarImpl sonar(hardwareSonar, 0.3, 0.2);
 	hardwareSonar.setValue(3, 0.1);
 	hardwareSonar.setValue(4, 0.1);
 
-	CPPUNIT_ASSERT(sonar.isObstacleDirectInFront());
+	CPPUNIT_ASSERT(sonar.isObstacleDirectInFront(1));
 }

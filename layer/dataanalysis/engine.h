@@ -28,6 +28,7 @@ namespace DataAnalysis
 		virtual bool reachedTarget() const = 0;
 		virtual Common::Point getCurrentTarget() const = 0;
 		virtual bool isMoving() const = 0;
+		virtual double getCurrentSpeed() const = 0;
 	};
 }
 }

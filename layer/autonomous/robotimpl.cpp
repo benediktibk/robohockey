@@ -60,8 +60,9 @@ void RobotImpl::updateActuators()
 	DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
 	DataAnalysis::Sonar &sonar = m_dataAnalyser->getSonar();
 	const DataAnalysis::Lidar &lidar = m_dataAnalyser->getLidar();
+	double speed = engine.getCurrentSpeed();
 
-	if (sonar.isObstacleDirectInFront() || lidar.isObstacleInFront())
+	if (sonar.isObstacleDirectInFront(speed) || lidar.isObstacleInFront(speed))
 		engine.lockForwardMovement();
 	else
 		engine.unlockForwardMovement();

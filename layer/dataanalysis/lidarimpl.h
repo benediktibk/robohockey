@@ -29,10 +29,10 @@ namespace DataAnalysis
 		typedef std::pair<unsigned int, double> DistanceForSensor;
 
 	public:
-		LidarImpl(Hardware::Lidar &lidar, double minimumDistanceToObstacle, double axisLength);
+		LidarImpl(Hardware::Lidar &lidar, double minimumDistanceToObstacle, double axisLength, double timeToStop);
 
 		virtual LidarObjects getAllObjects(const Common::RobotPosition &ownPosition) const;
-		virtual bool isObstacleInFront() const;
+		virtual bool isObstacleInFront(double speed) const;
 
 	private:
 		std::list<std::pair<int, int> > findStartAndEndOfObjects(
@@ -57,6 +57,7 @@ namespace DataAnalysis
 		const double m_maximumWidthInMeter;
 		const double m_axisLengthAngst;
 		const double m_axisLength;
+		const double m_timeToStop;
 		std::vector<DistanceForSensor> m_minimumDistances;
 	};
 }

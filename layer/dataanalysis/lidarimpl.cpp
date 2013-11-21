@@ -12,7 +12,7 @@ using namespace RoboHockey::Layer::DataAnalysis;
 using namespace std;
 using namespace boost;
 
-LidarImpl::LidarImpl(Hardware::Lidar &lidar, double minimumDistanceToObstacle, double axisLength) :
+LidarImpl::LidarImpl(Hardware::Lidar &lidar, double minimumDistanceToObstacle, double axisLength, double timeToStop) :
 	m_lidar(lidar),
 	m_minimumSensorNumber(lidar.getMinimumSensorNumber()),
 	m_maximumSensorNumber(lidar.getMaximumSensorNumber()),
@@ -23,7 +23,8 @@ LidarImpl::LidarImpl(Hardware::Lidar &lidar, double minimumDistanceToObstacle, d
 	m_maximumWidthInRadiants(1),
 	m_maximumWidthInMeter(0.7),
 	m_axisLengthAngst(0.03),
-	m_axisLength(axisLength + m_axisLengthAngst)
+	m_axisLength(axisLength + m_axisLengthAngst),
+	m_timeToStop(timeToStop)
 {
 	const double possibleBlindAngle = 20*M_PI/180; // more than the necessary 12°, just to be sure
 	const unsigned int possibleBlindSensorNumberRight = ceil((M_PI/2 + possibleBlindAngle)*361/M_PI);
@@ -95,15 +96,19 @@ LidarObjects LidarImpl::getAllObjects(const RobotPosition &ownPosition) const
 	return objects;
 }
 
-bool LidarImpl::isObstacleInFront() const
+bool LidarImpl::isObstacleInFront(double speed) const
 {
 	for (vector<DistanceForSensor>::const_iterator i = m_minimumDistances.begin(); i != m_minimumDistances.end(); ++i)
 	{
 		unsigned int sensorNumber = i->first;
 		double minimumDistance = i->second;
 		double distance = m_lidar.getDistance(sensorNumber);
+		Angle angle = calculateOrientationFromSensorNumber(sensorNumber);
+		double brakingDistance = speed*m_timeToStop;
+		// The consideration of the braking distance is not totally correct this way, but it should be good enough.
+		double totalDistance = minimumDistance + brakingDistance*cos(angle.getValueBetweenMinusPiAndPi());
 
-		if (distance < minimumDistance)
+		if (distance < totalDistance)
 			return true;
 	}
 

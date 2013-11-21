@@ -26,6 +26,7 @@ namespace DataAnalysis
 		virtual bool reachedTarget() const;
 		virtual Common::Point getCurrentTarget() const;
 		virtual bool isMoving() const;
+		virtual double getCurrentSpeed() const;
 
 		unsigned int getCallsToGoToStraight() const;
 		unsigned int getCallsToStop() const;

@@ -16,7 +16,7 @@ namespace DataAnalysis
 		LidarMock();
 
 		virtual LidarObjects getAllObjects(const Common::RobotPosition &ownPosition) const;
-		virtual bool isObstacleInFront() const;
+		virtual bool isObstacleInFront(double speed) const;
 
 		void setAllObjects(const LidarObjects &objects);
 

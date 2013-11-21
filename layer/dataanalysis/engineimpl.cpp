@@ -19,7 +19,8 @@ EngineImpl::EngineImpl(Hardware::Engine &engine, Hardware::Odometry &odometry) :
 	m_engineState(EngineStateStopped),
 	m_forwardMovementLocked(false),
 	m_tryingToTackleObstacle(false),
-	m_speedTresholder(new SpeedTresholder())
+	m_speedTresholder(new SpeedTresholder()),
+	m_currentSpeed(0)
 { }
 
 EngineImpl::~EngineImpl()
@@ -97,6 +98,11 @@ Point EngineImpl::getCurrentTarget() const
 bool EngineImpl::isMoving() const
 {
 	return m_engine.isMoving();
+}
+
+double EngineImpl::getCurrentSpeed() const
+{
+	return m_currentSpeed;
 }
 
 const Point &EngineImpl::getStartPosition() const
@@ -209,5 +215,6 @@ void EngineImpl::driveAndTurn(const RobotPosition &currentPosition)
 void EngineImpl::setSpeed(double magnitude, double rotationSpeed)
 {
 	m_speedTresholder->tresholdWheelSpeeds(magnitude, rotationSpeed);
+	m_currentSpeed = magnitude;
 	m_engine.setSpeed(magnitude, rotationSpeed);
 }

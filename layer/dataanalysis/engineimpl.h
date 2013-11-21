@@ -40,6 +40,7 @@ namespace DataAnalysis
 		virtual bool reachedTarget() const;
 		virtual Common::Point getCurrentTarget() const;
 		virtual bool isMoving() const;
+		virtual double getCurrentSpeed() const;
 
 		const Common::Point& getStartPosition() const;
 
@@ -64,6 +65,7 @@ namespace DataAnalysis
 		bool m_forwardMovementLocked;
 		bool m_tryingToTackleObstacle;
 		SpeedTresholder *m_speedTresholder;
+		double m_currentSpeed;
 	};
 }
 }
