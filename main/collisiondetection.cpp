@@ -14,9 +14,11 @@ int main(int argc, char **argv)
 	if (argc == 1)
 		return 1;
 
-	DataAnalyserImpl dataAnalyser(new Hardware::RobotImpl(argv[1]));
+	Hardware::Robot *hardwareRobot = new Hardware::RobotImpl(argv[1]);
+	DataAnalyserImpl dataAnalyser(hardwareRobot);
 	const Lidar &lidar = dataAnalyser.getLidar();
 	Sonar &sonar = dataAnalyser.getSonar();
+	Hardware::Sonar &hardwareSonar = hardwareRobot->getSonar();
 	char key = 0;
 
 	cout << "press q to quit and any key to get next result" << endl;
@@ -36,6 +38,9 @@ int main(int argc, char **argv)
 			cout << "obstacle is in front of lidar" << endl;
 		else
 			cout << "no obstacle in front of lidar" << endl;
+
+		cout << "sonar, left front: " << hardwareSonar.getDistanceForSensor(3) << endl;
+		cout << "sonar, right front: " << hardwareSonar.getDistanceForSensor(4) << endl;
 
 		key = getchar();
 	}
