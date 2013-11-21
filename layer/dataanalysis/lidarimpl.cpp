@@ -18,7 +18,7 @@ LidarImpl::LidarImpl(Hardware::Lidar &lidar, double minimumDistanceToObstacle, d
 	m_maximumSensorNumber(lidar.getMaximumSensorNumber()),
 	m_minimumDistanceToObstacleAngst(0.05),
 	m_minimumDistanceToObstacle(minimumDistanceToObstacle + m_minimumDistanceToObstacleAngst),
-	m_edgeTreshold(0.5),
+	m_edgeTreshold(0.3),
 	m_minimumWidthInSensorNumbers(3),
 	m_maximumWidthInRadiants(1),
 	m_maximumWidthInMeter(0.7),

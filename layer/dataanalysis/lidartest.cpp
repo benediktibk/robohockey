@@ -129,9 +129,9 @@ void LidarTest::getAllObjects_oneObjectBehindAnotherOneLeft_objectCountIs2()
 	hardwareLidar.setValueForAngle(158, 4.02);
 	hardwareLidar.setValueForAngle(159, 4.04);
 	LidarImpl lidar(hardwareLidar, 0.3, 0.38);
-	Point ownPosition(1, 2);
+	RobotPosition ownPosition(Point(1, 2), M_PI*(-0.5));
 
-	LidarObjects objects = lidar.getAllObjects(RobotPosition(ownPosition, M_PI*(-0.5)));
+	LidarObjects objects = lidar.getAllObjects(ownPosition);
 
 	vector<LidarObject> objectsInForeground = objects.getObjectsWithDistanceBelow(5);
 	CPPUNIT_ASSERT_EQUAL((size_t)2, objectsInForeground.size());
@@ -364,6 +364,23 @@ void LidarTest::getAllObjects_maximumDistanceToBoundaryPostOfOwnFieldPart_distan
 	Compare compare(0.05);
 	CPPUNIT_ASSERT(compare.isFuzzyEqual(3.06, distance));
 	CPPUNIT_ASSERT(compare.isFuzzyEqual(0.06, object.getDiameter()));
+}
+
+void LidarTest::getAllObjects_twoObjectsInFrontOfWall_objectCountIs2()
+{
+	Hardware::LidarMock hardwareLidar;
+	hardwareLidar.readSensorDataFromFile("resources/testfiles/lidar_11.txt");
+	LidarImpl lidar(hardwareLidar, 0.3, 0.38);
+	RobotPosition ownPosition(Point(0, 0), 0);
+
+	LidarObjects objects = lidar.getAllObjects(ownPosition);
+
+	vector<LidarObject> objectsInForeground = objects.getObjectsWithDistanceBelow(4);
+	vector<LidarObject> objectsWithSmallDiameter;
+	for (vector<LidarObject>::const_iterator i = objectsInForeground.begin(); i != objectsInForeground.end(); ++i)
+		if (i->getDiameter() < 0.1)
+			objectsWithSmallDiameter.push_back(*i);
+	CPPUNIT_ASSERT_EQUAL((size_t)2, objectsWithSmallDiameter.size());
 }
 
 void LidarTest::isObstacleInFront_noObstacleInFront_false()

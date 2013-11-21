@@ -40,7 +40,7 @@ double DiscreteFunction::getValue(int x) const
 
 void DiscreteFunction::suppressNoise()
 {
-	applyCore(m_coreNoiseSuppressionBig, m_start, m_end);
+	applyCore(m_coreNoiseSuppressionSmall, m_start, m_end);
 }
 
 void DiscreteFunction::suppressNoiseInRange(int start, int end)
