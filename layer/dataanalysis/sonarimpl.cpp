@@ -8,7 +8,7 @@ SonarImpl::SonarImpl(Hardware::Sonar &sonar, double minimumDistanceToObstacle) :
 	m_sonar(sonar),
 	m_distanceOfSensorsToMiddleOfRobot(0.15),
 	m_minimumDistanceToObstacle(minimumDistanceToObstacle - m_distanceOfSensorsToMiddleOfRobot),
-	m_minimumDistanceWithAngst(m_minimumDistanceToObstacle + 0.1)
+	m_minimumDistanceWithAngst(m_minimumDistanceToObstacle + 0.05)
 { }
 
 bool SonarImpl::isObstacleDirectInFront()
