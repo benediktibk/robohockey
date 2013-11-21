@@ -32,7 +32,7 @@ void FieldImpl::update()
 	updateWithOdometryData();
 	updateWithLidarData();
 	updateWithCameraData();
-	tryToFindField();
+//	tryToFindField();
 }
 
 std::vector<FieldObject>& FieldImpl::getAllFieldObjects()
@@ -52,6 +52,8 @@ void FieldImpl::tryToFindField()
 		cout << "Objects: "<< input.size() <<" Found new Origin!!!" << endl;
 	else
 		cout << "Objects: "<< input.size() << " Could not detect new Origin." << endl;
+
+	delete &input;
 
 	//return result;
 }
@@ -80,7 +82,6 @@ void FieldImpl::updateWithCameraData()
 	//! @todo Use Camera Data!
 	const DataAnalysis::CameraObjects &allCameraObjects = m_camera->getAllCameraObjects(*m_position);
 
-	//	cout << "Number of CameraObjects: " << allCameraObjects.getObjectCount() << endl;
 
 	if (m_fieldObjects.size() < allCameraObjects.getObjectCount())
 		return;
@@ -90,7 +91,7 @@ void FieldImpl::updateWithCameraData()
 		const DataAnalysis::CameraObject &currentObject = allCameraObjects[i];
 		FieldObject &nextFieldObject = getNextObjectFromPosition(currentObject.getPosition());
 
-		cout << "Camera: " << currentObject.getPosition() << " Laser: " << nextFieldObject.getCircle().getCenter() << " delta: " << currentObject.getPosition().distanceTo(nextFieldObject.getCircle().getCenter()) << endl;
+//		cout << "Camera: " << currentObject.getPosition() << " Laser: " << nextFieldObject.getCircle().getCenter() << " delta: " << currentObject.getPosition().distanceTo(nextFieldObject.getCircle().getCenter()) << endl;
 
 		if (currentObject.getPosition().distanceTo(nextFieldObject.getCircle().getCenter()) < 0.1)
 		{
@@ -177,6 +178,7 @@ std::vector<Point> &FieldImpl::getPointsOfObjectsWithDiameterAndColor(double , F
 	Compare compare(0.02);
 	for (vector<FieldObject>::iterator i = m_fieldObjects.begin(); i != m_fieldObjects.end(); ++i)
 	{
+//! Deactivated Filter! -> Returns Positions of all Objects!
 //		if (compare.isFuzzyEqual(((*i).getCircle()).getDiameter(), diameter) && ((*i).getColor() == color || (*i).getColor() == FieldObjectColorUnknown))
 //		{
 			resultObjects->push_back(((*i).getCircle()).getCenter());

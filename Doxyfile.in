@@ -1,6 +1,6 @@
 
 DOXYFILE_ENCODING      = UTF-8
-PROJECT_NAME           = "RoboHockey"
+PROJECT_NAME           = "Marvin"
 PROJECT_NUMBER         = rev. @HG_CURRENT_REV@
 PROJECT_BRIEF          =
 PROJECT_LOGO           =
