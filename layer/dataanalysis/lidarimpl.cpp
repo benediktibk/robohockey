@@ -27,6 +27,7 @@ LidarImpl::LidarImpl(Hardware::Lidar &lidar, double minimumDistanceToObstacle, d
 	m_timeToStop(timeToStop)
 {
 	const double possibleBlindAngle = 13*M_PI/180; // more than the necessary 12°, just to be sure
+	const unsigned int sensorDistanceToEdges = 30;
 	const unsigned int possibleBlindSensorNumberRight = ceil((M_PI/2 + possibleBlindAngle)*361/M_PI);
 	const unsigned int possibleBlindSensorNumberLeft = floor((M_PI/2 - possibleBlindAngle)*361/M_PI);
 	const size_t capacity = m_maximumSensorNumber - m_minimumSensorNumber - (possibleBlindSensorNumberRight - possibleBlindSensorNumberLeft);
@@ -35,14 +36,14 @@ LidarImpl::LidarImpl(Hardware::Lidar &lidar, double minimumDistanceToObstacle, d
 	assert(possibleBlindSensorNumberRight < m_maximumSensorNumber);
 	assert(possibleBlindSensorNumberLeft < m_maximumSensorNumber);
 
-	for (unsigned int i = m_minimumSensorNumber; i < possibleBlindSensorNumberLeft; ++i)
+	for (unsigned int i = m_minimumSensorNumber + sensorDistanceToEdges; i < possibleBlindSensorNumberLeft; ++i)
 	{
 		Angle angle = calculateOrientationFromSensorNumber(i);
 		double minimumDistance = calculateMinimumDistanceToObstacle(angle);
 		m_minimumDistances.push_back(DistanceForSensor(i, minimumDistance));
 	}
 
-	for (unsigned int i = possibleBlindSensorNumberRight; i < m_maximumSensorNumber; ++i)
+	for (unsigned int i = possibleBlindSensorNumberRight; i < m_maximumSensorNumber - sensorDistanceToEdges; ++i)
 	{
 		Angle angle = calculateOrientationFromSensorNumber(i);
 		double minimumDistance = calculateMinimumDistanceToObstacle(angle);

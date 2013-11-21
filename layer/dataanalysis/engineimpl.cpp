@@ -102,7 +102,7 @@ bool EngineImpl::isMoving() const
 
 double EngineImpl::getCurrentSpeed() const
 {
-	return max(m_engine.getSpeed(), m_desiredSpeed);
+	return (m_engine.getSpeed() + m_desiredSpeed)/2;
 }
 
 const Point &EngineImpl::getStartPosition() const
