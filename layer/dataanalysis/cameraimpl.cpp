@@ -76,22 +76,26 @@ void CameraImpl::addObjects(ColorType color)
 	Scalar minValue, maxValue;
 	int areaThreshold;
 	Point objectFootPixel;
+	double distanceToCenter;
 
 	switch (color) {
 	case ColorTypeYellow:
 		minValue = Scalar(18, 20, 50);
 		maxValue = Scalar(28, 255, 255);
 		areaThreshold = 1500;
+		distanceToCenter = 0.06;
 		break;
 	case ColorTypeBlue:
 		minValue = Scalar(95, 20, 40);
 		maxValue = Scalar(107, 255, 255);
 		areaThreshold = 1500;
+		distanceToCenter = 0.06;
 		break;
 	case ColorTypeGreen:
 		minValue = Scalar(75, 20, 55);
 		maxValue = Scalar(85, 255, 255);
 		areaThreshold = 750;
+		distanceToCenter = 0.03;
 		break;
 	default:
 		break;
@@ -119,7 +123,7 @@ void CameraImpl::addObjects(ColorType color)
 							objectFootPixel.y = contours[i][j].y;
 						}
 					}
-					m_cameraObjects.addObject(CameraObject(color, getCalculatedPosition(objectFootPixel)));
+					m_cameraObjects.addObject(CameraObject(color, getCalculatedPosition(objectFootPixel, distanceToCenter)));
 				}
 			}
 		}
@@ -127,15 +131,15 @@ void CameraImpl::addObjects(ColorType color)
 	}
 }
 
-const RoboHockey::Common::Point CameraImpl::getCalculatedPosition(Point pixel) const
+const RoboHockey::Common::Point CameraImpl::getCalculatedPosition(Point pixel, double distanceToCenter) const
 {
 	Point robotMatPosition(160,240);
 	Common::Point objectPosition;
 
-	pixel.x = pixel.x -robotMatPosition.x;
+	pixel.x = pixel.x - robotMatPosition.x;
 	pixel.y = robotMatPosition.y - pixel.y;
 	objectPosition.setX(pixel.x * (1.9/320));
-	objectPosition.setY(pixel.y * (1.66/240) + 0.34);
+	objectPosition.setY(pixel.y * (1.66/240) + 0.34 + distanceToCenter);
 
 	objectPosition.rotate(Common::Angle(-0.5 * M_PI) + m_ownPosition.getOrientation());
 	objectPosition = objectPosition + m_ownPosition.getPosition();
