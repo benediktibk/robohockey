@@ -8,7 +8,8 @@ using namespace RoboHockey::Layer::DataAnalysis;
 SpeedTresholder::SpeedTresholder() :
 	m_wheelDiameter(0.19),
 	m_axisLength(0.38),
-	m_maximumWheelSpeed(1.7*M_PI)
+	m_maximumWheelSpeed(1.7*M_PI),
+	m_minimumWheelSpeed(0.3)
 { }
 
 SpeedTresholder::~SpeedTresholder()
@@ -95,6 +96,13 @@ double SpeedTresholder::tresholdWheelSpeed(double wheelSpeed) const
 		wheelSpeed = m_maximumWheelSpeed;
 	else if (wheelSpeed < (-1)*m_maximumWheelSpeed)
 		wheelSpeed = (-1)*m_maximumWheelSpeed;
+	else if (fabs(wheelSpeed) < m_minimumWheelSpeed && wheelSpeed != 0)
+	{
+		if (wheelSpeed < 0)
+			wheelSpeed = (-1)*m_minimumWheelSpeed;
+		else
+			wheelSpeed = m_minimumWheelSpeed;
+	}
 
 	return wheelSpeed;
 }

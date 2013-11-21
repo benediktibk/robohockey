@@ -27,6 +27,7 @@ namespace DataAnalysis
 		const double m_wheelDiameter;
 		const double m_axisLength;
 		const double m_maximumWheelSpeed;
+		const double m_minimumWheelSpeed;
 	};
 }
 }

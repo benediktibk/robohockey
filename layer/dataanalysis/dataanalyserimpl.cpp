@@ -12,7 +12,7 @@ using namespace RoboHockey::Layer::DataAnalysis;
 
 DataAnalyserImpl::DataAnalyserImpl(Hardware::Robot *robot) :
 	m_robot(robot),
-	m_minimumDistanceToObstacle(0.45),
+	m_minimumDistanceToObstacle(0.55),
 	m_axisLength(0.38),
 	m_widthOfRobotBesideLidar(0.14),
 	m_sonar(new SonarImpl(m_robot->getSonar(), m_minimumDistanceToObstacle)),

@@ -39,32 +39,40 @@ void RobotDriver::update()
 	m_robot.updateSensorData();
 	vector<Point> targets = m_model.getAllTargetPoints();
 
-	if(m_model.getTurnAround() && targets.size() == 0 && m_robot.reachedTarget())
+	if(m_model.getStop())
 	{
-		m_robot.turnAround();
-        m_model.setData(targets, false, false, false);
+		targets.clear();
+		m_robot.stop();
+		m_model.setData(targets, false, false, false);
 	}
 
-    if(m_model.getStop())
-    {
-        targets.clear();
-        m_robot.stop();
-        m_model.setData(targets, false, false, false);
-    }
-
-    if(m_model.getTurnTo() && targets.size() == 0 && m_robot.reachedTarget())
-    {
-        Point turnToPoint;
-        turnToPoint = m_model.getTurnPoint();
-        m_robot.turnTo(turnToPoint);
-        m_model.setData(targets, false, false, false);
-    }
-
-	if (m_robot.reachedTarget() && targets.size() > 0 && !m_model.getTurnAround())
+	if (m_robot.reachedTarget())
 	{
-		vector<Point> targetsWithoutFirstOne(targets.begin() + 1, targets.end());
-        m_model.setData(targetsWithoutFirstOne, false, false, false);
-		m_robot.goTo(targets.front());
+		if(m_model.getTurnAround() && targets.size() == 0 && !m_model.getStop())
+		{
+			m_robot.turnAround();
+			m_model.setData(targets, false, false, false);
+		}
+
+		if(m_model.getTurnTo() && targets.size() == 0 && !m_model.getStop())
+		{
+			Point turnToPoint;
+			turnToPoint = m_model.getTurnPoint();
+			m_robot.turnTo(turnToPoint);
+			m_model.setData(targets, false, false, false);
+		}
+
+		if (targets.size() > 0 && !m_model.getTurnAround() && !m_model.getStop())
+		{
+			vector<Point> targetsWithoutFirstOne(targets.begin() + 1, targets.end());
+			m_model.setData(targetsWithoutFirstOne, false, false, false);
+			m_robot.goTo(targets.front());
+		}
+		else
+		{
+			targets.clear();
+			m_model.setData(targets, false, false, false);
+		}
 	}
 
 	m_model.setData(
@@ -77,7 +85,7 @@ void RobotDriver::update()
 	if (m_robot.stuckAtObstacle())
 	{
 		cout << "stuck at obstacle" << endl;
-        m_model.setData(vector<Point>(), false, false, false);
+		m_model.setData(vector<Point>(), false, false, false);
 		m_robot.stop();
 	}
 }
