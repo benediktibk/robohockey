@@ -65,7 +65,7 @@ namespace DataAnalysis
 		bool m_forwardMovementLocked;
 		bool m_tryingToTackleObstacle;
 		SpeedTresholder *m_speedTresholder;
-		double m_currentSpeed;
+		double m_desiredSpeed;
 	};
 }
 }

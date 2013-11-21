@@ -26,7 +26,7 @@ LidarImpl::LidarImpl(Hardware::Lidar &lidar, double minimumDistanceToObstacle, d
 	m_axisLength(axisLength + m_axisLengthAngst),
 	m_timeToStop(timeToStop)
 {
-	const double possibleBlindAngle = 20*M_PI/180; // more than the necessary 12°, just to be sure
+	const double possibleBlindAngle = 13*M_PI/180; // more than the necessary 12°, just to be sure
 	const unsigned int possibleBlindSensorNumberRight = ceil((M_PI/2 + possibleBlindAngle)*361/M_PI);
 	const unsigned int possibleBlindSensorNumberLeft = floor((M_PI/2 - possibleBlindAngle)*361/M_PI);
 	const size_t capacity = m_maximumSensorNumber - m_minimumSensorNumber - (possibleBlindSensorNumberRight - possibleBlindSensorNumberLeft);

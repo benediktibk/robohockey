@@ -37,3 +37,8 @@ bool EngineMock::isMoving() const
 {
 	return true;
 }
+
+double EngineMock::getSpeed() const
+{
+	return 0;
+}

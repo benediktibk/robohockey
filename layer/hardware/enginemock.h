@@ -20,6 +20,7 @@ namespace Hardware
 		double getLastMagnitude() const;
 		double getLastRotation() const;
 		virtual bool isMoving() const;
+		virtual double getSpeed() const;
 
 	private:
 		unsigned int m_callsToSetSpeed;

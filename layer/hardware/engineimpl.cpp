@@ -32,6 +32,11 @@ bool EngineImpl::isMoving() const
 	return (m_engine->GetXSpeed() != 0) && (m_engine->GetYawSpeed() != 0);
 }
 
+double EngineImpl::getSpeed() const
+{
+	return m_engine->GetXSpeed();
+}
+
 EngineImpl::EngineImpl(const EngineImpl &)
 { }
 

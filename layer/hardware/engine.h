@@ -14,6 +14,7 @@ namespace Hardware
 
 		virtual void setSpeed(double magnitude, double rotation) = 0;
 		virtual bool isMoving() const = 0;
+		virtual double getSpeed() const = 0;
 	};
 }
 }
