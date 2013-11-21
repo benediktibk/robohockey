@@ -17,7 +17,8 @@ namespace Common
 
 		void setValue(int x, double y);
 		double getValue(int x) const;
-		void suppressNoise();
+		void suppressNoiseLight();
+		void suppressNoiseHeavy();
 		void suppressNoiseInRange(int start, int end);
 		void differentiate(double stepSize);
 		bool withinRange(int x) const;

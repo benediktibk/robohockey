@@ -38,9 +38,14 @@ double DiscreteFunction::getValue(int x) const
 	return m_values[getVectorPosition(x)];
 }
 
-void DiscreteFunction::suppressNoise()
+void DiscreteFunction::suppressNoiseLight()
 {
 	applyCore(m_coreNoiseSuppressionSmall, m_start, m_end);
+}
+
+void DiscreteFunction::suppressNoiseHeavy()
+{
+	applyCore(m_coreNoiseSuppressionBig, m_start, m_end);
 }
 
 void DiscreteFunction::suppressNoiseInRange(int start, int end)

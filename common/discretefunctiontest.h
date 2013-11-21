@@ -21,7 +21,7 @@ namespace Common
 		CPPUNIT_TEST(isWithinRange_endAt5And6_false);
 		CPPUNIT_TEST(setValue_4At3_valueAt3Is4);
 		CPPUNIT_TEST(setValue_3AtMinus1_valueAtMinus1Is3);
-		CPPUNIT_TEST(suppressNoise_sineWithNoise_nearlySine);
+		CPPUNIT_TEST(suppressNoiseHeavy_sineWithNoise_nearlySine);
 		CPPUNIT_TEST(differentiate_sine_cosine);
 		CPPUNIT_TEST(differentiate_xToThe3_threeTimesXToThe2);
 		CPPUNIT_TEST(operatorMultiplyAndAssign_threeValues3With2_valuesAre6);
@@ -43,7 +43,7 @@ namespace Common
 		void isWithinRange_endAt5And6_false();
 		void setValue_4At3_valueAt3Is4();
 		void setValue_3AtMinus1_valueAtMinus1Is3();
-		void suppressNoise_sineWithNoise_nearlySine();
+		void suppressNoiseHeavy_sineWithNoise_nearlySine();
 		void differentiate_sine_cosine();
 		void differentiate_xToThe3_threeTimesXToThe2();
 		void operatorMultiplyAndAssign_threeValues3With2_valuesAre6();

@@ -282,7 +282,7 @@ void LidarTest::getAllObjects_onePuckALittleBitDistant_diameterIsCorrect()
 	vector<LidarObject> objectsInForeground = objects.getObjectsWithDistanceBelow(1);
 	CPPUNIT_ASSERT_EQUAL((size_t)1, objectsInForeground.size());
 	const LidarObject &object = objectsInForeground.front();
-	Compare compare(0.01);
+	Compare compare(0.02);
 	CPPUNIT_ASSERT(compare.isFuzzyEqual(0.04, object.getDiameter()));
 }
 

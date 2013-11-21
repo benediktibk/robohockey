@@ -57,12 +57,12 @@ LidarObjects LidarImpl::getAllObjects(const RobotPosition &ownPosition) const
 	scoped_ptr<DiscreteFunction> distances(readInData());
 
 	DiscreteFunction distanceEdges(*distances);
-	distanceEdges.suppressNoise();
+	distanceEdges.suppressNoiseLight();
 	distanceEdges.differentiate(1);
 	list<int> positiveEdges = distanceEdges.getPositionsWithValuesAbove(m_edgeTreshold);
 	list<int> negativeEdges = distanceEdges.getPositionsWithValuesBelow((-1)*m_edgeTreshold);
-	positiveEdges = replaceFollowingEdgesWithMiddlePosition(positiveEdges);
-	negativeEdges = replaceFollowingEdgesWithMiddlePosition(negativeEdges);
+	positiveEdges = replaceFollowingEdgesWithBiggestMagnitudePosition(positiveEdges, distanceEdges);
+	negativeEdges = replaceFollowingEdgesWithBiggestMagnitudePosition(negativeEdges, distanceEdges);
 	list<pair<int, int> > startAndEndOfObjects = findStartAndEndOfObjects(positiveEdges, negativeEdges);
 
 	for (list<pair<int, int> >::iterator i = startAndEndOfObjects.begin(); i != startAndEndOfObjects.end(); ++i)
@@ -184,7 +184,7 @@ double LidarImpl::calculateMinimumDistanceToObstacle(const Angle &angle) const
 
 double LidarImpl::calculateWidthFromAngleAndDistance(const Angle &angle, double distance)
 {
-	Compare compare(0.01);
+	Compare compare(0.001);
 
 	if (compare.isFuzzyEqual(angle.getValueBetweenMinusPiAndPi(), 0))
 		return 0;
@@ -192,7 +192,7 @@ double LidarImpl::calculateWidthFromAngleAndDistance(const Angle &angle, double 
 		return 2*distance/(1/tan(angle.getValueBetweenMinusPiAndPi()/2) - 1);
 }
 
-list<int> LidarImpl::replaceFollowingEdgesWithMiddlePosition(const list<int> &edges)
+list<int> LidarImpl::replaceFollowingEdgesWithBiggestMagnitudePosition(const list<int> &edges, const DiscreteFunction &edgeFunction)
 {
 	list<int> result;
 
@@ -205,10 +205,22 @@ list<int> LidarImpl::replaceFollowingEdgesWithMiddlePosition(const list<int> &ed
 		for (; lastEdgeOfFollowingOnes != edges.end() && *lastEdgeOfFollowingOnes == lastPosition + 1; ++lastEdgeOfFollowingOnes)
 			lastPosition = *lastEdgeOfFollowingOnes;
 
-		--lastEdgeOfFollowingOnes;
-		int middlePosition = (*i + *lastEdgeOfFollowingOnes)/2;
-		result.push_back(middlePosition);
+		int biggestMagnitudePosition = *i;
+		double biggestMagnitude = fabs(edgeFunction.getValue(*i));
+		list<int>::const_iterator j = i;
+		++j;
+		for (; j != lastEdgeOfFollowingOnes; ++j)
+		{
+			double magnitude = fabs(edgeFunction.getValue(*j));
+			if (magnitude > biggestMagnitude)
+			{
+				biggestMagnitude = magnitude;
+				biggestMagnitudePosition = *j;
+			}
+		}
 
+		result.push_back(biggestMagnitudePosition);
+		--lastEdgeOfFollowingOnes;
 		i = lastEdgeOfFollowingOnes;
 	}
 

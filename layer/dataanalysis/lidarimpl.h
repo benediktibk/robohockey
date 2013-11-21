@@ -43,7 +43,7 @@ namespace DataAnalysis
 
 	private:
 		static double calculateWidthFromAngleAndDistance(const Common::Angle &angle, double distance);
-		static std::list<int> replaceFollowingEdgesWithMiddlePosition(const std::list<int> &edges);
+		static std::list<int> replaceFollowingEdgesWithBiggestMagnitudePosition(const std::list<int> &edges, const Common::DiscreteFunction &edgeFunction);
 
 	private:
 		Hardware::Lidar &m_lidar;
