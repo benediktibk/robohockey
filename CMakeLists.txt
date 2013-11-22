@@ -67,6 +67,7 @@ set(TESTFILES
 	lidar_9.txt
 	lidar_10.txt
 	lidar_11.txt
+	lidar_12.txt
 	blue_goal.png
 	blue_puck.png
 	nothing.png
@@ -82,6 +83,7 @@ set(TESTFILES
 	yellow_and_blue_puck_and_green_borderstone.png
 	yellow_puck_twice_and_green_borderstone.png
 	yellow_puck_twice_and_green_borderstone_1.png
+	camera_22_11.png
 )
 
 foreach(file ${TESTFILES})
