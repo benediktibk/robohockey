@@ -25,7 +25,7 @@ namespace View
 				const std::vector<Autonomous::FieldObject> &fieldObjects,
 				bool stuckAtObstacle, bool reachedTarget, const Common::RobotPosition &currentPosition,
                 const Common::Point &currentTarget, bool isMoving);
-        void setData(const std::vector<Common::Point> &targetPositions, bool turnAround, bool turnTo, bool stop);
+		void setData(const std::vector<Common::Point> &targetPositions, bool turnAround, bool turnTo, bool stop, bool collectPuck, bool calibratePosition);
 		const std::vector<Autonomous::FieldObject>& getAllFieldObjects() const;
 		const std::vector<Common::Point>& getAllTargetPoints() const;
 		bool stuckAtObstacle() const;
@@ -41,6 +41,10 @@ namespace View
         bool stop();
         bool getStop();
         Common::Point getTurnPoint();
+		void collectPuckInFront();
+		bool getCollectPuckInFront();
+		void calibratePosition();
+		bool getCalibratePosition();
 
 	signals:
 		void targetPositionsChanged();
@@ -58,6 +62,8 @@ namespace View
         bool m_stop;
         bool m_turn;
         Common::Point m_turnToPosition;
+		bool m_collectPuck;
+		bool m_calibratePosition;
 	};
 }
 }

@@ -36,7 +36,11 @@ namespace View
 
         void on_stop_clicked();
 
-    public slots:
+		void on_collectPuckInFront_clicked();
+
+		void on_calibratePosition_clicked();
+
+	public slots:
 		void update();
 
     private:

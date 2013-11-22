@@ -16,7 +16,8 @@ using namespace std;
 RobotImpl::RobotImpl(DataAnalysis::DataAnalyser *dataAnalyser) :
 	m_dataAnalyser(dataAnalyser),
 	m_field(new FieldImpl(dataAnalyser->getOdometry(), dataAnalyser->getLidar(), dataAnalyser->getCamera())),
-	m_tryingToTackleObstacle(false)
+	m_tryingToTackleObstacle(false),
+	m_collectingPuck(false)
 { }
 
 RobotImpl::~RobotImpl()
@@ -27,6 +28,7 @@ RobotImpl::~RobotImpl()
 
 void RobotImpl::goTo(const RoboHockey::Common::Point &position)
 {
+	m_collectingPuck = false;
 	DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
 
 	//! @todo imlement a router to find a path to the target without tackling obstacles
@@ -35,6 +37,7 @@ void RobotImpl::goTo(const RoboHockey::Common::Point &position)
 
 void RobotImpl::turnTo(const Point &position)
 {
+	m_collectingPuck = false;
 	DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
 	engine.turnToTarget(position);
 }
@@ -64,7 +67,7 @@ void RobotImpl::updateActuators()
 	m_dataAnalyser->updateActuators();
 	double speed = engine.getCurrentSpeed();
 
-	if (sonar.isObstacleDirectInFront(speed) || lidar.isObstacleInFront(speed))
+	if ((sonar.isObstacleDirectInFront(speed) || lidar.isObstacleInFront(speed)) && !m_collectingPuck)
 		engine.lockForwardMovement();
 	else
 		engine.unlockForwardMovement();
@@ -87,7 +90,17 @@ void RobotImpl::stop()
 }
 
 void RobotImpl::collectPuckInFront()
-{ }
+{
+	DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
+	RobotPosition ownPosition = getCurrentPosition();
+
+	Point puck(0.2,0);
+	puck.rotate(ownPosition.getOrientation());
+	Point targetPosition = ownPosition.getPosition() + puck;
+
+	m_collectingPuck = true;
+	engine.goToStraightSlowly(targetPosition);
+}
 
 bool RobotImpl::isMoving()
 {
@@ -101,12 +114,13 @@ void RobotImpl::calibratePosition()
 	if (success)
 		cout <<"Found new Origin. System transformed." << endl;
 	else
-		cout <<"Didn't found new Origin." << endl;
+		cout <<"Didn't find new Origin." << endl;
 
 }
 
 void RobotImpl::turnAround()
 {
+	m_collectingPuck = false;
 	DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
 	engine.turnAround();
 }

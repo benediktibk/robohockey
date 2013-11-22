@@ -102,3 +102,13 @@ void Controller::update()
     }
 
 }
+
+void RoboHockey::Layer::View::Controller::on_collectPuckInFront_clicked()
+{
+	m_model.collectPuckInFront();
+}
+
+void RoboHockey::Layer::View::Controller::on_calibratePosition_clicked()
+{
+	m_model.calibratePosition();
+}
