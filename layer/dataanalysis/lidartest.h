@@ -39,6 +39,7 @@ namespace DataAnalysis
 		CPPUNIT_TEST(getAllObjects_onePuckInQuiteADistanceVersion2_distanceAndDiameterIsCorrect);
 		CPPUNIT_TEST(getAllObjects_maximumDistanceToBoundaryPostOfOwnFieldPart_distanceAndDiameterIsCorrect);
 		CPPUNIT_TEST(getAllObjects_twoObjectsInFrontOfWall_objectCountIs2);
+		CPPUNIT_TEST(getAllObjects_twoObjectsWithADistanceOfOneMeter_objectCountIs2);
 		CPPUNIT_TEST(isObstacleInFront_noObstacleInFront_false);
 		CPPUNIT_TEST(isObstacleInFront_puckCollected_false);
 		CPPUNIT_TEST(isObstacleInFront_obstacleOnLeftSide_true);
@@ -65,6 +66,7 @@ namespace DataAnalysis
 		void getAllObjects_onePuckInQuiteADistanceVersion2_distanceAndDiameterIsCorrect();
 		void getAllObjects_maximumDistanceToBoundaryPostOfOwnFieldPart_distanceAndDiameterIsCorrect();
 		void getAllObjects_twoObjectsInFrontOfWall_objectCountIs2();
+		void getAllObjects_twoObjectsWithADistanceOfOneMeter_objectCountIs2();
 		void isObstacleInFront_noObstacleInFront_false();
 		void isObstacleInFront_puckCollected_false();
 		void isObstacleInFront_obstacleOnLeftSide_true();

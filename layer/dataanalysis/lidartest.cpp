@@ -344,9 +344,9 @@ void LidarTest::getAllObjects_maximumDistanceToBoundaryPostOfOwnFieldPart_distan
 	Hardware::LidarMock hardwareLidar;
 	hardwareLidar.readSensorDataFromFile("resources/testfiles/lidar_9.txt");
 	LidarImpl lidar(hardwareLidar, 0.3, 0.38, 0.2);
-	Point ownPosition(0, 0);
+	RobotPosition ownPosition(Point(0, 0), 0);
 
-	LidarObjects objects = lidar.getAllObjects(RobotPosition(ownPosition, 0));
+	LidarObjects objects = lidar.getAllObjects(ownPosition);
 
 	vector<LidarObject> objectsInForeground = objects.getObjectsWithDistanceBelow(3.2);
 	vector<LidarObject> farDistantObjects;
@@ -375,7 +375,24 @@ void LidarTest::getAllObjects_twoObjectsInFrontOfWall_objectCountIs2()
 
 	LidarObjects objects = lidar.getAllObjects(ownPosition);
 
-	vector<LidarObject> objectsInForeground = objects.getObjectsWithDistanceBelow(4);
+	vector<LidarObject> objectsInForeground = objects.getObjectsWithDistanceBelow(2);
+	vector<LidarObject> objectsWithSmallDiameter;
+	for (vector<LidarObject>::const_iterator i = objectsInForeground.begin(); i != objectsInForeground.end(); ++i)
+		if (i->getDiameter() < 0.1)
+			objectsWithSmallDiameter.push_back(*i);
+	CPPUNIT_ASSERT_EQUAL((size_t)2, objectsWithSmallDiameter.size());
+}
+
+void LidarTest::getAllObjects_twoObjectsWithADistanceOfOneMeter_objectCountIs2()
+{
+	Hardware::LidarMock hardwareLidar;
+	hardwareLidar.readSensorDataFromFile("resources/testfiles/lidar_12.txt");
+	LidarImpl lidar(hardwareLidar, 0.3, 0.38, 0.2);
+	RobotPosition ownPosition(Point(0, 0), 0);
+
+	LidarObjects objects = lidar.getAllObjects(ownPosition);
+
+	vector<LidarObject> objectsInForeground = objects.getObjectsWithDistanceBelow(1);
 	vector<LidarObject> objectsWithSmallDiameter;
 	for (vector<LidarObject>::const_iterator i = objectsInForeground.begin(); i != objectsInForeground.end(); ++i)
 		if (i->getDiameter() < 0.1)
