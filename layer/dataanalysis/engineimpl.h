@@ -23,7 +23,12 @@ namespace DataAnalysis
 			public Engine
 	{
 	private:
-		enum EngineState { EngineStateStopped, EngineStateTurnAround, EngineStateDriving, EngineStateRotating, EngineStateDrivingSlowly };
+		enum EngineState { EngineStateStopped,
+						   EngineStateTurnAround,
+						   EngineStateDriving,
+						   EngineStateRotating,
+						   EngineStateDrivingSlowly,
+						   EngineStateDrivingThrough };
 
 	public:
 		EngineImpl(Hardware::Engine &engine, Hardware::Odometry &odometry);
@@ -31,6 +36,7 @@ namespace DataAnalysis
 
 		virtual void goToStraight(const Common::Point &position);
 		virtual void goToStraightSlowly(const Common::Point &position);
+		virtual void goToStraightThrough(const Common::Point &position);
 		virtual void updateSpeedAndRotation();
 		virtual void stop();
 		virtual void turnAround();
