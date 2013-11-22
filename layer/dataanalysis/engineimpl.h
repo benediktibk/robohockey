@@ -23,7 +23,12 @@ namespace DataAnalysis
 			public Engine
 	{
 	private:
-		enum EngineState { EngineStateStopped, EngineStateTurnAround, EngineStateDriving, EngineStateRotating, EngineStateDrivingSlowly };
+		enum EngineState { EngineStateStopped,
+						   EngineStateTurnAround,
+						   EngineStateDriving,
+						   EngineStateRotating,
+						   EngineStateDrivingSlowly,
+						   EngineStateDrivingThrough };
 
 	public:
 		EngineImpl(Hardware::Engine &engine, Hardware::Odometry &odometry);
