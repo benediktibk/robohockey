@@ -1,11 +1,9 @@
-#ifndef ROBOHOCKEY_LAYER_AUTONOMOUS_FIELDOBJECTCOLOR_H
-#define ROBOHOCKEY_LAYER_AUTONOMOUS_FIELDOBJECTCOLOR_H
+#ifndef ROBOHOCKEY_COMMON_FIELDOBJECTCOLOR_H
+#define ROBOHOCKEY_COMMON_FIELDOBJECTCOLOR_H
 
 namespace RoboHockey
 {
-namespace Layer
-{
-namespace Autonomous
+namespace Common
 {
 	enum FieldObjectColor
 	{
@@ -14,7 +12,6 @@ namespace Autonomous
 		FieldObjectColorBlue,
 		FieldObjectColorGreen
 	};
-}
 }
 }
 

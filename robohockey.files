@@ -146,7 +146,6 @@ layer/hardware/lidar.cpp
 layer/hardware/sonar.cpp
 layer/autonomous/fieldobject.h
 layer/autonomous/fieldobject.cpp
-layer/autonomous/fieldobjectcolor.h
 layer/autonomous/fieldobjecttest.h
 layer/autonomous/fieldobjecttest.cpp
 layer/view/model.h
@@ -248,3 +247,4 @@ resources/testfiles/lidar_11.txt
 resources/marvin.jpg
 resources/testfiles/lidar_12.txt
 resources/testfiles/camera_22_11.png
+common/fieldobjectcolor.h

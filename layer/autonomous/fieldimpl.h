@@ -2,7 +2,7 @@
 #define ROBOHOCKEY_LAYER_AUTONOMOUS_FIELDIMPL_H
 
 #include "layer/autonomous/field.h"
-#include "layer/autonomous/fieldobjectcolor.h"
+#include "common/fieldobjectcolor.h"
 #include <vector>
 
 namespace RoboHockey
@@ -49,7 +49,7 @@ namespace Autonomous
 		void rotateCoordinateSystem(double alpha);
 		void moveCoordinateSystem(Common::Point &newOrigin);
 
-		std::vector<Common::Point> &getPointsOfObjectsWithDiameterAndColor(double diameter, FieldObjectColor color);
+		std::vector<Common::Point> &getPointsOfObjectsWithDiameterAndColor(double diameter, Common::FieldObjectColor color);
 
 		virtual void removeAllFieldObjectsInVisibleArea();
 

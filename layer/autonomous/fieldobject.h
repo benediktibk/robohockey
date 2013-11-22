@@ -2,7 +2,7 @@
 #define ROBOHOCKEY_LAYER_AUTONOMOUS_FIELDOBJECT_H
 
 #include "common/circle.h"
-#include "layer/autonomous/fieldobjectcolor.h"
+#include "common/fieldobjectcolor.h"
 
 namespace RoboHockey
 {
@@ -13,15 +13,15 @@ namespace Autonomous
 	class FieldObject
 	{
 	public:
-		FieldObject(const Common::Circle &circle, FieldObjectColor color);
+		FieldObject(const Common::Circle &circle, Common::FieldObjectColor color);
 
 		const Common::Circle &getCircle() const;
-		FieldObjectColor getColor() const;
-		void setColor(FieldObjectColor color);
+		Common::FieldObjectColor getColor() const;
+		void setColor(Common::FieldObjectColor color);
 
 	private:
 		Common::Circle m_circle;
-		FieldObjectColor m_color;
+		Common::FieldObjectColor m_color;
 	};
 }
 }
