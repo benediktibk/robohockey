@@ -40,7 +40,7 @@ std::vector<FieldObject>& FieldImpl::getAllFieldObjects()
 	return m_fieldObjects;
 }
 
-void FieldImpl::tryToFindField()
+bool FieldImpl::tryToFindField()
 {
 	vector<Point> &input = getPointsOfObjectsWithDiameterAndColor(0.06, FieldObjectColorGreen);
 
@@ -50,17 +50,13 @@ void FieldImpl::tryToFindField()
 
 	if (result)
 	{
-		cout << "Objects: "<< input.size() <<" Found new Origin!!!" << endl;
 		Point newOrigin = detector.getNewOrigin();
 		transformCoordinateSystem(newOrigin, detector.getRotation());
 	}
-	else
-		cout << "Objects: "<< input.size() << " Could not detect new Origin." << endl;
 
 	delete &input;
 
-
-	//return result;
+	return result;
 }
 
 void FieldImpl::updateWithLidarData()

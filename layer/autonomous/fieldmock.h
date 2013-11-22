@@ -14,6 +14,7 @@ namespace Autonomous
 	{
 	public:
 		virtual void update();
+		virtual bool tryToFindField();
 	};
 }
 }

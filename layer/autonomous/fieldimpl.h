@@ -36,7 +36,7 @@ namespace Autonomous
 		virtual void update();
 		virtual std::vector<FieldObject> &getAllFieldObjects();
 
-		virtual void tryToFindField();
+		virtual bool tryToFindField();
 
 	private:
 		virtual void updateWithLidarData();
