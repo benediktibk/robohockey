@@ -474,3 +474,16 @@ void EngineTest::goToStraight_rotationDoneAndLittleBitRightOfDirectConnection_la
 	CPPUNIT_ASSERT(hardwareEngine.getLastMagnitude() > 0);
 	CPPUNIT_ASSERT(hardwareEngine.getLastRotation() > 0);
 }
+
+void EngineTest::goToStraightSlowly_currentPositionDifferentToTarget_atLeastOneCallToSetSpeed()
+{
+	Hardware::EngineMock hardwareEngine;
+	Hardware::OdometryMock hardwareOdometry;
+	EngineImpl engine(hardwareEngine, hardwareOdometry);
+	hardwareOdometry.setCurrentPosition(RobotPosition(Point(1, 2), 0));
+
+	engine.goToStraightSlowly(Point(4, 20));
+	engine.updateSpeedAndRotation();
+
+	CPPUNIT_ASSERT(hardwareEngine.getCallsToSetSpeed() > 0);
+}

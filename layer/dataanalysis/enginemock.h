@@ -16,6 +16,7 @@ namespace DataAnalysis
 		EngineMock();
 
 		virtual void goToStraight(const Common::Point &position);
+		virtual void goToStraightSlowly(const Common::Point &targetPosition);
 		virtual void updateSpeedAndRotation();
 		virtual void stop();
 		virtual void turnAround();
@@ -29,6 +30,7 @@ namespace DataAnalysis
 		virtual double getCurrentSpeed() const;
 
 		unsigned int getCallsToGoToStraight() const;
+		unsigned int getCallsToGoToStraightSlowly() const;
 		unsigned int getCallsToStop() const;
 		unsigned int getCallsToUpdateSpeedAndMagnitude() const;
 		unsigned int getCallsToTryingToTackleObstacle() const;
@@ -41,6 +43,7 @@ namespace DataAnalysis
 
 	private:
 		unsigned int m_callsToGoToStraight;
+		unsigned int m_callsToGoToStraightSlowly;
 		unsigned int m_callsToStop;
 		unsigned int m_callsToUpdateSpeedAndMagnitude;
 		unsigned int m_callsToTryingToTackleObstacle;

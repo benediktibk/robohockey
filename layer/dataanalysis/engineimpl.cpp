@@ -38,12 +38,22 @@ void EngineImpl::goToStraight(const Common::Point &position)
 	m_engineState = EngineStateDriving;
 }
 
+void EngineImpl::goToStraightSlowly(const Point &position)
+{
+	m_target = position;
+	RobotPosition currentRobotPosition = m_odometry.getCurrentPosition();
+	m_startPosition = currentRobotPosition.getPosition();
+	m_rotationReached = false;
+	m_engineState = EngineStateDrivingSlowly;
+}
+
 void EngineImpl::updateSpeedAndRotation()
 {
 	switch(m_engineState)
 	{
 	case EngineStateStopped: updateSpeedAndRotationForStopped(); break;
 	case EngineStateDriving: updateSpeedAndRotationForDriving(); break;
+	case EngineStateDrivingSlowly: updateSpeedAndRotationForDriving(); break;
 	case EngineStateTurnAround: updateSpeedAndRotationForTurnAround(); break;
 	case EngineStateRotating: updateSpeedAndRotationForRotating(); break;
 	}
@@ -200,6 +210,9 @@ void EngineImpl::driveAndTurn(const RobotPosition &currentPosition)
 	double orientationAmplification = 1;
 	double magnitude = distanceAmplification*forwardError;
 	double rotationSpeed = orientationAmplification*orthogonalError;
+
+	if (m_engineState == EngineStateDrivingSlowly)
+		magnitude = min(magnitude, 0.05);
 
 	if (magnitude > 0 && m_forwardMovementLocked)
 	{

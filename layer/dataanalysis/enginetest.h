@@ -45,6 +45,7 @@ namespace DataAnalysis
 		CPPUNIT_TEST(goToStraight_moveAwayFromStartPosition_startPositionIsCorrect);
 		CPPUNIT_TEST(goToStraight_rotationDoneAndLittleBitLeftOfDirectConnection_lastRotationIsSmallerThanZero);
 		CPPUNIT_TEST(goToStraight_rotationDoneAndLittleBitRightOfDirectConnection_lastRotationIsGreaterThanZero);
+		CPPUNIT_TEST(goToStraightSlowly_currentPositionDifferentToTarget_atLeastOneCallToSetSpeed);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
@@ -79,6 +80,7 @@ namespace DataAnalysis
 		void goToStraight_moveAwayFromStartPosition_startPositionIsCorrect();
 		void goToStraight_rotationDoneAndLittleBitLeftOfDirectConnection_lastRotationIsSmallerThanZero();
 		void goToStraight_rotationDoneAndLittleBitRightOfDirectConnection_lastRotationIsGreaterThanZero();
+		void goToStraightSlowly_currentPositionDifferentToTarget_atLeastOneCallToSetSpeed();
 	};
 }
 }
