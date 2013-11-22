@@ -17,5 +17,5 @@ Written by:
 
 Find this project [on bitbucket](https://bitbucket.org/leistungskursc/robohockey), our [discussion board](http://kevin-meyer.de/forum/).
 
-![Marvin](/resources/marvin.jpg "Optional title")
+![Marvin](https://bitbucket.org/leistungskursc/robohockey/raw/3aaf38f002c7654fde272f4f6354fbed55c2263a/resources/marvin.jpg "Optional title")
 ---
