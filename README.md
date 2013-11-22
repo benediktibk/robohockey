@@ -9,7 +9,6 @@ The Project is part of [LDV's](http://www.ldv.ei.tum.de/en/homepage/) course [Le
 
 Written by:
 
--   Daniel Haug
 -   Markus Hofbauer
 -   Kevin Meyer
 -   Benedikt Schmidt
