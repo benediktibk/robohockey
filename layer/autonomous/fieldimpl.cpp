@@ -84,7 +84,7 @@ void FieldImpl::updateWithCameraData()
 	const DataAnalysis::CameraObjects &allCameraObjects = m_camera->getAllCameraObjects(*m_position);
 
 
-	if (m_fieldObjects.size() < allCameraObjects.getObjectCount())
+	if (m_fieldObjects.size() == 0 || allCameraObjects.getObjectCount() == 0)
 		return;
 
 	for (size_t i = 0; i < allCameraObjects.getObjectCount(); ++i)
@@ -94,7 +94,7 @@ void FieldImpl::updateWithCameraData()
 
 //		cout << "Camera: " << currentObject.getPosition() << " Laser: " << nextFieldObject.getCircle().getCenter() << " delta: " << currentObject.getPosition().distanceTo(nextFieldObject.getCircle().getCenter()) << endl;
 
-		if (currentObject.getPosition().distanceTo(nextFieldObject.getCircle().getCenter()) < 0.1)
+		if (currentObject.getPosition().distanceTo(nextFieldObject.getCircle().getCenter()) < 0.07)
 		{
 			if (currentObject.getColorType() == DataAnalysis::ColorTypeYellow)
 				nextFieldObject.setColor(FieldObjectColorYellow);
