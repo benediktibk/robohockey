@@ -138,12 +138,21 @@ void FieldImpl::rotateCoordinateSystem(double alpha)
 		double currentDiameter = ((*i).getCircle()).getDiameter();
 		FieldObjectColor color = (*i).getColor();
 
-		Point newCenter;
-		newCenter.setX( cos(alpha)*currentCenter.getX() - sin(alpha)*currentCenter.getY() );
-		newCenter.setY( sin(alpha)*currentCenter.getX() + cos(alpha)*currentCenter.getY() );
+		currentCenter.rotate(Angle(alpha));
 
-		newSystem.push_back(FieldObject(Circle(newCenter, currentDiameter), color));
+		newSystem.push_back(FieldObject(Circle(currentCenter, currentDiameter), color));
 	}
+
+	Point ownPosition = m_position->getPosition();
+	Angle ownOrientation = m_position->getOrientation();
+
+	ownPosition.rotate(Angle(alpha));
+	ownOrientation = ownOrientation + Angle(alpha);
+
+	m_position->setPosition(ownPosition);
+	m_position->setOrientation(ownOrientation);
+
+	m_odometry->setCurrentPosition(*m_position);
 
 	m_fieldObjects.clear();
 	m_fieldObjects = newSystem;
@@ -152,7 +161,7 @@ void FieldImpl::rotateCoordinateSystem(double alpha)
 
 void FieldImpl::moveCoordinateSystem(Point &newOrigin)
 {
-	//! @todo test and implement movment of coordinate system
+	//! @todo test and implement movement of coordinate system
 
 	vector<FieldObject> newSystem;
 
@@ -160,11 +169,18 @@ void FieldImpl::moveCoordinateSystem(Point &newOrigin)
 	{
 		Point currentCenter = ((*i).getCircle()).getCenter();
 		double currentDiameter = ((*i).getCircle()).getDiameter();
-		Point newCenter = newOrigin - currentCenter;
+		Point newCenter = currentCenter - newOrigin;
 		FieldObjectColor color = (*i).getColor();
 
 		newSystem.push_back(FieldObject(Circle(newCenter, currentDiameter), color));
 	}
+
+	Point ownPosition = m_position->getPosition();
+
+	ownPosition =  ownPosition - newOrigin;
+	m_position->setPosition(ownPosition);
+
+	m_odometry->setCurrentPosition(*m_position);
 
 	m_fieldObjects.clear();
 	m_fieldObjects = newSystem;
