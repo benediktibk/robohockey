@@ -212,22 +212,11 @@ void EngineImpl::driveAndTurn(const RobotPosition &currentPosition)
 	}
 	rotationSpeed = orientationAmplification*orthogonalError;
 
-	if (m_engineState == EngineStateDrivingThrough)
-		magnitude = 0.05;
-	else
+	switch (m_engineState)
 	{
-		magnitude = distanceAmplification*forwardError;
-
-		if (m_engineState == EngineStateDrivingSlowly)
-			magnitude = min(magnitude, 0.05);
-
-		if (magnitude > 0 && m_forwardMovementLocked)
-		{
-			magnitude = 0;
-			m_tryingToTackleObstacle = true;
-		}
-		else
-			m_tryingToTackleObstacle = false;
+	case EngineStateDrivingThrough: magnitude = 0.05; break;
+	case EngineStateDrivingSlowly: magnitude = min(magnitude, 0.05); break;
+	default: magnitude = distanceAmplification*forwardError; break;
 	}
 
 	setSpeed(magnitude, rotationSpeed);
@@ -235,6 +224,14 @@ void EngineImpl::driveAndTurn(const RobotPosition &currentPosition)
 
 void EngineImpl::setSpeed(double magnitude, double rotationSpeed)
 {
+	if (magnitude > 0 && m_forwardMovementLocked)
+	{
+		magnitude = 0;
+		m_tryingToTackleObstacle = true;
+	}
+	else
+		m_tryingToTackleObstacle = false;
+
 	m_speedTresholder->tresholdWheelSpeeds(magnitude, rotationSpeed);
 	m_desiredSpeed = magnitude;
 	m_engine.setSpeed(magnitude, rotationSpeed);
