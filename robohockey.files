@@ -248,3 +248,7 @@ resources/testfiles/lidar_12.txt
 resources/testfiles/camera_22_11.png
 common/fieldobjectcolor.h
 resources/testfiles/lidar_wall.txt
+layer/dataanalysis/speedtresholdertest.cpp
+layer/dataanalysis/speedtresholder.cpp
+layer/dataanalysis/speedtresholdertest.h
+layer/dataanalysis/speedtresholder.h
