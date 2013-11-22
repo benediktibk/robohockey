@@ -214,7 +214,6 @@ resources/testfiles/lidar_9.txt
 main/collisiondetection.cpp
 layer/autonomous/fieldtest.h
 layer/autonomous/fieldtest.cpp
-layer/dataanalysis/colortype.h
 layer/view/graph.h
 layer/view/graph.cpp
 common/angle.h

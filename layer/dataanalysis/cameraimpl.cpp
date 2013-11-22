@@ -19,9 +19,9 @@ CameraObjects CameraImpl::getAllCameraObjects(const Common::RobotPosition &posit
 	{
 		m_ownPosition = position;
 		filterFrameAndConvertToHLS();
-		addObjects(ColorTypeYellow);
-		addObjects(ColorTypeBlue);
-		addObjects(ColorTypeGreen);
+		addObjects(Common::FieldObjectColorYellow);
+		addObjects(Common::FieldObjectColorBlue);
+		addObjects(Common::FieldObjectColorGreen);
 	}
 
 	return m_cameraObjects;
@@ -67,7 +67,7 @@ void CameraImpl::filterFrameAndConvertToHLS()
 	cvtColor(m_filteredFrame, m_filteredFrame, CV_BGR2HLS);
 }
 
-void CameraImpl::addObjects(ColorType color)
+void CameraImpl::addObjects(Common::FieldObjectColor color)
 {
 	Mat colorPic, currentPic;
 	vector<vector<Point> > contours;
@@ -79,19 +79,19 @@ void CameraImpl::addObjects(ColorType color)
 	double distanceToCenter;
 
 	switch (color) {
-	case ColorTypeYellow:
+	case Common::FieldObjectColorYellow:
 		minValue = Scalar(18, 20, 50);
 		maxValue = Scalar(28, 255, 255);
 		areaThreshold = 1500;
 		distanceToCenter = 0.06;
 		break;
-	case ColorTypeBlue:
+	case Common::FieldObjectColorBlue:
 		minValue = Scalar(95, 20, 40);
 		maxValue = Scalar(107, 255, 255);
 		areaThreshold = 1500;
 		distanceToCenter = 0.06;
 		break;
-	case ColorTypeGreen:
+	case Common::FieldObjectColorGreen:
 		minValue = Scalar(75, 20, 55);
 		maxValue = Scalar(85, 255, 255);
 		areaThreshold = 750;

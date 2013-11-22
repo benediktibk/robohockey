@@ -95,16 +95,8 @@ void FieldImpl::updateWithCameraData()
 //		cout << "Camera: " << currentObject.getPosition() << " Laser: " << nextFieldObject.getCircle().getCenter() << " delta: " << currentObject.getPosition().distanceTo(nextFieldObject.getCircle().getCenter()) << endl;
 
 		if (currentObject.getPosition().distanceTo(nextFieldObject.getCircle().getCenter()) < 0.07)
-		{
-			if (currentObject.getColorType() == DataAnalysis::ColorTypeYellow)
-				nextFieldObject.setColor(FieldObjectColorYellow);
+			nextFieldObject.setColor(currentObject.getColorType());
 
-			else if (currentObject.getColorType() == DataAnalysis::ColorTypeBlue)
-				nextFieldObject.setColor(FieldObjectColorBlue);
-
-			else if (currentObject.getColorType() == DataAnalysis::ColorTypeGreen)
-				nextFieldObject.setColor(FieldObjectColorGreen);
-		}
 	}
 
 }

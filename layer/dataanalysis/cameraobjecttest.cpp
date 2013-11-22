@@ -8,14 +8,14 @@ using namespace RoboHockey::Common;
 
 void CameraObjectTest::getColorType_ColorTypeYellowGoal()
 {
-	CameraObject cameraobject(ColorTypeYellow, Point(0,0));
+	CameraObject cameraobject(FieldObjectColorYellow, Point(0,0));
 
-	CPPUNIT_ASSERT_EQUAL(ColorTypeYellow, cameraobject.getColorType());
+	CPPUNIT_ASSERT_EQUAL(FieldObjectColorYellow, cameraobject.getColorType());
 }
 
 void CameraObjectTest::getPosition_positionIs0And0()
 {
-	CameraObject cameraobject(ColorTypeYellow, Point(0,0));
+	CameraObject cameraobject(FieldObjectColorYellow, Point(0,0));
 
 	CPPUNIT_ASSERT_EQUAL(Point(0,0), cameraobject.getPosition());
 }
