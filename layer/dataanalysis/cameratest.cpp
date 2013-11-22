@@ -226,3 +226,11 @@ void CameraTest::getAllCameraObjects_yellowPuckTwiceAndRobotAt1And1AndHalfPi_cam
 	Compare compare(0.05);
 	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(1.0,1.66), camera.getAllCameraObjects(RobotPosition(Point(1,1),Angle::getQuarterRotation())).front().getPosition()));
 }
+
+void CameraTest::getAllCameraObjects_camera2211_cameraObjectCountIs2()
+{
+	Hardware::CameraMock hardwareCamera("camera_22_11");
+	CameraImpl camera(hardwareCamera);
+
+	CPPUNIT_ASSERT(!camera.isGoalYellow());
+}
