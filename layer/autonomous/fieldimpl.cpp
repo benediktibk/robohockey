@@ -49,11 +49,16 @@ void FieldImpl::tryToFindField()
 	bool result = detector.tryToDetectField();
 
 	if (result)
+	{
 		cout << "Objects: "<< input.size() <<" Found new Origin!!!" << endl;
+		Point newOrigin = detector.getNewOrigin();
+		transformCoordinateSystem(newOrigin, detector.getRotation());
+	}
 	else
 		cout << "Objects: "<< input.size() << " Could not detect new Origin." << endl;
 
 	delete &input;
+
 
 	//return result;
 }
