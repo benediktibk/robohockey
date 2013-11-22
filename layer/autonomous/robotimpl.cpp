@@ -6,6 +6,7 @@
 #include "layer/dataanalysis/lidar.h"
 #include "common/compare.h"
 #include "layer/autonomous/fieldimpl.h"
+#include <iostream>
 
 using namespace RoboHockey::Common;
 using namespace RoboHockey::Layer::Autonomous;
@@ -94,7 +95,15 @@ bool RobotImpl::isMoving()
 }
 
 void RobotImpl::calibratePosition()
-{ }
+{
+	bool success = m_field->tryToFindField();
+
+	if (success)
+		cout <<"Found new Origin. System transformed." << endl;
+	else
+		cout <<"Didn't found new Origin." << endl;
+
+}
 
 void RobotImpl::turnAround()
 {
