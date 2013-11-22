@@ -209,23 +209,23 @@ void EngineImpl::driveAndTurn(const RobotPosition &currentPosition)
 	double distanceToTarget = currentPositionPoint.distanceTo(m_target);
 	double orthogonalError = distanceToTarget*sin(orientationDifference.getValueBetweenMinusPiAndPi());
 	double forwardError = max(0.0, distanceToTarget*cos(alpha.getValueBetweenMinusPiAndPi()));
-	double magnitude;
-	double rotationSpeed;
-	double orientationAmplification = 1;
-	double distanceAmplification = 0.5;
 
 	if (positionCompare.isFuzzyEqual(forwardError, 0))
 	{
 		stop();
 		return;
 	}
-	rotationSpeed = orientationAmplification*orthogonalError;
+
+	double orientationAmplification = 1;
+	double distanceAmplification = 0.5;
+	double rotationSpeed = orientationAmplification*orthogonalError;
+	double magnitude = distanceAmplification*forwardError;
 
 	switch (m_engineState)
 	{
 	case EngineStateDrivingThrough: magnitude = 0.5; break;
-	case EngineStateDrivingSlowly: magnitude = min(magnitude, 0.05); break;
-	default: magnitude = distanceAmplification*forwardError; break;
+	case EngineStateDrivingSlowly: magnitude = min(magnitude, 0.1); break;
+	default: break;
 	}
 
 	setSpeed(magnitude, rotationSpeed);
