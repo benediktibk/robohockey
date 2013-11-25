@@ -25,7 +25,7 @@ void CameraObjectsTest::getColorType_add2Objects_secondObjectIsYellow()
 	objects.addObject(objectOne);
 	objects.addObject(objectTwo);
 
-	CPPUNIT_ASSERT_EQUAL(FieldObjectColorYellow, objects.back().getColorType());
+	CPPUNIT_ASSERT_EQUAL(FieldObjectColorYellow, objects.back().getColor());
 }
 
 void CameraObjectsTest::getCameraObjectAtPosition_4ObjectsAndPositionIs3And3_ObjectAtPositionIsObject3()
@@ -41,7 +41,7 @@ void CameraObjectsTest::getCameraObjectAtPosition_4ObjectsAndPositionIs3And3_Obj
 	objects.addObject(objectThree);
 	objects.addObject(objectFour);
 
-	CPPUNIT_ASSERT_EQUAL(objectThree.getColorType(), objects.getCameraObjectAtPosition(Point(3,3)).getColorType());
+	CPPUNIT_ASSERT_EQUAL(objectThree.getColor(), objects.getCameraObjectAtPosition(Point(3,3)).getColor());
 }
 
 void CameraObjectsTest::getCameraObjectAtPosition_3ObjectsAndPositionIs3And3AndNoObjectInRange_NextObjectAtPositionIsObject2()
@@ -55,5 +55,5 @@ void CameraObjectsTest::getCameraObjectAtPosition_3ObjectsAndPositionIs3And3AndN
 	objects.addObject(objectTwo);
 	objects.addObject(objectThree);
 
-	CPPUNIT_ASSERT_EQUAL(objectThree.getColorType(), objects.getCameraObjectAtPosition(Point(3,3)).getColorType());
+	CPPUNIT_ASSERT_EQUAL(objectThree.getColor(), objects.getCameraObjectAtPosition(Point(3,3)).getColor());
 }

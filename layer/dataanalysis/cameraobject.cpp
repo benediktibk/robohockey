@@ -14,7 +14,7 @@ Point CameraObject::getPosition() const
 	return m_position;
 }
 
-FieldObjectColor CameraObject::getColorType() const
+FieldObjectColor CameraObject::getColor() const
 {
 	return m_color;
 }

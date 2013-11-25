@@ -17,7 +17,7 @@ namespace DataAnalysis
 		CameraObject(Common::FieldObjectColor color, const Common::Point &position);
 
 		Common::Point getPosition() const;
-		Common::FieldObjectColor getColorType() const;
+		Common::FieldObjectColor getColor() const;
 
 	private:
 		Common::FieldObjectColor m_color;

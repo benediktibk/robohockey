@@ -10,7 +10,7 @@ void CameraObjectTest::getColorType_ColorTypeYellowGoal()
 {
 	CameraObject cameraobject(FieldObjectColorYellow, Point(0,0));
 
-	CPPUNIT_ASSERT_EQUAL(FieldObjectColorYellow, cameraobject.getColorType());
+	CPPUNIT_ASSERT_EQUAL(FieldObjectColorYellow, cameraobject.getColor());
 }
 
 void CameraObjectTest::getPosition_positionIs0And0()

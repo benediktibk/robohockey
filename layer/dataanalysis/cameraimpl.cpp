@@ -46,7 +46,7 @@ void CameraImpl::filterFrameAndConvertToHLS()
 	m_filteredFrame = m_camera.getFrame();
 	cv::Point2f destinationPoints[4];
 	cv::Point2f sourcePoints[4];
-	Mat transform_matrix;
+	Mat transformationMatrix;
 	Mat temp;
 
 	sourcePoints[0] = Point2f(0,0);
@@ -60,8 +60,8 @@ void CameraImpl::filterFrameAndConvertToHLS()
 	destinationPoints[3] = Point2f(103,240);
 
 	temp = m_filteredFrame.clone();
-	transform_matrix = getPerspectiveTransform(sourcePoints, destinationPoints);
-	cv::warpPerspective(temp, m_filteredFrame, transform_matrix, cv::Size(320,240));
+	transformationMatrix = getPerspectiveTransform(sourcePoints, destinationPoints);
+	cv::warpPerspective(temp, m_filteredFrame, transformationMatrix, cv::Size(320,240));
 
 	medianBlur(m_filteredFrame, m_filteredFrame, 9);
 	cvtColor(m_filteredFrame, m_filteredFrame, CV_BGR2HLS);
