@@ -95,7 +95,20 @@ void FieldImpl::updateWithCameraData()
 //		cout << "Camera: " << currentObject.getPosition() << " Laser: " << nextFieldObject.getCircle().getCenter() << " delta: " << currentObject.getPosition().distanceTo(nextFieldObject.getCircle().getCenter()) << endl;
 
 		if (currentObject.getPosition().distanceTo(nextFieldObject.getCircle().getCenter()) < 0.07)
+		{
 			nextFieldObject.setColor(currentObject.getColorType());
+			Circle circle = nextFieldObject.getCircle();
+
+			if (currentObject.getColorType() == FieldObjectColorBlue || currentObject.getColorType() == FieldObjectColorYellow)
+			{
+				circle.setDiameter(0.12);
+				nextFieldObject.setCircle(circle);
+			} else if (currentObject.getColorType() == FieldObjectColorGreen)
+			{
+				circle.setDiameter(0.06);
+				nextFieldObject.setCircle(circle);
+			}
+		}
 
 	}
 
@@ -207,7 +220,6 @@ void FieldImpl::removeAllFieldObjectsInVisibleArea()
 	{
 		Point currentCenter = ((*i).getCircle()).getCenter();
 
-		//! @todo Use a global parameter for distance filtering
 		if (Point::isTargetPointRightOfLine(referencePoint, directionVector, currentCenter))
 		{
 			m_fieldObjects.erase(i);
