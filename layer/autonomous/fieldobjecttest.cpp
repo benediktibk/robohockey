@@ -34,3 +34,17 @@ void FieldObjectTest::setColor_blueColor_IsBlueColor()
 
 	CPPUNIT_ASSERT_EQUAL(FieldObjectColorBlue, object.getColor());
 }
+
+void FieldObjectTest::setCircle_validCircle_getCircleReturnsSameCircle()
+{
+	Circle circle(Point(4, 3), 2);
+
+	FieldObject object(circle, FieldObjectColorGreen);
+
+	Circle newCircle(Point(2, 7), 5);
+	object.setCircle(newCircle);
+
+
+	Compare compare(0.001);
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(newCircle, object.getCircle()));
+}

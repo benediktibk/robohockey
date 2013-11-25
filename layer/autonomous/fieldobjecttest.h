@@ -17,12 +17,14 @@ namespace Autonomous
 		CPPUNIT_TEST(constructor_validCircle_getCircleReturnsSameCircle);
 		CPPUNIT_TEST(constructor_validColor_getCircleReturnsSameColor);
 		CPPUNIT_TEST(setColor_blueColor_IsBlueColor);
+		CPPUNIT_TEST(setCircle_validCircle_getCircleReturnsSameCircle);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
 		void constructor_validCircle_getCircleReturnsSameCircle();
 		void constructor_validColor_getCircleReturnsSameColor();
 		void setColor_blueColor_IsBlueColor();
+		void setCircle_validCircle_getCircleReturnsSameCircle();
 	};
 }
 }

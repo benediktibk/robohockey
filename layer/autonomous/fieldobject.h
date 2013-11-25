@@ -18,6 +18,7 @@ namespace Autonomous
 		const Common::Circle &getCircle() const;
 		Common::FieldObjectColor getColor() const;
 		void setColor(Common::FieldObjectColor color);
+		void setCircle(const Common::Circle &circle);
 
 	private:
 		Common::Circle m_circle;

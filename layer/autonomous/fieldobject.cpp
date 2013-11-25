@@ -23,3 +23,8 @@ void FieldObject::setColor(FieldObjectColor color)
 {
 	m_color = color;
 }
+
+void FieldObject::setCircle(const Circle &circle)
+{
+	m_circle = circle;
+}
