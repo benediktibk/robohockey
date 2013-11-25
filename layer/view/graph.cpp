@@ -128,7 +128,7 @@ void Graph::updateObjects()
 		else if (currentObject.getColor() == FieldObjectColorYellow)
 			currentItem.setBrush(Qt::yellow);
 		else
-			currentItem.setBrush(Qt::gray);
+			currentItem.setBrush(Qt::white);
 	}
 
 	const RobotPosition &robotPosition = m_model.getCurrentPosition();
