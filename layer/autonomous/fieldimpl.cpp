@@ -68,6 +68,16 @@ void FieldImpl::updateWithLidarData()
 
 	for (vector<DataAnalysis::LidarObject>::const_iterator i = objectsInRange.begin(); i != objectsInRange.end(); ++i)
 	{
+		if (inVisibleArea.size() != 0)
+		{
+			vector<FieldObject>::iterator currentObject = getNextObjectFromPosition(inVisibleArea, (*i).getCenter());
+
+			if ( tryToMergeLidarAndFieldObject(*currentObject, *i))
+			{
+				inVisibleArea.erase(currentObject);
+				continue;
+			}
+		}
 		FieldObject object(*i,FieldObjectColorUnknown);
 		m_fieldObjects.push_back(object);
 	}
@@ -139,7 +149,7 @@ vector<FieldObject>::iterator FieldImpl::getNextObjectFromPosition(std::vector<F
 	return result;
 }
 
-bool FieldImpl::tryToMergeLidarAndFieldObject(FieldObject &fieldObject, RoboHockey::Layer::DataAnalysis::LidarObject &lidarObject)
+bool FieldImpl::tryToMergeLidarAndFieldObject(FieldObject &fieldObject, const DataAnalysis::LidarObject &lidarObject)
 {
 	Compare positionCompare(0.09);
 	Point newCenter;

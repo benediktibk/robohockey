@@ -46,7 +46,7 @@ namespace Autonomous
 
 		FieldObject& getNextObjectFromPosition(Common::Point position);
 		std::vector<FieldObject>::iterator getNextObjectFromPosition(std::vector<FieldObject> &fieldObjects, Common::Point position);
-		bool tryToMergeLidarAndFieldObject(FieldObject &fieldObject, DataAnalysis::LidarObject &lidarObject);
+		bool tryToMergeLidarAndFieldObject(FieldObject &fieldObject, const DataAnalysis::LidarObject &lidarObject);
 
 		void transformCoordinateSystem(Common::Point &newOrigin, double rotation);
 		void rotateCoordinateSystem(double alpha);
