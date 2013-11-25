@@ -17,6 +17,7 @@ namespace Layer
 namespace DataAnalysis
 {
 	class Lidar;
+	class LidarObject;
 	class Sonar;
 	class Odometry;
 	class Camera;
@@ -44,6 +45,8 @@ namespace Autonomous
 		virtual void updateWithCameraData();
 
 		FieldObject& getNextObjectFromPosition(Common::Point position);
+		std::vector<FieldObject>::iterator getNextObjectFromPosition(std::vector<FieldObject> &fieldObjects, Common::Point position);
+		bool tryToMergeLidarAndFieldObject(FieldObject &fieldObject, DataAnalysis::LidarObject &lidarObject);
 
 		void transformCoordinateSystem(Common::Point &newOrigin, double rotation);
 		void rotateCoordinateSystem(double alpha);
@@ -51,7 +54,7 @@ namespace Autonomous
 
 		std::vector<Common::Point> &getPointsOfObjectsWithDiameterAndColor(double diameter, Common::FieldObjectColor color);
 
-		virtual void removeAllFieldObjectsInVisibleArea();
+		virtual std::vector<FieldObject> moveAllFieldObjectsInVisibleAreaToTemporaryVector();
 
 	private:
 		DataAnalysis::Odometry *m_odometry;

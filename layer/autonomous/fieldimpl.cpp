@@ -64,12 +64,12 @@ void FieldImpl::updateWithLidarData()
 	const DataAnalysis::LidarObjects &lidarObjects =  m_lidar->getAllObjects(*m_position);
 	const vector<DataAnalysis::LidarObject> &objectsInRange = lidarObjects.getObjectsWithDistanceBelow(4);
 
-	removeAllFieldObjectsInVisibleArea();
+	vector<FieldObject> inVisibleArea = moveAllFieldObjectsInVisibleAreaToTemporaryVector();
 
 	for (vector<DataAnalysis::LidarObject>::const_iterator i = objectsInRange.begin(); i != objectsInRange.end(); ++i)
 	{
-		FieldObject *object = new FieldObject(*i,FieldObjectColorUnknown);
-		m_fieldObjects.push_back(*object);
+		FieldObject object(*i,FieldObjectColorUnknown);
+		m_fieldObjects.push_back(object);
 	}
 }
 
@@ -124,6 +124,40 @@ FieldObject &FieldImpl::getNextObjectFromPosition(Point position)
 			nextFieldObject = *i;
 	}
 	return nextFieldObject;
+}
+
+vector<FieldObject>::iterator FieldImpl::getNextObjectFromPosition(std::vector<FieldObject> &fieldObjects, Point position)
+{
+	vector<FieldObject>::iterator result = fieldObjects.begin();
+
+	for (vector<FieldObject>::iterator i = fieldObjects.begin(); i != fieldObjects.end(); ++i)
+	{
+		if ( position.distanceTo((*i).getCircle().getCenter()) < position.distanceTo((*result).getCircle().getCenter()))
+			result = i;
+	}
+
+	return result;
+}
+
+bool FieldImpl::tryToMergeLidarAndFieldObject(FieldObject &fieldObject, RoboHockey::Layer::DataAnalysis::LidarObject &lidarObject)
+{
+	Compare positionCompare(0.09);
+	Point newCenter;
+	double diameter = 0.0;
+
+	if ( positionCompare.isFuzzyEqual( fieldObject.getCircle().getCenter(), lidarObject.getCenter() ) )
+	{
+		newCenter  = ( fieldObject.getCircle().getCenter() + lidarObject.getCenter() ) * 0.5;
+		diameter = fieldObject.getCircle().getDiameter();
+
+		if (fieldObject.getColor() == FieldObjectColorUnknown)
+			diameter = 0.5 * (fieldObject.getCircle().getDiameter() + lidarObject.getDiameter());
+
+		m_fieldObjects.push_back(FieldObject( Circle(newCenter, diameter), fieldObject.getColor()));
+		return true;
+	}
+
+	return false;
 }
 
 void FieldImpl::transformCoordinateSystem(Point &newOrigin, double rotation)
@@ -210,8 +244,9 @@ std::vector<Point> &FieldImpl::getPointsOfObjectsWithDiameterAndColor(double , F
 	return *resultObjects;
 }
 
-void FieldImpl::removeAllFieldObjectsInVisibleArea()
+vector<FieldObject> FieldImpl::moveAllFieldObjectsInVisibleAreaToTemporaryVector()
 {
+	vector<FieldObject> result;
 	Point referencePoint = m_position->getPosition();
 	Point directionVector(1, m_position->getOrientation());
 	directionVector.rotate(Angle::getQuarterRotation());
@@ -223,7 +258,10 @@ void FieldImpl::removeAllFieldObjectsInVisibleArea()
 		if (Point::isTargetPointRightOfLine(referencePoint, directionVector, currentCenter))
 		{
 			m_fieldObjects.erase(i);
+			result.push_back(*i);
 			i--;
 		}
 	}
+
+	return result;
 }
