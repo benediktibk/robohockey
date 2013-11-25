@@ -12,11 +12,27 @@ dataHighPassOne = applyLinearFilter(rawData, highPassFilterOne);
 slightLowPass = [1 16 81 256 81 16 1];
 slightLowPass = slightLowPass/sum(abs(slightLowPass));
 dataSlightLowPass = applyLinearFilter(rawData, slightLowPass);
-dataHighPassTwo = applyLinearFilter(dataSlightLowPass, highPassFilterOne);
+dataHighPassComplete = applyLinearFilter(dataSlightLowPass, highPassFilterOne);
+
+highPassFilterTwo = [-1 0 0 0 1];
+highPassFilterTwo = highPassFilterTwo/sum(abs(highPassFilterTwo));
+dataHighPassTwo = applyLinearFilter(rawData, highPassFilterTwo);
+
+highPassFilterThree = [-1 -2 -3 -2 -1 0 1 2 3 2 1];
+highPassFilterThree = highPassFilterThree/sum(abs(highPassFilterThree));
+dataHighPassThree = applyLinearFilter(rawData, highPassFilterThree);
 
 plot(rawData, 'b');
 hold on;
 plot(dataLowPassOne, 'g');
 plot(dataLowPassTwo, 'r');
 plot(dataHighPassOne, 'm');
-plot(dataHighPassTwo, 'r');
+plot(dataHighPassComplete, 'r');
+plot(dataHighPassTwo, 'y');
+plot(dataHighPassThree, 'g');
+
+figure;
+plot(rawData, 'b');
+hold on;
+plot(dataLowPassOne + dataHighPassThree, 'g');
+
