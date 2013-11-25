@@ -46,6 +46,8 @@ namespace DataAnalysis
 		CPPUNIT_TEST(goToStraight_rotationDoneAndLittleBitLeftOfDirectConnection_lastRotationIsSmallerThanZero);
 		CPPUNIT_TEST(goToStraight_rotationDoneAndLittleBitRightOfDirectConnection_lastRotationIsGreaterThanZero);
 		CPPUNIT_TEST(goToStraightSlowly_currentPositionDifferentToTarget_atLeastOneCallToSetSpeed);
+		CPPUNIT_TEST(goToStraightThrough_currentPositionDifferentToTarget_atLeastOneCallToSetSpeed);
+		CPPUNIT_TEST(goToStraightThrough_TargetAlmostReachedAfterSomeTime_lastMagnitudeIs0p5);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
@@ -81,6 +83,8 @@ namespace DataAnalysis
 		void goToStraight_rotationDoneAndLittleBitLeftOfDirectConnection_lastRotationIsSmallerThanZero();
 		void goToStraight_rotationDoneAndLittleBitRightOfDirectConnection_lastRotationIsGreaterThanZero();
 		void goToStraightSlowly_currentPositionDifferentToTarget_atLeastOneCallToSetSpeed();
+		void goToStraightThrough_currentPositionDifferentToTarget_atLeastOneCallToSetSpeed();
+		void goToStraightThrough_TargetAlmostReachedAfterSomeTime_lastMagnitudeIs0p5();
 	};
 }
 }

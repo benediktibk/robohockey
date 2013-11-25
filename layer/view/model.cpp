@@ -11,7 +11,9 @@ Model::Model() :
 	m_isMoving(false),
     m_turnAround(false),
     m_stop(false),
-    m_turn(false)
+	m_turn(false),
+	m_collectPuck(false),
+	m_calibratePosition(false)
 {}
 
 void Model::setData(
@@ -30,12 +32,14 @@ void Model::setData(
 	emit robotDataChanged();
 }
 
-void Model::setData(const vector<Point> &targetPositions, bool turnAround, bool turnTo, bool stop)
+void Model::setData(const vector<Point> &targetPositions, bool turnAround, bool turnTo, bool stop, bool collectPuck, bool calibratePosition)
 {
 	m_targetPositions = targetPositions;
 	m_turnAround = turnAround;
     m_turn = turnTo;
     m_stop = stop;
+	m_collectPuck = collectPuck;
+	m_calibratePosition = calibratePosition;
 
 	emit targetPositionsChanged();
 }
@@ -102,7 +106,27 @@ bool Model::getTurnTo()
 
 Point Model::getTurnPoint()
 {
-    return m_turnToPosition;
+	return m_turnToPosition;
+}
+
+void Model::collectPuckInFront()
+{
+	m_collectPuck = true;
+}
+
+bool Model::getCollectPuckInFront()
+{
+	return m_collectPuck;
+}
+
+void Model::calibratePosition()
+{
+	m_calibratePosition = true;
+}
+
+bool Model::getCalibratePosition()
+{
+	return m_calibratePosition;
 }
 
 bool Model::getTurnAround()

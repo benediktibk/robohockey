@@ -47,6 +47,15 @@ void EngineImpl::goToStraightSlowly(const Point &position)
 	m_engineState = EngineStateDrivingSlowly;
 }
 
+void EngineImpl::goToStraightThrough(const Point &position)
+{
+	m_target = position;
+	RobotPosition currentRobotPosition = m_odometry.getCurrentPosition();
+	m_startPosition = currentRobotPosition.getPosition();
+	m_rotationReached = false;
+	m_engineState = EngineStateDrivingThrough;
+}
+
 void EngineImpl::updateSpeedAndRotation()
 {
 	switch(m_engineState)
@@ -54,6 +63,7 @@ void EngineImpl::updateSpeedAndRotation()
 	case EngineStateStopped: updateSpeedAndRotationForStopped(); break;
 	case EngineStateDriving: updateSpeedAndRotationForDriving(); break;
 	case EngineStateDrivingSlowly: updateSpeedAndRotationForDriving(); break;
+	case EngineStateDrivingThrough: updateSpeedAndRotationForDriving(); break;
 	case EngineStateTurnAround: updateSpeedAndRotationForTurnAround(); break;
 	case EngineStateRotating: updateSpeedAndRotationForRotating(); break;
 	}
@@ -206,14 +216,23 @@ void EngineImpl::driveAndTurn(const RobotPosition &currentPosition)
 		return;
 	}
 
-	double distanceAmplification = 0.5;
 	double orientationAmplification = 1;
-	double magnitude = distanceAmplification*forwardError;
+	double distanceAmplification = 0.5;
 	double rotationSpeed = orientationAmplification*orthogonalError;
+	double magnitude = distanceAmplification*forwardError;
 
-	if (m_engineState == EngineStateDrivingSlowly)
-		magnitude = min(magnitude, 0.05);
+	switch (m_engineState)
+	{
+	case EngineStateDrivingThrough: magnitude = 0.5; break;
+	case EngineStateDrivingSlowly: magnitude = min(magnitude, 0.1); break;
+	default: break;
+	}
 
+	setSpeed(magnitude, rotationSpeed);
+}
+
+void EngineImpl::setSpeed(double magnitude, double rotationSpeed)
+{
 	if (magnitude > 0 && m_forwardMovementLocked)
 	{
 		magnitude = 0;
@@ -222,11 +241,6 @@ void EngineImpl::driveAndTurn(const RobotPosition &currentPosition)
 	else
 		m_tryingToTackleObstacle = false;
 
-	setSpeed(magnitude, rotationSpeed);
-}
-
-void EngineImpl::setSpeed(double magnitude, double rotationSpeed)
-{
 	m_speedTresholder->tresholdWheelSpeeds(magnitude, rotationSpeed);
 	m_desiredSpeed = magnitude;
 	m_engine.setSpeed(magnitude, rotationSpeed);

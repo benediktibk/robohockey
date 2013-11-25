@@ -57,7 +57,7 @@ void RobotDriverTest::update_stuckAtObstacle_targetPositionsIsEmpty()
 	robot.setStuckAtObstacle(true);
 	vector<Point> targets;
 	targets.push_back(Point());
-    model.setData(targets, false, false, false);
+	model.setData(targets, false, false, false, false, false);
 
 	driver.update();
 
@@ -73,7 +73,7 @@ void RobotDriverTest::update_newTargetPositionsAndTargetReached_targetOfRobotIsF
 	vector<Point> targets;
 	targets.push_back(Point(3, 4));
 	targets.push_back(Point(5, 1));
-    model.setData(targets, false, false, false);
+	model.setData(targets, false, false, false, false, false);
 	robot.setReachedTarget(true);
 
 	driver.update();
@@ -91,7 +91,7 @@ void RobotDriverTest::update_newTargetPositionsAndTargetReached_firstTargetPosit
 	vector<Point> targets;
 	targets.push_back(Point(3, 4));
 	targets.push_back(Point(5, 1));
-    model.setData(targets, false, false, false);
+	model.setData(targets, false, false, false, false, false);
 	robot.setReachedTarget(true);
 
 	driver.update();
@@ -110,7 +110,7 @@ void RobotDriverTest::update_newTargetPositionsAndTargetNotReached_targetOfRobot
 	vector<Point> targets;
 	targets.push_back(Point(3, 4));
 	targets.push_back(Point(5, 1));
-    model.setData(targets, false, false, false);
+	model.setData(targets, false, false, false, false, false);
 	robot.setReachedTarget(false);
 	robot.goTo(Point(4, 5));
 
@@ -153,7 +153,7 @@ void RobotDriverTest::update_stuckAtObstacle_noTargetsAnymore()
 	vector<Point> targets;
 	targets.push_back(Point(3, 4));
 	targets.push_back(Point(5, 1));
-    model.setData(targets, false, false, false);
+	model.setData(targets, false, false, false, false, false);
 
 	driver.update();
 
