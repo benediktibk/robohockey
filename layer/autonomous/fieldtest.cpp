@@ -111,6 +111,71 @@ void FieldTest::update_objectFromLidarNotInViewAnymoreThroughRotation_oneFieldOb
 	CPPUNIT_ASSERT_EQUAL((size_t)1, fieldObjects.size());
 }
 
+void FieldTest::update_oneObjectFromLidarAndNoObjectFromCamera_noColor()
+{
+	DataAnalysis::OdometryMock odometry;
+	DataAnalysis::LidarMock lidar;
+	DataAnalysis::CameraMock camera;
+	FieldImpl field(odometry, lidar, camera);
+	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 0), 0.1));
+	lidar.setAllObjects(lidarObjects);
+
+	field.update();
+
+	vector<FieldObject> fieldObjects = field.getAllFieldObjects();
+
+	CPPUNIT_ASSERT_EQUAL(FieldObjectColorUnknown, fieldObjects.front().getColor());
+}
+
+void FieldTest::update_twoObjectsFromLidarAndOneFromCamera_correctColor()
+{
+	DataAnalysis::OdometryMock odometry;
+	DataAnalysis::LidarMock lidar;
+	DataAnalysis::CameraMock camera;
+	FieldImpl field(odometry, lidar, camera);
+
+	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 0), 0.1));
+	lidar.setAllObjects(lidarObjects);
+
+	DataAnalysis::CameraObjects cameraObjects;
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldObjectColorYellow, Point(1,0)));
+	camera.setAllObjects(cameraObjects);
+
+	field.update();
+
+	vector<FieldObject> fieldObjects = field.getAllFieldObjects();
+
+	CPPUNIT_ASSERT_EQUAL(FieldObjectColorYellow, fieldObjects.front().getColor());
+}
+
+void FieldTest::update_twoObjectsFromLidarAndOneFromCameraNoColorAnymoreDuringSecondCall_stillCorrectColor()
+{
+	DataAnalysis::OdometryMock odometry;
+	DataAnalysis::LidarMock lidar;
+	DataAnalysis::CameraMock camera;
+	FieldImpl field(odometry, lidar, camera);
+
+	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 0), 0.1));
+	lidar.setAllObjects(lidarObjects);
+
+	DataAnalysis::CameraObjects cameraObjects;
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldObjectColorYellow, Point(1,0)));
+	camera.setAllObjects(cameraObjects);
+
+	field.update();
+
+	camera.setAllObjects(DataAnalysis::CameraObjects());
+
+	field.update();
+
+	vector<FieldObject> fieldObjects = field.getAllFieldObjects();
+
+	CPPUNIT_ASSERT_EQUAL(FieldObjectColorYellow, fieldObjects.front().getColor());
+}
+
 void FieldTest::tryToDetectField_noValidPattern_false()
 {
 	DataAnalysis::OdometryMock odometry;

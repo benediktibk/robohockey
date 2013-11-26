@@ -10,7 +10,7 @@ CameraMock::CameraMock() :
 
 CameraObjects CameraMock::getAllCameraObjects(const RobotPosition &)
 {
-	return CameraObjects();
+	return m_objects;
 }
 
 double CameraMock::getProbabilityForYellowGoal()
