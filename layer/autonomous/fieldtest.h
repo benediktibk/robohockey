@@ -22,6 +22,8 @@ namespace Autonomous
 		CPPUNIT_TEST(update_objectFromLidarNotInViewAnymoreThroughRotation_oneFieldObject);
 		CPPUNIT_TEST(tryToDetectFild_noValidPattern_false);
 		CPPUNIT_TEST(tryToDetectFild_validPattern_true);
+		CPPUNIT_TEST(tryToDetectFild_noValidPattern_noTransformation);
+		CPPUNIT_TEST(tryToDetectFild_validPattern_transformed);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
@@ -33,6 +35,8 @@ namespace Autonomous
 		void update_objectFromLidarNotInViewAnymoreThroughRotation_oneFieldObject();
 		void tryToDetectFild_noValidPattern_false();
 		void tryToDetectFild_validPattern_true();
+		void tryToDetectFild_noValidPattern_noTransformation();
+		void tryToDetectFild_validPattern_transformed();
 	};
 }
 }
