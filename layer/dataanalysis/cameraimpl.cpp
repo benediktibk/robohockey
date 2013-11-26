@@ -27,7 +27,7 @@ CameraObjects CameraImpl::getAllCameraObjects(const Common::RobotPosition &posit
 	return m_cameraObjects;
 }
 
-bool CameraImpl::isGoalYellow()
+double CameraImpl::getProbabilityForYellowGoal()
 {
 	assert(m_camera.isValid());
 	Mat goal;
@@ -35,11 +35,9 @@ bool CameraImpl::isGoalYellow()
 	inRange(m_filteredFrame, cv::Scalar(20, 100, 50), cv::Scalar(30, 200, 255), goal);
 	Rect range(103, 180, 114, 60);
 	goal = goal(range);
-	if(countNonZero(goal) > 0.8*range.area())
-		return true;
-	else
-		return false;
+	return (static_cast<double>(countNonZero(goal))/static_cast<double>(range.area()));
 }
+
 
 void CameraImpl::filterFrameAndConvertToHLS()
 {

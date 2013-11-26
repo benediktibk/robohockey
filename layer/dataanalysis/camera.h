@@ -21,7 +21,7 @@ namespace DataAnalysis
 		virtual ~Camera() { }
 
 		virtual CameraObjects getAllCameraObjects(const Common::RobotPosition &position) = 0;
-		virtual bool isGoalYellow() = 0;
+		virtual double getProbabilityForYellowGoal() = 0;
 	};
 }
 }

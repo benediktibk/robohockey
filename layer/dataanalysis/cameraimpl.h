@@ -22,7 +22,7 @@ namespace DataAnalysis
 		CameraImpl(Hardware::Camera &camera);
 
 		virtual CameraObjects getAllCameraObjects(const Common::RobotPosition &position);
-		virtual bool isGoalYellow();
+		virtual double getProbabilityForYellowGoal();
 
 	private:
 		void filterFrameAndConvertToHLS();

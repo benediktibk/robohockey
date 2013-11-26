@@ -22,7 +22,7 @@ void CameraTest::isGoalYellow_yellowGoal_resultIsTrue()
 	Hardware::CameraMock hardwareCamera("yellow_goal");
 	CameraImpl camera(hardwareCamera);
 
-	CPPUNIT_ASSERT(camera.isGoalYellow());
+	CPPUNIT_ASSERT(camera.getProbabilityForYellowGoal() > 0.8);
 }
 
 void CameraTest::isGoalYellow_blueGoal_resultIsFalse()
@@ -30,7 +30,7 @@ void CameraTest::isGoalYellow_blueGoal_resultIsFalse()
 	Hardware::CameraMock hardwareCamera("blue_goal");
 	CameraImpl camera(hardwareCamera);
 
-	CPPUNIT_ASSERT(!camera.isGoalYellow());
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(0,camera.getProbabilityForYellowGoal(), 0.05);
 }
 
 void CameraTest::getAllCameraObjects_yellowPuckTwice_cameraObjectsCountIs2()
@@ -232,5 +232,5 @@ void CameraTest::getAllCameraObjects_camera2211_cameraObjectCountIs2()
 	Hardware::CameraMock hardwareCamera("camera_22_11");
 	CameraImpl camera(hardwareCamera);
 
-	CPPUNIT_ASSERT(!camera.isGoalYellow());
+	CPPUNIT_ASSERT_EQUAL((size_t)2 ,camera.getAllCameraObjects(RobotPosition()).getObjectCount());
 }
