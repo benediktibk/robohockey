@@ -175,16 +175,15 @@ Angle LidarImpl::calculateOrientationFromSensorNumber(unsigned int value) const
 double LidarImpl::calculateMinimumDistanceToObstacle(const Angle &angle, double speed) const
 {
 	const double anglePositive = fabs(angle.getValueBetweenMinusPiAndPi());
-	const double additionalSpaceBesideAxis = 0.2;
-	const double axisLength = 0.38 + additionalSpaceBesideAxis;
+	const double additionalSpaceBesideAxis = 0.1;
+	const double axisLength = (0.38 + additionalSpaceBesideAxis)*2;
 	const double timeToStop = 0.2;
-	const double minimumDistanceToObstacle = 0.2 + axisLength + speed*timeToStop*cos(anglePositive);
-	const double orthogonalDistance = axisLength/2*tan(M_PI/2 - anglePositive);
-
-	if (orthogonalDistance <= minimumDistanceToObstacle)
-		return axisLength*sin(anglePositive);
-	else
-		return minimumDistanceToObstacle*cos(anglePositive);
+	const double minimumDistanceToObstacle = 0.4 + axisLength + speed*timeToStop;
+	const double axisLengthWithAngle = axisLength*cos(anglePositive);
+	const double axisLengthWithAngleSquare = axisLengthWithAngle*axisLengthWithAngle;
+	const double minimumWithAngle = minimumDistanceToObstacle*sin(anglePositive);
+	const double minimumWithAngleSquare = minimumWithAngle*minimumWithAngle;
+	return axisLength*minimumDistanceToObstacle/(sqrt(axisLengthWithAngleSquare + 4*minimumWithAngleSquare));
 }
 
 void LidarImpl::clearInternalObjects()
