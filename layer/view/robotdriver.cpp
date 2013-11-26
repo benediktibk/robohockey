@@ -46,7 +46,7 @@ void RobotDriver::update()
 		m_model.setData(targets, false, false, false, false, false);
 	}
 
-	if (m_robot.reachedTarget())
+	else if (m_robot.reachedTarget())
 	{
 		if(m_model.getTurnAround() && targets.size() == 0 && !m_model.getStop())
 		{
