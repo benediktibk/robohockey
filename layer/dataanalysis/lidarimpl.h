@@ -30,9 +30,11 @@ namespace DataAnalysis
 
 	public:
 		LidarImpl(Hardware::Lidar &lidar, double minimumDistanceToObstacle, double axisLength, double timeToStop);
+		virtual ~LidarImpl();
 
 		virtual LidarObjects getAllObjects(const Common::RobotPosition &ownPosition) const;
 		virtual bool isObstacleInFront(double speed) const;
+		virtual void updateSensorData();
 
 	private:
 		std::list<std::pair<int, int> > findStartAndEndOfObjects(
@@ -40,6 +42,7 @@ namespace DataAnalysis
 		Common::DiscreteFunction* readInData() const;
 		Common::Angle calculateOrientationFromSensorNumber(unsigned int value) const;
 		double calculateMinimumDistanceToObstacle(const Common::Angle &angle) const;
+		void initializeMinimumDistancesForCollisionDetection();
 
 	private:
 		static double calculateWidthFromAngleAndDistance(const Common::Angle &angle, double distance);
@@ -53,12 +56,14 @@ namespace DataAnalysis
 		const double m_minimumDistanceToObstacle;
 		const double m_edgeTreshold;
 		const int m_minimumWidthInSensorNumbers;
-		const double m_maximumWidthInRadiants;
 		const double m_maximumWidthInMeter;
 		const double m_axisLengthAngst;
 		const double m_axisLength;
 		const double m_timeToStop;
 		std::vector<DistanceForSensor> m_minimumDistances;
+		Common::DiscreteFunction *m_lowPassPart;
+		Common::DiscreteFunction *m_highPassPart;
+		Common::DiscreteFunction *m_rawData;
 	};
 }
 }

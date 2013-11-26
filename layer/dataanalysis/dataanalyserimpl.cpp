@@ -73,6 +73,7 @@ Engine &DataAnalyserImpl::getEngine()
 void DataAnalyserImpl::updateSensorData()
 {
 	m_robot->updateSensorData();
+	m_lidar->updateSensorData();
 }
 
 void DataAnalyserImpl::updateActuators()

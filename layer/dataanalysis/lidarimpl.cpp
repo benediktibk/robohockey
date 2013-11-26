@@ -20,51 +20,35 @@ LidarImpl::LidarImpl(Hardware::Lidar &lidar, double minimumDistanceToObstacle, d
 	m_minimumDistanceToObstacle(minimumDistanceToObstacle + m_minimumDistanceToObstacleAngst),
 	m_edgeTreshold(0.25),
 	m_minimumWidthInSensorNumbers(3),
-	m_maximumWidthInRadiants(1),
 	m_maximumWidthInMeter(0.7),
 	m_axisLengthAngst(0.03),
 	m_axisLength(axisLength + m_axisLengthAngst),
-	m_timeToStop(timeToStop)
+	m_timeToStop(timeToStop),
+	m_lowPassPart(new Common::DiscreteFunction(0, m_maximumSensorNumber)),
+	m_highPassPart(new Common::DiscreteFunction(0, m_maximumSensorNumber)),
+	m_rawData(new Common::DiscreteFunction(0, m_maximumSensorNumber))
 {
-	const double possibleBlindAngle = 13*M_PI/180; // more than the necessary 12°, just to be sure
-	const unsigned int sensorDistanceToEdges = 30;
-	const unsigned int possibleBlindSensorNumberRight = ceil((M_PI/2 + possibleBlindAngle)*361/M_PI);
-	const unsigned int possibleBlindSensorNumberLeft = floor((M_PI/2 - possibleBlindAngle)*361/M_PI);
-	const size_t capacity = m_maximumSensorNumber - m_minimumSensorNumber - (possibleBlindSensorNumberRight - possibleBlindSensorNumberLeft);
-	m_minimumDistances.reserve(capacity);
+	// These values stay the same, therefore we have to calculate them only once.
+	initializeMinimumDistancesForCollisionDetection();
+}
 
-	assert(possibleBlindSensorNumberRight < m_maximumSensorNumber);
-	assert(possibleBlindSensorNumberLeft < m_maximumSensorNumber);
-
-	for (unsigned int i = m_minimumSensorNumber + sensorDistanceToEdges; i < possibleBlindSensorNumberLeft; ++i)
-	{
-		Angle angle = calculateOrientationFromSensorNumber(i);
-		double minimumDistance = calculateMinimumDistanceToObstacle(angle);
-		m_minimumDistances.push_back(DistanceForSensor(i, minimumDistance));
-	}
-
-	for (unsigned int i = possibleBlindSensorNumberRight; i < m_maximumSensorNumber - sensorDistanceToEdges; ++i)
-	{
-		Angle angle = calculateOrientationFromSensorNumber(i);
-		double minimumDistance = calculateMinimumDistanceToObstacle(angle);
-		m_minimumDistances.push_back(DistanceForSensor(i, minimumDistance));
-	}
-
-	assert(m_minimumDistances.capacity() <= capacity);
+LidarImpl::~LidarImpl()
+{
+	delete m_highPassPart;
+	m_highPassPart = 0;
+	delete m_lowPassPart;
+	m_lowPassPart = 0;
+	delete m_rawData;
+	m_rawData = 0;
 }
 
 LidarObjects LidarImpl::getAllObjects(const RobotPosition &ownPosition) const
 {
 	LidarObjects objects(ownPosition.getPosition());
-	scoped_ptr<DiscreteFunction> distances(readInData());
-
-	DiscreteFunction distanceEdges(*distances);
-	distanceEdges.suppressNoiseLight();
-	distanceEdges.differentiate(1);
-	list<int> positiveEdges = distanceEdges.getPositionsWithValuesAbove(m_edgeTreshold);
-	list<int> negativeEdges = distanceEdges.getPositionsWithValuesBelow((-1)*m_edgeTreshold);
-	positiveEdges = replaceFollowingEdgesWithBiggestMagnitudePosition(positiveEdges, distanceEdges);
-	negativeEdges = replaceFollowingEdgesWithBiggestMagnitudePosition(negativeEdges, distanceEdges);
+	list<int> positiveEdges = m_highPassPart->getPositionsWithValuesAbove(m_edgeTreshold);
+	list<int> negativeEdges = m_highPassPart->getPositionsWithValuesBelow((-1)*m_edgeTreshold);
+	positiveEdges = replaceFollowingEdgesWithBiggestMagnitudePosition(positiveEdges, *m_highPassPart);
+	negativeEdges = replaceFollowingEdgesWithBiggestMagnitudePosition(negativeEdges, *m_highPassPart);
 	list<pair<int, int> > startAndEndOfObjects = findStartAndEndOfObjects(positiveEdges, negativeEdges);
 
 	for (list<pair<int, int> >::iterator i = startAndEndOfObjects.begin(); i != startAndEndOfObjects.end(); ++i)
@@ -75,18 +59,14 @@ LidarObjects LidarImpl::getAllObjects(const RobotPosition &ownPosition) const
 		if (widthInSensorNumbers < m_minimumWidthInSensorNumbers)
 			continue;
 
-		Angle widthInAngle = calculateOrientationFromSensorNumber(end - 1) - calculateOrientationFromSensorNumber(start + 1);
-		if (widthInAngle.getValueBetweenZeroAndTwoPi() > m_maximumWidthInRadiants)
-			continue;
-
-		distances->suppressNoiseInRange(start + 1, end - 1);
-		double distance = distances->getMinimumInRange(start + 1, end - 1);
+		double distance = m_rawData->getMinimumInRange(start + 1, end - 1);
 		int middleSensorNumber = (end + start)/2;
 		Angle orientationOfObjectRelativeToOwnOrientation = calculateOrientationFromSensorNumber(middleSensorNumber);
 		Angle orientationOfObject = ownPosition.getOrientation() + orientationOfObjectRelativeToOwnOrientation;
+		Angle widthInAngle = calculateOrientationFromSensorNumber(end - 1) - calculateOrientationFromSensorNumber(start + 1);
 		double widthOfObject = calculateWidthFromAngleAndDistance(widthInAngle, distance);
 
-		if (widthOfObject > m_maximumWidthInMeter)
+		if (widthOfObject > m_maximumWidthInMeter || widthOfObject < 0)
 			continue;
 
 		double totalDistance = distance + widthOfObject/2;
@@ -103,7 +83,7 @@ bool LidarImpl::isObstacleInFront(double speed) const
 	{
 		unsigned int sensorNumber = i->first;
 		double minimumDistance = i->second;
-		double distance = m_lidar.getDistance(sensorNumber);
+		double distance = m_lowPassPart->getValue(sensorNumber);
 		Angle angle = calculateOrientationFromSensorNumber(sensorNumber);
 		double brakingDistance = speed*m_timeToStop;
 		// The consideration of the braking distance is not totally correct this way, but it should be good enough.
@@ -114,6 +94,16 @@ bool LidarImpl::isObstacleInFront(double speed) const
 	}
 
 	return false;
+}
+
+void LidarImpl::updateSensorData()
+{
+	scoped_ptr<DiscreteFunction> rawData(readInData());
+	*m_rawData = *rawData;
+	rawData->suppressNoiseLight();
+	*m_lowPassPart = *rawData;
+	*m_highPassPart = *rawData;
+	m_highPassPart->differentiate(1);
 }
 
 list<pair<int, int> > LidarImpl::findStartAndEndOfObjects(
@@ -186,6 +176,35 @@ double LidarImpl::calculateMinimumDistanceToObstacle(const Angle &angle) const
 		return m_axisLength/(2*sin(anglePositive));
 	else
 		return m_minimumDistanceToObstacle/cos(anglePositive);
+}
+
+void LidarImpl::initializeMinimumDistancesForCollisionDetection()
+{
+	const double possibleBlindAngle = 13*M_PI/180; // more than the necessary 12°, just to be sure
+	const unsigned int sensorDistanceToEdges = 30;
+	const unsigned int possibleBlindSensorNumberRight = ceil((M_PI/2 + possibleBlindAngle)*361/M_PI);
+	const unsigned int possibleBlindSensorNumberLeft = floor((M_PI/2 - possibleBlindAngle)*361/M_PI);
+	const size_t capacity = m_maximumSensorNumber - m_minimumSensorNumber - (possibleBlindSensorNumberRight - possibleBlindSensorNumberLeft);
+	m_minimumDistances.reserve(capacity);
+
+	assert(possibleBlindSensorNumberRight < m_maximumSensorNumber);
+	assert(possibleBlindSensorNumberLeft < m_maximumSensorNumber);
+
+	for (unsigned int i = m_minimumSensorNumber + sensorDistanceToEdges; i < possibleBlindSensorNumberLeft; ++i)
+	{
+		Angle angle = calculateOrientationFromSensorNumber(i);
+		double minimumDistance = calculateMinimumDistanceToObstacle(angle);
+		m_minimumDistances.push_back(DistanceForSensor(i, minimumDistance));
+	}
+
+	for (unsigned int i = possibleBlindSensorNumberRight; i < m_maximumSensorNumber - sensorDistanceToEdges; ++i)
+	{
+		Angle angle = calculateOrientationFromSensorNumber(i);
+		double minimumDistance = calculateMinimumDistanceToObstacle(angle);
+		m_minimumDistances.push_back(DistanceForSensor(i, minimumDistance));
+	}
+
+	assert(m_minimumDistances.capacity() <= capacity);
 }
 
 double LidarImpl::calculateWidthFromAngleAndDistance(const Angle &angle, double distance)

@@ -18,6 +18,9 @@ bool LidarMock::isObstacleInFront(double) const
 	return false;
 }
 
+void LidarMock::updateSensorData()
+{ }
+
 void LidarMock::setAllObjects(const LidarObjects &objects)
 {
 	m_objects = objects;

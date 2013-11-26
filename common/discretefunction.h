@@ -21,6 +21,7 @@ namespace Common
 		void suppressNoiseHeavy();
 		void suppressNoiseInRange(int start, int end);
 		void differentiate(double stepSize);
+		void filterHighPass();
 		bool withinRange(int x) const;
 		std::list<int> getPositionsWithValuesAbove(double value) const;
 		std::list<int> getPositionsWithValuesBelow(double value) const;
@@ -39,9 +40,10 @@ namespace Common
 		int m_start;
 		int m_end;
 		std::vector<double> m_values;
-		std::vector<double> m_coreNoiseSuppressionBig;
-		std::vector<double> m_coreNoiseSuppressionSmall;
+		std::vector<double> m_coreNoiseSuppressionHeavy;
+		std::vector<double> m_coreNoiseSuppressionLight;
 		std::vector<double> m_coreDifferentiation;
+		std::vector<double> m_coreHighPass;
 
 	};
 }

@@ -25,6 +25,7 @@ namespace DataAnalysis
 		 */
 		virtual LidarObjects getAllObjects(const Common::RobotPosition &ownPosition) const = 0;
 		virtual bool isObstacleInFront(double speed) const = 0;
+		virtual void updateSensorData() = 0;
 	};
 }
 }

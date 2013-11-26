@@ -252,3 +252,10 @@ layer/dataanalysis/speedtresholdertest.cpp
 layer/dataanalysis/speedtresholder.cpp
 layer/dataanalysis/speedtresholdertest.h
 layer/dataanalysis/speedtresholder.h
+resources/analysis/readInLidarData.m
+resources/analysis/lidarAnalysis.m
+resources/analysis/finalResults.m
+resources/analysis/finalFilter.m
+resources/analysis/filtered_plot_version_2.png
+resources/analysis/filtered_plot.png
+resources/analysis/applyLinearFilter.m
