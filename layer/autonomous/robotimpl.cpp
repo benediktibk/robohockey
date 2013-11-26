@@ -102,6 +102,19 @@ void RobotImpl::collectPuckInFront()
 	engine.goToStraightSlowly(targetPosition);
 }
 
+void RobotImpl::leaveCollectedPuck()
+{
+	DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
+	RobotPosition ownPosition = getCurrentPosition();
+
+	Point puck(-0.2,0);
+	puck.rotate(ownPosition.getOrientation());
+	Point targetPosition = ownPosition.getPosition() + puck;
+
+	m_collectingPuck = false;
+	engine.goToStraightSlowlyBack(targetPosition);
+}
+
 bool RobotImpl::isMoving()
 {
 	return m_dataAnalyser->getEngine().isMoving();

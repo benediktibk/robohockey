@@ -68,6 +68,12 @@ void RobotDriver::update()
 			m_model.setData(targets, false, false, false, false, false);
 		}
 
+		if(m_model.getLeavePuckInFront() && targets.size() == 0 && !m_model.getStop())
+		{
+			m_robot.leaveCollectedPuck();
+			m_model.setData(targets, false, false, false, false, false);
+		}
+
 		if(m_model.getCalibratePosition() && targets.size() == 0 && !m_model.getStop())
 		{
 			m_robot.calibratePosition();

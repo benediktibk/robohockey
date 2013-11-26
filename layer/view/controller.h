@@ -40,6 +40,10 @@ namespace View
 
 		void on_calibratePosition_clicked();
 
+		void on_leavePuckInFront_clicked();
+
+		void on_pushButton_clicked();
+
 	public slots:
 		void update();
 
