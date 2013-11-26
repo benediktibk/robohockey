@@ -111,7 +111,7 @@ void FieldTest::update_objectFromLidarNotInViewAnymoreThroughRotation_oneFieldOb
 	CPPUNIT_ASSERT_EQUAL((size_t)1, fieldObjects.size());
 }
 
-void FieldTest::tryToDetectFild_noValidPattern_false()
+void FieldTest::tryToDetectField_noValidPattern_false()
 {
 	DataAnalysis::OdometryMock odometry;
 	DataAnalysis::LidarMock lidar;
@@ -121,8 +121,8 @@ void FieldTest::tryToDetectFild_noValidPattern_false()
 	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 0), 0.1));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(3.4, 3), 0.1));
-	lidarObjects.addObject(DataAnalysis::LidarObject(Point(5, 7), 0.1));
-	lidarObjects.addObject(DataAnalysis::LidarObject(Point(0.4, 4.3), 0.1));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(3, -4), 0.1));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(4.5, -1), 0.1));
 	lidar.setAllObjects(lidarObjects);
 
 	field.update();
@@ -130,7 +130,7 @@ void FieldTest::tryToDetectFild_noValidPattern_false()
 	CPPUNIT_ASSERT(!field.tryToFindField());
 }
 
-void FieldTest::tryToDetectFild_validPattern_true()
+void FieldTest::tryToDetectField_validPattern_true()
 {
 	DataAnalysis::OdometryMock odometry;
 	DataAnalysis::LidarMock lidar;
@@ -149,7 +149,7 @@ void FieldTest::tryToDetectFild_validPattern_true()
 	CPPUNIT_ASSERT(field.tryToFindField());
 }
 
-void FieldTest::tryToDetectFild_noValidPattern_noTransformation()
+void FieldTest::tryToDetectField_noValidPattern_noTransformation()
 {
 	Compare compare(0.01);
 	DataAnalysis::OdometryMock odometry;
@@ -160,8 +160,8 @@ void FieldTest::tryToDetectFild_noValidPattern_noTransformation()
 	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 0), 0.1));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(3.4, 3), 0.1));
-	lidarObjects.addObject(DataAnalysis::LidarObject(Point(5, 7), 0.1));
-	lidarObjects.addObject(DataAnalysis::LidarObject(Point(6, 8.5), 0.1));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(3, -4), 0.1));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(4.5, -1), 0.1));
 	lidar.setAllObjects(lidarObjects);
 
 	field.update();
@@ -173,7 +173,7 @@ void FieldTest::tryToDetectFild_noValidPattern_noTransformation()
 	CPPUNIT_ASSERT(compare.isFuzzyEqual(fieldObjects.front().getCircle(), lidarObjectsVector.front()));
 }
 
-void FieldTest::tryToDetectFild_validPattern_transformed()
+void FieldTest::tryToDetectField_validPattern_transformed()
 {
 	Compare compare(0.01);
 	DataAnalysis::OdometryMock odometry;
