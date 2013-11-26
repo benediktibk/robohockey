@@ -33,6 +33,7 @@ namespace Autonomous
 		const Common::Point& getLastTarget() const;
 		unsigned int getCallsToStop() const;
 		virtual void collectPuckInFront();
+		virtual void leaveCollectedPuck();
 		virtual bool isMoving();
 		virtual void turnAround();
 		virtual void turnTo(const Common::Point &position);

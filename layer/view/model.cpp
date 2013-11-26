@@ -13,7 +13,8 @@ Model::Model() :
     m_stop(false),
 	m_turn(false),
 	m_collectPuck(false),
-	m_calibratePosition(false)
+	m_calibratePosition(false),
+	m_leavePuck(false)
 {}
 
 void Model::setData(
@@ -127,6 +128,16 @@ void Model::calibratePosition()
 bool Model::getCalibratePosition()
 {
 	return m_calibratePosition;
+}
+
+void Model::leavePuckInFront()
+{
+	m_leavePuck = true;
+}
+
+bool Model::getLeavePuckInFront()
+{
+	return m_leavePuck;
 }
 
 bool Model::getTurnAround()

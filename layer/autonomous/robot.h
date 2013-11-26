@@ -29,6 +29,7 @@ namespace Autonomous
 		virtual void updateSensorData() = 0;
 		virtual void stop() = 0;
 		virtual void collectPuckInFront() = 0;
+		virtual void leaveCollectedPuck() = 0;
 		virtual bool isMoving() = 0;
 		virtual void turnAround() = 0;
 		virtual Common::RobotPosition getCurrentPosition() = 0;

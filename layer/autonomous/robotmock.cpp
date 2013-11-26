@@ -76,6 +76,9 @@ unsigned int RobotMock::getCallsToStop() const
 void RobotMock::collectPuckInFront()
 { }
 
+void RobotMock::leaveCollectedPuck()
+{ }
+
 bool RobotMock::isMoving()
 {
 	return false;

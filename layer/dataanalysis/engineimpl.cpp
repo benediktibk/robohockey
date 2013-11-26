@@ -56,6 +56,15 @@ void EngineImpl::goToStraightThrough(const Point &position)
 	m_engineState = EngineStateDrivingThrough;
 }
 
+void EngineImpl::goToStraightSlowlyBack(const Point &position)
+{
+	m_target = position;
+	RobotPosition currentRobotPosition = m_odometry.getCurrentPosition();
+	m_startPosition = currentRobotPosition.getPosition();
+	m_rotationReached = true;
+	m_engineState = EngineStateDrivingSlowlyBack;
+}
+
 void EngineImpl::updateSpeedAndRotation()
 {
 	switch(m_engineState)
@@ -64,6 +73,7 @@ void EngineImpl::updateSpeedAndRotation()
 	case EngineStateDriving: updateSpeedAndRotationForDriving(); break;
 	case EngineStateDrivingSlowly: updateSpeedAndRotationForDriving(); break;
 	case EngineStateDrivingThrough: updateSpeedAndRotationForDriving(); break;
+	case EngineStateDrivingSlowlyBack: updateSpeedAndRotationForDriving(); break;
 	case EngineStateTurnAround: updateSpeedAndRotationForTurnAround(); break;
 	case EngineStateRotating: updateSpeedAndRotationForRotating(); break;
 	}
@@ -225,6 +235,7 @@ void EngineImpl::driveAndTurn(const RobotPosition &currentPosition)
 	{
 	case EngineStateDrivingThrough: magnitude = 0.5; break;
 	case EngineStateDrivingSlowly: magnitude = min(magnitude, 0.1); break;
+	case EngineStateDrivingSlowlyBack: magnitude = -0.1; break;
 	default: break;
 	}
 
