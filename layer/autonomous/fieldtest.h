@@ -20,6 +20,9 @@ namespace Autonomous
 		CPPUNIT_TEST(update_oneObjectFromLidarLeftNotInViewAnymoreDuringSecondCall_noFieldObjects);
 		CPPUNIT_TEST(update_oneObjectFromLidarRightNotInViewAnymoreDuringSecondCall_noFieldObjects);
 		CPPUNIT_TEST(update_objectFromLidarNotInViewAnymoreThroughRotation_oneFieldObject);
+		CPPUNIT_TEST(update_oneObjectFromLidarAndNoObjectFromCamera_noColor);
+		CPPUNIT_TEST(update_twoObjectsFromLidarAndOneFromCamera_correctColor);
+		CPPUNIT_TEST(update_twoObjectsFromLidarAndOneFromCameraNoColorAnymoreDuringSecondCall_stillCorrectColor);
 		CPPUNIT_TEST(tryToDetectField_noValidPattern_false);
 		CPPUNIT_TEST(tryToDetectField_validPattern_true);
 		CPPUNIT_TEST(tryToDetectField_noValidPattern_noTransformation);
@@ -35,6 +38,9 @@ namespace Autonomous
 		void update_oneObjectFromLidarLeftNotInViewAnymoreDuringSecondCall_noFieldObjects();
 		void update_oneObjectFromLidarRightNotInViewAnymoreDuringSecondCall_noFieldObjects();
 		void update_objectFromLidarNotInViewAnymoreThroughRotation_oneFieldObject();
+		void update_oneObjectFromLidarAndNoObjectFromCamera_noColor();
+		void update_twoObjectsFromLidarAndOneFromCamera_correctColor();
+		void update_twoObjectsFromLidarAndOneFromCameraNoColorAnymoreDuringSecondCall_stillCorrectColor();
 		void tryToDetectField_noValidPattern_false();
 		void tryToDetectField_validPattern_true();
 		void tryToDetectField_noValidPattern_noTransformation();
