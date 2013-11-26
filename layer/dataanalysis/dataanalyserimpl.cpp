@@ -17,11 +17,7 @@ DataAnalyserImpl::DataAnalyserImpl(Hardware::Robot *robot) :
 	m_widthOfRobotBesideLidar(0.14),
 	m_timeToStop(1.5),
 	m_sonar(new SonarImpl(m_robot->getSonar(), m_minimumDistanceToObstacle, m_timeToStop)),
-	// we have to make the robot slightly bigger because we see only the lidar with the lidar, and not the whole robot
-	m_lidar(new LidarImpl(m_robot->getLidar(),
-						  m_minimumDistanceToObstacle + m_widthOfRobotBesideLidar,
-						  m_axisLength + 2*m_widthOfRobotBesideLidar,
-						  m_timeToStop)),
+	m_lidar(new LidarImpl(m_robot->getLidar())),
 	m_camera(new CameraImpl(m_robot->getCamera())),
 	m_odometry(new OdometryImpl(m_robot->getOdometry())),
 	m_engine(new EngineImpl(m_robot->getEngine(), m_robot->getOdometry()))

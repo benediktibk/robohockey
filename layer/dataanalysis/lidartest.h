@@ -44,6 +44,8 @@ namespace DataAnalysis
 		CPPUNIT_TEST(isObstacleInFront_puckCollected_false);
 		CPPUNIT_TEST(isObstacleInFront_obstacleOnLeftSide_true);
 		CPPUNIT_TEST(isObstacleInFront_obstacleOnRightSide_true);
+		CPPUNIT_TEST(isObstacleInFront_severalBoundPostsAndOtherRobotFarAway_false);
+		CPPUNIT_TEST(isObstacleInFront_robotVeryCloseAtTheSide_true);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
@@ -71,6 +73,8 @@ namespace DataAnalysis
 		void isObstacleInFront_puckCollected_false();
 		void isObstacleInFront_obstacleOnLeftSide_true();
 		void isObstacleInFront_obstacleOnRightSide_true();
+		void isObstacleInFront_severalBoundPostsAndOtherRobotFarAway_false();
+		void isObstacleInFront_robotVeryCloseAtTheSide_true();
 	};
 }
 }

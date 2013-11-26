@@ -13,16 +13,13 @@ using namespace RoboHockey::Layer::DataAnalysis;
 using namespace std;
 using namespace boost;
 
-LidarImpl::LidarImpl(Hardware::Lidar &lidar, double minimumDistanceToObstacle, double axisLength, double timeToStop) :
+LidarImpl::LidarImpl(Hardware::Lidar &lidar) :
 	m_lidar(lidar),
 	m_minimumSensorNumber(lidar.getMinimumSensorNumber()),
 	m_maximumSensorNumber(lidar.getMaximumSensorNumber()),
-	m_minimumDistanceToObstacle(minimumDistanceToObstacle),
 	m_edgeTreshold(0.25),
 	m_minimumWidthInSensorNumbers(3),
 	m_maximumWidthInMeter(0.7),
-	m_axisLength(axisLength),
-	m_timeToStop(timeToStop),
 	m_lowPassPart(new Common::DiscreteFunction(0, m_maximumSensorNumber)),
 	m_highPassPart(new Common::DiscreteFunction(0, m_maximumSensorNumber)),
 	m_rawData(new Common::DiscreteFunction(0, m_maximumSensorNumber))
@@ -61,10 +58,11 @@ bool LidarImpl::isObstacleInFront(double speed) const
 	{
 		const LidarInternalObject &object = **i;
 
-		if (object.getWidthInMeter() < 0.1)
+		if (object.getWidthInMeter() < 0.12)
 			continue;
 
-		double minimumDistance = calculateMinimumDistanceToObstacle(object.getOrientationRelativeToRobot(), speed);
+		const Angle &objectOrientation = object.getOrientationRelativeToRobot();
+		double minimumDistance = calculateMinimumDistanceToObstacle(objectOrientation, speed);
 
 		if (object.getDistance() < minimumDistance)
 			return true;
@@ -174,12 +172,16 @@ Angle LidarImpl::calculateOrientationFromSensorNumber(unsigned int value) const
 double LidarImpl::calculateMinimumDistanceToObstacle(const Angle &angle, double speed) const
 {
 	const double anglePositive = fabs(angle.getValueBetweenMinusPiAndPi());
-	const double orthogonalDistance = m_axisLength/(2*tan(anglePositive)) + speed*m_timeToStop;
+	const double additionalSpaceBesideAxis = 0.2;
+	const double axisLength = 0.38 + additionalSpaceBesideAxis;
+	const double timeToStop = 0.2;
+	const double minimumDistanceToObstacle = 0.2 + axisLength + speed*timeToStop*cos(anglePositive);
+	const double orthogonalDistance = axisLength/2*tan(M_PI/2 - anglePositive);
 
-	if (orthogonalDistance <= m_minimumDistanceToObstacle)
-		return m_axisLength/(2*sin(anglePositive));
+	if (orthogonalDistance <= minimumDistanceToObstacle)
+		return axisLength*sin(anglePositive);
 	else
-		return m_minimumDistanceToObstacle/cos(anglePositive);
+		return minimumDistanceToObstacle*cos(anglePositive);
 }
 
 void LidarImpl::clearInternalObjects()

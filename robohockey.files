@@ -263,3 +263,5 @@ layer/dataanalysis/lidarinternalobject.h
 layer/dataanalysis/lidarinternalobject.cpp
 layer/dataanalysis/lidarinternalobjecttest.h
 layer/dataanalysis/lidarinternalobjecttest.cpp
+resources/testfiles/lidar_13.txt
+resources/testfiles/lidar_14.txt

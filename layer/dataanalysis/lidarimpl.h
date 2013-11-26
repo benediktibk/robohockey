@@ -31,7 +31,7 @@ namespace DataAnalysis
 		typedef std::pair<unsigned int, double> DistanceForSensor;
 
 	public:
-		LidarImpl(Hardware::Lidar &lidar, double minimumDistanceToObstacle, double axisLength, double timeToStop);
+		LidarImpl(Hardware::Lidar &lidar);
 		virtual ~LidarImpl();
 
 		virtual LidarObjects getAllObjects(const Common::RobotPosition &ownPosition) const;
@@ -53,12 +53,9 @@ namespace DataAnalysis
 		Hardware::Lidar &m_lidar;
 		const unsigned int m_minimumSensorNumber;
 		const unsigned int m_maximumSensorNumber;
-		const double m_minimumDistanceToObstacle;
 		const double m_edgeTreshold;
 		const int m_minimumWidthInSensorNumbers;
 		const double m_maximumWidthInMeter;
-		const double m_axisLength;
-		const double m_timeToStop;
 		Common::DiscreteFunction *m_lowPassPart;
 		Common::DiscreteFunction *m_highPassPart;
 		Common::DiscreteFunction *m_rawData;
