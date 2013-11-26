@@ -48,7 +48,6 @@ namespace DataAnalysis
 		void clearInternalObjects();
 
 	private:
-		static double calculateWidthFromAngleAndDistance(const Common::Angle &angle, double distance);
 		static std::list<int> replaceFollowingEdgesWithBiggestMagnitudePosition(const std::list<int> &edges, const Common::DiscreteFunction &edgeFunction);
 
 	private:

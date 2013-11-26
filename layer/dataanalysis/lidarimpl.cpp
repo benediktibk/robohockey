@@ -224,16 +224,6 @@ void LidarImpl::clearInternalObjects()
 	m_objects.clear();
 }
 
-double LidarImpl::calculateWidthFromAngleAndDistance(const Angle &angle, double distance)
-{
-	Compare compare(0.001);
-
-	if (compare.isFuzzyEqual(angle.getValueBetweenMinusPiAndPi(), 0))
-		return 0;
-	else
-		return 2*distance/(1/tan(angle.getValueBetweenMinusPiAndPi()/2) - 1);
-}
-
 list<int> LidarImpl::replaceFollowingEdgesWithBiggestMagnitudePosition(const list<int> &edges, const DiscreteFunction &edgeFunction)
 {
 	list<int> result;
