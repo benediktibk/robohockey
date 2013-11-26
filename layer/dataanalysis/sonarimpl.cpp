@@ -4,20 +4,19 @@
 using namespace RoboHockey::Layer;
 using namespace RoboHockey::Layer::DataAnalysis;
 
-SonarImpl::SonarImpl(Hardware::Sonar &sonar, double minimumDistanceToObstacle, double timeToStop) :
-	m_sonar(sonar),
-	m_distanceOfSensorsToMiddleOfRobot(0.15),
-	m_minimumDistanceToObstacle(minimumDistanceToObstacle - m_distanceOfSensorsToMiddleOfRobot),
-	m_minimumDistanceWithAngst(m_minimumDistanceToObstacle + 0.1),
-	m_timeToStop(timeToStop)
+SonarImpl::SonarImpl(Hardware::Sonar &sonar) :
+	m_sonar(sonar)
 { }
 
 bool SonarImpl::isObstacleDirectInFront(double speed)
 {
-	double leftFrontValue = m_sonar.getDistanceForSensor(3);
-	double rightFrontValue = m_sonar.getDistanceForSensor(4);
-	double brakingDistance = speed*m_timeToStop;
-	double totalDistance = brakingDistance + m_minimumDistanceWithAngst;
+	const double leftFrontValue = m_sonar.getDistanceForSensor(3);
+	const double rightFrontValue = m_sonar.getDistanceForSensor(4);
+	const double distanceOfSensorsToMiddleOfRobot = 0.15;
+	const double minimumDistanceToObstacle = 0.4 - distanceOfSensorsToMiddleOfRobot;
+	const double timeToStop = 0.2;
+	const double brakingDistance = speed*timeToStop;
+	const double totalDistance = brakingDistance + minimumDistanceToObstacle;
 
 	if (	leftFrontValue < totalDistance ||
 			rightFrontValue < totalDistance)

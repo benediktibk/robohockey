@@ -12,11 +12,7 @@ using namespace RoboHockey::Layer::DataAnalysis;
 
 DataAnalyserImpl::DataAnalyserImpl(Hardware::Robot *robot) :
 	m_robot(robot),
-	m_minimumDistanceToObstacle(0.3),
-	m_axisLength(0.38),
-	m_widthOfRobotBesideLidar(0.14),
-	m_timeToStop(1.5),
-	m_sonar(new SonarImpl(m_robot->getSonar(), m_minimumDistanceToObstacle, m_timeToStop)),
+	m_sonar(new SonarImpl(m_robot->getSonar())),
 	m_lidar(new LidarImpl(m_robot->getLidar())),
 	m_camera(new CameraImpl(m_robot->getCamera())),
 	m_odometry(new OdometryImpl(m_robot->getOdometry())),
@@ -77,11 +73,7 @@ void DataAnalyserImpl::updateActuators()
 	m_engine->updateSpeedAndRotation();
 }
 
-DataAnalyserImpl::DataAnalyserImpl(const DataAnalyserImpl &) :
-	m_minimumDistanceToObstacle(0),
-	m_axisLength(0),
-	m_widthOfRobotBesideLidar(0),
-	m_timeToStop(0)
+DataAnalyserImpl::DataAnalyserImpl(const DataAnalyserImpl &)
 { }
 
 void DataAnalyserImpl::operator=(const DataAnalyserImpl &)
