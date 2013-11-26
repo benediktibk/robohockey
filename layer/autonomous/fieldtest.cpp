@@ -196,3 +196,55 @@ void FieldTest::tryToDetectField_validPattern_transformed()
 
 	CPPUNIT_ASSERT(!compare.isFuzzyEqual(fieldObjects.front().getCircle(), lidarObjectsVector.front()));
 }
+
+void FieldTest::tryToDetectField_validPattern_correctNumberOfFieldObjects()
+{
+	DataAnalysis::OdometryMock odometry;
+	DataAnalysis::LidarMock lidar;
+	DataAnalysis::CameraMock camera;
+	FieldImpl field(odometry, lidar, camera);
+
+	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 1), 0.06));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 1.833), 0.06));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 2.666), 0.06));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 3.916), 0.06));
+	lidar.setAllObjects(lidarObjects);
+
+	field.update();
+	field.tryToFindField();
+
+	vector<FieldObject> fieldObjects = field.getAllFieldObjects();
+	vector<DataAnalysis::LidarObject> lidarObjectsVector = lidarObjects.getObjectsWithDistanceBelow(10);
+
+	CPPUNIT_ASSERT_EQUAL(lidarObjectsVector.size(), fieldObjects.size());
+}
+
+void FieldTest::tryToDetectField_validPattern_correctTransformation()
+{
+	Compare compare(0.05);
+	DataAnalysis::OdometryMock odometry;
+	DataAnalysis::LidarMock lidar;
+	DataAnalysis::CameraMock camera;
+	FieldImpl field(odometry, lidar, camera);
+
+	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 1), 0.06));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 1.833), 0.06));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 2.666), 0.06));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 3.916), 0.06));
+	lidar.setAllObjects(lidarObjects);
+
+	field.update();
+	field.tryToFindField();
+
+	bool result = true;
+	vector<FieldObject> fieldObjects = field.getAllFieldObjects();
+
+	result = result && compare.isFuzzyEqual(fieldObjects.at(0).getCircle().getCenter(), Point(1.666, 0));
+	result = result && compare.isFuzzyEqual(fieldObjects.at(1).getCircle().getCenter(), Point(2.5, 0));
+	result = result && compare.isFuzzyEqual(fieldObjects.at(2).getCircle().getCenter(), Point(3.333, 0));
+	result = result && compare.isFuzzyEqual(fieldObjects.at(3).getCircle().getCenter(), Point(4.582, 0));
+
+	CPPUNIT_ASSERT(result);
+}
