@@ -9,10 +9,38 @@
 \usepackage{xcolor}
 \usepackage{caption}
 
+\pagestyle{scrheadings}
+\clearscrheadfoot
+\ohead[]{Gruppe 0}
+\cfoot[]{\pagemark}
+
 
 \begin{document}
 
-\section{Pflichtanforderungen}
+\section{Pflichtanforderung}
+\begin{quote}
+	\textit{Der Roboter muss reproduzierbar in der Lage sein, innerhalb von 5 Minuten nach (\ldots) festgelegten Regeln mindestens 15 Punkte zu bekommen.}
+\end{quote}
 
+Um alle Regeln einzuhalten und die geforderten Mindestanzahl von 15 Punkten zu erreichen ergeben sich folgende Pflichten.
+
+\subsection{Kommunikation mit dem Schiedsrichter}
+Der Roboter verbindet sich mithilfe der Hermes-Klasse zum Schiedsrichterserver \textit{Angelina}. \\
+Diesem muss in der ersten Phase des Spiels die erkannte Teamfarbe und außerdem mindestens alle 45 Sekunden das \textit{sendAlive()} Signal gesendet. Das Signal \textit{reportGoal()} muss nach Erzielen eines Tors geschickt werden. Nach Erhalt von \textit{gameOver()} oder \textit{stopMovement()} muss der Roboter sofort stehen bleiben.
+
+\subsection{Spielstrategie}
+Die Spielstrategie wird durch mindestens eine State Machine realisiert. Die Signale des Schiedsrichters werden dieser State Machine weitergegeben.
+
+\subsection{Spielfelderkennung}
+Um die korrekte Orientierung des Roboters zu gewährleisten wird mindestens am Anfang das Spielfeld erkannt. Dazu benutzt der Roboter mindestens die Daten von der Lasermessung und berechnet sich aus den Positionen der Spielbegenzungspfosten die eigene Position auf dem Spielfeld.\\
+Danach wird der Roboter die Farbe des eigenen Tors bestimmen.
+
+%\subsection{Routenplanung}
+
+\subsection{Motorsteuerung}
+Zum Fahren des Roboters wird ein Regler verwendet um Fehler beim Anfahren von Zielen zu minimieren.
+
+\subsection{Kollisionsverhinderung}
+Da alle verhinderbaren Kollisionen vom Regelwerk verboten sind benutzt der Roboter sowohl die Sonar-, als auch die Lidardaten um im Gefahrenfall rechtzeitig anzuhalten.
 
 \end{document}
