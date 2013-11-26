@@ -10,21 +10,27 @@ LidarInternalObject::LidarInternalObject(const Angle &width, const Angle &orient
 	m_width(width),
 	m_orientationRelativeToRobot(orientation),
 	m_distance(distance)
-{ }
+{
+	calculateWidthInMeter();
+}
 
 double LidarInternalObject::getWidthInMeter() const
 {
-	Compare compare(0.001);
-
-	if (compare.isFuzzyEqual(m_width.getValueBetweenMinusPiAndPi(), 0))
-		return 0;
-	else
-		return 2*m_distance/(1/tan(m_width.getValueBetweenMinusPiAndPi()/2) - 1);
+	return m_widthInMeter;
 }
 
 Point LidarInternalObject::getPositionRelativeToRobot() const
 {
-	double diameter = getWidthInMeter();
-	double totalDistance = m_distance + diameter/2;
+	double totalDistance = m_distance + m_widthInMeter/2;
 	return Point(totalDistance, m_orientationRelativeToRobot);
+}
+
+void LidarInternalObject::calculateWidthInMeter()
+{
+	Compare compare(0.001);
+
+	if (compare.isFuzzyEqual(m_width, Angle(0)))
+		m_widthInMeter = 0;
+	else
+		m_widthInMeter = 2*m_distance/(1/tan(m_width.getValueBetweenMinusPiAndPi()/2) - 1);
 }

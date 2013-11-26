@@ -23,9 +23,13 @@ namespace DataAnalysis
 		Common::Point getPositionRelativeToRobot() const;
 
 	private:
+		void calculateWidthInMeter();
+
+	private:
 		Common::Angle m_width;
 		Common::Angle m_orientationRelativeToRobot;
 		double m_distance;
+		double m_widthInMeter;
 	};
 }
 }
