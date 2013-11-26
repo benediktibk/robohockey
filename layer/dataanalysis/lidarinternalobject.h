@@ -17,10 +17,12 @@ namespace DataAnalysis
 	class LidarInternalObject
 	{
 	public:
+		LidarInternalObject();
 		LidarInternalObject(const Common::Angle &width, const Common::Angle &orientation, double distance);
 
 		double getWidthInMeter() const;
 		Common::Point getPositionRelativeToRobot() const;
+		const Common::Angle& getOrientationRelativeToRobot() const;
 
 	private:
 		void calculateWidthInMeter();
@@ -34,6 +36,5 @@ namespace DataAnalysis
 }
 }
 }
-
 
 #endif

@@ -22,6 +22,8 @@ namespace Hardware
 
 namespace DataAnalysis
 {
+	class LidarInternalObject;
+
 	class LidarImpl :
 			public Lidar
 	{
@@ -43,6 +45,7 @@ namespace DataAnalysis
 		Common::Angle calculateOrientationFromSensorNumber(unsigned int value) const;
 		double calculateMinimumDistanceToObstacle(const Common::Angle &angle) const;
 		void initializeMinimumDistancesForCollisionDetection();
+		void clearInternalObjects();
 
 	private:
 		static double calculateWidthFromAngleAndDistance(const Common::Angle &angle, double distance);
@@ -64,6 +67,7 @@ namespace DataAnalysis
 		Common::DiscreteFunction *m_lowPassPart;
 		Common::DiscreteFunction *m_highPassPart;
 		Common::DiscreteFunction *m_rawData;
+		std::vector<LidarInternalObject*> m_objects;
 	};
 }
 }

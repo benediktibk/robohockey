@@ -1,4 +1,5 @@
 #include "layer/dataanalysis/lidarimpl.h"
+#include "layer/dataanalysis/lidarinternalobject.h"
 #include "layer/hardware/lidar.h"
 #include "common/discretefunction.h"
 #include "common/compare.h"
@@ -40,38 +41,20 @@ LidarImpl::~LidarImpl()
 	m_lowPassPart = 0;
 	delete m_rawData;
 	m_rawData = 0;
+	clearInternalObjects();
 }
 
 LidarObjects LidarImpl::getAllObjects(const RobotPosition &ownPosition) const
 {
 	LidarObjects objects(ownPosition.getPosition());
-	list<int> positiveEdges = m_highPassPart->getPositionsWithValuesAbove(m_edgeTreshold);
-	list<int> negativeEdges = m_highPassPart->getPositionsWithValuesBelow((-1)*m_edgeTreshold);
-	positiveEdges = replaceFollowingEdgesWithBiggestMagnitudePosition(positiveEdges, *m_highPassPart);
-	negativeEdges = replaceFollowingEdgesWithBiggestMagnitudePosition(negativeEdges, *m_highPassPart);
-	list<pair<int, int> > startAndEndOfObjects = findStartAndEndOfObjects(positiveEdges, negativeEdges);
 
-	for (list<pair<int, int> >::iterator i = startAndEndOfObjects.begin(); i != startAndEndOfObjects.end(); ++i)
+	for (vector<LidarInternalObject*>::const_iterator i = m_objects.begin(); i != m_objects.end(); ++i)
 	{
-		int start = i->first;
-		int end = i->second;
-		int widthInSensorNumbers = end - start + 1;
-		if (widthInSensorNumbers < m_minimumWidthInSensorNumbers)
-			continue;
-
-		double distance = m_rawData->getMinimumInRange(start + 1, end - 1);
-		int middleSensorNumber = (end + start)/2;
-		Angle orientationOfObjectRelativeToOwnOrientation = calculateOrientationFromSensorNumber(middleSensorNumber);
-		Angle orientationOfObject = ownPosition.getOrientation() + orientationOfObjectRelativeToOwnOrientation;
-		Angle widthInAngle = calculateOrientationFromSensorNumber(end - 1) - calculateOrientationFromSensorNumber(start + 1);
-		double widthOfObject = calculateWidthFromAngleAndDistance(widthInAngle, distance);
-
-		if (widthOfObject > m_maximumWidthInMeter || widthOfObject < 0)
-			continue;
-
-		double totalDistance = distance + widthOfObject/2;
-		Point positionOfObject = ownPosition.getPosition() + Point(totalDistance, orientationOfObject);
-		objects.addObject(LidarObject(positionOfObject, widthOfObject));
+		const LidarInternalObject &object = **i;
+		Point positionRelativeToRobot = object.getPositionRelativeToRobot();
+		positionRelativeToRobot.rotate(ownPosition.getOrientation());
+		Point positionOfObject = ownPosition.getPosition() + positionRelativeToRobot;
+		objects.addObject(LidarObject(positionOfObject, object.getWidthInMeter()));
 	}
 
 	return objects;
@@ -104,6 +87,33 @@ void LidarImpl::updateSensorData()
 	*m_lowPassPart = *rawData;
 	*m_highPassPart = *rawData;
 	m_highPassPart->differentiate(1);
+
+	clearInternalObjects();
+	list<int> positiveEdges = m_highPassPart->getPositionsWithValuesAbove(m_edgeTreshold);
+	list<int> negativeEdges = m_highPassPart->getPositionsWithValuesBelow((-1)*m_edgeTreshold);
+	positiveEdges = replaceFollowingEdgesWithBiggestMagnitudePosition(positiveEdges, *m_highPassPart);
+	negativeEdges = replaceFollowingEdgesWithBiggestMagnitudePosition(negativeEdges, *m_highPassPart);
+	list<pair<int, int> > startAndEndOfObjects = findStartAndEndOfObjects(positiveEdges, negativeEdges);
+
+	for (list<pair<int, int> >::iterator i = startAndEndOfObjects.begin(); i != startAndEndOfObjects.end(); ++i)
+	{
+		int start = i->first;
+		int end = i->second;
+		int widthInSensorNumbers = end - start + 1;
+		if (widthInSensorNumbers < m_minimumWidthInSensorNumbers)
+			continue;
+
+		double distance = m_rawData->getMinimumInRange(start + 1, end - 1);
+		int middleSensorNumber = (end + start)/2;
+		Angle orientationOfObjectRelativeToOwnOrientation = calculateOrientationFromSensorNumber(middleSensorNumber);
+		Angle widthInAngle = calculateOrientationFromSensorNumber(end - 1) - calculateOrientationFromSensorNumber(start + 1);
+		LidarInternalObject *object = new LidarInternalObject(widthInAngle, orientationOfObjectRelativeToOwnOrientation, distance);
+
+		if (object->getWidthInMeter() < m_maximumWidthInMeter && object->getWidthInMeter() >= 0)
+			m_objects.push_back(object);
+		else
+			delete object;
+	}
 }
 
 list<pair<int, int> > LidarImpl::findStartAndEndOfObjects(
@@ -205,6 +215,13 @@ void LidarImpl::initializeMinimumDistancesForCollisionDetection()
 	}
 
 	assert(m_minimumDistances.capacity() <= capacity);
+}
+
+void LidarImpl::clearInternalObjects()
+{
+	for (vector<LidarInternalObject*>::iterator i = m_objects.begin(); i != m_objects.end(); ++i)
+		delete *i;
+	m_objects.clear();
 }
 
 double LidarImpl::calculateWidthFromAngleAndDistance(const Angle &angle, double distance)
