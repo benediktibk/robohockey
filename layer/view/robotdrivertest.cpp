@@ -2,6 +2,7 @@
 #include "layer/view/robotdriver.h"
 #include "layer/view/model.h"
 #include "layer/autonomous/robotmock.h"
+#include "layer/autonomous/fieldmock.h"
 #include "common/compare.h"
 
 using namespace RoboHockey::Common;
@@ -12,8 +13,9 @@ using namespace std;
 void RobotDriverTest::update_targetReached_targetInModelReached()
 {
 	RobotMock robot;
+	FieldMock field;
 	Model model;
-	RobotDriver driver(robot, model);
+	RobotDriver driver(robot, field, model);
 	robot.setReachedTarget(true);
 
 	driver.update();
@@ -24,8 +26,9 @@ void RobotDriverTest::update_targetReached_targetInModelReached()
 void RobotDriverTest::update_stuckAtObstacle_stuckAtObstacleInModel()
 {
 	RobotMock robot;
+	FieldMock field;
 	Model model;
-	RobotDriver driver(robot, model);
+	RobotDriver driver(robot, field, model);
 	robot.setStuckAtObstacle(true);
 
 	driver.update();
@@ -36,12 +39,13 @@ void RobotDriverTest::update_stuckAtObstacle_stuckAtObstacleInModel()
 void RobotDriverTest::update_twoFieldObjects_twoFieldObjectsInModel()
 {
 	RobotMock robot;
+	FieldMock field;
 	Model model;
-	RobotDriver driver(robot, model);
+	RobotDriver driver(robot, field, model);
 	vector<FieldObject> objects;
 	objects.push_back(FieldObject(Circle(), FieldObjectColorBlue));
 	objects.push_back(FieldObject(Circle(), FieldObjectColorGreen));
-	robot.setFieldObjects(objects);
+	field.setFieldObjects(objects);
 
 	driver.update();
 
@@ -52,8 +56,9 @@ void RobotDriverTest::update_twoFieldObjects_twoFieldObjectsInModel()
 void RobotDriverTest::update_stuckAtObstacle_targetPositionsIsEmpty()
 {
 	RobotMock robot;
+	FieldMock field;
 	Model model;
-	RobotDriver driver(robot, model);
+	RobotDriver driver(robot, field, model);
 	robot.setStuckAtObstacle(true);
 	vector<Point> targets;
 	targets.push_back(Point());
@@ -68,8 +73,9 @@ void RobotDriverTest::update_stuckAtObstacle_targetPositionsIsEmpty()
 void RobotDriverTest::update_newTargetPositionsAndTargetReached_targetOfRobotIsFirstPosition()
 {
 	RobotMock robot;
+	FieldMock field;
 	Model model;
-	RobotDriver driver(robot, model);
+	RobotDriver driver(robot, field, model);
 	vector<Point> targets;
 	targets.push_back(Point(3, 4));
 	targets.push_back(Point(5, 1));
@@ -86,8 +92,9 @@ void RobotDriverTest::update_newTargetPositionsAndTargetReached_targetOfRobotIsF
 void RobotDriverTest::update_newTargetPositionsAndTargetReached_firstTargetPositionIsMissingInModel()
 {
 	RobotMock robot;
+	FieldMock field;
 	Model model;
-	RobotDriver driver(robot, model);
+	RobotDriver driver(robot, field, model);
 	vector<Point> targets;
 	targets.push_back(Point(3, 4));
 	targets.push_back(Point(5, 1));
@@ -105,8 +112,9 @@ void RobotDriverTest::update_newTargetPositionsAndTargetReached_firstTargetPosit
 void RobotDriverTest::update_newTargetPositionsAndTargetNotReached_targetOfRobotIsUnchanged()
 {
 	RobotMock robot;
+	FieldMock field;
 	Model model;
-	RobotDriver driver(robot, model);
+	RobotDriver driver(robot, field, model);
 	vector<Point> targets;
 	targets.push_back(Point(3, 4));
 	targets.push_back(Point(5, 1));
@@ -125,8 +133,9 @@ void RobotDriverTest::update_newTargetPositionsAndTargetNotReached_targetOfRobot
 void RobotDriverTest::update_empty_robotGotAtLeastOneCallToUpdateSensorData()
 {
 	RobotMock robot;
+	FieldMock field;
 	Model model;
-	RobotDriver driver(robot, model);
+	RobotDriver driver(robot, field, model);
 
 	driver.update();
 
@@ -136,8 +145,9 @@ void RobotDriverTest::update_empty_robotGotAtLeastOneCallToUpdateSensorData()
 void RobotDriverTest::update_empty_robotGotAtLeastOneCallToUpdateActuators()
 {
 	RobotMock robot;
+	FieldMock field;
 	Model model;
-	RobotDriver driver(robot, model);
+	RobotDriver driver(robot, field, model);
 
 	driver.update();
 
@@ -147,9 +157,10 @@ void RobotDriverTest::update_empty_robotGotAtLeastOneCallToUpdateActuators()
 void RobotDriverTest::update_stuckAtObstacle_noTargetsAnymore()
 {
 	RobotMock robot;
+	FieldMock field;
 	robot.setStuckAtObstacle(true);
 	Model model;
-	RobotDriver driver(robot, model);
+	RobotDriver driver(robot, field, model);
 	vector<Point> targets;
 	targets.push_back(Point(3, 4));
 	targets.push_back(Point(5, 1));

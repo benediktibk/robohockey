@@ -29,13 +29,11 @@ namespace Autonomous
 		virtual void turnTo(const Common::Point &position);
 		virtual bool stuckAtObstacle();
 		virtual bool reachedTarget();
-		virtual std::vector<FieldObject> getAllFieldObjects();
 		virtual void updateActuators();
 		virtual void updateSensorData();
 		virtual void stop();
 		virtual void collectPuckInFront();
 		virtual bool isMoving();
-		virtual void calibratePosition();
 		virtual void turnAround();
 		virtual Common::RobotPosition getCurrentPosition();
 		virtual Common::Point getCurrentTarget() const;
