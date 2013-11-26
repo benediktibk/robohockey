@@ -28,18 +28,6 @@ DiscreteFunction::DiscreteFunction(int start, int end) :
 	m_coreDifferentiation[0] = -0.5;
 	m_coreDifferentiation[1] = 0;
 	m_coreDifferentiation[2] = 0.5;
-	m_coreHighPass.resize(11);
-	m_coreHighPass[0] = -1.0/18;
-	m_coreHighPass[1] = -2.0/18;
-	m_coreHighPass[2] = -3.0/18;
-	m_coreHighPass[3] = -2.0/18;
-	m_coreHighPass[4] = -1.0/18;
-	m_coreHighPass[5] = 0.0/18;
-	m_coreHighPass[6] = 1.0/18;
-	m_coreHighPass[7] = 2.0/18;
-	m_coreHighPass[8] = 3.0/18;
-	m_coreHighPass[9] = 2.0/18;
-	m_coreHighPass[10] = 1.0/18;
 }
 
 void DiscreteFunction::setValue(int x, double y)
@@ -85,11 +73,6 @@ void DiscreteFunction::differentiate(double stepSize)
 		*this *= (1/stepSize);
 	m_values[0] = m_values[1];
 	*(m_values.end() - 1) = *(m_values.end() - 2);
-}
-
-void DiscreteFunction::filterHighPass()
-{
-	applyCore(m_coreHighPass, m_start, m_end);
 }
 
 void DiscreteFunction::applyCore(const vector<double> &core, int start, int end)
