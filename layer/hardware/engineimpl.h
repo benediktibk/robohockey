@@ -34,10 +34,9 @@ namespace Hardware
 
 	private:
 		PlayerCc::Position2dProxy *m_engine;
-        Common::RobotPosition m_angle;
         double m_posX;
         double m_posY;
-        RoboHockey::Common::Angle m_orientation;
+        double m_orientation;
         bool m_posX_equal;
         bool m_posY_equal;
         bool m_orientation_equal;
