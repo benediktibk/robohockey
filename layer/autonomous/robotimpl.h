@@ -34,6 +34,7 @@ namespace Autonomous
 		virtual void updateSensorData();
 		virtual void stop();
 		virtual void collectPuckInFront();
+		virtual void leaveCollectedPuck();
 		virtual bool isMoving();
 		virtual void calibratePosition();
 		virtual void turnAround();
