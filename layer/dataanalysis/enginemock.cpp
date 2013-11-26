@@ -8,6 +8,7 @@ EngineMock::EngineMock() :
 	m_callsToGoToStraight(0),
 	m_callsToGoToStraightSlowly(0),
 	m_callsToGoToStraightThrough(0),
+	m_callsToGoToStraightSlowlyBack(0),
 	m_callsToStop(0),
 	m_callsToUpdateSpeedAndMagnitude(0),
 	m_callsToTryingToTackleObstacle(0),
@@ -32,6 +33,11 @@ void EngineMock::goToStraightSlowly(const Point &)
 void EngineMock::goToStraightThrough(const Point &)
 {
 	++m_callsToGoToStraightThrough;
+}
+
+void EngineMock::goToStraightSlowlyBack(const Point &)
+{
+	++m_callsToGoToStraightSlowlyBack;
 }
 
 void EngineMock::updateSpeedAndRotation()
@@ -103,6 +109,11 @@ unsigned int EngineMock::getCallsToGoToStraightSlowly() const
 unsigned int EngineMock::getCallsToGoToStraightThrough() const
 {
 	return m_callsToGoToStraightThrough;
+}
+
+unsigned int EngineMock::getCallsToGoToStraightSlowlyBack() const
+{
+	return m_callsToGoToStraightSlowlyBack;
 }
 
 unsigned int EngineMock::getCallsToStop() const
