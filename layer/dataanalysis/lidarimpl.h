@@ -56,6 +56,7 @@ namespace DataAnalysis
 		const double m_edgeTreshold;
 		const int m_minimumWidthInSensorNumbers;
 		const double m_maximumWidthInMeter;
+		const double m_maximumDistance;
 		Common::DiscreteFunction *m_lowPassPart;
 		Common::DiscreteFunction *m_highPassPart;
 		Common::DiscreteFunction *m_rawData;

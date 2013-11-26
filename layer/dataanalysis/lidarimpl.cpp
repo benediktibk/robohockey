@@ -20,6 +20,7 @@ LidarImpl::LidarImpl(Hardware::Lidar &lidar) :
 	m_edgeTreshold(0.25),
 	m_minimumWidthInSensorNumbers(3),
 	m_maximumWidthInMeter(0.7),
+	m_maximumDistance(4),
 	m_lowPassPart(new Common::DiscreteFunction(0, m_maximumSensorNumber)),
 	m_highPassPart(new Common::DiscreteFunction(0, m_maximumSensorNumber)),
 	m_rawData(new Common::DiscreteFunction(0, m_maximumSensorNumber))
@@ -101,7 +102,9 @@ void LidarImpl::updateSensorData()
 		Angle widthInAngle = calculateOrientationFromSensorNumber(end - 1) - calculateOrientationFromSensorNumber(start + 1);
 		LidarInternalObject *object = new LidarInternalObject(widthInAngle, orientationOfObjectRelativeToOwnOrientation, distance);
 
-		if (object->getWidthInMeter() < m_maximumWidthInMeter && object->getWidthInMeter() >= 0)
+		if (	object->getWidthInMeter() < m_maximumWidthInMeter &&
+				object->getWidthInMeter() >= 0 &&
+				object->getDistance() < m_maximumDistance)
 			m_objects.push_back(object);
 		else
 			delete object;
