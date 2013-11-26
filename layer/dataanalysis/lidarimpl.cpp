@@ -17,21 +17,16 @@ LidarImpl::LidarImpl(Hardware::Lidar &lidar, double minimumDistanceToObstacle, d
 	m_lidar(lidar),
 	m_minimumSensorNumber(lidar.getMinimumSensorNumber()),
 	m_maximumSensorNumber(lidar.getMaximumSensorNumber()),
-	m_minimumDistanceToObstacleAngst(0.05),
-	m_minimumDistanceToObstacle(minimumDistanceToObstacle + m_minimumDistanceToObstacleAngst),
+	m_minimumDistanceToObstacle(minimumDistanceToObstacle),
 	m_edgeTreshold(0.25),
 	m_minimumWidthInSensorNumbers(3),
 	m_maximumWidthInMeter(0.7),
-	m_axisLengthAngst(0.03),
-	m_axisLength(axisLength + m_axisLengthAngst),
+	m_axisLength(axisLength),
 	m_timeToStop(timeToStop),
 	m_lowPassPart(new Common::DiscreteFunction(0, m_maximumSensorNumber)),
 	m_highPassPart(new Common::DiscreteFunction(0, m_maximumSensorNumber)),
 	m_rawData(new Common::DiscreteFunction(0, m_maximumSensorNumber))
-{
-	// These values stay the same, therefore we have to calculate them only once.
-	initializeMinimumDistancesForCollisionDetection();
-}
+{ }
 
 LidarImpl::~LidarImpl()
 {
@@ -62,17 +57,16 @@ LidarObjects LidarImpl::getAllObjects(const RobotPosition &ownPosition) const
 
 bool LidarImpl::isObstacleInFront(double speed) const
 {
-	for (vector<DistanceForSensor>::const_iterator i = m_minimumDistances.begin(); i != m_minimumDistances.end(); ++i)
+	for (vector<LidarInternalObject*>::const_iterator i = m_objects.begin(); i != m_objects.end(); ++i)
 	{
-		unsigned int sensorNumber = i->first;
-		double minimumDistance = i->second;
-		double distance = m_lowPassPart->getValue(sensorNumber);
-		Angle angle = calculateOrientationFromSensorNumber(sensorNumber);
-		double brakingDistance = speed*m_timeToStop;
-		// The consideration of the braking distance is not totally correct this way, but it should be good enough.
-		double totalDistance = minimumDistance + brakingDistance*cos(angle.getValueBetweenMinusPiAndPi());
+		const LidarInternalObject &object = **i;
 
-		if (distance < totalDistance)
+		if (object.getWidthInMeter() < 0.1)
+			continue;
+
+		double minimumDistance = calculateMinimumDistanceToObstacle(object.getOrientationRelativeToRobot(), speed);
+
+		if (object.getDistance() < minimumDistance)
 			return true;
 	}
 
@@ -177,44 +171,15 @@ Angle LidarImpl::calculateOrientationFromSensorNumber(unsigned int value) const
 	return Angle(value*k + d);
 }
 
-double LidarImpl::calculateMinimumDistanceToObstacle(const Angle &angle) const
+double LidarImpl::calculateMinimumDistanceToObstacle(const Angle &angle, double speed) const
 {
 	const double anglePositive = fabs(angle.getValueBetweenMinusPiAndPi());
-	const double orthogonalDistance = m_axisLength/(2*tan(anglePositive));
+	const double orthogonalDistance = m_axisLength/(2*tan(anglePositive)) + speed*m_timeToStop;
 
 	if (orthogonalDistance <= m_minimumDistanceToObstacle)
 		return m_axisLength/(2*sin(anglePositive));
 	else
 		return m_minimumDistanceToObstacle/cos(anglePositive);
-}
-
-void LidarImpl::initializeMinimumDistancesForCollisionDetection()
-{
-	const double possibleBlindAngle = 13*M_PI/180; // more than the necessary 12°, just to be sure
-	const unsigned int sensorDistanceToEdges = 30;
-	const unsigned int possibleBlindSensorNumberRight = ceil((M_PI/2 + possibleBlindAngle)*361/M_PI);
-	const unsigned int possibleBlindSensorNumberLeft = floor((M_PI/2 - possibleBlindAngle)*361/M_PI);
-	const size_t capacity = m_maximumSensorNumber - m_minimumSensorNumber - (possibleBlindSensorNumberRight - possibleBlindSensorNumberLeft);
-	m_minimumDistances.reserve(capacity);
-
-	assert(possibleBlindSensorNumberRight < m_maximumSensorNumber);
-	assert(possibleBlindSensorNumberLeft < m_maximumSensorNumber);
-
-	for (unsigned int i = m_minimumSensorNumber + sensorDistanceToEdges; i < possibleBlindSensorNumberLeft; ++i)
-	{
-		Angle angle = calculateOrientationFromSensorNumber(i);
-		double minimumDistance = calculateMinimumDistanceToObstacle(angle);
-		m_minimumDistances.push_back(DistanceForSensor(i, minimumDistance));
-	}
-
-	for (unsigned int i = possibleBlindSensorNumberRight; i < m_maximumSensorNumber - sensorDistanceToEdges; ++i)
-	{
-		Angle angle = calculateOrientationFromSensorNumber(i);
-		double minimumDistance = calculateMinimumDistanceToObstacle(angle);
-		m_minimumDistances.push_back(DistanceForSensor(i, minimumDistance));
-	}
-
-	assert(m_minimumDistances.capacity() <= capacity);
 }
 
 void LidarImpl::clearInternalObjects()

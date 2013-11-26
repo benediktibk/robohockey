@@ -23,6 +23,7 @@ namespace DataAnalysis
 		double getWidthInMeter() const;
 		Common::Point getPositionRelativeToRobot() const;
 		const Common::Angle& getOrientationRelativeToRobot() const;
+		double getDistance() const;
 
 	private:
 		void calculateWidthInMeter();

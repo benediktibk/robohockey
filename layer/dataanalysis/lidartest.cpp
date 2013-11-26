@@ -444,11 +444,8 @@ void LidarTest::isObstacleInFront_obstacleOnLeftSide_true()
 	Hardware::LidarMock hardwareLidar;
 	LidarImpl lidar(hardwareLidar, 0.3, 0.38, 0.2);
 
-	hardwareLidar.setValueForAngle(260, 0.1);
-	hardwareLidar.setValueForAngle(261, 0.1);
-	hardwareLidar.setValueForAngle(262, 0.1);
-	hardwareLidar.setValueForAngle(263, 0.1);
-	hardwareLidar.setValueForAngle(264, 0.1);
+	for (unsigned int i = 200; i < 300; ++i)
+		hardwareLidar.setValueForAngle(i, 0.1);
 	lidar.updateSensorData();
 
 	CPPUNIT_ASSERT(lidar.isObstacleInFront(1));
@@ -459,11 +456,8 @@ void LidarTest::isObstacleInFront_obstacleOnRightSide_true()
 	Hardware::LidarMock hardwareLidar;
 	LidarImpl lidar(hardwareLidar, 0.3, 0.38, 0.2);
 
-	hardwareLidar.setValueForAngle(100, 0.1);
-	hardwareLidar.setValueForAngle(101, 0.1);
-	hardwareLidar.setValueForAngle(102, 0.1);
-	hardwareLidar.setValueForAngle(103, 0.1);
-	hardwareLidar.setValueForAngle(104, 0.1);
+	for (unsigned int i = 50; i < 150; ++i)
+		hardwareLidar.setValueForAngle(i, 0.1);
 	lidar.updateSensorData();
 
 	CPPUNIT_ASSERT(lidar.isObstacleInFront(1));

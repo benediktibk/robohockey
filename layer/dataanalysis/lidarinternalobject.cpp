@@ -36,6 +36,11 @@ const Angle &LidarInternalObject::getOrientationRelativeToRobot() const
 	return m_orientationRelativeToRobot;
 }
 
+double LidarInternalObject::getDistance() const
+{
+	return m_distance;
+}
+
 void LidarInternalObject::calculateWidthInMeter()
 {
 	Compare compare(0.001);
