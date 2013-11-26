@@ -112,3 +112,13 @@ void RoboHockey::Layer::View::Controller::on_calibratePosition_clicked()
 {
 	m_model.calibratePosition();
 }
+
+void RoboHockey::Layer::View::Controller::on_leavePuckInFront_clicked()
+{
+	m_model.leavePuckInFront();
+}
+
+void RoboHockey::Layer::View::Controller::on_pushButton_clicked()
+{
+
+}

@@ -2,10 +2,15 @@
 #include <libplayerc++/playerc++.h>
 
 using namespace RoboHockey::Layer::Hardware;
+using namespace RoboHockey::Common;
 using namespace PlayerCc;
 
 EngineImpl::EngineImpl(PlayerCc::PlayerClient *playerClient) :
-	m_engine(new Position2dProxy(playerClient, 0))
+    m_engine(new Position2dProxy(playerClient, 0)),
+    m_posX(m_engine->GetXPos()),
+    m_posY(m_engine->GetYPos()),
+    m_orientation(m_engine->GetYaw())
+
 {
 	setSpeed(0, 0);
 }
@@ -14,7 +19,7 @@ EngineImpl::~EngineImpl()
 {
 	setSpeed(0, 0);
 	delete m_engine;
-	m_engine = 0;
+    m_engine = 0;
 }
 
 void EngineImpl::setSpeed(double magnitude, double rotation)
@@ -27,9 +32,21 @@ void EngineImpl::setSpeed(double magnitude, double rotation)
 	m_engine->SetSpeed(magnitude, rotation);
 }
 
-bool EngineImpl::isMoving() const
+bool EngineImpl::isMoving()
 {
-	return (m_engine->GetXSpeed() != 0) && (m_engine->GetYawSpeed() != 0);
+    Compare compare(0.001);
+    m_orientation_equal = compare.isFuzzyEqual(m_engine->GetYaw(), m_orientation);
+    m_posX_equal = compare.isFuzzyEqual(m_engine->GetXPos(), m_posX);
+    m_posY_equal = compare.isFuzzyEqual(m_engine->GetYPos(), m_posY);
+    m_posX = m_engine->GetXPos();
+    m_posY = m_engine->GetYPos();
+    m_orientation = m_engine->GetYaw();
+    if(m_orientation_equal && m_posX_equal && m_posY_equal)
+    {
+        return false;
+    }
+    return true;
+    //return (m_engine->GetXSpeed() != 0) && (m_engine->GetYawSpeed() != 0);
 }
 
 double EngineImpl::getSpeed() const

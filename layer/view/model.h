@@ -45,6 +45,8 @@ namespace View
 		bool getCollectPuckInFront();
 		void calibratePosition();
 		bool getCalibratePosition();
+		void leavePuckInFront();
+		bool getLeavePuckInFront();
 
 	signals:
 		void targetPositionsChanged();
@@ -64,6 +66,7 @@ namespace View
         Common::Point m_turnToPosition;
 		bool m_collectPuck;
 		bool m_calibratePosition;
+		bool m_leavePuck;
 	};
 }
 }

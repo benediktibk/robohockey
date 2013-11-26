@@ -23,7 +23,6 @@ namespace Autonomous
 		virtual void goTo(const Common::Point &position);
 		virtual bool stuckAtObstacle();
 		virtual bool reachedTarget();
-		virtual std::vector<FieldObject> getAllFieldObjects();
 		virtual void updateActuators();
 		virtual void updateSensorData();
 		virtual void stop();
@@ -31,12 +30,11 @@ namespace Autonomous
 		unsigned int getCallsToUpdateSensorData() const;
 		void setStuckAtObstacle(bool value);
 		void setReachedTarget(bool value);
-		void setFieldObjects(const std::vector<FieldObject> &objects);
 		const Common::Point& getLastTarget() const;
 		unsigned int getCallsToStop() const;
 		virtual void collectPuckInFront();
+		virtual void leaveCollectedPuck();
 		virtual bool isMoving();
-		virtual void calibratePosition();
 		virtual void turnAround();
 		virtual void turnTo(const Common::Point &position);
 		virtual Common::RobotPosition getCurrentPosition();
@@ -46,7 +44,6 @@ namespace Autonomous
 		Common::Point m_lastTarget;
 		bool m_stuckAtObstacle;
 		bool m_reachedTarget;
-		std::vector<FieldObject> m_fieldObjects;
 		unsigned int m_callsToUpdateActuators;
 		unsigned int m_callsToUpdateSensorData;
 		unsigned int m_callsToStop;

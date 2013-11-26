@@ -33,7 +33,7 @@ double EngineMock::getLastRotation() const
 	return m_lastRotation;
 }
 
-bool EngineMock::isMoving() const
+bool EngineMock::isMoving()
 {
 	return true;
 }

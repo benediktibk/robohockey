@@ -4,6 +4,7 @@
 #include "layer/view/controller.h"
 #include "layer/view/graph.h"
 #include "layer/autonomous/robotimpl.h"
+#include "layer/autonomous/fieldimpl.h"
 #include "layer/dataanalysis/dataanalyserimpl.h"
 #include "layer/hardware/robotimpl.h"
 #include <QtGui/QApplication>
@@ -36,7 +37,8 @@ int main(int argc, char **argv)
 	Hardware::Robot *hardwareRobot = new Hardware::RobotImpl(playerServer);
 	DataAnalysis::DataAnalyser *dataAnalyser = new DataAnalysis::DataAnalyserImpl(hardwareRobot);
 	Autonomous::RobotImpl autonomousRobot(dataAnalyser);
-	RobotDriver robotDriver(autonomousRobot, model);
+	Autonomous::FieldImpl autonomousField(dataAnalyser->getOdometry(), dataAnalyser->getLidar(), dataAnalyser->getCamera());
+	RobotDriver robotDriver(autonomousRobot, autonomousField, model);
 	RobotDriverLoop loop(robotDriver);
 
 	controller.show();

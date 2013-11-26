@@ -54,11 +54,6 @@ bool RobotImpl::reachedTarget()
 	return engine.reachedTarget();
 }
 
-vector<FieldObject> RobotImpl::getAllFieldObjects()
-{
-	return m_field->getAllFieldObjects();
-}
-
 void RobotImpl::updateActuators()
 {
 	DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
@@ -102,20 +97,22 @@ void RobotImpl::collectPuckInFront()
 	engine.goToStraightSlowly(targetPosition);
 }
 
+void RobotImpl::leaveCollectedPuck()
+{
+	DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
+	RobotPosition ownPosition = getCurrentPosition();
+
+	Point puck(-0.2,0);
+	puck.rotate(ownPosition.getOrientation());
+	Point targetPosition = ownPosition.getPosition() + puck;
+
+	m_collectingPuck = false;
+	engine.goToStraightSlowlyBack(targetPosition);
+}
+
 bool RobotImpl::isMoving()
 {
 	return m_dataAnalyser->getEngine().isMoving();
-}
-
-void RobotImpl::calibratePosition()
-{
-	bool success = m_field->tryToFindField();
-
-	if (success)
-		cout <<"Found new Origin. System transformed." << endl;
-	else
-		cout <<"Didn't find new Origin." << endl;
-
 }
 
 void RobotImpl::turnAround()

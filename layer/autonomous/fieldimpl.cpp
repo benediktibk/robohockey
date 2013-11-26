@@ -40,7 +40,7 @@ std::vector<FieldObject>& FieldImpl::getAllFieldObjects()
 	return m_fieldObjects;
 }
 
-bool FieldImpl::tryToFindField()
+bool FieldImpl::calibratePosition()
 {
 	vector<Point> &input = getPointsOfObjectsWithDiameterAndColor(0.06, FieldObjectColorGreen);
 
