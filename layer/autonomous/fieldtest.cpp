@@ -192,7 +192,7 @@ void FieldTest::tryToDetectField_noValidPattern_false()
 
 	field.update();
 
-	CPPUNIT_ASSERT(!field.tryToFindField());
+	CPPUNIT_ASSERT(!field.calibratePosition());
 }
 
 void FieldTest::tryToDetectField_validPattern_true()
@@ -211,7 +211,7 @@ void FieldTest::tryToDetectField_validPattern_true()
 
 	field.update();
 
-	CPPUNIT_ASSERT(field.tryToFindField());
+	CPPUNIT_ASSERT(field.calibratePosition());
 }
 
 void FieldTest::tryToDetectField_noValidPattern_noTransformation()
@@ -230,7 +230,7 @@ void FieldTest::tryToDetectField_noValidPattern_noTransformation()
 	lidar.setAllObjects(lidarObjects);
 
 	field.update();
-	field.tryToFindField();
+	field.calibratePosition();
 
 	vector<FieldObject> fieldObjects = field.getAllFieldObjects();
 	vector<DataAnalysis::LidarObject> lidarObjectsVector = lidarObjects.getObjectsWithDistanceBelow(10);
@@ -254,7 +254,7 @@ void FieldTest::tryToDetectField_validPattern_transformed()
 	lidar.setAllObjects(lidarObjects);
 
 	field.update();
-	field.tryToFindField();
+	field.calibratePosition();
 
 	vector<FieldObject> fieldObjects = field.getAllFieldObjects();
 	vector<DataAnalysis::LidarObject> lidarObjectsVector = lidarObjects.getObjectsWithDistanceBelow(10);
@@ -277,7 +277,7 @@ void FieldTest::tryToDetectField_validPattern_correctNumberOfFieldObjects()
 	lidar.setAllObjects(lidarObjects);
 
 	field.update();
-	field.tryToFindField();
+	field.calibratePosition();
 
 	vector<FieldObject> fieldObjects = field.getAllFieldObjects();
 	vector<DataAnalysis::LidarObject> lidarObjectsVector = lidarObjects.getObjectsWithDistanceBelow(10);
@@ -301,7 +301,7 @@ void FieldTest::tryToDetectField_validPattern_correctTransformation()
 	lidar.setAllObjects(lidarObjects);
 
 	field.update();
-	field.tryToFindField();
+	field.calibratePosition();
 
 	bool result = true;
 	vector<FieldObject> fieldObjects = field.getAllFieldObjects();

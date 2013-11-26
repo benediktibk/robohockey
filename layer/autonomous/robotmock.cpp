@@ -28,11 +28,6 @@ bool RobotMock::reachedTarget()
 	return m_reachedTarget;
 }
 
-vector<FieldObject> RobotMock::getAllFieldObjects()
-{
-	return m_fieldObjects;
-}
-
 void RobotMock::updateActuators()
 {
 	++m_callsToUpdateActuators;
@@ -68,11 +63,6 @@ void RobotMock::setReachedTarget(bool value)
 	m_reachedTarget = value;
 }
 
-void RobotMock::setFieldObjects(const vector<FieldObject> &objects)
-{
-	m_fieldObjects = objects;
-}
-
 const Point &RobotMock::getLastTarget() const
 {
 	return m_lastTarget;
@@ -93,9 +83,6 @@ bool RobotMock::isMoving()
 {
 	return false;
 }
-
-void RobotMock::calibratePosition()
-{ }
 
 void RobotMock::turnAround()
 { }

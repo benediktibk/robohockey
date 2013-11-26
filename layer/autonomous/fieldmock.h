@@ -13,8 +13,17 @@ namespace Autonomous
 	class FieldMock : public Field
 	{
 	public:
+		FieldMock();
+
 		virtual void update();
-		virtual bool tryToFindField();
+		virtual std::vector<FieldObject> &getAllFieldObjects();
+
+		virtual bool calibratePosition();
+
+		void setFieldObjects(std::vector<FieldObject> &objects);
+
+	private:
+		std::vector<FieldObject> m_objects;
 	};
 }
 }

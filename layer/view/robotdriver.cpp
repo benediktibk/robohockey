@@ -1,6 +1,7 @@
 #include "layer/view/robotdriver.h"
 #include "layer/view/model.h"
 #include "layer/autonomous/robot.h"
+#include "layer/autonomous/field.h"
 #include "common/watch.h"
 #include "common/robotposition.h"
 #include <iostream>
@@ -12,8 +13,9 @@ using namespace std;
 
 const double RobotDriver::m_maximumLoopTime = 0.2;
 
-RobotDriver::RobotDriver(Robot &robot, Model &model) :
+RobotDriver::RobotDriver(Robot &robot, Field &field, Model &model) :
 	m_robot(robot),
+	m_field(field),
 	m_model(model),
 	m_watch(new Watch()),
 	m_lastTime(0)
@@ -76,7 +78,7 @@ void RobotDriver::update()
 
 		if(m_model.getCalibratePosition() && targets.size() == 0)
 		{
-			m_robot.calibratePosition();
+			m_field.calibratePosition();
 			m_model.setData(targets, false, false, false, false, false);
 		}
 
@@ -94,7 +96,7 @@ void RobotDriver::update()
 	}
 
 	m_model.setData(
-				m_robot.getAllFieldObjects(), m_robot.stuckAtObstacle(),
+				m_field.getAllFieldObjects(), m_robot.stuckAtObstacle(),
 				m_robot.reachedTarget(), m_robot.getCurrentPosition(),
 				m_robot.getCurrentTarget(), m_robot.isMoving());
 

@@ -54,11 +54,6 @@ bool RobotImpl::reachedTarget()
 	return engine.reachedTarget();
 }
 
-vector<FieldObject> RobotImpl::getAllFieldObjects()
-{
-	return m_field->getAllFieldObjects();
-}
-
 void RobotImpl::updateActuators()
 {
 	DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
@@ -118,17 +113,6 @@ void RobotImpl::leaveCollectedPuck()
 bool RobotImpl::isMoving()
 {
 	return m_dataAnalyser->getEngine().isMoving();
-}
-
-void RobotImpl::calibratePosition()
-{
-	bool success = m_field->tryToFindField();
-
-	if (success)
-		cout <<"Found new Origin. System transformed." << endl;
-	else
-		cout <<"Didn't find new Origin." << endl;
-
 }
 
 void RobotImpl::turnAround()
