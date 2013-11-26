@@ -22,3 +22,10 @@ void CameraMock::setIsGoalYellow(bool value)
 {
 	m_isGoalYellow = value;
 }
+
+void CameraMock::setAllObjects(const CameraObjects &objects)
+{
+	m_objects = objects;
+}
+
+

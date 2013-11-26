@@ -20,8 +20,11 @@ namespace DataAnalysis
 
 		void setIsGoalYellow(bool value);
 
+		void setAllObjects(const CameraObjects &objects);
+
 	private:
 		bool m_isGoalYellow;
+		CameraObjects m_objects;
 	};
 }
 }
