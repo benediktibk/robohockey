@@ -176,14 +176,15 @@ double LidarImpl::calculateMinimumDistanceToObstacle(const Angle &angle, double 
 {
 	const double anglePositive = fabs(angle.getValueBetweenMinusPiAndPi());
 	const double additionalSpaceBesideAxis = 0.1;
-	const double axisLength = (0.38 + additionalSpaceBesideAxis)*2;
+	const double axisLength = 0.38 + additionalSpaceBesideAxis;
+	const double axisLengthTwice = axisLength*2;
 	const double timeToStop = 0.2;
 	const double minimumDistanceToObstacle = 0.4 + axisLength + speed*timeToStop;
-	const double axisLengthWithAngle = axisLength*cos(anglePositive);
+	const double axisLengthWithAngle = axisLengthTwice*cos(anglePositive);
 	const double axisLengthWithAngleSquare = axisLengthWithAngle*axisLengthWithAngle;
 	const double minimumWithAngle = minimumDistanceToObstacle*sin(anglePositive);
 	const double minimumWithAngleSquare = minimumWithAngle*minimumWithAngle;
-	return axisLength*minimumDistanceToObstacle/(sqrt(axisLengthWithAngleSquare + 4*minimumWithAngleSquare));
+	return axisLengthTwice*minimumDistanceToObstacle/(sqrt(axisLengthWithAngleSquare + 4*minimumWithAngleSquare));
 }
 
 void LidarImpl::clearInternalObjects()

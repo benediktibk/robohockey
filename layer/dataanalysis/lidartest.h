@@ -47,6 +47,7 @@ namespace DataAnalysis
 		CPPUNIT_TEST(isObstacleInFront_severalBoundPostsAndOtherRobotFarAway_false);
 		CPPUNIT_TEST(isObstacleInFront_robotVeryCloseAtTheSide_true);
 		CPPUNIT_TEST(isObstacleInFront_robotVeryCloseAheadAtTheSide_true);
+		CPPUNIT_TEST(isObstacleInFront_robotFarDistance_false);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
@@ -77,6 +78,7 @@ namespace DataAnalysis
 		void isObstacleInFront_severalBoundPostsAndOtherRobotFarAway_false();
 		void isObstacleInFront_robotVeryCloseAtTheSide_true();
 		void isObstacleInFront_robotVeryCloseAheadAtTheSide_true();
+		void isObstacleInFront_robotFarDistance_false();
 	};
 }
 }
