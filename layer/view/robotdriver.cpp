@@ -48,13 +48,13 @@ void RobotDriver::update()
 
 	else if (m_robot.reachedTarget())
 	{
-		if(m_model.getTurnAround() && targets.size() == 0 && !m_model.getStop())
+		if(m_model.getTurnAround() && targets.size() == 0)
 		{
 			m_robot.turnAround();
 			m_model.setData(targets, false, false, false, false, false);
 		}
 
-		if(m_model.getTurnTo() && targets.size() == 0 && !m_model.getStop())
+		if(m_model.getTurnTo() && targets.size() == 0)
 		{
 			Point turnToPoint;
 			turnToPoint = m_model.getTurnPoint();
@@ -62,25 +62,25 @@ void RobotDriver::update()
 			m_model.setData(targets, false, false, false, false, false);
 		}
 
-		if(m_model.getCollectPuckInFront() && targets.size() == 0 && !m_model.getStop())
+		if(m_model.getCollectPuckInFront() && targets.size() == 0)
 		{
 			m_robot.collectPuckInFront();
 			m_model.setData(targets, false, false, false, false, false);
 		}
 
-		if(m_model.getLeavePuckInFront() && targets.size() == 0 && !m_model.getStop())
+		if(m_model.getLeavePuckInFront() && targets.size() == 0)
 		{
 			m_robot.leaveCollectedPuck();
 			m_model.setData(targets, false, false, false, false, false);
 		}
 
-		if(m_model.getCalibratePosition() && targets.size() == 0 && !m_model.getStop())
+		if(m_model.getCalibratePosition() && targets.size() == 0)
 		{
 			m_robot.calibratePosition();
 			m_model.setData(targets, false, false, false, false, false);
 		}
 
-		if (targets.size() > 0 && !m_model.getTurnAround() && !m_model.getStop())
+		if (targets.size() > 0 && !m_model.getTurnAround())
 		{
 			vector<Point> targetsWithoutFirstOne(targets.begin() + 1, targets.end());
 			m_model.setData(targetsWithoutFirstOne, false, false, false, false, false);

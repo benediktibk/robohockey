@@ -528,3 +528,19 @@ void EngineTest::goToStraightSlowlyBack_currentPositionDifferentToTarget_atLeast
 
 	CPPUNIT_ASSERT(hardwareEngine.getCallsToSetSpeed() > 0);
 }
+
+void EngineTest::goToStraightSlowlyBack_TargetPassedAfterSomeTime_lastMagnitudeIs0()
+{
+	Hardware::EngineMock hardwareEngine;
+	Hardware::OdometryMock hardwareOdometry;
+	EngineImpl engine(hardwareEngine, hardwareOdometry);
+	hardwareOdometry.setCurrentPosition(RobotPosition(Point(0, 0), 0));
+
+	engine.goToStraightSlowlyBack(Point(-1, 0));
+	engine.updateSpeedAndRotation();
+	hardwareOdometry.setCurrentPosition(RobotPosition(Point(-1.05, 0)));
+	engine.updateSpeedAndRotation();
+
+	CPPUNIT_ASSERT_EQUAL(0.0, hardwareEngine.getLastMagnitude());
+
+}
