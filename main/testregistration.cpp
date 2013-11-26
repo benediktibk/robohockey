@@ -17,6 +17,7 @@
 #include "layer/dataanalysis/lidarobjectdistancecomparatortest.h"
 #include "layer/dataanalysis/lidarobjectstest.h"
 #include "layer/dataanalysis/lidartest.h"
+#include "layer/dataanalysis/lidarinternalobjecttest.h"
 #include "layer/dataanalysis/odometrytest.h"
 #include "layer/dataanalysis/sonartest.h"
 #include "layer/dataanalysis/speedtresholdertest.h"
@@ -55,6 +56,7 @@ CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::DataAnalysis::LidarTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::DataAnalysis::OdometryTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::DataAnalysis::SonarTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::DataAnalysis::SpeedTresholderTest);
+CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::DataAnalysis::LidarInternalObjectTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Autonomous::RobotTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Autonomous::FieldObjectTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Autonomous::FieldTest);

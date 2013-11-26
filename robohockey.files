@@ -259,3 +259,7 @@ resources/analysis/finalFilter.m
 resources/analysis/filtered_plot_version_2.png
 resources/analysis/filtered_plot.png
 resources/analysis/applyLinearFilter.m
+layer/dataanalysis/lidarinternalobject.h
+layer/dataanalysis/lidarinternalobject.cpp
+layer/dataanalysis/lidarinternalobjecttest.h
+layer/dataanalysis/lidarinternalobjecttest.cpp

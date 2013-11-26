@@ -11,6 +11,7 @@ set(LAYER_DATAANALYSIS_SRC
 	cameraobject.cpp
 	cameraobjects.cpp
 	speedtresholder.cpp
+	lidarinternalobject.cpp
 )
 
 set(LAYER_DATAANALYSIS_TEST_SRC
@@ -32,6 +33,7 @@ set(LAYER_DATAANALYSIS_TEST_SRC
 	cameraobjecttest.cpp
 	cameraobjectstest.cpp
 	speedtresholdertest.cpp
+	lidarinternalobjecttest.cpp
 )
 
 add_library(layerdataanalysis ${LAYER_DATAANALYSIS_SRC})
