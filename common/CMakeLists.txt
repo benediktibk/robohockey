@@ -19,6 +19,7 @@ set(COMMON_TEST_SRC
 	watchtest.cpp
 	robotpositiontest.cpp
 	angletest.cpp
+	pathtest.cpp
 )
 
 add_library(common ${COMMON_SRC})
