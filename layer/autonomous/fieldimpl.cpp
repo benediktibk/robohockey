@@ -32,7 +32,6 @@ void FieldImpl::update()
 	updateWithOdometryData();
 	updateWithLidarData();
 	updateWithCameraData();
-//	tryToFindField();
 }
 
 std::vector<FieldObject>& FieldImpl::getAllFieldObjects()
@@ -52,7 +51,9 @@ bool FieldImpl::calibratePosition()
 	{
 		Point newOrigin = detector.getNewOrigin();
 		transformCoordinateSystem(newOrigin, detector.getRotation());
-	}
+		cout << "Found borderstones -> System transformed." << endl;
+	} else
+		cout << "Didn't find enough borderstones." << endl;
 
 	delete &input;
 
@@ -204,6 +205,9 @@ void FieldImpl::rotateCoordinateSystem(double alpha)
 
 	m_odometry->setCurrentPosition(*m_position);
 
+	cout << "Setze RobotPosition auf: " << *m_position << endl << "Neue Position ist: " << m_odometry->getCurrentPosition() << endl;
+	assert(*m_position == m_odometry->getCurrentPosition());
+
 	m_fieldObjects.clear();
 	m_fieldObjects = newSystem;
 
@@ -225,12 +229,13 @@ void FieldImpl::moveCoordinateSystem(Point &newOrigin)
 		newSystem.push_back(FieldObject(Circle(newCenter, currentDiameter), color));
 	}
 
-	Point ownPosition = m_position->getPosition();
-
-	ownPosition =  ownPosition - newOrigin;
-	m_position->setPosition(ownPosition);
+	Point newCenter =  m_position->getPosition() - newOrigin;
+	m_position->setPosition(newCenter);
 
 	m_odometry->setCurrentPosition(*m_position);
+
+	cout << "Setze RobotPosition auf: " << *m_position << endl << "Neue Position ist: " << m_odometry->getCurrentPosition() << endl;
+	assert(*m_position == m_odometry->getCurrentPosition());
 
 	m_fieldObjects.clear();
 	m_fieldObjects = newSystem;
