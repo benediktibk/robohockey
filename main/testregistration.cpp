@@ -21,16 +21,18 @@
 #include "layer/dataanalysis/odometrytest.h"
 #include "layer/dataanalysis/sonartest.h"
 #include "layer/dataanalysis/speedtresholdertest.h"
+#include "layer/dataanalysis/cameraobjecttest.h"
+#include "layer/dataanalysis/cameraobjectstest.h"
 #include "layer/autonomous/robottest.h"
 #include "layer/autonomous/fieldobjecttest.h"
 #include "layer/autonomous/fieldtest.h"
 #include "layer/autonomous/borderstonetest.h"
 #include "layer/autonomous/borderstonedistancestest.h"
 #include "layer/autonomous/fielddetectortest.h"
+#include "layer/autonomous/routetest.h"
+#include "layer/autonomous/routertest.h"
 #include "layer/view/modeltest.h"
 #include "layer/view/robotdrivertest.h"
-#include "layer/dataanalysis/cameraobjecttest.h"
-#include "layer/dataanalysis/cameraobjectstest.h"
 #include "layer/strategy/statemachinetest.h"
 #include "layer/strategy/initialstatetest.h"
 #include "common/pathtest.h"
@@ -67,6 +69,8 @@ CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Autonomous::FieldTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Autonomous::BorderStoneTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Autonomous::BorderStoneDistancesTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Autonomous::FieldDetectorTest);
+CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Autonomous::RouteTest);
+CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Autonomous::RouterTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::View::ModelTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::View::RobotDriverTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::DataAnalysis::CameraObjectTest);
