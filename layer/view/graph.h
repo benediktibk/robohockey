@@ -32,8 +32,7 @@ namespace View
 		Model &m_model;
 		std::vector<QGraphicsEllipseItem*> m_targetPositions;
 		std::vector<QGraphicsEllipseItem*> m_objectPositions;
-        QGraphicsPolygonItem *m_triangle;
-		QGraphicsEllipseItem *m_robot;
+		QGraphicsPolygonItem *m_triangle;
 		int m_pixelPerMeter;
 		double m_robotDiameter;
 		double m_targetSpotDiameter;

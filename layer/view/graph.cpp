@@ -15,14 +15,13 @@ using namespace RoboHockey::Layer::Autonomous;
 Graph::Graph(Model &model) :
 	QGraphicsView(),
 	m_model(model),
-	m_robot(new QGraphicsEllipseItem),
 	m_pixelPerMeter(80),
 	m_robotDiameter(0.5),
 	m_targetSpotDiameter(0.2)
 
 {
 	m_scene = new QGraphicsScene();
-	m_scene->addItem(m_robot);
+
 	QPolygonF triangle;
 	triangle.append(QPointF(-0.225 * m_pixelPerMeter,-0.175 * m_pixelPerMeter));
 	triangle.append(QPointF(-0.225 * m_pixelPerMeter,0.175 * m_pixelPerMeter));
