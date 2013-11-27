@@ -23,7 +23,10 @@ OdometryImpl::~OdometryImpl()
 void OdometryImpl::setCurrentPosition(const RobotPosition &position)
 {
 	Point globalPosition(m_odometry->GetXPos(), m_odometry->GetYPos());
-	m_ownOffset.setPosition( position.getPosition() - globalPosition + m_playerOffset.getPosition() );
+	Point newOwnOffset = position.getPosition() - globalPosition + m_playerOffset.getPosition();
+	newOwnOffset.rotate(Angle() - position.getOrientation());
+
+	m_ownOffset.setPosition(newOwnOffset);
 
 	Angle globalOrientation(m_odometry->GetYaw());
 	m_ownOffset.setOrientation( position.getOrientation() - globalOrientation + m_playerOffset.getOrientation() );
@@ -37,7 +40,12 @@ void OdometryImpl::operator=(const OdometryImpl &)
 
 RobotPosition OdometryImpl::getCurrentPosition()
 {
-	Point position = Point(m_odometry->GetXPos(), m_odometry->GetYPos()) - m_playerOffset.getPosition() + m_ownOffset.getPosition();
+	Point position = Point(m_odometry->GetXPos(), m_odometry->GetYPos()) - m_playerOffset.getPosition();
+	position.rotate(Angle() - m_playerOffset.getOrientation());
+
+	position = position  + m_ownOffset.getPosition();
+	position.rotate(Angle() + m_ownOffset.getOrientation());
+
 	Angle orientation = Angle(m_odometry->GetYaw()) - m_playerOffset.getOrientation() + m_ownOffset.getOrientation();
 	return RobotPosition(position, orientation);
 }
