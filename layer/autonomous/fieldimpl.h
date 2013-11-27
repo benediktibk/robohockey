@@ -51,8 +51,8 @@ namespace Autonomous
 		bool tryToMergeLidarAndFieldObject(FieldObject &fieldObject, const DataAnalysis::LidarObject &lidarObject);
 
 		void transformCoordinateSystem(Common::Point &newOrigin, double rotation);
-		void rotateCoordinateSystem(double alpha);
 		void moveCoordinateSystem(Common::Point &newOrigin);
+		void rotateCoordinateSystem(double alpha);
 
 		std::vector<Common::Point> &getPointsOfObjectsWithDiameterAndColor(double diameter, Common::FieldObjectColor color);
 

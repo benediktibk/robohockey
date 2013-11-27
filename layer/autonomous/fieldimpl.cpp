@@ -1,12 +1,12 @@
 #include "layer/autonomous/fieldimpl.h"
+#include "layer/autonomous/fieldobject.h"
 #include "layer/autonomous/fielddetector.h"
-#include "common/robotposition.h"
-#include "common/compare.h"
 #include "layer/dataanalysis/odometryimpl.h"
 #include "layer/dataanalysis/lidarimpl.h"
 #include "layer/dataanalysis/cameraimpl.h"
-#include "layer/autonomous/fieldobject.h"
-#include "math.h"
+#include "common/compare.h"
+#include "common/robotposition.h"
+#include <math.h>
 
 using namespace RoboHockey::Layer::Autonomous;
 using namespace RoboHockey::Common;
@@ -192,6 +192,33 @@ void FieldImpl::transformCoordinateSystem(Point &newOrigin, double rotation)
 	rotateCoordinateSystem(rotation);
 }
 
+void FieldImpl::moveCoordinateSystem(Point &newOrigin)
+{
+	//! @todo test and implement movement of coordinate system
+
+	vector<FieldObject> newSystem;
+
+	for (vector<FieldObject>::iterator i = m_fieldObjects.begin(); i != m_fieldObjects.end(); ++i)
+	{
+		Point currentCenter = ((*i).getCircle()).getCenter();
+		double currentDiameter = ((*i).getCircle()).getDiameter();
+		Point newCenter = currentCenter - newOrigin;
+		FieldObjectColor color = (*i).getColor();
+
+		newSystem.push_back(FieldObject(Circle(newCenter, currentDiameter), color));
+	}
+
+	Point newCenter =  m_position->getPosition() - newOrigin;
+	m_position->setPosition(newCenter);
+
+	m_odometry->setCurrentPosition(*m_position);
+	assert(*m_position == m_odometry->getCurrentPosition());
+
+	m_fieldObjects.clear();
+	m_fieldObjects = newSystem;
+
+}
+
 void FieldImpl::rotateCoordinateSystem(double alpha)
 {
 	//! @todo test and implement rotation of coordinate system
@@ -217,33 +244,6 @@ void FieldImpl::rotateCoordinateSystem(double alpha)
 
 	m_position->setPosition(ownPosition);
 	m_position->setOrientation(ownOrientation);
-
-	m_odometry->setCurrentPosition(*m_position);
-	assert(*m_position == m_odometry->getCurrentPosition());
-
-	m_fieldObjects.clear();
-	m_fieldObjects = newSystem;
-
-}
-
-void FieldImpl::moveCoordinateSystem(Point &newOrigin)
-{
-	//! @todo test and implement movement of coordinate system
-
-	vector<FieldObject> newSystem;
-
-	for (vector<FieldObject>::iterator i = m_fieldObjects.begin(); i != m_fieldObjects.end(); ++i)
-	{
-		Point currentCenter = ((*i).getCircle()).getCenter();
-		double currentDiameter = ((*i).getCircle()).getDiameter();
-		Point newCenter = currentCenter - newOrigin;
-		FieldObjectColor color = (*i).getColor();
-
-		newSystem.push_back(FieldObject(Circle(newCenter, currentDiameter), color));
-	}
-
-	Point newCenter =  m_position->getPosition() - newOrigin;
-	m_position->setPosition(newCenter);
 
 	m_odometry->setCurrentPosition(*m_position);
 	assert(*m_position == m_odometry->getCurrentPosition());
