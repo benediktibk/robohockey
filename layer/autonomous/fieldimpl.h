@@ -35,7 +35,8 @@ namespace Autonomous
 		virtual ~FieldImpl();
 
 		virtual void update();
-		virtual std::vector<FieldObject> &getAllFieldObjects();
+		virtual std::vector<FieldObject> getAllFieldObjects();
+		virtual std::vector<Common::Circle> getAllObstacles();
 
 		virtual bool calibratePosition();
 

@@ -34,9 +34,20 @@ void FieldImpl::update()
 	updateWithCameraData();
 }
 
-std::vector<FieldObject>& FieldImpl::getAllFieldObjects()
+vector<FieldObject> FieldImpl::getAllFieldObjects()
 {
 	return m_fieldObjects;
+}
+
+vector<Circle> FieldImpl::getAllObstacles()
+{
+	vector<Circle> obstacles;
+	obstacles.reserve(m_fieldObjects.size());
+
+	for (vector<FieldObject>::const_iterator i = m_fieldObjects.begin(); i != m_fieldObjects.end(); ++i)
+		obstacles.push_back(i->getCircle());
+
+	return obstacles;
 }
 
 bool FieldImpl::calibratePosition()

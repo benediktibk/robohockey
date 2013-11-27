@@ -1,6 +1,7 @@
 #include "layer/autonomous/fieldmock.h"
 
 using namespace std;
+using namespace RoboHockey::Common;
 using namespace RoboHockey::Layer::Autonomous;
 
 FieldMock::FieldMock()
@@ -9,9 +10,14 @@ FieldMock::FieldMock()
 void FieldMock::update()
 { }
 
-vector<FieldObject> &FieldMock::getAllFieldObjects()
+vector<FieldObject> FieldMock::getAllFieldObjects()
 {
 	return m_objects;
+}
+
+vector<Circle> FieldMock::getAllObstacles()
+{
+	return vector<Circle>();
 }
 
 bool FieldMock::calibratePosition()
