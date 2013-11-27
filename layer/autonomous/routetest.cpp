@@ -1,5 +1,6 @@
 #include "layer/autonomous/routetest.h"
 #include "layer/autonomous/route.h"
+#include "common/compare.h"
 
 using namespace RoboHockey::Common;
 using namespace RoboHockey::Layer::Autonomous;
@@ -44,4 +45,25 @@ void RouteTest::isValid_onePointAdded_true()
 	route.addPoint(Point(1, 2));
 
 	CPPUNIT_ASSERT(route.isValid());
+}
+
+void RouteTest::getLastPoint_onePointAdded_lastAddedPoint()
+{
+	Route route;
+
+	route.addPoint(Point(1, 2));
+
+	Compare compare(0.0001);
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(1, 2), route.getLastPoint()));
+}
+
+void RouteTest::getLastPoint_twoPointsAdded_lastAddedPoint()
+{
+	Route route;
+
+	route.addPoint(Point(1, 2));
+	route.addPoint(Point(3, 2));
+
+	Compare compare(0.0001);
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(3, 2), route.getLastPoint()));
 }

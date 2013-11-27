@@ -19,6 +19,8 @@ namespace Autonomous
 		CPPUNIT_TEST(addPoint_onceCalled_pointCountIs1);
 		CPPUNIT_TEST(addPoint_twiceCalled_pointCountIs2);
 		CPPUNIT_TEST(isValid_onePointAdded_true);
+		CPPUNIT_TEST(getLastPoint_onePointAdded_lastAddedPoint);
+		CPPUNIT_TEST(getLastPoint_twoPointsAdded_lastAddedPoint);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
@@ -27,6 +29,8 @@ namespace Autonomous
 		void addPoint_onceCalled_pointCountIs1();
 		void addPoint_twiceCalled_pointCountIs2();
 		void isValid_onePointAdded_true();
+		void getLastPoint_onePointAdded_lastAddedPoint();
+		void getLastPoint_twoPointsAdded_lastAddedPoint();
 	};
 }
 }

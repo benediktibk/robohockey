@@ -18,6 +18,7 @@ namespace Autonomous
 		void addPoint(const Common::Point &point);
 		size_t getPointCount() const;
 		bool isValid() const;
+		const Common::Point& getLastPoint() const;
 
 	private:
 		std::list<Common::Point> m_points;

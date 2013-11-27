@@ -10,7 +10,9 @@ Router::Router(double robotWidth, const Field &field) :
 	m_robotWidth(robotWidth)
 { }
 
-Route Router::calculateRoute(const Point &/*start*/, const Point &/*end*/) const
+Route Router::calculateRoute(const Point &/*start*/, const Point &end) const
 {
-	return Route();
+	Route route;
+	route.addPoint(end);
+	return route;
 }
