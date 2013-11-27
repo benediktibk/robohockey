@@ -51,6 +51,9 @@ namespace View
 		void operator=(const Controller &viewer);
 
 	private:
+		QString convertIntoString(bool value) const;
+
+	private:
 		Ui::View *m_ui;
 		Model &m_model;
 		Graph *m_graph;
@@ -61,7 +64,8 @@ namespace View
 		int m_pixelPerMeter;
 		double m_robotDiameter;
 		double m_targetSpotDiameter;
-
+		QString m_trueString;
+		QString m_falseString;
 	};
 }
 }

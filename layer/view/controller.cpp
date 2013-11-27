@@ -22,7 +22,9 @@ Controller::Controller(Model &model) :
 	m_scene(new QGraphicsScene()),
 	m_pixelPerMeter(80),
 	m_robotDiameter(0.5),
-	m_targetSpotDiameter(0.2)
+	m_targetSpotDiameter(0.2),
+	m_trueString("TRUE"),
+	m_falseString("FALSE")
 {
 	m_ui->setupUi(this);
 	m_ui->centralwidget->layout()->addWidget(m_graph);
@@ -86,6 +88,14 @@ Controller::Controller(const Controller &) :
 void Controller::operator=(const Controller &)
 { }
 
+QString Controller::convertIntoString(bool value) const
+{
+	if (value)
+		return m_trueString;
+	else
+		return m_falseString;
+}
+
 void Controller::on_turnAround_clicked()
 {
 	m_model.turnAround();
@@ -125,15 +135,9 @@ void Controller::update()
 	resultPosition.append(positionYstring);
 	m_ui->currentPosition->setText(resultPosition);
 
-	if(m_model.stuckAtObstacle())
-		m_ui->stuckAtObstacle->setText("TRUE");
-	else
-		m_ui->stuckAtObstacle->setText("FALSE");
-
-	if(m_model.reachedTarget())
-		m_ui->reachedTarget->setText("TRUE");
-	else
-		m_ui->reachedTarget->setText("FALSE");
+	m_ui->stuckAtObstacle->setText(convertIntoString(m_model.stuckAtObstacle()));
+	m_ui->reachedTarget->setText(convertIntoString(m_model.reachedTarget()));
+	m_ui->isMoving->setText(convertIntoString(m_model.isMoving()));
 
 	const Point &target = m_model.getCurrentTarget();
 	QString targetString = QString("%1, %2").arg(target.getX()).arg(target.getY());
@@ -141,14 +145,6 @@ void Controller::update()
 	m_ui->targetPosition->setText(targetString);
 	m_ui->distanceToTarget->setText(distanceToTargetString);
 
-	if(m_model.isMoving() == 1)
-	{
-		m_ui->isMoving->setText("TRUE");
-	}
-	else
-	{
-		m_ui->isMoving->setText("FALSE");
-	}
 }
 
 void Controller::mouseClickInGraph(QPointF point)
@@ -177,6 +173,7 @@ void Controller::on_pushButton_clicked()
 {
 
 }
+
 void Controller::updateTargets()
 {
 	vector<Point> target = m_model.getAllTargetPoints();
