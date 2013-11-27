@@ -33,7 +33,7 @@ void Model::setData(
 	emit robotDataChanged();
 }
 
-void Model::setData(const vector<Point> &targetPositions, bool turnAround, bool turnTo, bool stop, bool collectPuck, bool calibratePosition)
+void Model::setData(const vector<Point> &targetPositions, bool turnAround, bool turnTo, bool stop, bool collectPuck, bool calibratePosition, bool leavePuck)
 {
 	m_targetPositions = targetPositions;
 	m_turnAround = turnAround;
@@ -41,6 +41,7 @@ void Model::setData(const vector<Point> &targetPositions, bool turnAround, bool 
     m_stop = stop;
 	m_collectPuck = collectPuck;
 	m_calibratePosition = calibratePosition;
+	m_leavePuck = leavePuck;
 
 	emit targetPositionsChanged();
 }

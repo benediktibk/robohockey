@@ -61,7 +61,7 @@ void ModelTest::setData_twoTargetPositions_twoTargetPositions()
 	targetPositions.push_back(Point());
 	targetPositions.push_back(Point());
 
-	model.setData(targetPositions, false, false, false, false, false);
+	model.setData(targetPositions, false, false, false, false, false, false);
 
 	vector<Point> result = model.getAllTargetPoints();
 	CPPUNIT_ASSERT_EQUAL((size_t)2, result.size());
