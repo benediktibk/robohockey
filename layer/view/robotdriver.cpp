@@ -39,6 +39,7 @@ void RobotDriver::update()
 		cout << "loop time is too big: " << timeDifference*1000 << " ms" << endl;
 
 	m_robot.updateSensorData();
+	m_field.update();
 	vector<Point> targets = m_model.getAllTargetPoints();
 
 	if(m_model.getStop())
