@@ -273,3 +273,7 @@ common/path.h
 common/path.cpp
 common/pathtest.h
 common/pathtest.cpp
+common/line.h
+common/line.cpp
+common/linetest.h
+common/linetest.cpp
