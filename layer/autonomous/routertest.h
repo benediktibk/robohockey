@@ -14,9 +14,11 @@ namespace Autonomous
 			public CPPUNIT_NS::TestFixture
 	{
 		CPPUNIT_TEST_SUITE(RouterTest);
+		CPPUNIT_TEST(calculateRoute_emptyField_validRoute);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
+		void calculateRoute_emptyField_validRoute();
 	};
 }
 }
