@@ -2,10 +2,10 @@
 #define ROBOHOCKEY_LAYER_VIEW_CONTROLLER_H
 
 #include <QtGui/QMainWindow>
-#include "layer/autonomous/robot.h"
-#include "layer/dataanalysis/dataanalyserimpl.h"
-#include "layer/view/model.h"
-#include "layer/view/graph.h"
+
+class QGraphicsScene;
+class QGraphicsEllipseItem;
+class QGraphicsPolygonItem;
 
 namespace Ui
 {
@@ -19,9 +19,10 @@ namespace Layer
 namespace View
 {
 	class Model;
+	class Graph;
 
 	class Controller :
-            public QMainWindow
+			public QMainWindow
 	{
 		Q_OBJECT
 
@@ -30,24 +31,21 @@ namespace View
 		~Controller();
 
 	private slots:
-        void on_turnAround_clicked();
-
-        void on_turnToButton_clicked();
-
-        void on_stop_clicked();
-
+		void on_turnAround_clicked();
+		void on_turnToButton_clicked();
+		void on_stop_clicked();
 		void on_collectPuckInFront_clicked();
-
 		void on_calibratePosition_clicked();
-
 		void on_leavePuckInFront_clicked();
-
 		void on_pushButton_clicked();
 
-	public slots:
+	private slots:
 		void update();
+		void updateTargets();
+		void updateObjects();
+		void mouseClickInGraph(QPointF);
 
-    private:
+	private:
 		// forbid copies
 		Controller(const Controller &viewer);
 		void operator=(const Controller &viewer);
@@ -55,7 +53,14 @@ namespace View
 	private:
 		Ui::View *m_ui;
 		Model &m_model;
-        Graph *m_graph;
+		Graph *m_graph;
+		QGraphicsScene *m_scene;
+		std::vector<QGraphicsEllipseItem*> m_targetPositions;
+		std::vector<QGraphicsEllipseItem*> m_objectPositions;
+		QGraphicsPolygonItem *m_triangle;
+		int m_pixelPerMeter;
+		double m_robotDiameter;
+		double m_targetSpotDiameter;
 
 	};
 }
