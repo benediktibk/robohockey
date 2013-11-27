@@ -15,7 +15,6 @@ using namespace std;
 
 RobotImpl::RobotImpl(DataAnalysis::DataAnalyser *dataAnalyser) :
 	m_dataAnalyser(dataAnalyser),
-	m_field(new FieldImpl(dataAnalyser->getOdometry(), dataAnalyser->getLidar(), dataAnalyser->getCamera())),
 	m_tryingToTackleObstacle(false),
 	m_collectingPuck(false)
 { }
@@ -23,7 +22,6 @@ RobotImpl::RobotImpl(DataAnalysis::DataAnalyser *dataAnalyser) :
 RobotImpl::~RobotImpl()
 {
 	delete m_dataAnalyser;
-	delete m_field;
 }
 
 void RobotImpl::goTo(const RoboHockey::Common::Point &position)
@@ -75,7 +73,6 @@ void RobotImpl::updateActuators()
 void RobotImpl::updateSensorData()
 {
 	m_dataAnalyser->updateSensorData();
-	m_field->update();
 }
 
 void RobotImpl::stop()

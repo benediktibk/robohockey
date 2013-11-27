@@ -16,8 +16,6 @@ namespace DataAnalysis
 
 namespace Autonomous
 {
-	class Field;
-
 	class RobotImpl :
 			public Robot
 	{
@@ -46,7 +44,6 @@ namespace Autonomous
 
 	private:
 		DataAnalysis::DataAnalyser *m_dataAnalyser;
-		Field *m_field;
 		bool m_tryingToTackleObstacle;
 		bool m_collectingPuck;
 	};
