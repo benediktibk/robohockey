@@ -24,7 +24,8 @@ Controller::Controller(Model &model) :
 	m_robotDiameter(0.5),
 	m_targetSpotDiameter(0.2),
 	m_trueString("TRUE"),
-	m_falseString("FALSE")
+	m_falseString("FALSE"),
+	m_numberOfDigitsRightOfComma(3)
 {
 	m_ui->setupUi(this);
 	m_ui->centralwidget->layout()->addWidget(m_graph);
@@ -96,6 +97,11 @@ QString Controller::convertIntoString(bool value) const
 		return m_falseString;
 }
 
+QString Controller::convertIntoString(double value) const
+{
+	return QString::number(value, 'f', m_numberOfDigitsRightOfComma);
+}
+
 void Controller::on_turnAround_clicked()
 {
 	m_model.turnAround();
@@ -115,7 +121,6 @@ void Controller::on_turnToButton_clicked()
 	m_model.turnToPoint(turnPosX, turnPosY);
 }
 
-
 void Controller::on_stop_clicked()
 {
 	m_model.stop();
@@ -127,8 +132,8 @@ void Controller::update()
 	const Point &position = robotPosition.getPosition();
 	double positionX = position.getX();
 	double positionY = position.getY();
-	QString positionXstring = QString::number(positionX);
-	QString positionYstring = QString::number(positionY);
+	QString positionXstring = convertIntoString(positionX);
+	QString positionYstring = convertIntoString(positionY);
 	QString resultPosition;
 	resultPosition.append(positionXstring);
 	resultPosition.append(", ");
@@ -141,8 +146,8 @@ void Controller::update()
 	m_ui->cantReachTarget->setText(convertIntoString(m_model.cantReachTarget()));
 
 	const Point &target = m_model.getCurrentTarget();
-	QString targetString = QString("%1, %2").arg(target.getX()).arg(target.getY());
-	QString distanceToTargetString = QString("%1").arg(position.distanceTo(target));
+	QString targetString = QString("%1, %2").arg(convertIntoString(target.getX())).arg(convertIntoString(target.getY()));
+	QString distanceToTargetString = convertIntoString(position.distanceTo(target));
 	m_ui->targetPosition->setText(targetString);
 	m_ui->distanceToTarget->setText(distanceToTargetString);
 }

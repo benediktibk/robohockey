@@ -52,6 +52,7 @@ namespace View
 
 	private:
 		QString convertIntoString(bool value) const;
+		QString convertIntoString(double value) const;
 
 	private:
 		Ui::View *m_ui;
@@ -66,6 +67,7 @@ namespace View
 		double m_targetSpotDiameter;
 		QString m_trueString;
 		QString m_falseString;
+		unsigned int m_numberOfDigitsRightOfComma;
 	};
 }
 }
