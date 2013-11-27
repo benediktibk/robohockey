@@ -7,6 +7,7 @@ set(COMMON_SRC
 	watch.cpp
 	robotposition.cpp
 	angle.cpp
+	path.cpp
 )
 
 set(COMMON_TEST_SRC
