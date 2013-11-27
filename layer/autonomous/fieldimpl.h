@@ -35,15 +35,16 @@ namespace Autonomous
 		virtual ~FieldImpl();
 
 		virtual void update();
-		virtual std::vector<FieldObject> getAllFieldObjects();
-		virtual std::vector<Common::Circle> getAllObstacles();
+		virtual const std::vector<FieldObject>& getAllFieldObjects() const;
+		virtual const std::vector<Common::Circle>& getAllObstacles() const;
 
 		virtual bool calibratePosition();
 
 	private:
-		virtual void updateWithLidarData();
-		virtual void updateWithOdometryData();
-		virtual void updateWithCameraData();
+		void updateWithLidarData();
+		void updateWithOdometryData();
+		void updateWithCameraData();
+		void updateObstacles();
 
 		FieldObject& getNextObjectFromPosition(Common::Point position);
 		std::vector<FieldObject>::iterator getNextObjectFromPosition(std::vector<FieldObject> &fieldObjects, Common::Point position);
@@ -64,6 +65,7 @@ namespace Autonomous
 
 		Common::RobotPosition *m_position;
 		std::vector<FieldObject> m_fieldObjects;
+		std::vector<Common::Circle> m_obstacles;
 	};
 }
 }

@@ -285,3 +285,4 @@ common/linetest.h
 common/linetest.cpp
 layer/autonomous/routertest.h
 layer/autonomous/routertest.cpp
+layer/autonomous/robotstate.h

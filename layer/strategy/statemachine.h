@@ -8,6 +8,7 @@ namespace Layer
 namespace Autonomous
 {
 	class Robot;
+	class Field;
 }
 
 namespace Strategy
@@ -17,7 +18,7 @@ namespace Strategy
 	class StateMachine
 	{
 	public:
-		StateMachine(State *initialState, Autonomous::Robot *robot);
+		StateMachine(State *initialState, Autonomous::Robot &robot, const Autonomous::Field &field);
 		~StateMachine();
 
 		void update();
@@ -25,7 +26,8 @@ namespace Strategy
 
 	private:
 		State *m_currentState;
-		Autonomous::Robot *m_robot;
+		Autonomous::Robot &m_robot;
+		const Autonomous::Field &m_field;
 	};
 }
 }

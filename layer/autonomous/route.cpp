@@ -32,6 +32,18 @@ const Point &Route::getLastPoint() const
 	return m_points.back();
 }
 
+const Point &Route::getFirstPoint() const
+{
+	assert(getPointCount() > 0);
+	return m_points.front();
+}
+
+void Route::removeFirstPoint()
+{
+	assert(getPointCount() > 0);
+	m_points.pop_front();
+}
+
 double Route::getWidth() const
 {
 	return m_width;
