@@ -9,19 +9,20 @@ Model::Model() :
 	m_stuckAtObstacle(false),
 	m_reachedTarget(false),
 	m_isMoving(false),
-    m_turnAround(false),
-    m_stop(false),
+	m_turnAround(false),
+	m_stop(false),
 	m_turn(false),
 	m_collectPuck(false),
 	m_calibratePosition(false),
-	m_leavePuck(false)
+	m_leavePuck(false),
+	m_cantReachTarget(false)
 {}
 
 void Model::setData(
 		const vector<FieldObject> &fieldObjects,
 		bool stuckAtObstacle, bool reachedTarget,
 		const RobotPosition &currentPosition, const Point &currentTarget,
-		bool isMoving)
+		bool isMoving, bool cantReachTarget)
 {
 	m_fieldObjects = fieldObjects;
 	m_stuckAtObstacle = stuckAtObstacle;
@@ -29,21 +30,25 @@ void Model::setData(
 	m_currentPosition = currentPosition;
 	m_currentTarget = currentTarget;
 	m_isMoving = isMoving;
+	m_cantReachTarget = cantReachTarget;
 
 	emit robotDataChanged();
 }
 
-void Model::setData(const vector<Point> &targetPositions, bool turnAround, bool turnTo, bool stop, bool collectPuck, bool calibratePosition, bool leavePuck)
+void Model::setData(
+		const vector<Point> &targetPositions,
+		bool turnAround, bool turnTo, bool stop, bool collectPuck,
+		bool calibratePosition, bool leavePuck)
 {
 	m_targetPositions = targetPositions;
 	m_turnAround = turnAround;
-    m_turn = turnTo;
-    m_stop = stop;
+	m_turn = turnTo;
+	m_stop = stop;
 	m_collectPuck = collectPuck;
 	m_calibratePosition = calibratePosition;
 	m_leavePuck = leavePuck;
 
-	emit targetPositionsChanged();
+	emit dataForViewChanged();
 }
 
 const vector<FieldObject> &Model::getAllFieldObjects() const
@@ -79,31 +84,31 @@ bool Model::turnAround()
 
 Point Model::turnToPoint(double turnToX, double turnToY)
 {
-    m_turnToPosition.setX(turnToX);
-    m_turnToPosition.setY(turnToY);
-    return m_turnToPosition;
+	m_turnToPosition.setX(turnToX);
+	m_turnToPosition.setY(turnToY);
+	return m_turnToPosition;
 }
 
 bool Model::turnTo()
 {
-    m_turn = true;
-    return m_turn;
+	m_turn = true;
+	return m_turn;
 }
 
 bool Model::stop()
 {
-    m_stop = true;
-    return m_stop;
+	m_stop = true;
+	return m_stop;
 }
 
 bool Model::getStop()
 {
-    return m_stop;
+	return m_stop;
 }
 
 bool Model::getTurnTo()
 {
-    return m_turn;
+	return m_turn;
 }
 
 Point Model::getTurnPoint()
@@ -139,6 +144,11 @@ void Model::leavePuckInFront()
 bool Model::getLeavePuckInFront()
 {
 	return m_leavePuck;
+}
+
+bool Model::cantReachTarget() const
+{
+	return m_cantReachTarget;
 }
 
 bool Model::getTurnAround()

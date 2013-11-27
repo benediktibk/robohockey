@@ -61,7 +61,7 @@ Controller::Controller(Model &model) :
 	m_graph->setBackgroundBrush(QBrush(Qt::white, Qt::SolidPattern));
 
 	connect(&model, SIGNAL(robotDataChanged()), this, SLOT(update()));
-	connect(&model, SIGNAL(targetPositionsChanged()), this, SLOT(updateTargets()));
+	connect(&model, SIGNAL(dataForViewChanged()), this, SLOT(updateTargets()));
 	connect(&model, SIGNAL(robotDataChanged()), this, SLOT(updateObjects()));
 	connect(m_graph, SIGNAL(clicked(QPointF)), this, SLOT(mouseClickInGraph(QPointF)));
 }
@@ -138,13 +138,13 @@ void Controller::update()
 	m_ui->stuckAtObstacle->setText(convertIntoString(m_model.stuckAtObstacle()));
 	m_ui->reachedTarget->setText(convertIntoString(m_model.reachedTarget()));
 	m_ui->isMoving->setText(convertIntoString(m_model.isMoving()));
+	m_ui->cantReachTarget->setText(convertIntoString(m_model.cantReachTarget()));
 
 	const Point &target = m_model.getCurrentTarget();
 	QString targetString = QString("%1, %2").arg(target.getX()).arg(target.getY());
 	QString distanceToTargetString = QString("%1").arg(position.distanceTo(target));
 	m_ui->targetPosition->setText(targetString);
 	m_ui->distanceToTarget->setText(distanceToTargetString);
-
 }
 
 void Controller::mouseClickInGraph(QPointF point)
