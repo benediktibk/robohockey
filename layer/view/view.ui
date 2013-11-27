@@ -389,8 +389,11 @@
         </item>
         <item row="2" column="1">
          <widget class="QPushButton" name="pushButton">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
           <property name="text">
-           <string>empty button</string>
+           <string/>
           </property>
          </widget>
         </item>
