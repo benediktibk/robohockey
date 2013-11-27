@@ -16,11 +16,13 @@ namespace Autonomous
 		CPPUNIT_TEST_SUITE(RouterTest);
 		CPPUNIT_TEST(calculateRoute_emptyField_validRoute);
 		CPPUNIT_TEST(calculateRoute_emptyField_onlyPointOfRouteIsTarget);
+		CPPUNIT_TEST(calculateRoute_emptyField_routeHasSameWidthAsRobot);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
 		void calculateRoute_emptyField_validRoute();
 		void calculateRoute_emptyField_onlyPointOfRouteIsTarget();
+		void calculateRoute_emptyField_routeHasSameWidthAsRobot();
 	};
 }
 }
