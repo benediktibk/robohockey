@@ -29,14 +29,14 @@ vector<Point> Line::getIntersectPoints(const Circle &circle) const
 		if (discriminant == 0)
 		{
 			double resultX = -linearComponent/(2*squareComponent);
-			intersetPoints.push_back(Point(resultX, gradient*resultX + yAxisIntercept));
+			intersetPoints.push_back(Point(resultX, gradient*resultX + yAxisIntercept) + circle.getCenter());
 		}
 		else
 		{
 			double resultX1 = (-linearComponent + sqrt(discriminant)) / (2*squareComponent);
 			double resultX2 = (-linearComponent - sqrt(discriminant)) / (2*squareComponent);
-			intersetPoints.push_back(Point(resultX1, gradient*resultX1 + yAxisIntercept));
-			intersetPoints.push_back(Point(resultX2, gradient*resultX2 + yAxisIntercept));
+			intersetPoints.push_back(Point(resultX1, gradient*resultX1 + yAxisIntercept) + circle.getCenter());
+			intersetPoints.push_back(Point(resultX2, gradient*resultX2 + yAxisIntercept) + circle.getCenter());
 		}
 	}
 	return intersetPoints;
