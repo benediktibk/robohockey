@@ -9,7 +9,8 @@ using namespace PlayerCc;
 OdometryImpl::OdometryImpl(PlayerClient *playerClient) :
 	m_odometry(new Position2dProxy(playerClient))
 {
-	m_odometry->ResetOdometry();
+	// it's necessary to read after subscription but before m_playerOffset is set.
+	playerClient->Read();
 	m_playerOffset = getCurrentPosition();
 }
 
@@ -32,7 +33,7 @@ void OdometryImpl::operator=(const OdometryImpl &)
 
 RobotPosition OdometryImpl::getCurrentPosition()
 {
-	Point position = Point(m_odometry->GetXPos(), m_odometry->GetYPos()) - m_playerOffset.getPosition() - m_ownOffset.getPosition();
-	Angle orientation = Angle(m_odometry->GetYaw()) - m_playerOffset.getOrientation() - m_ownOffset.getOrientation();
+	Point position = Point(m_odometry->GetXPos(), m_odometry->GetYPos()) - m_playerOffset.getPosition() + m_ownOffset.getPosition();
+	Angle orientation = Angle(m_odometry->GetYaw()) - m_playerOffset.getOrientation() + m_ownOffset.getOrientation();
 	return RobotPosition(position, orientation);
 }

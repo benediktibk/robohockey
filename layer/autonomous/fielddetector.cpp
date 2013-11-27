@@ -31,7 +31,6 @@ bool FieldDetector::tryToDetectField()
 
 		if (numberOfFoundBorderStones > 2)
 		{
-			cout << "Found " << numberOfFoundBorderStones << " BorderStones!" << endl;
 			if (tryToFigureOutNewOrigin(root))
 				return true;
 		}
@@ -163,12 +162,12 @@ bool FieldDetector::tryToFigureOutNewOrigin(BorderStone &root)
 	if (!(pointOfRoot == possibleNewOrigin))
 	{
 		Angle angle(possibleNewOrigin, pointOfRoot);
-		m_rotation = -1.0 * angle.getValueBetweenZeroAndTwoPi();
+		m_rotation = -1.0 * angle.getValueBetweenMinusPiAndPi();
 	} else
 	{
 		Point onePointFound(root.getAllChildren().front().getX(), root.getAllChildren().front().getY());
 		Angle angle(possibleNewOrigin, onePointFound);
-		m_rotation = -1.0 * angle.getValueBetweenZeroAndTwoPi();
+		m_rotation = -1.0 * angle.getValueBetweenMinusPiAndPi();
 	}
 
 	m_newOrigin = possibleNewOrigin;
