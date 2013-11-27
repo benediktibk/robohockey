@@ -31,7 +31,6 @@ bool FieldDetector::tryToDetectField()
 
 		if (numberOfFoundBorderStones > 2)
 		{
-			cout << "Found " << numberOfFoundBorderStones << " BorderStones!" << endl;
 			if (tryToFigureOutNewOrigin(root))
 				return true;
 		}

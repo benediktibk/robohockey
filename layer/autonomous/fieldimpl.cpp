@@ -204,8 +204,6 @@ void FieldImpl::rotateCoordinateSystem(double alpha)
 	m_position->setOrientation(ownOrientation);
 
 	m_odometry->setCurrentPosition(*m_position);
-
-	cout << "Setze RobotPosition auf: " << *m_position << endl << "Neue Position ist: " << m_odometry->getCurrentPosition() << endl;
 	assert(*m_position == m_odometry->getCurrentPosition());
 
 	m_fieldObjects.clear();
@@ -233,8 +231,6 @@ void FieldImpl::moveCoordinateSystem(Point &newOrigin)
 	m_position->setPosition(newCenter);
 
 	m_odometry->setCurrentPosition(*m_position);
-
-	cout << "Setze RobotPosition auf: " << *m_position << endl << "Neue Position ist: " << m_odometry->getCurrentPosition() << endl;
 	assert(*m_position == m_odometry->getCurrentPosition());
 
 	m_fieldObjects.clear();
