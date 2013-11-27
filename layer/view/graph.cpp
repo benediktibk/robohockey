@@ -28,8 +28,26 @@ Graph::Graph(Model &model) :
 	triangle.append(QPointF(-0.225 * m_pixelPerMeter,0.175 * m_pixelPerMeter));
 	triangle.append(QPointF(0.225 * m_pixelPerMeter,0));
 	triangle.append(QPointF(-0.225 * m_pixelPerMeter,-0.175 * m_pixelPerMeter));
+
+	QRectF fieldLinesRect1(m_pixelPerMeter * QPointF(0,-3), m_pixelPerMeter * QPointF(5,0));
+	QRectF fieldLinesRect2(m_pixelPerMeter * QPointF(5.0/12.0,-3), m_pixelPerMeter * QPointF(5 - 5.0/12.0,0));
+	QRectF fieldLinesRect3(m_pixelPerMeter * QPointF(5.0/3.0,-3), m_pixelPerMeter * QPointF(5 - 5.0/3.0,0));
+	QRectF fieldLinesRect4(m_pixelPerMeter * QPointF(0,-3), m_pixelPerMeter * QPointF(5/2.0,0));
+
+	QRectF goal1(m_pixelPerMeter * QPointF(5.0/12.0,-2), m_pixelPerMeter * QPointF(5.0/6.0,-1));
+	QRectF goal2(m_pixelPerMeter * QPointF(5 - 5.0/6.0,-2), m_pixelPerMeter * QPointF(5 - 5/12.0,-1));
+
+
+	m_scene->addRect(goal1)->setBrush(Qt::yellow);
+	m_scene->addRect(goal2)->setBrush(Qt::blue);
+	m_scene->addRect(fieldLinesRect1);
+	m_scene->addRect(fieldLinesRect2);
+	m_scene->addRect(fieldLinesRect3);
+	m_scene->addRect(fieldLinesRect4);
+
 	m_triangle = m_scene->addPolygon(triangle);
-   // this->setSceneRect(50,50,350,350);
+
+	// this->setSceneRect(50,50,350,350);
 
 	connect(&model, SIGNAL(targetPositionsChanged()), this, SLOT(updateTargets()));
 	connect(&model, SIGNAL(robotDataChanged()), this, SLOT(updateObjects()));
