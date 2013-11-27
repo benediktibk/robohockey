@@ -271,3 +271,11 @@ resources/testfiles/lidar_16.txt
 resources/testfiles/sonar_2.txt
 common/path.h
 common/path.cpp
+layer/autonomous/router.h
+layer/autonomous/router.cpp
+layer/autonomous/route.h
+layer/autonomous/route.cpp
+layer/autonomous/routetest.h
+layer/autonomous/routetest.cpp
+layer/autonomous/routertest.h
+layer/autonomous/routertest.cpp
