@@ -277,5 +277,11 @@ layer/autonomous/route.h
 layer/autonomous/route.cpp
 layer/autonomous/routetest.h
 layer/autonomous/routetest.cpp
+common/pathtest.h
+common/pathtest.cpp
+common/line.h
+common/line.cpp
+common/linetest.h
+common/linetest.cpp
 layer/autonomous/routertest.h
 layer/autonomous/routertest.cpp

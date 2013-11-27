@@ -233,9 +233,13 @@ void EngineImpl::driveAndTurn(const RobotPosition &currentPosition)
 
 	switch (m_engineState)
 	{
+	case EngineStateDriving: break;
 	case EngineStateDrivingThrough: magnitude = 0.5; break;
 	case EngineStateDrivingSlowly: magnitude = min(magnitude, 0.1); break;
-	case EngineStateDrivingSlowlyBack: magnitude = -0.1; break;
+	case EngineStateDrivingSlowlyBack: magnitude = -min(magnitude, 0.1); break;
+	case EngineStateRotating: break;
+	case EngineStateStopped: break;
+	case EngineStateTurnAround: break;
 	default: break;
 	}
 

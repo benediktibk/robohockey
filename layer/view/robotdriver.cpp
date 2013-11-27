@@ -46,7 +46,7 @@ void RobotDriver::update()
 	{
 		targets.clear();
 		m_robot.stop();
-		m_model.setData(targets, false, false, false, false, false);
+		m_model.setData(targets, false, false, false, false, false, false);
 	}
 
 	else if (m_robot.reachedTarget())
@@ -54,7 +54,7 @@ void RobotDriver::update()
 		if(m_model.getTurnAround() && targets.size() == 0)
 		{
 			m_robot.turnAround();
-			m_model.setData(targets, false, false, false, false, false);
+			m_model.setData(targets, false, false, false, false, false, false);
 		}
 
 		if(m_model.getTurnTo() && targets.size() == 0)
@@ -62,37 +62,37 @@ void RobotDriver::update()
 			Point turnToPoint;
 			turnToPoint = m_model.getTurnPoint();
 			m_robot.turnTo(turnToPoint);
-			m_model.setData(targets, false, false, false, false, false);
+			m_model.setData(targets, false, false, false, false, false, false);
 		}
 
 		if(m_model.getCollectPuckInFront() && targets.size() == 0)
 		{
 			m_robot.collectPuckInFront();
-			m_model.setData(targets, false, false, false, false, false);
+			m_model.setData(targets, false, false, false, false, false, false);
 		}
 
 		if(m_model.getLeavePuckInFront() && targets.size() == 0)
 		{
 			m_robot.leaveCollectedPuck();
-			m_model.setData(targets, false, false, false, false, false);
+			m_model.setData(targets, false, false, false, false, false, false);
 		}
 
 		if(m_model.getCalibratePosition() && targets.size() == 0)
 		{
 			m_field.calibratePosition();
-			m_model.setData(targets, false, false, false, false, false);
+			m_model.setData(targets, false, false, false, false, false, false);
 		}
 
 		if (targets.size() > 0 && !m_model.getTurnAround())
 		{
 			vector<Point> targetsWithoutFirstOne(targets.begin() + 1, targets.end());
-			m_model.setData(targetsWithoutFirstOne, false, false, false, false, false);
+			m_model.setData(targetsWithoutFirstOne, false, false, false, false, false, false);
 			m_robot.goTo(targets.front());
 		}
 		else
 		{
 			targets.clear();
-			m_model.setData(targets, false, false, false, false, false);
+			m_model.setData(targets, false, false, false, false, false, false);
 		}
 	}
 
@@ -106,7 +106,7 @@ void RobotDriver::update()
 	if (m_robot.stuckAtObstacle())
 	{
 		cout << "stuck at obstacle" << endl;
-		m_model.setData(vector<Point>(), false, false, false, false, false);
+		m_model.setData(vector<Point>(), false, false, false, false, false, false);
 		m_robot.stop();
 	}
 }
