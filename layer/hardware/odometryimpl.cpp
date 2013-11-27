@@ -9,7 +9,8 @@ using namespace PlayerCc;
 OdometryImpl::OdometryImpl(PlayerClient *playerClient) :
 	m_odometry(new Position2dProxy(playerClient))
 {
-	m_odometry->ResetOdometry();
+	// it's necessary to read after subscription but before m_playerOffset is set.
+	playerClient->Read();
 	m_playerOffset = getCurrentPosition();
 }
 
