@@ -1,5 +1,6 @@
 #include "common/line.h"
 #include "common/circle.h"
+#include "common/angle.h"
 #include <math.h>
 
 using namespace RoboHockey::Common;
@@ -15,7 +16,19 @@ vector<Point> Line::getIntersectPoints(const Circle &circle) const
 	Point start(m_start - circle.getCenter());
 	Point end(m_end - circle.getCenter());
 	vector<Point> intersetPoints;
-	double gradient = (end.getY() - start.getY())/(end.getX() - start.getX());
+	Angle angleForVerticalLines;
+	double gradient;
+
+	if(end.getX() - start.getX() == 0)
+	{
+		gradient = 0;
+		angleForVerticalLines = Angle::getHalfRotation() + Angle::getQuarterRotation();
+		start.rotate(angleForVerticalLines);
+		end.rotate(angleForVerticalLines);
+	}
+	else
+		gradient = (end.getY() - start.getY())/(end.getX() - start.getX());
+
 	double yAxisIntercept = start.getY() - gradient*start.getX();
 	double radius = circle.getDiameter()/2;
 	double linearComponent = 2*gradient*yAxisIntercept;
@@ -29,14 +42,27 @@ vector<Point> Line::getIntersectPoints(const Circle &circle) const
 		if (discriminant == 0)
 		{
 			double resultX = -linearComponent/(2*squareComponent);
-			intersetPoints.push_back(Point(resultX, gradient*resultX + yAxisIntercept) + circle.getCenter());
+			Point result(resultX, gradient*resultX + yAxisIntercept);
+			if(angleForVerticalLines.getValueBetweenZeroAndTwoPi() != 0)
+				result.rotate(Angle::getQuarterRotation());
+			result = result	+ circle.getCenter();
+			intersetPoints.push_back(result);
 		}
 		else
 		{
 			double resultX1 = (-linearComponent + sqrt(discriminant)) / (2*squareComponent);
 			double resultX2 = (-linearComponent - sqrt(discriminant)) / (2*squareComponent);
-			intersetPoints.push_back(Point(resultX1, gradient*resultX1 + yAxisIntercept) + circle.getCenter());
-			intersetPoints.push_back(Point(resultX2, gradient*resultX2 + yAxisIntercept) + circle.getCenter());
+			Point resultPlus(resultX1, gradient*resultX1 + yAxisIntercept);
+			Point resultMinus(resultX2, gradient*resultX2 + yAxisIntercept);
+			if(angleForVerticalLines.getValueBetweenZeroAndTwoPi() != 0)
+			{
+				resultPlus.rotate(Angle::getQuarterRotation());
+				resultMinus.rotate(Angle::getQuarterRotation());
+			}
+			resultPlus = resultPlus + circle.getCenter();
+			resultMinus = resultMinus + circle.getCenter();
+			intersetPoints.push_back(resultPlus);
+			intersetPoints.push_back(resultMinus);
 		}
 	}
 	return intersetPoints;
