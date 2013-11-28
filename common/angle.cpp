@@ -99,6 +99,11 @@ Angle Angle::getFullRotation()
 	return Angle(0);
 }
 
+Angle Angle::getEighthRotation()
+{
+	return Angle(M_PI/4);
+}
+
 void Angle::fixRange()
 {
 	while (m_value <= M_PI)
