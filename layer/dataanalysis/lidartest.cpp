@@ -513,14 +513,14 @@ void LidarTest::isPuckCollected_noPuckInCloseDistance_false()
 	CPPUNIT_ASSERT(!lidar.isPuckCollected());
 }
 
-void LidarTest::isPuckCollected_onPuckNearlyCloseEnough_false()
+void LidarTest::isPuckCollected_closeEnough_true()
 {
 	Hardware::LidarMock hardwareLidar;
 	hardwareLidar.readSensorDataFromFile("resources/testfiles/lidar_18.txt");
 	LidarImpl lidar(hardwareLidar);
 	lidar.updateSensorData();
 
-	CPPUNIT_ASSERT(!lidar.isPuckCollected());
+	CPPUNIT_ASSERT(lidar.isPuckCollected());
 }
 
 void LidarTest::isPuckCollected_directInTheMiddle_true()

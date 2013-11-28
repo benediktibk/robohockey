@@ -49,7 +49,7 @@ namespace DataAnalysis
 		CPPUNIT_TEST(isObstacleInFront_robotVeryCloseAheadAtTheSide_true);
 		CPPUNIT_TEST(isObstacleInFront_robotFarDistance_false);
 		CPPUNIT_TEST(isPuckCollected_noPuckInCloseDistance_false);
-		CPPUNIT_TEST(isPuckCollected_onPuckNearlyCloseEnough_false);
+		CPPUNIT_TEST(isPuckCollected_closeEnough_true);
 		CPPUNIT_TEST(isPuckCollected_directInTheMiddle_true);
 		CPPUNIT_TEST(isPuckCollected_atLeftEndOfClutch_true);
 		CPPUNIT_TEST(isPuckCollected_atRightEndOfClutch_true);
@@ -89,7 +89,7 @@ namespace DataAnalysis
 		void isObstacleInFront_robotVeryCloseAheadAtTheSide_true();
 		void isObstacleInFront_robotFarDistance_false();
 		void isPuckCollected_noPuckInCloseDistance_false();
-		void isPuckCollected_onPuckNearlyCloseEnough_false();
+		void isPuckCollected_closeEnough_true();
 		void isPuckCollected_directInTheMiddle_true();
 		void isPuckCollected_atLeftEndOfClutch_true();
 		void isPuckCollected_atRightEndOfClutch_true();

@@ -47,6 +47,7 @@ namespace DataAnalysis
 		Common::Angle calculateOrientationFromSensorNumber(unsigned int value) const;
 		double calculateMinimumDistanceToObstacle(const Common::Angle &angle, double speed) const;
 		void clearInternalObjects();
+		std::list<LidarInternalObject*> getObjectsCloserThan(double distance) const;
 
 	private:
 		static std::list<int> replaceFollowingEdgesWithBiggestMagnitudePosition(const std::list<int> &edges, const Common::DiscreteFunction &edgeFunction);
