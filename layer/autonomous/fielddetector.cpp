@@ -170,6 +170,16 @@ bool FieldDetector::tryToFigureOutNewOrigin(BorderStone &root)
 		m_rotation = -1.0 * angle.getValueBetweenMinusPiAndPi();
 	}
 
+	Point currentOriginInNewCoordinates = Point() - possibleNewOrigin;
+	currentOriginInNewCoordinates.rotate(m_rotation);
+
+	if (currentOriginInNewCoordinates.getY() < 0)
+	{
+		Point oppositeOrigin = Point(0,-1* distancesChecker.getStandardFieldDistance(BorderStoneFieldDistanceD));
+		oppositeOrigin.rotate(Angle( -1* m_rotation));
+		possibleNewOrigin = possibleNewOrigin + oppositeOrigin;
+	}
+
 	m_newOrigin = possibleNewOrigin;
 
 	return true;
