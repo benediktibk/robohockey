@@ -30,6 +30,7 @@ namespace Common
 		static Angle getHalfRotation();
 		static Angle getQuarterRotation();
 		static Angle getFullRotation();
+		static Angle getEighthRotation();
 
 	private:
 		void fixRange();
