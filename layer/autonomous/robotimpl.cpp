@@ -182,6 +182,11 @@ bool RobotImpl::isPuckCollected() const
 	return lidar.isPuckCollected();
 }
 
+bool RobotImpl::isPuckCollectable() const
+{
+	return false;
+}
+
 void RobotImpl::clearRoute()
 {
 	delete m_currentRoute;

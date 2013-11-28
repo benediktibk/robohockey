@@ -109,3 +109,8 @@ bool RobotMock::isPuckCollected() const
 {
 	return false;
 }
+
+bool RobotMock::isPuckCollectable() const
+{
+	return false;
+}

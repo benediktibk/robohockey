@@ -145,6 +145,7 @@ void Controller::update()
 	m_ui->isMoving->setText(convertIntoString(m_model.isMoving()));
 	m_ui->cantReachTarget->setText(convertIntoString(m_model.cantReachTarget()));
 	m_ui->isPuckCollected->setText(convertIntoString(m_model.isPuckCollected()));
+	m_ui->isPuckCollectable->setText(convertIntoString(m_model.isPuckCollectable()));
 
 	const Point &target = m_model.getCurrentTarget();
 	QString targetString = QString("%1, %2").arg(convertIntoString(target.getX())).arg(convertIntoString(target.getY()));

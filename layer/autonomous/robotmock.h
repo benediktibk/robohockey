@@ -41,6 +41,7 @@ namespace Autonomous
 		virtual Common::Point getCurrentTarget() const;
 		virtual bool cantReachTarget() const;
 		virtual bool isPuckCollected() const;
+		virtual bool isPuckCollectable() const;
 
 	private:
 		Common::Point m_lastTarget;
