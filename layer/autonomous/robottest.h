@@ -40,6 +40,8 @@ namespace Autonomous
 		CPPUNIT_TEST(cantReachTarget_notPossibleAnymoreDuringDriving_true);
 		CPPUNIT_TEST(cantReachTarget_onlyLastTargetNotPossibleToReach_false);
 		CPPUNIT_TEST(cantReachTarget_updateTwiceCalled_false);
+		CPPUNIT_TEST(isPuckCollected_lidarSaysNo_false);
+		CPPUNIT_TEST(isPuckCollected_lidarSaysYes_true);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
@@ -69,6 +71,8 @@ namespace Autonomous
 		void cantReachTarget_notPossibleAnymoreDuringDriving_true();
 		void cantReachTarget_onlyLastTargetNotPossibleToReach_false();
 		void cantReachTarget_updateTwiceCalled_false();
+		void isPuckCollected_lidarSaysNo_false();
+		void isPuckCollected_lidarSaysYes_true();
 	};
 }
 }

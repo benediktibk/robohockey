@@ -40,6 +40,7 @@ namespace Autonomous
 		virtual Common::RobotPosition getCurrentPosition();
 		virtual Common::Point getCurrentTarget() const;
 		virtual bool cantReachTarget() const;
+		virtual bool isPuckCollected() const;
 
 	private:
 		void clearRoute();

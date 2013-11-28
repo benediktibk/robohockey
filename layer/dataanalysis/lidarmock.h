@@ -22,9 +22,11 @@ namespace DataAnalysis
 		virtual bool isPuckCollected() const;
 
 		void setAllObjects(const LidarObjects &objects);
+		void setPuckCollected(bool value);
 
 	private:
 		LidarObjects m_objects;
+		bool m_puckCollected;
 	};
 }
 }

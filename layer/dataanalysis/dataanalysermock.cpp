@@ -57,6 +57,11 @@ OdometryMock &DataAnalyserMock::getOdometryMock()
 	return m_odometry;
 }
 
+LidarMock &DataAnalyserMock::getLidarMock()
+{
+	return m_lidar;
+}
+
 unsigned int DataAnalyserMock::getCallsToUpdateSensorData() const
 {
 	return m_callsToUpdateSensorData;

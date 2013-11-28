@@ -176,6 +176,12 @@ bool RobotImpl::cantReachTarget() const
 	return false;
 }
 
+bool RobotImpl::isPuckCollected() const
+{
+	const DataAnalysis::Lidar &lidar = m_dataAnalyser->getLidar();
+	return lidar.isPuckCollected();
+}
+
 void RobotImpl::clearRoute()
 {
 	delete m_currentRoute;

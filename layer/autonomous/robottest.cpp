@@ -363,3 +363,23 @@ void RobotTest::cantReachTarget_updateTwiceCalled_false()
 
 	CPPUNIT_ASSERT(!robot.cantReachTarget());
 }
+
+void RobotTest::isPuckCollected_lidarSaysNo_false()
+{
+	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
+	DataAnalysis::LidarMock &lidar = dataAnalyser->getLidarMock();
+	lidar.setPuckCollected(false);
+	RobotImpl robot(dataAnalyser);
+
+	CPPUNIT_ASSERT(!robot.isPuckCollected());
+}
+
+void RobotTest::isPuckCollected_lidarSaysYes_true()
+{
+	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
+	DataAnalysis::LidarMock &lidar = dataAnalyser->getLidarMock();
+	lidar.setPuckCollected(true);
+	RobotImpl robot(dataAnalyser);
+
+	CPPUNIT_ASSERT(robot.isPuckCollected());
+}
