@@ -22,14 +22,12 @@ OdometryImpl::~OdometryImpl()
 
 void OdometryImpl::setCurrentPosition(const RobotPosition &position)
 {
-	Point globalPosition(m_odometry->GetXPos(), m_odometry->GetYPos());
-	Point newOwnOffset = position.getPosition() - globalPosition + m_playerOffset.getPosition();
-	newOwnOffset.rotate(Angle() - position.getOrientation());
+	Point newOwnOffset = position.getPosition() - getCurrentPosition().getPosition();
+	newOwnOffset.rotate(getCurrentPosition().getOrientation() - position.getOrientation());
 
 	m_ownOffset.setPosition(newOwnOffset);
 
-	Angle globalOrientation(m_odometry->GetYaw());
-	m_ownOffset.setOrientation( position.getOrientation() - globalOrientation + m_playerOffset.getOrientation() );
+	m_ownOffset.setOrientation( position.getOrientation() - getCurrentPosition().getOrientation());
 }
 
 OdometryImpl::OdometryImpl(const OdometryImpl &)
