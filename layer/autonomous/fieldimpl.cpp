@@ -99,7 +99,6 @@ void FieldImpl::updateWithOdometryData()
 
 void FieldImpl::updateWithCameraData()
 {
-	//! @todo Use Camera Data!
 	const DataAnalysis::CameraObjects &allCameraObjects = m_camera->getAllCameraObjects(*m_position);
 
 	if (m_fieldObjects.size() == 0 || allCameraObjects.getObjectCount() == 0)
@@ -142,7 +141,6 @@ void FieldImpl::updateObstacles()
 
 FieldObject &FieldImpl::getNextObjectFromPosition(Point position)
 {
-	//! @todo Test!
 	FieldObject &nextFieldObject = m_fieldObjects.front();
 	for (vector<FieldObject>::iterator i = m_fieldObjects.begin(); i != m_fieldObjects.end(); ++i)
 	{
@@ -194,8 +192,6 @@ void FieldImpl::transformCoordinateSystem(Point &newOrigin, double rotation)
 
 void FieldImpl::moveCoordinateSystem(Point &newOrigin)
 {
-	//! @todo test and implement movement of coordinate system
-
 	vector<FieldObject> newSystem;
 
 	for (vector<FieldObject>::iterator i = m_fieldObjects.begin(); i != m_fieldObjects.end(); ++i)
@@ -221,8 +217,6 @@ void FieldImpl::moveCoordinateSystem(Point &newOrigin)
 
 void FieldImpl::rotateCoordinateSystem(double alpha)
 {
-	//! @todo test and implement rotation of coordinate system
-
 	vector<FieldObject> newSystem;
 
 	for (vector<FieldObject>::iterator i = m_fieldObjects.begin(); i != m_fieldObjects.end(); ++i)
