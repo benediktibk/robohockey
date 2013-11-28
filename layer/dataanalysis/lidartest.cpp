@@ -592,3 +592,89 @@ void LidarTest::isPuckCollected_slightlyMoreDistantThanOneQuarterTurn_false()
 
 	CPPUNIT_ASSERT(!lidar.isPuckCollected());
 }
+
+void LidarTest::isPuckCollectable_noPuckInCloseDistance_false()
+{
+	Hardware::LidarMock hardwareLidar;
+	hardwareLidar.readSensorDataFromFile("resources/testfiles/lidar_17.txt");
+	LidarImpl lidar(hardwareLidar);
+	lidar.updateSensorData();
+
+	CPPUNIT_ASSERT(!lidar.isPuckCollectable());
+}
+
+void LidarTest::isPuckCollectable_puckCollected_true()
+{
+	Hardware::LidarMock hardwareLidar;
+	hardwareLidar.readSensorDataFromFile("resources/testfiles/lidar_21.txt");
+	LidarImpl lidar(hardwareLidar);
+	lidar.updateSensorData();
+
+	CPPUNIT_ASSERT(lidar.isPuckCollectable());
+}
+
+void LidarTest::isPuckCollectable_puckStraightAheadCloseEnough_true()
+{
+	CPPUNIT_ASSERT(false); // test data missing
+	Hardware::LidarMock hardwareLidar;
+	hardwareLidar.readSensorDataFromFile("resources/testfiles/lidar_.txt");
+	LidarImpl lidar(hardwareLidar);
+	lidar.updateSensorData();
+
+	CPPUNIT_ASSERT(lidar.isPuckCollectable());
+}
+
+void LidarTest::isPuckCollectable_puckStraightAheadButTooDistant_false()
+{
+	CPPUNIT_ASSERT(false); // test data missing
+	Hardware::LidarMock hardwareLidar;
+	hardwareLidar.readSensorDataFromFile("resources/testfiles/lidar_.txt");
+	LidarImpl lidar(hardwareLidar);
+	lidar.updateSensorData();
+
+	CPPUNIT_ASSERT(!lidar.isPuckCollectable());
+}
+
+void LidarTest::isPuckCollectable_puckCloseAndALittleBitLeft_true()
+{
+	CPPUNIT_ASSERT(false); // test data missing
+	Hardware::LidarMock hardwareLidar;
+	hardwareLidar.readSensorDataFromFile("resources/testfiles/lidar_.txt");
+	LidarImpl lidar(hardwareLidar);
+	lidar.updateSensorData();
+
+	CPPUNIT_ASSERT(lidar.isPuckCollectable());
+}
+
+void LidarTest::isPuckCollectable_puckCloseAndALittleBitRight_true()
+{
+	CPPUNIT_ASSERT(false); // test data missing
+	Hardware::LidarMock hardwareLidar;
+	hardwareLidar.readSensorDataFromFile("resources/testfiles/lidar_.txt");
+	LidarImpl lidar(hardwareLidar);
+	lidar.updateSensorData();
+
+	CPPUNIT_ASSERT(lidar.isPuckCollectable());
+}
+
+void LidarTest::isPuckCollectable_puckCloseButTooMuchLeft_false()
+{
+	CPPUNIT_ASSERT(false); // test data missing
+	Hardware::LidarMock hardwareLidar;
+	hardwareLidar.readSensorDataFromFile("resources/testfiles/lidar_.txt");
+	LidarImpl lidar(hardwareLidar);
+	lidar.updateSensorData();
+
+	CPPUNIT_ASSERT(!lidar.isPuckCollectable());
+}
+
+void LidarTest::isPuckCollectable_puckCloseButTooMuchRight_false()
+{
+	CPPUNIT_ASSERT(false); // test data missing
+	Hardware::LidarMock hardwareLidar;
+	hardwareLidar.readSensorDataFromFile("resources/testfiles/lidar_.txt");
+	LidarImpl lidar(hardwareLidar);
+	lidar.updateSensorData();
+
+	CPPUNIT_ASSERT(!lidar.isPuckCollectable());
+}

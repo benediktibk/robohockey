@@ -57,6 +57,14 @@ namespace DataAnalysis
 		CPPUNIT_TEST(isPuckCollected_leftOfClutch_false);
 		CPPUNIT_TEST(isPuckCollected_asDistantAsAfterOneQuarterTurn_true);
 		CPPUNIT_TEST(isPuckCollected_slightlyMoreDistantThanOneQuarterTurn_false);
+		CPPUNIT_TEST(isPuckCollectable_noPuckInCloseDistance_false);
+		CPPUNIT_TEST(isPuckCollectable_puckCollected_true);
+		CPPUNIT_TEST(isPuckCollectable_puckStraightAheadCloseEnough_true);
+		CPPUNIT_TEST(isPuckCollectable_puckStraightAheadButTooDistant_false);
+		CPPUNIT_TEST(isPuckCollectable_puckCloseAndALittleBitLeft_true);
+		CPPUNIT_TEST(isPuckCollectable_puckCloseAndALittleBitRight_true);
+		CPPUNIT_TEST(isPuckCollectable_puckCloseButTooMuchLeft_false);
+		CPPUNIT_TEST(isPuckCollectable_puckCloseButTooMuchRight_false);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
@@ -97,6 +105,14 @@ namespace DataAnalysis
 		void isPuckCollected_leftOfClutch_false();
 		void isPuckCollected_asDistantAsAfterOneQuarterTurn_true();
 		void isPuckCollected_slightlyMoreDistantThanOneQuarterTurn_false();
+		void isPuckCollectable_noPuckInCloseDistance_false();
+		void isPuckCollectable_puckCollected_true();
+		void isPuckCollectable_puckStraightAheadCloseEnough_true();
+		void isPuckCollectable_puckStraightAheadButTooDistant_false();
+		void isPuckCollectable_puckCloseAndALittleBitLeft_true();
+		void isPuckCollectable_puckCloseAndALittleBitRight_true();
+		void isPuckCollectable_puckCloseButTooMuchLeft_false();
+		void isPuckCollectable_puckCloseButTooMuchRight_false();
 	};
 }
 }
