@@ -383,3 +383,23 @@ void RobotTest::isPuckCollected_lidarSaysYes_true()
 
 	CPPUNIT_ASSERT(robot.isPuckCollected());
 }
+
+void RobotTest::isPuckCollectable_lidarSaysNo_false()
+{
+	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
+	DataAnalysis::LidarMock &lidar = dataAnalyser->getLidarMock();
+	lidar.setPuckCollectable(false);
+	RobotImpl robot(dataAnalyser);
+
+	CPPUNIT_ASSERT(!robot.isPuckCollectable());
+}
+
+void RobotTest::isPuckCollectable_lidarSaysYes_true()
+{
+	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
+	DataAnalysis::LidarMock &lidar = dataAnalyser->getLidarMock();
+	lidar.setPuckCollectable(true);
+	RobotImpl robot(dataAnalyser);
+
+	CPPUNIT_ASSERT(robot.isPuckCollectable());
+}

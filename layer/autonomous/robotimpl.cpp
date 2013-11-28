@@ -184,7 +184,8 @@ bool RobotImpl::isPuckCollected() const
 
 bool RobotImpl::isPuckCollectable() const
 {
-	return false;
+	const DataAnalysis::Lidar &lidar = m_dataAnalyser->getLidar();
+	return lidar.isPuckCollectable();
 }
 
 void RobotImpl::clearRoute()

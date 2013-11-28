@@ -6,7 +6,8 @@ using namespace RoboHockey::Common;
 
 LidarMock::LidarMock() :
 	m_objects(Point()),
-	m_puckCollected(false)
+	m_puckCollected(false),
+	m_puckCollectable(false)
 { }
 
 LidarObjects LidarMock::getAllObjects(const RobotPosition &) const
@@ -24,7 +25,7 @@ void LidarMock::updateSensorData()
 
 bool LidarMock::isPuckCollectable() const
 {
-	return false;
+	return m_puckCollectable;
 }
 
 bool LidarMock::isPuckCollected() const
@@ -40,4 +41,9 @@ void LidarMock::setAllObjects(const LidarObjects &objects)
 void LidarMock::setPuckCollected(bool value)
 {
 	m_puckCollected = value;
+}
+
+void LidarMock::setPuckCollectable(bool value)
+{
+	m_puckCollectable = value;
 }
