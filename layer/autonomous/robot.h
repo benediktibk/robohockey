@@ -16,6 +16,8 @@ namespace Layer
 {
 namespace Autonomous
 {
+	class Field;
+
 	class Robot
 	{
 	public:
@@ -25,7 +27,7 @@ namespace Autonomous
 		virtual void turnTo(const Common::Point &position) = 0;
 		virtual bool stuckAtObstacle() = 0;
 		virtual bool reachedTarget() = 0;
-		virtual void updateActuators() = 0;
+		virtual void updateActuators(const Field &field) = 0;
 		virtual void updateSensorData() = 0;
 		virtual void stop() = 0;
 		virtual void collectPuckInFront() = 0;
@@ -34,6 +36,7 @@ namespace Autonomous
 		virtual void turnAround() = 0;
 		virtual Common::RobotPosition getCurrentPosition() = 0;
 		virtual Common::Point getCurrentTarget() const = 0;
+		virtual bool cantReachTarget() const = 0;
 	};
 }
 }

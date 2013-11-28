@@ -22,6 +22,9 @@ namespace Autonomous
 		CPPUNIT_TEST(isValid_onePointAdded_true);
 		CPPUNIT_TEST(getLastPoint_onePointAdded_lastAddedPoint);
 		CPPUNIT_TEST(getLastPoint_twoPointsAdded_lastAddedPoint);
+		CPPUNIT_TEST(getFirstPoint_twoPointsAdded_firstPoint);
+		CPPUNIT_TEST(removeFirstPoint_onePointAdded_pointCountIs0);
+		CPPUNIT_TEST(removeFirstPoint_twoPointsAdded_onlyPointIsLastAddedPoint);
 		CPPUNIT_TEST(intersectsWith_noObstacles_false);
 		CPPUNIT_TEST(intersectsWith_oneObstacleFarAway_false);
 		CPPUNIT_TEST(intersectsWith_oneObstacleOnTheWay_true);
@@ -41,6 +44,9 @@ namespace Autonomous
 		void isValid_onePointAdded_true();
 		void getLastPoint_onePointAdded_lastAddedPoint();
 		void getLastPoint_twoPointsAdded_lastAddedPoint();
+		void getFirstPoint_twoPointsAdded_firstPoint();
+		void removeFirstPoint_onePointAdded_pointCountIs0();
+		void removeFirstPoint_twoPointsAdded_onlyPointIsLastAddedPoint();
 		void intersectsWith_noObstacles_false();
 		void intersectsWith_oneObstacleFarAway_false();
 		void intersectsWith_oneObstacleOnTheWay_true();

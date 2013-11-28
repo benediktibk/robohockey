@@ -1,9 +1,11 @@
 #include "layer/autonomous/robottest.h"
 #include "layer/autonomous/robotimpl.h"
+#include "layer/autonomous/fieldmock.h"
 #include "layer/dataanalysis/dataanalysermock.h"
 #include "common/compare.h"
 #include "common/robotposition.h"
 
+using namespace std;
 using namespace RoboHockey::Common;
 using namespace RoboHockey::Layer;
 using namespace RoboHockey::Layer::Autonomous;
@@ -15,8 +17,10 @@ void RobotTest::goTo_positionDifferentToCurrentOne_engineGotAtLeastOneCallToGoTo
 	DataAnalysis::EngineMock &engine = dataAnalyser->getEngineMock();
 	odometry.setCurrentPosition(RobotPosition(Point(2, 3), 1));
 	RobotImpl robot(dataAnalyser);
+	FieldMock field;
 
 	robot.goTo(Point(5, 4));
+	robot.updateActuators(field);
 
 	CPPUNIT_ASSERT(engine.getCallsToGoToStraight() > 0);
 }
@@ -27,9 +31,10 @@ void RobotTest::stuckAtObstacle_tryingToTackleObstacle_true()
 	DataAnalysis::EngineMock &engine = dataAnalyser->getEngineMock();
 	engine.setTryingToTackleObstacle(true);
 	RobotImpl robot(dataAnalyser);
+	FieldMock field;
 
 	robot.updateSensorData();
-	robot.updateActuators();
+	robot.updateActuators(field);
 
 	CPPUNIT_ASSERT(robot.stuckAtObstacle());
 }
@@ -49,7 +54,11 @@ void RobotTest::reachedTarget_engineSaysNotReached_false()
 	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
 	DataAnalysis::EngineMock &engine = dataAnalyser->getEngineMock();
 	RobotImpl robot(dataAnalyser);
+	FieldMock field;
 	engine.setReachedTarget(false);
+
+	robot.goTo(Point(4, 5));
+	robot.updateActuators(field);
 
 	CPPUNIT_ASSERT(!robot.reachedTarget());
 }
@@ -68,8 +77,9 @@ void RobotTest::updateActuators_empty_layerBelowGotAtLeastOneCallToUpdateActuato
 {
 	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
 	RobotImpl robot(dataAnalyser);
+	FieldMock field;
 
-	robot.updateActuators();
+	robot.updateActuators(field);
 
 	CPPUNIT_ASSERT(dataAnalyser->getCallsToUpdateActuators() > 0);
 }
@@ -100,8 +110,9 @@ void RobotTest::stuckAtObstacle_empty_engineGotAtLeastOneCallToTryingToTackleObs
 	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
 	DataAnalysis::EngineMock &engine = dataAnalyser->getEngineMock();
 	RobotImpl robot(dataAnalyser);
+	FieldMock field;
 
-	robot.updateActuators();
+	robot.updateActuators(field);
 	robot.stuckAtObstacle();
 
 	CPPUNIT_ASSERT(engine.getCallsToTryingToTackleObstacle() > 0);
@@ -127,8 +138,9 @@ void RobotTest::updateActuators_notTryingToTackleObstacle_engineGotNoCallToStop(
 	engine.setTryingToTackleObstacle(false);
 	RobotImpl robot(dataAnalyser);
 	robot.goTo(Point(10, 0));
+	FieldMock field;
 
-	robot.updateActuators();
+	robot.updateActuators(field);
 
 	CPPUNIT_ASSERT(engine.getCallsToStop() == 0);
 }
@@ -140,8 +152,9 @@ void RobotTest::updateActuators_tryingToTackleObstacle_engineGotAtLeastOneCallTo
 	engine.setTryingToTackleObstacle(true);
 	RobotImpl robot(dataAnalyser);
 	robot.goTo(Point(10, 0));
+	FieldMock field;
 
-	robot.updateActuators();
+	robot.updateActuators(field);
 
 	CPPUNIT_ASSERT(engine.getCallsToStop() > 0);
 }
@@ -153,8 +166,9 @@ void RobotTest::updateActuators_tryingToTackleObstacle_targetReached()
 	engine.setTryingToTackleObstacle(true);
 	RobotImpl robot(dataAnalyser);
 	robot.goTo(Point(10, 0));
+	FieldMock field;
 
-	robot.updateActuators();
+	robot.updateActuators(field);
 
 	CPPUNIT_ASSERT(robot.reachedTarget());
 }
@@ -179,9 +193,10 @@ void RobotTest::updateSensorData_noObstacleDirectInFront_engineGotAtLeastOneCall
 	DataAnalysis::SonarMock &sonar = dataAnalyser->getSonarMock();
 	RobotImpl robot(dataAnalyser);
 	sonar.setIsObstacleDirectInFront(false);
+	FieldMock field;
 
 	robot.updateSensorData();
-	robot.updateActuators();
+	robot.updateActuators(field);
 
 	CPPUNIT_ASSERT(engine.getCallsToUnlockForwardMovement() > 0);
 }
@@ -193,9 +208,10 @@ void RobotTest::updateSensorData_obstacleDirectInFront_engineGotAtLeastOneCallTo
 	DataAnalysis::SonarMock &sonar = dataAnalyser->getSonarMock();
 	RobotImpl robot(dataAnalyser);
 	sonar.setIsObstacleDirectInFront(true);
+	FieldMock field;
 
 	robot.updateSensorData();
-	robot.updateActuators();
+	robot.updateActuators(field);
 
 	CPPUNIT_ASSERT(engine.getCallsToLockForwardMovement() > 0);
 }
@@ -242,23 +258,108 @@ void RobotTest::reachedTarget_nearlyHitTargetButTookSomeAdditionalWayToStop_true
 	DataAnalysis::EngineMock &engine = dataAnalyser->getEngineMock();
 	DataAnalysis::SonarMock &sonar = dataAnalyser->getSonarMock();
 	RobotImpl robot(dataAnalyser);
+	FieldMock field;
 
 	odometry.setCurrentPosition(RobotPosition(Point(0, 0), 0));
 	robot.goTo(Point(10, 0));
 	sonar.setIsObstacleDirectInFront(false);
 	robot.updateSensorData();
-	robot.updateActuators();
+	robot.updateActuators(field);
 	odometry.setCurrentPosition(RobotPosition(Point(5, 0), 0));
 	sonar.setIsObstacleDirectInFront(true);
 	robot.updateSensorData();
-	robot.updateActuators();
+	robot.updateActuators(field);
 	engine.setTryingToTackleObstacle(true);
 	robot.updateSensorData();
-	robot.updateActuators();
+	robot.updateActuators(field);
 	engine.setTryingToTackleObstacle(false);
 	odometry.setCurrentPosition(RobotPosition(Point(5.2, 0), 0));
 	robot.updateSensorData();
-	robot.updateActuators();
+	robot.updateActuators(field);
 
 	CPPUNIT_ASSERT(robot.reachedTarget());
+}
+
+void RobotTest::cantReachTarget_calledDirectAfterConstructor_false()
+{
+	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
+	RobotImpl robot(dataAnalyser);
+
+	CPPUNIT_ASSERT(!robot.cantReachTarget());
+}
+
+void RobotTest::cantReachTarget_drivingTowardsTheTarget_false()
+{
+	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
+	RobotImpl robot(dataAnalyser);
+	FieldMock field;
+
+	robot.goTo(Point(10, 0));
+	robot.updateActuators(field);
+
+	CPPUNIT_ASSERT(!robot.cantReachTarget());
+}
+
+void RobotTest::cantReachTarget_newTargetNotPossible_true()
+{
+	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
+	RobotImpl robot(dataAnalyser);
+	FieldMock field;
+
+	robot.goTo(Point(10, 0));
+	robot.updateActuators(field);
+	vector<Circle> obstacles;
+	obstacles.push_back(Circle(Point(10, 0), 2));
+	field.setObstacles(obstacles);
+	robot.updateActuators(field);
+
+	CPPUNIT_ASSERT(robot.cantReachTarget());
+}
+
+void RobotTest::cantReachTarget_notPossibleAnymoreDuringDriving_true()
+{
+	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
+	RobotImpl robot(dataAnalyser);
+	FieldMock field;
+	vector<Circle> obstacles;
+	obstacles.push_back(Circle(Point(10, 0), 2));
+	field.setObstacles(obstacles);
+
+	robot.goTo(Point(10, 0));
+	robot.updateActuators(field);
+
+	CPPUNIT_ASSERT(robot.cantReachTarget());
+}
+
+void RobotTest::cantReachTarget_onlyLastTargetNotPossibleToReach_false()
+{
+	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
+	RobotImpl robot(dataAnalyser);
+	FieldMock field;
+	vector<Circle> obstacles;
+	obstacles.push_back(Circle(Point(10, 0), 2));
+	field.setObstacles(obstacles);
+
+	robot.goTo(Point(10, 0));
+	robot.updateActuators(field);
+	robot.goTo(Point(-10, 0));
+	robot.updateActuators(field);
+
+	CPPUNIT_ASSERT(!robot.cantReachTarget());
+}
+
+void RobotTest::cantReachTarget_updateTwiceCalled_false()
+{
+	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
+	RobotImpl robot(dataAnalyser);
+	FieldMock field;
+	vector<Circle> obstacles;
+	obstacles.push_back(Circle(Point(10, 0), 2));
+	field.setObstacles(obstacles);
+
+	robot.goTo(Point(10, 0));
+	robot.updateActuators(field);
+	robot.updateActuators(field);
+
+	CPPUNIT_ASSERT(!robot.cantReachTarget());
 }

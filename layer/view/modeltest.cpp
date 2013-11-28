@@ -21,6 +21,13 @@ void ModelTest::constructor_empty_notReachedTarget()
 	CPPUNIT_ASSERT(!model.reachedTarget());
 }
 
+void ModelTest::constructor_empty_canReachTarget()
+{
+	Model model;
+
+	CPPUNIT_ASSERT(!model.cantReachTarget());
+}
+
 void ModelTest::setData_twoFieldObjects_twoFieldObjects()
 {
 	Model model;
@@ -28,7 +35,7 @@ void ModelTest::setData_twoFieldObjects_twoFieldObjects()
 	fieldObjects.push_back(FieldObject(Circle(), FieldObjectColorUnknown));
 	fieldObjects.push_back(FieldObject(Circle(), FieldObjectColorUnknown));
 
-	model.setData(fieldObjects, false, false, RobotPosition(), Point(), false);
+	model.setData(fieldObjects, false, false, RobotPosition(), Point(), false, false);
 
 	vector<FieldObject> result = model.getAllFieldObjects();
 	CPPUNIT_ASSERT_EQUAL((size_t)2, result.size());
@@ -39,7 +46,7 @@ void ModelTest::setData_stuckAtObstacle_stuckAtObstacle()
 	Model model;
 	vector<FieldObject> fieldObjects;
 
-	model.setData(fieldObjects, true, false, RobotPosition(), Point(), false);
+	model.setData(fieldObjects, true, false, RobotPosition(), Point(), false, false);
 
 	CPPUNIT_ASSERT(model.stuckAtObstacle());
 }
@@ -49,7 +56,7 @@ void ModelTest::setData_reachedTarget_reachedTarget()
 	Model model;
 	vector<FieldObject> fieldObjects;
 
-	model.setData(fieldObjects, false, true, RobotPosition(), Point(), false);
+	model.setData(fieldObjects, false, true, RobotPosition(), Point(), false, false);
 
 	CPPUNIT_ASSERT(model.reachedTarget());
 }
@@ -72,8 +79,18 @@ void ModelTest::setData_currentPosition_currentPositionIsCorrect()
 	Model model;
 	vector<FieldObject> fieldObjects;
 
-	model.setData(fieldObjects, true, false, RobotPosition(Point(3, 2), 1), Point(), false);
+	model.setData(fieldObjects, true, false, RobotPosition(Point(3, 2), 1), Point(), false, false);
 
 	Compare compare(0.0001);
 	CPPUNIT_ASSERT(compare.isFuzzyEqual(RobotPosition(Point(3, 2), 1), model.getCurrentPosition()));
+}
+
+void ModelTest::setData_cantReachTarget_cantReachTarget()
+{
+	Model model;
+	vector<FieldObject> fieldObjects;
+
+	model.setData(fieldObjects, false, false, RobotPosition(), Point(), false, true);
+
+	CPPUNIT_ASSERT(model.cantReachTarget());
 }

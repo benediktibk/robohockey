@@ -1,6 +1,7 @@
 #include "layer/hardware/robotimpl.h"
 #include "layer/dataanalysis/dataanalyserimpl.h"
 #include "layer/autonomous/robotimpl.h"
+#include "layer/autonomous/fieldimpl.h"
 #include "layer/strategy/statemachine.h"
 #include "layer/strategy/initialstate.h"
 #include "common/watch.h"
@@ -9,10 +10,12 @@
 #include <termios.h>
 #include <unistd.h>
 #include <fcntl.h>
+#include <boost/scoped_ptr.hpp>
 
 using namespace RoboHockey::Common;
 using namespace RoboHockey::Layer;
 using namespace std;
+using namespace boost;
 
 char kbhit(void)
 {
@@ -58,8 +61,12 @@ int main(int argc, char **argv)
 
 	Hardware::Robot *hardwareRobot = new Hardware::RobotImpl(playerServer);
 	DataAnalysis::DataAnalyser *dataAnalyser = new DataAnalysis::DataAnalyserImpl(hardwareRobot);
-	Autonomous::Robot *autonomousRobot = new Autonomous::RobotImpl(dataAnalyser);
-	Strategy::StateMachine stateMachine(new Strategy::InitialState(*autonomousRobot), autonomousRobot);
+	scoped_ptr<Autonomous::Robot> autonomousRobot(new Autonomous::RobotImpl(dataAnalyser));
+	scoped_ptr<Autonomous::FieldImpl> field(new Autonomous::FieldImpl(
+												dataAnalyser->getOdometry(),
+												dataAnalyser->getLidar(),
+												dataAnalyser->getCamera()));
+	Strategy::StateMachine stateMachine(new Strategy::InitialState(*autonomousRobot), *autonomousRobot, *field);
 	bool running = true;
 	double lastTime = watch.getTime();
 	const double maximumLoopTime = 0.1;
