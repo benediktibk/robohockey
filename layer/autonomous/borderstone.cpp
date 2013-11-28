@@ -15,7 +15,7 @@ BorderStone::BorderStone(Point &father, BorderStoneFieldDistance distanceToFathe
 
 void BorderStone::searchNeighbourBorderStones(std::vector<Point*> &candidates)
 {
-	Compare compare(0.04);
+	Compare compare(0.02);
 
 	for (vector<Point*>::iterator i = candidates.begin(); i != candidates.end(); ++i)
 	{
