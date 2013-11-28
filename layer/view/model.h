@@ -24,7 +24,7 @@ namespace View
 		void setData(
 				const std::vector<Autonomous::FieldObject> &fieldObjects,
 				bool stuckAtObstacle, bool reachedTarget, const Common::RobotPosition &currentPosition,
-				const Common::Point &currentTarget, bool isMoving, bool cantReachTarget);
+				const Common::Point &currentTarget, bool isMoving, bool cantReachTarget, bool isPuckCollected);
 		void setData(
 				const std::vector<Common::Point> &targetPositions,
 				bool turnAround, bool turnTo, bool stop, bool collectPuck,
@@ -51,6 +51,7 @@ namespace View
 		void leavePuckInFront();
 		bool getLeavePuckInFront();
 		bool cantReachTarget() const;
+		bool isPuckCollected() const;
 
 	signals:
 		void dataForViewChanged();
@@ -72,6 +73,7 @@ namespace View
 		bool m_calibratePosition;
 		bool m_leavePuck;
 		bool m_cantReachTarget;
+		bool m_isPuckCollected;
 	};
 }
 }
