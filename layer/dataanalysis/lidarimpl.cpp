@@ -111,6 +111,16 @@ void LidarImpl::updateSensorData()
 	}
 }
 
+bool LidarImpl::isPuckCollectable() const
+{
+	return false;
+}
+
+bool LidarImpl::isPuckCollected() const
+{
+	return false;
+}
+
 list<pair<int, int> > LidarImpl::findStartAndEndOfObjects(
 		const list<int> &positiveEdges, const list<int> &negativeEdges) const
 {

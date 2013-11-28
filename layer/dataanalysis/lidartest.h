@@ -48,6 +48,15 @@ namespace DataAnalysis
 		CPPUNIT_TEST(isObstacleInFront_robotVeryCloseAtTheSide_true);
 		CPPUNIT_TEST(isObstacleInFront_robotVeryCloseAheadAtTheSide_true);
 		CPPUNIT_TEST(isObstacleInFront_robotFarDistance_false);
+		CPPUNIT_TEST(isPuckCollected_noPuckInCloseDistance_false);
+		CPPUNIT_TEST(isPuckCollected_onPuckNearlyCloseEnough_false);
+		CPPUNIT_TEST(isPuckCollected_directInTheMiddle_true);
+		CPPUNIT_TEST(isPuckCollected_atLeftEndOfClutch_true);
+		CPPUNIT_TEST(isPuckCollected_atRightEndOfClutch_true);
+		CPPUNIT_TEST(isPuckCollected_rightOfClutch_false);
+		CPPUNIT_TEST(isPuckCollected_leftOfClutch_false);
+		CPPUNIT_TEST(isPuckCollected_asDistantAsAfterOneQuarterTurn_true);
+		CPPUNIT_TEST(isPuckCollected_slightlyMoreDistantThanOneQuarterTurn_false);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
@@ -79,6 +88,15 @@ namespace DataAnalysis
 		void isObstacleInFront_robotVeryCloseAtTheSide_true();
 		void isObstacleInFront_robotVeryCloseAheadAtTheSide_true();
 		void isObstacleInFront_robotFarDistance_false();
+		void isPuckCollected_noPuckInCloseDistance_false();
+		void isPuckCollected_onPuckNearlyCloseEnough_false();
+		void isPuckCollected_directInTheMiddle_true();
+		void isPuckCollected_atLeftEndOfClutch_true();
+		void isPuckCollected_atRightEndOfClutch_true();
+		void isPuckCollected_rightOfClutch_false();
+		void isPuckCollected_leftOfClutch_false();
+		void isPuckCollected_asDistantAsAfterOneQuarterTurn_true();
+		void isPuckCollected_slightlyMoreDistantThanOneQuarterTurn_false();
 	};
 }
 }

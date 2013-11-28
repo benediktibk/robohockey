@@ -21,6 +21,16 @@ bool LidarMock::isObstacleInFront(double) const
 void LidarMock::updateSensorData()
 { }
 
+bool LidarMock::isPuckCollectable() const
+{
+	return false;
+}
+
+bool LidarMock::isPuckCollected() const
+{
+	return false;
+}
+
 void LidarMock::setAllObjects(const LidarObjects &objects)
 {
 	m_objects = objects;

@@ -37,6 +37,8 @@ namespace DataAnalysis
 		virtual LidarObjects getAllObjects(const Common::RobotPosition &ownPosition) const;
 		virtual bool isObstacleInFront(double speed) const;
 		virtual void updateSensorData();
+		virtual bool isPuckCollectable() const;
+		virtual bool isPuckCollected() const;
 
 	private:
 		std::list<std::pair<int, int> > findStartAndEndOfObjects(
