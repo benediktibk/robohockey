@@ -34,6 +34,12 @@ namespace Autonomous
 		CPPUNIT_TEST(turnAround_empty_engineGotAtLeastOneCallToTurnAround);
 		CPPUNIT_TEST(getCurrentPosition_position3And4InOdometry_3And4);
 		CPPUNIT_TEST(reachedTarget_nearlyHitTargetButTookSomeAdditionalWayToStop_true);
+		CPPUNIT_TEST(cantReachTarget_calledDirectAfterConstructor_false);
+		CPPUNIT_TEST(cantReachTarget_drivingTowardsTheTarget_false);
+		CPPUNIT_TEST(cantReachTarget_newTargetNotPossible_true);
+		CPPUNIT_TEST(cantReachTarget_notPossibleAnymoreDuringDriving_true);
+		CPPUNIT_TEST(cantReachTarget_onlyLastTargetNotPossibleToReach_false);
+		CPPUNIT_TEST(cantReachTarget_updateTwiceCalled_false);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
@@ -57,6 +63,12 @@ namespace Autonomous
 		void turnAround_empty_engineGotAtLeastOneCallToTurnAround();
 		void getCurrentPosition_position3And4InOdometry_3And4();
 		void reachedTarget_nearlyHitTargetButTookSomeAdditionalWayToStop_true();
+		void cantReachTarget_calledDirectAfterConstructor_false();
+		void cantReachTarget_drivingTowardsTheTarget_false();
+		void cantReachTarget_newTargetNotPossible_true();
+		void cantReachTarget_notPossibleAnymoreDuringDriving_true();
+		void cantReachTarget_onlyLastTargetNotPossibleToReach_false();
+		void cantReachTarget_updateTwiceCalled_false();
 	};
 }
 }

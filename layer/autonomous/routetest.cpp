@@ -76,6 +76,41 @@ void RouteTest::getLastPoint_twoPointsAdded_lastAddedPoint()
 	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(3, 2), route.getLastPoint()));
 }
 
+void RouteTest::getFirstPoint_twoPointsAdded_firstPoint()
+{
+	Route route(0.5);
+
+	route.addPoint(Point(1, 2));
+	route.addPoint(Point(3, 2));
+
+	Compare compare(0.0001);
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(1, 2), route.getFirstPoint()));
+}
+
+void RouteTest::removeFirstPoint_onePointAdded_pointCountIs0()
+{
+	Route route(0.5);
+	route.addPoint(Point(1, 2));
+
+	route.removeFirstPoint();
+
+	CPPUNIT_ASSERT_EQUAL((size_t)0, route.getPointCount());
+}
+
+void RouteTest::removeFirstPoint_twoPointsAdded_onlyPointIsLastAddedPoint()
+{
+	Route route(0.5);
+	route.addPoint(Point(1, 2));
+	route.addPoint(Point(3, 2));
+
+	route.removeFirstPoint();
+
+	CPPUNIT_ASSERT_EQUAL((size_t)1, route.getPointCount());
+	Compare compare(0.0001);
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(3, 2), route.getFirstPoint()));
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(3, 2), route.getLastPoint()));
+}
+
 void RouteTest::intersectsWith_noObstacles_false()
 {
 	vector<Circle> obstacles;

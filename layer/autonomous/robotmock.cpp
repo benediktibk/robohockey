@@ -28,7 +28,7 @@ bool RobotMock::reachedTarget()
 	return m_reachedTarget;
 }
 
-void RobotMock::updateActuators()
+void RobotMock::updateActuators(const Field &)
 {
 	++m_callsToUpdateActuators;
 }
@@ -98,4 +98,9 @@ RobotPosition RobotMock::getCurrentPosition()
 Point RobotMock::getCurrentTarget() const
 {
 	return Point();
+}
+
+bool RobotMock::cantReachTarget() const
+{
+	return false;
 }

@@ -23,7 +23,7 @@ namespace Autonomous
 		virtual void goTo(const Common::Point &position);
 		virtual bool stuckAtObstacle();
 		virtual bool reachedTarget();
-		virtual void updateActuators();
+		virtual void updateActuators(const Field &field);
 		virtual void updateSensorData();
 		virtual void stop();
 		unsigned int getCallsToUpdateActuators() const;
@@ -39,6 +39,7 @@ namespace Autonomous
 		virtual void turnTo(const Common::Point &position);
 		virtual Common::RobotPosition getCurrentPosition();
 		virtual Common::Point getCurrentTarget() const;
+		virtual bool cantReachTarget() const;
 
 	private:
 		Common::Point m_lastTarget;

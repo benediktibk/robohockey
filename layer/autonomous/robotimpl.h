@@ -2,6 +2,7 @@
 #define ROBOHOCKEY_LAYER_AUTONOMOUS_ROBOTIMPL_H
 
 #include "layer/autonomous/robot.h"
+#include "layer/autonomous/robotstate.h"
 #include "common/point.h"
 #include "common/robotposition.h"
 
@@ -16,7 +17,7 @@ namespace DataAnalysis
 
 namespace Autonomous
 {
-	class Field;
+	class Route;
 
 	class RobotImpl :
 			public Robot
@@ -29,7 +30,7 @@ namespace Autonomous
 		virtual void turnTo(const Common::Point &position);
 		virtual bool stuckAtObstacle();
 		virtual bool reachedTarget();
-		virtual void updateActuators();
+		virtual void updateActuators(const Field &field);
 		virtual void updateSensorData();
 		virtual void stop();
 		virtual void collectPuckInFront();
@@ -38,6 +39,10 @@ namespace Autonomous
 		virtual void turnAround();
 		virtual Common::RobotPosition getCurrentPosition();
 		virtual Common::Point getCurrentTarget() const;
+		virtual bool cantReachTarget() const;
+
+	private:
+		void clearRoute();
 
 	private:
 		// forbid copies
@@ -45,10 +50,13 @@ namespace Autonomous
 		void operator=(const RobotImpl &robot);
 
 	private:
+		const double m_robotWidth;
 		DataAnalysis::DataAnalyser *m_dataAnalyser;
-		Field *m_field;
 		bool m_tryingToTackleObstacle;
-		bool m_collectingPuck;
+		bool m_cantReachTarget;
+		Route *m_currentRoute;
+		Common::Point m_currentTarget;
+		RobotState m_state;
 	};
 }
 }

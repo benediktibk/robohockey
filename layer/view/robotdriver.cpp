@@ -99,9 +99,9 @@ void RobotDriver::update()
 	m_model.setData(
 				m_field.getAllFieldObjects(), m_robot.stuckAtObstacle(),
 				m_robot.reachedTarget(), m_robot.getCurrentPosition(),
-				m_robot.getCurrentTarget(), m_robot.isMoving());
+				m_robot.getCurrentTarget(), m_robot.isMoving(), m_robot.cantReachTarget());
 
-	m_robot.updateActuators();
+	m_robot.updateActuators(m_field);
 
 	if (m_robot.stuckAtObstacle())
 	{

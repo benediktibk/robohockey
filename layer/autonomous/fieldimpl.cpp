@@ -32,11 +32,17 @@ void FieldImpl::update()
 	updateWithOdometryData();
 	updateWithLidarData();
 	updateWithCameraData();
+	updateObstacles();
 }
 
-std::vector<FieldObject>& FieldImpl::getAllFieldObjects()
+const vector<FieldObject> &FieldImpl::getAllFieldObjects() const
 {
 	return m_fieldObjects;
+}
+
+const vector<Circle> &FieldImpl::getAllObstacles() const
+{
+	return m_obstacles;
 }
 
 bool FieldImpl::calibratePosition()
@@ -52,7 +58,8 @@ bool FieldImpl::calibratePosition()
 		Point newOrigin = detector.getNewOrigin();
 		transformCoordinateSystem(newOrigin, detector.getRotation());
 		cout << "Found borderstones -> System transformed." << endl;
-	} else
+	}
+	else
 		cout << "Didn't find enough borderstones." << endl;
 
 	delete &input;
@@ -79,6 +86,7 @@ void FieldImpl::updateWithLidarData()
 				continue;
 			}
 		}
+
 		FieldObject object(*i,FieldObjectColorUnknown);
 		m_fieldObjects.push_back(object);
 	}
@@ -93,7 +101,6 @@ void FieldImpl::updateWithCameraData()
 {
 	//! @todo Use Camera Data!
 	const DataAnalysis::CameraObjects &allCameraObjects = m_camera->getAllCameraObjects(*m_position);
-
 
 	if (m_fieldObjects.size() == 0 || allCameraObjects.getObjectCount() == 0)
 		return;
@@ -114,15 +121,23 @@ void FieldImpl::updateWithCameraData()
 			{
 				circle.setDiameter(0.12);
 				nextFieldObject.setCircle(circle);
-			} else if (currentObject.getColor() == FieldObjectColorGreen)
+			}
+			else if (currentObject.getColor() == FieldObjectColorGreen)
 			{
 				circle.setDiameter(0.06);
 				nextFieldObject.setCircle(circle);
 			}
 		}
-
 	}
+}
 
+void FieldImpl::updateObstacles()
+{
+	m_obstacles.clear();
+	m_obstacles.reserve(m_fieldObjects.size());
+
+	for (vector<FieldObject>::const_iterator i = m_fieldObjects.begin(); i != m_fieldObjects.end(); ++i)
+		m_obstacles.push_back(i->getCircle());
 }
 
 FieldObject &FieldImpl::getNextObjectFromPosition(Point position)

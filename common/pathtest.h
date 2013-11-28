@@ -12,9 +12,22 @@ namespace Common
 			public CPPUNIT_NS::TestFixture
 	{
 		 CPPUNIT_TEST_SUITE(PathTest);
+		 CPPUNIT_TEST(intersectsWith_circleIntersectsPathFromLeft_resultIsTrue);
+		 CPPUNIT_TEST(intersectsWith_circleIntersectsPathFromRight_resultIsTrue);
+		 CPPUNIT_TEST(intersectsWith_circleIntersectsPathFromStart_resultIsTrue);
+		 CPPUNIT_TEST(intersectsWith_circleIntersectsPathFromEnd_resultIsTrue);
+		 CPPUNIT_TEST(intersectsWith_circleIsInThePath_resultIsTrue);
+		 CPPUNIT_TEST(intersectsWith_circlePassesThePath_resultIsFalse);
 		 CPPUNIT_TEST_SUITE_END();
 
 	private:
+		 void intersectsWith_circleIntersectsPathFromLeft_resultIsTrue();
+		 void intersectsWith_circleIntersectsPathFromRight_resultIsTrue();
+		 void intersectsWith_circleIntersectsPathFromStart_resultIsTrue();
+		 void intersectsWith_circleIntersectsPathFromEnd_resultIsTrue();
+		 void intersectsWith_circleIsInThePath_resultIsTrue();
+		 void intersectsWith_circlePassesThePath_resultIsFalse();
+
 	};
 }
 }
