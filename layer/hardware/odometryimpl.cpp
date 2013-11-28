@@ -22,12 +22,17 @@ OdometryImpl::~OdometryImpl()
 
 void OdometryImpl::setCurrentPosition(const RobotPosition &position)
 {
-	Point newOwnOffset = position.getPosition() - getCurrentPosition().getPosition();
-	newOwnOffset.rotate(getCurrentPosition().getOrientation() - position.getOrientation());
+	RobotPosition globalPositionAfterPlayerOffset = getGlobalPositionAfterPlayerOffset();
+	Point currentPosition = globalPositionAfterPlayerOffset.getPosition();
+	Angle deltaAlpha = position.getOrientation() - globalPositionAfterPlayerOffset.getOrientation();
+
+	currentPosition.rotate(deltaAlpha);
+
+	Point newOwnOffset = position.getPosition() - currentPosition;
 
 	m_ownOffset.setPosition(newOwnOffset);
 
-	m_ownOffset.setOrientation( position.getOrientation() - getCurrentPosition().getOrientation());
+	m_ownOffset.setOrientation(position.getOrientation() - getCurrentPosition().getOrientation() + m_ownOffset.getOrientation());
 }
 
 OdometryImpl::OdometryImpl(const OdometryImpl &)
@@ -36,14 +41,25 @@ OdometryImpl::OdometryImpl(const OdometryImpl &)
 void OdometryImpl::operator=(const OdometryImpl &)
 { }
 
-RobotPosition OdometryImpl::getCurrentPosition()
+const RobotPosition OdometryImpl::getGlobalPositionAfterPlayerOffset() const
 {
 	Point position = Point(m_odometry->GetXPos(), m_odometry->GetYPos()) - m_playerOffset.getPosition();
+	Angle orientation = Angle(m_odometry->GetYaw()) - m_playerOffset.getOrientation();
+
 	position.rotate(Angle() - m_playerOffset.getOrientation());
 
-	position = position  + m_ownOffset.getPosition();
-	position.rotate(Angle() + m_ownOffset.getOrientation());
+	return RobotPosition(position, orientation);
+}
 
-	Angle orientation = Angle(m_odometry->GetYaw()) - m_playerOffset.getOrientation() + m_ownOffset.getOrientation();
+RobotPosition OdometryImpl::getCurrentPosition()
+{
+	RobotPosition globalPositionAfterPlayerOffset = getGlobalPositionAfterPlayerOffset();
+	Point position = globalPositionAfterPlayerOffset.getPosition();
+
+	position.rotate(m_ownOffset.getOrientation());
+	position = position  + m_ownOffset.getPosition();
+
+	Angle orientation = globalPositionAfterPlayerOffset.getOrientation();
+	orientation = orientation + m_ownOffset.getOrientation();
 	return RobotPosition(position, orientation);
 }
