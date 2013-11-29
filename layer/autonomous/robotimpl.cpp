@@ -7,6 +7,7 @@
 #include "layer/dataanalysis/odometry.h"
 #include "layer/dataanalysis/lidar.h"
 #include "common/compare.h"
+#include "common/path.h"
 #include "layer/autonomous/fieldimpl.h"
 #include <iostream>
 
@@ -20,7 +21,7 @@ RobotImpl::RobotImpl(DataAnalysis::DataAnalyser *dataAnalyser) :
 	m_dataAnalyser(dataAnalyser),
 	m_tryingToTackleObstacle(false),
 	m_cantReachTarget(false),
-	m_currentRoute(new Route(m_robotWidth)),
+	m_currentRoute(0),
 	m_state(RobotStateWaiting)
 { }
 
@@ -65,12 +66,35 @@ void RobotImpl::updateActuators(const Field &field)
 
 	if (m_state == RobotStateDriving)
 	{
-		if (m_currentRoute == 0 || m_currentRoute->intersectsWith(obstacles))
+		bool currentRouteInvalid = m_currentRoute == 0 || !m_currentRoute->isValid();
+
+		if (!currentRouteInvalid && m_currentRoute->getPointCount() > 0)
 		{
+			Path path(ownPosition.getPosition(), m_currentRoute->getFirstPoint(), m_robotWidth);
+			if (path.intersectsWith(obstacles) || m_currentRoute->intersectsWith(obstacles))
+				currentRouteInvalid = true;
+		}
+
+		if (currentRouteInvalid)
+		{
+			clearRoute();
 			m_currentRoute = new Route(m_robotWidth);
 			*m_currentRoute = router.calculateRoute(ownPosition.getPosition(), m_currentTarget);
+			currentRouteInvalid = !m_currentRoute->isValid();
 
-			if (!m_currentRoute->isValid())
+			if (!currentRouteInvalid)
+			{
+				Path path(ownPosition.getPosition(), m_currentRoute->getFirstPoint(), m_robotWidth);
+				if (path.intersectsWith(obstacles) || m_currentRoute->intersectsWith(obstacles))
+					currentRouteInvalid = true;
+			}
+
+			if (!currentRouteInvalid)
+			{
+				Point newTarget = m_currentRoute->getFirstPoint();
+				engine.goToStraight(newTarget);
+			}
+			else
 				clearRoute();
 		}
 
@@ -80,12 +104,13 @@ void RobotImpl::updateActuators(const Field &field)
 
 			if (engine.reachedTarget())
 			{
+				m_currentRoute->removeFirstPoint();
+
 				if (m_currentRoute->getPointCount() == 0)
 					stop();
 				else
 				{
 					Point newTarget = m_currentRoute->getFirstPoint();
-					m_currentRoute->removeFirstPoint();
 					engine.goToStraight(newTarget);
 				}
 			}
@@ -120,8 +145,7 @@ void RobotImpl::updateSensorData()
 {
 	m_dataAnalyser->updateSensorData();
 	DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
-
-	if (engine.reachedTarget())
+	if (engine.reachedTarget() && m_currentRoute == 0)
 		m_state = RobotStateWaiting;
 }
 
@@ -130,6 +154,7 @@ void RobotImpl::stop()
 	DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
 	engine.stop();
 	m_state = RobotStateWaiting;
+	clearRoute();
 }
 
 void RobotImpl::collectPuckInFront()
@@ -184,7 +209,7 @@ Point RobotImpl::getCurrentTarget() const
 
 bool RobotImpl::cantReachTarget() const
 {
-	return false;
+	return m_cantReachTarget;
 }
 
 bool RobotImpl::isPuckCollected() const

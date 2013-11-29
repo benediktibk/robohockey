@@ -46,3 +46,10 @@ void PathTest::intersectsWith_circlePassesThePath_resultIsFalse()
 	CPPUNIT_ASSERT(!path.intersectsWith(Circle(Point(2,2),0.1)));
 }
 
+void PathTest::intersectsWith_pathFromRightToLeftAndCircleFarAwayRight_false()
+{
+	Path path(Point(0, 0), Point(-10, 0), 0.5);
+
+	CPPUNIT_ASSERT(!path.intersectsWith(Circle(Point(10, 0), 2)));
+}
+

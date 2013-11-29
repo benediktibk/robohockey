@@ -36,7 +36,7 @@ namespace Autonomous
 		CPPUNIT_TEST(reachedTarget_nearlyHitTargetButTookSomeAdditionalWayToStop_true);
 		CPPUNIT_TEST(cantReachTarget_calledDirectAfterConstructor_false);
 		CPPUNIT_TEST(cantReachTarget_drivingTowardsTheTarget_false);
-		CPPUNIT_TEST(cantReachTarget_newTargetNotPossible_true);
+		CPPUNIT_TEST(cantReachTarget_currentTargetSuddenlyNotPossible_true);
 		CPPUNIT_TEST(cantReachTarget_notPossibleAnymoreDuringDriving_true);
 		CPPUNIT_TEST(cantReachTarget_onlyLastTargetNotPossibleToReach_false);
 		CPPUNIT_TEST(cantReachTarget_updateTwiceCalled_false);
@@ -72,7 +72,7 @@ namespace Autonomous
 		void reachedTarget_nearlyHitTargetButTookSomeAdditionalWayToStop_true();
 		void cantReachTarget_calledDirectAfterConstructor_false();
 		void cantReachTarget_drivingTowardsTheTarget_false();
-		void cantReachTarget_newTargetNotPossible_true();
+		void cantReachTarget_currentTargetSuddenlyNotPossible_true();
 		void cantReachTarget_notPossibleAnymoreDuringDriving_true();
 		void cantReachTarget_onlyLastTargetNotPossibleToReach_false();
 		void cantReachTarget_updateTwiceCalled_false();

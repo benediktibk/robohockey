@@ -2,6 +2,7 @@
 #define ROBOHOCKEY_COMMON_PATH_H
 
 #include "common/point.h"
+#include <vector>
 
 namespace  RoboHockey
 {
@@ -15,6 +16,7 @@ namespace Common
 		Path(const Point &start, const Point &end, double width);
 
 		bool intersectsWith(const Circle &circle) const;
+		bool intersectsWith(const std::vector<Circle> &circles) const;
 
 	private:
 		Point m_start;

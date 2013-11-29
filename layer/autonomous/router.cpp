@@ -13,9 +13,14 @@ Router::Router(double robotWidth, const Field &field) :
 
 Route Router::calculateRoute(const Point &/*start*/, const Point &end) const
 {
+	vector<Circle> obstacles = m_field.getAllObstacles();
 	Route route(m_robotWidth);
 	route.addPoint(end);
-	return route;
+
+	if (route.intersectsWith(obstacles))
+		return Route(m_robotWidth);
+	else
+		return route;
 }
 
 vector<Point> Router::getPointsBesideObstacle(

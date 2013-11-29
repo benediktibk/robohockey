@@ -21,6 +21,7 @@ void RobotTest::goTo_positionDifferentToCurrentOne_engineGotAtLeastOneCallToGoTo
 	RobotImpl robot(dataAnalyser);
 	FieldMock field;
 
+	robot.updateSensorData();
 	robot.goTo(Point(5, 4));
 	robot.updateActuators(field);
 
@@ -138,6 +139,7 @@ void RobotTest::updateActuators_notTryingToTackleObstacle_engineGotNoCallToStop(
 	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
 	DataAnalysis::EngineMock &engine = dataAnalyser->getEngineMock();
 	engine.setTryingToTackleObstacle(false);
+	engine.setReachedTarget(false);
 	RobotImpl robot(dataAnalyser);
 	robot.goTo(Point(10, 0));
 	FieldMock field;
@@ -302,17 +304,21 @@ void RobotTest::cantReachTarget_drivingTowardsTheTarget_false()
 	CPPUNIT_ASSERT(!robot.cantReachTarget());
 }
 
-void RobotTest::cantReachTarget_newTargetNotPossible_true()
+void RobotTest::cantReachTarget_currentTargetSuddenlyNotPossible_true()
 {
 	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
+	DataAnalysis::EngineMock &engine = dataAnalyser->getEngineMock();
+	engine.setReachedTarget(false);
 	RobotImpl robot(dataAnalyser);
 	FieldMock field;
 
+	robot.updateSensorData();
 	robot.goTo(Point(10, 0));
 	robot.updateActuators(field);
 	vector<Circle> obstacles;
 	obstacles.push_back(Circle(Point(10, 0), 2));
 	field.setObstacles(obstacles);
+	robot.updateSensorData();
 	robot.updateActuators(field);
 
 	CPPUNIT_ASSERT(robot.cantReachTarget());
@@ -321,6 +327,8 @@ void RobotTest::cantReachTarget_newTargetNotPossible_true()
 void RobotTest::cantReachTarget_notPossibleAnymoreDuringDriving_true()
 {
 	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
+	DataAnalysis::EngineMock &engine = dataAnalyser->getEngineMock();
+	engine.setReachedTarget(false);
 	RobotImpl robot(dataAnalyser);
 	FieldMock field;
 	vector<Circle> obstacles;
@@ -342,8 +350,10 @@ void RobotTest::cantReachTarget_onlyLastTargetNotPossibleToReach_false()
 	obstacles.push_back(Circle(Point(10, 0), 2));
 	field.setObstacles(obstacles);
 
+	robot.updateSensorData();
 	robot.goTo(Point(10, 0));
 	robot.updateActuators(field);
+	robot.updateSensorData();
 	robot.goTo(Point(-10, 0));
 	robot.updateActuators(field);
 

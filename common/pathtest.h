@@ -18,6 +18,7 @@ namespace Common
 		 CPPUNIT_TEST(intersectsWith_circleIntersectsPathFromEnd_resultIsTrue);
 		 CPPUNIT_TEST(intersectsWith_circleIsInThePath_resultIsTrue);
 		 CPPUNIT_TEST(intersectsWith_circlePassesThePath_resultIsFalse);
+		 CPPUNIT_TEST(intersectsWith_pathFromRightToLeftAndCircleFarAwayRight_false);
 		 CPPUNIT_TEST_SUITE_END();
 
 	private:
@@ -27,6 +28,7 @@ namespace Common
 		 void intersectsWith_circleIntersectsPathFromEnd_resultIsTrue();
 		 void intersectsWith_circleIsInThePath_resultIsTrue();
 		 void intersectsWith_circlePassesThePath_resultIsFalse();
+		 void intersectsWith_pathFromRightToLeftAndCircleFarAwayRight_false();
 
 	};
 }

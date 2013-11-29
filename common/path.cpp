@@ -4,6 +4,7 @@
 #include "common/angle.h"
 #include <math.h>
 
+using namespace std;
 using namespace RoboHockey::Common;
 
 Path::Path(const Point &start, const Point &end, double width) :
@@ -33,5 +34,13 @@ bool Path::intersectsWith(const Circle &circle) const
 		startOutline.getIntersectPoints(circle).size() + endOutline.getIntersectPoints(circle).size() != 0)
 		return true;
 
+	return false;
+}
+
+bool Path::intersectsWith(const vector<Circle> &circles) const
+{
+	for (vector<Circle>::const_iterator i = circles.begin(); i != circles.end(); ++i)
+		if (intersectsWith(*i))
+			return true;
 	return false;
 }
