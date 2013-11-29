@@ -51,6 +51,7 @@ namespace Autonomous
 		void updateTargetForEngine();
 		void updateEngine(const Field &field);
 		void detectCollisions();
+		bool enableCollisionDetectionWithSonar() const;
 
 	private:
 		// forbid copies

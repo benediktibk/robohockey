@@ -95,7 +95,7 @@ void RobotImpl::detectCollisions()
 	double speed = engine.getCurrentSpeed();
 	bool obstacleInFrontBySonar = sonar.isObstacleDirectInFront(speed);
 	bool obstacleInFrontByLidar = lidar.isObstacleInFront(speed);
-	bool lockForwardMovement = (obstacleInFrontBySonar && m_state != RobotStateCollectingPuck) || obstacleInFrontByLidar;
+	bool lockForwardMovement = (obstacleInFrontBySonar && enableCollisionDetectionWithSonar()) || obstacleInFrontByLidar;
 
 	if (lockForwardMovement)
 		engine.lockForwardMovement();
@@ -107,6 +107,26 @@ void RobotImpl::detectCollisions()
 	m_tryingToTackleObstacle = engine.tryingToTackleObstacle();
 	if (m_tryingToTackleObstacle)
 		stop();
+}
+
+bool RobotImpl::enableCollisionDetectionWithSonar() const
+{
+	bool result;
+
+	switch(m_state)
+	{
+	case RobotStateCollectingPuck:
+		result = false;
+		break;
+	case RobotStateDriving:
+	case RobotStateLeavingPuck:
+	case RobotStateTurning:
+	case RobotStateWaiting:
+		result = true;
+		break;
+	}
+
+	return result;
 }
 
 void RobotImpl::updateActuators(const Field &field)
