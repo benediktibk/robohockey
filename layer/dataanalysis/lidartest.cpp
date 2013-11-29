@@ -615,9 +615,8 @@ void LidarTest::isPuckCollectable_puckCollected_true()
 
 void LidarTest::isPuckCollectable_puckStraightAheadCloseEnough_true()
 {
-	CPPUNIT_ASSERT(false); // test data missing
 	Hardware::LidarMock hardwareLidar;
-	hardwareLidar.readSensorDataFromFile("resources/testfiles/lidar_.txt");
+	hardwareLidar.readSensorDataFromFile("resources/testfiles/lidar_26.txt");
 	LidarImpl lidar(hardwareLidar);
 	lidar.updateSensorData();
 
@@ -626,9 +625,8 @@ void LidarTest::isPuckCollectable_puckStraightAheadCloseEnough_true()
 
 void LidarTest::isPuckCollectable_puckStraightAheadButTooDistant_false()
 {
-	CPPUNIT_ASSERT(false); // test data missing
 	Hardware::LidarMock hardwareLidar;
-	hardwareLidar.readSensorDataFromFile("resources/testfiles/lidar_.txt");
+	hardwareLidar.readSensorDataFromFile("resources/testfiles/lidar_27.txt");
 	LidarImpl lidar(hardwareLidar);
 	lidar.updateSensorData();
 
@@ -637,9 +635,8 @@ void LidarTest::isPuckCollectable_puckStraightAheadButTooDistant_false()
 
 void LidarTest::isPuckCollectable_puckCloseAndALittleBitLeft_true()
 {
-	CPPUNIT_ASSERT(false); // test data missing
 	Hardware::LidarMock hardwareLidar;
-	hardwareLidar.readSensorDataFromFile("resources/testfiles/lidar_.txt");
+	hardwareLidar.readSensorDataFromFile("resources/testfiles/lidar_28.txt");
 	LidarImpl lidar(hardwareLidar);
 	lidar.updateSensorData();
 
@@ -648,9 +645,8 @@ void LidarTest::isPuckCollectable_puckCloseAndALittleBitLeft_true()
 
 void LidarTest::isPuckCollectable_puckCloseAndALittleBitRight_true()
 {
-	CPPUNIT_ASSERT(false); // test data missing
 	Hardware::LidarMock hardwareLidar;
-	hardwareLidar.readSensorDataFromFile("resources/testfiles/lidar_.txt");
+	hardwareLidar.readSensorDataFromFile("resources/testfiles/lidar_29.txt");
 	LidarImpl lidar(hardwareLidar);
 	lidar.updateSensorData();
 
@@ -659,9 +655,8 @@ void LidarTest::isPuckCollectable_puckCloseAndALittleBitRight_true()
 
 void LidarTest::isPuckCollectable_puckCloseButTooMuchLeft_false()
 {
-	CPPUNIT_ASSERT(false); // test data missing
 	Hardware::LidarMock hardwareLidar;
-	hardwareLidar.readSensorDataFromFile("resources/testfiles/lidar_.txt");
+	hardwareLidar.readSensorDataFromFile("resources/testfiles/lidar_30.txt");
 	LidarImpl lidar(hardwareLidar);
 	lidar.updateSensorData();
 
@@ -670,9 +665,8 @@ void LidarTest::isPuckCollectable_puckCloseButTooMuchLeft_false()
 
 void LidarTest::isPuckCollectable_puckCloseButTooMuchRight_false()
 {
-	CPPUNIT_ASSERT(false); // test data missing
 	Hardware::LidarMock hardwareLidar;
-	hardwareLidar.readSensorDataFromFile("resources/testfiles/lidar_.txt");
+	hardwareLidar.readSensorDataFromFile("resources/testfiles/lidar_31.txt");
 	LidarImpl lidar(hardwareLidar);
 	lidar.updateSensorData();
 
