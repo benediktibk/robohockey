@@ -52,9 +52,13 @@ double Route::getWidth() const
 
 bool Route::intersectsWith(const vector<Circle> &objects) const
 {
-	for(list<Point>::const_iterator k = m_points.begin(); k != m_points.end(); ++k)
+	list<Point>::const_iterator pointsEnd = m_points.end();
+	--pointsEnd;
+	for(list<Point>::const_iterator k = m_points.begin(); k != pointsEnd; ++k)
 	{
-		Path currentPath(*k,*k++, m_width);
+		list<Point>::const_iterator nextElement = k;
+		++nextElement;
+		Path currentPath(*k,*nextElement, m_width);
 		for(vector<Circle>::const_iterator i = objects.begin(); i != objects.end(); ++i)
 		{
 			if(currentPath.intersectsWith(*i))
