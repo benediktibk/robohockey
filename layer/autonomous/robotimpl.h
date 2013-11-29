@@ -50,6 +50,7 @@ namespace Autonomous
 		void goToFirstPointOfRoute();
 		void updateTargetForEngine();
 		void updateEngine(const Field &field);
+		void detectCollisions();
 
 	private:
 		// forbid copies

@@ -87,10 +87,8 @@ void RobotImpl::updateEngine(const Field &field)
 	}
 }
 
-void RobotImpl::updateActuators(const Field &field)
+void RobotImpl::detectCollisions()
 {
-	updateEngine(field);
-
 	DataAnalysis::Sonar &sonar = m_dataAnalyser->getSonar();
 	const DataAnalysis::Lidar &lidar = m_dataAnalyser->getLidar();
 	DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
@@ -109,6 +107,12 @@ void RobotImpl::updateActuators(const Field &field)
 	m_tryingToTackleObstacle = engine.tryingToTackleObstacle();
 	if (m_tryingToTackleObstacle)
 		stop();
+}
+
+void RobotImpl::updateActuators(const Field &field)
+{
+	updateEngine(field);
+	detectCollisions();
 }
 
 void RobotImpl::updateSensorData()
