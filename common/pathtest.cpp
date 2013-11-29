@@ -8,28 +8,28 @@ void PathTest::intersectsWith_circleIntersectsPathFromLeft_resultIsTrue()
 {
 	Path path(Point(0,0), Point(3,0), 0.4);
 
-	CPPUNIT_ASSERT(path.intersectsWith(Circle(Point(1.5,0.5),0.3)));
+	CPPUNIT_ASSERT(path.intersectsWith(Circle(Point(1.5,0.3),0.3)));
 }
 
 void PathTest::intersectsWith_circleIntersectsPathFromRight_resultIsTrue()
 {
 	Path path(Point(0,0), Point(3,0), 0.4);
 
-	CPPUNIT_ASSERT(path.intersectsWith(Circle(Point(1.5,-0.5),0.3)));
+	CPPUNIT_ASSERT(path.intersectsWith(Circle(Point(1.5,-0.3),0.3)));
 }
 
 void PathTest::intersectsWith_circleIntersectsPathFromStart_resultIsTrue()
 {
 	Path path(Point(0,0), Point(3,0), 0.4);
 
-	CPPUNIT_ASSERT(path.intersectsWith(Circle(Point(-0.1,0),0.3)));
+	CPPUNIT_ASSERT(path.intersectsWith(Circle(Point(-0.3,0),0.3)));
 }
 
 void PathTest::intersectsWith_circleIntersectsPathFromEnd_resultIsTrue()
 {
 	Path path(Point(0,0), Point(3,0), 0.4);
 
-	CPPUNIT_ASSERT(path.intersectsWith(Circle(Point(3.1,0),0.3)));
+	CPPUNIT_ASSERT(path.intersectsWith(Circle(Point(3.3,0),0.3)));
 }
 
 void PathTest::intersectsWith_circleIsInThePath_resultIsTrue()

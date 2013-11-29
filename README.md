@@ -1,4 +1,4 @@
-Marvin  {#mainpage}
+Marvin
 ====================
 
 C++ Project, Group 0, WS2013/14

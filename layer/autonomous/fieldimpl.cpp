@@ -99,7 +99,6 @@ void FieldImpl::updateWithOdometryData()
 
 void FieldImpl::updateWithCameraData()
 {
-	//! @todo Use Camera Data!
 	const DataAnalysis::CameraObjects &allCameraObjects = m_camera->getAllCameraObjects(*m_position);
 
 	if (m_fieldObjects.size() == 0 || allCameraObjects.getObjectCount() == 0)
@@ -142,7 +141,6 @@ void FieldImpl::updateObstacles()
 
 FieldObject &FieldImpl::getNextObjectFromPosition(Point position)
 {
-	//! @todo Test!
 	FieldObject &nextFieldObject = m_fieldObjects.front();
 	for (vector<FieldObject>::iterator i = m_fieldObjects.begin(); i != m_fieldObjects.end(); ++i)
 	{
@@ -194,8 +192,6 @@ void FieldImpl::transformCoordinateSystem(Point &newOrigin, double rotation)
 
 void FieldImpl::moveCoordinateSystem(Point &newOrigin)
 {
-	//! @todo test and implement movement of coordinate system
-
 	vector<FieldObject> newSystem;
 
 	for (vector<FieldObject>::iterator i = m_fieldObjects.begin(); i != m_fieldObjects.end(); ++i)
@@ -221,8 +217,6 @@ void FieldImpl::moveCoordinateSystem(Point &newOrigin)
 
 void FieldImpl::rotateCoordinateSystem(double alpha)
 {
-	//! @todo test and implement rotation of coordinate system
-
 	vector<FieldObject> newSystem;
 
 	for (vector<FieldObject>::iterator i = m_fieldObjects.begin(); i != m_fieldObjects.end(); ++i)
@@ -253,18 +247,17 @@ void FieldImpl::rotateCoordinateSystem(double alpha)
 
 }
 
-std::vector<Point> &FieldImpl::getPointsOfObjectsWithDiameterAndColor(double , FieldObjectColor )
+std::vector<Point> &FieldImpl::getPointsOfObjectsWithDiameterAndColor(double diameter, FieldObjectColor color)
 {
 	vector<Point> *resultObjects = new vector<Point>;
 
-	Compare compare(0.02);
+	Compare compare(0.04);
 	for (vector<FieldObject>::iterator i = m_fieldObjects.begin(); i != m_fieldObjects.end(); ++i)
 	{
-//! Deactivated Filter! -> Returns Positions of all Objects!
-//		if (compare.isFuzzyEqual(((*i).getCircle()).getDiameter(), diameter) && ((*i).getColor() == color || (*i).getColor() == FieldObjectColorUnknown))
-//		{
+		if (compare.isFuzzyEqual(((*i).getCircle()).getDiameter(), diameter) && ((*i).getColor() == color || (*i).getColor() == FieldObjectColorUnknown))
+		{
 			resultObjects->push_back(((*i).getCircle()).getCenter());
-//		}
+		}
 	}
 
 	return *resultObjects;

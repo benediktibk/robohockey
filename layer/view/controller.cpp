@@ -56,6 +56,8 @@ Controller::Controller(Model &model) :
 
 	m_triangle = m_scene->addPolygon(triangle);
 
+//	m_scene->addRect(m_triangle->boundingRect());
+
 	m_graph->setScene(m_scene);
 	m_graph->setSceneRect(0, 0, 4, 6);
 	m_graph->resize(900, 600);
@@ -257,7 +259,7 @@ void Controller::updateObjects()
 	const Point &position = robotPosition.getPosition();
 	double positionX = position.getX() * m_pixelPerMeter - 0.5 * m_pixelPerMeter * m_robotDiameter;
 	double positionY = position.getY() * m_pixelPerMeter - 0.5 * m_pixelPerMeter * m_robotDiameter;
-	m_triangle->setPos(positionX + 0.225 * m_pixelPerMeter, -1.0 * positionY - 0.175 * m_pixelPerMeter);
+	m_triangle->setPos(positionX + 0.25 * m_pixelPerMeter, -1.0 * positionY - 0.25 * m_pixelPerMeter);
 	m_triangle->setRotation(-1.0 * 360 * robotPosition.getOrientation().getValueBetweenMinusPiAndPi() / (2 * M_PI));
 	m_triangle->setBrush(Qt::blue);
 }

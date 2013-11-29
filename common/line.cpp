@@ -2,6 +2,7 @@
 #include "common/circle.h"
 #include "common/angle.h"
 #include <math.h>
+#include "common/compare.h"
 
 using namespace RoboHockey::Common;
 using namespace std;
@@ -18,8 +19,9 @@ vector<Point> Line::getIntersectPoints(const Circle &circle) const
 	vector<Point> intersetPoints;
 	Angle angleForVerticalLines;
 	double gradient;
+	Compare compare(0.001);
 
-	if(end.getX() - start.getX() == 0)
+	if(compare.isFuzzyEqual(end.getX(), start.getX()))
 	{
 		gradient = 0;
 		angleForVerticalLines = Angle::getHalfRotation() + Angle::getQuarterRotation();
