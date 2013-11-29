@@ -75,16 +75,7 @@ void RobotImpl::updateActuators(const Field &field)
 		else
 		{
 			m_cantReachTarget = false;
-
-			if (engine.reachedTarget())
-			{
-				m_currentRoute->removeFirstPoint();
-
-				if (m_currentRoute->getPointCount() == 0)
-					stop();
-				else
-					goToFirstPointOfRoute();
-			}
+			updateTargetForEngine();
 		}
 	}
 	else
@@ -236,6 +227,21 @@ void RobotImpl::goToFirstPointOfRoute()
 	DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
 	Point target = m_currentRoute->getFirstPoint();
 	engine.goToStraight(target);
+}
+
+void RobotImpl::updateTargetForEngine()
+{
+	DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
+
+	if (engine.reachedTarget())
+	{
+		m_currentRoute->removeFirstPoint();
+
+		if (m_currentRoute->getPointCount() == 0)
+			stop();
+		else
+			goToFirstPointOfRoute();
+	}
 }
 
 RobotImpl::RobotImpl(const RobotImpl &) :
