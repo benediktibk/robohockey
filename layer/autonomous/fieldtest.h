@@ -29,6 +29,7 @@ namespace Autonomous
 		CPPUNIT_TEST(tryToDetectField_validPattern_transformed);
 		CPPUNIT_TEST(tryToDetectField_validPattern_correctNumberOfFieldObjects);
 		CPPUNIT_TEST(tryToDetectField_validPattern_correctTransformation);
+		CPPUNIT_TEST(tryToDetectField_realWorldExample_positionIsCorrect);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
@@ -47,6 +48,7 @@ namespace Autonomous
 		void tryToDetectField_validPattern_transformed();
 		void tryToDetectField_validPattern_correctNumberOfFieldObjects();
 		void tryToDetectField_validPattern_correctTransformation();
+		void tryToDetectField_realWorldExample_positionIsCorrect();
 	};
 }
 }

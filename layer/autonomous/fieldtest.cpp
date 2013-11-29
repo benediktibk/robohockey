@@ -3,9 +3,12 @@
 #include "layer/dataanalysis/odometrymock.h"
 #include "layer/dataanalysis/lidarmock.h"
 #include "layer/dataanalysis/cameramock.h"
+#include "layer/dataanalysis/dataanalyserimpl.h"
+#include "layer/hardware/robotmock.h"
 #include "common/compare.h"
 
 using namespace RoboHockey::Common;
+using namespace RoboHockey::Layer;
 using namespace RoboHockey::Layer::Autonomous;
 using namespace std;
 
@@ -312,4 +315,21 @@ void FieldTest::tryToDetectField_validPattern_correctTransformation()
 	result = result && compare.isFuzzyEqual(fieldObjects.at(3).getCircle().getCenter(), Point(4.582, 0));
 
 	CPPUNIT_ASSERT(result);
+}
+
+void FieldTest::tryToDetectField_realWorldExample_positionIsCorrect()
+{
+	Hardware::RobotMock *hardwareRobot = new Hardware::RobotMock();
+	DataAnalysis::DataAnalyserImpl dataAnalyser(hardwareRobot);
+	FieldImpl field(dataAnalyser.getOdometry(), dataAnalyser.getLidar(), dataAnalyser.getCamera());
+	Hardware::OdometryMock &odometry = hardwareRobot->getOdometryMock();
+	Hardware::LidarMock &lidar = hardwareRobot->getLidarMock();
+	lidar.readSensorDataFromFile("resources/testfiles/lidar_35.txt");
+
+	field.update();
+	field.calibratePosition();
+
+	Compare compare(0.5);
+	RobotPosition position = odometry.getCurrentPosition();
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(2.5, 1.5), position));
 }
