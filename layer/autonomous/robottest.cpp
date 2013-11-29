@@ -2,6 +2,8 @@
 #include "layer/autonomous/robotimpl.h"
 #include "layer/autonomous/fieldmock.h"
 #include "layer/dataanalysis/dataanalysermock.h"
+#include "layer/dataanalysis/dataanalyserimpl.h"
+#include "layer/hardware/robotmock.h"
 #include "common/compare.h"
 #include "common/robotposition.h"
 
@@ -402,4 +404,62 @@ void RobotTest::isPuckCollectable_lidarSaysYes_true()
 	RobotImpl robot(dataAnalyser);
 
 	CPPUNIT_ASSERT(robot.isPuckCollectable());
+}
+
+void RobotTest::collectPuckInFront_puckAhead_notStuckAtObstacle()
+{
+	Hardware::RobotMock *hardwareRobot = new Hardware::RobotMock();
+	DataAnalysis::DataAnalyser *dataAnalyser = new DataAnalysis::DataAnalyserImpl(hardwareRobot);
+	Hardware::LidarMock &lidar = hardwareRobot->getLidarMock();
+	Hardware::SonarMock &sonar = hardwareRobot->getSonarMock();
+	lidar.readSensorDataFromFile("resources/testfiles/lidar_34.txt");
+	sonar.readSensorDataFromFile("resources/testfiles/sonar_3.txt");
+	RobotImpl robot(dataAnalyser);
+	FieldMock field;
+
+	robot.updateSensorData();
+	robot.collectPuckInFront();
+	robot.updateActuators(field);
+
+	CPPUNIT_ASSERT(!robot.stuckAtObstacle());
+}
+
+void RobotTest::collectPuckInFront_puckAheadAndStartedToMove_notStuckAtObstacle()
+{
+	Hardware::RobotMock *hardwareRobot = new Hardware::RobotMock();
+	DataAnalysis::DataAnalyser *dataAnalyser = new DataAnalysis::DataAnalyserImpl(hardwareRobot);
+	Hardware::LidarMock &lidar = hardwareRobot->getLidarMock();
+	Hardware::SonarMock &sonar = hardwareRobot->getSonarMock();
+	lidar.readSensorDataFromFile("resources/testfiles/lidar_34.txt");
+	sonar.readSensorDataFromFile("resources/testfiles/sonar_3.txt");
+	RobotImpl robot(dataAnalyser);
+	FieldMock field;
+
+	robot.updateSensorData();
+	robot.collectPuckInFront();
+	robot.updateActuators(field);
+	robot.updateSensorData();
+	robot.updateActuators(field);
+
+	CPPUNIT_ASSERT(!robot.stuckAtObstacle());
+}
+
+void RobotTest::collectPuckInFront_puckAheadAndAlreadyUpdatedTheEngine_notStuckAtObstacle()
+{
+	Hardware::RobotMock *hardwareRobot = new Hardware::RobotMock();
+	DataAnalysis::DataAnalyser *dataAnalyser = new DataAnalysis::DataAnalyserImpl(hardwareRobot);
+	Hardware::LidarMock &lidar = hardwareRobot->getLidarMock();
+	Hardware::SonarMock &sonar = hardwareRobot->getSonarMock();
+	lidar.readSensorDataFromFile("resources/testfiles/lidar_34.txt");
+	sonar.readSensorDataFromFile("resources/testfiles/sonar_3.txt");
+	RobotImpl robot(dataAnalyser);
+	FieldMock field;
+
+	robot.updateSensorData();
+	robot.updateActuators(field);
+	robot.updateSensorData();
+	robot.collectPuckInFront();
+	robot.updateActuators(field);
+
+	CPPUNIT_ASSERT(!robot.stuckAtObstacle());
 }

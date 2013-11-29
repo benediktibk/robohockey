@@ -63,46 +63,53 @@ void RobotImpl::updateActuators(const Field &field)
 	DataAnalysis::Odometry &odometry = m_dataAnalyser->getOdometry();
 	RobotPosition ownPosition = odometry.getCurrentPosition();
 
-	if (m_currentRoute == 0 || m_currentRoute->intersectsWith(obstacles))
+	if (m_state == RobotStateDriving)
 	{
-		m_currentRoute = new Route(m_robotWidth);
-		*m_currentRoute = router.calculateRoute(ownPosition.getPosition(), m_currentTarget);
-
-		if (!m_currentRoute->isValid())
-			clearRoute();
-	}
-
-	if (m_currentRoute != 0)
-	{
-		m_cantReachTarget = false;
-
-		if (engine.reachedTarget())
+		if (m_currentRoute == 0 || m_currentRoute->intersectsWith(obstacles))
 		{
-			if (m_currentRoute->getPointCount() == 0)
-				stop();
-			else
+			m_currentRoute = new Route(m_robotWidth);
+			*m_currentRoute = router.calculateRoute(ownPosition.getPosition(), m_currentTarget);
+
+			if (!m_currentRoute->isValid())
+				clearRoute();
+		}
+
+		if (m_currentRoute != 0)
+		{
+			m_cantReachTarget = false;
+
+			if (engine.reachedTarget())
 			{
-				Point newTarget = m_currentRoute->getFirstPoint();
-				m_currentRoute->removeFirstPoint();
-				engine.goToStraight(newTarget);
+				if (m_currentRoute->getPointCount() == 0)
+					stop();
+				else
+				{
+					Point newTarget = m_currentRoute->getFirstPoint();
+					m_currentRoute->removeFirstPoint();
+					engine.goToStraight(newTarget);
+				}
 			}
 		}
-	}
-	else
-	{
-		m_cantReachTarget = true;
-		stop();
+		else
+		{
+			m_cantReachTarget = true;
+			stop();
+		}
 	}
 
 	DataAnalysis::Sonar &sonar = m_dataAnalyser->getSonar();
 	const DataAnalysis::Lidar &lidar = m_dataAnalyser->getLidar();
-	m_dataAnalyser->updateActuators();
 	double speed = engine.getCurrentSpeed();
+	bool obstacleInFrontBySonar = sonar.isObstacleDirectInFront(speed);
+	bool obstacleInFrontByLidar = lidar.isObstacleInFront(speed);
+	bool lockForwardMovement = (obstacleInFrontBySonar && m_state != RobotStateCollectingPuck) || obstacleInFrontByLidar;
 
-	if ((sonar.isObstacleDirectInFront(speed) && m_state != RobotStateCollectingPuck) || lidar.isObstacleInFront(speed))
+	if (lockForwardMovement)
 		engine.lockForwardMovement();
 	else
 		engine.unlockForwardMovement();
+
+	m_dataAnalyser->updateActuators();
 
 	m_tryingToTackleObstacle = engine.tryingToTackleObstacle();
 	if (m_tryingToTackleObstacle)
@@ -112,6 +119,10 @@ void RobotImpl::updateActuators(const Field &field)
 void RobotImpl::updateSensorData()
 {
 	m_dataAnalyser->updateSensorData();
+	DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
+
+	if (engine.reachedTarget())
+		m_state = RobotStateWaiting;
 }
 
 void RobotImpl::stop()

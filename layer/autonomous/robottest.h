@@ -44,6 +44,9 @@ namespace Autonomous
 		CPPUNIT_TEST(isPuckCollected_lidarSaysYes_true);
 		CPPUNIT_TEST(isPuckCollectable_lidarSaysNo_false);
 		CPPUNIT_TEST(isPuckCollectable_lidarSaysYes_true);
+		CPPUNIT_TEST(collectPuckInFront_puckAhead_notStuckAtObstacle);
+		CPPUNIT_TEST(collectPuckInFront_puckAheadAndStartedToMove_notStuckAtObstacle);
+		CPPUNIT_TEST(collectPuckInFront_puckAheadAndAlreadyUpdatedTheEngine_notStuckAtObstacle);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
@@ -77,6 +80,9 @@ namespace Autonomous
 		void isPuckCollected_lidarSaysYes_true();
 		void isPuckCollectable_lidarSaysNo_false();
 		void isPuckCollectable_lidarSaysYes_true();
+		void collectPuckInFront_puckAhead_notStuckAtObstacle();
+		void collectPuckInFront_puckAheadAndStartedToMove_notStuckAtObstacle();
+		void collectPuckInFront_puckAheadAndAlreadyUpdatedTheEngine_notStuckAtObstacle();
 	};
 }
 }
