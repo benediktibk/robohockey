@@ -121,6 +121,8 @@ void RobotImpl::updateActuators(const Field &field)
 			stop();
 		}
 	}
+	else
+		m_cantReachTarget = false;
 
 	DataAnalysis::Sonar &sonar = m_dataAnalyser->getSonar();
 	const DataAnalysis::Lidar &lidar = m_dataAnalyser->getLidar();
