@@ -69,13 +69,21 @@ void EngineImpl::updateSpeedAndRotation()
 {
 	switch(m_engineState)
 	{
-	case EngineStateStopped: updateSpeedAndRotationForStopped(); break;
-	case EngineStateDriving: updateSpeedAndRotationForDriving(); break;
-	case EngineStateDrivingSlowly: updateSpeedAndRotationForDriving(); break;
-	case EngineStateDrivingThrough: updateSpeedAndRotationForDriving(); break;
-	case EngineStateDrivingSlowlyBack: updateSpeedAndRotationForDriving(); break;
-	case EngineStateTurnAround: updateSpeedAndRotationForTurnAround(); break;
-	case EngineStateRotating: updateSpeedAndRotationForRotating(); break;
+	case EngineStateStopped:
+		updateSpeedAndRotationForStopped();
+		break;
+	case EngineStateDriving:
+	case EngineStateDrivingSlowly:
+	case EngineStateDrivingThrough:
+	case EngineStateDrivingSlowlyBack:
+		updateSpeedAndRotationForDriving();
+		break;
+	case EngineStateTurnAround:
+		updateSpeedAndRotationForTurnAround();
+		break;
+	case EngineStateRotating:
+		updateSpeedAndRotationForRotating();
+		break;
 	}
 }
 

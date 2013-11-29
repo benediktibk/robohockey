@@ -169,7 +169,7 @@ void RobotImpl::leaveCollectedPuck()
 	DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
 	RobotPosition ownPosition = getCurrentPosition();
 
-	Point puck(-0.2,0);
+	Point puck(-0.2, 0);
 	puck.rotate(ownPosition.getOrientation());
 	Point targetPosition = ownPosition.getPosition() + puck;
 

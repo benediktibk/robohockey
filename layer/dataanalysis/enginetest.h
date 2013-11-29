@@ -50,6 +50,8 @@ namespace DataAnalysis
 		CPPUNIT_TEST(goToStraightThrough_TargetAlmostReachedAfterSomeTime_lastMagnitudeIs0p5);
 		CPPUNIT_TEST(goToStraightSlowlyBack_currentPositionDifferentToTarget_atLeastOneCallToSetSpeed);
 		CPPUNIT_TEST(goToStraightSlowlyBack_TargetPassedAfterSomeTime_lastMagnitudeIs0);
+		CPPUNIT_TEST(goToStraightSlowlyBack_forwardMovementLocked_lastMagnitudeIsSmallerThanZero);
+		CPPUNIT_TEST(goToStraightSlowlyBack_forwardMovementLocked_notTryingToTackleObstacle);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
@@ -89,6 +91,8 @@ namespace DataAnalysis
 		void goToStraightThrough_TargetAlmostReachedAfterSomeTime_lastMagnitudeIs0p5();
 		void goToStraightSlowlyBack_currentPositionDifferentToTarget_atLeastOneCallToSetSpeed();
 		void goToStraightSlowlyBack_TargetPassedAfterSomeTime_lastMagnitudeIs0();
+		void goToStraightSlowlyBack_forwardMovementLocked_lastMagnitudeIsSmallerThanZero();
+		void goToStraightSlowlyBack_forwardMovementLocked_notTryingToTackleObstacle();
 	};
 }
 }

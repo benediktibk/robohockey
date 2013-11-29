@@ -542,5 +542,32 @@ void EngineTest::goToStraightSlowlyBack_TargetPassedAfterSomeTime_lastMagnitudeI
 	engine.updateSpeedAndRotation();
 
 	CPPUNIT_ASSERT_EQUAL(0.0, hardwareEngine.getLastMagnitude());
+}
 
+void EngineTest::goToStraightSlowlyBack_forwardMovementLocked_lastMagnitudeIsSmallerThanZero()
+{
+	Hardware::EngineMock hardwareEngine;
+	Hardware::OdometryMock hardwareOdometry;
+	EngineImpl engine(hardwareEngine, hardwareOdometry);
+	hardwareOdometry.setCurrentPosition(RobotPosition(Point(0, 0), 0));
+
+	engine.goToStraightSlowlyBack(Point(-1, 0));
+	engine.lockForwardMovement();
+	engine.updateSpeedAndRotation();
+
+	CPPUNIT_ASSERT(hardwareEngine.getLastMagnitude() < 0);
+}
+
+void EngineTest::goToStraightSlowlyBack_forwardMovementLocked_notTryingToTackleObstacle()
+{
+	Hardware::EngineMock hardwareEngine;
+	Hardware::OdometryMock hardwareOdometry;
+	EngineImpl engine(hardwareEngine, hardwareOdometry);
+	hardwareOdometry.setCurrentPosition(RobotPosition(Point(0, 0), 0));
+
+	engine.goToStraightSlowlyBack(Point(-1, 0));
+	engine.lockForwardMovement();
+	engine.updateSpeedAndRotation();
+
+	CPPUNIT_ASSERT(!engine.tryingToTackleObstacle());
 }
