@@ -62,8 +62,9 @@ void RobotImpl::updateActuators(const Field &field)
 	DataAnalysis::Odometry &odometry = m_dataAnalyser->getOdometry();
 	RobotPosition ownPosition = odometry.getCurrentPosition();
 
-	if (m_state == RobotStateDriving)
+	switch(m_state)
 	{
+	case RobotStateDriving:
 		updateRoute(ownPosition.getPosition(), field);
 
 		//! If there is no route at this point we can't reach the target.
@@ -77,9 +78,14 @@ void RobotImpl::updateActuators(const Field &field)
 			m_cantReachTarget = false;
 			updateTargetForEngine();
 		}
-	}
-	else
+		break;
+	case RobotStateWaiting:
+	case RobotStateCollectingPuck:
+	case RobotStateLeavingPuck:
+	case RobotStateTurning:
 		m_cantReachTarget = false;
+		break;
+	}
 
 	DataAnalysis::Sonar &sonar = m_dataAnalyser->getSonar();
 	const DataAnalysis::Lidar &lidar = m_dataAnalyser->getLidar();
