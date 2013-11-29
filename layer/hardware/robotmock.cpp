@@ -85,3 +85,13 @@ OdometryMock &RobotMock::getOdometryMock()
 {
 	return m_odometry;
 }
+
+LidarMock &RobotMock::getLidarMock()
+{
+	return m_lidar;
+}
+
+SonarMock &RobotMock::getSonarMock()
+{
+	return m_sonar;
+}

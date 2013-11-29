@@ -111,6 +111,44 @@ void LidarImpl::updateSensorData()
 	}
 }
 
+bool LidarImpl::isPuckCollectable() const
+{
+	const double maximumDistanceToPuck = 0.5;
+	const double maximumAngleToPuck = 10.0/180*M_PI;
+	list<LidarInternalObject*> candidatesForPuckByDistance = getObjectsCloserThan(maximumDistanceToPuck);
+	vector<LidarInternalObject*> candidatesForPuckByAngleAndDistance;
+
+	candidatesForPuckByAngleAndDistance.reserve(candidatesForPuckByDistance.size());
+	for (list<LidarInternalObject*>::const_iterator i = candidatesForPuckByDistance.begin(); i != candidatesForPuckByDistance.end(); ++i)
+	{
+		LidarInternalObject *object = *i;
+		Angle objectAngle = object->getOrientationRelativeToRobot();
+		if (fabs(objectAngle.getValueBetweenMinusPiAndPi()) < maximumAngleToPuck)
+			candidatesForPuckByAngleAndDistance.push_back(object);
+	}
+
+	return candidatesForPuckByAngleAndDistance.size() > 0;
+}
+
+bool LidarImpl::isPuckCollected() const
+{
+	const double maximumDistanceToPuck = 0.197;
+	const double maximumAngleToPuck = 5.0/180*M_PI;
+	list<LidarInternalObject*> candidatesForPuckByDistance = getObjectsCloserThan(maximumDistanceToPuck);
+	vector<LidarInternalObject*> candidatesForPuckByAngleAndDistance;
+
+	candidatesForPuckByAngleAndDistance.reserve(candidatesForPuckByDistance.size());
+	for (list<LidarInternalObject*>::const_iterator i = candidatesForPuckByDistance.begin(); i != candidatesForPuckByDistance.end(); ++i)
+	{
+		LidarInternalObject *object = *i;
+		Angle objectAngle = object->getOrientationRelativeToRobot();
+		if (fabs(objectAngle.getValueBetweenMinusPiAndPi()) < maximumAngleToPuck)
+			candidatesForPuckByAngleAndDistance.push_back(object);
+	}
+
+	return candidatesForPuckByAngleAndDistance.size() == 1;
+}
+
 list<pair<int, int> > LidarImpl::findStartAndEndOfObjects(
 		const list<int> &positiveEdges, const list<int> &negativeEdges) const
 {
@@ -192,6 +230,20 @@ void LidarImpl::clearInternalObjects()
 	for (vector<LidarInternalObject*>::iterator i = m_objects.begin(); i != m_objects.end(); ++i)
 		delete *i;
 	m_objects.clear();
+}
+
+list<LidarInternalObject*> LidarImpl::getObjectsCloserThan(double distance) const
+{
+	list<LidarInternalObject*> result;
+
+	for (vector<LidarInternalObject*>::const_iterator i = m_objects.begin(); i != m_objects.end(); ++i)
+	{
+		LidarInternalObject *object = *i;
+		if (object->getDistance() < distance)
+			result.push_back(object);
+	}
+
+	return result;
 }
 
 list<int> LidarImpl::replaceFollowingEdgesWithBiggestMagnitudePosition(const list<int> &edges, const DiscreteFunction &edgeFunction)

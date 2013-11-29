@@ -37,6 +37,8 @@ namespace Autonomous
 		virtual Common::RobotPosition getCurrentPosition() = 0;
 		virtual Common::Point getCurrentTarget() const = 0;
 		virtual bool cantReachTarget() const = 0;
+		virtual bool isPuckCollected() const = 0;
+		virtual bool isPuckCollectable() const = 0;
 	};
 }
 }

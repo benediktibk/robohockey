@@ -37,6 +37,8 @@ namespace DataAnalysis
 		virtual LidarObjects getAllObjects(const Common::RobotPosition &ownPosition) const;
 		virtual bool isObstacleInFront(double speed) const;
 		virtual void updateSensorData();
+		virtual bool isPuckCollectable() const;
+		virtual bool isPuckCollected() const;
 
 	private:
 		std::list<std::pair<int, int> > findStartAndEndOfObjects(
@@ -45,6 +47,7 @@ namespace DataAnalysis
 		Common::Angle calculateOrientationFromSensorNumber(unsigned int value) const;
 		double calculateMinimumDistanceToObstacle(const Common::Angle &angle, double speed) const;
 		void clearInternalObjects();
+		std::list<LidarInternalObject*> getObjectsCloserThan(double distance) const;
 
 	private:
 		static std::list<int> replaceFollowingEdgesWithBiggestMagnitudePosition(const std::list<int> &edges, const Common::DiscreteFunction &edgeFunction);

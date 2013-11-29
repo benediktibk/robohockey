@@ -15,14 +15,16 @@ Model::Model() :
 	m_collectPuck(false),
 	m_calibratePosition(false),
 	m_leavePuck(false),
-	m_cantReachTarget(false)
+	m_cantReachTarget(false),
+	m_isPuckCollected(false),
+	m_isPuckCollectable(false)
 {}
 
 void Model::setData(
 		const vector<FieldObject> &fieldObjects,
 		bool stuckAtObstacle, bool reachedTarget,
 		const RobotPosition &currentPosition, const Point &currentTarget,
-		bool isMoving, bool cantReachTarget)
+		bool isMoving, bool cantReachTarget, bool isPuckCollected, bool isPuckCollectable)
 {
 	m_fieldObjects = fieldObjects;
 	m_stuckAtObstacle = stuckAtObstacle;
@@ -31,6 +33,8 @@ void Model::setData(
 	m_currentTarget = currentTarget;
 	m_isMoving = isMoving;
 	m_cantReachTarget = cantReachTarget;
+	m_isPuckCollected = isPuckCollected;
+	m_isPuckCollectable = isPuckCollectable;
 
 	emit robotDataChanged();
 }
@@ -149,6 +153,16 @@ bool Model::getLeavePuckInFront()
 bool Model::cantReachTarget() const
 {
 	return m_cantReachTarget;
+}
+
+bool Model::isPuckCollected() const
+{
+	return m_isPuckCollected;
+}
+
+bool Model::isPuckCollectable() const
+{
+	return m_isPuckCollectable;
 }
 
 bool Model::getTurnAround()

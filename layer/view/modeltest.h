@@ -17,24 +17,32 @@ namespace View
 		CPPUNIT_TEST(constructor_empty_notStuckAtObject);
 		CPPUNIT_TEST(constructor_empty_notReachedTarget);
 		CPPUNIT_TEST(constructor_empty_canReachTarget);
+		CPPUNIT_TEST(constructor_empty_puckIsNotCollected);
+		CPPUNIT_TEST(constructory_empty_puckIsNotCollectable);
 		CPPUNIT_TEST(setData_twoFieldObjects_twoFieldObjects);
 		CPPUNIT_TEST(setData_stuckAtObstacle_stuckAtObstacle);
 		CPPUNIT_TEST(setData_reachedTarget_reachedTarget);
 		CPPUNIT_TEST(setData_twoTargetPositions_twoTargetPositions);
 		CPPUNIT_TEST(setData_currentPosition_currentPositionIsCorrect);
 		CPPUNIT_TEST(setData_cantReachTarget_cantReachTarget);
+		CPPUNIT_TEST(setData_puckIsCollected_puckIsCollected);
+		CPPUNIT_TEST(setData_puckIsCollectable_puckIsCollectable);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
 		void constructor_empty_notStuckAtObject();
 		void constructor_empty_notReachedTarget();
 		void constructor_empty_canReachTarget();
+		void constructor_empty_puckIsNotCollected();
+		void constructory_empty_puckIsNotCollectable();
 		void setData_twoFieldObjects_twoFieldObjects();
 		void setData_stuckAtObstacle_stuckAtObstacle();
 		void setData_reachedTarget_reachedTarget();
 		void setData_twoTargetPositions_twoTargetPositions();
 		void setData_currentPosition_currentPositionIsCorrect();
 		void setData_cantReachTarget_cantReachTarget();
+		void setData_puckIsCollected_puckIsCollected();
+		void setData_puckIsCollectable_puckIsCollectable();
 	};
 }
 }
