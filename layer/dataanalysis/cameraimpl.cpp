@@ -76,7 +76,8 @@ void CameraImpl::addObjects(Common::FieldObjectColor color)
 	Point objectFootPixel;
 	double distanceToCenter;
 
-	switch (color) {
+	switch (color)
+	{
 	case Common::FieldObjectColorYellow:
 		minValue = Scalar(18, 20, 50);
 		maxValue = Scalar(28, 255, 255);
@@ -95,7 +96,7 @@ void CameraImpl::addObjects(Common::FieldObjectColor color)
 		areaThreshold = 750;
 		distanceToCenter = 0.03;
 		break;
-	default:
+	case Common::FieldObjectColorUnknown:
 		break;
 	}
 

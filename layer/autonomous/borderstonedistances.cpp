@@ -14,25 +14,26 @@ double BorderStoneDistances::getStandardFieldDistance(BorderStoneFieldDistance d
 
 	switch (distanceType)
 	{
-		case BorderStoneFieldDistanceA:
-			result = 5.0 / 12.0;
-			break;
+	case BorderStoneFieldDistanceA:
+		result = 5.0 / 12.0;
+		break;
 
-		case BorderStoneFieldDistanceB:
-			result = 15.0 / 12.0;
-			break;
+	case BorderStoneFieldDistanceB:
+		result = 15.0 / 12.0;
+		break;
 
-		case BorderStoneFieldDistanceC:
-			result = 5.0 / 6.0;
-			break;
+	case BorderStoneFieldDistanceC:
+		result = 5.0 / 6.0;
+		break;
 
-		case BorderStoneFieldDistanceD:
-			result = 3.0;
-			break;
+	case BorderStoneFieldDistanceD:
+		result = 3.0;
+		break;
 
-		default:
-			result = 0.0;
-			break;
+	case BorderStoneFieldDistanceRoot:
+	case BorderStoneFieldDistanceFalse:
+		result = 0.0;
+		break;
 	}
 
 	return result;
