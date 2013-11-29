@@ -65,6 +65,8 @@ namespace DataAnalysis
 		CPPUNIT_TEST(isPuckCollectable_puckCloseAndALittleBitRight_true);
 		CPPUNIT_TEST(isPuckCollectable_puckCloseButTooMuchLeft_false);
 		CPPUNIT_TEST(isPuckCollectable_puckCloseButTooMuchRight_false);
+		CPPUNIT_TEST(isPuckCollectable_twoPucksBeside_true);
+		CPPUNIT_TEST(isPuckCollectable_onePuckCloseEnoughtAndAnotherOneStraightAhead_false);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
@@ -113,6 +115,8 @@ namespace DataAnalysis
 		void isPuckCollectable_puckCloseAndALittleBitRight_true();
 		void isPuckCollectable_puckCloseButTooMuchLeft_false();
 		void isPuckCollectable_puckCloseButTooMuchRight_false();
+		void isPuckCollectable_twoPucksBeside_true();
+		void isPuckCollectable_onePuckCloseEnoughtAndAnotherOneStraightAhead_false();
 	};
 }
 }

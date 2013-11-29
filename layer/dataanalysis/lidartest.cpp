@@ -672,3 +672,23 @@ void LidarTest::isPuckCollectable_puckCloseButTooMuchRight_false()
 
 	CPPUNIT_ASSERT(!lidar.isPuckCollectable());
 }
+
+void LidarTest::isPuckCollectable_twoPucksBeside_true()
+{
+	Hardware::LidarMock hardwareLidar;
+	hardwareLidar.readSensorDataFromFile("resources/testfiles/lidar_32.txt");
+	LidarImpl lidar(hardwareLidar);
+	lidar.updateSensorData();
+
+	CPPUNIT_ASSERT(lidar.isPuckCollectable());
+}
+
+void LidarTest::isPuckCollectable_onePuckCloseEnoughtAndAnotherOneStraightAhead_false()
+{
+	Hardware::LidarMock hardwareLidar;
+	hardwareLidar.readSensorDataFromFile("resources/testfiles/lidar_33.txt");
+	LidarImpl lidar(hardwareLidar);
+	lidar.updateSensorData();
+
+	CPPUNIT_ASSERT(!lidar.isPuckCollectable());
+}

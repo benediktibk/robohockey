@@ -87,6 +87,8 @@ set(TESTFILES
 	lidar_29.txt
 	lidar_30.txt
 	lidar_31.txt
+	lidar_32.txt
+	lidar_33.txt
 	lidar_wall.txt
 	sonar_1.txt
 	sonar_2.txt
