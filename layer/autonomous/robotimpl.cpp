@@ -206,28 +206,14 @@ void RobotImpl::updateRoute(const Point &ownPosition, const Field &field)
 	Router router(m_robotWidth, field);
 	DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
 	vector<Circle> obstacles = field.getAllObstacles();
-	bool currentRouteValid = m_currentRoute != 0 && m_currentRoute->isValid();
-
-	if (currentRouteValid && m_currentRoute->getPointCount() > 0)
-	{
-		Path path(ownPosition, m_currentRoute->getFirstPoint(), m_robotWidth);
-		if (path.intersectsWith(obstacles) || m_currentRoute->intersectsWith(obstacles))
-			currentRouteValid = false;
-	}
+	bool currentRouteValid = isRouteFeasible(ownPosition, obstacles);
 
 	if (!currentRouteValid)
 	{
 		clearRoute();
 		m_currentRoute = new Route(m_robotWidth);
 		*m_currentRoute = router.calculateRoute(ownPosition, m_currentTarget);
-		currentRouteValid = m_currentRoute->isValid();
-
-		if (currentRouteValid)
-		{
-			Path path(ownPosition, m_currentRoute->getFirstPoint(), m_robotWidth);
-			if (path.intersectsWith(obstacles) || m_currentRoute->intersectsWith(obstacles))
-				currentRouteValid = false;
-		}
+		currentRouteValid = isRouteFeasible(ownPosition, obstacles);
 
 		if (currentRouteValid)
 		{
@@ -237,6 +223,18 @@ void RobotImpl::updateRoute(const Point &ownPosition, const Field &field)
 		else
 			clearRoute();
 	}
+}
+
+bool RobotImpl::isRouteFeasible(const Point &ownPosition, const vector<Circle> &obstacles) const
+{
+	if (m_currentRoute == 0)
+		return false;
+
+	if (!m_currentRoute->isValid())
+		return false;
+
+	Path path(ownPosition, m_currentRoute->getFirstPoint(), m_robotWidth);
+	return !path.intersectsWith(obstacles) && !m_currentRoute->intersectsWith(obstacles);
 }
 
 RobotImpl::RobotImpl(const RobotImpl &) :
