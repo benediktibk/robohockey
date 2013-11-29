@@ -45,6 +45,7 @@ namespace Autonomous
 
 	private:
 		void clearRoute();
+		void updateRoute(const Common::Point &ownPosition, const Field &field);
 
 	private:
 		// forbid copies

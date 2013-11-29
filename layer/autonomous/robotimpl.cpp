@@ -58,8 +58,6 @@ bool RobotImpl::reachedTarget()
 
 void RobotImpl::updateActuators(const Field &field)
 {
-	Router router(m_robotWidth, field);
-	vector<Circle> obstacles = field.getAllObstacles();
 	DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
 	DataAnalysis::Odometry &odometry = m_dataAnalyser->getOdometry();
 	RobotPosition ownPosition = odometry.getCurrentPosition();
@@ -67,37 +65,7 @@ void RobotImpl::updateActuators(const Field &field)
 	//! @todo clean this mess up
 	if (m_state == RobotStateDriving)
 	{
-		bool currentRouteInvalid = m_currentRoute == 0 || !m_currentRoute->isValid();
-
-		if (!currentRouteInvalid && m_currentRoute->getPointCount() > 0)
-		{
-			Path path(ownPosition.getPosition(), m_currentRoute->getFirstPoint(), m_robotWidth);
-			if (path.intersectsWith(obstacles) || m_currentRoute->intersectsWith(obstacles))
-				currentRouteInvalid = true;
-		}
-
-		if (currentRouteInvalid)
-		{
-			clearRoute();
-			m_currentRoute = new Route(m_robotWidth);
-			*m_currentRoute = router.calculateRoute(ownPosition.getPosition(), m_currentTarget);
-			currentRouteInvalid = !m_currentRoute->isValid();
-
-			if (!currentRouteInvalid)
-			{
-				Path path(ownPosition.getPosition(), m_currentRoute->getFirstPoint(), m_robotWidth);
-				if (path.intersectsWith(obstacles) || m_currentRoute->intersectsWith(obstacles))
-					currentRouteInvalid = true;
-			}
-
-			if (!currentRouteInvalid)
-			{
-				Point newTarget = m_currentRoute->getFirstPoint();
-				engine.goToStraight(newTarget);
-			}
-			else
-				clearRoute();
-		}
+		updateRoute(ownPosition.getPosition(), field);
 
 		if (m_currentRoute != 0)
 		{
@@ -231,6 +199,44 @@ void RobotImpl::clearRoute()
 {
 	delete m_currentRoute;
 	m_currentRoute = 0;
+}
+
+void RobotImpl::updateRoute(const Point &ownPosition, const Field &field)
+{
+	Router router(m_robotWidth, field);
+	DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
+	vector<Circle> obstacles = field.getAllObstacles();
+	bool currentRouteValid = m_currentRoute != 0 && m_currentRoute->isValid();
+
+	if (currentRouteValid && m_currentRoute->getPointCount() > 0)
+	{
+		Path path(ownPosition, m_currentRoute->getFirstPoint(), m_robotWidth);
+		if (path.intersectsWith(obstacles) || m_currentRoute->intersectsWith(obstacles))
+			currentRouteValid = false;
+	}
+
+	if (!currentRouteValid)
+	{
+		clearRoute();
+		m_currentRoute = new Route(m_robotWidth);
+		*m_currentRoute = router.calculateRoute(ownPosition, m_currentTarget);
+		currentRouteValid = m_currentRoute->isValid();
+
+		if (currentRouteValid)
+		{
+			Path path(ownPosition, m_currentRoute->getFirstPoint(), m_robotWidth);
+			if (path.intersectsWith(obstacles) || m_currentRoute->intersectsWith(obstacles))
+				currentRouteValid = false;
+		}
+
+		if (currentRouteValid)
+		{
+			Point newTarget = m_currentRoute->getFirstPoint();
+			engine.goToStraight(newTarget);
+		}
+		else
+			clearRoute();
+	}
 }
 
 RobotImpl::RobotImpl(const RobotImpl &) :
