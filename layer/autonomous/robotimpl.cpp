@@ -56,9 +56,8 @@ bool RobotImpl::reachedTarget()
 	return m_state == RobotStateWaiting && !m_cantReachTarget;
 }
 
-void RobotImpl::updateActuators(const Field &field)
+void RobotImpl::updateEngine(const Field &field)
 {
-	DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
 	DataAnalysis::Odometry &odometry = m_dataAnalyser->getOdometry();
 	RobotPosition ownPosition = odometry.getCurrentPosition();
 
@@ -86,9 +85,15 @@ void RobotImpl::updateActuators(const Field &field)
 		m_cantReachTarget = false;
 		break;
 	}
+}
+
+void RobotImpl::updateActuators(const Field &field)
+{
+	updateEngine(field);
 
 	DataAnalysis::Sonar &sonar = m_dataAnalyser->getSonar();
 	const DataAnalysis::Lidar &lidar = m_dataAnalyser->getLidar();
+	DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
 	double speed = engine.getCurrentSpeed();
 	bool obstacleInFrontBySonar = sonar.isObstacleDirectInFront(speed);
 	bool obstacleInFrontByLidar = lidar.isObstacleInFront(speed);
