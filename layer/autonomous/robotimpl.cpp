@@ -62,12 +62,17 @@ void RobotImpl::updateActuators(const Field &field)
 	DataAnalysis::Odometry &odometry = m_dataAnalyser->getOdometry();
 	RobotPosition ownPosition = odometry.getCurrentPosition();
 
-	//! @todo clean this mess up
 	if (m_state == RobotStateDriving)
 	{
 		updateRoute(ownPosition.getPosition(), field);
 
-		if (m_currentRoute != 0)
+		//! If there is no route at this point we can't reach the target.
+		if (m_currentRoute == 0)
+		{
+			m_cantReachTarget = true;
+			stop();
+		}
+		else
 		{
 			m_cantReachTarget = false;
 
@@ -78,16 +83,8 @@ void RobotImpl::updateActuators(const Field &field)
 				if (m_currentRoute->getPointCount() == 0)
 					stop();
 				else
-				{
-					Point newTarget = m_currentRoute->getFirstPoint();
-					engine.goToStraight(newTarget);
-				}
+					goToFirstPointOfRoute();
 			}
-		}
-		else
-		{
-			m_cantReachTarget = true;
-			stop();
 		}
 	}
 	else
@@ -204,7 +201,6 @@ void RobotImpl::clearRoute()
 void RobotImpl::updateRoute(const Point &ownPosition, const Field &field)
 {
 	Router router(m_robotWidth, field);
-	DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
 	vector<Circle> obstacles = field.getAllObstacles();
 
 	if (isRouteFeasible(ownPosition, obstacles))
@@ -217,10 +213,7 @@ void RobotImpl::updateRoute(const Point &ownPosition, const Field &field)
 
 	//! If this one is now feasible we go towards the first point.
 	if (isRouteFeasible(ownPosition, obstacles))
-	{
-		Point newTarget = m_currentRoute->getFirstPoint();
-		engine.goToStraight(newTarget);
-	}
+		goToFirstPointOfRoute();
 	//! If the route is still not feasible we clear it to signal that something went wrong.
 	else
 		clearRoute();
@@ -236,6 +229,13 @@ bool RobotImpl::isRouteFeasible(const Point &ownPosition, const vector<Circle> &
 
 	Path path(ownPosition, m_currentRoute->getFirstPoint(), m_robotWidth);
 	return !path.intersectsWith(obstacles) && !m_currentRoute->intersectsWith(obstacles);
+}
+
+void RobotImpl::goToFirstPointOfRoute()
+{
+	DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
+	Point target = m_currentRoute->getFirstPoint();
+	engine.goToStraight(target);
 }
 
 RobotImpl::RobotImpl(const RobotImpl &) :

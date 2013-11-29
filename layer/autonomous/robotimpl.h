@@ -47,6 +47,7 @@ namespace Autonomous
 		void clearRoute();
 		void updateRoute(const Common::Point &ownPosition, const Field &field);
 		bool isRouteFeasible(const Common::Point &ownPosition, const std::vector<Common::Circle> &obstacles) const;
+		void goToFirstPointOfRoute();
 
 	private:
 		// forbid copies
