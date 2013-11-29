@@ -6,7 +6,7 @@ using namespace std;
 using namespace RoboHockey::Layer::Autonomous;
 using namespace RoboHockey::Common;
 
-BorderStone::BorderStone(Point &father, BorderStoneFieldDistance distanceToFather, BorderStoneDistances &distances, RoboHockey::Common::Point &point):
+BorderStone::BorderStone(Point &father, BorderStoneFieldDistance distanceToFather, BorderStoneDistances &distances, Point &point):
 	Point(point.getX(), point.getY()),
 	m_distances(distances),
 	m_father(father),
