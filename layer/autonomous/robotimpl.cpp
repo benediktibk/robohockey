@@ -64,6 +64,7 @@ void RobotImpl::updateActuators(const Field &field)
 	DataAnalysis::Odometry &odometry = m_dataAnalyser->getOdometry();
 	RobotPosition ownPosition = odometry.getCurrentPosition();
 
+	//! @todo clean this mess up
 	if (m_state == RobotStateDriving)
 	{
 		bool currentRouteInvalid = m_currentRoute == 0 || !m_currentRoute->isValid();
