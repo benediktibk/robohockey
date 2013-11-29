@@ -18,6 +18,9 @@ namespace Autonomous
 		CPPUNIT_TEST(getNumberOfChildrenRecursive_twoChildren_is2);
 		CPPUNIT_TEST(getDistanceToFather_root_isRoot);
 		CPPUNIT_TEST(getDistanceToFather_distanceB_isDistanceB);
+		CPPUNIT_TEST(getAllChildren_noValidChildren_isEmpty);
+		CPPUNIT_TEST(getAllChildren_2validChildren_has2Entries);
+		CPPUNIT_TEST(getAllChildren_2validChildren_correctChildren);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
@@ -25,6 +28,9 @@ namespace Autonomous
 		void getNumberOfChildrenRecursive_twoChildren_is2();
 		void getDistanceToFather_root_isRoot();
 		void getDistanceToFather_distanceB_isDistanceB();
+		void getAllChildren_noValidChildren_isEmpty();
+		void getAllChildren_2validChildren_has2Entries();
+		void getAllChildren_2validChildren_correctChildren();
 	};
 }
 }
