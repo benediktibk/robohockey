@@ -206,23 +206,24 @@ void RobotImpl::updateRoute(const Point &ownPosition, const Field &field)
 	Router router(m_robotWidth, field);
 	DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
 	vector<Circle> obstacles = field.getAllObstacles();
-	bool currentRouteValid = isRouteFeasible(ownPosition, obstacles);
 
-	if (!currentRouteValid)
+	if (isRouteFeasible(ownPosition, obstacles))
+		return;
+
+	//! If the current route is not feasible anymore we try to create a new one.
+	clearRoute();
+	m_currentRoute = new Route(m_robotWidth);
+	*m_currentRoute = router.calculateRoute(ownPosition, m_currentTarget);
+
+	//! If this one is now feasible we go towards the first point.
+	if (isRouteFeasible(ownPosition, obstacles))
 	{
-		clearRoute();
-		m_currentRoute = new Route(m_robotWidth);
-		*m_currentRoute = router.calculateRoute(ownPosition, m_currentTarget);
-		currentRouteValid = isRouteFeasible(ownPosition, obstacles);
-
-		if (currentRouteValid)
-		{
-			Point newTarget = m_currentRoute->getFirstPoint();
-			engine.goToStraight(newTarget);
-		}
-		else
-			clearRoute();
+		Point newTarget = m_currentRoute->getFirstPoint();
+		engine.goToStraight(newTarget);
 	}
+	//! If the route is still not feasible we clear it to signal that something went wrong.
+	else
+		clearRoute();
 }
 
 bool RobotImpl::isRouteFeasible(const Point &ownPosition, const vector<Circle> &obstacles) const
