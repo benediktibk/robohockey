@@ -16,7 +16,7 @@ vector<Point> Line::getIntersectPoints(const Circle &circle) const
 {
 	Point start(m_start - circle.getCenter());
 	Point end(m_end - circle.getCenter());
-	vector<Point> intersetPoints;
+	vector<Point> intersectPoints;
 	Angle angleForVerticalLines;
 	double gradient;
 	Compare compare(0.001);
@@ -38,7 +38,7 @@ vector<Point> Line::getIntersectPoints(const Circle &circle) const
 	double discriminant = linearComponent*linearComponent - 4*squareComponent*(yAxisIntercept*yAxisIntercept - radius*radius);
 
 	if (discriminant < 0)
-		return intersetPoints;
+		return intersectPoints;
 	else
 	{
 		if (discriminant == 0)
@@ -48,7 +48,7 @@ vector<Point> Line::getIntersectPoints(const Circle &circle) const
 			if(angleForVerticalLines.getValueBetweenZeroAndTwoPi() != 0)
 				result.rotate(Angle::getQuarterRotation());
 			result = result	+ circle.getCenter();
-			intersetPoints.push_back(result);
+			intersectPoints.push_back(result);
 		}
 		else
 		{
@@ -63,9 +63,9 @@ vector<Point> Line::getIntersectPoints(const Circle &circle) const
 			}
 			resultPlus = resultPlus + circle.getCenter();
 			resultMinus = resultMinus + circle.getCenter();
-			intersetPoints.push_back(resultPlus);
-			intersetPoints.push_back(resultMinus);
+			intersectPoints.push_back(resultPlus);
+			intersectPoints.push_back(resultMinus);
 		}
 	}
-	return intersetPoints;
+	return intersectPoints;
 }
