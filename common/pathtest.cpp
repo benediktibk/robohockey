@@ -53,6 +53,20 @@ void PathTest::intersectsWith_pathFromRightToLeftAndCircleFarAwayRight_false()
 	CPPUNIT_ASSERT(!path.intersectsWith(Circle(Point(10, 0), 2)));
 }
 
+void PathTest::intersectsWith_oneBoundaryPostFarAway_false()
+{
+	Path path(Point(0, 0), Point(-0.4625, 1.625), 0.38);
+
+	CPPUNIT_ASSERT(!path.intersectsWith(Circle(Point(0.8796, 0.738), 0.0702)));
+}
+
+void PathTest::intersectsWith_oneBoundaryPostFarAwaySimplified_false()
+{
+	Path path(Point(0, 0), Point(-0.5, 2), 0.4);
+
+	CPPUNIT_ASSERT(!path.intersectsWith(Circle(Point(1, 1), 0.1)));
+}
+
 void PathTest::isCircleOnPath_circleOnPath_true()
 {
 	Path path(Point(0,0), Point(-3,0), 0.4);

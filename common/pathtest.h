@@ -19,6 +19,8 @@ namespace Common
 		 CPPUNIT_TEST(intersectsWith_circleIsInThePath_resultIsTrue);
 		 CPPUNIT_TEST(intersectsWith_circlePassesThePath_resultIsFalse);
 		 CPPUNIT_TEST(intersectsWith_pathFromRightToLeftAndCircleFarAwayRight_false);
+		 CPPUNIT_TEST(intersectsWith_oneBoundaryPostFarAway_false);
+		 CPPUNIT_TEST(intersectsWith_oneBoundaryPostFarAwaySimplified_false);
 		 CPPUNIT_TEST(isCircleOnPath_circleOnPath_true);
 		 CPPUNIT_TEST(isCircleOnPath_circleCenterIsNotOnPath_false);
 		 CPPUNIT_TEST_SUITE_END();
@@ -31,6 +33,8 @@ namespace Common
 		 void intersectsWith_circleIsInThePath_resultIsTrue();
 		 void intersectsWith_circlePassesThePath_resultIsFalse();
 		 void intersectsWith_pathFromRightToLeftAndCircleFarAwayRight_false();
+		 void intersectsWith_oneBoundaryPostFarAway_false();
+		 void intersectsWith_oneBoundaryPostFarAwaySimplified_false();
 		 void isCircleOnPath_circleOnPath_true();
 		 void isCircleOnPath_circleCenterIsNotOnPath_false();
 
