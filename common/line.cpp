@@ -29,7 +29,10 @@ vector<Point> Line::getIntersectPoints(const Circle &circle) const
 		end.rotate(angleForVerticalLines);
 	}
 	else
-		gradient = (end.getY() - start.getY())/(end.getX() - start.getX());
+	{
+		Point startToEndDifference = end - start;
+		gradient = startToEndDifference.getY()/startToEndDifference.getX();
+	}
 
 	double yAxisIntercept = start.getY() - gradient*start.getX();
 	double radius = circle.getDiameter()/2;
