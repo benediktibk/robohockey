@@ -73,3 +73,10 @@ void LineTest::getIntersectPoints_lineIsVerticalAndCircleIsNotAt0And0_intersectP
 
 	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(2,2), line.getIntersectPoints(Circle(Point(3,3), 2.8284)).back()));
 }
+
+void LineTest::getIntersectPoints_circleBehindEndPointWithNoIntersects_intersectPointsCountIs0()
+{
+	Line line(Point(-2,2), Point(2,2));
+
+	CPPUNIT_ASSERT_EQUAL((size_t)0, line.getIntersectPoints(Circle(Point(4,2), 1)).size());
+}
