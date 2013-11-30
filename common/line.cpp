@@ -37,6 +37,10 @@ vector<Point> Line::getIntersectPoints(const Circle &circle) const
 	double squareComponent = gradient*gradient + 1;
 	double discriminant = linearComponent*linearComponent - 4*squareComponent*(yAxisIntercept*yAxisIntercept - radius*radius);
 
+	if((compare.isStrictFuzzyGreater(start.getX(), radius) && compare.isStrictFuzzyGreater(end.getX(), radius)) ||
+		(compare.isStrictFuzzySmaller(start.getX(), -radius) && compare.isStrictFuzzySmaller(end.getX(), -radius)))
+		return intersectPoints;
+
 	if (discriminant < 0)
 		return intersectPoints;
 	else
