@@ -57,12 +57,12 @@ void PathTest::isCircleOnPath_circleOnPath_true()
 {
 	Path path(Point(0,0), Point(-3,0), 0.4);
 
-	CPPUNIT_ASSERT(path.isCircleOnPath(Circle(Point(-1,0.05),0.1)));
+	CPPUNIT_ASSERT(path.isCircleCenterOnPath(Circle(Point(-1,0.05),0.1)));
 }
 
 void PathTest::isCircleOnPath_circleCenterIsNotOnPath_false()
 {
 	Path path(Point(0,0), Point(3,0), 0.4);
 
-	CPPUNIT_ASSERT(!path.isCircleOnPath(Circle(Point(1.5,0.3),0.3)));
+	CPPUNIT_ASSERT(!path.isCircleCenterOnPath(Circle(Point(1.5,0.3),0.3)));
 }

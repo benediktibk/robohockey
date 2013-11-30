@@ -16,7 +16,7 @@ Path::Path(const Point &start, const Point &end, double width) :
 bool Path::intersectsWith(const Circle &circle) const
 {
 
-	if(isCircleOnPath(circle))
+	if(isCircleCenterOnPath(circle))
 		return true;
 	if (getIntersectPoints(circle).size() != 0)
 		return true;
@@ -32,7 +32,7 @@ bool Path::intersectsWith(const vector<Circle> &circles) const
 	return false;
 }
 
-bool Path::isCircleOnPath(const Circle &circle) const
+bool Path::isCircleCenterOnPath(const Circle &circle) const
 {
 	Point circleCenter = circle.getCenter();
 	Angle angleBetweenPoints(m_start, m_end);
