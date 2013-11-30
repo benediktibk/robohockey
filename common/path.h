@@ -17,6 +17,7 @@ namespace Common
 
 		bool intersectsWith(const Circle &circle) const;
 		bool intersectsWith(const std::vector<Circle> &circles) const;
+		bool isCircleOnPath(const Circle &circle) const;
 
 	private:
 		Point m_start;
