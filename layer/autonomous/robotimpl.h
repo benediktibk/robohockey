@@ -48,8 +48,14 @@ namespace Autonomous
 		void updateRoute(const Common::Point &ownPosition, const Field &field);
 		bool isRouteFeasible(const Common::Point &ownPosition, const std::vector<Common::Circle> &obstacles) const;
 		void goToFirstPointOfRoute();
-		void updateTargetForEngine();
+		void updateTargetOfEngineForRoute();
 		void updateEngine(const Field &field);
+		void updateEngineForDriving(const Field &field);
+		void updateEngineForWaiting();
+		void updateEngineForCollectingPuck();
+		void updateEngineForLeavingPuck();
+		void updateEngineForTurnAround();
+		void updateEngineForTurnTo();
 		void detectCollisions();
 		bool enableCollisionDetectionWithSonar() const;
 		void changeIntoState(RobotState state);
@@ -67,6 +73,7 @@ namespace Autonomous
 		Route *m_currentRoute;
 		Common::Point m_currentTarget;
 		RobotState m_state;
+		bool m_stateChanged;
 	};
 }
 }

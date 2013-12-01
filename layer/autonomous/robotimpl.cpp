@@ -22,7 +22,8 @@ RobotImpl::RobotImpl(DataAnalysis::DataAnalyser *dataAnalyser) :
 	m_tryingToTackleObstacle(false),
 	m_cantReachTarget(false),
 	m_currentRoute(0),
-	m_state(RobotStateWaiting)
+	m_state(RobotStateWaiting),
+	m_stateChanged(false)
 { }
 
 RobotImpl::~RobotImpl()
@@ -40,9 +41,8 @@ void RobotImpl::goTo(const Point &position)
 
 void RobotImpl::turnTo(const Point &position)
 {
-	DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
-	engine.turnToTarget(position);
-	changeIntoState(RobotStateTurning);
+	changeIntoState(RobotStateTurnTo);
+	m_currentTarget = position;
 }
 
 bool RobotImpl::stuckAtObstacle()
@@ -55,14 +55,65 @@ bool RobotImpl::reachedTarget()
 	return m_state == RobotStateWaiting && !m_cantReachTarget;
 }
 
+void RobotImpl::updateEngineForDriving(const Field &field)
+{
+	updateRoute(getCurrentPosition().getPosition(), field);
+
+	//! If there is no route at this point we can't reach the target.
+	if (m_currentRoute == 0)
+		m_cantReachTarget = true;
+	else
+		updateTargetOfEngineForRoute();
+}
+
+void RobotImpl::updateEngineForWaiting()
+{
+	DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
+	engine.stop();
+}
+
+void RobotImpl::updateEngineForCollectingPuck()
+{
+	if (!m_stateChanged)
+		return;
+
+	DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
+	RobotPosition ownPosition = getCurrentPosition();
+
+	Point puck(0.2, 0);
+	puck.rotate(ownPosition.getOrientation());
+	Point targetPosition = ownPosition.getPosition() + puck;
+	engine.goToStraightSlowly(targetPosition);
+}
+
+void RobotImpl::updateEngineForLeavingPuck()
+{
+	DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
+	RobotPosition ownPosition = getCurrentPosition();
+
+	Point puck(-0.2, 0);
+	puck.rotate(ownPosition.getOrientation());
+	Point targetPosition = ownPosition.getPosition() + puck;
+	engine.goToStraightSlowlyBack(targetPosition);
+}
+
+void RobotImpl::updateEngineForTurnAround()
+{
+	DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
+	engine.turnAround();
+}
+
+void RobotImpl::updateEngineForTurnTo()
+{
+	DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
+	engine.turnToTarget(m_currentTarget);
+}
+
 void RobotImpl::updateEngine(const Field &field)
 {
-	DataAnalysis::Odometry &odometry = m_dataAnalyser->getOdometry();
-	RobotPosition ownPosition = odometry.getCurrentPosition();
-	DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
-
 	if (m_cantReachTarget || m_tryingToTackleObstacle)
 	{
+		DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
 		engine.stop();
 		return;
 	}
@@ -70,20 +121,22 @@ void RobotImpl::updateEngine(const Field &field)
 	switch(m_state)
 	{
 	case RobotStateDriving:
-		updateRoute(ownPosition.getPosition(), field);
-
-		//! If there is no route at this point we can't reach the target.
-		if (m_currentRoute == 0)
-			m_cantReachTarget = true;
-		else
-			updateTargetForEngine();
+		updateEngineForDriving(field);
 		break;
 	case RobotStateWaiting:
-		engine.stop();
+		updateEngineForWaiting();
 		break;
 	case RobotStateCollectingPuck:
+		updateEngineForCollectingPuck();
+		break;
 	case RobotStateLeavingPuck:
-	case RobotStateTurning:
+		updateEngineForLeavingPuck();
+		break;
+	case RobotStateTurnAround:
+		updateEngineForTurnAround();
+		break;
+	case RobotStateTurnTo:
+		updateEngineForTurnTo();
 		break;
 	}
 }
@@ -120,7 +173,8 @@ bool RobotImpl::enableCollisionDetectionWithSonar() const
 		break;
 	case RobotStateDriving:
 	case RobotStateLeavingPuck:
-	case RobotStateTurning:
+	case RobotStateTurnTo:
+	case RobotStateTurnAround:
 	case RobotStateWaiting:
 		result = true;
 		break;
@@ -136,6 +190,7 @@ void RobotImpl::changeIntoState(RobotState state)
 	m_cantReachTarget = false;
 	m_tryingToTackleObstacle = false;
 	m_state = state;
+	m_stateChanged = true;
 }
 
 void RobotImpl::updateActuators(const Field &field)
@@ -146,6 +201,7 @@ void RobotImpl::updateActuators(const Field &field)
 
 void RobotImpl::updateSensorData()
 {
+	m_stateChanged = false;
 	m_dataAnalyser->updateSensorData();
 }
 
@@ -156,28 +212,12 @@ void RobotImpl::stop()
 
 void RobotImpl::collectPuckInFront()
 {
-	DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
-	RobotPosition ownPosition = getCurrentPosition();
-
-	Point puck(0.2,0);
-	puck.rotate(ownPosition.getOrientation());
-	Point targetPosition = ownPosition.getPosition() + puck;
-
 	changeIntoState(RobotStateCollectingPuck);
-	engine.goToStraightSlowly(targetPosition);
 }
 
 void RobotImpl::leaveCollectedPuck()
 {
-	DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
-	RobotPosition ownPosition = getCurrentPosition();
-
-	Point puck(-0.2, 0);
-	puck.rotate(ownPosition.getOrientation());
-	Point targetPosition = ownPosition.getPosition() + puck;
-
 	changeIntoState(RobotStateLeavingPuck);
-	engine.goToStraightSlowlyBack(targetPosition);
 }
 
 bool RobotImpl::isMoving()
@@ -187,9 +227,7 @@ bool RobotImpl::isMoving()
 
 void RobotImpl::turnAround()
 {
-	changeIntoState(RobotStateTurning);
-	DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
-	engine.turnAround();
+	changeIntoState(RobotStateTurnAround);
 }
 
 RobotPosition RobotImpl::getCurrentPosition()
@@ -267,7 +305,7 @@ void RobotImpl::goToFirstPointOfRoute()
 	engine.goToStraight(target);
 }
 
-void RobotImpl::updateTargetForEngine()
+void RobotImpl::updateTargetOfEngineForRoute()
 {
 	DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
 
