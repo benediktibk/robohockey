@@ -90,16 +90,18 @@ void RobotImpl::updateEngineForCollectingPuck()
 
 void RobotImpl::updateEngineForLeavingPuck()
 {
-	if (!m_stateChanged)
-		return;
-
 	DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
-	RobotPosition ownPosition = getCurrentPosition();
 
-	Point puck(-0.2, 0);
-	puck.rotate(ownPosition.getOrientation());
-	Point targetPosition = ownPosition.getPosition() + puck;
-	engine.goToStraightSlowlyBack(targetPosition);
+	if (m_stateChanged)
+	{
+		RobotPosition ownPosition = getCurrentPosition();
+		Point puck(-0.2, 0);
+		puck.rotate(ownPosition.getOrientation());
+		Point targetPosition = ownPosition.getPosition() + puck;
+		engine.goToStraightSlowlyBack(targetPosition);
+	}
+	else if (engine.reachedTarget())
+		changeIntoState(RobotStateWaiting);
 }
 
 void RobotImpl::updateEngineForTurnAround()

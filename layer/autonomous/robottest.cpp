@@ -799,3 +799,21 @@ void RobotTest::collectPuckInFront_puckCollected_reachedTarget()
 
 	CPPUNIT_ASSERT(robot.reachedTarget());
 }
+
+void RobotTest::leaveCollectedPuck_drivenFarEnoughBack_reachedTarget()
+{
+	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
+	DataAnalysis::OdometryMock &odometry = dataAnalyser->getOdometryMock();
+	RobotImpl robot(dataAnalyser);
+	FieldMock field;
+
+	odometry.setCurrentPosition(RobotPosition(Point(0, 0), 0));
+	robot.updateSensorData();
+	robot.leaveCollectedPuck();
+	robot.updateActuators(field);
+	odometry.setCurrentPosition(RobotPosition(Point(-0.2, 0), 0));
+	robot.updateSensorData();
+	robot.updateActuators(field);
+
+	CPPUNIT_ASSERT(robot.reachedTarget());
+}
