@@ -40,10 +40,6 @@ vector<Point> Line::getIntersectPoints(const Circle &circle) const
 	double squareComponent = gradient*gradient + 1;
 	double discriminant = linearComponent*linearComponent - 4*squareComponent*(yAxisIntercept*yAxisIntercept - radius*radius);
 
-	if((compare.isStrictFuzzyGreater(start.getX(), radius) && compare.isStrictFuzzyGreater(end.getX(), radius)) ||
-		(compare.isStrictFuzzySmaller(start.getX(), -radius) && compare.isStrictFuzzySmaller(end.getX(), -radius)))
-		return intersectPoints;
-
 	if (discriminant < 0)
 		return intersectPoints;
 	else
@@ -54,8 +50,12 @@ vector<Point> Line::getIntersectPoints(const Circle &circle) const
 			Point result(resultX, gradient*resultX + yAxisIntercept);
 			if(angleForVerticalLines.getValueBetweenZeroAndTwoPi() != 0)
 				result.rotate(Angle::getQuarterRotation());
-			result = result	+ circle.getCenter();
-			intersectPoints.push_back(result);
+			if((compare.isFuzzyGreater(resultX, start.getX()) && compare.isFuzzySmaller(resultX, end.getX())) ||
+				(compare.isFuzzySmaller(resultX, start.getX()) && compare.isFuzzyGreater(resultX, end.getX())))
+			{
+				result = result	+ circle.getCenter();
+				intersectPoints.push_back(result);
+			}
 		}
 		else
 		{
@@ -68,10 +68,14 @@ vector<Point> Line::getIntersectPoints(const Circle &circle) const
 				resultPlus.rotate(Angle::getQuarterRotation());
 				resultMinus.rotate(Angle::getQuarterRotation());
 			}
-			resultPlus = resultPlus + circle.getCenter();
-			resultMinus = resultMinus + circle.getCenter();
-			intersectPoints.push_back(resultPlus);
-			intersectPoints.push_back(resultMinus);
+			if((compare.isFuzzyGreater(resultX1, start.getX()) && compare.isFuzzySmaller(resultX1, end.getX())) ||
+				(compare.isFuzzySmaller(resultX1, start.getX()) && compare.isFuzzyGreater(resultX1, end.getX())))
+			{
+				resultPlus = resultPlus + circle.getCenter();
+				resultMinus = resultMinus + circle.getCenter();
+				intersectPoints.push_back(resultPlus);
+				intersectPoints.push_back(resultMinus);
+			}
 		}
 	}
 	return intersectPoints;
