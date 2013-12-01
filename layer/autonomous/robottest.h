@@ -51,6 +51,7 @@ namespace Autonomous
 		CPPUNIT_TEST(cantReachTarget_turnAroundCalled_false);
 		CPPUNIT_TEST(cantReachTarget_turnToCalled_false);
 		CPPUNIT_TEST(cantReachTarget_leavePuckCalled_false);
+		CPPUNIT_TEST(cantReachTarget_stuckAtObstacle_true);
 		CPPUNIT_TEST(isPuckCollected_lidarSaysNo_false);
 		CPPUNIT_TEST(isPuckCollected_lidarSaysYes_true);
 		CPPUNIT_TEST(isPuckCollectable_lidarSaysNo_false);
@@ -98,6 +99,7 @@ namespace Autonomous
 		void cantReachTarget_turnAroundCalled_false();
 		void cantReachTarget_turnToCalled_false();
 		void cantReachTarget_leavePuckCalled_false();
+		void cantReachTarget_stuckAtObstacle_true();
 		void isPuckCollected_lidarSaysNo_false();
 		void isPuckCollected_lidarSaysYes_true();
 		void isPuckCollectable_lidarSaysNo_false();

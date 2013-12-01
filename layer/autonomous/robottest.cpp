@@ -566,6 +566,21 @@ void RobotTest::cantReachTarget_leavePuckCalled_false()
 	CPPUNIT_ASSERT(!robot.cantReachTarget());
 }
 
+void RobotTest::cantReachTarget_stuckAtObstacle_true()
+{
+	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
+	DataAnalysis::EngineMock &engine = dataAnalyser->getEngineMock();
+	RobotImpl robot(dataAnalyser);
+	FieldMock field;
+
+	robot.updateSensorData();
+	robot.goTo(Point(10, 0));
+	engine.setTryingToTackleObstacle(true);
+	robot.updateActuators(field);
+
+	CPPUNIT_ASSERT(robot.cantReachTarget());
+}
+
 void RobotTest::isPuckCollected_lidarSaysNo_false()
 {
 	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();

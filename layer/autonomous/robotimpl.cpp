@@ -206,7 +206,7 @@ Point RobotImpl::getCurrentTarget() const
 
 bool RobotImpl::cantReachTarget() const
 {
-	return m_cantReachTarget;
+	return m_cantReachTarget || m_tryingToTackleObstacle;
 }
 
 bool RobotImpl::isPuckCollected() const
