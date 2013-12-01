@@ -34,16 +34,15 @@ RobotImpl::~RobotImpl()
 
 void RobotImpl::goTo(const Point &position)
 {
-	clearRoute();
+	changeIntoState(RobotStateDriving);
 	m_currentTarget = position;
-	m_state = RobotStateDriving;
 }
 
 void RobotImpl::turnTo(const Point &position)
 {
 	DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
 	engine.turnToTarget(position);
-	m_state = RobotStateTurning;
+	changeIntoState(RobotStateTurning);
 }
 
 bool RobotImpl::stuckAtObstacle()
@@ -60,6 +59,13 @@ void RobotImpl::updateEngine(const Field &field)
 {
 	DataAnalysis::Odometry &odometry = m_dataAnalyser->getOdometry();
 	RobotPosition ownPosition = odometry.getCurrentPosition();
+	DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
+
+	if (m_cantReachTarget || m_tryingToTackleObstacle)
+	{
+		engine.stop();
+		return;
+	}
 
 	switch(m_state)
 	{
@@ -68,21 +74,16 @@ void RobotImpl::updateEngine(const Field &field)
 
 		//! If there is no route at this point we can't reach the target.
 		if (m_currentRoute == 0)
-		{
 			m_cantReachTarget = true;
-			stop();
-		}
 		else
-		{
-			m_cantReachTarget = false;
 			updateTargetForEngine();
-		}
 		break;
 	case RobotStateWaiting:
+		engine.stop();
+		break;
 	case RobotStateCollectingPuck:
 	case RobotStateLeavingPuck:
 	case RobotStateTurning:
-		m_cantReachTarget = false;
 		break;
 	}
 }
@@ -104,9 +105,8 @@ void RobotImpl::detectCollisions()
 
 	m_dataAnalyser->updateActuators();
 
-	m_tryingToTackleObstacle = engine.tryingToTackleObstacle();
-	if (m_tryingToTackleObstacle)
-		stop();
+	if (engine.tryingToTackleObstacle())
+		m_tryingToTackleObstacle = true;
 }
 
 bool RobotImpl::enableCollisionDetectionWithSonar() const
@@ -129,26 +129,29 @@ bool RobotImpl::enableCollisionDetectionWithSonar() const
 	return result;
 }
 
+void RobotImpl::changeIntoState(RobotState state)
+{
+	clearRoute();
+	m_currentTarget = Point();
+	m_cantReachTarget = false;
+	m_tryingToTackleObstacle = false;
+	m_state = state;
+}
+
 void RobotImpl::updateActuators(const Field &field)
 {
-	updateEngine(field);
 	detectCollisions();
+	updateEngine(field);
 }
 
 void RobotImpl::updateSensorData()
 {
 	m_dataAnalyser->updateSensorData();
-	DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
-	if (engine.reachedTarget() && m_currentRoute == 0)
-		m_state = RobotStateWaiting;
 }
 
 void RobotImpl::stop()
 {
-	DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
-	engine.stop();
-	m_state = RobotStateWaiting;
-	clearRoute();
+	changeIntoState(RobotStateWaiting);
 }
 
 void RobotImpl::collectPuckInFront()
@@ -160,7 +163,7 @@ void RobotImpl::collectPuckInFront()
 	puck.rotate(ownPosition.getOrientation());
 	Point targetPosition = ownPosition.getPosition() + puck;
 
-	m_state = RobotStateCollectingPuck;
+	changeIntoState(RobotStateCollectingPuck);
 	engine.goToStraightSlowly(targetPosition);
 }
 
@@ -173,7 +176,7 @@ void RobotImpl::leaveCollectedPuck()
 	puck.rotate(ownPosition.getOrientation());
 	Point targetPosition = ownPosition.getPosition() + puck;
 
-	m_state = RobotStateLeavingPuck;
+	changeIntoState(RobotStateLeavingPuck);
 	engine.goToStraightSlowlyBack(targetPosition);
 }
 
@@ -184,7 +187,7 @@ bool RobotImpl::isMoving()
 
 void RobotImpl::turnAround()
 {
-	m_state = RobotStateTurning;
+	changeIntoState(RobotStateTurning);
 	DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
 	engine.turnAround();
 }

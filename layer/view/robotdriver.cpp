@@ -18,7 +18,9 @@ RobotDriver::RobotDriver(Robot &robot, Field &field, Model &model) :
 	m_field(field),
 	m_model(model),
 	m_watch(new Watch()),
-	m_lastTime(0)
+	m_lastTime(0),
+	m_cantReachTargetOld(false),
+	m_stuckAtObstacleOld(false)
 {
 	m_lastTime = m_watch->getTime();
 }
@@ -42,14 +44,27 @@ void RobotDriver::update()
 	m_field.update();
 	vector<Point> targets = m_model.getAllTargetPoints();
 
-	if(m_model.getStop())
+	if (cantReachTargetOrStuckAtObstacleNewTillLastCall())
+	{
+		targets.clear();
+		m_model.setData(targets, false, false, false, false, false, false);
+	}
+	else if(m_model.getStop())
 	{
 		targets.clear();
 		m_robot.stop();
 		m_model.setData(targets, false, false, false, false, false, false);
 	}
-
-	else if (m_robot.reachedTarget())
+	else if (targets.size() > 0)
+	{
+		if (m_robot.reachedTarget() || m_robot.stuckAtObstacle() || m_robot.cantReachTarget())
+		{
+			vector<Point> targetsWithoutFirstOne(targets.begin() + 1, targets.end());
+			m_model.setData(targetsWithoutFirstOne, false, false, false, false, false, false);
+			m_robot.goTo(targets.front());
+		}
+	}
+	else
 	{
 		if(m_model.getTurnAround() && targets.size() == 0)
 		{
@@ -82,18 +97,6 @@ void RobotDriver::update()
 			m_field.calibratePosition();
 			m_model.setData(targets, false, false, false, false, false, false);
 		}
-
-		if (targets.size() > 0 && !m_model.getTurnAround())
-		{
-			vector<Point> targetsWithoutFirstOne(targets.begin() + 1, targets.end());
-			m_model.setData(targetsWithoutFirstOne, false, false, false, false, false, false);
-			m_robot.goTo(targets.front());
-		}
-		else
-		{
-			targets.clear();
-			m_model.setData(targets, false, false, false, false, false, false);
-		}
 	}
 
 	m_model.setData(
@@ -103,11 +106,14 @@ void RobotDriver::update()
 				m_robot.isPuckCollected(), m_robot.isPuckCollectable());
 
 	m_robot.updateActuators(m_field);
+}
 
-	if (m_robot.stuckAtObstacle())
-	{
-		cout << "stuck at obstacle" << endl;
-		m_model.setData(vector<Point>(), false, false, false, false, false, false);
-		m_robot.stop();
-	}
+bool RobotDriver::cantReachTargetOrStuckAtObstacleNewTillLastCall()
+{
+	bool cantReachTarget = m_robot.cantReachTarget();
+	bool stuckAtObstacle = m_robot.stuckAtObstacle();
+	bool result = (stuckAtObstacle && !m_stuckAtObstacleOld) || (cantReachTarget && !m_cantReachTargetOld);
+	m_cantReachTargetOld = cantReachTarget;
+	m_stuckAtObstacleOld = stuckAtObstacle;
+	return result;
 }

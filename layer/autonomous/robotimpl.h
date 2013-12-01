@@ -52,6 +52,7 @@ namespace Autonomous
 		void updateEngine(const Field &field);
 		void detectCollisions();
 		bool enableCollisionDetectionWithSonar() const;
+		void changeIntoState(RobotState state);
 
 	private:
 		// forbid copies
