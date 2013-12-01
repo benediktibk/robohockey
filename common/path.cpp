@@ -39,8 +39,8 @@ bool Path::isCircleCenterOnPath(const Circle &circle) const
 	Point startRight(m_start + Point(sqrt(2)*0.5*m_width, angleBetweenPoints - Angle::getQuarterRotation() - Angle::getEighthRotation()));
 
 	circleCenter.rotate(Angle::getFullRotation() - angleBetweenPoints);
-	circleCenter = circleCenter - startRight;
-	if (circleCenter.getX() > 0 && circleCenter.getX() < m_start.distanceTo(m_end) && circleCenter.getY() < m_width)
+	//circleCenter = circleCenter - startRight;
+	if (circleCenter.getX() > -0.5*m_width && circleCenter.getX() < (m_start.distanceTo(m_end) + 0.5*m_width) && fabs(circleCenter.getY()) < 0.5*m_width)
 		return true;
 	else
 		return false;
