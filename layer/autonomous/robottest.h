@@ -30,6 +30,7 @@ namespace Autonomous
 		CPPUNIT_TEST(stop_empty_engineGotAtLeastOneCallToStop);
 		CPPUNIT_TEST(stuckAtObstacle_empty_engineGotAtLeastOneCallToTryingToTackleObstacle);
 		CPPUNIT_TEST(turnToTarget_validPoint_engineGotAtLeastOneCallToTurnToTarget);
+		CPPUNIT_TEST(turnToTarget_orientationReached_reachedTarget);
 		CPPUNIT_TEST(updateActuators_notTryingToTackleObstacle_engineGotNoCallToStop);
 		CPPUNIT_TEST(updateActuators_tryingToTackleObstacle_engineGotAtLeastOneCallToStop);
 		CPPUNIT_TEST(updateActuators_tryingToTackleObstacle_targetNotReached);
@@ -79,6 +80,7 @@ namespace Autonomous
 		void stop_empty_engineGotAtLeastOneCallToStop();
 		void stuckAtObstacle_empty_engineGotAtLeastOneCallToTryingToTackleObstacle();
 		void turnToTarget_validPoint_engineGotAtLeastOneCallToTurnToTarget();
+		void turnToTarget_orientationReached_reachedTarget();
 		void updateActuators_notTryingToTackleObstacle_engineGotNoCallToStop();
 		void updateActuators_tryingToTackleObstacle_engineGotAtLeastOneCallToStop();
 		void updateActuators_tryingToTackleObstacle_targetNotReached();

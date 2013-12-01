@@ -112,11 +112,12 @@ void RobotImpl::updateEngineForTurnAround()
 
 void RobotImpl::updateEngineForTurnTo()
 {
-	if (!m_stateChanged)
-		return;
-
 	DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
-	engine.turnToTarget(m_currentTarget);
+
+	if (m_stateChanged)
+		engine.turnToTarget(m_currentTarget);
+	else if (engine.reachedTarget())
+		changeIntoState(RobotStateWaiting);
 }
 
 void RobotImpl::updateEngine(const Field &field)
