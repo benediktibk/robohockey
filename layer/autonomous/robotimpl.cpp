@@ -88,6 +88,9 @@ void RobotImpl::updateEngineForCollectingPuck()
 
 void RobotImpl::updateEngineForLeavingPuck()
 {
+	if (!m_stateChanged)
+		return;
+
 	DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
 	RobotPosition ownPosition = getCurrentPosition();
 
@@ -100,11 +103,18 @@ void RobotImpl::updateEngineForLeavingPuck()
 void RobotImpl::updateEngineForTurnAround()
 {
 	DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
-	engine.turnAround();
+
+	if (m_stateChanged)
+		engine.turnAround();
+	else if (engine.reachedTarget())
+		changeIntoState(RobotStateWaiting);
 }
 
 void RobotImpl::updateEngineForTurnTo()
 {
+	if (!m_stateChanged)
+		return;
+
 	DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
 	engine.turnToTarget(m_currentTarget);
 }

@@ -38,6 +38,7 @@ namespace Autonomous
 		CPPUNIT_TEST(updateSensorData_obstacleDirectInFront_engineGotAtLeastOneCallToLockForwardMovement);
 		CPPUNIT_TEST(updateSensorData_0bstacleDirectInFront_engineGotNoCallToUnlockForwardMovement);
 		CPPUNIT_TEST(turnAround_empty_engineGotAtLeastOneCallToTurnAround);
+		CPPUNIT_TEST(turnAround_turnAroundDone_reachedTarget);
 		CPPUNIT_TEST(getCurrentPosition_position3And4InOdometry_3And4);
 		CPPUNIT_TEST(reachedTarget_nearlyHitTargetButTookSomeAdditionalWayToStop_true);
 		CPPUNIT_TEST(cantReachTarget_calledDirectAfterConstructor_false);
@@ -86,6 +87,7 @@ namespace Autonomous
 		void updateSensorData_obstacleDirectInFront_engineGotAtLeastOneCallToLockForwardMovement();
 		void updateSensorData_0bstacleDirectInFront_engineGotNoCallToUnlockForwardMovement();
 		void turnAround_empty_engineGotAtLeastOneCallToTurnAround();
+		void turnAround_turnAroundDone_reachedTarget();
 		void getCurrentPosition_position3And4InOdometry_3And4();
 		void reachedTarget_nearlyHitTargetButTookSomeAdditionalWayToStop_true();
 		void cantReachTarget_calledDirectAfterConstructor_false();

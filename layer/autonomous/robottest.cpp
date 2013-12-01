@@ -377,6 +377,26 @@ void RobotTest::turnAround_empty_engineGotAtLeastOneCallToTurnAround()
 	CPPUNIT_ASSERT(engine.getCallsToTurnAround() > 0);
 }
 
+void RobotTest::turnAround_turnAroundDone_reachedTarget()
+{
+	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
+	DataAnalysis::OdometryMock &odometry = dataAnalyser->getOdometryMock();
+	RobotImpl robot(dataAnalyser);
+	FieldMock field;
+
+	robot.updateSensorData();
+	robot.turnAround();
+	robot.updateActuators(field);
+	odometry.setCurrentPosition(RobotPosition(Point(), 9*M_PI/8));
+	robot.updateSensorData();
+	robot.updateActuators(field);
+	odometry.setCurrentPosition(RobotPosition(Point(), 0));
+	robot.updateSensorData();
+	robot.updateActuators(field);
+
+	CPPUNIT_ASSERT(robot.reachedTarget());
+}
+
 void RobotTest::getCurrentPosition_position3And4InOdometry_3And4()
 {
 	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
