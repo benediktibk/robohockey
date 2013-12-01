@@ -43,7 +43,6 @@ bool Path::isCircleCenterOnPath(const Circle &circle) const
 		return true;
 	else
 		return false;
-
 }
 
 std::vector<Point> Path::getIntersectPoints(const Circle &circle) const
@@ -71,5 +70,4 @@ std::vector<Point> Path::getIntersectPoints(const Circle &circle) const
 	intersectPoints = endOutline.getIntersectPoints(circle);
 
 	return intersectPoints;
-
 }
