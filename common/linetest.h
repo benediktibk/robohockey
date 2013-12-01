@@ -22,6 +22,7 @@ namespace Common
 		 CPPUNIT_TEST(getIntersectPoints_lineIsVertical_intersectPointIsMinus1AndMinus1);
 		 CPPUNIT_TEST(getIntersectPoints_lineIsVerticalAndCircleIsNotAt0And0_intersectPointIs2And2);
 		 CPPUNIT_TEST(getIntersectPoints_circleBehindEndPointWithNoIntersects_intersectPointsCountIs0);
+		 CPPUNIT_TEST(getIntersectPoints_circleOverEndPointWithNoIntersects_intersectPointsCountIs0);
 		 CPPUNIT_TEST_SUITE_END();
 
 	private:
@@ -35,6 +36,7 @@ namespace Common
 		 void getIntersectPoints_lineIsVertical_intersectPointIsMinus1AndMinus1();
 		 void getIntersectPoints_lineIsVerticalAndCircleIsNotAt0And0_intersectPointIs2And2();
 		 void getIntersectPoints_circleBehindEndPointWithNoIntersects_intersectPointsCountIs0();
+		 void getIntersectPoints_circleOverEndPointWithNoIntersects_intersectPointsCountIs0();
 	};
 }
 }

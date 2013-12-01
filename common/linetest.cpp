@@ -80,3 +80,10 @@ void LineTest::getIntersectPoints_circleBehindEndPointWithNoIntersects_intersect
 
 	CPPUNIT_ASSERT_EQUAL((size_t)0, line.getIntersectPoints(Circle(Point(4,2), 1)).size());
 }
+
+void LineTest::getIntersectPoints_circleOverEndPointWithNoIntersects_intersectPointsCountIs0()
+{
+	Line line(Point(3.5,0), Point(4.1,3));
+
+	CPPUNIT_ASSERT_EQUAL((size_t)0, line.getIntersectPoints(Circle(Point(4,2), 1)).size());
+}
