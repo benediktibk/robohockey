@@ -781,3 +781,21 @@ void RobotTest::collectPuckInFront_puckAheadAndAlreadyUpdatedTheEngine_notStuckA
 
 	CPPUNIT_ASSERT(!robot.stuckAtObstacle());
 }
+
+void RobotTest::collectPuckInFront_puckCollected_reachedTarget()
+{
+	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
+	DataAnalysis::OdometryMock &odometry = dataAnalyser->getOdometryMock();
+	RobotImpl robot(dataAnalyser);
+	FieldMock field;
+
+	odometry.setCurrentPosition(RobotPosition(Point(0, 0), 0));
+	robot.updateSensorData();
+	robot.collectPuckInFront();
+	robot.updateActuators(field);
+	odometry.setCurrentPosition(RobotPosition(Point(0.2, 0), 0));
+	robot.updateSensorData();
+	robot.updateActuators(field);
+
+	CPPUNIT_ASSERT(robot.reachedTarget());
+}

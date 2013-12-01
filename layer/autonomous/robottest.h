@@ -61,6 +61,7 @@ namespace Autonomous
 		CPPUNIT_TEST(collectPuckInFront_puckAhead_notStuckAtObstacle);
 		CPPUNIT_TEST(collectPuckInFront_puckAheadAndStartedToMove_notStuckAtObstacle);
 		CPPUNIT_TEST(collectPuckInFront_puckAheadAndAlreadyUpdatedTheEngine_notStuckAtObstacle);
+		CPPUNIT_TEST(collectPuckInFront_puckCollected_reachedTarget);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
@@ -111,6 +112,7 @@ namespace Autonomous
 		void collectPuckInFront_puckAhead_notStuckAtObstacle();
 		void collectPuckInFront_puckAheadAndStartedToMove_notStuckAtObstacle();
 		void collectPuckInFront_puckAheadAndAlreadyUpdatedTheEngine_notStuckAtObstacle();
+		void collectPuckInFront_puckCollected_reachedTarget();
 	};
 }
 }
