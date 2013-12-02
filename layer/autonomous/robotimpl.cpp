@@ -10,6 +10,7 @@
 #include "common/path.h"
 #include "layer/autonomous/fieldimpl.h"
 #include <iostream>
+#include <math.h>
 
 using namespace RoboHockey::Common;
 using namespace RoboHockey::Layer::Autonomous;
@@ -18,6 +19,8 @@ using namespace std;
 
 RobotImpl::RobotImpl(DataAnalysis::DataAnalyser *dataAnalyser) :
 	m_robotWidth(0.38),
+	m_maximumDistanceToCollectPuck(0.5),
+	m_maximumAngleToCollectPuck(10.0/180*M_PI),
 	m_dataAnalyser(dataAnalyser),
 	m_tryingToTackleObstacle(false),
 	m_cantReachTarget(false),
@@ -77,7 +80,7 @@ void RobotImpl::updateEngineForCollectingPuck()
 	DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
 	const DataAnalysis::Lidar &lidar = m_dataAnalyser->getLidar();
 
-	if (!lidar.isPuckCollectable())
+	if (!lidar.isPuckCollectable(m_maximumDistanceToCollectPuck, m_maximumAngleToCollectPuck))
 	{
 		m_cantReachTarget = true;
 		return;
@@ -278,7 +281,7 @@ bool RobotImpl::isPuckCollected() const
 bool RobotImpl::isPuckCollectable() const
 {
 	const DataAnalysis::Lidar &lidar = m_dataAnalyser->getLidar();
-	return lidar.isPuckCollectable();
+	return lidar.isPuckCollectable(m_maximumDistanceToCollectPuck, m_maximumAngleToCollectPuck);
 }
 
 void RobotImpl::clearRoute()
@@ -343,7 +346,9 @@ void RobotImpl::updateTargetOfEngineForRoute()
 }
 
 RobotImpl::RobotImpl(const RobotImpl &) :
-	m_robotWidth(0)
+	m_robotWidth(0),
+	m_maximumDistanceToCollectPuck(0),
+	m_maximumAngleToCollectPuck(0)
 { }
 
 void RobotImpl::operator=(const RobotImpl &)

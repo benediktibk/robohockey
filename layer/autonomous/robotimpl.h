@@ -67,6 +67,8 @@ namespace Autonomous
 
 	private:
 		const double m_robotWidth;
+		const double m_maximumDistanceToCollectPuck;
+		const Common::Angle m_maximumAngleToCollectPuck;
 		DataAnalysis::DataAnalyser *m_dataAnalyser;
 		bool m_tryingToTackleObstacle;
 		bool m_cantReachTarget;

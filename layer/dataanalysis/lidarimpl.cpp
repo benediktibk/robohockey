@@ -111,11 +111,9 @@ void LidarImpl::updateSensorData()
 	}
 }
 
-bool LidarImpl::isPuckCollectable() const
+bool LidarImpl::isPuckCollectable(double maximumDistance, const Angle &maximumAngle) const
 {
-	const double maximumDistanceToPuck = 0.5;
-	const double maximumAngleToPuck = 10.0/180*M_PI;
-	list<LidarInternalObject*> candidatesForPuckByDistance = getObjectsCloserThan(maximumDistanceToPuck);
+	list<LidarInternalObject*> candidatesForPuckByDistance = getObjectsCloserThan(maximumDistance);
 	vector<LidarInternalObject*> candidatesForPuckByAngleAndDistance;
 
 	candidatesForPuckByAngleAndDistance.reserve(candidatesForPuckByDistance.size());
@@ -123,7 +121,7 @@ bool LidarImpl::isPuckCollectable() const
 	{
 		LidarInternalObject *object = *i;
 		Angle objectAngle = object->getOrientationRelativeToRobot();
-		if (fabs(objectAngle.getValueBetweenMinusPiAndPi()) < maximumAngleToPuck)
+		if (fabs(objectAngle.getValueBetweenMinusPiAndPi()) < maximumAngle.getValueBetweenMinusPiAndPi())
 			candidatesForPuckByAngleAndDistance.push_back(object);
 	}
 

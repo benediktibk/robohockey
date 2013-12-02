@@ -4,6 +4,7 @@
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
 #include <string>
+#include "common/angle.h"
 
 namespace RoboHockey
 {
@@ -117,6 +118,10 @@ namespace DataAnalysis
 		void isPuckCollectable_puckCloseButTooMuchRight_false();
 		void isPuckCollectable_twoPucksBeside_true();
 		void isPuckCollectable_onePuckCloseEnoughtAndAnotherOneStraightAhead_false();
+
+	private:
+		static const double m_maximumDistance;
+		static const Common::Angle m_maximumAngle;
 	};
 }
 }

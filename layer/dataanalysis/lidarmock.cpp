@@ -23,7 +23,7 @@ bool LidarMock::isObstacleInFront(double) const
 void LidarMock::updateSensorData()
 { }
 
-bool LidarMock::isPuckCollectable() const
+bool LidarMock::isPuckCollectable(double, const Angle&) const
 {
 	return m_puckCollectable;
 }

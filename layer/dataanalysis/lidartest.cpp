@@ -6,10 +6,13 @@
 #include <math.h>
 #include <assert.h>
 
+using namespace std;
 using namespace RoboHockey::Common;
 using namespace RoboHockey::Layer;
 using namespace RoboHockey::Layer::DataAnalysis;
-using namespace std;
+
+const double LidarTest::m_maximumDistance = 0.5;
+const Angle LidarTest::m_maximumAngle = 10.0/180*M_PI;
 
 void LidarTest::getAllObjects_mockHardwareLidar_atLeastOneCallToGetDistance()
 {
@@ -600,7 +603,7 @@ void LidarTest::isPuckCollectable_noPuckInCloseDistance_false()
 	LidarImpl lidar(hardwareLidar);
 	lidar.updateSensorData();
 
-	CPPUNIT_ASSERT(!lidar.isPuckCollectable());
+	CPPUNIT_ASSERT(!lidar.isPuckCollectable(m_maximumDistance, m_maximumAngle));
 }
 
 void LidarTest::isPuckCollectable_puckCollected_true()
@@ -610,7 +613,7 @@ void LidarTest::isPuckCollectable_puckCollected_true()
 	LidarImpl lidar(hardwareLidar);
 	lidar.updateSensorData();
 
-	CPPUNIT_ASSERT(lidar.isPuckCollectable());
+	CPPUNIT_ASSERT(lidar.isPuckCollectable(m_maximumDistance, m_maximumAngle));
 }
 
 void LidarTest::isPuckCollectable_puckStraightAheadCloseEnough_true()
@@ -620,7 +623,7 @@ void LidarTest::isPuckCollectable_puckStraightAheadCloseEnough_true()
 	LidarImpl lidar(hardwareLidar);
 	lidar.updateSensorData();
 
-	CPPUNIT_ASSERT(lidar.isPuckCollectable());
+	CPPUNIT_ASSERT(lidar.isPuckCollectable(m_maximumDistance, m_maximumAngle));
 }
 
 void LidarTest::isPuckCollectable_puckStraightAheadButTooDistant_false()
@@ -630,7 +633,7 @@ void LidarTest::isPuckCollectable_puckStraightAheadButTooDistant_false()
 	LidarImpl lidar(hardwareLidar);
 	lidar.updateSensorData();
 
-	CPPUNIT_ASSERT(!lidar.isPuckCollectable());
+	CPPUNIT_ASSERT(!lidar.isPuckCollectable(m_maximumDistance, m_maximumAngle));
 }
 
 void LidarTest::isPuckCollectable_puckCloseAndALittleBitLeft_true()
@@ -640,7 +643,7 @@ void LidarTest::isPuckCollectable_puckCloseAndALittleBitLeft_true()
 	LidarImpl lidar(hardwareLidar);
 	lidar.updateSensorData();
 
-	CPPUNIT_ASSERT(lidar.isPuckCollectable());
+	CPPUNIT_ASSERT(lidar.isPuckCollectable(m_maximumDistance, m_maximumAngle));
 }
 
 void LidarTest::isPuckCollectable_puckCloseAndALittleBitRight_true()
@@ -650,7 +653,7 @@ void LidarTest::isPuckCollectable_puckCloseAndALittleBitRight_true()
 	LidarImpl lidar(hardwareLidar);
 	lidar.updateSensorData();
 
-	CPPUNIT_ASSERT(lidar.isPuckCollectable());
+	CPPUNIT_ASSERT(lidar.isPuckCollectable(m_maximumDistance, m_maximumAngle));
 }
 
 void LidarTest::isPuckCollectable_puckCloseButTooMuchLeft_false()
@@ -660,7 +663,7 @@ void LidarTest::isPuckCollectable_puckCloseButTooMuchLeft_false()
 	LidarImpl lidar(hardwareLidar);
 	lidar.updateSensorData();
 
-	CPPUNIT_ASSERT(!lidar.isPuckCollectable());
+	CPPUNIT_ASSERT(!lidar.isPuckCollectable(m_maximumDistance, m_maximumAngle));
 }
 
 void LidarTest::isPuckCollectable_puckCloseButTooMuchRight_false()
@@ -670,7 +673,7 @@ void LidarTest::isPuckCollectable_puckCloseButTooMuchRight_false()
 	LidarImpl lidar(hardwareLidar);
 	lidar.updateSensorData();
 
-	CPPUNIT_ASSERT(!lidar.isPuckCollectable());
+	CPPUNIT_ASSERT(!lidar.isPuckCollectable(m_maximumDistance, m_maximumAngle));
 }
 
 void LidarTest::isPuckCollectable_twoPucksBeside_true()
@@ -680,7 +683,7 @@ void LidarTest::isPuckCollectable_twoPucksBeside_true()
 	LidarImpl lidar(hardwareLidar);
 	lidar.updateSensorData();
 
-	CPPUNIT_ASSERT(lidar.isPuckCollectable());
+	CPPUNIT_ASSERT(lidar.isPuckCollectable(m_maximumDistance, m_maximumAngle));
 }
 
 void LidarTest::isPuckCollectable_onePuckCloseEnoughtAndAnotherOneStraightAhead_false()
@@ -690,5 +693,5 @@ void LidarTest::isPuckCollectable_onePuckCloseEnoughtAndAnotherOneStraightAhead_
 	LidarImpl lidar(hardwareLidar);
 	lidar.updateSensorData();
 
-	CPPUNIT_ASSERT(!lidar.isPuckCollectable());
+	CPPUNIT_ASSERT(!lidar.isPuckCollectable(m_maximumDistance, m_maximumAngle));
 }
