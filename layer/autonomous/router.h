@@ -9,6 +9,7 @@ namespace Common
 {
 	class Point;
 	class Circle;
+	class Path;
 }
 
 namespace Layer
@@ -24,8 +25,7 @@ namespace Autonomous
 		Router(double robotWidth, const Field &field);
 
 		Route calculateRoute(const Common::Point &start, const Common::Point &end) const;
-		std::vector<Common::Point> getPointsBesideObstacle(
-				const std::vector<Common::Point> &intersectionPointsWithObstacle, const Common::Circle &obstacle) const;
+		std::vector<Common::Point> getPointsBesideObstacle(const Common::Path &path, const Common::Circle &obstacle) const;
 
 	private:
 		const Field &m_field;
