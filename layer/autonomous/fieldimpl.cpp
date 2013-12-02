@@ -1,9 +1,9 @@
 #include "layer/autonomous/fieldimpl.h"
 #include "layer/autonomous/fieldobject.h"
 #include "layer/autonomous/fielddetector.h"
-#include "layer/dataanalysis/odometryimpl.h"
-#include "layer/dataanalysis/lidarimpl.h"
-#include "layer/dataanalysis/cameraimpl.h"
+#include "layer/dataanalysis/odometry.h"
+#include "layer/dataanalysis/lidar.h"
+#include "layer/dataanalysis/camera.h"
 #include "common/compare.h"
 #include "common/robotposition.h"
 #include <math.h>
