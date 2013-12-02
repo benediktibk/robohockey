@@ -306,3 +306,7 @@ resources/testfiles/lidar_32.txt
 resources/testfiles/sonar_3.txt
 resources/testfiles/lidar_34.txt
 resources/testfiles/lidar_35.txt
+layer/autonomous/fieldobjectdistancecomparetest.h
+layer/autonomous/fieldobjectdistancecompare.h
+layer/autonomous/fieldobjectdistancecomparetest.cpp
+layer/autonomous/fieldobjectdistancecompare.cpp

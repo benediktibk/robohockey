@@ -30,6 +30,9 @@ namespace Autonomous
 		CPPUNIT_TEST(tryToDetectField_validPattern_correctNumberOfFieldObjects);
 		CPPUNIT_TEST(tryToDetectField_validPattern_correctTransformation);
 		CPPUNIT_TEST(tryToDetectField_realWorldExample_positionIsCorrect);
+		CPPUNIT_TEST(getObjectsWithColorOrderedByDistance_oneObjectWithCorrectColorAndOneWithNoColor_resultSizeIsCorrect);
+		CPPUNIT_TEST(getObjectsWithColorOrderedByDistance_twoObjectsWithCorrectColorInAscendingOrder_orderIsCorrect);
+		CPPUNIT_TEST(getObjectsWithColorOrderedByDistance_twoObjectsWithCorrectColorInDescendingOrder_orderIsCorrect);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
@@ -49,6 +52,9 @@ namespace Autonomous
 		void tryToDetectField_validPattern_correctNumberOfFieldObjects();
 		void tryToDetectField_validPattern_correctTransformation();
 		void tryToDetectField_realWorldExample_positionIsCorrect();
+		void getObjectsWithColorOrderedByDistance_oneObjectWithCorrectColorAndOneWithNoColor_resultSizeIsCorrect();
+		void getObjectsWithColorOrderedByDistance_twoObjectsWithCorrectColorInAscendingOrder_orderIsCorrect();
+		void getObjectsWithColorOrderedByDistance_twoObjectsWithCorrectColorInDescendingOrder_orderIsCorrect();
 	};
 }
 }

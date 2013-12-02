@@ -1,16 +1,18 @@
 #include "layer/autonomous/fieldimpl.h"
 #include "layer/autonomous/fieldobject.h"
 #include "layer/autonomous/fielddetector.h"
+#include "layer/autonomous/fieldobjectdistancecompare.h"
 #include "layer/dataanalysis/odometry.h"
 #include "layer/dataanalysis/lidar.h"
 #include "layer/dataanalysis/camera.h"
 #include "common/compare.h"
 #include "common/robotposition.h"
 #include <math.h>
+#include <algorithm>
 
-using namespace RoboHockey::Layer::Autonomous;
-using namespace RoboHockey::Common;
 using namespace std;
+using namespace RoboHockey::Common;
+using namespace RoboHockey::Layer::Autonomous;
 
 FieldImpl::FieldImpl(DataAnalysis::Odometry &odometry, const DataAnalysis::Lidar &lidar, DataAnalysis::Camera &camera):
 	m_odometry(&odometry),
@@ -43,6 +45,14 @@ const vector<FieldObject> &FieldImpl::getAllFieldObjects() const
 const vector<Circle> &FieldImpl::getAllObstacles() const
 {
 	return m_obstacles;
+}
+
+vector<FieldObject> FieldImpl::getObjectsWithColorOrderdByDistance(FieldObjectColor color, const Point &position) const
+{
+	vector<FieldObject> result = getObjectsWithColor(color);
+	FieldObjectDistanceCompare compare(position);
+	sort(result.begin(), result.end(), compare);
+	return result;
 }
 
 bool FieldImpl::calibratePosition()
@@ -80,14 +90,14 @@ void FieldImpl::updateWithLidarData()
 		{
 			vector<FieldObject>::iterator currentObject = getNextObjectFromPosition(inVisibleArea, (*i).getCenter());
 
-			if ( tryToMergeLidarAndFieldObject(*currentObject, *i))
+			if (tryToMergeLidarAndFieldObject(*currentObject, *i))
 			{
 				inVisibleArea.erase(currentObject);
 				continue;
 			}
 		}
 
-		FieldObject object(*i,FieldObjectColorUnknown);
+		FieldObject object(*i, FieldObjectColorUnknown);
 		m_fieldObjects.push_back(object);
 	}
 }
@@ -108,8 +118,6 @@ void FieldImpl::updateWithCameraData()
 	{
 		const DataAnalysis::CameraObject &currentObject = allCameraObjects[i];
 		FieldObject &nextFieldObject = getNextObjectFromPosition(currentObject.getPosition());
-
-//		cout << "Camera: " << currentObject.getPosition() << " Laser: " << nextFieldObject.getCircle().getCenter() << " delta: " << currentObject.getPosition().distanceTo(nextFieldObject.getCircle().getCenter()) << endl;
 
 		if (currentObject.getPosition().distanceTo(nextFieldObject.getCircle().getCenter()) < 0.07)
 		{
@@ -247,20 +255,27 @@ void FieldImpl::rotateCoordinateSystem(double alpha)
 
 }
 
-std::vector<Point> &FieldImpl::getPointsOfObjectsWithDiameterAndColor(double diameter, FieldObjectColor color)
+vector<Point> &FieldImpl::getPointsOfObjectsWithDiameterAndColor(double diameter, FieldObjectColor color)
 {
 	vector<Point> *resultObjects = new vector<Point>;
 
 	Compare compare(0.04);
 	for (vector<FieldObject>::iterator i = m_fieldObjects.begin(); i != m_fieldObjects.end(); ++i)
-	{
 		if (compare.isFuzzyEqual(((*i).getCircle()).getDiameter(), diameter) && ((*i).getColor() == color || (*i).getColor() == FieldObjectColorUnknown))
-		{
 			resultObjects->push_back(((*i).getCircle()).getCenter());
-		}
-	}
 
 	return *resultObjects;
+}
+
+vector<FieldObject> FieldImpl::getObjectsWithColor(FieldObjectColor color) const
+{
+	vector<FieldObject> result;
+
+	for (vector<FieldObject>::const_iterator i = m_fieldObjects.begin(); i != m_fieldObjects.end(); ++i)
+		if (i->getColor() == color)
+			result.push_back(*i);
+
+	return result;
 }
 
 vector<FieldObject> FieldImpl::moveAllFieldObjectsInVisibleAreaToTemporaryVector()

@@ -20,6 +20,11 @@ const vector<Circle>& FieldMock::getAllObstacles() const
 	return m_obstacles;
 }
 
+vector<FieldObject> FieldMock::getObjectsWithColorOrderdByDistance(FieldObjectColor, const Point&) const
+{
+	return vector<FieldObject>();
+}
+
 bool FieldMock::calibratePosition()
 {
 	return false;

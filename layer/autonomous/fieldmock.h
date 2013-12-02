@@ -19,6 +19,7 @@ namespace Autonomous
 		virtual void update();
 		virtual const std::vector<FieldObject>& getAllFieldObjects() const;
 		virtual const std::vector<Common::Circle>& getAllObstacles() const;
+		virtual std::vector<FieldObject> getObjectsWithColorOrderdByDistance(Common::FieldObjectColor color, const Common::Point &position) const;
 
 		virtual bool calibratePosition();
 
