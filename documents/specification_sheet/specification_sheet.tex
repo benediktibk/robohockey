@@ -26,19 +26,19 @@ Um alle Regeln einzuhalten und die geforderten Mindestanzahl von 15 Punkten zu e
 
 \subsection{Kommunikation mit dem Schiedsrichter}
 Der Roboter verbindet sich mithilfe der Hermes-Klasse zum Schiedsrichterserver \textit{Angelina}. \\
-Diesem muss in der ersten Phase des Spiels die erkannte Teamfarbe und außerdem mindestens alle 45 Sekunden das \textit{sendAlive()} Signal gesendet. Das Signal \textit{reportGoal()} muss nach Erzielen eines Tors geschickt werden. Nach Erhalt von \textit{gameOver()} oder \textit{stopMovement()} muss der Roboter sofort stehen bleiben.
+Diesem muss in der ersten Phase des Spiels die erkannte Teamfarbe und außerdem mindestens alle 45 Sekunden das \textit{sendAlive()} Signal gesendet werden. Das Signal \textit{reportGoal()} muss nach Erzielen eines Tors geschickt werden. Nach Erhalt von \textit{gameOver()} oder \textit{stopMovement()} muss der Roboter sofort stehen bleiben.
 
 \subsection{Spielstrategie}
 Die Spielstrategie wird durch mindestens eine State Machine realisiert. Als Eingänge der State Machine dienen u.a. die Signale des Schiedsrichters.\\
-Während des Spiels bestimmt die Strategie hauptsächlich die Zielpunkte und Zielobjekte des Roboters.
+Während des Spiels bestimmt die Strategie hauptsächlich die Zielpunkte und Ziel\-objekte des Roboters.
 
 \subsection{Spielfelderkennung}
 Um die korrekte Orientierung des Roboters zu gewährleisten wird mindestens am Anfang das Spielfeld erkannt. Dazu benutzt der Roboter mindestens die Daten von der Lasermessung und berechnet sich aus den Positionen der Spielbegenzungspfosten die eigene Position auf dem Spielfeld.\\
-Optional werden auch die durch die Kamera bestimmten Farben der Objekte hinzugezogen, etwa um Pucks bei der Suche auszuschließen.\\
+Optional werden auch die durch die Kamera bestimmte Farben der Objekte hinzugezogen, etwa um Pucks bei der Suche auszuschließen.\\
 Danach wird der Roboter die Farbe des eigenen Tors bestimmen.
 
 \subsection{Routenplanung}
-Durch die Routenplanung sollen Kollisionskurse von vornherein vermieden werden. So soll ein Pfad geplant werden, welcher allen bekannten Hindernissen ausweicht, sodass es im besten Fall nie zur direkten Kollisionsverhinderung kommen muss.
+Durch die Routenplanung sollen Kollisionen von vornherein vermieden werden. So soll ein Pfad geplant werden, welcher allen bekannten Hindernissen ausweicht, sodass es im besten Fall nie zur direkten Kollisionsverhinderung kommen muss.
 
 \subsection{Motorsteuerung}
 Zum Fahren des Roboters wird ein Regler verwendet um Fehler beim Anfahren von Zielen zu minimieren.
