@@ -61,7 +61,10 @@ namespace Autonomous
 		CPPUNIT_TEST(collectPuckInFront_puckAhead_notStuckAtObstacle);
 		CPPUNIT_TEST(collectPuckInFront_puckAheadAndStartedToMove_notStuckAtObstacle);
 		CPPUNIT_TEST(collectPuckInFront_puckAheadAndAlreadyUpdatedTheEngine_notStuckAtObstacle);
-		CPPUNIT_TEST(collectPuckInFront_puckCollected_reachedTarget);
+		CPPUNIT_TEST(collectPuckInFront_puckCollectedButEngineTargetNotReached_reachedTarget);
+		CPPUNIT_TEST(collectPuckInFront_puckNotYetCollected_notReachedTarget);
+		CPPUNIT_TEST(collectPuckInFront_drivenToFarAndPuckNotYetCollected_notReachedTarget);
+		CPPUNIT_TEST(collectPuckInFront_drivenToFarAndPuckNotYetCollected_cantReachTarget);
 		CPPUNIT_TEST(collectPuckInFront_noPuckAhead_cantReachTarget);
 		CPPUNIT_TEST(collectPuckInFront_puckAhead_canReachTarget);
 		CPPUNIT_TEST(leaveCollectedPuck_drivenFarEnoughBack_reachedTarget);
@@ -115,7 +118,10 @@ namespace Autonomous
 		void collectPuckInFront_puckAhead_notStuckAtObstacle();
 		void collectPuckInFront_puckAheadAndStartedToMove_notStuckAtObstacle();
 		void collectPuckInFront_puckAheadAndAlreadyUpdatedTheEngine_notStuckAtObstacle();
-		void collectPuckInFront_puckCollected_reachedTarget();
+		void collectPuckInFront_puckCollectedButEngineTargetNotReached_reachedTarget();
+		void collectPuckInFront_puckNotYetCollected_notReachedTarget();
+		void collectPuckInFront_drivenToFarAndPuckNotYetCollected_notReachedTarget();
+		void collectPuckInFront_drivenToFarAndPuckNotYetCollected_cantReachTarget();
 		void collectPuckInFront_noPuckAhead_cantReachTarget();
 		void collectPuckInFront_puckAhead_canReachTarget();
 		void leaveCollectedPuck_drivenFarEnoughBack_reachedTarget();

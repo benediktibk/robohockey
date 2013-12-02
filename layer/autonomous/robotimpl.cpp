@@ -75,6 +75,13 @@ void RobotImpl::updateEngineForWaiting()
 void RobotImpl::updateEngineForCollectingPuck()
 {
 	DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
+	const DataAnalysis::Lidar &lidar = m_dataAnalyser->getLidar();
+
+	if (!lidar.isPuckCollectable())
+	{
+		m_cantReachTarget = true;
+		return;
+	}
 
 	if (m_stateChanged)
 	{
