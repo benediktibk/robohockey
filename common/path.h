@@ -1,8 +1,8 @@
 #ifndef ROBOHOCKEY_COMMON_PATH_H
 #define ROBOHOCKEY_COMMON_PATH_H
 
-#include "common/point.h"
 #include <vector>
+#include "common/point.h"
 
 namespace  RoboHockey
 {
