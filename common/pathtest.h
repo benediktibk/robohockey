@@ -23,6 +23,11 @@ namespace Common
 		 CPPUNIT_TEST(intersectsWith_oneBoundaryPostFarAwaySimplified_false);
 		 CPPUNIT_TEST(isCircleOnPath_circleOnPath_true);
 		 CPPUNIT_TEST(isCircleOnPath_circleCenterIsNotOnPath_false);
+		 CPPUNIT_TEST(getIntersectPoints_circleWithNoIntersects_intersectPointsCountIs0);
+		 CPPUNIT_TEST(getIntersectPoints_circleToutchesLine_intersectPointsCountIs1);
+		 CPPUNIT_TEST(getIntersectPoints_circleIntersectsLine_intersectPointsCountIs2);
+		 CPPUNIT_TEST(getIntersectPoints_circleIntersectsLineFromRight_intersectTypeFromRight);
+		 CPPUNIT_TEST(getIntersectPoints_circleIntersectsLineFromRight_intersectPointIs);
 		 CPPUNIT_TEST_SUITE_END();
 
 	private:
@@ -37,6 +42,11 @@ namespace Common
 		 void intersectsWith_oneBoundaryPostFarAwaySimplified_false();
 		 void isCircleOnPath_circleOnPath_true();
 		 void isCircleOnPath_circleCenterIsNotOnPath_false();
+		 void getIntersectPoints_circleWithNoIntersects_intersectPointsCountIs0();
+		 void getIntersectPoints_circleToutchesLine_intersectPointsCountIs1();
+		 void getIntersectPoints_circleIntersectsLine_intersectPointsCountIs2();
+		 void getIntersectPoints_circleIntersectsLineFromRight_intersectTypeFromRight();
+		 void getIntersectPoints_circleIntersectsLineFromRight_intersectPointIs();
 
 	};
 }

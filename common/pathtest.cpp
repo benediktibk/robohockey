@@ -1,6 +1,8 @@
 #include "common/pathtest.h"
 #include "common/path.h"
 #include "common/circle.h"
+#include "common/pathintersectpoints.h"
+#include "common/compare.h"
 
 using namespace RoboHockey::Common;
 
@@ -79,4 +81,40 @@ void PathTest::isCircleOnPath_circleCenterIsNotOnPath_false()
 	Path path(Point(0,0), Point(3,0), 0.4);
 
 	CPPUNIT_ASSERT(!path.isCircleCenterOnPath(Circle(Point(1.5,0.3),0.3)));
+}
+
+void PathTest::getIntersectPoints_circleWithNoIntersects_intersectPointsCountIs0()
+{
+	Path path(Point(-2,2), Point(2,2), 0.2);
+
+	CPPUNIT_ASSERT_EQUAL((size_t)0, path.getIntersectPoints(Circle(Point(0,0), 1)).getIntersectPointsCount());
+}
+
+void PathTest::getIntersectPoints_circleToutchesLine_intersectPointsCountIs1()
+{
+	Path path(Point(-2,2), Point(2,2), 1);
+
+	CPPUNIT_ASSERT_EQUAL((size_t)1, path.getIntersectPoints(Circle(Point(0,0), 3)).getIntersectPointsCount());
+}
+
+void PathTest::getIntersectPoints_circleIntersectsLine_intersectPointsCountIs2()
+{
+	Path path(Point(-2,2), Point(2,2), 1);
+
+	CPPUNIT_ASSERT_EQUAL((size_t)2, path.getIntersectPoints(Circle(Point(0,0), 4)).getIntersectPointsCount());
+}
+
+void PathTest::getIntersectPoints_circleIntersectsLineFromRight_intersectTypeFromRight()
+{
+	Path path(Point(-2,2), Point(2,2), 1);
+
+	CPPUNIT_ASSERT_EQUAL(PathIntersectPoints::IntersectTypeFromRight, path.getIntersectPoints(Circle(Point(0,0), 4)).getIntersectTypeFrom());
+}
+
+void PathTest::getIntersectPoints_circleIntersectsLineFromRight_intersectPointIs()
+{
+	Compare compare(0.0001);
+	Path path(Point(-2,2.5), Point(3,2.5), 1);
+
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(2,2), path.getIntersectPoints(Circle(Point(1,1), 2.8284)).getIntersectPoints().front()));
 }
