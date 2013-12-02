@@ -846,7 +846,7 @@ void RobotTest::collectPuckInFront_drivenToFarAndPuckNotYetCollected_notReachedT
 	robot.updateSensorData();
 	robot.collectPuckInFront();
 	robot.updateActuators(field);
-	odometry.setCurrentPosition(RobotPosition(Point(0.5, 0), 0));
+	odometry.setCurrentPosition(RobotPosition(Point(1, 0), 0));
 	robot.updateSensorData();
 	robot.updateActuators(field);
 
@@ -869,7 +869,7 @@ void RobotTest::collectPuckInFront_drivenToFarAndPuckNotYetCollected_cantReachTa
 	robot.updateSensorData();
 	robot.collectPuckInFront();
 	robot.updateActuators(field);
-	odometry.setCurrentPosition(RobotPosition(Point(0.5, 0), 0));
+	odometry.setCurrentPosition(RobotPosition(Point(1, 0), 0));
 	robot.updateSensorData();
 	robot.updateActuators(field);
 
