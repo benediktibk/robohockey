@@ -9,6 +9,7 @@ set(COMMON_SRC
 	angle.cpp
 	path.cpp
 	line.cpp
+	pathintersectpoints.cpp
 )
 
 set(COMMON_TEST_SRC
@@ -22,6 +23,7 @@ set(COMMON_TEST_SRC
 	angletest.cpp
 	pathtest.cpp
 	linetest.cpp
+	pathintersectpointstest.cpp
 )
 
 add_library(common ${COMMON_SRC})

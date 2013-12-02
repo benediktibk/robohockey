@@ -2,6 +2,7 @@
 #include "common/circle.h"
 #include "common/line.h"
 #include "common/angle.h"
+#include "common/pathintersectpoints.h"
 #include <math.h>
 
 using namespace std;
@@ -18,7 +19,7 @@ bool Path::intersectsWith(const Circle &circle) const
 
 	if(isCircleCenterOnPath(circle))
 		return true;
-	if (getIntersectPoints(circle).size() != 0)
+	if (getIntersectPoints(circle).getIntersectPointsCount() != 0)
 		return true;
 
 	return false;
@@ -45,9 +46,8 @@ bool Path::isCircleCenterOnPath(const Circle &circle) const
 		return false;
 }
 
-std::vector<Point> Path::getIntersectPoints(const Circle &circle) const
+PathIntersectPoints Path::getIntersectPoints(const Circle &circle) const
 {
-	vector<Point> intersectPoints;
 	Angle angleBetweenPoints(m_start, m_end);
 	Point startLeft(m_start + Point(sqrt(2)*0.5*m_width, Angle::getQuarterRotation() + Angle::getEighthRotation() + angleBetweenPoints));
 	Point startRight(m_start + Point(sqrt(2)*0.5*m_width, angleBetweenPoints - Angle::getQuarterRotation() - Angle::getEighthRotation()));
@@ -58,16 +58,16 @@ std::vector<Point> Path::getIntersectPoints(const Circle &circle) const
 	Line startOutline(startLeft, startRight);
 	Line endOutline(endLeft, endRight);
 
-	intersectPoints = leftOutline.getIntersectPoints(circle);
-	if(intersectPoints.size() != 0)
-		return intersectPoints;
-	intersectPoints = rightOutline.getIntersectPoints(circle);
-	if(intersectPoints.size() != 0)
-		return intersectPoints;
-	intersectPoints = startOutline.getIntersectPoints(circle);
-	if(intersectPoints.size() != 0)
-		return intersectPoints;
-	intersectPoints = endOutline.getIntersectPoints(circle);
+	PathIntersectPoints intersectPointsLeft(leftOutline.getIntersectPoints(circle), PathIntersectPoints::IntersectTypeFromLeft);
+	if(intersectPointsLeft.getIntersectPointsCount() != 0)
+		return intersectPointsLeft;
+	PathIntersectPoints intersectPointsRight(rightOutline.getIntersectPoints(circle), PathIntersectPoints::IntersectTypeFromRight);
+	if(intersectPointsRight.getIntersectPointsCount() != 0)
+		return intersectPointsRight;
+	PathIntersectPoints intersectPointsStart(startOutline.getIntersectPoints(circle), PathIntersectPoints::IntersectTypeFromStart);
+	if(intersectPointsStart.getIntersectPointsCount() != 0)
+		return intersectPointsStart;
+	PathIntersectPoints intersectPointsEnd(endOutline.getIntersectPoints(circle), PathIntersectPoints::IntersectTypeFromEnd);
 
-	return intersectPoints;
+	return intersectPointsEnd;
 }

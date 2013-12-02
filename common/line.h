@@ -15,11 +15,11 @@ namespace Common
 	public:
 		Line(const Point &start, const Point &end);
 
-		std::vector<Common::Point> getIntersectPoints(const Circle &circle) const;
+		std::vector<Point> getIntersectPoints(const Circle &circle) const;
 
 	private:
-		const Common::Point m_start;
-		const Common::Point m_end;
+		const Point m_start;
+		const Point m_end;
 	};
 }
 }

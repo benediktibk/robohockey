@@ -38,6 +38,7 @@
 #include "layer/strategy/initialstatetest.h"
 #include "common/pathtest.h"
 #include "common/linetest.h"
+#include "common/pathintersectpointstest.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Common::CompareTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Common::WatchTest);
@@ -49,6 +50,7 @@ CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Common::RobotPositionTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Common::AngleTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Common::PathTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Common::LineTest);
+CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Common::PathIntersectPointsTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Threading::ThreadTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Threading::MutexTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Threading::SignalTest);

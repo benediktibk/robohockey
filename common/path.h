@@ -1,14 +1,15 @@
 #ifndef ROBOHOCKEY_COMMON_PATH_H
 #define ROBOHOCKEY_COMMON_PATH_H
 
-#include "common/point.h"
 #include <vector>
+#include "common/point.h"
 
 namespace  RoboHockey
 {
 namespace Common
 {
 	class Circle;
+	class PathIntersectPoints;
 
 	class Path
 	{
@@ -18,7 +19,7 @@ namespace Common
 		bool intersectsWith(const Circle &circle) const;
 		bool intersectsWith(const std::vector<Circle> &circles) const;
 		bool isCircleCenterOnPath(const Circle &circle) const;
-		std::vector<Common::Point> getIntersectPoints(const Circle &circle) const;
+		PathIntersectPoints getIntersectPoints(const Circle &circle) const;
 
 	private:
 		Point m_start;
