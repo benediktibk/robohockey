@@ -326,6 +326,8 @@ void FieldTest::tryToDetectField_realWorldExample_positionIsCorrect()
 	Hardware::LidarMock &lidar = hardwareRobot->getLidarMock();
 	lidar.readSensorDataFromFile("resources/testfiles/lidar_35.txt");
 
+	dataAnalyser.updateSensorData();
+
 	field.update();
 	field.calibratePosition();
 
