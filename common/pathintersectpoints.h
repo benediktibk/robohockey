@@ -18,14 +18,14 @@ public:
 					   };
 
 public:
-	PathIntersectPoints(std::vector<Common::Point> intersectPoints, IntersectType intersectFrom);
+	PathIntersectPoints(std::vector<Point> intersectPoints, IntersectType intersectFrom);
 
-	std::vector<Common::Point> getIntersectPoints();
+	std::vector<Point> getIntersectPoints();
 	IntersectType getIntersectTypeFrom();
 	std::size_t getIntersectPointsCount();
 
 private:
-	std::vector<Common::Point> m_intersectPoints;
+	std::vector<Point> m_intersectPoints;
 	IntersectType m_intersectFrom;
 	
 };
