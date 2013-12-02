@@ -80,9 +80,11 @@ void RobotImpl::updateEngineForCollectingPuck()
 {
 	DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
 	const DataAnalysis::Lidar &lidar = m_dataAnalyser->getLidar();
+	bool lidarPuckCollectable = lidar.isPuckCollectable(m_maximumDistanceToCollectPuck, m_maximumAngleToCollectPuck);
+	bool fromTargetPositionPuckCollectable = isCurrentTargetPuckCollectable();
 
-	if (	!lidar.isPuckCollectable(m_maximumDistanceToCollectPuck, m_maximumAngleToCollectPuck) ||
-			!isCurrentTargetPuckCollectable())
+	if (	!lidarPuckCollectable ||
+			!fromTargetPositionPuckCollectable)
 	{
 		m_cantReachTarget = true;
 		return;
