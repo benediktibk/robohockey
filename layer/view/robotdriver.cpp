@@ -82,8 +82,15 @@ void RobotDriver::update()
 
 		if(m_model.getCollectPuckInFront() && targets.size() == 0)
 		{
-			m_robot.collectPuckInFront();
-			m_model.setData(targets, false, false, false, false, false, false);
+			vector<FieldObject> pucks = m_field.getObjectsWithColorOrderdByDistance(FieldObjectColorBlue, m_robot.getCurrentPosition().getPosition());
+
+			if (pucks.size() > 0)
+			{
+				const FieldObject &firstPuck = pucks.front();
+				const Point &firstPuckPosition = firstPuck.getCircle().getCenter();
+				m_robot.collectPuckInFront(firstPuckPosition);
+				m_model.setData(targets, false, false, false, false, false, false);
+			}
 		}
 
 		if(m_model.getLeavePuckInFront() && targets.size() == 0)

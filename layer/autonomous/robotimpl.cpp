@@ -235,9 +235,10 @@ void RobotImpl::stop()
 	changeIntoState(RobotStateWaiting);
 }
 
-void RobotImpl::collectPuckInFront()
+void RobotImpl::collectPuckInFront(const Point &puckPosition)
 {
 	changeIntoState(RobotStateCollectingPuck);
+	m_currentTarget = puckPosition;
 }
 
 void RobotImpl::leaveCollectedPuck()

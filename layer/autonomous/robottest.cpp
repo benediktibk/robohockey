@@ -99,7 +99,7 @@ void RobotTest::stuckAtObstacle_collectPuckInFrontCalled_false()
 	robot.updateActuators(field);
 	engine.setTryingToTackleObstacle(false);
 	robot.updateSensorData();
-	robot.collectPuckInFront();
+	robot.collectPuckInFront(Point(0.4, 0));
 	robot.leaveCollectedPuck();
 	robot.updateActuators(field);
 
@@ -590,7 +590,7 @@ void RobotTest::cantReachTarget_collectPuckInFrontCalled_false()
 	robot.updateActuators(field);
 	lidar.setPuckCollectable(true);
 	robot.updateSensorData();
-	robot.collectPuckInFront();
+	robot.collectPuckInFront(Point(0.4, 0));
 	robot.updateActuators(field);
 
 	CPPUNIT_ASSERT(!robot.cantReachTarget());
@@ -738,7 +738,7 @@ void RobotTest::collectPuckInFront_puckAhead_notStuckAtObstacle()
 	FieldMock field;
 
 	robot.updateSensorData();
-	robot.collectPuckInFront();
+	robot.collectPuckInFront(Point(0.4, 0));
 	robot.updateActuators(field);
 
 	CPPUNIT_ASSERT(!robot.stuckAtObstacle());
@@ -756,7 +756,7 @@ void RobotTest::collectPuckInFront_puckAheadAndStartedToMove_notStuckAtObstacle(
 	FieldMock field;
 
 	robot.updateSensorData();
-	robot.collectPuckInFront();
+	robot.collectPuckInFront(Point(0.4, 0));
 	robot.updateActuators(field);
 	robot.updateSensorData();
 	robot.updateActuators(field);
@@ -778,7 +778,7 @@ void RobotTest::collectPuckInFront_puckAheadAndAlreadyUpdatedTheEngine_notStuckA
 	robot.updateSensorData();
 	robot.updateActuators(field);
 	robot.updateSensorData();
-	robot.collectPuckInFront();
+	robot.collectPuckInFront(Point(0.4, 0));
 	robot.updateActuators(field);
 
 	CPPUNIT_ASSERT(!robot.stuckAtObstacle());
@@ -797,7 +797,7 @@ void RobotTest::collectPuckInFront_puckCollectedButEngineTargetNotReached_reache
 	odometry.setCurrentPosition(RobotPosition(Point(0, 0), 0));
 	lidar.setPuckCollectable(true);
 	robot.updateSensorData();
-	robot.collectPuckInFront();
+	robot.collectPuckInFront(Point(0.4, 0));
 	robot.updateActuators(field);
 	lidar.setPuckCollectable(true);
 	lidar.setPuckCollected(true);
@@ -821,7 +821,7 @@ void RobotTest::collectPuckInFront_puckNotYetCollected_notReachedTarget()
 	lidar.setPuckCollectable(true);
 	lidar.setPuckCollected(false);
 	robot.updateSensorData();
-	robot.collectPuckInFront();
+	robot.collectPuckInFront(Point(0.4, 0));
 	robot.updateActuators(field);
 	lidar.setPuckCollectable(true);
 	robot.updateSensorData();
@@ -844,7 +844,7 @@ void RobotTest::collectPuckInFront_drivenToFarAndPuckNotYetCollected_notReachedT
 	lidar.setPuckCollectable(true);
 	lidar.setPuckCollected(false);
 	robot.updateSensorData();
-	robot.collectPuckInFront();
+	robot.collectPuckInFront(Point(0.4, 0));
 	robot.updateActuators(field);
 	odometry.setCurrentPosition(RobotPosition(Point(1, 0), 0));
 	robot.updateSensorData();
@@ -867,7 +867,7 @@ void RobotTest::collectPuckInFront_drivenToFarAndPuckNotYetCollected_cantReachTa
 	lidar.setPuckCollectable(true);
 	lidar.setPuckCollected(false);
 	robot.updateSensorData();
-	robot.collectPuckInFront();
+	robot.collectPuckInFront(Point(0.4, 0));
 	robot.updateActuators(field);
 	odometry.setCurrentPosition(RobotPosition(Point(1, 0), 0));
 	robot.updateSensorData();
@@ -885,7 +885,7 @@ void RobotTest::collectPuckInFront_noPuckAhead_cantReachTarget()
 
 	lidar.setPuckCollectable(false);
 	robot.updateSensorData();
-	robot.collectPuckInFront();
+	robot.collectPuckInFront(Point(0.4, 0));
 	robot.updateActuators(field);
 
 	CPPUNIT_ASSERT(robot.cantReachTarget());
@@ -900,7 +900,7 @@ void RobotTest::collectPuckInFront_puckAhead_canReachTarget()
 
 	lidar.setPuckCollectable(true);
 	robot.updateSensorData();
-	robot.collectPuckInFront();
+	robot.collectPuckInFront(Point(0.4, 0));
 	robot.updateActuators(field);
 
 	CPPUNIT_ASSERT(!robot.cantReachTarget());

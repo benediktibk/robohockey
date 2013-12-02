@@ -30,7 +30,7 @@ namespace Autonomous
 		virtual void updateActuators(const Field &field) = 0;
 		virtual void updateSensorData() = 0;
 		virtual void stop() = 0;
-		virtual void collectPuckInFront() = 0;
+		virtual void collectPuckInFront(const Common::Point &puckPosition) = 0;
 		virtual void leaveCollectedPuck() = 0;
 		virtual bool isMoving() = 0;
 		virtual void turnAround() = 0;

@@ -73,7 +73,7 @@ unsigned int RobotMock::getCallsToStop() const
 	return m_callsToStop;
 }
 
-void RobotMock::collectPuckInFront()
+void RobotMock::collectPuckInFront(const Point &)
 { }
 
 void RobotMock::leaveCollectedPuck()
