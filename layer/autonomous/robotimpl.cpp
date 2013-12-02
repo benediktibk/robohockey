@@ -20,7 +20,7 @@ using namespace std;
 
 RobotImpl::RobotImpl(DataAnalysis::DataAnalyser *dataAnalyser) :
 	m_robotWidth(0.38),
-	m_maximumDistanceToCollectPuck(0.5),
+	m_maximumDistanceToCollectPuck(0.75),
 	m_maximumAngleToCollectPuck(10.0/180*M_PI),
 	m_dataAnalyser(dataAnalyser),
 	m_tryingToTackleObstacle(false),
