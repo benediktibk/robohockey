@@ -13,10 +13,12 @@ class PathIntersectPointsTest :
 {
 	CPPUNIT_TEST_SUITE(PathIntersectPointsTest);
 	CPPUNIT_TEST(constructor_createDefaultObject_intersectPointsCountIs2);
+	CPPUNIT_TEST(constructor_createDefaultObject_intersectTypeFromLeft);
 	CPPUNIT_TEST_SUITE_END();
 
 private:
 	void constructor_createDefaultObject_intersectPointsCountIs2();
+	void constructor_createDefaultObject_intersectTypeFromLeft();
 	
 };
 }
