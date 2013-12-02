@@ -6,6 +6,10 @@
 
 namespace RoboHockey
 {
+namespace Common
+{
+	class Point;
+}
 namespace Layer
 {
 namespace Autonomous
@@ -20,6 +24,7 @@ namespace Autonomous
 		virtual const std::vector<Common::Circle>& getAllObstacles() const = 0;
 
 		virtual bool calibratePosition() = 0;
+		virtual bool isPointInsideField(const Common::Point &point) const = 0;
 	};
 }
 }

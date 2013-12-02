@@ -30,6 +30,9 @@ namespace Autonomous
 		CPPUNIT_TEST(tryToDetectField_validPattern_correctNumberOfFieldObjects);
 		CPPUNIT_TEST(tryToDetectField_validPattern_correctTransformation);
 		CPPUNIT_TEST(tryToDetectField_realWorldExample_positionIsCorrect);
+		CPPUNIT_TEST(isPointInsideField_notCalibrated_true);
+		CPPUNIT_TEST(isPointInsideField_pointIsInside_true);
+		CPPUNIT_TEST(isPointInsideField_pointIsOutside_false);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
@@ -49,6 +52,9 @@ namespace Autonomous
 		void tryToDetectField_validPattern_correctNumberOfFieldObjects();
 		void tryToDetectField_validPattern_correctTransformation();
 		void tryToDetectField_realWorldExample_positionIsCorrect();
+		void isPointInsideField_notCalibrated_true();
+		void isPointInsideField_pointIsInside_true();
+		void isPointInsideField_pointIsOutside_false();
 	};
 }
 }

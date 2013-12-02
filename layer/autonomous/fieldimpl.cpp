@@ -1,6 +1,7 @@
 #include "layer/autonomous/fieldimpl.h"
 #include "layer/autonomous/fieldobject.h"
 #include "layer/autonomous/fielddetector.h"
+#include "layer/autonomous/borderstonedistances.h"
 #include "layer/dataanalysis/odometry.h"
 #include "layer/dataanalysis/lidar.h"
 #include "layer/dataanalysis/camera.h"
@@ -16,7 +17,8 @@ FieldImpl::FieldImpl(DataAnalysis::Odometry &odometry, const DataAnalysis::Lidar
 	m_odometry(&odometry),
 	m_lidar(&lidar),
 	m_camera(&camera),
-	m_position(new Common::RobotPosition(m_odometry->getCurrentPosition()))
+	m_position(new Common::RobotPosition(m_odometry->getCurrentPosition())),
+	m_fieldState(FieldStateUnknownPosition)
 { }
 
 FieldImpl::~FieldImpl()
@@ -58,6 +60,7 @@ bool FieldImpl::calibratePosition()
 		Point newOrigin = detector.getNewOrigin();
 		transformCoordinateSystem(newOrigin, detector.getRotation());
 		cout << "Found borderstones -> System transformed." << endl;
+		m_fieldState = FieldStateCalibrated;
 	}
 	else
 		cout << "Didn't find enough borderstones." << endl;
@@ -65,6 +68,14 @@ bool FieldImpl::calibratePosition()
 	delete &input;
 
 	return result;
+}
+
+bool FieldImpl::isPointInsideField(const Point &point) const
+{
+	if (m_fieldState == FieldStateUnknownPosition)
+		return true;
+
+	return ( point.getX() < 5.0 && point.getX() > 0 && point.getY() < 3.0 && point.getY() > 0.0);
 }
 
 void FieldImpl::updateWithLidarData()

@@ -21,6 +21,7 @@ namespace Autonomous
 		virtual const std::vector<Common::Circle>& getAllObstacles() const;
 
 		virtual bool calibratePosition();
+		virtual bool isPointInsideField(const Common::Point &point) const;
 
 		void setFieldObjects(const std::vector<FieldObject> &objects);
 		void setObstacles(const std::vector<Common::Circle> &obstacles);

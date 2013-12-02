@@ -27,9 +27,15 @@ namespace Autonomous
 {
 	class FieldObject;
 
+
 	class FieldImpl :
 			public Field
 	{
+	private:
+			enum FieldState { FieldStateUnknownPosition,
+							  FieldStateCalibrated
+							};
+
 	public:
 		FieldImpl(DataAnalysis::Odometry &odometry, const DataAnalysis::Lidar &lidar, DataAnalysis::Camera &camera);
 		virtual ~FieldImpl();
@@ -39,6 +45,7 @@ namespace Autonomous
 		virtual const std::vector<Common::Circle>& getAllObstacles() const;
 
 		virtual bool calibratePosition();
+		virtual bool isPointInsideField(const Common::Point &point) const;
 
 	private:
 		void updateWithLidarData();
@@ -66,6 +73,7 @@ namespace Autonomous
 		Common::RobotPosition *m_position;
 		std::vector<FieldObject> m_fieldObjects;
 		std::vector<Common::Circle> m_obstacles;
+		FieldState m_fieldState;
 	};
 }
 }
