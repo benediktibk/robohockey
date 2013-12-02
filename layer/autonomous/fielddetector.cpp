@@ -116,8 +116,8 @@ bool FieldDetector::tryToFigureOutNewOrigin(BorderStone &root)
 	{
 		if (linear)
 		{
-			cornerOne = root + normFromRoot * (standardDistanceA);
-			cornerTwo = root + normToRoot * (standardDistanceA + 2*standardDistanceB + 2*standardDistanceC);
+			cornerOne = root + normFromRoot * (standardDistanceC + standardDistanceB + standardDistanceA);
+			cornerTwo = root + normToRoot * (standardDistanceC + standardDistanceB + standardDistanceA);
 		} else
 		{
 			cornerOne = root + normFromRoot * (2*standardDistanceC + standardDistanceB + standardDistanceA);
