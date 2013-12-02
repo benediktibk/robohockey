@@ -127,22 +127,23 @@ void FieldImpl::updateWithCameraData()
 	for (size_t i = 0; i < allCameraObjects.getObjectCount(); ++i)
 	{
 		const DataAnalysis::CameraObject &currentObject = allCameraObjects[i];
-		FieldObject &nextFieldObject = getNextObjectFromPosition(currentObject.getPosition());
 
-		if (currentObject.getPosition().distanceTo(nextFieldObject.getCircle().getCenter()) < 0.07)
+		FieldObject* nextFieldObject = &getNextObjectFromPosition(currentObject.getPosition());
+
+		if (currentObject.getPosition().distanceTo(nextFieldObject->getCircle().getCenter()) < 0.07)
 		{
-			nextFieldObject.setColor(currentObject.getColor());
-			Circle circle = nextFieldObject.getCircle();
+			nextFieldObject->setColor(currentObject.getColor());
+			Circle circle = nextFieldObject->getCircle();
 
 			if (currentObject.getColor() == FieldObjectColorBlue || currentObject.getColor() == FieldObjectColorYellow)
 			{
 				circle.setDiameter(0.12);
-				nextFieldObject.setCircle(circle);
+				nextFieldObject->setCircle(circle);
 			}
 			else if (currentObject.getColor() == FieldObjectColorGreen)
 			{
 				circle.setDiameter(0.06);
-				nextFieldObject.setCircle(circle);
+				nextFieldObject->setCircle(circle);
 			}
 		}
 	}
@@ -159,13 +160,14 @@ void FieldImpl::updateObstacles()
 
 FieldObject &FieldImpl::getNextObjectFromPosition(Point position)
 {
-	FieldObject &nextFieldObject = m_fieldObjects.front();
+	vector<FieldObject>::iterator result = m_fieldObjects.begin();
+
 	for (vector<FieldObject>::iterator i = m_fieldObjects.begin(); i != m_fieldObjects.end(); ++i)
 	{
-		if ( position.distanceTo((*i).getCircle().getCenter()) < position.distanceTo(nextFieldObject.getCircle().getCenter()))
-			nextFieldObject = *i;
+		if ( position.distanceTo((*i).getCircle().getCenter()) < position.distanceTo((*result).getCircle().getCenter()))
+			result = i;
 	}
-	return nextFieldObject;
+	return *result;
 }
 
 vector<FieldObject>::iterator FieldImpl::getNextObjectFromPosition(std::vector<FieldObject> &fieldObjects, Point position)
