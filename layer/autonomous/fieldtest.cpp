@@ -333,5 +333,5 @@ void FieldTest::tryToDetectField_realWorldExample_positionIsCorrect()
 
 	Compare compare(0.5);
 	RobotPosition position = odometry.getCurrentPosition();
-	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(2.5, 1.5), position));
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(2.5, 1.5), position.getPosition()));
 }
