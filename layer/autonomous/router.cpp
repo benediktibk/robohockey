@@ -23,8 +23,7 @@ Route Router::calculateRoute(const Point &/*start*/, const Point &end) const
 		return route;
 }
 
-vector<Point> Router::getPointsBesideObstacle(
-		const vector<Point> &/*intersectionPointsWithObstacle*/, const Circle &/*obstacle*/) const
+vector<Point> Router::getPointsBesideObstacle(const Path &/*path*/, const Circle &/*obstacle*/) const
 {
 	return vector<Point>();
 }
