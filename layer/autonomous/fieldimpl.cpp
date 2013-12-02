@@ -2,9 +2,9 @@
 #include "layer/autonomous/fieldobject.h"
 #include "layer/autonomous/fielddetector.h"
 #include "layer/autonomous/fieldobjectdistancecompare.h"
-#include "layer/dataanalysis/odometry.h"
 #include "layer/dataanalysis/lidar.h"
 #include "layer/dataanalysis/camera.h"
+#include "layer/dataanalysis/odometry.h"
 #include "common/compare.h"
 #include "common/robotposition.h"
 #include <math.h>
@@ -18,7 +18,8 @@ FieldImpl::FieldImpl(DataAnalysis::Odometry &odometry, const DataAnalysis::Lidar
 	m_odometry(&odometry),
 	m_lidar(&lidar),
 	m_camera(&camera),
-	m_position(new Common::RobotPosition(m_odometry->getCurrentPosition()))
+	m_position(new Common::RobotPosition(m_odometry->getCurrentPosition())),
+	m_fieldState(FieldStateUnknownPosition)
 { }
 
 FieldImpl::~FieldImpl()
@@ -57,9 +58,9 @@ vector<FieldObject> FieldImpl::getObjectsWithColorOrderdByDistance(FieldObjectCo
 
 bool FieldImpl::calibratePosition()
 {
-	vector<Point> &input = getPointsOfObjectsWithDiameterAndColor(0.06, FieldObjectColorGreen);
+	vector<Point> *input = getPointsOfObjectsWithDiameterAndColor(0.06, FieldObjectColorGreen);
 
-	FieldDetector detector(input);
+	FieldDetector detector(*input);
 
 	bool result = detector.tryToDetectField();
 
@@ -68,13 +69,22 @@ bool FieldImpl::calibratePosition()
 		Point newOrigin = detector.getNewOrigin();
 		transformCoordinateSystem(newOrigin, detector.getRotation());
 		cout << "Found borderstones -> System transformed." << endl;
+		m_fieldState = FieldStateCalibrated;
 	}
 	else
 		cout << "Didn't find enough borderstones." << endl;
 
-	delete &input;
+	delete input;
 
 	return result;
+}
+
+bool FieldImpl::isPointInsideField(const Point &point) const
+{
+	if (m_fieldState == FieldStateUnknownPosition)
+		return true;
+
+	return ( point.getX() < 5.0 && point.getX() > 0 && point.getY() < 3.0 && point.getY() > 0.0);
 }
 
 void FieldImpl::updateWithLidarData()
@@ -255,7 +265,7 @@ void FieldImpl::rotateCoordinateSystem(double alpha)
 
 }
 
-vector<Point> &FieldImpl::getPointsOfObjectsWithDiameterAndColor(double diameter, FieldObjectColor color)
+std::vector<Point> *FieldImpl::getPointsOfObjectsWithDiameterAndColor(double diameter, FieldObjectColor color)
 {
 	vector<Point> *resultObjects = new vector<Point>;
 
@@ -264,7 +274,7 @@ vector<Point> &FieldImpl::getPointsOfObjectsWithDiameterAndColor(double diameter
 		if (compare.isFuzzyEqual(((*i).getCircle()).getDiameter(), diameter) && ((*i).getColor() == color || (*i).getColor() == FieldObjectColorUnknown))
 			resultObjects->push_back(((*i).getCircle()).getCenter());
 
-	return *resultObjects;
+	return resultObjects;
 }
 
 vector<FieldObject> FieldImpl::getObjectsWithColor(FieldObjectColor color) const

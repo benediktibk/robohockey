@@ -409,3 +409,76 @@ void FieldTest::getObjectsWithColorOrderedByDistance_twoObjectsWithCorrectColorI
 	CPPUNIT_ASSERT(compare.isFuzzyEqual(Circle(Point(1, 0), 0.12), firstObject.getCircle()));
 	CPPUNIT_ASSERT(compare.isFuzzyEqual(Circle(Point(2, -1), 0.12), secondObject.getCircle()));
 }
+
+void FieldTest::isPointInsideField_notCalibrated_true()
+{
+	DataAnalysis::OdometryMock odometry;
+	DataAnalysis::LidarMock lidar;
+	DataAnalysis::CameraMock camera;
+	FieldImpl field(odometry, lidar, camera);
+
+	field.update();
+
+	CPPUNIT_ASSERT(field.isPointInsideField(Point(-1,-3)));
+}
+
+void FieldTest::isPointInsideField_pointIsInside_true()
+{
+	DataAnalysis::OdometryMock odometry;
+	DataAnalysis::LidarMock lidar;
+	DataAnalysis::CameraMock camera;
+	FieldImpl field(odometry, lidar, camera);
+
+	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 1), 0.06));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 1.833), 0.06));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 2.666), 0.06));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 3.916), 0.06));
+	lidar.setAllObjects(lidarObjects);
+
+	field.update();
+	field.calibratePosition();
+
+	CPPUNIT_ASSERT(field.isPointInsideField(Point(2,1.5)));
+}
+
+void FieldTest::isPointInsideField_pointIsOutside_false()
+{
+	DataAnalysis::OdometryMock odometry;
+	DataAnalysis::LidarMock lidar;
+	DataAnalysis::CameraMock camera;
+	FieldImpl field(odometry, lidar, camera);
+
+	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 1), 0.06));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 1.833), 0.06));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 2.666), 0.06));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 3.916), 0.06));
+	lidar.setAllObjects(lidarObjects);
+
+	field.update();
+	field.calibratePosition();
+
+	CPPUNIT_ASSERT(!field.isPointInsideField(Point(0.8,3.2)));
+}
+
+void FieldTest::isPointInsideField_pointIsUnderField_false()
+{
+	DataAnalysis::OdometryMock odometry;
+	DataAnalysis::LidarMock lidar;
+	DataAnalysis::CameraMock camera;
+	FieldImpl field(odometry, lidar, camera);
+
+	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 1), 0.06));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 1.833), 0.06));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 2.666), 0.06));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 3.916), 0.06));
+	lidar.setAllObjects(lidarObjects);
+
+	field.update();
+	field.calibratePosition();
+
+	CPPUNIT_ASSERT(!field.isPointInsideField(Point(-1,-3)));
+}
+

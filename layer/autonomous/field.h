@@ -7,6 +7,10 @@
 
 namespace RoboHockey
 {
+namespace Common
+{
+	class Point;
+}
 namespace Layer
 {
 namespace Autonomous
@@ -22,6 +26,7 @@ namespace Autonomous
 		virtual std::vector<FieldObject> getObjectsWithColorOrderdByDistance(Common::FieldObjectColor color, const Common::Point &position) const = 0;
 
 		virtual bool calibratePosition() = 0;
+		virtual bool isPointInsideField(const Common::Point &point) const = 0;
 	};
 }
 }

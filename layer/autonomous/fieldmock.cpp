@@ -30,6 +30,11 @@ bool FieldMock::calibratePosition()
 	return false;
 }
 
+bool FieldMock::isPointInsideField(const Point &/*point*/) const
+{
+	return true;
+}
+
 void FieldMock::setFieldObjects(const vector<FieldObject> &objects)
 {
 	m_objects = objects;

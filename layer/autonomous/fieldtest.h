@@ -33,6 +33,10 @@ namespace Autonomous
 		CPPUNIT_TEST(getObjectsWithColorOrderedByDistance_oneObjectWithCorrectColorAndOneWithNoColor_resultSizeIsCorrect);
 		CPPUNIT_TEST(getObjectsWithColorOrderedByDistance_twoObjectsWithCorrectColorInAscendingOrder_orderIsCorrect);
 		CPPUNIT_TEST(getObjectsWithColorOrderedByDistance_twoObjectsWithCorrectColorInDescendingOrder_orderIsCorrect);
+		CPPUNIT_TEST(isPointInsideField_notCalibrated_true);
+		CPPUNIT_TEST(isPointInsideField_pointIsInside_true);
+		CPPUNIT_TEST(isPointInsideField_pointIsOutside_false);
+		CPPUNIT_TEST(isPointInsideField_pointIsUnderField_false);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
@@ -55,6 +59,10 @@ namespace Autonomous
 		void getObjectsWithColorOrderedByDistance_oneObjectWithCorrectColorAndOneWithNoColor_resultSizeIsCorrect();
 		void getObjectsWithColorOrderedByDistance_twoObjectsWithCorrectColorInAscendingOrder_orderIsCorrect();
 		void getObjectsWithColorOrderedByDistance_twoObjectsWithCorrectColorInDescendingOrder_orderIsCorrect();
+		void isPointInsideField_notCalibrated_true();
+		void isPointInsideField_pointIsInside_true();
+		void isPointInsideField_pointIsOutside_false();
+		void isPointInsideField_pointIsUnderField_false();
 	};
 }
 }
