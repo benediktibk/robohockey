@@ -17,3 +17,8 @@ PathIntersectPoints::IntersectType PathIntersectPoints::getIntersectTypeFrom()
 	return m_intersectFrom;
 }
 
+std::size_t PathIntersectPoints::getIntersectPointsCount()
+{
+	return m_intersectPoints.size();
+}
+

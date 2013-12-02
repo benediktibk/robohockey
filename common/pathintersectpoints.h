@@ -12,7 +12,9 @@ class PathIntersectPoints
 {
 public:
 	enum IntersectType { IntersectTypeFromLeft,
-						 IntersectTypeFromRight
+						 IntersectTypeFromRight,
+						 IntersectTypeFromEnd,
+						 IntersectTypeFromStart
 					   };
 
 public:
@@ -20,6 +22,7 @@ public:
 
 	std::vector<Common::Point> getIntersectPoints();
 	IntersectType getIntersectTypeFrom();
+	std::size_t getIntersectPointsCount();
 
 private:
 	std::vector<Common::Point> m_intersectPoints;
