@@ -7,6 +7,7 @@ set(LAYER_AUTONOMOUS_SRC
 	fielddetector.cpp
 	router.cpp
 	route.cpp
+	fieldobjectdistancecompare.cpp
 )
 
 set(LAYER_AUTONOMOUS_TEST_SRC
@@ -20,6 +21,7 @@ set(LAYER_AUTONOMOUS_TEST_SRC
 	fielddetectortest.cpp
 	routetest.cpp
 	routertest.cpp
+	fieldobjectdistancecomparetest.cpp
 )
 
 add_library(layerautonomous ${LAYER_AUTONOMOUS_SRC})

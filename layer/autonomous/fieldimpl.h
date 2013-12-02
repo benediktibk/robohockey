@@ -27,9 +27,15 @@ namespace Autonomous
 {
 	class FieldObject;
 
+
 	class FieldImpl :
 			public Field
 	{
+	private:
+			enum FieldState { FieldStateUnknownPosition,
+							  FieldStateCalibrated
+							};
+
 	public:
 		FieldImpl(DataAnalysis::Odometry &odometry, const DataAnalysis::Lidar &lidar, DataAnalysis::Camera &camera);
 		virtual ~FieldImpl();
@@ -37,8 +43,10 @@ namespace Autonomous
 		virtual void update();
 		virtual const std::vector<FieldObject>& getAllFieldObjects() const;
 		virtual const std::vector<Common::Circle>& getAllObstacles() const;
+		virtual std::vector<FieldObject> getObjectsWithColorOrderdByDistance(Common::FieldObjectColor color, const Common::Point &position) const;
 
 		virtual bool calibratePosition();
+		virtual bool isPointInsideField(const Common::Point &point) const;
 
 	private:
 		void updateWithLidarData();
@@ -54,7 +62,8 @@ namespace Autonomous
 		void moveCoordinateSystem(Common::Point &newOrigin);
 		void rotateCoordinateSystem(double alpha);
 
-		std::vector<Common::Point> &getPointsOfObjectsWithDiameterAndColor(double diameter, Common::FieldObjectColor color);
+		std::vector<Common::Point> *getPointsOfObjectsWithDiameterAndColor(double diameter, Common::FieldObjectColor color);
+		std::vector<FieldObject> getObjectsWithColor(Common::FieldObjectColor color) const;
 
 		virtual std::vector<FieldObject> moveAllFieldObjectsInVisibleAreaToTemporaryVector();
 
@@ -66,6 +75,7 @@ namespace Autonomous
 		Common::RobotPosition *m_position;
 		std::vector<FieldObject> m_fieldObjects;
 		std::vector<Common::Circle> m_obstacles;
+		FieldState m_fieldState;
 	};
 }
 }

@@ -310,3 +310,7 @@ common/pathintersectpointstest.h
 common/pathintersectpoints.h
 common/pathintersectpointstest.cpp
 common/pathintersectpoints.cpp
+layer/autonomous/fieldobjectdistancecomparetest.h
+layer/autonomous/fieldobjectdistancecompare.h
+layer/autonomous/fieldobjectdistancecomparetest.cpp
+layer/autonomous/fieldobjectdistancecompare.cpp
