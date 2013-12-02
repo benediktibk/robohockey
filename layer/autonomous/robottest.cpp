@@ -906,6 +906,21 @@ void RobotTest::collectPuckInFront_puckAhead_canReachTarget()
 	CPPUNIT_ASSERT(!robot.cantReachTarget());
 }
 
+void RobotTest::collectPuckInFront_differentPuckAheadThanDesiredOne_cantReachTarget()
+{
+	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
+	DataAnalysis::LidarMock &lidar = dataAnalyser->getLidarMock();
+	RobotImpl robot(dataAnalyser);
+	FieldMock field;
+
+	lidar.setPuckCollectable(true);
+	robot.updateSensorData();
+	robot.collectPuckInFront(Point(4, 5));
+	robot.updateActuators(field);
+
+	CPPUNIT_ASSERT(robot.cantReachTarget());
+}
+
 void RobotTest::leaveCollectedPuck_drivenFarEnoughBack_reachedTarget()
 {
 	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();

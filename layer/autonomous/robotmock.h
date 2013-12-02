@@ -37,7 +37,7 @@ namespace Autonomous
 		virtual bool isMoving();
 		virtual void turnAround();
 		virtual void turnTo(const Common::Point &position);
-		virtual Common::RobotPosition getCurrentPosition();
+		virtual Common::RobotPosition getCurrentPosition() const;
 		virtual Common::Point getCurrentTarget() const;
 		virtual bool cantReachTarget() const;
 		virtual bool isPuckCollected() const;

@@ -80,22 +80,23 @@ void RobotImpl::updateEngineForCollectingPuck()
 	DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
 	const DataAnalysis::Lidar &lidar = m_dataAnalyser->getLidar();
 
-	if (!lidar.isPuckCollectable(m_maximumDistanceToCollectPuck, m_maximumAngleToCollectPuck))
+	if (	!lidar.isPuckCollectable(m_maximumDistanceToCollectPuck, m_maximumAngleToCollectPuck) ||
+			!isCurrentTargetPuckCollectable())
 	{
 		m_cantReachTarget = true;
 		return;
 	}
 
 	if (m_stateChanged)
-	{
-		RobotPosition ownPosition = getCurrentPosition();
-		Point puck(0.2, 0);
-		puck.rotate(ownPosition.getOrientation());
-		Point targetPosition = ownPosition.getPosition() + puck;
-		engine.goToStraightSlowly(targetPosition);
-	}
-	else if (engine.reachedTarget())
+		engine.goToStraightSlowly(m_currentTarget);
+
+	Point currentPosition = getCurrentPosition().getPosition();
+	double drivenDistance = m_startPosition.distanceTo(currentPosition);
+
+	if (isPuckCollected())
 		changeIntoState(RobotStateWaiting);
+	else if (drivenDistance > m_maximumDistanceToCollectPuck)
+		m_cantReachTarget = true;
 }
 
 void RobotImpl::updateEngineForLeavingPuck()
@@ -218,6 +219,17 @@ void RobotImpl::changeIntoState(RobotState state)
 	m_stateChanged = true;
 }
 
+bool RobotImpl::isCurrentTargetPuckCollectable() const
+{
+	RobotPosition currentPosition = getCurrentPosition();
+	Angle orientation(currentPosition.getPosition(), m_currentTarget);
+	double distance = m_currentTarget.distanceTo(currentPosition.getPosition());
+	orientation.abs();
+
+	return	distance < m_maximumDistanceToCollectPuck &&
+			orientation.getValueBetweenMinusPiAndPi() < m_maximumAngleToCollectPuck.getValueBetweenMinusPiAndPi();
+}
+
 void RobotImpl::updateActuators(const Field &field)
 {
 	detectCollisions();
@@ -239,6 +251,7 @@ void RobotImpl::collectPuckInFront(const Point &puckPosition)
 {
 	changeIntoState(RobotStateCollectingPuck);
 	m_currentTarget = puckPosition;
+	m_startPosition = getCurrentPosition().getPosition();
 }
 
 void RobotImpl::leaveCollectedPuck()
@@ -256,7 +269,7 @@ void RobotImpl::turnAround()
 	changeIntoState(RobotStateTurnAround);
 }
 
-RobotPosition RobotImpl::getCurrentPosition()
+RobotPosition RobotImpl::getCurrentPosition() const
 {
 	DataAnalysis::Odometry &odometry = m_dataAnalyser->getOdometry();
 	return odometry.getCurrentPosition();

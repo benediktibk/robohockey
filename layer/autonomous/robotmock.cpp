@@ -90,7 +90,7 @@ void RobotMock::turnAround()
 void RobotMock::turnTo(const Point &)
 { }
 
-RobotPosition RobotMock::getCurrentPosition()
+RobotPosition RobotMock::getCurrentPosition() const
 {
 	return RobotPosition();
 }

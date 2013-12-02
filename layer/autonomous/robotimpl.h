@@ -37,7 +37,7 @@ namespace Autonomous
 		virtual void leaveCollectedPuck();
 		virtual bool isMoving();
 		virtual void turnAround();
-		virtual Common::RobotPosition getCurrentPosition();
+		virtual Common::RobotPosition getCurrentPosition() const;
 		virtual Common::Point getCurrentTarget() const;
 		virtual bool cantReachTarget() const;
 		virtual bool isPuckCollected() const;
@@ -59,6 +59,7 @@ namespace Autonomous
 		void detectCollisions();
 		bool enableCollisionDetectionWithSonar() const;
 		void changeIntoState(RobotState state);
+		bool isCurrentTargetPuckCollectable() const;
 
 	private:
 		// forbid copies
@@ -76,6 +77,7 @@ namespace Autonomous
 		Common::Point m_currentTarget;
 		RobotState m_state;
 		bool m_stateChanged;
+		Common::Point m_startPosition;
 	};
 }
 }

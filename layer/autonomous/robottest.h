@@ -67,6 +67,7 @@ namespace Autonomous
 		CPPUNIT_TEST(collectPuckInFront_drivenToFarAndPuckNotYetCollected_cantReachTarget);
 		CPPUNIT_TEST(collectPuckInFront_noPuckAhead_cantReachTarget);
 		CPPUNIT_TEST(collectPuckInFront_puckAhead_canReachTarget);
+		CPPUNIT_TEST(collectPuckInFront_differentPuckAheadThanDesiredOne_cantReachTarget);
 		CPPUNIT_TEST(leaveCollectedPuck_drivenFarEnoughBack_reachedTarget);
 		CPPUNIT_TEST_SUITE_END();
 
@@ -124,6 +125,7 @@ namespace Autonomous
 		void collectPuckInFront_drivenToFarAndPuckNotYetCollected_cantReachTarget();
 		void collectPuckInFront_noPuckAhead_cantReachTarget();
 		void collectPuckInFront_puckAhead_canReachTarget();
+		void collectPuckInFront_differentPuckAheadThanDesiredOne_cantReachTarget();
 		void leaveCollectedPuck_drivenFarEnoughBack_reachedTarget();
 	};
 }
