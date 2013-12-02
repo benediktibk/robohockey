@@ -43,7 +43,7 @@ void EngineImpl::goToStraightSlowly(const Point &position)
 	m_target = position;
 	RobotPosition currentRobotPosition = m_odometry.getCurrentPosition();
 	m_startPosition = currentRobotPosition.getPosition();
-	m_rotationReached = false;
+	m_rotationReached = true;
 	m_engineState = EngineStateDrivingSlowly;
 }
 
