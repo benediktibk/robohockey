@@ -61,7 +61,7 @@ namespace Autonomous
 		void moveCoordinateSystem(Common::Point &newOrigin);
 		void rotateCoordinateSystem(double alpha);
 
-		std::vector<Common::Point> &getPointsOfObjectsWithDiameterAndColor(double diameter, Common::FieldObjectColor color);
+		std::vector<Common::Point> *getPointsOfObjectsWithDiameterAndColor(double diameter, Common::FieldObjectColor color);
 
 		virtual std::vector<FieldObject> moveAllFieldObjectsInVisibleAreaToTemporaryVector();
 
