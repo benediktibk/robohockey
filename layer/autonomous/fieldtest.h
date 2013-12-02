@@ -33,6 +33,7 @@ namespace Autonomous
 		CPPUNIT_TEST(isPointInsideField_notCalibrated_true);
 		CPPUNIT_TEST(isPointInsideField_pointIsInside_true);
 		CPPUNIT_TEST(isPointInsideField_pointIsOutside_false);
+		CPPUNIT_TEST(isPointInsideField_pointIsUnderField_false);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
@@ -55,6 +56,7 @@ namespace Autonomous
 		void isPointInsideField_notCalibrated_true();
 		void isPointInsideField_pointIsInside_true();
 		void isPointInsideField_pointIsOutside_false();
+		void isPointInsideField_pointIsUnderField_false();
 	};
 }
 }
