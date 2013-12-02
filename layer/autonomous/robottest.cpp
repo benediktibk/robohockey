@@ -921,6 +921,60 @@ void RobotTest::collectPuckInFront_differentPuckAheadThanDesiredOne_cantReachTar
 	CPPUNIT_ASSERT(robot.cantReachTarget());
 }
 
+void RobotTest::collectPuckInFront_validPuck_isCollectingPuck()
+{
+	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
+	DataAnalysis::LidarMock &lidar = dataAnalyser->getLidarMock();
+	RobotImpl robot(dataAnalyser);
+	FieldMock field;
+
+	lidar.setPuckCollectable(true);
+	robot.updateSensorData();
+	robot.collectPuckInFront(Point(0.4, 0));
+	robot.updateActuators(field);
+
+	CPPUNIT_ASSERT(robot.isCollectingPuck());
+}
+
+void RobotTest::collectPuckInFront_puckCollected_isNotCollectingPuck()
+{
+	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
+	DataAnalysis::LidarMock &lidar = dataAnalyser->getLidarMock();
+	RobotImpl robot(dataAnalyser);
+	FieldMock field;
+
+	lidar.setPuckCollectable(true);
+	robot.updateSensorData();
+	robot.collectPuckInFront(Point(0.4, 0));
+	robot.updateActuators(field);
+	lidar.setPuckCollected(true);
+	robot.updateSensorData();
+	robot.updateActuators(field);
+
+	CPPUNIT_ASSERT(!robot.isCollectingPuck());
+}
+
+void RobotTest::updatePuckPosition_newPositionOfPuck_goToStraightSlowlyCalledTwice()
+{
+	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
+	DataAnalysis::LidarMock &lidar = dataAnalyser->getLidarMock();
+	DataAnalysis::OdometryMock &odometry = dataAnalyser->getOdometryMock();
+	DataAnalysis::EngineMock &engine = dataAnalyser->getEngineMock();
+	RobotImpl robot(dataAnalyser);
+	FieldMock field;
+
+	lidar.setPuckCollectable(true);
+	odometry.setCurrentPosition(RobotPosition(Point(4, 5), 0));
+	robot.updateSensorData();
+	robot.collectPuckInFront(Point(4.2, 5));
+	robot.updateActuators(field);
+	robot.updateSensorData();
+	robot.updatePuckPosition(Point(4.3, 5));
+	robot.updateActuators(field);
+
+	CPPUNIT_ASSERT(engine.getCallsToGoToStraightSlowly() == 2);
+}
+
 void RobotTest::leaveCollectedPuck_drivenFarEnoughBack_reachedTarget()
 {
 	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();

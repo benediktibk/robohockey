@@ -11,6 +11,7 @@
 #include "layer/autonomous/fieldimpl.h"
 #include <iostream>
 #include <math.h>
+#include <assert.h>
 
 using namespace RoboHockey::Common;
 using namespace RoboHockey::Layer::Autonomous;
@@ -87,16 +88,22 @@ void RobotImpl::updateEngineForCollectingPuck()
 		return;
 	}
 
-	if (m_stateChanged)
-		engine.goToStraightSlowly(m_currentTarget);
-
 	Point currentPosition = getCurrentPosition().getPosition();
 	double drivenDistance = m_startPosition.distanceTo(currentPosition);
 
 	if (isPuckCollected())
+	{
 		changeIntoState(RobotStateWaiting);
+		return;
+	}
 	else if (drivenDistance > m_maximumDistanceToCollectPuck)
+	{
 		m_cantReachTarget = true;
+		return;
+	}
+
+	if (m_stateChanged || m_puckPositionChanged)
+		engine.goToStraightSlowly(m_currentTarget);
 }
 
 void RobotImpl::updateEngineForLeavingPuck()
@@ -239,6 +246,7 @@ void RobotImpl::updateActuators(const Field &field)
 void RobotImpl::updateSensorData()
 {
 	m_stateChanged = false;
+	m_puckPositionChanged = false;
 	m_dataAnalyser->updateSensorData();
 }
 
@@ -252,6 +260,13 @@ void RobotImpl::collectPuckInFront(const Point &puckPosition)
 	changeIntoState(RobotStateCollectingPuck);
 	m_currentTarget = puckPosition;
 	m_startPosition = getCurrentPosition().getPosition();
+}
+
+void RobotImpl::updatePuckPosition(const Point &puckPosition)
+{
+	assert(m_state == RobotStateCollectingPuck);
+	m_currentTarget = puckPosition;
+	m_puckPositionChanged = true;
 }
 
 void RobotImpl::leaveCollectedPuck()
@@ -296,6 +311,11 @@ bool RobotImpl::isPuckCollectable() const
 {
 	const DataAnalysis::Lidar &lidar = m_dataAnalyser->getLidar();
 	return lidar.isPuckCollectable(m_maximumDistanceToCollectPuck, m_maximumAngleToCollectPuck);
+}
+
+bool RobotImpl::isCollectingPuck() const
+{
+	return m_state == RobotStateCollectingPuck;
 }
 
 void RobotImpl::clearRoute()

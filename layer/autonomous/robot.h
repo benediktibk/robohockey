@@ -31,6 +31,7 @@ namespace Autonomous
 		virtual void updateSensorData() = 0;
 		virtual void stop() = 0;
 		virtual void collectPuckInFront(const Common::Point &puckPosition) = 0;
+		virtual void updatePuckPosition(const Common::Point &puckPosition) = 0;
 		virtual void leaveCollectedPuck() = 0;
 		virtual bool isMoving() = 0;
 		virtual void turnAround() = 0;
@@ -39,6 +40,7 @@ namespace Autonomous
 		virtual bool cantReachTarget() const = 0;
 		virtual bool isPuckCollected() const = 0;
 		virtual bool isPuckCollectable() const = 0;
+		virtual bool isCollectingPuck() const = 0;
 	};
 }
 }

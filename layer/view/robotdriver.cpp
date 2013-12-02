@@ -66,13 +66,13 @@ void RobotDriver::update()
 	}
 	else
 	{
-		if(m_model.getTurnAround() && targets.size() == 0)
+		if(m_model.getTurnAround())
 		{
 			m_robot.turnAround();
 			m_model.setData(targets, false, false, false, false, false, false);
 		}
 
-		if(m_model.getTurnTo() && targets.size() == 0)
+		if(m_model.getTurnTo())
 		{
 			Point turnToPoint;
 			turnToPoint = m_model.getTurnPoint();
@@ -80,29 +80,46 @@ void RobotDriver::update()
 			m_model.setData(targets, false, false, false, false, false, false);
 		}
 
-		if(m_model.getCollectPuckInFront() && targets.size() == 0)
+		if(m_model.getCollectPuckInFront())
 		{
-			vector<FieldObject> pucks = m_field.getObjectsWithColorOrderdByDistance(FieldObjectColorBlue, m_robot.getCurrentPosition().getPosition());
+			vector<FieldObject> pucks = m_field.getObjectsWithColorOrderdByDistance(
+						FieldObjectColorBlue, m_robot.getCurrentPosition().getPosition());
 
 			if (pucks.size() > 0)
 			{
 				const FieldObject &firstPuck = pucks.front();
 				const Point &firstPuckPosition = firstPuck.getCircle().getCenter();
 				m_robot.collectPuckInFront(firstPuckPosition);
-				m_model.setData(targets, false, false, false, false, false, false);
 			}
+
+			m_model.setData(targets, false, false, false, false, false, false);
 		}
 
-		if(m_model.getLeavePuckInFront() && targets.size() == 0)
+		if(m_model.getLeavePuckInFront())
 		{
 			m_robot.leaveCollectedPuck();
 			m_model.setData(targets, false, false, false, false, false, false);
 		}
 
-		if(m_model.getCalibratePosition() && targets.size() == 0)
+		if(m_model.getCalibratePosition())
 		{
 			m_field.calibratePosition();
 			m_model.setData(targets, false, false, false, false, false, false);
+		}
+
+		if (m_robot.isCollectingPuck())
+		{
+			vector<FieldObject> pucks = m_field.getObjectsWithColorOrderdByDistance(
+						FieldObjectColorBlue, m_robot.getCurrentPosition().getPosition());
+
+			if (pucks.size() > 0)
+			{
+				const FieldObject &firstPuck = pucks.front();
+				const Point &firstPuckPosition = firstPuck.getCircle().getCenter();
+				m_robot.updatePuckPosition(firstPuckPosition);
+			}
+			else
+				m_model.setData(targets, false, false, false, false, false, false);
 		}
 	}
 

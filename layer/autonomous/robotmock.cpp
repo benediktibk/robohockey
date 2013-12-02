@@ -76,6 +76,9 @@ unsigned int RobotMock::getCallsToStop() const
 void RobotMock::collectPuckInFront(const Point &)
 { }
 
+void RobotMock::updatePuckPosition(const Point &)
+{ }
+
 void RobotMock::leaveCollectedPuck()
 { }
 
@@ -111,6 +114,11 @@ bool RobotMock::isPuckCollected() const
 }
 
 bool RobotMock::isPuckCollectable() const
+{
+	return false;
+}
+
+bool RobotMock::isCollectingPuck() const
 {
 	return false;
 }
