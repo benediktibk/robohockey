@@ -43,12 +43,3 @@ void SonarTest::isObstacleInFront_farDistant_false()
 
 	CPPUNIT_ASSERT(!sonar.isObstacleDirectInFront(0.5));
 }
-
-void SonarTest::isObstacleInFront_closeEnough_true()
-{
-	Hardware::SonarMock hardwareSonar;
-	SonarImpl sonar(hardwareSonar);
-	hardwareSonar.readSensorDataFromFile("resources/testfiles/sonar_2.txt");
-
-	CPPUNIT_ASSERT(sonar.isObstacleDirectInFront(0.5));
-}
