@@ -18,6 +18,7 @@ namespace DataAnalysis
 		CPPUNIT_TEST(isObstacleInFront_nothingInFront_false);
 		CPPUNIT_TEST(isObstacleInFront_obstacleIn01meter_true);
 		CPPUNIT_TEST(isObstacleInFront_farDistant_false);
+		CPPUNIT_TEST(isObstacleInFront_closeEnough_true);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
@@ -25,6 +26,7 @@ namespace DataAnalysis
 		void isObstacleInFront_nothingInFront_false();
 		void isObstacleInFront_obstacleIn01meter_true();
 		void isObstacleInFront_farDistant_false();
+		void isObstacleInFront_closeEnough_true();
 	};
 }
 }
