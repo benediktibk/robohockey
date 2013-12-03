@@ -231,12 +231,13 @@ void RobotImpl::changeIntoState(RobotState state)
 bool RobotImpl::isCurrentTargetPuckCollectable() const
 {
 	RobotPosition currentPosition = getCurrentPosition();
-	Angle orientation(currentPosition.getPosition(), m_currentTarget);
+	Angle orientationAbsolute(currentPosition.getPosition(), m_currentTarget);
+	Angle orientationDifference = orientationAbsolute - currentPosition.getOrientation();
 	double distance = m_currentTarget.distanceTo(currentPosition.getPosition());
-	orientation.abs();
+	orientationDifference.abs();
 
 	return	distance < m_maximumDistanceToCollectPuck &&
-			orientation.getValueBetweenMinusPiAndPi() < m_maximumAngleToCollectPuck.getValueBetweenMinusPiAndPi();
+			orientationDifference.getValueBetweenMinusPiAndPi() < m_maximumAngleToCollectPuck.getValueBetweenMinusPiAndPi();
 }
 
 void RobotImpl::updateActuators(const Field &field)
