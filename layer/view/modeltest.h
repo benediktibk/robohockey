@@ -27,6 +27,7 @@ namespace View
 		CPPUNIT_TEST(constructor_empty_puckIsNotCollectable);
 		CPPUNIT_TEST(constructor_empty_closestPuckPositionIsNotValid);
 		CPPUNIT_TEST(constructor_empty_fieldObjectColorIsBlue);
+		CPPUNIT_TEST(constructor_empty_isNotRotating);
 		CPPUNIT_TEST(setData_twoFieldObjects_twoFieldObjects);
 		CPPUNIT_TEST(setData_stuckAtObstacle_stuckAtObstacle);
 		CPPUNIT_TEST(setData_reachedTarget_reachedTarget);
@@ -39,6 +40,8 @@ namespace View
 		CPPUNIT_TEST(setData_closestPuckPositionValid_closestPuckPositionValid);
 		CPPUNIT_TEST(setData_closestPuckPositionNotValid_closestPuckPositionNotValid);
 		CPPUNIT_TEST(setData_closestPuckPosition5And3_closestPuckPosition5And3);
+		CPPUNIT_TEST(setData_isRotating_isRotating);
+		CPPUNIT_TEST(setData_isNotRotating_isNotRotating);
 		CPPUNIT_TEST(setPuckColor_puckColorYellow_puckColorIsYellow);
 		CPPUNIT_TEST(setPuckColor_puckColorBlue_puckColorIsBlue);
 		CPPUNIT_TEST_SUITE_END();
@@ -60,6 +63,7 @@ namespace View
 		void constructor_empty_puckIsNotCollectable();
 		void constructor_empty_closestPuckPositionIsNotValid();
 		void constructor_empty_fieldObjectColorIsBlue();
+		void constructor_empty_isNotRotating();
 		void setData_twoFieldObjects_twoFieldObjects();
 		void setData_stuckAtObstacle_stuckAtObstacle();
 		void setData_reachedTarget_reachedTarget();
@@ -72,6 +76,8 @@ namespace View
 		void setData_closestPuckPositionValid_closestPuckPositionValid();
 		void setData_closestPuckPositionNotValid_closestPuckPositionNotValid();
 		void setData_closestPuckPosition5And3_closestPuckPosition5And3();
+		void setData_isRotating_isRotating();
+		void setData_isNotRotating_isNotRotating();
 		void setPuckColor_puckColorYellow_puckColorIsYellow();
 		void setPuckColor_puckColorBlue_puckColorIsBlue();
 

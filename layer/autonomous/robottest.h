@@ -70,8 +70,19 @@ namespace Autonomous
 		CPPUNIT_TEST(collectPuckInFront_differentPuckAheadThanDesiredOne_cantReachTarget);
 		CPPUNIT_TEST(collectPuckInFront_validPuck_isCollectingPuck);
 		CPPUNIT_TEST(collectPuckInFront_puckCollected_isNotCollectingPuck);
+		CPPUNIT_TEST(collectPuckInFront_lookingLeftAndPuckAhead_canReachTarget);
+		CPPUNIT_TEST(collectPuckInFront_orientationWrongAtBegin_canReachTarget);
+		CPPUNIT_TEST(collectPuckInFront_orientationWrongAtBegin_engineGotCallToTurnTo);
+		CPPUNIT_TEST(collectPuckInFront_orientationWrongAtBeginAndOrientationReached_engineGotCallToGoToStraightSlowly);
 		CPPUNIT_TEST(updatePuckPosition_newPositionOfPuck_goToStraightSlowlyCalledTwice);
 		CPPUNIT_TEST(leaveCollectedPuck_drivenFarEnoughBack_reachedTarget);
+		CPPUNIT_TEST(isRotating_waiting_false);
+		CPPUNIT_TEST(isRotating_driving_false);
+		CPPUNIT_TEST(isRotating_turnTo_true);
+		CPPUNIT_TEST(isRotating_turnAround_true);
+		CPPUNIT_TEST(isRotating_firstPhaseOfCollectingPuck_true);
+		CPPUNIT_TEST(isRotating_secondPhaseOfCollectingPuck_false);
+		CPPUNIT_TEST(isRotating_leavingPuck_false);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
@@ -131,8 +142,19 @@ namespace Autonomous
 		void collectPuckInFront_differentPuckAheadThanDesiredOne_cantReachTarget();
 		void collectPuckInFront_validPuck_isCollectingPuck();
 		void collectPuckInFront_puckCollected_isNotCollectingPuck();
+		void collectPuckInFront_lookingLeftAndPuckAhead_canReachTarget();
+		void collectPuckInFront_orientationWrongAtBegin_canReachTarget();
+		void collectPuckInFront_orientationWrongAtBegin_engineGotCallToTurnTo();
+		void collectPuckInFront_orientationWrongAtBeginAndOrientationReached_engineGotCallToGoToStraightSlowly();
 		void updatePuckPosition_newPositionOfPuck_goToStraightSlowlyCalledTwice();
 		void leaveCollectedPuck_drivenFarEnoughBack_reachedTarget();
+		void isRotating_waiting_false();
+		void isRotating_driving_false();
+		void isRotating_turnTo_true();
+		void isRotating_turnAround_true();
+		void isRotating_firstPhaseOfCollectingPuck_true();
+		void isRotating_secondPhaseOfCollectingPuck_false();
+		void isRotating_leavingPuck_false();
 	};
 }
 }

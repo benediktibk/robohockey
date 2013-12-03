@@ -44,6 +44,7 @@ namespace Autonomous
 		virtual bool isPuckCollected() const;
 		virtual bool isPuckCollectable() const;
 		virtual bool isCollectingPuck() const;
+		virtual bool isRotating() const;
 
 	private:
 		void clearRoute();
@@ -81,6 +82,7 @@ namespace Autonomous
 		bool m_stateChanged;
 		Common::Point m_startPosition;
 		bool m_puckPositionChanged;
+		bool m_rotationToPuckReached;
 	};
 }
 }

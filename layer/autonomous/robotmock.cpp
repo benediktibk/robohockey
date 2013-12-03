@@ -122,3 +122,8 @@ bool RobotMock::isCollectingPuck() const
 {
 	return false;
 }
+
+bool RobotMock::isRotating() const
+{
+	return false;
+}

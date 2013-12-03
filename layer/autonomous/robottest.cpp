@@ -361,6 +361,7 @@ void RobotTest::updateSensorData_obstacleDirectInFront_engineGotAtLeastOneCallTo
 	FieldMock field;
 
 	robot.updateSensorData();
+	robot.goTo(Point(1, 0));
 	robot.updateActuators(field);
 
 	CPPUNIT_ASSERT(engine.getCallsToLockForwardMovement() > 0);
@@ -376,6 +377,7 @@ void RobotTest::updateSensorData_0bstacleDirectInFront_engineGotNoCallToUnlockFo
 	sonar.setIsObstacleDirectInFront(true);
 
 	robot.updateSensorData();
+	robot.goTo(Point(1, 0));
 	robot.updateActuators(field);
 
 	CPPUNIT_ASSERT(engine.getCallsToUnlockForwardMovement() == 0);
@@ -880,12 +882,18 @@ void RobotTest::collectPuckInFront_noPuckAhead_cantReachTarget()
 {
 	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
 	DataAnalysis::LidarMock &lidar = dataAnalyser->getLidarMock();
+	DataAnalysis::OdometryMock &odometry = dataAnalyser->getOdometryMock();
+	DataAnalysis::EngineMock &engine = dataAnalyser->getEngineMock();
 	RobotImpl robot(dataAnalyser);
 	FieldMock field;
 
+	odometry.setCurrentPosition(RobotPosition(Point(0, 0), 0));
 	lidar.setPuckCollectable(false);
 	robot.updateSensorData();
 	robot.collectPuckInFront(Point(0.4, 0));
+	robot.updateActuators(field);
+	engine.setReachedTarget(true);
+	robot.updateSensorData();
 	robot.updateActuators(field);
 
 	CPPUNIT_ASSERT(robot.cantReachTarget());
@@ -910,12 +918,24 @@ void RobotTest::collectPuckInFront_differentPuckAheadThanDesiredOne_cantReachTar
 {
 	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
 	DataAnalysis::LidarMock &lidar = dataAnalyser->getLidarMock();
+	DataAnalysis::OdometryMock &odometry = dataAnalyser->getOdometryMock();
+	DataAnalysis::EngineMock &engine = dataAnalyser->getEngineMock();
 	RobotImpl robot(dataAnalyser);
 	FieldMock field;
 
+	odometry.setCurrentPosition(RobotPosition(Point(0, 0), Angle::getQuarterRotation()));
+	lidar.setPuckCollectable(false);
 	lidar.setPuckCollectable(true);
 	robot.updateSensorData();
-	robot.collectPuckInFront(Point(4, 5));
+	robot.collectPuckInFront(Point(0.4, 0));
+	robot.updateActuators(field);
+	engine.setReachedTarget(true);
+	lidar.setPuckCollectable(true);
+	odometry.setCurrentPosition(RobotPosition(Point(0, 0), 0));
+	robot.updateSensorData();
+	robot.updateActuators(field);
+	robot.updatePuckPosition(Point(0.4, -0.5));
+	robot.updateSensorData();
 	robot.updateActuators(field);
 
 	CPPUNIT_ASSERT(robot.cantReachTarget());
@@ -954,6 +974,76 @@ void RobotTest::collectPuckInFront_puckCollected_isNotCollectingPuck()
 	CPPUNIT_ASSERT(!robot.isCollectingPuck());
 }
 
+void RobotTest::collectPuckInFront_lookingLeftAndPuckAhead_canReachTarget()
+{
+	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
+	DataAnalysis::LidarMock &lidar = dataAnalyser->getLidarMock();
+	DataAnalysis::OdometryMock &odometry = dataAnalyser->getOdometryMock();
+	RobotImpl robot(dataAnalyser);
+	FieldMock field;
+
+	lidar.setPuckCollectable(true);
+	odometry.setCurrentPosition(RobotPosition(Point(0, 0), Angle::getHalfRotation()));
+	robot.updateSensorData();
+	robot.collectPuckInFront(Point(-0.4, 0));
+	robot.updateActuators(field);
+
+	CPPUNIT_ASSERT(!robot.cantReachTarget());
+}
+
+void RobotTest::collectPuckInFront_orientationWrongAtBegin_canReachTarget()
+{
+	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
+	DataAnalysis::OdometryMock &odometry = dataAnalyser->getOdometryMock();
+	RobotImpl robot(dataAnalyser);
+	FieldMock field;
+
+	odometry.setCurrentPosition(RobotPosition(Point(0, 0), Angle::getHalfRotation()));
+	robot.updateSensorData();
+	robot.collectPuckInFront(Point(0, 0.4));
+	robot.updateActuators(field);
+
+	CPPUNIT_ASSERT(!robot.cantReachTarget());
+}
+
+void RobotTest::collectPuckInFront_orientationWrongAtBegin_engineGotCallToTurnTo()
+{
+	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
+	DataAnalysis::OdometryMock &odometry = dataAnalyser->getOdometryMock();
+	DataAnalysis::EngineMock &engine = dataAnalyser->getEngineMock();
+	RobotImpl robot(dataAnalyser);
+	FieldMock field;
+
+	odometry.setCurrentPosition(RobotPosition(Point(0, 0), Angle::getHalfRotation()));
+	robot.updateSensorData();
+	robot.collectPuckInFront(Point(0, 0.4));
+	robot.updateActuators(field);
+
+	CPPUNIT_ASSERT(engine.getCallsToTurnToTarget() == 1);
+}
+
+void RobotTest::collectPuckInFront_orientationWrongAtBeginAndOrientationReached_engineGotCallToGoToStraightSlowly()
+{
+	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
+	DataAnalysis::OdometryMock &odometry = dataAnalyser->getOdometryMock();
+	DataAnalysis::EngineMock &engine = dataAnalyser->getEngineMock();
+	DataAnalysis::LidarMock &lidar = dataAnalyser->getLidarMock();
+	RobotImpl robot(dataAnalyser);
+	FieldMock field;
+
+	odometry.setCurrentPosition(RobotPosition(Point(0, 0), Angle::getHalfRotation()));
+	robot.updateSensorData();
+	robot.collectPuckInFront(Point(0, 0.4));
+	robot.updateActuators(field);
+	odometry.setCurrentPosition(RobotPosition(Point(0, 0), Angle::getQuarterRotation()));
+	engine.setReachedTarget(true);
+	lidar.setPuckCollectable(true);
+	robot.updateSensorData();
+	robot.updateActuators(field);
+
+	CPPUNIT_ASSERT(engine.getCallsToGoToStraightSlowly() == 1);
+}
+
 void RobotTest::updatePuckPosition_newPositionOfPuck_goToStraightSlowlyCalledTwice()
 {
 	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
@@ -967,6 +1057,9 @@ void RobotTest::updatePuckPosition_newPositionOfPuck_goToStraightSlowlyCalledTwi
 	odometry.setCurrentPosition(RobotPosition(Point(4, 5), 0));
 	robot.updateSensorData();
 	robot.collectPuckInFront(Point(4.2, 5));
+	robot.updateActuators(field);
+	engine.setReachedTarget(true);
+	robot.updateSensorData();
 	robot.updateActuators(field);
 	robot.updateSensorData();
 	robot.updatePuckPosition(Point(4.3, 5));
@@ -991,4 +1084,116 @@ void RobotTest::leaveCollectedPuck_drivenFarEnoughBack_reachedTarget()
 	robot.updateActuators(field);
 
 	CPPUNIT_ASSERT(robot.reachedTarget());
+}
+
+void RobotTest::isRotating_waiting_false()
+{
+	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
+	DataAnalysis::OdometryMock &odometry = dataAnalyser->getOdometryMock();
+	RobotImpl robot(dataAnalyser);
+	FieldMock field;
+
+	odometry.setCurrentPosition(RobotPosition(Point(0, 0), 0));
+	robot.updateSensorData();
+	robot.updateActuators(field);
+
+	CPPUNIT_ASSERT(!robot.isRotating());
+}
+
+void RobotTest::isRotating_driving_false()
+{
+	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
+	DataAnalysis::OdometryMock &odometry = dataAnalyser->getOdometryMock();
+	RobotImpl robot(dataAnalyser);
+	FieldMock field;
+
+	odometry.setCurrentPosition(RobotPosition(Point(0, 0), 0));
+	robot.updateSensorData();
+	robot.goTo(Point(4, 5));
+	robot.updateActuators(field);
+
+	CPPUNIT_ASSERT(!robot.isRotating());
+}
+
+void RobotTest::isRotating_turnTo_true()
+{
+	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
+	DataAnalysis::OdometryMock &odometry = dataAnalyser->getOdometryMock();
+	RobotImpl robot(dataAnalyser);
+	FieldMock field;
+
+	odometry.setCurrentPosition(RobotPosition(Point(0, 0), 0));
+	robot.updateSensorData();
+	robot.turnTo(Point(4, 5));
+	robot.updateActuators(field);
+
+	CPPUNIT_ASSERT(robot.isRotating());
+}
+
+void RobotTest::isRotating_turnAround_true()
+{
+	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
+	DataAnalysis::OdometryMock &odometry = dataAnalyser->getOdometryMock();
+	RobotImpl robot(dataAnalyser);
+	FieldMock field;
+
+	odometry.setCurrentPosition(RobotPosition(Point(0, 0), 0));
+	robot.updateSensorData();
+	robot.turnAround();
+	robot.updateActuators(field);
+
+	CPPUNIT_ASSERT(robot.isRotating());
+}
+
+void RobotTest::isRotating_firstPhaseOfCollectingPuck_true()
+{
+	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
+	DataAnalysis::OdometryMock &odometry = dataAnalyser->getOdometryMock();
+	DataAnalysis::LidarMock &lidar = dataAnalyser->getLidarMock();
+	RobotImpl robot(dataAnalyser);
+	FieldMock field;
+
+	lidar.setPuckCollectable(false);
+	odometry.setCurrentPosition(RobotPosition(Point(0, 0), Angle::getHalfRotation()));
+	robot.updateSensorData();
+	robot.collectPuckInFront(Point(0, 0.4));
+	robot.updateActuators(field);
+
+	CPPUNIT_ASSERT(robot.isRotating());
+}
+
+void RobotTest::isRotating_secondPhaseOfCollectingPuck_false()
+{
+	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
+	DataAnalysis::OdometryMock &odometry = dataAnalyser->getOdometryMock();
+	DataAnalysis::LidarMock &lidar = dataAnalyser->getLidarMock();
+	RobotImpl robot(dataAnalyser);
+	FieldMock field;
+
+	lidar.setPuckCollectable(false);
+	odometry.setCurrentPosition(RobotPosition(Point(0, 0), Angle::getHalfRotation()));
+	robot.updateSensorData();
+	robot.collectPuckInFront(Point(0, 0.4));
+	robot.updateActuators(field);
+	lidar.setPuckCollectable(false);
+	odometry.setCurrentPosition(RobotPosition(Point(0, 0), Angle::getQuarterRotation()));
+	robot.updateSensorData();
+	robot.updateActuators(field);
+
+	CPPUNIT_ASSERT(!robot.isRotating());
+}
+
+void RobotTest::isRotating_leavingPuck_false()
+{
+	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
+	DataAnalysis::OdometryMock &odometry = dataAnalyser->getOdometryMock();
+	RobotImpl robot(dataAnalyser);
+	FieldMock field;
+
+	odometry.setCurrentPosition(RobotPosition(Point(0, 0), 0));
+	robot.updateSensorData();
+	robot.leaveCollectedPuck();
+	robot.updateActuators(field);
+
+	CPPUNIT_ASSERT(!robot.isRotating());
 }

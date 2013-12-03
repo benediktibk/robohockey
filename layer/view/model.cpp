@@ -20,14 +20,15 @@ Model::Model() :
 	m_isPuckCollected(false),
 	m_isPuckCollectable(false),
 	m_closestPuckValid(false),
-	m_puckColor(FieldObjectColorBlue)
+	m_puckColor(FieldObjectColorBlue),
+	m_isRotating(false)
 {}
 
 void Model::setData(const vector<FieldObject> &fieldObjects,
 		bool stuckAtObstacle, bool reachedTarget,
 		const RobotPosition &currentPosition, const Point &currentTarget,
 		bool isMoving, bool cantReachTarget, bool isPuckCollected, bool isPuckCollectable,
-		bool closestPuckPositionValid, const Point &closestPuckPosition)
+		bool closestPuckPositionValid, const Point &closestPuckPosition, bool isRotating)
 {
 	m_fieldObjects = fieldObjects;
 	m_stuckAtObstacle = stuckAtObstacle;
@@ -40,6 +41,7 @@ void Model::setData(const vector<FieldObject> &fieldObjects,
 	m_isPuckCollectable = isPuckCollectable;
 	m_closestPuckValid = closestPuckPositionValid;
 	m_closestPuckPosition = closestPuckPosition;
+	m_isRotating = isRotating;
 
 	emit robotDataChanged();
 }
@@ -175,6 +177,11 @@ FieldObjectColor Model::getPuckColor() const
 void Model::setPuckColor(FieldObjectColor color)
 {
 	m_puckColor = color;
+}
+
+bool Model::isRotating() const
+{
+	return m_isRotating;
 }
 
 bool Model::getTurnAround()

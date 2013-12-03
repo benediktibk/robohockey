@@ -80,22 +80,28 @@ void RobotImpl::updateEngineForCollectingPuck()
 {
 	DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
 	const DataAnalysis::Lidar &lidar = m_dataAnalyser->getLidar();
-	bool lidarPuckCollectable = lidar.isPuckCollectable(m_maximumDistanceToCollectPuck, m_maximumAngleToCollectPuck);
-	bool fromTargetPositionPuckCollectable = isCurrentTargetPuckCollectable();
-
-	if (	!lidarPuckCollectable ||
-			!fromTargetPositionPuckCollectable)
-	{
-		m_cantReachTarget = true;
-		return;
-	}
-
 	Point currentPosition = getCurrentPosition().getPosition();
 	double drivenDistance = m_startPosition.distanceTo(currentPosition);
+	bool lidarPuckCollectable = lidar.isPuckCollectable(m_maximumDistanceToCollectPuck, m_maximumAngleToCollectPuck);
+	bool fromTargetPositionPuckCollectable = isCurrentTargetPuckCollectable();
+	bool justReachedOrientation = false;
+
+	if (!m_rotationToPuckReached && !m_stateChanged)
+	{
+		m_rotationToPuckReached = engine.reachedTarget();
+		if (m_rotationToPuckReached)
+			justReachedOrientation = true;
+	}
 
 	if (isPuckCollected())
 	{
 		changeIntoState(RobotStateWaiting);
+		return;
+	}
+
+	if ((!lidarPuckCollectable || !fromTargetPositionPuckCollectable) && m_rotationToPuckReached)
+	{
+		m_cantReachTarget = true;
 		return;
 	}
 	else if (drivenDistance > m_maximumDistanceToCollectPuck)
@@ -104,8 +110,13 @@ void RobotImpl::updateEngineForCollectingPuck()
 		return;
 	}
 
-	if (m_stateChanged || m_puckPositionChanged)
-		engine.goToStraightSlowly(m_currentTarget);
+	if (m_stateChanged || m_puckPositionChanged || justReachedOrientation)
+	{
+		if (m_rotationToPuckReached)
+			engine.goToStraightSlowly(m_currentTarget);
+		else
+			engine.turnToTarget(m_currentTarget);
+	}
 }
 
 void RobotImpl::updateEngineForLeavingPuck()
@@ -203,6 +214,7 @@ bool RobotImpl::enableCollisionDetectionWithSonar() const
 
 	switch(m_state)
 	{
+	case RobotStateWaiting:
 	case RobotStateCollectingPuck:
 		result = false;
 		break;
@@ -210,7 +222,6 @@ bool RobotImpl::enableCollisionDetectionWithSonar() const
 	case RobotStateLeavingPuck:
 	case RobotStateTurnTo:
 	case RobotStateTurnAround:
-	case RobotStateWaiting:
 		result = true;
 		break;
 	}
@@ -226,17 +237,19 @@ void RobotImpl::changeIntoState(RobotState state)
 	m_tryingToTackleObstacle = false;
 	m_state = state;
 	m_stateChanged = true;
+	m_rotationToPuckReached = false;
 }
 
 bool RobotImpl::isCurrentTargetPuckCollectable() const
 {
 	RobotPosition currentPosition = getCurrentPosition();
-	Angle orientation(currentPosition.getPosition(), m_currentTarget);
+	Angle orientationAbsolute(currentPosition.getPosition(), m_currentTarget);
+	Angle orientationDifference = orientationAbsolute - currentPosition.getOrientation();
 	double distance = m_currentTarget.distanceTo(currentPosition.getPosition());
-	orientation.abs();
+	orientationDifference.abs();
 
 	return	distance < m_maximumDistanceToCollectPuck &&
-			orientation.getValueBetweenMinusPiAndPi() < m_maximumAngleToCollectPuck.getValueBetweenMinusPiAndPi();
+			orientationDifference.getValueBetweenMinusPiAndPi() < m_maximumAngleToCollectPuck.getValueBetweenMinusPiAndPi();
 }
 
 void RobotImpl::updateActuators(const Field &field)
@@ -318,6 +331,28 @@ bool RobotImpl::isPuckCollectable() const
 bool RobotImpl::isCollectingPuck() const
 {
 	return m_state == RobotStateCollectingPuck;
+}
+
+bool RobotImpl::isRotating() const
+{
+	switch (m_state)
+	{
+	case RobotStateWaiting:
+		return false;
+	case RobotStateDriving:
+		return false;
+	case RobotStateTurnAround:
+		return true;
+	case RobotStateTurnTo:
+		return true;
+	case RobotStateLeavingPuck:
+		return false;
+	case RobotStateCollectingPuck:
+		return !m_rotationToPuckReached;
+	}
+
+	assert(false);
+	return true;
 }
 
 void RobotImpl::clearRoute()
