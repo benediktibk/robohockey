@@ -3,6 +3,7 @@
 
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
+#include <QtCore/QObject>
 
 namespace RoboHockey
 {
@@ -10,9 +11,14 @@ namespace Layer
 {
 namespace View
 {
+	class Model;
+
 	class ModelTest :
+			public QObject,
 			public CPPUNIT_NS::TestFixture
 	{
+		Q_OBJECT
+
 		CPPUNIT_TEST_SUITE(ModelTest);
 		CPPUNIT_TEST(constructor_empty_notStuckAtObject);
 		CPPUNIT_TEST(constructor_empty_notReachedTarget);
@@ -25,6 +31,7 @@ namespace View
 		CPPUNIT_TEST(setData_stuckAtObstacle_stuckAtObstacle);
 		CPPUNIT_TEST(setData_reachedTarget_reachedTarget);
 		CPPUNIT_TEST(setTargetPoints_twoTargetPositions_twoTargetPositions);
+		CPPUNIT_TEST(setTargetPoints_validTargetPositions_atLeastOneCallToDataChanged);
 		CPPUNIT_TEST(setData_currentPosition_currentPositionIsCorrect);
 		CPPUNIT_TEST(setData_cantReachTarget_cantReachTarget);
 		CPPUNIT_TEST(setData_puckIsCollected_puckIsCollected);
@@ -35,6 +42,15 @@ namespace View
 		CPPUNIT_TEST(setPuckColor_puckColorYellow_puckColorIsYellow);
 		CPPUNIT_TEST(setPuckColor_puckColorBlue_puckColorIsBlue);
 		CPPUNIT_TEST_SUITE_END();
+
+	public:
+		ModelTest();
+
+		virtual void setUp();
+		virtual void tearDown();
+
+	private slots:
+		void dataChanged();
 
 	private:
 		void constructor_empty_notStuckAtObject();
@@ -48,6 +64,7 @@ namespace View
 		void setData_stuckAtObstacle_stuckAtObstacle();
 		void setData_reachedTarget_reachedTarget();
 		void setTargetPoints_twoTargetPositions_twoTargetPositions();
+		void setTargetPoints_validTargetPositions_atLeastOneCallToDataChanged();
 		void setData_currentPosition_currentPositionIsCorrect();
 		void setData_cantReachTarget_cantReachTarget();
 		void setData_puckIsCollected_puckIsCollected();
@@ -57,6 +74,10 @@ namespace View
 		void setData_closestPuckPosition5And3_closestPuckPosition5And3();
 		void setPuckColor_puckColorYellow_puckColorIsYellow();
 		void setPuckColor_puckColorBlue_puckColorIsBlue();
+
+	private:
+		unsigned int m_callsForDataChanged;
+		Model *m_model;
 	};
 }
 }
