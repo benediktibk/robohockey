@@ -24,7 +24,7 @@ namespace View
 		CPPUNIT_TEST(setData_twoFieldObjects_twoFieldObjects);
 		CPPUNIT_TEST(setData_stuckAtObstacle_stuckAtObstacle);
 		CPPUNIT_TEST(setData_reachedTarget_reachedTarget);
-		CPPUNIT_TEST(setData_twoTargetPositions_twoTargetPositions);
+		CPPUNIT_TEST(setTargetPoints_twoTargetPositions_twoTargetPositions);
 		CPPUNIT_TEST(setData_currentPosition_currentPositionIsCorrect);
 		CPPUNIT_TEST(setData_cantReachTarget_cantReachTarget);
 		CPPUNIT_TEST(setData_puckIsCollected_puckIsCollected);
@@ -32,8 +32,8 @@ namespace View
 		CPPUNIT_TEST(setData_closestPuckPositionValid_closestPuckPositionValid);
 		CPPUNIT_TEST(setData_closestPuckPositionNotValid_closestPuckPositionNotValid);
 		CPPUNIT_TEST(setData_closestPuckPosition5And3_closestPuckPosition5And3);
-		CPPUNIT_TEST(setData_puckColorYellow_puckColorIsYellow);
-		CPPUNIT_TEST(setData_puckColorBlue_puckColorIsBlue);
+		CPPUNIT_TEST(setPuckColor_puckColorYellow_puckColorIsYellow);
+		CPPUNIT_TEST(setPuckColor_puckColorBlue_puckColorIsBlue);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
@@ -47,7 +47,7 @@ namespace View
 		void setData_twoFieldObjects_twoFieldObjects();
 		void setData_stuckAtObstacle_stuckAtObstacle();
 		void setData_reachedTarget_reachedTarget();
-		void setData_twoTargetPositions_twoTargetPositions();
+		void setTargetPoints_twoTargetPositions_twoTargetPositions();
 		void setData_currentPosition_currentPositionIsCorrect();
 		void setData_cantReachTarget_cantReachTarget();
 		void setData_puckIsCollected_puckIsCollected();
@@ -55,8 +55,8 @@ namespace View
 		void setData_closestPuckPositionValid_closestPuckPositionValid();
 		void setData_closestPuckPositionNotValid_closestPuckPositionNotValid();
 		void setData_closestPuckPosition5And3_closestPuckPosition5And3();
-		void setData_puckColorYellow_puckColorIsYellow();
-		void setData_puckColorBlue_puckColorIsBlue();
+		void setPuckColor_puckColorYellow_puckColorIsYellow();
+		void setPuckColor_puckColorBlue_puckColorIsBlue();
 	};
 }
 }

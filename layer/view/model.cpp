@@ -44,23 +44,6 @@ void Model::setData(const vector<FieldObject> &fieldObjects,
 	emit robotDataChanged();
 }
 
-void Model::setData(const vector<Point> &targetPositions,
-		bool turnAround, bool turnTo, bool stop, bool collectPuck,
-		bool calibratePosition, bool leavePuck, FieldObjectColor puckColor)
-{
-	m_targetPositions = targetPositions;
-	m_turnAround = turnAround;
-	m_turn = turnTo;
-	m_stop = stop;
-	m_collectPuck = collectPuck;
-	m_calibratePosition = calibratePosition;
-	m_leavePuck = leavePuck;
-	m_puckColor = puckColor;
-
-	assert(m_puckColor == FieldObjectColorBlue || m_puckColor == FieldObjectColorYellow);
-	emit dataForViewChanged();
-}
-
 const vector<FieldObject> &Model::getAllFieldObjects() const
 {
 	return m_fieldObjects;
@@ -69,6 +52,12 @@ const vector<FieldObject> &Model::getAllFieldObjects() const
 const vector<Point> &Model::getAllTargetPoints() const
 {
 	return m_targetPositions;
+}
+
+void Model::setTargetPoints(const vector<Point> &targets)
+{
+	m_targetPositions = targets;
+	emit dataForViewChanged();
 }
 
 bool Model::stuckAtObstacle() const
@@ -86,10 +75,9 @@ bool Model::isMoving() const
 	return m_isMoving;
 }
 
-bool Model::turnAround()
+void Model::setTurnAround(bool value)
 {
-	m_turnAround = true;
-	return m_turnAround;
+	m_turnAround = value;
 }
 
 void Model::turnToPoint(double turnToX, double turnToY)
@@ -98,16 +86,14 @@ void Model::turnToPoint(double turnToX, double turnToY)
 	m_turnToPosition.setY(turnToY);
 }
 
-bool Model::turnTo()
+void Model::setTurnTo(bool value)
 {
-	m_turn = true;
-	return m_turn;
+	m_turn = value;
 }
 
-bool Model::stop()
+void Model::setStop(bool value)
 {
-	m_stop = true;
-	return m_stop;
+	m_stop = value;
 }
 
 bool Model::getStop()
@@ -125,9 +111,9 @@ Point Model::getTurnPoint()
 	return m_turnToPosition;
 }
 
-void Model::collectPuckInFront()
+void Model::setCollectPuckInFront(bool value)
 {
-	m_collectPuck = true;
+	m_collectPuck = value;
 }
 
 bool Model::getCollectPuckInFront()
@@ -135,9 +121,9 @@ bool Model::getCollectPuckInFront()
 	return m_collectPuck;
 }
 
-void Model::calibratePosition()
+void Model::setCalibratePosition(bool value)
 {
-	m_calibratePosition = true;
+	m_calibratePosition = value;
 }
 
 bool Model::getCalibratePosition()
@@ -145,9 +131,9 @@ bool Model::getCalibratePosition()
 	return m_calibratePosition;
 }
 
-void Model::leavePuckInFront()
+void Model::setLeavePuckInFront(bool value)
 {
-	m_leavePuck = true;
+	m_leavePuck = value;
 }
 
 bool Model::getLeavePuckInFront()
@@ -184,6 +170,11 @@ const Point &Model::getClosestPuckPosition() const
 FieldObjectColor Model::getPuckColor() const
 {
 	return m_puckColor;
+}
+
+void Model::setPuckColor(FieldObjectColor color)
+{
+	m_puckColor = color;
 }
 
 bool Model::getTurnAround()

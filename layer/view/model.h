@@ -26,30 +26,27 @@ namespace View
 				bool stuckAtObstacle, bool reachedTarget, const Common::RobotPosition &currentPosition,
 				const Common::Point &currentTarget, bool isMoving, bool cantReachTarget, bool isPuckCollected,
 				bool isPuckCollectable, bool closestPuckPositionValid, const Common::Point &closestPuckPosition);
-		void setData(
-				const std::vector<Common::Point> &targetPositions,
-				bool turnAround, bool turnTo, bool stop, bool collectPuck,
-				bool calibratePosition, bool leavePuck, Common::FieldObjectColor puckColor);
 		const std::vector<Autonomous::FieldObject>& getAllFieldObjects() const;
 		const std::vector<Common::Point>& getAllTargetPoints() const;
+		void setTargetPoints(const std::vector<Common::Point> &targets);
 		bool stuckAtObstacle() const;
 		bool reachedTarget() const;
 		const Common::RobotPosition& getCurrentPosition() const;
 		const Common::Point getCurrentTarget() const;
 		bool isMoving() const;
-		bool turnAround();
+		void setTurnAround(bool value);
 		bool getTurnAround();
 		void turnToPoint(double turnToX, double turnToY);
-		bool turnTo();
+		void setTurnTo(bool value);
 		bool getTurnTo();
-		bool stop();
+		void setStop(bool value);
 		bool getStop();
 		Common::Point getTurnPoint();
-		void collectPuckInFront();
+		void setCollectPuckInFront(bool value);
 		bool getCollectPuckInFront();
-		void calibratePosition();
+		void setCalibratePosition(bool value);
 		bool getCalibratePosition();
-		void leavePuckInFront();
+		void setLeavePuckInFront(bool value);
 		bool getLeavePuckInFront();
 		bool cantReachTarget() const;
 		bool isPuckCollected() const;
@@ -57,6 +54,7 @@ namespace View
 		bool isClosestPuckValid() const;
 		const Common::Point &getClosestPuckPosition() const;
 		Common::FieldObjectColor getPuckColor() const;
+		void setPuckColor(Common::FieldObjectColor color);
 
 	signals:
 		void dataForViewChanged();

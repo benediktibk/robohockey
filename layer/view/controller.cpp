@@ -118,7 +118,7 @@ FieldObjectColor Controller::getSeletectedPuckColor() const
 
 void Controller::on_turnAround_clicked()
 {
-	m_model.turnAround();
+	m_model.setTurnAround(true);
 }
 
 void Controller::on_turnToButton_clicked()
@@ -131,13 +131,13 @@ void Controller::on_turnToButton_clicked()
 	turnPosX = textPosX.toDouble();
 	textPosY = m_ui->turnToEditY->displayText();
 	turnPosY = textPosY.toDouble();
-	m_model.turnTo();
+	m_model.setTurnTo(true);
 	m_model.turnToPoint(turnPosX, turnPosY);
 }
 
 void Controller::on_stop_clicked()
 {
-	m_model.stop();
+	m_model.setStop(true);
 }
 
 void Controller::update()
@@ -172,22 +172,22 @@ void Controller::mouseClickInGraph(QPointF point)
 {
 	vector<Point> target = m_model.getAllTargetPoints();
 	target.push_back(Point(point.x() / (double) m_pixelPerMeter, -1.0 * point.y() / (double) m_pixelPerMeter));
-	m_model.setData(target, false, false, false, false, false, false, getSeletectedPuckColor());
+	m_model.setTargetPoints(target);
 }
 
 void Controller::on_collectPuckInFront_clicked()
 {
-	m_model.collectPuckInFront();
+	m_model.setCollectPuckInFront(true);
 }
 
 void Controller::on_calibratePosition_clicked()
 {
-	m_model.calibratePosition();
+	m_model.setCalibratePosition(true);
 }
 
 void Controller::on_leavePuckInFront_clicked()
 {
-	m_model.leavePuckInFront();
+	m_model.setLeavePuckInFront(true);
 }
 
 void Controller::on_pushButton_clicked()

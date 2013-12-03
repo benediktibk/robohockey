@@ -57,20 +57,21 @@ void RobotDriver::update()
 	if (cantReachTargetOrStuckAtObstacleNewTillLastCall())
 	{
 		targets.clear();
-		m_model.setData(targets, false, false, false, false, false, false, FieldObjectColorBlue);
+		m_model.setTargetPoints(targets);
 	}
 	else if(m_model.getStop())
 	{
-		targets.clear();
 		m_robot.stop();
-		m_model.setData(targets, false, false, false, false, false, false, FieldObjectColorBlue);
+		targets.clear();
+		m_model.setTargetPoints(targets);
+		m_model.setStop(false);
 	}
 	else if (targets.size() > 0)
 	{
 		if (m_robot.reachedTarget() || m_robot.stuckAtObstacle() || m_robot.cantReachTarget())
 		{
 			vector<Point> targetsWithoutFirstOne(targets.begin() + 1, targets.end());
-			m_model.setData(targetsWithoutFirstOne, false, false, false, false, false, false, FieldObjectColorBlue);
+			m_model.setTargetPoints(targetsWithoutFirstOne);
 			m_robot.goTo(targets.front());
 		}
 	}
@@ -79,7 +80,7 @@ void RobotDriver::update()
 		if(m_model.getTurnAround())
 		{
 			m_robot.turnAround();
-			m_model.setData(targets, false, false, false, false, false, false, FieldObjectColorBlue);
+			m_model.setTurnAround(false);
 		}
 
 		if(m_model.getTurnTo())
@@ -87,7 +88,7 @@ void RobotDriver::update()
 			Point turnToPoint;
 			turnToPoint = m_model.getTurnPoint();
 			m_robot.turnTo(turnToPoint);
-			m_model.setData(targets, false, false, false, false, false, false, FieldObjectColorBlue);
+			m_model.setTurnTo(false);
 		}
 
 		if(m_model.getCollectPuckInFront())
@@ -95,27 +96,21 @@ void RobotDriver::update()
 			if (closestPuckValid)
 				m_robot.collectPuckInFront(closestPuckPosition);
 
-			m_model.setData(targets, false, false, false, false, false, false, FieldObjectColorBlue);
+			m_model.setCollectPuckInFront(false);
 		}
+		else if (m_robot.isCollectingPuck() && closestPuckValid)
+			m_robot.updatePuckPosition(closestPuckPosition);
 
 		if(m_model.getLeavePuckInFront())
 		{
 			m_robot.leaveCollectedPuck();
-			m_model.setData(targets, false, false, false, false, false, false, FieldObjectColorBlue);
+			m_model.setLeavePuckInFront(false);
 		}
 
 		if(m_model.getCalibratePosition())
 		{
 			m_field.calibratePosition();
-			m_model.setData(targets, false, false, false, false, false, false, FieldObjectColorBlue);
-		}
-
-		if (m_robot.isCollectingPuck())
-		{
-			if (closestPuckValid)
-				m_robot.updatePuckPosition(closestPuckPosition);
-			else
-				m_model.setData(targets, false, false, false, false, false, false, FieldObjectColorBlue);
+			m_model.setCalibratePosition(false);
 		}
 	}
 

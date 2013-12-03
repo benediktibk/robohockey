@@ -89,14 +89,14 @@ void ModelTest::setData_reachedTarget_reachedTarget()
 	CPPUNIT_ASSERT(model.reachedTarget());
 }
 
-void ModelTest::setData_twoTargetPositions_twoTargetPositions()
+void ModelTest::setTargetPoints_twoTargetPositions_twoTargetPositions()
 {
 	Model model;
 	vector<Point> targetPositions;
 	targetPositions.push_back(Point());
 	targetPositions.push_back(Point());
 
-	model.setData(targetPositions, false, false, false, false, false, false, FieldObjectColorBlue);
+	model.setTargetPoints(targetPositions);
 
 	vector<Point> result = model.getAllTargetPoints();
 	CPPUNIT_ASSERT_EQUAL((size_t)2, result.size());
@@ -174,22 +174,20 @@ void ModelTest::setData_closestPuckPosition5And3_closestPuckPosition5And3()
 	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(5, 3), model.getClosestPuckPosition()));
 }
 
-void ModelTest::setData_puckColorYellow_puckColorIsYellow()
+void ModelTest::setPuckColor_puckColorYellow_puckColorIsYellow()
 {
 	Model model;
-	vector<Point> targetPositions;
 
-	model.setData(targetPositions, false, false, false, false, false, false, FieldObjectColorYellow);
+	model.setPuckColor(FieldObjectColorYellow);
 
 	CPPUNIT_ASSERT_EQUAL(FieldObjectColorYellow, model.getPuckColor());
 }
 
-void ModelTest::setData_puckColorBlue_puckColorIsBlue()
+void ModelTest::setPuckColor_puckColorBlue_puckColorIsBlue()
 {
 	Model model;
-	vector<Point> targetPositions;
 
-	model.setData(targetPositions, false, false, false, false, false, false, FieldObjectColorBlue);
+	model.setPuckColor(FieldObjectColorBlue);
 
 	CPPUNIT_ASSERT_EQUAL(FieldObjectColorBlue, model.getPuckColor());
 }
