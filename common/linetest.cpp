@@ -83,7 +83,21 @@ void LineTest::getIntersectPoints_circleBehindEndPointWithNoIntersects_intersect
 
 void LineTest::getIntersectPoints_circleOverEndPointWithNoIntersects_intersectPointsCountIs0()
 {
-	Line line(Point(3.7,0), Point(4,1.9));
+	Line line(Point(3,0), Point(4,1));
 
-	CPPUNIT_ASSERT_EQUAL((size_t)0, line.getIntersectPoints(Circle(Point(4,2), 1)).size());
+	CPPUNIT_ASSERT_EQUAL((size_t)0, line.getIntersectPoints(Circle(Point(4,3.1), 2)).size());
+}
+
+void LineTest::getIntersectPoints_circleIntersectsLineButOnlyTheSmallerPointIsOnTheLine_intersectPointsCountIs2()
+{
+	Line line(Point(-2,2), Point(0,2));
+
+	CPPUNIT_ASSERT_EQUAL((size_t)2, line.getIntersectPoints(Circle(Point(0,0), 5)).size());
+}
+
+void LineTest::getIntersectPoints_circleIntersectsLineButOnlyTheHigherPointIsOnTheLine_intersectPointsCountIs2()
+{
+	Line line(Point(0,2), Point(2,2));
+
+	CPPUNIT_ASSERT_EQUAL((size_t)2, line.getIntersectPoints(Circle(Point(0,0), 5)).size());
 }
