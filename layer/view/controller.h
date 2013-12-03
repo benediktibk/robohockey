@@ -2,6 +2,7 @@
 #define ROBOHOCKEY_LAYER_VIEW_CONTROLLER_H
 
 #include <QtGui/QMainWindow>
+#include "common/fieldobjectcolor.h"
 
 class QGraphicsScene;
 class QGraphicsEllipseItem;
@@ -53,6 +54,7 @@ namespace View
 	private:
 		QString convertIntoString(bool value) const;
 		QString convertIntoString(double value) const;
+		Common::FieldObjectColor getSeletectedPuckColor() const;
 
 	private:
 		Ui::View *m_ui;

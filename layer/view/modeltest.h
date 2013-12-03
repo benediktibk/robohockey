@@ -18,7 +18,9 @@ namespace View
 		CPPUNIT_TEST(constructor_empty_notReachedTarget);
 		CPPUNIT_TEST(constructor_empty_canReachTarget);
 		CPPUNIT_TEST(constructor_empty_puckIsNotCollected);
-		CPPUNIT_TEST(constructory_empty_puckIsNotCollectable);
+		CPPUNIT_TEST(constructor_empty_puckIsNotCollectable);
+		CPPUNIT_TEST(constructor_empty_closestPuckPositionIsNotValid);
+		CPPUNIT_TEST(constructor_empty_fieldObjectColorIsBlue);
 		CPPUNIT_TEST(setData_twoFieldObjects_twoFieldObjects);
 		CPPUNIT_TEST(setData_stuckAtObstacle_stuckAtObstacle);
 		CPPUNIT_TEST(setData_reachedTarget_reachedTarget);
@@ -27,6 +29,11 @@ namespace View
 		CPPUNIT_TEST(setData_cantReachTarget_cantReachTarget);
 		CPPUNIT_TEST(setData_puckIsCollected_puckIsCollected);
 		CPPUNIT_TEST(setData_puckIsCollectable_puckIsCollectable);
+		CPPUNIT_TEST(setData_closestPuckPositionValid_closestPuckPositionValid);
+		CPPUNIT_TEST(setData_closestPuckPositionNotValid_closestPuckPositionNotValid);
+		CPPUNIT_TEST(setData_closestPuckPosition5And3_closestPuckPosition5And3);
+		CPPUNIT_TEST(setData_puckColorYellow_puckColorIsYellow);
+		CPPUNIT_TEST(setData_puckColorBlue_puckColorIsBlue);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
@@ -34,7 +41,9 @@ namespace View
 		void constructor_empty_notReachedTarget();
 		void constructor_empty_canReachTarget();
 		void constructor_empty_puckIsNotCollected();
-		void constructory_empty_puckIsNotCollectable();
+		void constructor_empty_puckIsNotCollectable();
+		void constructor_empty_closestPuckPositionIsNotValid();
+		void constructor_empty_fieldObjectColorIsBlue();
 		void setData_twoFieldObjects_twoFieldObjects();
 		void setData_stuckAtObstacle_stuckAtObstacle();
 		void setData_reachedTarget_reachedTarget();
@@ -43,6 +52,11 @@ namespace View
 		void setData_cantReachTarget_cantReachTarget();
 		void setData_puckIsCollected_puckIsCollected();
 		void setData_puckIsCollectable_puckIsCollectable();
+		void setData_closestPuckPositionValid_closestPuckPositionValid();
+		void setData_closestPuckPositionNotValid_closestPuckPositionNotValid();
+		void setData_closestPuckPosition5And3_closestPuckPosition5And3();
+		void setData_puckColorYellow_puckColorIsYellow();
+		void setData_puckColorBlue_puckColorIsBlue();
 	};
 }
 }

@@ -7,6 +7,7 @@
 #include <QtGui/QGraphicsEllipseItem>
 #include <QtGui/QGraphicsScene>
 #include <math.h>
+#include <assert.h>
 
 using namespace RoboHockey::Common;
 using namespace RoboHockey::Layer;
@@ -56,8 +57,6 @@ Controller::Controller(Model &model) :
 
 	m_triangle = m_scene->addPolygon(triangle);
 
-//	m_scene->addRect(m_triangle->boundingRect());
-
 	m_graph->setScene(m_scene);
 	m_graph->setSceneRect(0, 0, 4, 6);
 	m_graph->resize(900, 600);
@@ -102,6 +101,19 @@ QString Controller::convertIntoString(bool value) const
 QString Controller::convertIntoString(double value) const
 {
 	return QString::number(value, 'f', m_numberOfDigitsRightOfComma);
+}
+
+FieldObjectColor Controller::getSeletectedPuckColor() const
+{
+	if (m_ui->bluePuckButton->isChecked())
+		return FieldObjectColorBlue;
+	else if (m_ui->yellowPuckButton->isChecked())
+		return FieldObjectColorYellow;
+	else
+	{
+		assert(false);
+		return FieldObjectColorUnknown;
+	}
 }
 
 void Controller::on_turnAround_clicked()
@@ -160,7 +172,7 @@ void Controller::mouseClickInGraph(QPointF point)
 {
 	vector<Point> target = m_model.getAllTargetPoints();
 	target.push_back(Point(point.x() / (double) m_pixelPerMeter, -1.0 * point.y() / (double) m_pixelPerMeter));
-	m_model.setData(target, false, false, false, false, false, false);
+	m_model.setData(target, false, false, false, false, false, false, getSeletectedPuckColor());
 }
 
 void Controller::on_collectPuckInFront_clicked()

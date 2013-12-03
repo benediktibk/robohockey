@@ -1,9 +1,10 @@
 #include "layer/view/model.h"
+#include <assert.h>
 
+using namespace std;
 using namespace RoboHockey::Common;
 using namespace RoboHockey::Layer::View;
 using namespace RoboHockey::Layer::Autonomous;
-using namespace std;
 
 Model::Model() :
 	m_stuckAtObstacle(false),
@@ -17,14 +18,16 @@ Model::Model() :
 	m_leavePuck(false),
 	m_cantReachTarget(false),
 	m_isPuckCollected(false),
-	m_isPuckCollectable(false)
+	m_isPuckCollectable(false),
+	m_closestPuckValid(false),
+	m_puckColor(FieldObjectColorBlue)
 {}
 
-void Model::setData(
-		const vector<FieldObject> &fieldObjects,
+void Model::setData(const vector<FieldObject> &fieldObjects,
 		bool stuckAtObstacle, bool reachedTarget,
 		const RobotPosition &currentPosition, const Point &currentTarget,
-		bool isMoving, bool cantReachTarget, bool isPuckCollected, bool isPuckCollectable)
+		bool isMoving, bool cantReachTarget, bool isPuckCollected, bool isPuckCollectable,
+		bool closestPuckPositionValid, const Point &closestPuckPosition)
 {
 	m_fieldObjects = fieldObjects;
 	m_stuckAtObstacle = stuckAtObstacle;
@@ -35,14 +38,15 @@ void Model::setData(
 	m_cantReachTarget = cantReachTarget;
 	m_isPuckCollected = isPuckCollected;
 	m_isPuckCollectable = isPuckCollectable;
+	m_closestPuckValid = closestPuckPositionValid;
+	m_closestPuckPosition = closestPuckPosition;
 
 	emit robotDataChanged();
 }
 
-void Model::setData(
-		const vector<Point> &targetPositions,
+void Model::setData(const vector<Point> &targetPositions,
 		bool turnAround, bool turnTo, bool stop, bool collectPuck,
-		bool calibratePosition, bool leavePuck)
+		bool calibratePosition, bool leavePuck, FieldObjectColor puckColor)
 {
 	m_targetPositions = targetPositions;
 	m_turnAround = turnAround;
@@ -51,7 +55,9 @@ void Model::setData(
 	m_collectPuck = collectPuck;
 	m_calibratePosition = calibratePosition;
 	m_leavePuck = leavePuck;
+	m_puckColor = puckColor;
 
+	assert(m_puckColor == FieldObjectColorBlue || m_puckColor == FieldObjectColorYellow);
 	emit dataForViewChanged();
 }
 
@@ -86,11 +92,10 @@ bool Model::turnAround()
 	return m_turnAround;
 }
 
-Point Model::turnToPoint(double turnToX, double turnToY)
+void Model::turnToPoint(double turnToX, double turnToY)
 {
 	m_turnToPosition.setX(turnToX);
 	m_turnToPosition.setY(turnToY);
-	return m_turnToPosition;
 }
 
 bool Model::turnTo()
@@ -163,6 +168,22 @@ bool Model::isPuckCollected() const
 bool Model::isPuckCollectable() const
 {
 	return m_isPuckCollectable;
+}
+
+bool Model::isClosestPuckValid() const
+{
+	return m_closestPuckValid;
+}
+
+const Point &Model::getClosestPuckPosition() const
+{
+	assert(isClosestPuckValid());
+	return m_closestPuckPosition;
+}
+
+FieldObjectColor Model::getPuckColor() const
+{
+	return m_puckColor;
 }
 
 bool Model::getTurnAround()

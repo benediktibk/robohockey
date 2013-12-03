@@ -25,11 +25,11 @@ namespace View
 				const std::vector<Autonomous::FieldObject> &fieldObjects,
 				bool stuckAtObstacle, bool reachedTarget, const Common::RobotPosition &currentPosition,
 				const Common::Point &currentTarget, bool isMoving, bool cantReachTarget, bool isPuckCollected,
-				bool isPuckCollectable);
+				bool isPuckCollectable, bool closestPuckPositionValid, const Common::Point &closestPuckPosition);
 		void setData(
 				const std::vector<Common::Point> &targetPositions,
 				bool turnAround, bool turnTo, bool stop, bool collectPuck,
-				bool calibratePosition, bool leavePuck);
+				bool calibratePosition, bool leavePuck, Common::FieldObjectColor puckColor);
 		const std::vector<Autonomous::FieldObject>& getAllFieldObjects() const;
 		const std::vector<Common::Point>& getAllTargetPoints() const;
 		bool stuckAtObstacle() const;
@@ -39,7 +39,7 @@ namespace View
 		bool isMoving() const;
 		bool turnAround();
 		bool getTurnAround();
-		Common::Point turnToPoint(double turnToX, double turnToY);
+		void turnToPoint(double turnToX, double turnToY);
 		bool turnTo();
 		bool getTurnTo();
 		bool stop();
@@ -54,6 +54,9 @@ namespace View
 		bool cantReachTarget() const;
 		bool isPuckCollected() const;
 		bool isPuckCollectable() const;
+		bool isClosestPuckValid() const;
+		const Common::Point &getClosestPuckPosition() const;
+		Common::FieldObjectColor getPuckColor() const;
 
 	signals:
 		void dataForViewChanged();
@@ -77,6 +80,9 @@ namespace View
 		bool m_cantReachTarget;
 		bool m_isPuckCollected;
 		bool m_isPuckCollectable;
+		Common::Point m_closestPuckPosition;
+		bool m_closestPuckValid;
+		Common::FieldObjectColor m_puckColor;
 	};
 }
 }
