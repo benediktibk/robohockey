@@ -168,9 +168,16 @@ void Controller::update()
 	m_ui->isPuckCollectable->setText(convertIntoString(m_model.isPuckCollectable()));
 
 	if (m_model.isClosestPuckValid())
+	{
+		double distanceToClosestPuck = position.distanceTo(m_model.getClosestPuckPosition());
+		m_ui->distanceToClosestPuck->setText(convertIntoString(distanceToClosestPuck));
 		m_ui->closestPuckPosition->setText(convertIntoString(m_model.getClosestPuckPosition()));
+	}
 	else
+	{
 		m_ui->closestPuckPosition->setText("invalid");
+		m_ui->distanceToClosestPuck->setText("invalid");
+	}
 
 	const Point &target = m_model.getCurrentTarget();
 	QString targetString = QString("%1, %2").arg(convertIntoString(target.getX())).arg(convertIntoString(target.getY()));
