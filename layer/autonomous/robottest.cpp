@@ -954,6 +954,23 @@ void RobotTest::collectPuckInFront_puckCollected_isNotCollectingPuck()
 	CPPUNIT_ASSERT(!robot.isCollectingPuck());
 }
 
+void RobotTest::collectPuckInFront_lookingLeftAndPuckAhead_canReachTarget()
+{
+	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
+	DataAnalysis::LidarMock &lidar = dataAnalyser->getLidarMock();
+	DataAnalysis::OdometryMock &odometry = dataAnalyser->getOdometryMock();
+	RobotImpl robot(dataAnalyser);
+	FieldMock field;
+
+	lidar.setPuckCollectable(true);
+	odometry.setCurrentPosition(RobotPosition(Point(0, 0), Angle::getHalfRotation()));
+	robot.updateSensorData();
+	robot.collectPuckInFront(Point(-0.4, 0));
+	robot.updateActuators(field);
+
+	CPPUNIT_ASSERT(!robot.cantReachTarget());
+}
+
 void RobotTest::updatePuckPosition_newPositionOfPuck_goToStraightSlowlyCalledTwice()
 {
 	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
