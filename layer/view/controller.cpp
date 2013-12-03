@@ -66,6 +66,8 @@ Controller::Controller(Model &model) :
 	connect(&model, SIGNAL(dataForViewChanged()), this, SLOT(updateTargets()));
 	connect(&model, SIGNAL(robotDataChanged()), this, SLOT(updateObjects()));
 	connect(m_graph, SIGNAL(clicked(QPointF)), this, SLOT(mouseClickInGraph(QPointF)));
+	connect(m_ui->bluePuckButton, SIGNAL(clicked()), this, SLOT(puckColorChanged()));
+	connect(m_ui->yellowPuckButton, SIGNAL(clicked()), this, SLOT(puckColorChanged()));
 }
 
 Controller::~Controller()
@@ -193,6 +195,11 @@ void Controller::on_leavePuckInFront_clicked()
 void Controller::on_pushButton_clicked()
 {
 
+}
+
+void Controller::puckColorChanged()
+{
+	m_model.setPuckColor(getSeletectedPuckColor());
 }
 
 void Controller::updateTargets()
