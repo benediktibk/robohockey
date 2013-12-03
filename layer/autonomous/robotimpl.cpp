@@ -333,6 +333,28 @@ bool RobotImpl::isCollectingPuck() const
 	return m_state == RobotStateCollectingPuck;
 }
 
+bool RobotImpl::isRotating() const
+{
+	switch (m_state)
+	{
+	case RobotStateWaiting:
+		return false;
+	case RobotStateDriving:
+		return false;
+	case RobotStateTurnAround:
+		return true;
+	case RobotStateTurnTo:
+		return true;
+	case RobotStateLeavingPuck:
+		return false;
+	case RobotStateCollectingPuck:
+		return !m_rotationToPuckReached;
+	}
+
+	assert(false);
+	return true;
+}
+
 void RobotImpl::clearRoute()
 {
 	delete m_currentRoute;

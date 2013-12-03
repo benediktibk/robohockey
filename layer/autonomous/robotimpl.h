@@ -44,6 +44,7 @@ namespace Autonomous
 		virtual bool isPuckCollected() const;
 		virtual bool isPuckCollectable() const;
 		virtual bool isCollectingPuck() const;
+		virtual bool isRotating() const;
 
 	private:
 		void clearRoute();

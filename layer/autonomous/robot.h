@@ -41,6 +41,7 @@ namespace Autonomous
 		virtual bool isPuckCollected() const = 0;
 		virtual bool isPuckCollectable() const = 0;
 		virtual bool isCollectingPuck() const = 0;
+		virtual bool isRotating() const = 0;
 	};
 }
 }
