@@ -361,6 +361,7 @@ void RobotTest::updateSensorData_obstacleDirectInFront_engineGotAtLeastOneCallTo
 	FieldMock field;
 
 	robot.updateSensorData();
+	robot.goTo(Point(1, 0));
 	robot.updateActuators(field);
 
 	CPPUNIT_ASSERT(engine.getCallsToLockForwardMovement() > 0);
@@ -376,6 +377,7 @@ void RobotTest::updateSensorData_0bstacleDirectInFront_engineGotNoCallToUnlockFo
 	sonar.setIsObstacleDirectInFront(true);
 
 	robot.updateSensorData();
+	robot.goTo(Point(1, 0));
 	robot.updateActuators(field);
 
 	CPPUNIT_ASSERT(engine.getCallsToUnlockForwardMovement() == 0);
