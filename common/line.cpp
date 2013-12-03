@@ -69,7 +69,9 @@ vector<Point> Line::getIntersectPoints(const Circle &circle) const
 				resultMinus.rotate(Angle::getQuarterRotation());
 			}
 			if((compare.isFuzzyGreater(resultX1, start.getX()) && compare.isFuzzySmaller(resultX1, end.getX())) ||
-				(compare.isFuzzySmaller(resultX1, start.getX()) && compare.isFuzzyGreater(resultX1, end.getX())))
+				(compare.isFuzzySmaller(resultX1, start.getX()) && compare.isFuzzyGreater(resultX1, end.getX())) ||
+				(compare.isFuzzyGreater(resultX2, start.getX()) && compare.isFuzzySmaller(resultX2, end.getX())) ||
+				(compare.isFuzzySmaller(resultX2, start.getX()) && compare.isFuzzyGreater(resultX2, end.getX())))
 			{
 				resultPlus = resultPlus + circle.getCenter();
 				resultMinus = resultMinus + circle.getCenter();
