@@ -35,6 +35,17 @@ vector<Point> Router::getPointsBesideObstacle(const Path &path, const Circle &ob
 	if(intersectionPoints.getIntersectPointsCount() == 1)
 	{
 		pointOnObstacleEdge = intersectionPoints.getIntersectPoints().front();
+		switch (intersectionPoints.getIntersectTypeFrom()) {
+		case PathIntersectPoints::IntersectTypeFromLeft:
+			pointOnObstacleEdge = pointOnObstacleEdge + Point(1.2*m_robotWidth, Angle::getFullRotation());
+			break;
+		case PathIntersectPoints::IntersectTypeFromRight:
+			break;
+		case PathIntersectPoints::IntersectTypeFromStart:
+			break;
+		case PathIntersectPoints::IntersectTypeFromEnd:
+			break;
+		}
 	}
 	else
 	{

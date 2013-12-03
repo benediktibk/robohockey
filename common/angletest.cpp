@@ -182,3 +182,10 @@ void AngleTest::getEighthRotation_empty_valueIsPiQuarter()
 
 	CPPUNIT_ASSERT_DOUBLES_EQUAL(M_PI/4, angle.getValueBetweenMinusPiAndPi(), 0.00001);
 }
+
+void AngleTest::getThreeQuarterRotation_empty_valueIsThreeHalfPi()
+{
+	Angle angle = Angle::getThreeQuarterRotation();
+
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(-M_PI/2, angle.getValueBetweenMinusPiAndPi(), 0.00001);
+}
