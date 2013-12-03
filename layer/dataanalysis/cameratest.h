@@ -15,8 +15,10 @@ namespace DataAnalysis
 	{
 		CPPUNIT_TEST_SUITE(CameraTest);
 		CPPUNIT_TEST(getAllCameraObjects_mockHardwareCamera_atLeastOneCallToGetFrame);
-		CPPUNIT_TEST(isGoalYellow_yellowGoal_resultIsOver80Percent);
-		CPPUNIT_TEST(isGoalYellow_blueGoal_resultIsNear0);
+		CPPUNIT_TEST(getProbabilityForYellowGoal_yellowGoal_resultIsOver80Percent);
+		CPPUNIT_TEST(getProbabilityForYellowGoal_blueGoal_resultIsNear0);
+		CPPUNIT_TEST(getProbabilityForBlueGoal_blueGoal_resultIsOver80Percent);
+		CPPUNIT_TEST(getProbabilityForBlueGoal_yellowGoal_resultIsNear0);
 		CPPUNIT_TEST(getAllCameraObjects_yellowPuckTwice_cameraObjectsCountIs2);
 		CPPUNIT_TEST(getAllCameraObjects_yellowAndBluePuck_cameraObjectsCountIs2);
 		CPPUNIT_TEST(getAllCameraObjects_nothing_cameraObjectCountIs0);
@@ -45,8 +47,10 @@ namespace DataAnalysis
 
 	private:
 		void getAllCameraObjects_mockHardwareCamera_atLeastOneCallToGetFrame();
-		void isGoalYellow_yellowGoal_resultIsOver80Percent();
-		void isGoalYellow_blueGoal_resultIsNear0();
+		void getProbabilityForYellowGoal_yellowGoal_resultIsOver80Percent();
+		void getProbabilityForYellowGoal_blueGoal_resultIsNear0();
+		void getProbabilityForBlueGoal_blueGoal_resultIsOver80Percent();
+		void getProbabilityForBlueGoal_yellowGoal_resultIsNear0();
 		void getAllCameraObjects_yellowPuckTwice_cameraObjectsCountIs2();
 		void getAllCameraObjects_yellowAndBluePuck_cameraObjectsCountIs2();
 		void getAllCameraObjects_nothing_cameraObjectCountIs0();
