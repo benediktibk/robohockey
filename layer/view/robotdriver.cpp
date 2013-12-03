@@ -42,9 +42,22 @@ void RobotDriver::update()
 
 	m_robot.updateSensorData();
 	m_field.update();
+	const RobotPosition &positionAndOrientation = m_robot.getCurrentPosition();
 	vector<Point> targets = m_model.getAllTargetPoints();
 	vector<FieldObject> pucks = m_field.getObjectsWithColorOrderdByDistance(
-				m_model.getPuckColor(), m_robot.getCurrentPosition().getPosition());
+				m_model.getPuckColor(), positionAndOrientation.getPosition());
+
+	if (m_model.getPuckColor() == FieldObjectColorUnknown)
+	{
+		vector<FieldObject> bluePucks = m_field.getObjectsWithColorOrderdByDistance(
+					FieldObjectColorBlue, positionAndOrientation.getPosition());
+		vector<FieldObject> yellowPucks = m_field.getObjectsWithColorOrderdByDistance(
+					FieldObjectColorYellow, positionAndOrientation.getPosition());
+
+		pucks.insert(pucks.end(), bluePucks.begin(), bluePucks.end());
+		pucks.insert(pucks.end(), yellowPucks.begin(), yellowPucks.end());
+	}
+
 	Point closestPuckPosition;
 	bool closestPuckValid = pucks.size() > 0;
 

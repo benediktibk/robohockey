@@ -68,6 +68,7 @@ Controller::Controller(Model &model) :
 	connect(m_graph, SIGNAL(clicked(QPointF)), this, SLOT(mouseClickInGraph(QPointF)));
 	connect(m_ui->bluePuckButton, SIGNAL(clicked()), this, SLOT(puckColorChanged()));
 	connect(m_ui->yellowPuckButton, SIGNAL(clicked()), this, SLOT(puckColorChanged()));
+	connect(m_ui->anyPuckButton, SIGNAL(clicked()), this, SLOT(puckColorChanged()));
 }
 
 Controller::~Controller()
@@ -124,6 +125,8 @@ FieldObjectColor Controller::getSeletectedPuckColor() const
 		return FieldObjectColorBlue;
 	else if (m_ui->yellowPuckButton->isChecked())
 		return FieldObjectColorYellow;
+	else if(m_ui->anyPuckButton->isChecked())
+		return FieldObjectColorUnknown;
 	else
 	{
 		assert(false);
