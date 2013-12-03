@@ -81,6 +81,7 @@ namespace Autonomous
 		bool m_stateChanged;
 		Common::Point m_startPosition;
 		bool m_puckPositionChanged;
+		bool m_rotationToPuckReached;
 	};
 }
 }

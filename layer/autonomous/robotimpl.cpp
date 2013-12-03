@@ -80,20 +80,18 @@ void RobotImpl::updateEngineForCollectingPuck()
 {
 	DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
 	const DataAnalysis::Lidar &lidar = m_dataAnalyser->getLidar();
+
+	Point currentPosition = getCurrentPosition().getPosition();
+	double drivenDistance = m_startPosition.distanceTo(currentPosition);
 	bool lidarPuckCollectable = lidar.isPuckCollectable(m_maximumDistanceToCollectPuck, m_maximumAngleToCollectPuck);
 	bool fromTargetPositionPuckCollectable = isCurrentTargetPuckCollectable();
 
-	if (	!lidarPuckCollectable ||
-			!fromTargetPositionPuckCollectable)
+	if ((!lidarPuckCollectable || !fromTargetPositionPuckCollectable) && m_rotationToPuckReached)
 	{
 		m_cantReachTarget = true;
 		return;
 	}
-
-	Point currentPosition = getCurrentPosition().getPosition();
-	double drivenDistance = m_startPosition.distanceTo(currentPosition);
-
-	if (isPuckCollected())
+	else if (isPuckCollected())
 	{
 		changeIntoState(RobotStateWaiting);
 		return;
@@ -105,7 +103,12 @@ void RobotImpl::updateEngineForCollectingPuck()
 	}
 
 	if (m_stateChanged || m_puckPositionChanged)
-		engine.goToStraightSlowly(m_currentTarget);
+	{
+		if (m_rotationToPuckReached)
+			engine.goToStraightSlowly(m_currentTarget);
+		else
+			engine.turnToTarget(m_currentTarget);
+	}
 }
 
 void RobotImpl::updateEngineForLeavingPuck()
@@ -226,6 +229,7 @@ void RobotImpl::changeIntoState(RobotState state)
 	m_tryingToTackleObstacle = false;
 	m_state = state;
 	m_stateChanged = true;
+	m_rotationToPuckReached = false;
 }
 
 bool RobotImpl::isCurrentTargetPuckCollectable() const
@@ -251,6 +255,13 @@ void RobotImpl::updateSensorData()
 	m_stateChanged = false;
 	m_puckPositionChanged = false;
 	m_dataAnalyser->updateSensorData();
+
+	if (isCollectingPuck() && !m_rotationToPuckReached)
+	{
+		DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
+		m_rotationToPuckReached = engine.reachedTarget();
+		m_stateChanged = true;
+	}
 }
 
 void RobotImpl::stop()
