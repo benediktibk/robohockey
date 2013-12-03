@@ -71,3 +71,8 @@ PathIntersectPoints Path::getIntersectPoints(const Circle &circle) const
 
 	return intersectPointsEnd;
 }
+
+Angle Path::getAgnleBetweenStartAndEnd() const
+{
+	return Angle(m_start, m_end);
+}

@@ -3,6 +3,7 @@
 #include "common/circle.h"
 #include "common/pathintersectpoints.h"
 #include "common/compare.h"
+#include "common/angle.h"
 
 using namespace RoboHockey::Common;
 
@@ -117,4 +118,21 @@ void PathTest::getIntersectPoints_circleIntersectsLineFromRight_intersectPointIs
 	Path path(Point(-2,2.5), Point(3,2.5), 1);
 
 	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(2,2), path.getIntersectPoints(Circle(Point(1,1), 2.8284)).getIntersectPoints().front()));
+}
+
+void PathTest::getAngleBetweenStartAndEnd_StartIs0And0EndIs1And1_AngleIsPiQuarter()
+{
+	Compare compare(0.0001);
+	Path path(Point(0,0), Point(1,1), 1);
+
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(Angle::getEighthRotation(), path.getAgnleBetweenStartAndEnd()));
+}
+
+void PathTest::getAngleBetweenStartAndEnd_StartIs1And1EndIs0And0_AngleIsMinusPiQuarter()
+{
+	Compare compare(0.0001);
+	Path path(Point(1,1), Point(0,0), 1);
+	Angle angle = Angle::getHalfRotation() + Angle::getEighthRotation();
+
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(angle.getValueBetweenMinusPiAndPi(), path.getAgnleBetweenStartAndEnd()));
 }

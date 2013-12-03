@@ -9,6 +9,7 @@ namespace  RoboHockey
 namespace Common
 {
 	class Circle;
+	class Angle;
 	class PathIntersectPoints;
 
 	class Path
@@ -20,6 +21,7 @@ namespace Common
 		bool intersectsWith(const std::vector<Circle> &circles) const;
 		bool isCircleCenterOnPath(const Circle &circle) const;
 		PathIntersectPoints getIntersectPoints(const Circle &circle) const;
+		Angle getAgnleBetweenStartAndEnd() const;
 
 	private:
 		Point m_start;

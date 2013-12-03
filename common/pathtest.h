@@ -28,6 +28,8 @@ namespace Common
 		 CPPUNIT_TEST(getIntersectPoints_circleIntersectsLine_intersectPointsCountIs2);
 		 CPPUNIT_TEST(getIntersectPoints_circleIntersectsLineFromRight_intersectTypeFromRight);
 		 CPPUNIT_TEST(getIntersectPoints_circleIntersectsLineFromRight_intersectPointIs);
+		 CPPUNIT_TEST(getAngleBetweenStartAndEnd_StartIs0And0EndIs1And1_AngleIsPiQuarter);
+		 CPPUNIT_TEST(getAngleBetweenStartAndEnd_StartIs1And1EndIs0And0_AngleIsMinusPiQuarter);
 		 CPPUNIT_TEST_SUITE_END();
 
 	private:
@@ -47,6 +49,8 @@ namespace Common
 		 void getIntersectPoints_circleIntersectsLine_intersectPointsCountIs2();
 		 void getIntersectPoints_circleIntersectsLineFromRight_intersectTypeFromRight();
 		 void getIntersectPoints_circleIntersectsLineFromRight_intersectPointIs();
+		 void getAngleBetweenStartAndEnd_StartIs0And0EndIs1And1_AngleIsPiQuarter();
+		 void getAngleBetweenStartAndEnd_StartIs1And1EndIs0And0_AngleIsMinusPiQuarter();
 
 	};
 }
