@@ -80,20 +80,28 @@ void RobotImpl::updateEngineForCollectingPuck()
 {
 	DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
 	const DataAnalysis::Lidar &lidar = m_dataAnalyser->getLidar();
-
 	Point currentPosition = getCurrentPosition().getPosition();
 	double drivenDistance = m_startPosition.distanceTo(currentPosition);
 	bool lidarPuckCollectable = lidar.isPuckCollectable(m_maximumDistanceToCollectPuck, m_maximumAngleToCollectPuck);
 	bool fromTargetPositionPuckCollectable = isCurrentTargetPuckCollectable();
+	bool justReachedOrientation = false;
+
+	if (!m_rotationToPuckReached && !m_stateChanged)
+	{
+		m_rotationToPuckReached = engine.reachedTarget();
+		if (m_rotationToPuckReached)
+			justReachedOrientation = true;
+	}
+
+	if (isPuckCollected())
+	{
+		changeIntoState(RobotStateWaiting);
+		return;
+	}
 
 	if ((!lidarPuckCollectable || !fromTargetPositionPuckCollectable) && m_rotationToPuckReached)
 	{
 		m_cantReachTarget = true;
-		return;
-	}
-	else if (isPuckCollected())
-	{
-		changeIntoState(RobotStateWaiting);
 		return;
 	}
 	else if (drivenDistance > m_maximumDistanceToCollectPuck)
@@ -102,7 +110,7 @@ void RobotImpl::updateEngineForCollectingPuck()
 		return;
 	}
 
-	if (m_stateChanged || m_puckPositionChanged)
+	if (m_stateChanged || m_puckPositionChanged || justReachedOrientation)
 	{
 		if (m_rotationToPuckReached)
 			engine.goToStraightSlowly(m_currentTarget);
@@ -206,6 +214,7 @@ bool RobotImpl::enableCollisionDetectionWithSonar() const
 
 	switch(m_state)
 	{
+	case RobotStateWaiting:
 	case RobotStateCollectingPuck:
 		result = false;
 		break;
@@ -213,7 +222,6 @@ bool RobotImpl::enableCollisionDetectionWithSonar() const
 	case RobotStateLeavingPuck:
 	case RobotStateTurnTo:
 	case RobotStateTurnAround:
-	case RobotStateWaiting:
 		result = true;
 		break;
 	}
@@ -255,13 +263,6 @@ void RobotImpl::updateSensorData()
 	m_stateChanged = false;
 	m_puckPositionChanged = false;
 	m_dataAnalyser->updateSensorData();
-
-	if (isCollectingPuck() && !m_rotationToPuckReached)
-	{
-		DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
-		m_rotationToPuckReached = engine.reachedTarget();
-		m_stateChanged = true;
-	}
 }
 
 void RobotImpl::stop()
