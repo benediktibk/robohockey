@@ -105,6 +105,19 @@ QString Controller::convertIntoString(double value) const
 	return QString::number(value, 'f', m_numberOfDigitsRightOfComma);
 }
 
+QString Controller::convertIntoString(const Point &value) const
+{
+	QString xString = convertIntoString(value.getX());
+	QString yString = convertIntoString(value.getY());
+	QString result;
+	result.append("(");
+	result.append(xString);
+	result.append(", ");
+	result.append(yString);
+	result.append(")");
+	return result;
+}
+
 FieldObjectColor Controller::getSeletectedPuckColor() const
 {
 	if (m_ui->bluePuckButton->isChecked())
@@ -146,22 +159,18 @@ void Controller::update()
 {
 	const RobotPosition &robotPosition = m_model.getCurrentPosition();
 	const Point &position = robotPosition.getPosition();
-	double positionX = position.getX();
-	double positionY = position.getY();
-	QString positionXstring = convertIntoString(positionX);
-	QString positionYstring = convertIntoString(positionY);
-	QString resultPosition;
-	resultPosition.append(positionXstring);
-	resultPosition.append(", ");
-	resultPosition.append(positionYstring);
-	m_ui->currentPosition->setText(resultPosition);
-
+	m_ui->currentPosition->setText(convertIntoString(position));
 	m_ui->stuckAtObstacle->setText(convertIntoString(m_model.stuckAtObstacle()));
 	m_ui->reachedTarget->setText(convertIntoString(m_model.reachedTarget()));
 	m_ui->isMoving->setText(convertIntoString(m_model.isMoving()));
 	m_ui->cantReachTarget->setText(convertIntoString(m_model.cantReachTarget()));
 	m_ui->isPuckCollected->setText(convertIntoString(m_model.isPuckCollected()));
 	m_ui->isPuckCollectable->setText(convertIntoString(m_model.isPuckCollectable()));
+
+	if (m_model.isClosestPuckValid())
+		m_ui->closestPuckPosition->setText(convertIntoString(m_model.getClosestPuckPosition()));
+	else
+		m_ui->closestPuckPosition->setText("invalid");
 
 	const Point &target = m_model.getCurrentTarget();
 	QString targetString = QString("%1, %2").arg(convertIntoString(target.getX())).arg(convertIntoString(target.getY()));

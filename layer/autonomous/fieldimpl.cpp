@@ -284,7 +284,7 @@ vector<FieldObject> FieldImpl::getObjectsWithColor(FieldObjectColor color) const
 	vector<FieldObject> result;
 
 	for (vector<FieldObject>::const_iterator i = m_fieldObjects.begin(); i != m_fieldObjects.end(); ++i)
-		if (i->getColor() == color || true) //! @todo remove this workaround, necessary as long the color is not very reliable
+		if (i->getColor() == color)
 			result.push_back(*i);
 
 	return result;

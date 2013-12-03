@@ -15,6 +15,11 @@ namespace Ui
 
 namespace RoboHockey
 {
+namespace Common
+{
+	class Point;
+}
+
 namespace Layer
 {
 namespace View
@@ -55,6 +60,7 @@ namespace View
 	private:
 		QString convertIntoString(bool value) const;
 		QString convertIntoString(double value) const;
+		QString convertIntoString(const Common::Point &value) const;
 		Common::FieldObjectColor getSeletectedPuckColor() const;
 
 	private:
