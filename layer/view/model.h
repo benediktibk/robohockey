@@ -25,7 +25,8 @@ namespace View
 				const std::vector<Autonomous::FieldObject> &fieldObjects,
 				bool stuckAtObstacle, bool reachedTarget, const Common::RobotPosition &currentPosition,
 				const Common::Point &currentTarget, bool isMoving, bool cantReachTarget, bool isPuckCollected,
-				bool isPuckCollectable, bool closestPuckPositionValid, const Common::Point &closestPuckPosition);
+				bool isPuckCollectable, bool closestPuckPositionValid, const Common::Point &closestPuckPosition,
+				bool isRotating);
 		const std::vector<Autonomous::FieldObject>& getAllFieldObjects() const;
 		const std::vector<Common::Point>& getAllTargetPoints() const;
 		void setTargetPoints(const std::vector<Common::Point> &targets);
@@ -55,6 +56,7 @@ namespace View
 		const Common::Point &getClosestPuckPosition() const;
 		Common::FieldObjectColor getPuckColor() const;
 		void setPuckColor(Common::FieldObjectColor color);
+		bool isRotating() const;
 
 	signals:
 		void dataForViewChanged();
@@ -81,6 +83,7 @@ namespace View
 		Common::Point m_closestPuckPosition;
 		bool m_closestPuckValid;
 		Common::FieldObjectColor m_puckColor;
+		bool m_isRotating;
 	};
 }
 }

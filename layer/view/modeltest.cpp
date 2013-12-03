@@ -63,13 +63,18 @@ void ModelTest::constructor_empty_fieldObjectColorIsBlue()
 	CPPUNIT_ASSERT_EQUAL(FieldObjectColorBlue, m_model->getPuckColor());
 }
 
+void ModelTest::constructor_empty_isNotRotating()
+{
+	CPPUNIT_ASSERT(!m_model->isRotating());
+}
+
 void ModelTest::setData_twoFieldObjects_twoFieldObjects()
 {
 	vector<FieldObject> fieldObjects;
 	fieldObjects.push_back(FieldObject(Circle(), FieldObjectColorUnknown));
 	fieldObjects.push_back(FieldObject(Circle(), FieldObjectColorUnknown));
 
-	m_model->setData(fieldObjects, false, false, RobotPosition(), Point(), false, false, false, false, false, Point());
+	m_model->setData(fieldObjects, false, false, RobotPosition(), Point(), false, false, false, false, false, Point(), false);
 
 	vector<FieldObject> result = m_model->getAllFieldObjects();
 	CPPUNIT_ASSERT_EQUAL((size_t)2, result.size());
@@ -79,7 +84,7 @@ void ModelTest::setData_stuckAtObstacle_stuckAtObstacle()
 {
 	vector<FieldObject> fieldObjects;
 
-	m_model->setData(fieldObjects, true, false, RobotPosition(), Point(), false, false, false, false, false, Point());
+	m_model->setData(fieldObjects, true, false, RobotPosition(), Point(), false, false, false, false, false, Point(), false);
 
 	CPPUNIT_ASSERT(m_model->stuckAtObstacle());
 }
@@ -88,7 +93,7 @@ void ModelTest::setData_reachedTarget_reachedTarget()
 {
 	vector<FieldObject> fieldObjects;
 
-	m_model->setData(fieldObjects, false, true, RobotPosition(), Point(), false, false, false, false, false, Point());
+	m_model->setData(fieldObjects, false, true, RobotPosition(), Point(), false, false, false, false, false, Point(), false);
 
 	CPPUNIT_ASSERT(m_model->reachedTarget());
 }
@@ -120,7 +125,7 @@ void ModelTest::setData_currentPosition_currentPositionIsCorrect()
 {
 	vector<FieldObject> fieldObjects;
 
-	m_model->setData(fieldObjects, true, false, RobotPosition(Point(3, 2), 1), Point(), false, false, false, false, false, Point());
+	m_model->setData(fieldObjects, true, false, RobotPosition(Point(3, 2), 1), Point(), false, false, false, false, false, Point(), false);
 
 	Compare compare(0.0001);
 	CPPUNIT_ASSERT(compare.isFuzzyEqual(RobotPosition(Point(3, 2), 1), m_model->getCurrentPosition()));
@@ -130,7 +135,7 @@ void ModelTest::setData_cantReachTarget_cantReachTarget()
 {
 	vector<FieldObject> fieldObjects;
 
-	m_model->setData(fieldObjects, false, false, RobotPosition(), Point(), false, true, false, false, false, Point());
+	m_model->setData(fieldObjects, false, false, RobotPosition(), Point(), false, true, false, false, false, Point(), false);
 
 	CPPUNIT_ASSERT(m_model->cantReachTarget());
 }
@@ -139,7 +144,7 @@ void ModelTest::setData_puckIsCollected_puckIsCollected()
 {
 	vector<FieldObject> fieldObjects;
 
-	m_model->setData(fieldObjects, false, false, RobotPosition(), Point(), false, false, true, false, false, Point());
+	m_model->setData(fieldObjects, false, false, RobotPosition(), Point(), false, false, true, false, false, Point(), false);
 
 	CPPUNIT_ASSERT(m_model->isPuckCollected());
 }
@@ -148,7 +153,7 @@ void ModelTest::setData_puckIsCollectable_puckIsCollectable()
 {
 	vector<FieldObject> fieldObjects;
 
-	m_model->setData(fieldObjects, false, false, RobotPosition(), Point(), false, false, false, true, false, Point());
+	m_model->setData(fieldObjects, false, false, RobotPosition(), Point(), false, false, false, true, false, Point(), false);
 
 	CPPUNIT_ASSERT(m_model->isPuckCollectable());
 }
@@ -157,7 +162,7 @@ void ModelTest::setData_closestPuckPositionValid_closestPuckPositionValid()
 {
 	vector<FieldObject> fieldObjects;
 
-	m_model->setData(fieldObjects, false, false, RobotPosition(), Point(), false, false, false, false, true, Point());
+	m_model->setData(fieldObjects, false, false, RobotPosition(), Point(), false, false, false, false, true, Point(), false);
 
 	CPPUNIT_ASSERT(m_model->isClosestPuckValid());
 }
@@ -166,7 +171,7 @@ void ModelTest::setData_closestPuckPositionNotValid_closestPuckPositionNotValid(
 {
 	vector<FieldObject> fieldObjects;
 
-	m_model->setData(fieldObjects, false, false, RobotPosition(), Point(), false, false, false, false, false, Point());
+	m_model->setData(fieldObjects, false, false, RobotPosition(), Point(), false, false, false, false, false, Point(), false);
 
 	CPPUNIT_ASSERT(!m_model->isClosestPuckValid());
 }
@@ -175,10 +180,29 @@ void ModelTest::setData_closestPuckPosition5And3_closestPuckPosition5And3()
 {
 	vector<FieldObject> fieldObjects;
 
-	m_model->setData(fieldObjects, false, false, RobotPosition(), Point(), false, false, false, false, true, Point(5, 3));
+	m_model->setData(fieldObjects, false, false, RobotPosition(), Point(), false, false, false, false, true, Point(5, 3), false);
 
 	Compare compare(0.00001);
 	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(5, 3), m_model->getClosestPuckPosition()));
+}
+
+void ModelTest::setData_isRotating_isRotating()
+{
+	vector<FieldObject> fieldObjects;
+
+	m_model->setData(fieldObjects, false, false, RobotPosition(), Point(), false, false, false, false, true, Point(5, 3), true);
+
+	CPPUNIT_ASSERT(m_model->isRotating());
+}
+
+void ModelTest::setData_isNotRotating_isNotRotating()
+{
+	vector<FieldObject> fieldObjects;
+
+	m_model->setData(fieldObjects, false, false, RobotPosition(), Point(), false, false, false, false, true, Point(5, 3), true);
+	m_model->setData(fieldObjects, false, false, RobotPosition(), Point(), false, false, false, false, true, Point(5, 3), false);
+
+	CPPUNIT_ASSERT(!m_model->isRotating());
 }
 
 void ModelTest::setPuckColor_puckColorYellow_puckColorIsYellow()

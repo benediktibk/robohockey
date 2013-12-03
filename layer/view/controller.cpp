@@ -169,6 +169,7 @@ void Controller::update()
 	m_ui->cantReachTarget->setText(convertIntoString(m_model.cantReachTarget()));
 	m_ui->isPuckCollected->setText(convertIntoString(m_model.isPuckCollected()));
 	m_ui->isPuckCollectable->setText(convertIntoString(m_model.isPuckCollectable()));
+	m_ui->isRotating->setText(convertIntoString(m_model.isRotating()));
 
 	if (m_model.isClosestPuckValid())
 	{
