@@ -9,9 +9,6 @@ namespace Layer
 {
 namespace Strategy
 {
-    class AchieveGoals;
-    class Pause;
-
     class Calibrate :
             public State
     {

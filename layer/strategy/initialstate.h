@@ -10,8 +10,6 @@ namespace Layer
 {
 namespace Strategy
 {
-    class Calibrate;
-
     class InitialState :
 			public State
 	{
