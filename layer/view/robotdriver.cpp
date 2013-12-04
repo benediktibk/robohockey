@@ -5,6 +5,7 @@
 #include "common/watch.h"
 #include "common/robotposition.h"
 #include <iostream>
+#include <iomanip>
 
 using namespace RoboHockey::Common;
 using namespace RoboHockey::Layer::View;
@@ -17,28 +18,24 @@ RobotDriver::RobotDriver(Robot &robot, Field &field, Model &model) :
 	m_robot(robot),
 	m_field(field),
 	m_model(model),
-	m_watch(new Watch()),
 	m_lastTime(0),
 	m_cantReachTargetOld(false),
 	m_stuckAtObstacleOld(false)
 {
-	m_lastTime = m_watch->getTime();
+	Watch::getTimeAndRestart();
 }
 
 RobotDriver::~RobotDriver()
-{
-	delete m_watch;
-	m_watch = 0;
-}
+{ }
 
 void RobotDriver::update()
 {
-	double currentTime = m_watch->getTime();
+	double currentTime = Watch::getTimeAndRestart();
 	double timeDifference = currentTime - m_lastTime;
 	m_lastTime = currentTime;
 
-	if (timeDifference > m_maximumLoopTime)
-		cout << "loop time is too big: " << timeDifference*1000 << " ms" << endl;
+	//if (timeDifference > m_maximumLoopTime)
+		cout << setprecision(3) << fixed << "loop time is too big: " << timeDifference*1000 << " ms" << endl;
 
 	m_robot.updateSensorData();
 	m_field.update();

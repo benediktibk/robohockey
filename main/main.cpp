@@ -18,7 +18,6 @@ using namespace boost;
 
 int main(int argc, char **argv)
 {
-	Watch watch;
 	string playerServer;
 	if (argc == 2)
 		playerServer = argv[1];
@@ -41,7 +40,6 @@ int main(int argc, char **argv)
 				new Strategy::InitialState(autonomousRobot, autonomousField),
 				autonomousRobot, autonomousField, referee);
 	bool running = true;
-	double lastTime = watch.getTime();
 	const double maximumLoopTime = 0.1;
 
 	cout << "program can be closed with 'q'" << endl;
@@ -60,9 +58,7 @@ int main(int argc, char **argv)
 		else
 			running = true;
 
-		double currentTime = watch.getTime();
-		double timeDifference = currentTime - lastTime;
-		lastTime = currentTime;
+		double timeDifference = Watch::getTimeAndRestart();
 
 		if (timeDifference > maximumLoopTime)
 			cout << "loop time is too high: " << timeDifference*1000 << " ms" << endl;

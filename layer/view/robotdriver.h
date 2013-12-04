@@ -36,7 +36,6 @@ namespace View
 		Autonomous::Robot &m_robot;
 		Autonomous::Field &m_field;
 		Model &m_model;
-		Common::Watch *m_watch;
 		double m_lastTime;
 		static const double m_maximumLoopTime;
 		bool m_cantReachTargetOld;
