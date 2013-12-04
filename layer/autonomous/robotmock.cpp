@@ -82,7 +82,7 @@ void RobotMock::updatePuckPosition(const Point &)
 void RobotMock::leaveCollectedPuck()
 { }
 
-bool RobotMock::isMoving()
+bool RobotMock::isMoving() const
 {
 	return false;
 }
