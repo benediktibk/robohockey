@@ -84,9 +84,9 @@ void CameraImpl::addObjects(FieldObjectColor color)
 	vector<Vec4i> hierarchy;
 	Rect boundRect;
 	Scalar minValue, maxValue;
-	int areaThreshold;
+	int areaThreshold = 0;
 	cv::Point objectFootPixel;
-	double distanceToCenter;
+	double distanceToCenter = 0;
 
 	switch (color)
 	{
