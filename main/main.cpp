@@ -7,46 +7,14 @@
 #include "layer/autonomous/fieldimpl.h"
 #include "layer/strategy/refereeimpl.h"
 #include "common/watch.h"
+#include "common/console.h"
 #include <iostream>
-#include <stdio.h>
-#include <termios.h>
-#include <unistd.h>
-#include <fcntl.h>
 #include <boost/scoped_ptr.hpp>
-
 
 using namespace RoboHockey::Common;
 using namespace RoboHockey::Layer;
 using namespace std;
 using namespace boost;
-
-char kbhit(void)
-{
-  struct termios oldt, newt;
-  char key;
-  int oldf;
-
-  // just copied from stackoverflow, got no idea what it actually does - Benedikt
-  tcgetattr(STDIN_FILENO, &oldt);
-  newt = oldt;
-  newt.c_lflag &= ~(ICANON | ECHO);
-  tcsetattr(STDIN_FILENO, TCSANOW, &newt);
-  oldf = fcntl(STDIN_FILENO, F_GETFL, 0);
-  fcntl(STDIN_FILENO, F_SETFL, oldf | O_NONBLOCK);
-
-  key = getchar();
-
-  tcsetattr(STDIN_FILENO, TCSANOW, &oldt);
-  fcntl(STDIN_FILENO, F_SETFL, oldf);
-
-  if(key != EOF)
-  {
-	ungetc(key, stdin);
-	return key;
-  }
-
-  return 0;
-}
 
 int main(int argc, char **argv)
 {
@@ -81,7 +49,8 @@ int main(int argc, char **argv)
 	while(running)
 	{
 		stateMachine.update();
-		char key = kbhit();
+
+		char key = Console::getAsynchronousInput();
 
 		if (key == 'q')
 			running = false;

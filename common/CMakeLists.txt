@@ -10,6 +10,7 @@ set(COMMON_SRC
 	path.cpp
 	line.cpp
 	pathintersectpoints.cpp
+	console.cpp
 )
 
 set(COMMON_TEST_SRC

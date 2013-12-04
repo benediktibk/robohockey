@@ -331,3 +331,5 @@ layer/autonomous/fieldobjectdistancecomparetest.h
 layer/autonomous/fieldobjectdistancecompare.h
 layer/autonomous/fieldobjectdistancecomparetest.cpp
 layer/autonomous/fieldobjectdistancecompare.cpp
+common/console.h
+common/console.cpp
