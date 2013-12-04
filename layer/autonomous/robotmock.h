@@ -45,6 +45,8 @@ namespace Autonomous
 		virtual bool isPuckCollectable() const;
 		virtual bool isCollectingPuck() const;
 		virtual bool isRotating() const;
+		void setIsMoving(bool value);
+		void setIsRotating(bool value);
 
 	private:
 		Common::Point m_lastTarget;
@@ -53,6 +55,8 @@ namespace Autonomous
 		unsigned int m_callsToUpdateActuators;
 		unsigned int m_callsToUpdateSensorData;
 		unsigned int m_callsToStop;
+		bool m_isMoving;
+		bool m_isRotating;
 	};
 }
 }
