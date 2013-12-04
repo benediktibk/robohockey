@@ -210,7 +210,7 @@ void RobotImpl::detectCollisions()
 
 bool RobotImpl::enableCollisionDetectionWithSonar() const
 {
-	bool result;
+	bool result = false;
 
 	switch(m_state)
 	{

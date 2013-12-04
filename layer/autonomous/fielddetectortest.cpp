@@ -20,7 +20,7 @@ void FieldDetectorTest::tryToDetectField_4validFieldPoints_true()
 	FieldDetector fieldDetector(Point(), testPoints);
 	bool result = fieldDetector.tryToDetectField();
 
-	CPPUNIT_ASSERT_EQUAL(true, result);
+	CPPUNIT_ASSERT(result);
 }
 
 void FieldDetectorTest::tryToDetectField_4validFieldPoints_correctNewOrigin()
@@ -34,8 +34,7 @@ void FieldDetectorTest::tryToDetectField_4validFieldPoints_correctNewOrigin()
 	FieldDetector fieldDetector(Point(), testPoints);
 	bool result = fieldDetector.tryToDetectField();
 
-	assert(result);
-
+	CPPUNIT_ASSERT(result);
 	CPPUNIT_ASSERT_EQUAL(Point(1,1-(1.25+0.416)), fieldDetector.getNewOrigin());
 }
 
@@ -50,12 +49,11 @@ void FieldDetectorTest::tryToDetectField_4validFieldPoints_correctRotation()
 	FieldDetector fieldDetector(Point(), testPoints);
 	bool result = fieldDetector.tryToDetectField();
 
-	assert(result);
-
+	CPPUNIT_ASSERT(result);
 	CPPUNIT_ASSERT_DOUBLES_EQUAL(-0.5*M_PI, fieldDetector.getRotation(), 0.001);
 }
 
-void FieldDetectorTest::tryToDetectField_5unvalidPoints_false()
+void FieldDetectorTest::tryToDetectField_5invalidPoints_false()
 {
 	vector<Point> testPoints;
 	testPoints.push_back(Point(1,1));
@@ -66,5 +64,5 @@ void FieldDetectorTest::tryToDetectField_5unvalidPoints_false()
 	FieldDetector fieldDetector(Point(), testPoints);
 	bool result = fieldDetector.tryToDetectField();
 
-	CPPUNIT_ASSERT_EQUAL(false, result);
+	CPPUNIT_ASSERT(!result);
 }

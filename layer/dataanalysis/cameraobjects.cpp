@@ -32,7 +32,8 @@ const CameraObject &CameraObjects::back() const
 const CameraObject &CameraObjects::getCameraObjectAtPosition(const Common::Point &position) const
 {
 	Point nextToPosition(0,0);
-	int objectNumberNextToPosition;
+	int objectNumberNextToPosition = 0;
+
 	for (unsigned int i = 0; i < m_objects.size(); i++)
 	{
 		if(nextToPosition.distanceTo(position) > m_objects[i].getPosition().distanceTo(position))
@@ -41,6 +42,7 @@ const CameraObject &CameraObjects::getCameraObjectAtPosition(const Common::Point
 			objectNumberNextToPosition = i;
 		}
 	}
+
 	return m_objects[objectNumberNextToPosition];
 }
 
