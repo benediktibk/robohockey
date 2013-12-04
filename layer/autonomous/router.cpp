@@ -30,27 +30,22 @@ vector<Point> Router::getPointsBesideObstacle(const Path &path, const Circle &ob
 {
 	PathIntersectPoints intersectionPoints = path.getIntersectPoints(obstacle);
 	Angle angleBetweenCircleCenterAndIntersectPoint(obstacle.getCenter(), intersectionPoints.getIntersectPoints().front());
-	Point pointOnObstacleEdge;
+	Point shortPointBesideObstacle;
+	Point longPointBesdieObstacle;
 
-	if(intersectionPoints.getIntersectPointsCount() == 1)
+	if(path.isCircleCenterOnPath(obstacle))
 	{
-		pointOnObstacleEdge = intersectionPoints.getIntersectPoints().front();
-		switch (intersectionPoints.getIntersectTypeFrom()) {
-		case PathIntersectPoints::IntersectTypeFromLeft:
-			pointOnObstacleEdge = pointOnObstacleEdge + Point(1.2*m_robotWidth, Angle::getThreeQuarterRotation());
-			break;
-		case PathIntersectPoints::IntersectTypeFromRight:
-			break;
-		case PathIntersectPoints::IntersectTypeFromStart:
-			break;
-		case PathIntersectPoints::IntersectTypeFromEnd:
-			break;
+		if(intersectionPoints.getIntersectTypeFrom() == PathIntersectPoints::IntersectTypeFromLeft)
+		{
+			shortPointBesideObstacle = (intersectionPoints.front() + intersectionPoints.back())/2;
+			shortPointBesideObstacle = shortPointBesideObstacle + Point(0.5*m_robotWidth, Angle::getThreeQuarterRotation() + path.getAgnleBetweenStartAndEnd());
 		}
 	}
 	else
 	{
 
 	}
+
 
 	return vector<Point>();
 }

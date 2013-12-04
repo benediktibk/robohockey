@@ -22,3 +22,13 @@ std::size_t PathIntersectPoints::getIntersectPointsCount()
 	return m_intersectPoints.size();
 }
 
+Point PathIntersectPoints::front()
+{
+	return m_intersectPoints.front();
+}
+
+Point PathIntersectPoints::back()
+{
+	return m_intersectPoints.back();
+}
+

@@ -23,6 +23,8 @@ public:
 	std::vector<Point> getIntersectPoints();
 	IntersectType getIntersectTypeFrom();
 	std::size_t getIntersectPointsCount();
+	Point front();
+	Point back();
 
 private:
 	std::vector<Point> m_intersectPoints;
