@@ -35,7 +35,7 @@ double SonarImpl::getDistanceForSensor(unsigned int sensorNumber)
 	assert(m_lastValues.count(sensorNumber) != 0);
 	double currentValue = m_currentValues[sensorNumber];
 	double lastValue = m_lastValues[sensorNumber];
-	return min((currentValue + lastValue)/2, currentValue);
+	return min(lastValue, currentValue);
 }
 
 SonarImpl::SonarImpl(const SonarImpl &)

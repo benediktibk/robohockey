@@ -5,7 +5,8 @@ using namespace RoboHockey::Common;
 
 
 CameraMock::CameraMock() :
-	m_isGoalYellow(0)
+	m_probabilityForYellow(0),
+	m_probabilityForBlue(0)
 { }
 
 CameraObjects CameraMock::getAllCameraObjects(const RobotPosition &)
@@ -15,12 +16,22 @@ CameraObjects CameraMock::getAllCameraObjects(const RobotPosition &)
 
 double CameraMock::getProbabilityForYellowGoal()
 {
-	return m_isGoalYellow;
+	return m_probabilityForYellow;
 }
 
-void CameraMock::setIsGoalYellow(bool value)
+double CameraMock::getProbabilityForBlueGoal()
 {
-	m_isGoalYellow = value;
+	return m_probabilityForBlue;
+}
+
+void CameraMock::setProbabilityForYellowGoal(bool value)
+{
+	m_probabilityForYellow = value;
+}
+
+void CameraMock::setProbabilityForBlueGoal(bool value)
+{
+	m_probabilityForBlue = value;
 }
 
 void CameraMock::setAllObjects(const CameraObjects &objects)

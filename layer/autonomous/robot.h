@@ -16,6 +16,8 @@ namespace Layer
 {
 namespace Autonomous
 {
+	class Field;
+
 	class Robot
 	{
 	public:
@@ -25,17 +27,21 @@ namespace Autonomous
 		virtual void turnTo(const Common::Point &position) = 0;
 		virtual bool stuckAtObstacle() = 0;
 		virtual bool reachedTarget() = 0;
-		virtual std::vector<FieldObject> getAllFieldObjects() = 0;
-		virtual void updateActuators() = 0;
+		virtual void updateActuators(const Field &field) = 0;
 		virtual void updateSensorData() = 0;
 		virtual void stop() = 0;
-		virtual void collectPuckInFront() = 0;
+		virtual void collectPuckInFront(const Common::Point &puckPosition) = 0;
+		virtual void updatePuckPosition(const Common::Point &puckPosition) = 0;
 		virtual void leaveCollectedPuck() = 0;
-		virtual bool isMoving() = 0;
-		virtual void calibratePosition() = 0;
+		virtual bool isMoving() const = 0;
 		virtual void turnAround() = 0;
-		virtual Common::RobotPosition getCurrentPosition() = 0;
+		virtual Common::RobotPosition getCurrentPosition() const = 0;
 		virtual Common::Point getCurrentTarget() const = 0;
+		virtual bool cantReachTarget() const = 0;
+		virtual bool isPuckCollected() const = 0;
+		virtual bool isPuckCollectable() const = 0;
+		virtual bool isCollectingPuck() const = 0;
+		virtual bool isRotating() const = 0;
 	};
 }
 }

@@ -2,10 +2,15 @@
 #define ROBOHOCKEY_LAYER_AUTONOMOUS_FIELD_H
 
 #include <vector>
+#include "common/fieldobjectcolor.h"
 #include "layer/autonomous/fieldobject.h"
 
 namespace RoboHockey
 {
+namespace Common
+{
+	class Point;
+}
 namespace Layer
 {
 namespace Autonomous
@@ -16,10 +21,13 @@ namespace Autonomous
 		virtual ~Field() { }
 
 		virtual void update() = 0;
-        virtual std::vector<FieldObject> getAllFieldObjects() = 0;
         virtual int achievedGoals() = 0;
+		virtual const std::vector<FieldObject>& getAllFieldObjects() const = 0;
+		virtual const std::vector<Common::Circle>& getAllObstacles() const = 0;
+		virtual std::vector<FieldObject> getObjectsWithColorOrderdByDistance(Common::FieldObjectColor color, const Common::Point &position) const = 0;
 
-		virtual bool tryToFindField() = 0;
+		virtual bool calibratePosition() = 0;
+		virtual bool isPointInsideField(const Common::Point &point) const = 0;
 	};
 }
 }

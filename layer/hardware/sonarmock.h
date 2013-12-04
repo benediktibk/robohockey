@@ -3,6 +3,7 @@
 
 #include "layer/hardware/sonar.h"
 #include <map>
+#include <string>
 
 namespace RoboHockey
 {
@@ -20,6 +21,7 @@ namespace Hardware
 		virtual double getDistanceForSensor(unsigned int sensorNumber);
 		unsigned int getCallsToGetDistanceForSensor() const;
 		void setValue(unsigned int sensorNumber, double value);
+		void readSensorDataFromFile(const std::string &fileName);
 
 	private:
 		unsigned int m_callsToGetDistanceForSensor;

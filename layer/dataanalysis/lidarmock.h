@@ -17,11 +17,18 @@ namespace DataAnalysis
 
 		virtual LidarObjects getAllObjects(const Common::RobotPosition &ownPosition) const;
 		virtual bool isObstacleInFront(double speed) const;
+		virtual void updateSensorData();
+		virtual bool isPuckCollectable(double maximumDistance, const Common::Angle &maximumAngle) const;
+		virtual bool isPuckCollected() const;
 
 		void setAllObjects(const LidarObjects &objects);
+		void setPuckCollected(bool value);
+		void setPuckCollectable(bool value);
 
 	private:
 		LidarObjects m_objects;
+		bool m_puckCollected;
+		bool m_puckCollectable;
 	};
 }
 }

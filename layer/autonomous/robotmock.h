@@ -23,34 +23,40 @@ namespace Autonomous
 		virtual void goTo(const Common::Point &position);
 		virtual bool stuckAtObstacle();
 		virtual bool reachedTarget();
-		virtual std::vector<FieldObject> getAllFieldObjects();
-		virtual void updateActuators();
+		virtual void updateActuators(const Field &field);
 		virtual void updateSensorData();
 		virtual void stop();
 		unsigned int getCallsToUpdateActuators() const;
 		unsigned int getCallsToUpdateSensorData() const;
 		void setStuckAtObstacle(bool value);
 		void setReachedTarget(bool value);
-		void setFieldObjects(const std::vector<FieldObject> &objects);
 		const Common::Point& getLastTarget() const;
 		unsigned int getCallsToStop() const;
-		virtual void collectPuckInFront();
+		virtual void collectPuckInFront(const Common::Point &puckPosition);
+		virtual void updatePuckPosition(const Common::Point &puckPosition);
 		virtual void leaveCollectedPuck();
-		virtual bool isMoving();
-		virtual void calibratePosition();
+		virtual bool isMoving() const;
 		virtual void turnAround();
 		virtual void turnTo(const Common::Point &position);
-		virtual Common::RobotPosition getCurrentPosition();
+		virtual Common::RobotPosition getCurrentPosition() const;
 		virtual Common::Point getCurrentTarget() const;
+		virtual bool cantReachTarget() const;
+		virtual bool isPuckCollected() const;
+		virtual bool isPuckCollectable() const;
+		virtual bool isCollectingPuck() const;
+		virtual bool isRotating() const;
+		void setIsMoving(bool value);
+		void setIsRotating(bool value);
 
 	private:
 		Common::Point m_lastTarget;
 		bool m_stuckAtObstacle;
 		bool m_reachedTarget;
-		std::vector<FieldObject> m_fieldObjects;
 		unsigned int m_callsToUpdateActuators;
 		unsigned int m_callsToUpdateSensorData;
 		unsigned int m_callsToStop;
+		bool m_isMoving;
+		bool m_isRotating;
 	};
 }
 }

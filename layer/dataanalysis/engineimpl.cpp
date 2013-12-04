@@ -20,7 +20,8 @@ EngineImpl::EngineImpl(Hardware::Engine &engine, Hardware::Odometry &odometry) :
 	m_forwardMovementLocked(false),
 	m_tryingToTackleObstacle(false),
 	m_speedTresholder(new SpeedTresholder()),
-	m_desiredSpeed(0)
+	m_desiredSpeed(0),
+	m_isMoving(false)
 { }
 
 EngineImpl::~EngineImpl()
@@ -43,7 +44,7 @@ void EngineImpl::goToStraightSlowly(const Point &position)
 	m_target = position;
 	RobotPosition currentRobotPosition = m_odometry.getCurrentPosition();
 	m_startPosition = currentRobotPosition.getPosition();
-	m_rotationReached = false;
+	m_rotationReached = true;
 	m_engineState = EngineStateDrivingSlowly;
 }
 
@@ -61,7 +62,7 @@ void EngineImpl::goToStraightSlowlyBack(const Point &position)
 	m_target = position;
 	RobotPosition currentRobotPosition = m_odometry.getCurrentPosition();
 	m_startPosition = currentRobotPosition.getPosition();
-	m_rotationReached = false;
+	m_rotationReached = true;
 	m_engineState = EngineStateDrivingSlowlyBack;
 }
 
@@ -69,13 +70,21 @@ void EngineImpl::updateSpeedAndRotation()
 {
 	switch(m_engineState)
 	{
-	case EngineStateStopped: updateSpeedAndRotationForStopped(); break;
-	case EngineStateDriving: updateSpeedAndRotationForDriving(); break;
-	case EngineStateDrivingSlowly: updateSpeedAndRotationForDriving(); break;
-	case EngineStateDrivingThrough: updateSpeedAndRotationForDriving(); break;
-	case EngineStateDrivingSlowlyBack: updateSpeedAndRotationForDriving(); break;
-	case EngineStateTurnAround: updateSpeedAndRotationForTurnAround(); break;
-	case EngineStateRotating: updateSpeedAndRotationForRotating(); break;
+	case EngineStateStopped:
+		updateSpeedAndRotationForStopped();
+		break;
+	case EngineStateDriving:
+	case EngineStateDrivingSlowly:
+	case EngineStateDrivingThrough:
+	case EngineStateDrivingSlowlyBack:
+		updateSpeedAndRotationForDriving();
+		break;
+	case EngineStateTurnAround:
+		updateSpeedAndRotationForTurnAround();
+		break;
+	case EngineStateRotating:
+		updateSpeedAndRotationForRotating();
+		break;
 	}
 }
 
@@ -127,12 +136,17 @@ Point EngineImpl::getCurrentTarget() const
 
 bool EngineImpl::isMoving() const
 {
-	return m_engine.isMoving();
+	return m_isMoving;
 }
 
 double EngineImpl::getCurrentSpeed() const
 {
 	return (m_engine.getSpeed() + m_desiredSpeed)/2;
+}
+
+void EngineImpl::updateSensorData()
+{
+	m_isMoving = m_engine.isMoving();
 }
 
 const Point &EngineImpl::getStartPosition() const
@@ -233,10 +247,20 @@ void EngineImpl::driveAndTurn(const RobotPosition &currentPosition)
 
 	switch (m_engineState)
 	{
-	case EngineStateDrivingThrough: magnitude = 0.5; break;
-	case EngineStateDrivingSlowly: magnitude = min(magnitude, 0.1); break;
-	case EngineStateDrivingSlowlyBack: magnitude = -0.1; break;
-	default: break;
+	case EngineStateDrivingThrough:
+		magnitude = 0.5;
+		break;
+	case EngineStateDrivingSlowly:
+		magnitude = min(magnitude, 0.1);
+		break;
+	case EngineStateDrivingSlowlyBack:
+		magnitude = -min(magnitude, 0.1);
+		break;
+	case EngineStateDriving:
+	case EngineStateRotating:
+	case EngineStateStopped:
+	case EngineStateTurnAround:
+		break;
 	}
 
 	setSpeed(magnitude, rotationSpeed);

@@ -17,13 +17,16 @@ namespace DataAnalysis
 
 		virtual CameraObjects getAllCameraObjects(const Common::RobotPosition &position);
 		virtual double getProbabilityForYellowGoal();
+		virtual double getProbabilityForBlueGoal();
 
-		void setIsGoalYellow(bool value);
+		void setProbabilityForYellowGoal(bool value);
+		void setProbabilityForBlueGoal(bool value);
 
 		void setAllObjects(const CameraObjects &objects);
 
 	private:
-		double m_isGoalYellow;
+		double m_probabilityForYellow;
+		double m_probabilityForBlue;
 		CameraObjects m_objects;
 	};
 }

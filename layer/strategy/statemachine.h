@@ -27,7 +27,7 @@ namespace Strategy
 
 	private:
 		State *m_currentState;
-		Autonomous::Robot *m_robot;
+        Autonomous::Robot *m_robot;
         Autonomous::Field *m_field;
         Referee *m_referee;
 	};

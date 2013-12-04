@@ -39,8 +39,8 @@ namespace Common
 		int m_start;
 		int m_end;
 		std::vector<double> m_values;
-		std::vector<double> m_coreNoiseSuppressionBig;
-		std::vector<double> m_coreNoiseSuppressionSmall;
+		std::vector<double> m_coreNoiseSuppressionHeavy;
+		std::vector<double> m_coreNoiseSuppressionLight;
 		std::vector<double> m_coreDifferentiation;
 
 	};

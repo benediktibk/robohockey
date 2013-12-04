@@ -8,8 +8,9 @@ using namespace std;
 using namespace RoboHockey::Common;
 using namespace RoboHockey::Layer::Autonomous;
 
-FieldDetector::FieldDetector(vector<Point> &points):
-	m_points(points)
+FieldDetector::FieldDetector(const Point &currentPosition, vector<Point> &pointsOfObjects):
+	m_currentPosition(currentPosition),
+	m_points(pointsOfObjects)
 { }
 
 bool FieldDetector::tryToDetectField()
@@ -31,7 +32,6 @@ bool FieldDetector::tryToDetectField()
 
 		if (numberOfFoundBorderStones > 2)
 		{
-			cout << "Found " << numberOfFoundBorderStones << " BorderStones!" << endl;
 			if (tryToFigureOutNewOrigin(root))
 				return true;
 		}
@@ -117,8 +117,8 @@ bool FieldDetector::tryToFigureOutNewOrigin(BorderStone &root)
 	{
 		if (linear)
 		{
-			cornerOne = root + normFromRoot * (standardDistanceA);
-			cornerTwo = root + normToRoot * (standardDistanceA + 2*standardDistanceB + 2*standardDistanceC);
+			cornerOne = root + normFromRoot * (standardDistanceC + standardDistanceB + standardDistanceA);
+			cornerTwo = root + normToRoot * (standardDistanceC + standardDistanceB + standardDistanceA);
 		} else
 		{
 			cornerOne = root + normFromRoot * (2*standardDistanceC + standardDistanceB + standardDistanceA);
@@ -163,12 +163,22 @@ bool FieldDetector::tryToFigureOutNewOrigin(BorderStone &root)
 	if (!(pointOfRoot == possibleNewOrigin))
 	{
 		Angle angle(possibleNewOrigin, pointOfRoot);
-		m_rotation = -1.0 * angle.getValueBetweenZeroAndTwoPi();
+		m_rotation = -1.0 * angle.getValueBetweenMinusPiAndPi();
 	} else
 	{
 		Point onePointFound(root.getAllChildren().front().getX(), root.getAllChildren().front().getY());
 		Angle angle(possibleNewOrigin, onePointFound);
-		m_rotation = -1.0 * angle.getValueBetweenZeroAndTwoPi();
+		m_rotation = -1.0 * angle.getValueBetweenMinusPiAndPi();
+	}
+
+	Point currentPositionInNewCoordinates = m_currentPosition - possibleNewOrigin;
+	currentPositionInNewCoordinates.rotate(m_rotation);
+
+	if (currentPositionInNewCoordinates.getY() < 0)
+	{
+		Point oppositeOrigin = Point(0,-1* distancesChecker.getStandardFieldDistance(BorderStoneFieldDistanceD));
+		oppositeOrigin.rotate(Angle( -1* m_rotation));
+		possibleNewOrigin = possibleNewOrigin + oppositeOrigin;
 	}
 
 	m_newOrigin = possibleNewOrigin;

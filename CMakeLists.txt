@@ -5,7 +5,7 @@ if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE debug)
 endif()
 
-set(CMAKE_CXX_FLAGS_COMMON "-Wall -Wextra -Werror -ansi -fPIE")
+set(CMAKE_CXX_FLAGS_COMMON "-Wall -Wextra -Werror -ansi -fPIE -Wswitch-enum")
 set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_COMMON} -O3 -DNDEBUG")
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_COMMON} -g")
 set(CMAKE_CXX_FLAGS_COVERAGE "${CMAKE_CXX_FLAGS_COMMON} -g -fprofile-arcs -ftest-coverage")
@@ -69,7 +69,33 @@ set(TESTFILES
 	lidar_10.txt
 	lidar_11.txt
 	lidar_12.txt
+	lidar_13.txt
+	lidar_14.txt
+	lidar_15.txt
+	lidar_16.txt
+	lidar_17.txt
+	lidar_18.txt
+	lidar_19.txt
+	lidar_20.txt
+	lidar_21.txt
+	lidar_22.txt
+	lidar_23.txt
+	lidar_24.txt
+	lidar_25.txt
+	lidar_26.txt
+	lidar_27.txt
+	lidar_28.txt
+	lidar_29.txt
+	lidar_30.txt
+	lidar_31.txt
+	lidar_32.txt
+	lidar_33.txt
+	lidar_34.txt
+	lidar_35.txt
 	lidar_wall.txt
+	sonar_1.txt
+	sonar_2.txt
+	sonar_3.txt
 	blue_goal.png
 	blue_puck.png
 	nothing.png

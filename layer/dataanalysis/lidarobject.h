@@ -15,7 +15,6 @@ namespace DataAnalysis
 	public:
 		LidarObject();
 		LidarObject(const Common::Point &position, double diameter);
-
 	};
 }
 }

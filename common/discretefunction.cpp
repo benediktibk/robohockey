@@ -10,16 +10,20 @@ DiscreteFunction::DiscreteFunction(int start, int end) :
 	m_end(end)
 {
 	m_values.resize(m_end - m_start + 1);
-	m_coreNoiseSuppressionBig.resize(5);
-	m_coreNoiseSuppressionSmall.resize(3);
-	m_coreNoiseSuppressionBig[0] = 1.0/9;
-	m_coreNoiseSuppressionBig[1] = 2.0/9;
-	m_coreNoiseSuppressionBig[2] = 3.0/9;
-	m_coreNoiseSuppressionBig[3] = 2.0/9;
-	m_coreNoiseSuppressionBig[4] = 1.0/9;
-	m_coreNoiseSuppressionSmall[0] = 1.0/4;
-	m_coreNoiseSuppressionSmall[1] = 2.0/4;
-	m_coreNoiseSuppressionSmall[2] = 1.0/4;
+	m_coreNoiseSuppressionHeavy.resize(5);
+	m_coreNoiseSuppressionHeavy[0] = 1.0/5;
+	m_coreNoiseSuppressionHeavy[1] = 1.0/5;
+	m_coreNoiseSuppressionHeavy[2] = 1.0/5;
+	m_coreNoiseSuppressionHeavy[3] = 1.0/5;
+	m_coreNoiseSuppressionHeavy[4] = 1.0/5;
+	m_coreNoiseSuppressionLight.resize(7);
+	m_coreNoiseSuppressionLight[0] = 1.0/452;
+	m_coreNoiseSuppressionLight[1] = 16.0/452;
+	m_coreNoiseSuppressionLight[2] = 81.0/452;
+	m_coreNoiseSuppressionLight[3] = 256.0/452;
+	m_coreNoiseSuppressionLight[4] = 81.0/452;
+	m_coreNoiseSuppressionLight[5] = 16.0/452;
+	m_coreNoiseSuppressionLight[6] = 1.0/452;
 	m_coreDifferentiation.resize(3);
 	m_coreDifferentiation[0] = -0.5;
 	m_coreDifferentiation[1] = 0;
@@ -40,12 +44,12 @@ double DiscreteFunction::getValue(int x) const
 
 void DiscreteFunction::suppressNoiseLight()
 {
-	applyCore(m_coreNoiseSuppressionSmall, m_start, m_end);
+	applyCore(m_coreNoiseSuppressionLight, m_start, m_end);
 }
 
 void DiscreteFunction::suppressNoiseHeavy()
 {
-	applyCore(m_coreNoiseSuppressionBig, m_start, m_end);
+	applyCore(m_coreNoiseSuppressionHeavy, m_start, m_end);
 }
 
 void DiscreteFunction::suppressNoiseInRange(int start, int end)
@@ -54,10 +58,10 @@ void DiscreteFunction::suppressNoiseInRange(int start, int end)
 	assert(withinRange(start));
 	assert(withinRange(end));
 	size_t range = end - start;
-	if (range >= m_coreNoiseSuppressionBig.size() + 2)
-		applyCore(m_coreNoiseSuppressionBig, start, end);
-	else if (range >= m_coreNoiseSuppressionSmall.size() + 2)
-		applyCore(m_coreNoiseSuppressionSmall, start, end);
+	if (range >= m_coreNoiseSuppressionHeavy.size() + 2)
+		applyCore(m_coreNoiseSuppressionHeavy, start, end);
+	else if (range >= m_coreNoiseSuppressionLight.size() + 2)
+		applyCore(m_coreNoiseSuppressionLight, start, end);
 }
 
 void DiscreteFunction::differentiate(double stepSize)

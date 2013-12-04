@@ -10,7 +10,7 @@ using namespace RoboHockey::Layer::Autonomous;
 
 void StateMachineTest::update_empty_stateGotAtLeastOneCallToNextState()
 {
-	RobotMock *robot = new RobotMock;
+    RobotMock *robot = new RobotMock;
     FieldMock *field = new FieldMock;
     StateMock *state = new StateMock(*robot, *field);
     RefereeMock *referee = new RefereeMock();
@@ -23,7 +23,7 @@ void StateMachineTest::update_empty_stateGotAtLeastOneCallToNextState()
 
 void StateMachineTest::update_noStateChange_stateGotAtLeastOneCallToUpdate()
 {
-	RobotMock *robot = new RobotMock;
+    RobotMock *robot = new RobotMock;
     FieldMock *field = new FieldMock;
     StateMock *state = new StateMock(*robot, *field);
     RefereeMock *referee = new RefereeMock();
@@ -36,31 +36,31 @@ void StateMachineTest::update_noStateChange_stateGotAtLeastOneCallToUpdate()
 
 void StateMachineTest::update_empty_robotGotAtLeastOneCallToUpdateSensorData()
 {
-	RobotMock *robot = new RobotMock;
+    RobotMock *robot = new RobotMock;
     FieldMock *field = new FieldMock;
     RefereeMock *referee = new RefereeMock();
     StateMachine stateMachine(new StateMock(*robot, *field), robot, field, referee);
 
 	stateMachine.update();
 
-	CPPUNIT_ASSERT(robot->getCallsToUpdateSensorData() > 0);
+    CPPUNIT_ASSERT(robot->getCallsToUpdateSensorData() > 0);
 }
 
 void StateMachineTest::update_empty_robotGotAtLeastOneCallToUpdateActuators()
 {
-	RobotMock *robot = new RobotMock;
+    RobotMock *robot = new RobotMock;
     FieldMock *field = new FieldMock;
     RefereeMock *referee = new RefereeMock();
     StateMachine stateMachine(new StateMock(*robot, *field), robot, field, referee);
 
 	stateMachine.update();
 
-	CPPUNIT_ASSERT(robot->getCallsToUpdateActuators() > 0);
+    CPPUNIT_ASSERT(robot->getCallsToUpdateActuators() > 0);
 }
 
 void StateMachineTest::update_stateChange_currentStateIsNewOne()
 {
-	RobotMock *robot = new RobotMock;
+    RobotMock *robot = new RobotMock;
     FieldMock *field = new FieldMock;
     RefereeMock *referee = new RefereeMock();
     StateMock *oldState = new StateMock(*robot, *field);
@@ -75,7 +75,7 @@ void StateMachineTest::update_stateChange_currentStateIsNewOne()
 
 void StateMachineTest::update_stateChange_currentStateGotAtLeastOneCallToUpdate()
 {
-	RobotMock *robot = new RobotMock;
+    RobotMock *robot = new RobotMock;
     FieldMock *field = new FieldMock;
     RefereeMock *referee = new RefereeMock();
     StateMock *oldState = new StateMock(*robot, *field);

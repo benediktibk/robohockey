@@ -14,7 +14,6 @@ StateMachine::StateMachine(State *initialState, Autonomous::Robot *robot, Autono
     m_referee(referee)
 {
 	assert(m_currentState != 0);
-	assert(m_robot != 0);
     assert(m_referee != 0);
 }
 
@@ -22,15 +21,13 @@ StateMachine::~StateMachine()
 {
 	delete m_currentState;
 	m_currentState = 0;
-	delete m_robot;
-	m_robot = 0;
     delete m_referee;
     m_referee = 0;
 }
 
 void StateMachine::update()
 {
-	m_robot->updateSensorData();
+    m_robot->updateSensorData();
 
 	State *nextState = m_currentState->nextState();
 
@@ -41,7 +38,7 @@ void StateMachine::update()
 	}
 
 	m_currentState->update();
-	m_robot->updateActuators();;
+    m_robot->updateActuators(*m_field);;
 }
 
 const State &StateMachine::getCurrentState() const

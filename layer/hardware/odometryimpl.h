@@ -29,6 +29,7 @@ namespace Hardware
 	private:
 		OdometryImpl(const OdometryImpl &odometry);
 		void operator=(const OdometryImpl &odometry);
+		const Common::RobotPosition getGlobalPositionAfterPlayerOffset() const;
 
 	private:
 		PlayerCc::Position2dProxy *m_odometry;

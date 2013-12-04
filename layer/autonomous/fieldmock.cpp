@@ -1,19 +1,48 @@
 #include "layer/autonomous/fieldmock.h"
 
+using namespace std;
+using namespace RoboHockey::Common;
 using namespace RoboHockey::Layer::Autonomous;
 
+FieldMock::FieldMock()
+{ }
 
 void FieldMock::update()
 { }
 
-bool FieldMock::tryToFindField()
+const vector<FieldObject>& FieldMock::getAllFieldObjects() const
+{
+	return m_objects;
+}
+
+const vector<Circle>& FieldMock::getAllObstacles() const
+{
+	return m_obstacles;
+}
+
+vector<FieldObject> FieldMock::getObjectsWithColorOrderdByDistance(FieldObjectColor, const Point&) const
+{
+	return vector<FieldObject>();
+}
+
+bool FieldMock::calibratePosition()
 {
     return false;
 }
 
-std::vector<FieldObject> FieldMock::getAllFieldObjects()
+bool FieldMock::isPointInsideField(const Point &/*point*/) const
 {
-    return std::vector<FieldObject> ();
+	return true;
+}
+
+void FieldMock::setFieldObjects(const vector<FieldObject> &objects)
+{
+	m_objects = objects;
+}
+
+void FieldMock::setObstacles(const vector<Circle> &obstacles)
+{
+	m_obstacles = obstacles;
 }
 
 int FieldMock::achievedGoals()

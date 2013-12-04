@@ -7,6 +7,9 @@ set(COMMON_SRC
 	watch.cpp
 	robotposition.cpp
 	angle.cpp
+	path.cpp
+	line.cpp
+	pathintersectpoints.cpp
 )
 
 set(COMMON_TEST_SRC
@@ -18,6 +21,9 @@ set(COMMON_TEST_SRC
 	watchtest.cpp
 	robotpositiontest.cpp
 	angletest.cpp
+	pathtest.cpp
+	linetest.cpp
+	pathintersectpointstest.cpp
 )
 
 add_library(common ${COMMON_SRC})

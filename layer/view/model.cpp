@@ -1,27 +1,34 @@
 #include "layer/view/model.h"
+#include <assert.h>
 
+using namespace std;
 using namespace RoboHockey::Common;
 using namespace RoboHockey::Layer::View;
 using namespace RoboHockey::Layer::Autonomous;
-using namespace std;
 
 Model::Model() :
 	m_stuckAtObstacle(false),
 	m_reachedTarget(false),
 	m_isMoving(false),
-    m_turnAround(false),
-    m_stop(false),
+	m_turnAround(false),
+	m_stop(false),
 	m_turn(false),
 	m_collectPuck(false),
 	m_calibratePosition(false),
-	m_leavePuck(false)
+	m_leavePuck(false),
+	m_cantReachTarget(false),
+	m_isPuckCollected(false),
+	m_isPuckCollectable(false),
+	m_closestPuckValid(false),
+	m_puckColor(FieldObjectColorBlue),
+	m_isRotating(false)
 {}
 
-void Model::setData(
-		const vector<FieldObject> &fieldObjects,
+void Model::setData(const vector<FieldObject> &fieldObjects,
 		bool stuckAtObstacle, bool reachedTarget,
 		const RobotPosition &currentPosition, const Point &currentTarget,
-		bool isMoving)
+		bool isMoving, bool cantReachTarget, bool isPuckCollected, bool isPuckCollectable,
+		bool closestPuckPositionValid, const Point &closestPuckPosition, bool isRotating)
 {
 	m_fieldObjects = fieldObjects;
 	m_stuckAtObstacle = stuckAtObstacle;
@@ -29,20 +36,14 @@ void Model::setData(
 	m_currentPosition = currentPosition;
 	m_currentTarget = currentTarget;
 	m_isMoving = isMoving;
+	m_cantReachTarget = cantReachTarget;
+	m_isPuckCollected = isPuckCollected;
+	m_isPuckCollectable = isPuckCollectable;
+	m_closestPuckValid = closestPuckPositionValid;
+	m_closestPuckPosition = closestPuckPosition;
+	m_isRotating = isRotating;
 
 	emit robotDataChanged();
-}
-
-void Model::setData(const vector<Point> &targetPositions, bool turnAround, bool turnTo, bool stop, bool collectPuck, bool calibratePosition)
-{
-	m_targetPositions = targetPositions;
-	m_turnAround = turnAround;
-    m_turn = turnTo;
-    m_stop = stop;
-	m_collectPuck = collectPuck;
-	m_calibratePosition = calibratePosition;
-
-	emit targetPositionsChanged();
 }
 
 const vector<FieldObject> &Model::getAllFieldObjects() const
@@ -53,6 +54,12 @@ const vector<FieldObject> &Model::getAllFieldObjects() const
 const vector<Point> &Model::getAllTargetPoints() const
 {
 	return m_targetPositions;
+}
+
+void Model::setTargetPoints(const vector<Point> &targets)
+{
+	m_targetPositions = targets;
+	emit dataForViewChanged();
 }
 
 bool Model::stuckAtObstacle() const
@@ -70,39 +77,35 @@ bool Model::isMoving() const
 	return m_isMoving;
 }
 
-bool Model::turnAround()
+void Model::setTurnAround(bool value)
 {
-	m_turnAround = true;
-	return m_turnAround;
+	m_turnAround = value;
 }
 
-Point Model::turnToPoint(double turnToX, double turnToY)
+void Model::turnToPoint(double turnToX, double turnToY)
 {
-    m_turnToPosition.setX(turnToX);
-    m_turnToPosition.setY(turnToY);
-    return m_turnToPosition;
+	m_turnToPosition.setX(turnToX);
+	m_turnToPosition.setY(turnToY);
 }
 
-bool Model::turnTo()
+void Model::setTurnTo(bool value)
 {
-    m_turn = true;
-    return m_turn;
+	m_turn = value;
 }
 
-bool Model::stop()
+void Model::setStop(bool value)
 {
-    m_stop = true;
-    return m_stop;
+	m_stop = value;
 }
 
 bool Model::getStop()
 {
-    return m_stop;
+	return m_stop;
 }
 
 bool Model::getTurnTo()
 {
-    return m_turn;
+	return m_turn;
 }
 
 Point Model::getTurnPoint()
@@ -110,9 +113,9 @@ Point Model::getTurnPoint()
 	return m_turnToPosition;
 }
 
-void Model::collectPuckInFront()
+void Model::setCollectPuckInFront(bool value)
 {
-	m_collectPuck = true;
+	m_collectPuck = value;
 }
 
 bool Model::getCollectPuckInFront()
@@ -120,9 +123,9 @@ bool Model::getCollectPuckInFront()
 	return m_collectPuck;
 }
 
-void Model::calibratePosition()
+void Model::setCalibratePosition(bool value)
 {
-	m_calibratePosition = true;
+	m_calibratePosition = value;
 }
 
 bool Model::getCalibratePosition()
@@ -130,14 +133,55 @@ bool Model::getCalibratePosition()
 	return m_calibratePosition;
 }
 
-void Model::leavePuckInFront()
+void Model::setLeavePuckInFront(bool value)
 {
-	m_leavePuck = true;
+	m_leavePuck = value;
 }
 
 bool Model::getLeavePuckInFront()
 {
 	return m_leavePuck;
+}
+
+bool Model::cantReachTarget() const
+{
+	return m_cantReachTarget;
+}
+
+bool Model::isPuckCollected() const
+{
+	return m_isPuckCollected;
+}
+
+bool Model::isPuckCollectable() const
+{
+	return m_isPuckCollectable;
+}
+
+bool Model::isClosestPuckValid() const
+{
+	return m_closestPuckValid;
+}
+
+const Point &Model::getClosestPuckPosition() const
+{
+	assert(isClosestPuckValid());
+	return m_closestPuckPosition;
+}
+
+FieldObjectColor Model::getPuckColor() const
+{
+	return m_puckColor;
+}
+
+void Model::setPuckColor(FieldObjectColor color)
+{
+	m_puckColor = color;
+}
+
+bool Model::isRotating() const
+{
+	return m_isRotating;
 }
 
 bool Model::getTurnAround()

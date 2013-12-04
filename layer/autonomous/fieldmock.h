@@ -10,13 +10,27 @@ namespace Layer
 namespace Autonomous
 {
 
-	class FieldMock : public Field
+	class FieldMock :
+			public Field
 	{
 	public:
+		FieldMock();
+
 		virtual void update();
-		virtual bool tryToFindField();
-        virtual std::vector<FieldObject> getAllFieldObjects();
-        virtual int achievedGoals();
+		virtual const std::vector<FieldObject>& getAllFieldObjects() const;
+		virtual const std::vector<Common::Circle>& getAllObstacles() const;
+		virtual std::vector<FieldObject> getObjectsWithColorOrderdByDistance(Common::FieldObjectColor color, const Common::Point &position) const;
+                virtual int achievedGoals();
+
+		virtual bool calibratePosition();
+		virtual bool isPointInsideField(const Common::Point &point) const;
+
+		void setFieldObjects(const std::vector<FieldObject> &objects);
+		void setObstacles(const std::vector<Common::Circle> &obstacles);
+
+	private:
+		std::vector<FieldObject> m_objects;
+		std::vector<Common::Circle> m_obstacles;
 	};
 }
 }

@@ -13,6 +13,7 @@ namespace Layer
 namespace Autonomous
 {
 	class Robot;
+	class Field;
 }
 
 namespace View
@@ -22,17 +23,24 @@ namespace View
 	class RobotDriver
 	{
 	public:
-		RobotDriver(Autonomous::Robot &robot, Model &model);
+		RobotDriver(Autonomous::Robot &robot, Autonomous::Field &field, Model &model);
 		~RobotDriver();
 
 		void update();
 
 	private:
+		bool cantReachTargetOrStuckAtObstacleNewTillLastCall();
+		bool reachedTargetNewTillLastCall();
+
+	private:
 		Autonomous::Robot &m_robot;
+		Autonomous::Field &m_field;
 		Model &m_model;
 		Common::Watch *m_watch;
 		double m_lastTime;
 		static const double m_maximumLoopTime;
+		bool m_cantReachTargetOld;
+		bool m_stuckAtObstacleOld;
 	};
 }
 }

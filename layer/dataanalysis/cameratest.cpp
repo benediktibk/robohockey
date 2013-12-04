@@ -17,7 +17,7 @@ void CameraTest::getAllCameraObjects_mockHardwareCamera_atLeastOneCallToGetFrame
 	CPPUNIT_ASSERT(hardwareCamera.getCallsToGetFrame() > 0);
 }
 
-void CameraTest::isGoalYellow_yellowGoal_resultIsOver80Percent()
+void CameraTest::getProbabilityForYellowGoal_yellowGoal_resultIsOver80Percent()
 {
 	Hardware::CameraMock hardwareCamera("yellow_goal");
 	CameraImpl camera(hardwareCamera);
@@ -25,12 +25,28 @@ void CameraTest::isGoalYellow_yellowGoal_resultIsOver80Percent()
 	CPPUNIT_ASSERT(camera.getProbabilityForYellowGoal() > 0.8);
 }
 
-void CameraTest::isGoalYellow_blueGoal_resultIsNear0()
+void CameraTest::getProbabilityForYellowGoal_blueGoal_resultIsNear0()
 {
 	Hardware::CameraMock hardwareCamera("blue_goal");
 	CameraImpl camera(hardwareCamera);
 
 	CPPUNIT_ASSERT_DOUBLES_EQUAL(0,camera.getProbabilityForYellowGoal(), 0.05);
+}
+
+void CameraTest::getProbabilityForBlueGoal_blueGoal_resultIsOver80Percent()
+{
+	Hardware::CameraMock hardwareCamera("blue_goal");
+	CameraImpl camera(hardwareCamera);
+
+	CPPUNIT_ASSERT(camera.getProbabilityForBlueGoal() > 0.75);
+}
+
+void CameraTest::getProbabilityForBlueGoal_yellowGoal_resultIsNear0()
+{
+	Hardware::CameraMock hardwareCamera("yellow_goal");
+	CameraImpl camera(hardwareCamera);
+
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(0,camera.getProbabilityForBlueGoal(), 0.05);
 }
 
 void CameraTest::getAllCameraObjects_yellowPuckTwice_cameraObjectsCountIs2()

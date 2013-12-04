@@ -38,6 +38,17 @@ double CameraImpl::getProbabilityForYellowGoal()
 	return (static_cast<double>(countNonZero(goal))/static_cast<double>(range.area()));
 }
 
+double CameraImpl::getProbabilityForBlueGoal()
+{
+	assert(m_camera.isValid());
+	Mat goal;
+	filterFrameAndConvertToHLS();
+	inRange(m_filteredFrame, cv::Scalar(95, 20, 50), cv::Scalar(107, 255, 255), goal);
+	Rect range(103, 180, 114, 60);
+	goal = goal(range);
+	return (static_cast<double>(countNonZero(goal))/static_cast<double>(range.area()));
+}
+
 
 void CameraImpl::filterFrameAndConvertToHLS()
 {
@@ -76,7 +87,8 @@ void CameraImpl::addObjects(Common::FieldObjectColor color)
 	Point objectFootPixel;
 	double distanceToCenter;
 
-	switch (color) {
+	switch (color)
+	{
 	case Common::FieldObjectColorYellow:
 		minValue = Scalar(18, 20, 50);
 		maxValue = Scalar(28, 255, 255);
@@ -95,7 +107,7 @@ void CameraImpl::addObjects(Common::FieldObjectColor color)
 		areaThreshold = 750;
 		distanceToCenter = 0.03;
 		break;
-	default:
+	case Common::FieldObjectColorUnknown:
 		break;
 	}
 

@@ -96,6 +96,9 @@ double EngineMock::getCurrentSpeed() const
 	return 0;
 }
 
+void EngineMock::updateSensorData()
+{ }
+
 unsigned int EngineMock::getCallsToGoToStraight() const
 {
 	return m_callsToGoToStraight;

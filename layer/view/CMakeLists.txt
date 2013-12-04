@@ -21,6 +21,7 @@ SET(LAYER_VIEW_HEADER
 	robotdriverloop.h
 	model.h
 	graph.h
+	modeltest.h
 )
 
 SET(LAYER_VIEW_FORMS

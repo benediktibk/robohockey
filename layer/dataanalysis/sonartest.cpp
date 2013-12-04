@@ -8,7 +8,7 @@ using namespace RoboHockey::Layer::DataAnalysis;
 void SonarTest::isObstacleInFront_mockHardwareSonar_atLeastOneCallToGetDistanceForSensor()
 {
 	Hardware::SonarMock hardwareSonar;
-	SonarImpl sonar(hardwareSonar, 0.3, 0.2);
+	SonarImpl sonar(hardwareSonar);
 
 	sonar.isObstacleDirectInFront(1);
 
@@ -18,7 +18,7 @@ void SonarTest::isObstacleInFront_mockHardwareSonar_atLeastOneCallToGetDistanceF
 void SonarTest::isObstacleInFront_nothingInFront_false()
 {
 	Hardware::SonarMock hardwareSonar;
-	SonarImpl sonar(hardwareSonar, 0.3, 0.2);
+	SonarImpl sonar(hardwareSonar);
 	hardwareSonar.setValue(3, 5);
 	hardwareSonar.setValue(4, 5);
 
@@ -28,9 +28,27 @@ void SonarTest::isObstacleInFront_nothingInFront_false()
 void SonarTest::isObstacleInFront_obstacleIn01meter_true()
 {
 	Hardware::SonarMock hardwareSonar;
-	SonarImpl sonar(hardwareSonar, 0.3, 0.2);
+	SonarImpl sonar(hardwareSonar);
 	hardwareSonar.setValue(3, 0.1);
 	hardwareSonar.setValue(4, 0.1);
 
 	CPPUNIT_ASSERT(sonar.isObstacleDirectInFront(1));
+}
+
+void SonarTest::isObstacleInFront_farDistant_false()
+{
+	Hardware::SonarMock hardwareSonar;
+	SonarImpl sonar(hardwareSonar);
+	hardwareSonar.readSensorDataFromFile("resources/testfiles/sonar_1.txt");
+
+	CPPUNIT_ASSERT(!sonar.isObstacleDirectInFront(0.5));
+}
+
+void SonarTest::isObstacleInFront_closeEnough_true()
+{
+	Hardware::SonarMock hardwareSonar;
+	SonarImpl sonar(hardwareSonar);
+	hardwareSonar.readSensorDataFromFile("resources/testfiles/sonar_2.txt");
+
+	CPPUNIT_ASSERT(sonar.isObstacleDirectInFront(0.5));
 }

@@ -10,7 +10,9 @@ RobotMock::RobotMock() :
 	m_reachedTarget(false),
 	m_callsToUpdateActuators(0),
 	m_callsToUpdateSensorData(0),
-	m_callsToStop(0)
+	m_callsToStop(0),
+	m_isMoving(false),
+	m_isRotating(false)
 { }
 
 void RobotMock::goTo(const Point &position)
@@ -28,12 +30,7 @@ bool RobotMock::reachedTarget()
 	return m_reachedTarget;
 }
 
-vector<FieldObject> RobotMock::getAllFieldObjects()
-{
-	return m_fieldObjects;
-}
-
-void RobotMock::updateActuators()
+void RobotMock::updateActuators(const Field &)
 {
 	++m_callsToUpdateActuators;
 }
@@ -68,11 +65,6 @@ void RobotMock::setReachedTarget(bool value)
 	m_reachedTarget = value;
 }
 
-void RobotMock::setFieldObjects(const vector<FieldObject> &objects)
-{
-	m_fieldObjects = objects;
-}
-
 const Point &RobotMock::getLastTarget() const
 {
 	return m_lastTarget;
@@ -83,19 +75,19 @@ unsigned int RobotMock::getCallsToStop() const
 	return m_callsToStop;
 }
 
-void RobotMock::collectPuckInFront()
+void RobotMock::collectPuckInFront(const Point &)
+{ }
+
+void RobotMock::updatePuckPosition(const Point &)
 { }
 
 void RobotMock::leaveCollectedPuck()
 { }
 
-bool RobotMock::isMoving()
+bool RobotMock::isMoving() const
 {
-	return false;
+	return m_isMoving;
 }
-
-void RobotMock::calibratePosition()
-{ }
 
 void RobotMock::turnAround()
 { }
@@ -103,7 +95,7 @@ void RobotMock::turnAround()
 void RobotMock::turnTo(const Point &)
 { }
 
-RobotPosition RobotMock::getCurrentPosition()
+RobotPosition RobotMock::getCurrentPosition() const
 {
 	return RobotPosition();
 }
@@ -111,4 +103,39 @@ RobotPosition RobotMock::getCurrentPosition()
 Point RobotMock::getCurrentTarget() const
 {
 	return Point();
+}
+
+bool RobotMock::cantReachTarget() const
+{
+	return false;
+}
+
+bool RobotMock::isPuckCollected() const
+{
+	return false;
+}
+
+bool RobotMock::isPuckCollectable() const
+{
+	return false;
+}
+
+bool RobotMock::isCollectingPuck() const
+{
+	return false;
+}
+
+bool RobotMock::isRotating() const
+{
+	return m_isRotating;
+}
+
+void RobotMock::setIsMoving(bool value)
+{
+	m_isMoving = value;
+}
+
+void RobotMock::setIsRotating(bool value)
+{
+	m_isRotating = value;
 }

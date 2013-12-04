@@ -6,7 +6,7 @@ using namespace std;
 using namespace RoboHockey::Layer::Autonomous;
 using namespace RoboHockey::Common;
 
-BorderStone::BorderStone(Point &father, BorderStoneFieldDistance distanceToFather, BorderStoneDistances &distances, RoboHockey::Common::Point &point):
+BorderStone::BorderStone(Point &father, BorderStoneFieldDistance distanceToFather, BorderStoneDistances &distances, Point &point):
 	Point(point.getX(), point.getY()),
 	m_distances(distances),
 	m_father(father),
@@ -15,7 +15,7 @@ BorderStone::BorderStone(Point &father, BorderStoneFieldDistance distanceToFathe
 
 void BorderStone::searchNeighbourBorderStones(std::vector<Point*> &candidates)
 {
-	Compare compare(0.04);
+	Compare compare(0.02);
 
 	for (vector<Point*>::iterator i = candidates.begin(); i != candidates.end(); ++i)
 	{
