@@ -1,6 +1,6 @@
-FIND_PACKAGE(Qt4 REQUIRED)
-INCLUDE(${QT_USE_FILE})
-ADD_DEFINITIONS(${QT_DEFINITIONS})
+find_package(Qt4 REQUIRED)
+include(${QT_USE_FILE})
+add_definitions(${QT_DEFINITIONS})
 
 set(MOC_H
   hermes.h
@@ -18,16 +18,15 @@ set(SRC_CPP
   referee.cpp
 )
 
-QT4_WRAP_CPP( MOC_CPP ${MOC_H} )
+qt4_wrap_cpp(MOC_CPP ${MOC_H})
 
-
-add_library( referee STATIC
-	${SRC_CPP} 
-	${SRC_H} 
+add_library(referee STATIC
+	${SRC_CPP}
+	${SRC_H}
 	${MOC_CPP}
 )
 
-target_link_libraries ( referee
-	${QT_LIBRARIES} 
+target_link_libraries(referee
+	${QT_LIBRARIES}
 )
 
