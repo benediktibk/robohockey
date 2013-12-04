@@ -27,6 +27,17 @@ namespace Strategy
         virtual Extern::Angelina::TeamColor trueColorOfTeam();
         virtual bool stopMovement();
         virtual bool isValid();
+        void setDetectionStart(bool value);
+        void setGameStart(bool value);
+        void setGameOver(bool value);
+        void setStopMovement(bool value);
+
+    private:
+        bool m_detectionStart;
+        bool m_gameStart;
+        bool m_gameOver;
+        bool m_stopMovement;
+
 
     };
 }

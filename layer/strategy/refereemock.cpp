@@ -32,17 +32,17 @@ void RefereeMock::tellEgoPos(const RoboHockey::Common::Point &)
 
 bool RefereeMock::detectionStart()
 {
-    return false;
+    return m_detectionStart;
 }
 
 bool RefereeMock::gameStart()
 {
-    return false;
+    return m_gameStart;
 }
 
 bool RefereeMock::gameOver()
 {
-    return false;
+    return m_gameOver;
 }
 
 Extern::Angelina::TeamColor RefereeMock::trueColorOfTeam()
@@ -52,13 +52,35 @@ Extern::Angelina::TeamColor RefereeMock::trueColorOfTeam()
 
 bool RefereeMock::stopMovement()
 {
-    return false;
+    return m_stopMovement;
 }
 
 bool RefereeMock::isValid()
 {
     return true;
 }
+
+void RefereeMock::setDetectionStart(bool value)
+{
+    m_detectionStart = value;
+}
+
+void RefereeMock::setGameStart(bool value)
+{
+    m_gameStart = value;
+}
+
+void RefereeMock::setGameOver(bool value)
+{
+    m_gameOver = value;
+}
+
+void RefereeMock::setStopMovement(bool value)
+{
+    m_stopMovement = value;
+}
+
+
 
 
 

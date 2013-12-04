@@ -18,6 +18,10 @@ set(LAYER_STRATEGY_TEST_SRC
 	statemachinetest.cpp
 	initialstatetest.cpp
 	refereemock.cpp
+	achievegoalstest.cpp
+	calibratetest.cpp
+	hideenemypucks.cpp
+	pausetest.cpp
 )
 
 set(MOC_H

@@ -9,15 +9,17 @@
 using namespace RoboHockey::Layer::Strategy;
 using namespace RoboHockey::Layer::Autonomous;
 
-void InitialStateTest::update_empty_stateGotAtLeastOneCallToNextState()
+void InitialStateTest::nextState_detectionStart_calibrate()
 {
     RobotMock robot;
     FieldMock field;
     RefereeMock referee;
-    StateMock state(robot, field, referee);
     InitialState initialState(robot, field, referee);
+    referee.setDetectionStart(true);
+    State *state;
 
-    initialState.update();
+    state = initialState.nextState();
 
-    CPPUNIT_ASSERT(state.getCallsToNextState() > 0);
+    Calibrate *stateCasted = dynamic_cast<Calibrate*>(state);
+    CPPUNIT_ASSERT(stateCasted != 0);
 }
