@@ -8,10 +8,15 @@ namespace Common
 	class Watch
 	{
 	public:
-		static double getTimeAndRestart();
+		Watch();
+
+		double getTimeAndRestart();
 
 	private:
-		Watch();
+		double getCurrentAbsoluteTime() const;
+
+	private:
+		double m_lastTime;
 	};
 }
 }

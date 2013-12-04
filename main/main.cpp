@@ -9,6 +9,7 @@
 #include "common/watch.h"
 #include "common/console.h"
 #include <iostream>
+#include <iomanip>
 #include <boost/scoped_ptr.hpp>
 
 using namespace RoboHockey::Common;
@@ -37,10 +38,10 @@ int main(int argc, char **argv)
 				dataAnalyser->getCamera(), autonomousRobot);
 	Strategy::RefereeImpl referee;
 	Strategy::StateMachine stateMachine(
-                new Strategy::InitialState(autonomousRobot, autonomousField, referee),
+				new Strategy::InitialState(autonomousRobot, autonomousField, referee),
 				autonomousRobot, autonomousField, referee);
 	bool running = true;
-	const double maximumLoopTime = 0.1;
+	Watch watch;
 
 	cout << "program can be closed with 'q'" << endl;
 
@@ -58,10 +59,10 @@ int main(int argc, char **argv)
 		else
 			running = true;
 
-		double timeDifference = Watch::getTimeAndRestart();
-
-		if (timeDifference > maximumLoopTime)
-			cout << "loop time is too high: " << timeDifference*1000 << " ms" << endl;
+		double timeDifference = watch.getTimeAndRestart();
+		cout << setprecision(3) << fixed << "loop time: " << timeDifference*1000 << " ms" << endl;
+		if (timeDifference > 0.1)
+			cout << setprecision(3) << fixed << "loop time is too high!" << endl;
 	}
 
 	return 0;
