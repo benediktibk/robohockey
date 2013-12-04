@@ -6,10 +6,6 @@
 #include "common/circletest.h"
 #include "common/robotpositiontest.h"
 #include "common/angletest.h"
-#include "threading/threadtest.h"
-#include "threading/mutextest.h"
-#include "threading/signaltest.h"
-#include "threading/locktest.h"
 #include "layer/dataanalysis/dataanalysertest.h"
 #include "layer/dataanalysis/cameratest.h"
 #include "layer/dataanalysis/enginetest.h"
@@ -48,13 +44,9 @@ CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Common::RectangleTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Common::CircleTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Common::RobotPositionTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Common::AngleTest);
-//CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Threading::ThreadTest);
-//CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Threading::MutexTest);
-//CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Threading::SignalTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Common::PathTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Common::LineTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Common::PathIntersectPointsTest);
-//CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Threading::LockTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::DataAnalysis::DataAnalyserTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::DataAnalysis::CameraTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::DataAnalysis::EngineTest);

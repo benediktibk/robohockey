@@ -22,7 +22,6 @@ set(LIBRARIES
 	layerautonomous
 	layerdataanalysis
 	layerhardware
-	threading
 	common
 	referee
 	${QT_LIBRARIES}
@@ -41,7 +40,6 @@ set(LIBRARIES_TEST
 	layerautonomoustest
 	layerdataanalysistest
 	layerhardwaretest
-	threadingtest
 	commontest
 	${CPPUNIT_LIBRARY}
 )
