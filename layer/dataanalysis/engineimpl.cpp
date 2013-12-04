@@ -20,7 +20,8 @@ EngineImpl::EngineImpl(Hardware::Engine &engine, Hardware::Odometry &odometry) :
 	m_forwardMovementLocked(false),
 	m_tryingToTackleObstacle(false),
 	m_speedTresholder(new SpeedTresholder()),
-	m_desiredSpeed(0)
+	m_desiredSpeed(0),
+	m_isMoving(false)
 { }
 
 EngineImpl::~EngineImpl()
@@ -135,12 +136,17 @@ Point EngineImpl::getCurrentTarget() const
 
 bool EngineImpl::isMoving() const
 {
-	return m_engine.isMoving();
+	return m_isMoving;
 }
 
 double EngineImpl::getCurrentSpeed() const
 {
 	return (m_engine.getSpeed() + m_desiredSpeed)/2;
+}
+
+void EngineImpl::updateSensorData()
+{
+	m_isMoving = m_engine.isMoving();
 }
 
 const Point &EngineImpl::getStartPosition() const

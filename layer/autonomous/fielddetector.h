@@ -16,7 +16,7 @@ namespace Autonomous
 	class FieldDetector
 	{
 	public:
-		FieldDetector(std::vector<Common::Point> &points);
+		FieldDetector(const Common::Point &currentPosition, std::vector<Common::Point> &pointsOfObjects);
 
 		bool tryToDetectField();
 		Common::Point getNewOrigin();
@@ -26,6 +26,7 @@ namespace Autonomous
 		bool tryToFigureOutNewOrigin(BorderStone &root);
 
 	private:
+		const Common::Point m_currentPosition;
 		std::vector<Common::Point> m_points;
 		BorderStoneDistances m_distanceChecker;
 		Common::Point m_newOrigin;

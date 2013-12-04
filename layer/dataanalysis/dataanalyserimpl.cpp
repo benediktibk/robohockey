@@ -66,6 +66,7 @@ void DataAnalyserImpl::updateSensorData()
 {
 	m_robot->updateSensorData();
 	m_lidar->updateSensorData();
+	m_engine->updateSensorData();
 }
 
 void DataAnalyserImpl::updateActuators()

@@ -26,7 +26,7 @@ namespace DataAnalysis
 namespace Autonomous
 {
 	class FieldObject;
-
+	class Robot;
 
 	class FieldImpl :
 			public Field
@@ -37,14 +37,13 @@ namespace Autonomous
 							};
 
 	public:
-		FieldImpl(DataAnalysis::Odometry &odometry, const DataAnalysis::Lidar &lidar, DataAnalysis::Camera &camera);
+		FieldImpl(DataAnalysis::Odometry &odometry, const DataAnalysis::Lidar &lidar, DataAnalysis::Camera &camera, Robot &autonomousRobot);
 		virtual ~FieldImpl();
 
 		virtual void update();
 		virtual const std::vector<FieldObject>& getAllFieldObjects() const;
 		virtual const std::vector<Common::Circle>& getAllObstacles() const;
 		virtual std::vector<FieldObject> getObjectsWithColorOrderdByDistance(Common::FieldObjectColor color, const Common::Point &position) const;
-
 		virtual bool calibratePosition();
 		virtual bool isPointInsideField(const Common::Point &point) const;
 
@@ -71,6 +70,7 @@ namespace Autonomous
 		DataAnalysis::Odometry *m_odometry;
 		const DataAnalysis::Lidar *m_lidar;
 		DataAnalysis::Camera *m_camera;
+		const Robot *m_robot;
 
 		Common::RobotPosition *m_position;
 		std::vector<FieldObject> m_fieldObjects;

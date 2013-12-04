@@ -10,7 +10,9 @@ RobotMock::RobotMock() :
 	m_reachedTarget(false),
 	m_callsToUpdateActuators(0),
 	m_callsToUpdateSensorData(0),
-	m_callsToStop(0)
+	m_callsToStop(0),
+	m_isMoving(false),
+	m_isRotating(false)
 { }
 
 void RobotMock::goTo(const Point &position)
@@ -82,9 +84,9 @@ void RobotMock::updatePuckPosition(const Point &)
 void RobotMock::leaveCollectedPuck()
 { }
 
-bool RobotMock::isMoving()
+bool RobotMock::isMoving() const
 {
-	return false;
+	return m_isMoving;
 }
 
 void RobotMock::turnAround()
@@ -125,5 +127,15 @@ bool RobotMock::isCollectingPuck() const
 
 bool RobotMock::isRotating() const
 {
-	return false;
+	return m_isRotating;
+}
+
+void RobotMock::setIsMoving(bool value)
+{
+	m_isMoving = value;
+}
+
+void RobotMock::setIsRotating(bool value)
+{
+	m_isRotating = value;
 }

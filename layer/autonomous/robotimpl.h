@@ -36,7 +36,7 @@ namespace Autonomous
 		virtual void collectPuckInFront(const Common::Point &puckPosition);
 		virtual void updatePuckPosition(const Common::Point &puckPosition);
 		virtual void leaveCollectedPuck();
-		virtual bool isMoving();
+		virtual bool isMoving() const;
 		virtual void turnAround();
 		virtual Common::RobotPosition getCurrentPosition() const;
 		virtual Common::Point getCurrentTarget() const;

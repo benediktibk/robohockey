@@ -2,6 +2,7 @@
 #include "layer/autonomous/fieldobject.h"
 #include "layer/autonomous/fielddetector.h"
 #include "layer/autonomous/fieldobjectdistancecompare.h"
+#include "layer/autonomous/robot.h"
 #include "layer/dataanalysis/lidar.h"
 #include "layer/dataanalysis/camera.h"
 #include "layer/dataanalysis/odometry.h"
@@ -14,10 +15,11 @@ using namespace std;
 using namespace RoboHockey::Common;
 using namespace RoboHockey::Layer::Autonomous;
 
-FieldImpl::FieldImpl(DataAnalysis::Odometry &odometry, const DataAnalysis::Lidar &lidar, DataAnalysis::Camera &camera):
+FieldImpl::FieldImpl(DataAnalysis::Odometry &odometry, const DataAnalysis::Lidar &lidar, DataAnalysis::Camera &camera, Robot &autonomousRobot):
 	m_odometry(&odometry),
 	m_lidar(&lidar),
 	m_camera(&camera),
+	m_robot(&autonomousRobot),
 	m_position(new Common::RobotPosition(m_odometry->getCurrentPosition())),
 	m_fieldState(FieldStateUnknownPosition)
 { }
@@ -33,9 +35,14 @@ FieldImpl::~FieldImpl()
 void FieldImpl::update()
 {
 	updateWithOdometryData();
-	updateWithLidarData();
-	updateWithCameraData();
-	updateObstacles();
+
+	if (!m_robot->isRotating())
+	{
+		updateWithLidarData();
+		if (!m_robot->isMoving())
+			updateWithCameraData();
+		updateObstacles();
+	}
 }
 
 const vector<FieldObject> &FieldImpl::getAllFieldObjects() const
@@ -60,7 +67,7 @@ bool FieldImpl::calibratePosition()
 {
 	vector<Point> *input = getPointsOfObjectsWithDiameterAndColor(0.06, FieldObjectColorGreen);
 
-	FieldDetector detector(*input);
+	FieldDetector detector(m_position->getPosition(), *input);
 
 	bool result = detector.tryToDetectField();
 

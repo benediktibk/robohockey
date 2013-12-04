@@ -289,7 +289,7 @@ void RobotImpl::leaveCollectedPuck()
 	changeIntoState(RobotStateLeavingPuck);
 }
 
-bool RobotImpl::isMoving()
+bool RobotImpl::isMoving() const
 {
 	return m_dataAnalyser->getEngine().isMoving();
 }
