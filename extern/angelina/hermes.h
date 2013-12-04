@@ -19,11 +19,6 @@ namespace Angelina
 		public:
 			Hermes(QObject *parent = 0);
 			~Hermes();
-
-		private:
-			Referee *referee;
-			int myTeamID;
-			int messageSize;
 	};
 }
 }
