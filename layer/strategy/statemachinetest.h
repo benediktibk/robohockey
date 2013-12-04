@@ -16,8 +16,8 @@ namespace Strategy
 		CPPUNIT_TEST_SUITE(StateMachineTest);
 		CPPUNIT_TEST(update_empty_stateGotAtLeastOneCallToNextState);
 		CPPUNIT_TEST(update_noStateChange_stateGotAtLeastOneCallToUpdate);
-		CPPUNIT_TEST(update_empty_robotGotAtLeastOneCallToUpdateSensorData);
-		CPPUNIT_TEST(update_empty_robotGotAtLeastOneCallToUpdateActuators);
+		CPPUNIT_TEST(update_empty_robotGotNoCallsToUpdateSensorData);
+		CPPUNIT_TEST(update_empty_robotGotNoCallsToUpdateActuators);
 		CPPUNIT_TEST(update_stateChange_currentStateIsNewOne);
 		CPPUNIT_TEST(update_stateChange_currentStateGotAtLeastOneCallToUpdate);
 		CPPUNIT_TEST_SUITE_END();
@@ -25,8 +25,8 @@ namespace Strategy
 	private:
 		void update_empty_stateGotAtLeastOneCallToNextState();
 		void update_noStateChange_stateGotAtLeastOneCallToUpdate();
-		void update_empty_robotGotAtLeastOneCallToUpdateSensorData();
-		void update_empty_robotGotAtLeastOneCallToUpdateActuators();
+		void update_empty_robotGotNoCallsToUpdateSensorData();
+		void update_empty_robotGotNoCallsToUpdateActuators();
 		void update_stateChange_currentStateIsNewOne();
 		void update_stateChange_currentStateGotAtLeastOneCallToUpdate();
 	};

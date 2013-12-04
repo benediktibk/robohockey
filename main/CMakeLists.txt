@@ -45,11 +45,11 @@ set(LIBRARIES_TEST
 )
 
 add_executable(robot main.cpp)
-add_executable(testrunner testregistration.cpp testrunner.cpp)
+add_executable(testrunner testregistration.cpp maintestrunner.cpp)
 add_executable(calibratecamera maincameracalibration.cpp)
-add_executable(datalogger datalogger.cpp)
-add_executable(remotecontrol remotecontrol.cpp)
-add_executable(collisiondetection collisiondetection.cpp)
+add_executable(datalogger maindatalogger.cpp)
+add_executable(remotecontrol mainremotecontrol.cpp)
+add_executable(collisiondetection maincollisiondetection.cpp)
 
 target_link_libraries(robot ${LIBRARIES})
 target_link_libraries(testrunner ${LIBRARIES_TEST} ${LIBRARIES} ${LIBRARIES_REMOTECONTROL})

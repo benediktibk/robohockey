@@ -34,7 +34,7 @@ void StateMachineTest::update_noStateChange_stateGotAtLeastOneCallToUpdate()
 	CPPUNIT_ASSERT(state->getCallsToUpdate() > 0);
 }
 
-void StateMachineTest::update_empty_robotGotAtLeastOneCallToUpdateSensorData()
+void StateMachineTest::update_empty_robotGotNoCallsToUpdateSensorData()
 {
 	RobotMock robot;
 	FieldMock field;
@@ -43,10 +43,10 @@ void StateMachineTest::update_empty_robotGotAtLeastOneCallToUpdateSensorData()
 
 	stateMachine.update();
 
-	CPPUNIT_ASSERT(robot.getCallsToUpdateSensorData() > 0);
+	CPPUNIT_ASSERT(robot.getCallsToUpdateSensorData() == 0);
 }
 
-void StateMachineTest::update_empty_robotGotAtLeastOneCallToUpdateActuators()
+void StateMachineTest::update_empty_robotGotNoCallsToUpdateActuators()
 {
 	RobotMock robot;
 	FieldMock field;
@@ -55,7 +55,7 @@ void StateMachineTest::update_empty_robotGotAtLeastOneCallToUpdateActuators()
 
 	stateMachine.update();
 
-	CPPUNIT_ASSERT(robot.getCallsToUpdateActuators() > 0);
+	CPPUNIT_ASSERT(robot.getCallsToUpdateActuators() == 0);
 }
 
 void StateMachineTest::update_stateChange_currentStateIsNewOne()

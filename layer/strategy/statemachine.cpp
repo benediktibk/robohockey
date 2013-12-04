@@ -24,8 +24,6 @@ StateMachine::~StateMachine()
 
 void StateMachine::update()
 {
-	m_robot.updateSensorData();
-
 	State *nextState = m_currentState->nextState();
 
 	if (nextState != 0)
@@ -35,7 +33,6 @@ void StateMachine::update()
 	}
 
 	m_currentState->update();
-	m_robot.updateActuators(m_field);;
 }
 
 const State &StateMachine::getCurrentState() const

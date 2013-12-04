@@ -48,7 +48,10 @@ int main(int argc, char **argv)
 
 	while(running)
 	{
+		autonomousRobot.updateSensorData();
+		autonomousField.update();
 		stateMachine.update();
+		autonomousRobot.updateActuators(autonomousField);
 
 		char key = Console::getAsynchronousInput();
 
