@@ -3,6 +3,7 @@
 #include <opencv/cv.h>
 #include "math.h"
 
+using namespace RoboHockey::Common;
 using namespace RoboHockey::Layer::DataAnalysis;
 using namespace cv;
 using namespace std;
@@ -11,7 +12,7 @@ CameraImpl::CameraImpl(Hardware::Camera &camera) :
 	m_camera(camera)
 { }
 
-CameraObjects CameraImpl::getAllCameraObjects(const Common::RobotPosition &position)
+CameraObjects CameraImpl::getAllCameraObjects(const RobotPosition &position)
 {
 	m_cameraObjects.clear();
 
@@ -19,9 +20,9 @@ CameraObjects CameraImpl::getAllCameraObjects(const Common::RobotPosition &posit
 	{
 		m_ownPosition = position;
 		filterFrameAndConvertToHLS();
-		addObjects(Common::FieldObjectColorYellow);
-		addObjects(Common::FieldObjectColorBlue);
-		addObjects(Common::FieldObjectColorGreen);
+		addObjects(FieldObjectColorYellow);
+		addObjects(FieldObjectColorBlue);
+		addObjects(FieldObjectColorGreen);
 	}
 
 	return m_cameraObjects;
@@ -32,7 +33,7 @@ double CameraImpl::getProbabilityForYellowGoal()
 	assert(m_camera.isValid());
 	Mat goal;
 	filterFrameAndConvertToHLS();
-	inRange(m_filteredFrame, cv::Scalar(20, 100, 50), cv::Scalar(30, 200, 255), goal);
+	inRange(m_filteredFrame, Scalar(20, 100, 50), Scalar(30, 200, 255), goal);
 	Rect range(103, 180, 114, 60);
 	goal = goal(range);
 	return (static_cast<double>(countNonZero(goal))/static_cast<double>(range.area()));
@@ -43,7 +44,7 @@ double CameraImpl::getProbabilityForBlueGoal()
 	assert(m_camera.isValid());
 	Mat goal;
 	filterFrameAndConvertToHLS();
-	inRange(m_filteredFrame, cv::Scalar(95, 20, 50), cv::Scalar(107, 255, 255), goal);
+	inRange(m_filteredFrame, Scalar(95, 20, 50), Scalar(107, 255, 255), goal);
 	Rect range(103, 180, 114, 60);
 	goal = goal(range);
 	return (static_cast<double>(countNonZero(goal))/static_cast<double>(range.area()));
@@ -53,8 +54,8 @@ double CameraImpl::getProbabilityForBlueGoal()
 void CameraImpl::filterFrameAndConvertToHLS()
 {
 	m_filteredFrame = m_camera.getFrame();
-	cv::Point2f destinationPoints[4];
-	cv::Point2f sourcePoints[4];
+	Point2f destinationPoints[4];
+	Point2f sourcePoints[4];
 	Mat transformationMatrix;
 	Mat temp;
 
@@ -70,50 +71,50 @@ void CameraImpl::filterFrameAndConvertToHLS()
 
 	temp = m_filteredFrame.clone();
 	transformationMatrix = getPerspectiveTransform(sourcePoints, destinationPoints);
-	cv::warpPerspective(temp, m_filteredFrame, transformationMatrix, cv::Size(320,240));
+	warpPerspective(temp, m_filteredFrame, transformationMatrix, Size(320,240));
 
 	medianBlur(m_filteredFrame, m_filteredFrame, 9);
 	cvtColor(m_filteredFrame, m_filteredFrame, CV_BGR2HLS);
 }
 
-void CameraImpl::addObjects(Common::FieldObjectColor color)
+void CameraImpl::addObjects(FieldObjectColor color)
 {
 	Mat colorPic, currentPic;
-	vector<vector<Point> > contours;
+	vector< vector<cv::Point> > contours;
 	vector<Vec4i> hierarchy;
 	Rect boundRect;
 	Scalar minValue, maxValue;
 	int areaThreshold;
-	Point objectFootPixel;
+	cv::Point objectFootPixel;
 	double distanceToCenter;
 
 	switch (color)
 	{
-	case Common::FieldObjectColorYellow:
+	case FieldObjectColorYellow:
 		minValue = Scalar(18, 20, 50);
 		maxValue = Scalar(28, 255, 255);
 		areaThreshold = 1500;
 		distanceToCenter = 0.06;
 		break;
-	case Common::FieldObjectColorBlue:
+	case FieldObjectColorBlue:
 		minValue = Scalar(95, 20, 40);
 		maxValue = Scalar(107, 255, 255);
 		areaThreshold = 1500;
 		distanceToCenter = 0.06;
 		break;
-	case Common::FieldObjectColorGreen:
+	case FieldObjectColorGreen:
 		minValue = Scalar(75, 20, 55);
 		maxValue = Scalar(85, 255, 255);
 		areaThreshold = 750;
 		distanceToCenter = 0.03;
 		break;
-	case Common::FieldObjectColorUnknown:
+	case FieldObjectColorUnknown:
 		break;
 	}
 
 	inRange(m_filteredFrame, minValue, maxValue, colorPic);
 	colorPic.copyTo(currentPic);
-	findContours(currentPic, contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE, Point(0, 0));
+	findContours(currentPic, contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE, cv::Point(0, 0));
 	if (!contours.empty())
 	{
 		for(unsigned int i = 0; i < contours.size(); i++)
@@ -124,7 +125,7 @@ void CameraImpl::addObjects(Common::FieldObjectColor color)
 				currentPic = colorPic(boundRect);
 				if(countNonZero(currentPic) > 0.9*contourArea(contours[i]))
 				{
-					objectFootPixel = Point(0,0);
+					objectFootPixel = cv::Point(0,0);
 					for (unsigned int j = 0; j < contours[i].size(); j++)
 					{
 						if(objectFootPixel.y < contours[i][j].y)
@@ -141,9 +142,9 @@ void CameraImpl::addObjects(Common::FieldObjectColor color)
 	}
 }
 
-const RoboHockey::Common::Point CameraImpl::getCalculatedPosition(Point pixel, double distanceToCenter) const
+const RoboHockey::Common::Point CameraImpl::getCalculatedPosition(cv::Point pixel, double distanceToCenter) const
 {
-	Point robotMatPosition(160,240);
+	cv::Point robotMatPosition(160,240);
 	Common::Point objectPosition;
 
 	pixel.x = pixel.x - robotMatPosition.x;
@@ -151,7 +152,7 @@ const RoboHockey::Common::Point CameraImpl::getCalculatedPosition(Point pixel, d
 	objectPosition.setX(pixel.x * (1.9/320));
 	objectPosition.setY(pixel.y * (1.66/240) + 0.34 + distanceToCenter);
 
-	objectPosition.rotate(Common::Angle(-0.5 * M_PI) + m_ownPosition.getOrientation());
+	objectPosition.rotate(Angle(-0.5 * M_PI) + m_ownPosition.getOrientation());
 	objectPosition = objectPosition + m_ownPosition.getPosition();
 
 	return objectPosition;
