@@ -25,8 +25,15 @@
 using namespace Extern::Angelina;
 
 Referee::Referee(int teamID, QObject *parent) :
-	QObject(parent), messengerOfTheGods(new Hermes(this)), wLimit(1024), myTeamID(teamID), messageSize(0), connection(
-			false), testMode(false), verbose(true), ready(false)
+	QObject(parent),
+	messengerOfTheGods(new Hermes(this)),
+	wLimit(1024),
+	myTeamID(teamID),
+	messageSize(0),
+	connection(false),
+	testMode(false),
+	verbose(true),
+	ready(false)
 {
 	connect(messengerOfTheGods, SIGNAL(readyRead()), this, SLOT(slotRead()));
 	connect(messengerOfTheGods, SIGNAL(connected()), this, SLOT(slotConnected()));
@@ -36,9 +43,7 @@ Referee::Referee(int teamID, QObject *parent) :
 Referee::~Referee()
 {
 	if (messengerOfTheGods->isOpen())
-	{
 		messengerOfTheGods->close();
-	}
 }
 
 void Referee::setVerbose(bool enabled)
@@ -66,7 +71,7 @@ void Referee::connectToServer(const QString &ip, int port)
 		out.device()->seek(0);
 		out << (quint16) (block.size() - sizeof(quint16));
 		messengerOfTheGods->write(block);
-                Q_EMIT connected();
+				Q_EMIT connected();
 	}
 	else
 	{
@@ -74,8 +79,8 @@ void Referee::connectToServer(const QString &ip, int port)
 		qDebug() << "Keinen Server gefunden => Testmodus";
 		qDebug() << "Alle gesendeten Packete werden hier ausgegeben falls verbose=true";
 		qDebug()
-                                << "Um mit dem Server zu kommunizieren, stellt sicher, dass er laeuft (listening) und baut die Verbindung erneut auf";
-                Q_EMIT connectFailed();
+								<< "Um mit dem Server zu kommunizieren, stellt sicher, dass er laeuft (listening) und baut die Verbindung erneut auf";
+				Q_EMIT connectFailed();
 	}
 }
 
@@ -93,6 +98,7 @@ void Referee::reportReady()
 		messengerOfTheGods->write(block);
 		ready = true;
 	}
+
 	if (verbose)
 		qDebug() << "reportReady";
 }
@@ -110,9 +116,9 @@ void Referee::reportDone()
 		out << (quint16) (block.size() - sizeof(quint16));
 		messengerOfTheGods->write(block);
 	}
+
 	if (verbose)
 		qDebug() << "reportDone";
-
 }
 
 void Referee::sendAlive()
@@ -128,12 +134,12 @@ void Referee::sendAlive()
 		out << (quint16) (block.size() - sizeof(quint16));
 		messengerOfTheGods->write(block);
 	}
+
 	if (verbose)
 		qDebug() << "sendAlive";
 }
 
 /* Methods to report task results */
-
 void Referee::tellAbRatio(double ratio)
 {
 	if (connection)
@@ -148,6 +154,7 @@ void Referee::tellAbRatio(double ratio)
 		out << (quint16) (block.size() - sizeof(quint16));
 		messengerOfTheGods->write(block);
 	}
+
 	if (verbose)
 	{
 		qDebug() << "tellAbRatio";
@@ -170,6 +177,7 @@ void Referee::tellEgoPos(double posX, double posY)
 		out << (quint16) (block.size() - sizeof(quint16));
 		messengerOfTheGods->write(block);
 	}
+
 	if (verbose)
 	{
 		qDebug() << "tellEgoPos";
@@ -192,6 +200,7 @@ void Referee::tellTeamColor(TeamColor color)
 		out << (quint16) (block.size() - sizeof(quint16));
 		messengerOfTheGods->write(block);
 	}
+
 	if (verbose)
 	{
 		qDebug() << "tellTeamColor";
@@ -224,10 +233,9 @@ void Referee::reportGoal()
 		out << (quint16) (block.size() - sizeof(quint16));
 		messengerOfTheGods->write(block);
 	}
+
 	if (verbose)
-	{
 		qDebug() << "Goal!";
-	}
 }
 
 void Referee::slotRead()
@@ -306,10 +314,7 @@ void Referee::slotRead()
 			}
 		}
 		else
-		{
 			lastPacket = true;
-		}
-
 	} while (!lastPacket);
 
 	messageSize = 0;
@@ -319,6 +324,7 @@ void Referee::slotConnected()
 {
 	if (verbose)
 		qDebug() << "Verbunden";
+
 	connection = true;
 }
 
@@ -326,6 +332,7 @@ void Referee::slotDisconnected()
 {
 	if (verbose)
 		qDebug() << "Getrennt";
+
 	Q_EMIT
 	disconnected();
 	connection = false;
@@ -334,5 +341,5 @@ void Referee::slotDisconnected()
 
 bool Referee::isConnected()
 {
-        return connection;
+	return connection;
 }

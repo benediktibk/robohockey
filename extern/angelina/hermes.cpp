@@ -18,15 +18,13 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#include "hermes.h"
-#include "referee.h"
+#include "extern/angelina/hermes.h"
 
 using namespace Extern::Angelina;
 
 Hermes::Hermes(QObject *parent) :
 	QTcpSocket(parent)
-{
-}
+{ }
 
 Hermes::~Hermes()
 {

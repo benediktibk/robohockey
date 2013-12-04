@@ -3,7 +3,7 @@
 
 #include <QtCore/QObject>
 #include <QtCore/QMap>
-#include "teamcolor.h"
+#include "extern/angelina/teamcolor.h"
 
 namespace Extern
 {
@@ -15,7 +15,8 @@ namespace Angelina
 	/*!
 	 *	Die Schiedsrichterklasse kommuniziert mit Angelina und dient dazu dem Server die Ergebnisse mitzuteilen
 	 */
-	class Referee: public QObject
+	class Referee :
+			public QObject
 	{
 		Q_OBJECT
 

@@ -2,24 +2,22 @@
 #define ROBOHOCKEY_EXTERN_ANGELINA_HERMES_H
 
 #include <QtNetwork/QTcpSocket>
-
 #include "hermescodes.h"
 
 namespace Extern
 {
 namespace Angelina
 {
-	class Referee;
-
-	class Hermes:
+	class Hermes :
 			public QTcpSocket
 	{
 		Q_OBJECT
 
-		public:
-			Hermes(QObject *parent = 0);
-			~Hermes();
+	public:
+		Hermes(QObject *parent = 0);
+		~Hermes();
 	};
 }
 }
+
 #endif
