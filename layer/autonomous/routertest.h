@@ -17,12 +17,14 @@ namespace Autonomous
 		CPPUNIT_TEST(calculateRoute_emptyField_validRoute);
 		CPPUNIT_TEST(calculateRoute_emptyField_onlyPointOfRouteIsTarget);
 		CPPUNIT_TEST(calculateRoute_emptyField_routeHasSameWidthAsRobot);
+		CPPUNIT_TEST(getPointsBesideObstacle_intersectFromLeft_shortPointIs);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
 		void calculateRoute_emptyField_validRoute();
 		void calculateRoute_emptyField_onlyPointOfRouteIsTarget();
 		void calculateRoute_emptyField_routeHasSameWidthAsRobot();
+		void getPointsBesideObstacle_intersectFromLeft_shortPointIs();
 	};
 }
 }

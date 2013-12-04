@@ -28,17 +28,19 @@ Route Router::calculateRoute(const Point &/*start*/, const Point &end) const
 
 vector<Point> Router::getPointsBesideObstacle(const Path &path, const Circle &obstacle) const
 {
+	vector<Point> pointsBesideObstacle;
 	PathIntersectPoints intersectionPoints = path.getIntersectPoints(obstacle);
-	Angle angleBetweenCircleCenterAndIntersectPoint(obstacle.getCenter(), intersectionPoints.getIntersectPoints().front());
 	Point shortPointBesideObstacle;
 	Point longPointBesdieObstacle;
+	double offset;
 
-	if(path.isCircleCenterOnPath(obstacle))
+	if(!path.isCircleCenterOnPath(obstacle))
 	{
 		if(intersectionPoints.getIntersectTypeFrom() == PathIntersectPoints::IntersectTypeFromLeft)
 		{
 			shortPointBesideObstacle = (intersectionPoints.front() + intersectionPoints.back())/2;
-			shortPointBesideObstacle = shortPointBesideObstacle + Point(0.5*m_robotWidth, Angle::getThreeQuarterRotation() + path.getAgnleBetweenStartAndEnd());
+			offset = 0.5*m_robotWidth + shortPointBesideObstacle.distanceTo(intersectionPoints.front());
+			shortPointBesideObstacle = shortPointBesideObstacle + Point(offset, Angle::getThreeQuarterRotation() + path.getAgnleBetweenStartAndEnd());
 		}
 	}
 	else
@@ -46,6 +48,6 @@ vector<Point> Router::getPointsBesideObstacle(const Path &path, const Circle &ob
 
 	}
 
-
-	return vector<Point>();
+	pointsBesideObstacle.push_back(shortPointBesideObstacle);
+	return pointsBesideObstacle;
 }
