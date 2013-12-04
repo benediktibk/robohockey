@@ -2,13 +2,13 @@
 
 using namespace RoboHockey::Layer::Strategy;
 
-HideEnemyPucks::HideEnemyPucks(Autonomous::Robot &robot, Autonomous::Field &field):
-    State(robot, field)
+HideEnemyPucks::HideEnemyPucks(Autonomous::Robot &robot, Autonomous::Field &field, Referee &referee):
+    State(robot, field, referee)
 { }
 
 State* HideEnemyPucks::nextState()
 {
-    return new Pause(m_robot, m_field);
+    return new Pause(m_robot, m_field, m_referee);
 }
 
 void HideEnemyPucks::update()
