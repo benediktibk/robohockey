@@ -2,7 +2,6 @@
 #define ROBOHOCKEY_EXTERN_ANGELINA_HERMES_H
 
 #include <QtNetwork/QTcpSocket>
-#include "hermescodes.h"
 
 namespace Extern
 {

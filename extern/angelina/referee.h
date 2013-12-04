@@ -2,7 +2,6 @@
 #define ROBOHOCKEY_EXTERN_ANGELINA_REFEREE_H
 
 #include <QtCore/QObject>
-#include <QtCore/QMap>
 #include "extern/angelina/teamcolor.h"
 
 namespace Extern
@@ -78,8 +77,8 @@ namespace Angelina
 		 */
 		void tellEgoPos(double posX, double posY);
 
-				//! Returns true, wenn die Verbindung zum Server existiert
-				bool isConnected();
+		//! Returns true, wenn die Verbindung zum Server existiert
+		bool isConnected();
 
 	Q_SIGNALS:
 		//! Wird gesendet falls die Verbindung getrennt wird.
