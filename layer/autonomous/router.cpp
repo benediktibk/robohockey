@@ -43,6 +43,7 @@ vector<Point> Router::getPointsBesideObstacle(const Path &path, const Circle &ob
 	}
 	else
 	{
+		//! this offset is probably wrong
 		offsetDistance = 0.5*m_robotWidth + shortPointBesideObstacle.distanceTo(intersectionPoints.front())
 						+ 2*shortPointBesideObstacle.distanceTo(obstacle.getCenter());
 	}
