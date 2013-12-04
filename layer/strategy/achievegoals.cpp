@@ -3,8 +3,8 @@
 using namespace RoboHockey::Layer::Strategy;
 using namespace RoboHockey::Layer::Autonomous;
 
-AchieveGoals::AchieveGoals(Robot &robot, Field &field) :
-    State(robot, field)
+AchieveGoals::AchieveGoals(Robot &robot, Field &field, Referee &referee) :
+    State(robot, field, referee)
 { }
 
 State* AchieveGoals::nextState()

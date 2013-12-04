@@ -38,7 +38,7 @@ int main(int argc, char **argv)
 				dataAnalyser->getCamera(), autonomousRobot);
 	Strategy::RefereeImpl referee;
 	Strategy::StateMachine stateMachine(
-				new Strategy::InitialState(autonomousRobot, autonomousField),
+                new Strategy::InitialState(autonomousRobot, autonomousField, referee),
 				autonomousRobot, autonomousField, referee);
 	bool running = true;
 	double lastTime = watch.getTime();

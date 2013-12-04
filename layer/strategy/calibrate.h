@@ -16,7 +16,7 @@ namespace Strategy
             public State
     {
     public:
-        Calibrate(Autonomous::Robot &robot, Autonomous::Field &field);
+        Calibrate(Autonomous::Robot &robot, Autonomous::Field &field, Referee &referee);
 
         virtual State* nextState();
         virtual void update();

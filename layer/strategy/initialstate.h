@@ -16,7 +16,7 @@ namespace Strategy
 			public State
 	{
 	public:
-        InitialState(Autonomous::Robot &robot, Autonomous::Field &field);
+        InitialState(Autonomous::Robot &robot, Autonomous::Field &field, Referee &referee);
 
 		virtual State* nextState();
 		virtual void update();

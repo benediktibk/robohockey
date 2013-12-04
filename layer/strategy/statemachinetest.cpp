@@ -12,8 +12,8 @@ void StateMachineTest::update_empty_stateGotAtLeastOneCallToNextState()
 {
 	RobotMock robot;
 	FieldMock field;
-	StateMock *state = new StateMock(robot, field);
-	RefereeMock referee;
+    RefereeMock referee;
+    StateMock *state = new StateMock(robot, field, referee);
 	StateMachine stateMachine(state, robot, field, referee);
 
 	stateMachine.update();
@@ -25,8 +25,8 @@ void StateMachineTest::update_noStateChange_stateGotAtLeastOneCallToUpdate()
 {
 	RobotMock robot;
 	FieldMock field;
-	StateMock *state = new StateMock(robot, field);
-	RefereeMock referee;
+    RefereeMock referee;
+    StateMock *state = new StateMock(robot, field, referee);
 	StateMachine stateMachine(state, robot, field, referee);
 
 	stateMachine.update();
@@ -39,7 +39,7 @@ void StateMachineTest::update_empty_robotGotNoCallsToUpdateSensorData()
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	StateMachine stateMachine(new StateMock(robot, field), robot, field, referee);
+    StateMachine stateMachine(new StateMock(robot, field, referee), robot, field, referee);
 
 	stateMachine.update();
 
@@ -51,7 +51,7 @@ void StateMachineTest::update_empty_robotGotNoCallsToUpdateActuators()
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	StateMachine stateMachine(new StateMock(robot, field), robot, field, referee);
+    StateMachine stateMachine(new StateMock(robot, field, referee), robot, field, referee);
 
 	stateMachine.update();
 
@@ -63,8 +63,8 @@ void StateMachineTest::update_stateChange_currentStateIsNewOne()
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	StateMock *oldState = new StateMock(robot, field);
-	StateMock *newState = new StateMock(robot, field);
+    StateMock *oldState = new StateMock(robot, field, referee);
+    StateMock *newState = new StateMock(robot, field, referee);
 	oldState->setNextState(newState);
 	StateMachine stateMachine(oldState, robot, field, referee);
 
@@ -78,8 +78,8 @@ void StateMachineTest::update_stateChange_currentStateGotAtLeastOneCallToUpdate(
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	StateMock *oldState = new StateMock(robot, field);
-	StateMock *newState = new StateMock(robot, field);
+    StateMock *oldState = new StateMock(robot, field, referee);
+    StateMock *newState = new StateMock(robot, field, referee);
 	oldState->setNextState(newState);
 	StateMachine stateMachine(oldState, robot, field, referee);
 

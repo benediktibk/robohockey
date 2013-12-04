@@ -13,7 +13,7 @@ namespace Strategy
             public State
     {
     public:
-        AchieveGoals(Autonomous::Robot &robot, Autonomous::Field &field);
+        AchieveGoals(Autonomous::Robot &robot, Autonomous::Field &field, Referee &referee);
 
         virtual State* nextState();
         virtual void update();
