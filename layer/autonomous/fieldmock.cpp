@@ -42,10 +42,15 @@ void FieldMock::setFieldObjects(const vector<FieldObject> &objects)
 
 void FieldMock::setObstacles(const vector<Circle> &obstacles)
 {
-	m_obstacles = obstacles;
+    m_obstacles = obstacles;
 }
 
-int FieldMock::achievedGoals()
+unsigned int FieldMock::enemyHiddenPucks()
+{
+    return 0;
+}
+
+unsigned int FieldMock::achievedGoals()
 {
     return 0;
 }

@@ -10,7 +10,6 @@ namespace Layer
 {
 namespace Strategy
 {
-class Pause;
 class HideEnemyPucks :
         public State
 {

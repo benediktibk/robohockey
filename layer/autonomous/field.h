@@ -21,13 +21,14 @@ namespace Autonomous
 		virtual ~Field() { }
 
 		virtual void update() = 0;
-        virtual int achievedGoals() = 0;
+        virtual unsigned int achievedGoals() = 0;
 		virtual const std::vector<FieldObject>& getAllFieldObjects() const = 0;
 		virtual const std::vector<Common::Circle>& getAllObstacles() const = 0;
 		virtual std::vector<FieldObject> getObjectsWithColorOrderdByDistance(Common::FieldObjectColor color, const Common::Point &position) const = 0;
 
 		virtual bool calibratePosition() = 0;
 		virtual bool isPointInsideField(const Common::Point &point) const = 0;
+        virtual unsigned int enemyHiddenPucks() = 0;
 	};
 }
 }

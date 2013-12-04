@@ -14,7 +14,9 @@ State* Calibrate::nextState()
 {
     if(m_referee.gameStart())
         return new AchieveGoals(m_robot, m_field, m_referee);
-    return new Pause(m_robot, m_field, m_referee);
+    else if(m_referee.stopMovement() || m_referee.gameOver())
+        return new Pause(m_robot, m_field, m_referee);
+    return 0;
 }
 
 void Calibrate::update()
