@@ -8,18 +8,18 @@ namespace Layer
 namespace Autonomous
 {
 	class Robot;
-    class Field;
+	class Field;
 }
 
 namespace Strategy
 {
 	class State;
-    class Referee;
+	class Referee;
 
 	class StateMachine
 	{
 	public:
-        StateMachine(State *initialState, Autonomous::Robot *robot, Autonomous::Field *field, Referee *referee);
+		StateMachine(State *initialState, Autonomous::Robot &robot, Autonomous::Field &field, Referee &referee);
 		~StateMachine();
 
 		void update();
@@ -27,9 +27,9 @@ namespace Strategy
 
 	private:
 		State *m_currentState;
-        Autonomous::Robot *m_robot;
-        Autonomous::Field *m_field;
-        Referee *m_referee;
+		Autonomous::Robot &m_robot;
+		Autonomous::Field &m_field;
+		Referee &m_referee;
 	};
 }
 }

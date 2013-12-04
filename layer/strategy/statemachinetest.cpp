@@ -10,11 +10,11 @@ using namespace RoboHockey::Layer::Autonomous;
 
 void StateMachineTest::update_empty_stateGotAtLeastOneCallToNextState()
 {
-    RobotMock *robot = new RobotMock;
-    FieldMock *field = new FieldMock;
-    StateMock *state = new StateMock(*robot, *field);
-    RefereeMock *referee = new RefereeMock();
-    StateMachine stateMachine(state, robot, field, referee);
+	RobotMock robot;
+	FieldMock field;
+	StateMock *state = new StateMock(robot, field);
+	RefereeMock referee;
+	StateMachine stateMachine(state, robot, field, referee);
 
 	stateMachine.update();
 
@@ -23,11 +23,11 @@ void StateMachineTest::update_empty_stateGotAtLeastOneCallToNextState()
 
 void StateMachineTest::update_noStateChange_stateGotAtLeastOneCallToUpdate()
 {
-    RobotMock *robot = new RobotMock;
-    FieldMock *field = new FieldMock;
-    StateMock *state = new StateMock(*robot, *field);
-    RefereeMock *referee = new RefereeMock();
-    StateMachine stateMachine(state, robot, field, referee);
+	RobotMock robot;
+	FieldMock field;
+	StateMock *state = new StateMock(robot, field);
+	RefereeMock referee;
+	StateMachine stateMachine(state, robot, field, referee);
 
 	stateMachine.update();
 
@@ -36,37 +36,37 @@ void StateMachineTest::update_noStateChange_stateGotAtLeastOneCallToUpdate()
 
 void StateMachineTest::update_empty_robotGotAtLeastOneCallToUpdateSensorData()
 {
-    RobotMock *robot = new RobotMock;
-    FieldMock *field = new FieldMock;
-    RefereeMock *referee = new RefereeMock();
-    StateMachine stateMachine(new StateMock(*robot, *field), robot, field, referee);
+	RobotMock robot;
+	FieldMock field;
+	RefereeMock referee;
+	StateMachine stateMachine(new StateMock(robot, field), robot, field, referee);
 
 	stateMachine.update();
 
-    CPPUNIT_ASSERT(robot->getCallsToUpdateSensorData() > 0);
+	CPPUNIT_ASSERT(robot.getCallsToUpdateSensorData() > 0);
 }
 
 void StateMachineTest::update_empty_robotGotAtLeastOneCallToUpdateActuators()
 {
-    RobotMock *robot = new RobotMock;
-    FieldMock *field = new FieldMock;
-    RefereeMock *referee = new RefereeMock();
-    StateMachine stateMachine(new StateMock(*robot, *field), robot, field, referee);
+	RobotMock robot;
+	FieldMock field;
+	RefereeMock referee;
+	StateMachine stateMachine(new StateMock(robot, field), robot, field, referee);
 
 	stateMachine.update();
 
-    CPPUNIT_ASSERT(robot->getCallsToUpdateActuators() > 0);
+	CPPUNIT_ASSERT(robot.getCallsToUpdateActuators() > 0);
 }
 
 void StateMachineTest::update_stateChange_currentStateIsNewOne()
 {
-    RobotMock *robot = new RobotMock;
-    FieldMock *field = new FieldMock;
-    RefereeMock *referee = new RefereeMock();
-    StateMock *oldState = new StateMock(*robot, *field);
-    StateMock *newState = new StateMock(*robot, *field);
+	RobotMock robot;
+	FieldMock field;
+	RefereeMock referee;
+	StateMock *oldState = new StateMock(robot, field);
+	StateMock *newState = new StateMock(robot, field);
 	oldState->setNextState(newState);
-    StateMachine stateMachine(oldState, robot, field, referee);
+	StateMachine stateMachine(oldState, robot, field, referee);
 
 	stateMachine.update();
 
@@ -75,13 +75,13 @@ void StateMachineTest::update_stateChange_currentStateIsNewOne()
 
 void StateMachineTest::update_stateChange_currentStateGotAtLeastOneCallToUpdate()
 {
-    RobotMock *robot = new RobotMock;
-    FieldMock *field = new FieldMock;
-    RefereeMock *referee = new RefereeMock();
-    StateMock *oldState = new StateMock(*robot, *field);
-    StateMock *newState = new StateMock(*robot, *field);
+	RobotMock robot;
+	FieldMock field;
+	RefereeMock referee;
+	StateMock *oldState = new StateMock(robot, field);
+	StateMock *newState = new StateMock(robot, field);
 	oldState->setNextState(newState);
-    StateMachine stateMachine(oldState, robot, field, referee);
+	StateMachine stateMachine(oldState, robot, field, referee);
 
 	stateMachine.update();
 

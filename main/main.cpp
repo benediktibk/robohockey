@@ -64,9 +64,14 @@ int main(int argc, char **argv)
 
 	Hardware::Robot *hardwareRobot = new Hardware::RobotImpl(playerServer);
 	DataAnalysis::DataAnalyser *dataAnalyser = new DataAnalysis::DataAnalyserImpl(hardwareRobot);
-    Autonomous::Robot *autonomousRobot(new Autonomous::RobotImpl(dataAnalyser));
-    Autonomous::Field *autonomousField = new Autonomous::FieldImpl(dataAnalyser->getOdometry(), dataAnalyser->getLidar(), dataAnalyser->getCamera(), *autonomousRobot);
-    Strategy::StateMachine stateMachine(new Strategy::InitialState(*autonomousRobot, *autonomousField), autonomousRobot, autonomousField, new Strategy::RefereeImpl());
+	Autonomous::RobotImpl autonomousRobot(dataAnalyser);
+	Autonomous::FieldImpl autonomousField(
+				dataAnalyser->getOdometry(), dataAnalyser->getLidar(),
+				dataAnalyser->getCamera(), autonomousRobot);
+	Strategy::RefereeImpl referee;
+	Strategy::StateMachine stateMachine(
+				new Strategy::InitialState(autonomousRobot, autonomousField),
+				autonomousRobot, autonomousField, referee);
 	bool running = true;
 	double lastTime = watch.getTime();
 	const double maximumLoopTime = 0.1;
