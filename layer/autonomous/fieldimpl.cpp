@@ -67,7 +67,7 @@ bool FieldImpl::calibratePosition()
 {
 	vector<Point> *input = getPointsOfObjectsWithDiameterAndColor(0.06, FieldObjectColorGreen);
 
-	FieldDetector detector(*input);
+	FieldDetector detector(m_position->getPosition(), *input);
 
 	bool result = detector.tryToDetectField();
 
