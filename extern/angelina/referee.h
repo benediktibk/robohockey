@@ -5,20 +5,19 @@
 #include <QtCore/QMap>
 #include "teamcolor.h"
 
-namespace Extern{
-namespace Angelina{
-
-
-class Hermes;
-
-
-//! Die Schiedsrichterklasse
-/*!
- *	Die Schiedsrichterklasse kommuniziert mit Angelina und dient dazu dem Server die Ergebnisse mitzuteilen
- */
-class Referee: public QObject
+namespace Extern
 {
-	Q_OBJECT
+namespace Angelina
+{
+	class Hermes;
+
+	//! Die Schiedsrichterklasse
+	/*!
+	 *	Die Schiedsrichterklasse kommuniziert mit Angelina und dient dazu dem Server die Ergebnisse mitzuteilen
+	 */
+	class Referee: public QObject
+	{
+		Q_OBJECT
 
 	public:
 		//! Erstellt einen Schiedsrichter
@@ -78,8 +77,8 @@ class Referee: public QObject
 		 */
 		void tellEgoPos(double posX, double posY);
 
-                //! Returns true, wenn die Verbindung zum Server existiert
-                bool isConnected();
+				//! Returns true, wenn die Verbindung zum Server existiert
+				bool isConnected();
 
 	Q_SIGNALS:
 		//! Wird gesendet falls die Verbindung getrennt wird.
@@ -103,11 +102,11 @@ class Referee: public QObject
 		//! Roboter muss seine Bewegung sofort stoppen
 		void stopMovement();
 
-                //! Wird gesendet, falls die Verbindung zum Server erfolgreich war.
-                void connected();
+		//! Wird gesendet, falls die Verbindung zum Server erfolgreich war.
+		void connected();
 
-                //! Wird gesendet, falls die Verbindung zum Server nicht aufgebaut werden konnte.
-                void connectFailed();
+		//! Wird gesendet, falls die Verbindung zum Server nicht aufgebaut werden konnte.
+		void connectFailed();
 
 	private Q_SLOTS:
 		void slotRead();
@@ -123,7 +122,8 @@ class Referee: public QObject
 		bool testMode;
 		bool verbose;
 		bool ready;
-};
+	};
 }
 }
-#endif /* REFEREE_H */
+
+#endif

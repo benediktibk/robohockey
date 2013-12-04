@@ -5,25 +5,26 @@
 
 #include "hermescodes.h"
 
-namespace Extern{
-namespace Angelina{
-
-class Referee;
-
-class Hermes: public QTcpSocket
+namespace Extern
 {
+namespace Angelina
+{
+	class Referee;
 
-	Q_OBJECT
+	class Hermes:
+			public QTcpSocket
+	{
+		Q_OBJECT
 
-	public:
-		Hermes(QObject *parent = 0);
-		~Hermes();
+		public:
+			Hermes(QObject *parent = 0);
+			~Hermes();
 
-	private:
-		Referee *referee;
-		int myTeamID;
-		int messageSize;
-};
+		private:
+			Referee *referee;
+			int myTeamID;
+			int messageSize;
+	};
 }
 }
-#endif /* HERMES_H */
+#endif

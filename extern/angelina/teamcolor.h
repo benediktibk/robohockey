@@ -5,11 +5,10 @@ namespace Extern
 {
 namespace Angelina
 {
-
 //! Enum dient zur Angabe der Farbe des eigenen Teams
 enum TeamColor
 {
-    yellow, blue
+	yellow, blue
 };
 }
 }
