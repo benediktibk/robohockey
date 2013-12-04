@@ -21,6 +21,7 @@ double Watch::getCurrentAbsoluteTime() const
 	timeval timeStructure;
 	int errorCode = gettimeofday(&timeStructure, 0);
 	assert(errorCode == 0);
+	(void)(errorCode); // avoid errors in release build
 	double seconds = timeStructure.tv_sec;
 	double microSeconds = timeStructure.tv_usec;
 	double totalTime = seconds + microSeconds/1E6;
