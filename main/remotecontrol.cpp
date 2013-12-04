@@ -32,16 +32,16 @@ int main(int argc, char **argv)
 	}
 
 	Model model;
-    //Graph graph(model);
 	Controller controller(model);
 	Hardware::Robot *hardwareRobot = new Hardware::RobotImpl(playerServer);
 	DataAnalysis::DataAnalyser *dataAnalyser = new DataAnalysis::DataAnalyserImpl(hardwareRobot);
 	Autonomous::RobotImpl autonomousRobot(dataAnalyser);
-	Autonomous::FieldImpl autonomousField(dataAnalyser->getOdometry(), dataAnalyser->getLidar(), dataAnalyser->getCamera(), autonomousRobot);
+	Autonomous::FieldImpl autonomousField(
+				dataAnalyser->getOdometry(), dataAnalyser->getLidar(), dataAnalyser->getCamera(),
+				autonomousRobot);
 	RobotDriver robotDriver(autonomousRobot, autonomousField, model);
 	RobotDriverLoop loop(robotDriver);
 
 	controller.show();
-    //graph.show();
 	return application.exec();
 }
