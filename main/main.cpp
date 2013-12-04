@@ -65,7 +65,8 @@ int main(int argc, char **argv)
 	scoped_ptr<Autonomous::FieldImpl> field(new Autonomous::FieldImpl(
 												dataAnalyser->getOdometry(),
 												dataAnalyser->getLidar(),
-												dataAnalyser->getCamera()));
+												dataAnalyser->getCamera(),
+												*autonomousRobot));
 	Strategy::StateMachine stateMachine(new Strategy::InitialState(*autonomousRobot), *autonomousRobot, *field);
 	bool running = true;
 	double lastTime = watch.getTime();

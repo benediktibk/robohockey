@@ -1,5 +1,6 @@
 #include "layer/autonomous/fieldtest.h"
 #include "layer/autonomous/fieldimpl.h"
+#include "layer/autonomous/robotmock.h"
 #include "layer/dataanalysis/odometrymock.h"
 #include "layer/dataanalysis/lidarmock.h"
 #include "layer/dataanalysis/cameramock.h"
@@ -17,7 +18,8 @@ void FieldTest::update_noLidarObjects_noFieldObjects()
 	DataAnalysis::OdometryMock odometry;
 	DataAnalysis::LidarMock lidar;
 	DataAnalysis::CameraMock camera;
-	FieldImpl field(odometry, lidar, camera);
+	Autonomous::RobotMock autonomousRobot;
+	FieldImpl field(odometry, lidar, camera, autonomousRobot);
 
 	field.update();
 
@@ -30,7 +32,8 @@ void FieldTest::update_oneObjectFromLidarInView_oneObject()
 	DataAnalysis::OdometryMock odometry;
 	DataAnalysis::LidarMock lidar;
 	DataAnalysis::CameraMock camera;
-	FieldImpl field(odometry, lidar, camera);
+	Autonomous::RobotMock autonomousRobot;
+	FieldImpl field(odometry, lidar, camera, autonomousRobot);
 	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 0), 0.1));
 	lidar.setAllObjects(lidarObjects);
@@ -46,7 +49,8 @@ void FieldTest::update_oneObjectFromLidarNotInViewAnymoreDuringSecondCall_noFiel
 	DataAnalysis::OdometryMock odometry;
 	DataAnalysis::LidarMock lidar;
 	DataAnalysis::CameraMock camera;
-	FieldImpl field(odometry, lidar, camera);
+	Autonomous::RobotMock autonomousRobot;
+	FieldImpl field(odometry, lidar, camera, autonomousRobot);
 	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 0), 0.1));
 	lidar.setAllObjects(lidarObjects);
@@ -64,7 +68,8 @@ void FieldTest::update_oneObjectFromLidarLeftNotInViewAnymoreDuringSecondCall_no
 	DataAnalysis::OdometryMock odometry;
 	DataAnalysis::LidarMock lidar;
 	DataAnalysis::CameraMock camera;
-	FieldImpl field(odometry, lidar, camera);
+	Autonomous::RobotMock autonomousRobot;
+	FieldImpl field(odometry, lidar, camera, autonomousRobot);
 	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 1), 0.1));
 	lidar.setAllObjects(lidarObjects);
@@ -82,7 +87,8 @@ void FieldTest::update_oneObjectFromLidarRightNotInViewAnymoreDuringSecondCall_n
 	DataAnalysis::OdometryMock odometry;
 	DataAnalysis::LidarMock lidar;
 	DataAnalysis::CameraMock camera;
-	FieldImpl field(odometry, lidar, camera);
+	Autonomous::RobotMock autonomousRobot;
+	FieldImpl field(odometry, lidar, camera, autonomousRobot);
 	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, -1), 0.1));
 	lidar.setAllObjects(lidarObjects);
@@ -100,7 +106,8 @@ void FieldTest::update_objectFromLidarNotInViewAnymoreThroughRotation_oneFieldOb
 	DataAnalysis::OdometryMock odometry;
 	DataAnalysis::LidarMock lidar;
 	DataAnalysis::CameraMock camera;
-	FieldImpl field(odometry, lidar, camera);
+	Autonomous::RobotMock autonomousRobot;
+	FieldImpl field(odometry, lidar, camera, autonomousRobot);
 	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, -1), 0.1));
 	lidar.setAllObjects(lidarObjects);
@@ -119,7 +126,8 @@ void FieldTest::update_oneObjectFromLidarAndNoObjectFromCamera_noColor()
 	DataAnalysis::OdometryMock odometry;
 	DataAnalysis::LidarMock lidar;
 	DataAnalysis::CameraMock camera;
-	FieldImpl field(odometry, lidar, camera);
+	Autonomous::RobotMock autonomousRobot;
+	FieldImpl field(odometry, lidar, camera, autonomousRobot);
 	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 0), 0.1));
 	lidar.setAllObjects(lidarObjects);
@@ -136,7 +144,8 @@ void FieldTest::update_twoObjectsFromLidarAndOneFromCamera_correctColor()
 	DataAnalysis::OdometryMock odometry;
 	DataAnalysis::LidarMock lidar;
 	DataAnalysis::CameraMock camera;
-	FieldImpl field(odometry, lidar, camera);
+	Autonomous::RobotMock autonomousRobot;
+	FieldImpl field(odometry, lidar, camera, autonomousRobot);
 
 	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 0), 0.1));
@@ -158,7 +167,8 @@ void FieldTest::update_twoObjectsFromLidarAndOneFromCameraNoColorAnymoreDuringSe
 	DataAnalysis::OdometryMock odometry;
 	DataAnalysis::LidarMock lidar;
 	DataAnalysis::CameraMock camera;
-	FieldImpl field(odometry, lidar, camera);
+	Autonomous::RobotMock autonomousRobot;
+	FieldImpl field(odometry, lidar, camera, autonomousRobot);
 
 	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 0), 0.1));
@@ -184,7 +194,8 @@ void FieldTest::tryToDetectField_noValidPattern_false()
 	DataAnalysis::OdometryMock odometry;
 	DataAnalysis::LidarMock lidar;
 	DataAnalysis::CameraMock camera;
-	FieldImpl field(odometry, lidar, camera);
+	Autonomous::RobotMock autonomousRobot;
+	FieldImpl field(odometry, lidar, camera, autonomousRobot);
 
 	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 0), 0.1));
@@ -203,7 +214,8 @@ void FieldTest::tryToDetectField_validPattern_true()
 	DataAnalysis::OdometryMock odometry;
 	DataAnalysis::LidarMock lidar;
 	DataAnalysis::CameraMock camera;
-	FieldImpl field(odometry, lidar, camera);
+	Autonomous::RobotMock autonomousRobot;
+	FieldImpl field(odometry, lidar, camera, autonomousRobot);
 
 	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 1), 0.06));
@@ -223,7 +235,8 @@ void FieldTest::tryToDetectField_noValidPattern_noTransformation()
 	DataAnalysis::OdometryMock odometry;
 	DataAnalysis::LidarMock lidar;
 	DataAnalysis::CameraMock camera;
-	FieldImpl field(odometry, lidar, camera);
+	Autonomous::RobotMock autonomousRobot;
+	FieldImpl field(odometry, lidar, camera, autonomousRobot);
 
 	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 0), 0.1));
@@ -247,7 +260,8 @@ void FieldTest::tryToDetectField_validPattern_transformed()
 	DataAnalysis::OdometryMock odometry;
 	DataAnalysis::LidarMock lidar;
 	DataAnalysis::CameraMock camera;
-	FieldImpl field(odometry, lidar, camera);
+	Autonomous::RobotMock autonomousRobot;
+	FieldImpl field(odometry, lidar, camera, autonomousRobot);
 
 	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 1), 0.06));
@@ -270,7 +284,8 @@ void FieldTest::tryToDetectField_validPattern_correctNumberOfFieldObjects()
 	DataAnalysis::OdometryMock odometry;
 	DataAnalysis::LidarMock lidar;
 	DataAnalysis::CameraMock camera;
-	FieldImpl field(odometry, lidar, camera);
+	Autonomous::RobotMock autonomousRobot;
+	FieldImpl field(odometry, lidar, camera, autonomousRobot);
 
 	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 1), 0.06));
@@ -294,7 +309,8 @@ void FieldTest::tryToDetectField_validPattern_correctTransformation()
 	DataAnalysis::OdometryMock odometry;
 	DataAnalysis::LidarMock lidar;
 	DataAnalysis::CameraMock camera;
-	FieldImpl field(odometry, lidar, camera);
+	Autonomous::RobotMock autonomousRobot;
+	FieldImpl field(odometry, lidar, camera, autonomousRobot);
 
 	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 1), 0.06));
@@ -321,7 +337,8 @@ void FieldTest::tryToDetectField_realWorldExample_positionIsCorrect()
 {
 	Hardware::RobotMock *hardwareRobot = new Hardware::RobotMock();
 	DataAnalysis::DataAnalyserImpl dataAnalyser(hardwareRobot);
-	FieldImpl field(dataAnalyser.getOdometry(), dataAnalyser.getLidar(), dataAnalyser.getCamera());
+	Autonomous::RobotMock autonomousRobot;
+	FieldImpl field(dataAnalyser.getOdometry(), dataAnalyser.getLidar(), dataAnalyser.getCamera(), autonomousRobot);
 	Hardware::OdometryMock &odometry = hardwareRobot->getOdometryMock();
 	Hardware::LidarMock &lidar = hardwareRobot->getLidarMock();
 	lidar.readSensorDataFromFile("resources/testfiles/lidar_35.txt");
@@ -341,7 +358,8 @@ void FieldTest::getObjectsWithColorOrderedByDistance_oneObjectWithCorrectColorAn
 	DataAnalysis::OdometryMock odometry;
 	DataAnalysis::LidarMock lidar;
 	DataAnalysis::CameraMock camera;
-	FieldImpl field(odometry, lidar, camera);
+	Autonomous::RobotMock autonomousRobot;
+	FieldImpl field(odometry, lidar, camera, autonomousRobot);
 	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 0), 0.1));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(2, 1), 0.1));
@@ -361,7 +379,8 @@ void FieldTest::getObjectsWithColorOrderedByDistance_twoObjectsWithCorrectColorI
 	DataAnalysis::OdometryMock odometry;
 	DataAnalysis::LidarMock lidar;
 	DataAnalysis::CameraMock camera;
-	FieldImpl field(odometry, lidar, camera);
+	Autonomous::RobotMock autonomousRobot;
+	FieldImpl field(odometry, lidar, camera, autonomousRobot);
 	Point ownPosition(0, 0);
 	DataAnalysis::LidarObjects lidarObjects(ownPosition);
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 0), 0.12));
@@ -388,7 +407,8 @@ void FieldTest::getObjectsWithColorOrderedByDistance_twoObjectsWithCorrectColorI
 	DataAnalysis::OdometryMock odometry;
 	DataAnalysis::LidarMock lidar;
 	DataAnalysis::CameraMock camera;
-	FieldImpl field(odometry, lidar, camera);
+	Autonomous::RobotMock autonomousRobot;
+	FieldImpl field(odometry, lidar, camera, autonomousRobot);
 	Point ownPosition(0, 0);
 	DataAnalysis::LidarObjects lidarObjects(ownPosition);
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(2, -1), 0.12));
@@ -415,7 +435,8 @@ void FieldTest::isPointInsideField_notCalibrated_true()
 	DataAnalysis::OdometryMock odometry;
 	DataAnalysis::LidarMock lidar;
 	DataAnalysis::CameraMock camera;
-	FieldImpl field(odometry, lidar, camera);
+	Autonomous::RobotMock autonomousRobot;
+	FieldImpl field(odometry, lidar, camera, autonomousRobot);
 
 	field.update();
 
@@ -427,7 +448,8 @@ void FieldTest::isPointInsideField_pointIsInside_true()
 	DataAnalysis::OdometryMock odometry;
 	DataAnalysis::LidarMock lidar;
 	DataAnalysis::CameraMock camera;
-	FieldImpl field(odometry, lidar, camera);
+	Autonomous::RobotMock autonomousRobot;
+	FieldImpl field(odometry, lidar, camera, autonomousRobot);
 
 	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 1), 0.06));
@@ -447,7 +469,8 @@ void FieldTest::isPointInsideField_pointIsOutside_false()
 	DataAnalysis::OdometryMock odometry;
 	DataAnalysis::LidarMock lidar;
 	DataAnalysis::CameraMock camera;
-	FieldImpl field(odometry, lidar, camera);
+	Autonomous::RobotMock autonomousRobot;
+	FieldImpl field(odometry, lidar, camera, autonomousRobot);
 
 	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 1), 0.06));
@@ -467,7 +490,8 @@ void FieldTest::isPointInsideField_pointIsUnderField_false()
 	DataAnalysis::OdometryMock odometry;
 	DataAnalysis::LidarMock lidar;
 	DataAnalysis::CameraMock camera;
-	FieldImpl field(odometry, lidar, camera);
+	Autonomous::RobotMock autonomousRobot;
+	FieldImpl field(odometry, lidar, camera, autonomousRobot);
 
 	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 1), 0.06));

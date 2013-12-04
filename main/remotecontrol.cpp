@@ -37,7 +37,7 @@ int main(int argc, char **argv)
 	Hardware::Robot *hardwareRobot = new Hardware::RobotImpl(playerServer);
 	DataAnalysis::DataAnalyser *dataAnalyser = new DataAnalysis::DataAnalyserImpl(hardwareRobot);
 	Autonomous::RobotImpl autonomousRobot(dataAnalyser);
-	Autonomous::FieldImpl autonomousField(dataAnalyser->getOdometry(), dataAnalyser->getLidar(), dataAnalyser->getCamera());
+	Autonomous::FieldImpl autonomousField(dataAnalyser->getOdometry(), dataAnalyser->getLidar(), dataAnalyser->getCamera(), autonomousRobot);
 	RobotDriver robotDriver(autonomousRobot, autonomousField, model);
 	RobotDriverLoop loop(robotDriver);
 
