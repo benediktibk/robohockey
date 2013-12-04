@@ -32,16 +32,22 @@ vector<Point> Router::getPointsBesideObstacle(const Path &path, const Circle &ob
 	PathIntersectPoints intersectionPoints = path.getIntersectPoints(obstacle);
 	Point shortPointBesideObstacle;
 	Point longPointBesdieObstacle;
-	double offset;
+	double offsetDistance;
+	Angle offsetAngle;
 
 	if(!path.isCircleCenterOnPath(obstacle))
 	{
+		shortPointBesideObstacle = (intersectionPoints.front() + intersectionPoints.back())/2;
+		offsetDistance = 0.5*m_robotWidth + shortPointBesideObstacle.distanceTo(intersectionPoints.front());
 		if(intersectionPoints.getIntersectTypeFrom() == PathIntersectPoints::IntersectTypeFromLeft)
 		{
-			shortPointBesideObstacle = (intersectionPoints.front() + intersectionPoints.back())/2;
-			offset = 0.5*m_robotWidth + shortPointBesideObstacle.distanceTo(intersectionPoints.front());
-			shortPointBesideObstacle = shortPointBesideObstacle + Point(offset, Angle::getThreeQuarterRotation() + path.getAgnleBetweenStartAndEnd());
+			offsetAngle = Angle::getThreeQuarterRotation();
 		}
+		else
+		{
+			offsetAngle = Angle::getQuarterRotation();
+		}
+		shortPointBesideObstacle = shortPointBesideObstacle + Point(offsetDistance, offsetAngle + path.getAgnleBetweenStartAndEnd());
 	}
 	else
 	{
