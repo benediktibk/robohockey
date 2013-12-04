@@ -35,9 +35,14 @@ FieldImpl::~FieldImpl()
 void FieldImpl::update()
 {
 	updateWithOdometryData();
-	updateWithLidarData();
-	updateWithCameraData();
-	updateObstacles();
+
+	if (!m_robot->isRotating())
+	{
+		updateWithLidarData();
+		if (!m_robot->isMoving())
+			updateWithCameraData();
+		updateObstacles();
+	}
 }
 
 const vector<FieldObject> &FieldImpl::getAllFieldObjects() const
