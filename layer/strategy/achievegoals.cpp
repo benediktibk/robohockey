@@ -1,4 +1,5 @@
 #include "layer/strategy/achievegoals.h"
+#include "layer/strategy/referee.h"
 
 using namespace RoboHockey::Layer::Strategy;
 using namespace RoboHockey::Layer::Autonomous;

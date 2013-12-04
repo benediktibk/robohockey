@@ -9,6 +9,7 @@ set(LAYER_STRATEGY_SRC
 	achievegoals.cpp
 	calibrate.cpp
 	refereeimpl.cpp
+	pause.cpp
 )
 
 set(LAYER_STRATEGY_TEST_SRC
