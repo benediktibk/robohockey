@@ -1,19 +1,29 @@
 #include "watch.h"
 #include <sys/time.h>
-#include <sys/resource.h>
+#include <assert.h>
 
 using namespace RoboHockey::Common;
 
-Watch::Watch()
+Watch::Watch() :
+	m_lastTime(getCurrentAbsoluteTime())
 { }
 
 double Watch::getTimeAndRestart()
 {
-	rusage usage;
-	getrusage(RUSAGE_SELF, &usage);
-	timeval usrTime = usage.ru_utime;
-	timeval sysTime = usage.ru_stime;
-	double usrTimeTotal = usrTime.tv_sec + usrTime.tv_usec/static_cast<double>(1E6);
-	double sysTimeTotal = sysTime.tv_sec + sysTime.tv_usec/static_cast<double>(1E6);
-	return sysTimeTotal + usrTimeTotal;
+	double totalTime = getCurrentAbsoluteTime();
+	double timeDifference = totalTime - m_lastTime;
+	m_lastTime = totalTime;
+	return timeDifference;
+}
+
+double Watch::getCurrentAbsoluteTime() const
+{
+	timeval timeStructure;
+	int errorCode = gettimeofday(&timeStructure, 0);
+	assert(errorCode == 0);
+	(void)(errorCode); // avoid errors in release build
+	double seconds = timeStructure.tv_sec;
+	double microSeconds = timeStructure.tv_usec;
+	double totalTime = seconds + microSeconds/1E6;
+	return totalTime;
 }

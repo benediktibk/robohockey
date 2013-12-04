@@ -12,30 +12,27 @@ using namespace RoboHockey::Layer::View;
 using namespace RoboHockey::Layer::Autonomous;
 using namespace std;
 
-const double RobotDriver::m_maximumLoopTime = 0.2;
-
 RobotDriver::RobotDriver(Robot &robot, Field &field, Model &model) :
 	m_robot(robot),
 	m_field(field),
 	m_model(model),
-	m_lastTime(0),
+	m_watch(new Common::Watch()),
 	m_cantReachTargetOld(false),
 	m_stuckAtObstacleOld(false)
-{
-	Watch::getTimeAndRestart();
-}
+{ }
 
 RobotDriver::~RobotDriver()
-{ }
+{
+	delete m_watch;
+	m_watch = 0;
+}
 
 void RobotDriver::update()
 {
-	double currentTime = Watch::getTimeAndRestart();
-	double timeDifference = currentTime - m_lastTime;
-	m_lastTime = currentTime;
-
-	//if (timeDifference > m_maximumLoopTime)
-		cout << setprecision(3) << fixed << "loop time is too big: " << timeDifference*1000 << " ms" << endl;
+	double timeDifference = m_watch->getTimeAndRestart();
+	cout << setprecision(3) << fixed << "loop time: " << timeDifference*1000 << " ms" << endl;
+	if (timeDifference > 0.25)
+		cout << setprecision(3) << fixed << "loop time is too high!" << endl;
 
 	m_robot.updateSensorData();
 	m_field.update();

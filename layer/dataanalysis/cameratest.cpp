@@ -2,6 +2,7 @@
 #include "layer/dataanalysis/cameraimpl.h"
 #include "layer/hardware/cameramock.h"
 #include "common/compare.h"
+#include "common/watch.h"
 
 using namespace RoboHockey::Layer;
 using namespace RoboHockey::Layer::DataAnalysis;
@@ -248,4 +249,17 @@ void CameraTest::getAllCameraObjects_camera2211_cameraObjectCountIs2()
 	CameraImpl camera(hardwareCamera);
 
 	CPPUNIT_ASSERT_EQUAL((size_t)2 ,camera.getAllCameraObjects(RobotPosition()).getObjectCount());
+}
+
+void CameraTest::getAllCameraObjects_realWorldExampleData_timeIsBelow100ms()
+{
+	Hardware::CameraMock hardwareCamera("yellow_puck_twice");
+	CameraImpl camera(hardwareCamera);
+	Watch watch;
+
+	watch.getTimeAndRestart();
+	camera.getAllCameraObjects(RobotPosition(Point(1,1), Angle::getQuarterRotation()));
+	double time = watch.getTimeAndRestart();
+
+	CPPUNIT_ASSERT(time < 0.1);
 }
