@@ -8,6 +8,7 @@ namespace Layer
 namespace Autonomous
 {
 	class Robot;
+    class Field;
 }
 
 namespace Strategy
@@ -15,7 +16,7 @@ namespace Strategy
 	class State
 	{
 	public:
-		State(Autonomous::Robot &robot);
+        State(Autonomous::Robot &robot, Autonomous::Field &field);
 		virtual ~State();
 
 		virtual State* nextState() = 0;
@@ -23,6 +24,7 @@ namespace Strategy
 
 	protected:
 		Autonomous::Robot &m_robot;
+        Autonomous::Field &m_field;
 	};
 }
 }

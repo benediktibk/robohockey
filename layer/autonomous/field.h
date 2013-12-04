@@ -16,7 +16,8 @@ namespace Autonomous
 		virtual ~Field() { }
 
 		virtual void update() = 0;
-		virtual std::vector<FieldObject> &getAllFieldObjects() = 0;
+        virtual std::vector<FieldObject> getAllFieldObjects() = 0;
+        virtual int achievedGoals() = 0;
 
 		virtual bool tryToFindField() = 0;
 	};

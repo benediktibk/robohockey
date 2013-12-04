@@ -13,7 +13,7 @@ namespace Strategy
 			public State
 	{
 	public:
-		StateMock(Autonomous::Robot &robot);
+        StateMock(Autonomous::Robot &robot, Autonomous::Field &field);
 
 		virtual State* nextState();
 		virtual void update();

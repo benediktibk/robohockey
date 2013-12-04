@@ -35,9 +35,10 @@ namespace Autonomous
 		virtual ~FieldImpl();
 
 		virtual void update();
-		virtual std::vector<FieldObject> &getAllFieldObjects();
+        virtual std::vector<FieldObject> getAllFieldObjects();
 
 		virtual bool tryToFindField();
+        int achievedGoals();
 
 	private:
 		virtual void updateWithLidarData();
@@ -62,7 +63,7 @@ namespace Autonomous
 		DataAnalysis::Camera *m_camera;
 
 		Common::RobotPosition *m_position;
-		std::vector<FieldObject> m_fieldObjects;
+        std::vector<FieldObject> m_fieldObjects;
 	};
 }
 }

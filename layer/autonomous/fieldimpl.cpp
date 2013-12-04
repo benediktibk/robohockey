@@ -35,7 +35,7 @@ void FieldImpl::update()
 //	tryToFindField();
 }
 
-std::vector<FieldObject>& FieldImpl::getAllFieldObjects()
+vector<FieldObject> FieldImpl::getAllFieldObjects()
 {
 	return m_fieldObjects;
 }
@@ -56,7 +56,12 @@ bool FieldImpl::tryToFindField()
 
 	delete &input;
 
-	return result;
+    return result;
+}
+
+int FieldImpl::achievedGoals()
+{
+    return 0;
 }
 
 void FieldImpl::updateWithLidarData()

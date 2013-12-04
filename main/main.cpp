@@ -3,12 +3,15 @@
 #include "layer/autonomous/robotimpl.h"
 #include "layer/strategy/statemachine.h"
 #include "layer/strategy/initialstate.h"
+#include "layer/autonomous/fieldimpl.h"
+#include "layer/strategy/refereeimpl.h"
 #include "common/watch.h"
 #include <iostream>
 #include <stdio.h>
 #include <termios.h>
 #include <unistd.h>
 #include <fcntl.h>
+
 
 using namespace RoboHockey::Common;
 using namespace RoboHockey::Layer;
@@ -59,7 +62,8 @@ int main(int argc, char **argv)
 	Hardware::Robot *hardwareRobot = new Hardware::RobotImpl(playerServer);
 	DataAnalysis::DataAnalyser *dataAnalyser = new DataAnalysis::DataAnalyserImpl(hardwareRobot);
 	Autonomous::Robot *autonomousRobot = new Autonomous::RobotImpl(dataAnalyser);
-	Strategy::StateMachine stateMachine(new Strategy::InitialState(*autonomousRobot), autonomousRobot);
+    Autonomous::Field *autonomousField = new Autonomous::FieldImpl(dataAnalyser->getOdometry(), dataAnalyser->getLidar(), dataAnalyser->getCamera());
+    Strategy::StateMachine stateMachine(new Strategy::InitialState(*autonomousRobot, *autonomousField), autonomousRobot, autonomousField, new Strategy::RefereeImpl());
 	bool running = true;
 	double lastTime = watch.getTime();
 	const double maximumLoopTime = 0.1;

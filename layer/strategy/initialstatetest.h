@@ -14,9 +14,11 @@ namespace Strategy
 			public CPPUNIT_NS::TestFixture
 	{
 		CPPUNIT_TEST_SUITE(InitialStateTest);
+        CPPUNIT_TEST(update_empty_stateGotAtLeastOneCallToNextState);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
+        void update_empty_stateGotAtLeastOneCallToNextState();
 	};
 }
 }

@@ -4,7 +4,7 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 find_library(CPPUNIT_LIBRARY cppunit)
 include(UsePlayerC++)
 find_package(OpenCV REQUIRED)
-find_package(Qt4 COMPONENTS QtCore QtGui QtDeclarative REQUIRED)
+find_package(Qt4 COMPONENTS QtCore QtGui QtDeclarative QtNetwork QtXml REQUIRED)
 include(${QT_USE_FILE})
 ADD_DEFINITIONS(${QT_DEFINITIONS})
 
@@ -13,6 +13,8 @@ set(QT_LIBRARIES
 	${QT_QTCORE_LIBRARY}
 	${QT_QTGUI_LIBRARY}
 	${QT_QTDECLARATIVE_LIBRARY}
+	${QT_QTNETWORK_LIBRARY}
+	${QT_QTXML_LIBRARY}
 )
 
 set(LIBRARIES
@@ -22,6 +24,7 @@ set(LIBRARIES
 	layerhardware
 	threading
 	common
+	referee
 	${QT_LIBRARIES}
 	${PLAYERCPP_LINK_LIBS}
 	${OpenCV_LIBS}
@@ -30,7 +33,6 @@ set(LIBRARIES
 
 set(LIBRARIES_REMOTECONTROL
 	layerview
-#	QtDeclarative
 )
 
 set(LIBRARIES_TEST

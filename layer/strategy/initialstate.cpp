@@ -3,13 +3,13 @@
 using namespace RoboHockey::Layer::Strategy;
 using namespace RoboHockey::Layer::Autonomous;
 
-InitialState::InitialState(Robot &robot) :
-	State(robot)
+InitialState::InitialState(Robot &robot, Field &field) :
+    State(robot, field)
 { }
 
 State* InitialState::nextState()
 {
-	return 0;
+    return new Calibrate(m_robot, m_field);
 }
 
 void InitialState::update()

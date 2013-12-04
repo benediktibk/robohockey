@@ -20,6 +20,7 @@ add_subdirectory(common)
 add_subdirectory(layer)
 add_subdirectory(main)
 add_subdirectory(threading)
+add_subdirectory(extern)
 
 add_custom_target(
 		checkIncludeGuards ALL
