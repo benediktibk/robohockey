@@ -3,8 +3,8 @@
 using namespace RoboHockey::Layer::Strategy;
 using namespace RoboHockey::Layer::Autonomous;
 
-StateMock::StateMock(Autonomous::Robot &robot, Autonomous::Field &field) :
-    State(robot, field),
+StateMock::StateMock(Autonomous::Robot &robot, Autonomous::Field &field, Referee &referee) :
+    State(robot, field, referee),
     m_callsToNextState(0),
 	m_callsToUpdate(0),
 	m_nextState(0)

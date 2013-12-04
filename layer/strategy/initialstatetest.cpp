@@ -4,6 +4,7 @@
 #include "layer/strategy/statemock.h"
 #include "layer/autonomous/robotmock.h"
 #include "layer/autonomous/fieldmock.h"
+#include "layer/strategy/refereemock.h"
 
 using namespace RoboHockey::Layer::Strategy;
 using namespace RoboHockey::Layer::Autonomous;
@@ -12,8 +13,9 @@ void InitialStateTest::update_empty_stateGotAtLeastOneCallToNextState()
 {
     RobotMock robot;
     FieldMock field;
-    StateMock state(robot, field);
-    InitialState initialState(robot, field);
+    RefereeMock referee;
+    StateMock state(robot, field, referee);
+    InitialState initialState(robot, field, referee);
 
     initialState.update();
 
