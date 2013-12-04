@@ -52,7 +52,7 @@ add_executable(remotecontrol mainremotecontrol.cpp)
 add_executable(collisiondetection maincollisiondetection.cpp)
 
 target_link_libraries(robot ${LIBRARIES})
-target_link_libraries(testrunner ${LIBRARIES_TEST} ${LIBRARIES} ${LIBRARIES_REMOTECONTROL})
+target_link_libraries(testrunner ${LIBRARIES_TEST} ${LIBRARIES_REMOTECONTROL} ${LIBRARIES})
 target_link_libraries(calibratecamera ${LIBRARIES})
 target_link_libraries(datalogger ${LIBRARIES})
 target_link_libraries(remotecontrol ${LIBRARIES_REMOTECONTROL} ${LIBRARIES})
