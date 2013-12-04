@@ -6,7 +6,7 @@ include(UsePlayerC++)
 find_package(OpenCV REQUIRED)
 find_package(Qt4 COMPONENTS QtCore QtGui QtDeclarative QtNetwork QtXml REQUIRED)
 include(${QT_USE_FILE})
-ADD_DEFINITIONS(${QT_DEFINITIONS})
+add_definitions(${QT_DEFINITIONS})
 
 # on some machines this one seems not to be set properly
 set(QT_LIBRARIES
