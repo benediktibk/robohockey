@@ -24,7 +24,7 @@ namespace Hardware
 		~EngineImpl();
 
 		virtual void setSpeed(double magnitude, double rotation);
-        virtual bool isMoving();
+		virtual bool isMoving();
 		virtual double getSpeed() const;
 
 	private:
@@ -34,12 +34,13 @@ namespace Hardware
 
 	private:
 		PlayerCc::Position2dProxy *m_engine;
-        double m_posX;
-        double m_posY;
-        double m_orientation;
-        bool m_posX_equal;
-        bool m_posY_equal;
-        bool m_orientation_equal;
+		double m_posX;
+		double m_posY;
+		double m_orientation;
+		bool m_posX_equal;
+		bool m_posY_equal;
+		bool m_orientation_equal;
+		bool m_enabled;
 	};
 }
 }
