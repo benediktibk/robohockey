@@ -4,6 +4,7 @@
 #include "layer/view/model.h"
 #include "layer/view/controller.h"
 #include <QtGui/QApplication>
+#include <iostream>
 
 using namespace std;
 using namespace RoboHockey::Common;
@@ -19,6 +20,8 @@ GameRemoteControl::GameRemoteControl(int argc, char **argv) :
 	m_stuckAtObstacleOld(false)
 {
 	m_controller->show();
+
+	cout << "starting the remote control" << endl;
 }
 
 GameRemoteControl::~GameRemoteControl()

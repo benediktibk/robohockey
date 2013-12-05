@@ -31,8 +31,6 @@ Game::Game(int argc, char **argv) :
 		playerServer = "localhost";
 	}
 
-	cout << "starting the robot" << endl;
-
 	Hardware::Robot *hardwareRobot = new Hardware::RobotImpl(playerServer);
 	DataAnalysis::DataAnalyser *dataAnalyser = new DataAnalysis::DataAnalyserImpl(hardwareRobot);
 	m_robot = new Autonomous::RobotImpl(dataAnalyser);
@@ -59,17 +57,20 @@ Game::~Game()
 
 void Game::execute()
 {
-	m_application->processEvents();
-	m_robot->updateSensorData();
-	m_field->update();
-	executeRobotControl();
-	m_robot->updateActuators(*m_field);
-	m_application->sendPostedEvents();
+	while (keepRunning())
+	{
+		m_application->processEvents();
+		m_robot->updateSensorData();
+		m_field->update();
+		executeRobotControl();
+		m_robot->updateActuators(*m_field);
+		m_application->sendPostedEvents();
 
-	double timeDifference = m_watch->getTimeAndRestart();
-	cout << setprecision(3) << fixed << "loop time: " << timeDifference*1000 << " ms" << endl;
-	if (timeDifference > 0.11)
-		cout << setprecision(3) << fixed << "loop time is too high!" << endl;
+		double timeDifference = m_watch->getTimeAndRestart();
+		cout << setprecision(3) << fixed << "loop time: " << timeDifference*1000 << " ms" << endl;
+		if (timeDifference > 0.11)
+			cout << setprecision(3) << fixed << "loop time is too high!" << endl;
+	}
 }
 
 Autonomous::Robot &Game::getRobot()
@@ -85,10 +86,5 @@ Autonomous::Field &Game::getField()
 Strategy::Referee &Game::getReferee()
 {
 	return *m_referee;
-}
-
-QApplication &Game::getApplication()
-{
-	return *m_application;
 }
 

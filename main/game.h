@@ -39,7 +39,6 @@ namespace Main
 		Layer::Autonomous::Robot& getRobot();
 		Layer::Autonomous::Field& getField();
 		Layer::Strategy::Referee& getReferee();
-		QApplication& getApplication();
 
 	private:
 		Layer::Autonomous::Robot *m_robot;
