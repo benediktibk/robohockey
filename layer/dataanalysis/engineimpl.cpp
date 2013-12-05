@@ -92,7 +92,6 @@ void EngineImpl::stop()
 {
 	m_engineState = EngineStateStopped;
 	m_tryingToTackleObstacle = false;
-	setSpeed(0, 0);
 }
 
 void EngineImpl::turnAround()
