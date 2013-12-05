@@ -1,7 +1,6 @@
 CMakeLists.txt
 common/CMakeLists.txt
 main/main.cpp
-main/testrunner.cpp
 main/testregistration.cpp
 layer/CMakeLists.txt
 layer/hardware/CMakeLists.txt
@@ -140,8 +139,6 @@ common/circletest.cpp
 layer/view/CMakeLists.txt
 layer/view/controller.h
 layer/view/controller.cpp
-main/remotecontrol.cpp
-main/datalogger.cpp
 layer/hardware/lidar.cpp
 layer/hardware/sonar.cpp
 layer/autonomous/fieldobject.h
@@ -211,7 +208,6 @@ resources/testfiles/lidar_7.txt
 resources/testfiles/yellow_goal.png
 resources/testfiles/lidar_8.txt
 resources/testfiles/lidar_9.txt
-main/collisiondetection.cpp
 layer/autonomous/fieldtest.h
 layer/autonomous/fieldtest.cpp
 layer/view/graph.h
@@ -281,3 +277,7 @@ layer/strategy/hideenemypuckstest.h
 layer/strategy/hideenemypuckstest.cpp
 layer/strategy/pausetest.h
 layer/strategy/pausetest.cpp
+main/maintestrunner.cpp
+main/mainremotecontrol.cpp
+main/maindatalogger.cpp
+main/maincollisiondetection.cpp
