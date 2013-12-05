@@ -4,6 +4,8 @@
 #include "common/path.h"
 #include "common/pathintersectpoints.h"
 #include "common/angle.h"
+#include <math.h>
+#include <assert.h>
 
 using namespace std;
 using namespace RoboHockey::Common;
@@ -32,30 +34,30 @@ vector<Point> Router::getPointsBesideObstacle(const Path &path, const Circle &ob
 	PathIntersectPoints intersectionPoints = path.getIntersectPoints(obstacle);
 	Point shortPointBesideObstacle;
 	Point longPointBesdieObstacle;
-	double offsetDistance;
-	Angle offsetAngle;
+	Point centerBetweenIntersectPoints = (intersectionPoints.front() + intersectionPoints.back())/2;
+	double offsetDistanceShortPoint = 0.5*m_robotWidth + centerBetweenIntersectPoints.distanceTo(intersectionPoints.front());;
+	double offsetDistanceLongPoint = sqrt(2)*0.5*(m_robotWidth + obstacle.getDiameter()) + 0.5*m_robotWidth;
+	Angle offsetAngleShortPoint = path.getAgnleBetweenStartAndEnd();
 
-	shortPointBesideObstacle = (intersectionPoints.front() + intersectionPoints.back())/2;
+	assert(intersectionPoints.getIntersectTypeFrom() != PathIntersectPoints::IntersectTypeFromStart);
+	assert(intersectionPoints.getIntersectTypeFrom() != PathIntersectPoints::IntersectTypeFromEnd);
 
 	if(!path.isCircleCenterOnPath(obstacle))
-	{
-		offsetDistance = 0.5*m_robotWidth + shortPointBesideObstacle.distanceTo(intersectionPoints.front());
-	}
+		offsetDistanceLongPoint += centerBetweenIntersectPoints.distanceTo(obstacle.getCenter());
 	else
 	{
-		offsetDistance = 0.5*m_robotWidth + shortPointBesideObstacle.distanceTo(intersectionPoints.front())
-						+ 2*shortPointBesideObstacle.distanceTo(obstacle.getCenter());
+		offsetDistanceShortPoint += 2*centerBetweenIntersectPoints.distanceTo(obstacle.getCenter());
+		offsetDistanceLongPoint -= centerBetweenIntersectPoints.distanceTo(obstacle.getCenter());
 	}
 	if(intersectionPoints.getIntersectTypeFrom() == PathIntersectPoints::IntersectTypeFromLeft)
-	{
-		offsetAngle = Angle::getThreeQuarterRotation();
-	}
+		offsetAngleShortPoint = offsetAngleShortPoint + Angle::getThreeQuarterRotation();
 	else
-	{
-		offsetAngle = Angle::getQuarterRotation();
-	}
-	shortPointBesideObstacle = shortPointBesideObstacle + Point(offsetDistance, offsetAngle + path.getAgnleBetweenStartAndEnd());
+		offsetAngleShortPoint = offsetAngleShortPoint + Angle::getQuarterRotation();
+
+	shortPointBesideObstacle = centerBetweenIntersectPoints + Point(offsetDistanceShortPoint, offsetAngleShortPoint);
+	longPointBesdieObstacle = centerBetweenIntersectPoints + Point(offsetDistanceLongPoint, offsetAngleShortPoint + Angle::getHalfRotation());
 
 	pointsBesideObstacle.push_back(shortPointBesideObstacle);
+	pointsBesideObstacle.push_back(longPointBesdieObstacle);
 	return pointsBesideObstacle;
 }
