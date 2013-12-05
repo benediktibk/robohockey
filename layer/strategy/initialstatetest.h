@@ -15,10 +15,12 @@ namespace Strategy
 	{
 		CPPUNIT_TEST_SUITE(InitialStateTest);
         CPPUNIT_TEST(nextState_detectionStart_calibrate);
+        CPPUNIT_TEST(nextState_gameStart_initialState);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
         void nextState_detectionStart_calibrate();
+        void nextState_gameStart_initialState();
 	};
 }
 }
