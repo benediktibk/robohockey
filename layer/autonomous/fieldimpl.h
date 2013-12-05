@@ -48,6 +48,7 @@ namespace Autonomous
         unsigned int achievedGoals();
         unsigned int enemyHiddenPucks();
 		virtual bool isPointInsideField(const Common::Point &point) const;
+		virtual bool numberOfPucksChanged() const;
 
 	private:
 		void updateWithLidarData();
@@ -78,6 +79,7 @@ namespace Autonomous
         std::vector<FieldObject> m_fieldObjects;
 		std::vector<Common::Circle> m_obstacles;
 		FieldState m_fieldState;
+		bool m_numberOfPucksChanged;
 	};
 }
 }

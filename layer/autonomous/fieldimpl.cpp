@@ -21,7 +21,8 @@ FieldImpl::FieldImpl(DataAnalysis::Odometry &odometry, const DataAnalysis::Lidar
 	m_camera(&camera),
 	m_robot(&autonomousRobot),
 	m_position(new Common::RobotPosition(m_odometry->getCurrentPosition())),
-	m_fieldState(FieldStateUnknownPosition)
+	m_fieldState(FieldStateUnknownPosition),
+	m_numberOfPucksChanged(false)
 { }
 
 FieldImpl::~FieldImpl()
@@ -34,6 +35,7 @@ FieldImpl::~FieldImpl()
 
 void FieldImpl::update()
 {
+	m_numberOfPucksChanged = false;
 	updateWithOdometryData();
 
 	if (!m_robot->isRotating())
@@ -104,6 +106,11 @@ bool FieldImpl::isPointInsideField(const Point &point) const
 	return ( point.getX() < 5.0 && point.getX() > 0 && point.getY() < 3.0 && point.getY() > 0.0);
 }
 
+bool FieldImpl::numberOfPucksChanged() const
+{
+	return m_numberOfPucksChanged;
+}
+
 void FieldImpl::updateWithLidarData()
 {
 	const DataAnalysis::LidarObjects &lidarObjects =  m_lidar->getAllObjects(*m_position);
@@ -127,6 +134,15 @@ void FieldImpl::updateWithLidarData()
 		FieldObject object(*i, FieldObjectColorUnknown);
 		m_fieldObjects.push_back(object);
 	}
+
+	for (vector<FieldObject>::const_iterator i = inVisibleArea.begin(); i != inVisibleArea.end(); ++i)
+	{
+		if ((*i).getColor() != FieldObjectColorUnknown)
+		{
+			m_numberOfPucksChanged = true;
+			break;
+		}
+	}
 }
 
 void FieldImpl::updateWithOdometryData()
@@ -149,6 +165,9 @@ void FieldImpl::updateWithCameraData()
 
 		if (currentObject.getPosition().distanceTo(nextFieldObject->getCircle().getCenter()) < 0.07)
 		{
+			if (nextFieldObject->getColor() != currentObject.getColor())
+				m_numberOfPucksChanged = true;
+
 			nextFieldObject->setColor(currentObject.getColor());
 			Circle circle = nextFieldObject->getCircle();
 

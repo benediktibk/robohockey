@@ -29,6 +29,7 @@ namespace Autonomous
 		virtual bool calibratePosition() = 0;
 		virtual bool isPointInsideField(const Common::Point &point) const = 0;
         virtual unsigned int enemyHiddenPucks() = 0;
+		virtual bool numberOfPucksChanged() const = 0;
 	};
 }
 }
