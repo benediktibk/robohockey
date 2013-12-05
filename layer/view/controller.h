@@ -36,6 +36,9 @@ namespace View
 		Controller(Model &model);
 		~Controller();
 
+		virtual void closeEvent(QCloseEvent *event);
+		bool isClosed() const;
+
 	private slots:
 		void on_turnAround_clicked();
 		void on_turnToButton_clicked();
@@ -77,6 +80,7 @@ namespace View
 		QString m_trueString;
 		QString m_falseString;
 		unsigned int m_numberOfDigitsRightOfComma;
+		bool m_closed;
 	};
 }
 }

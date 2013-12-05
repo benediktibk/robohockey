@@ -1,8 +1,10 @@
 #include "main/gameautomatic.h"
 #include "layer/strategy/statemachine.h"
 #include "layer/strategy/initialstate.h"
+#include "common/console.h"
 
 using namespace RoboHockey;
+using namespace RoboHockey::Common;
 using namespace RoboHockey::Main;
 using namespace RoboHockey::Layer::Strategy;
 
@@ -18,6 +20,12 @@ GameAutomatic::~GameAutomatic()
 {
 	delete m_stateMachine;
 	m_stateMachine = 0;
+}
+
+bool GameAutomatic::keepRunning() const
+{
+	char key = Console::getAsynchronousInput();
+	return key != 'q';
 }
 
 void GameAutomatic::executeRobotControl()

@@ -26,7 +26,8 @@ Controller::Controller(Model &model) :
 	m_targetSpotDiameter(0.2),
 	m_trueString("TRUE"),
 	m_falseString("FALSE"),
-	m_numberOfDigitsRightOfComma(3)
+	m_numberOfDigitsRightOfComma(3),
+	m_closed(false)
 {
 	m_ui->setupUi(this);
 	m_ui->centralwidget->layout()->addWidget(m_graph);
@@ -83,6 +84,16 @@ Controller::~Controller()
 	 for (vector<QGraphicsEllipseItem*>::iterator i = m_targetPositions.begin(); i != m_targetPositions.end(); ++i)
 		delete *i;
 	 m_targetPositions.clear();
+}
+
+void Controller::closeEvent(QCloseEvent*)
+{
+	m_closed = true;
+}
+
+bool Controller::isClosed() const
+{
+	return m_closed;
 }
 
 Controller::Controller(const Controller &) :

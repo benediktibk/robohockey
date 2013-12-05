@@ -1,47 +1,19 @@
-#include "layer/view/model.h"
-#include "layer/view/robotdriver.h"
-#include "layer/view/robotdriverloop.h"
-#include "layer/view/controller.h"
-#include "layer/view/graph.h"
-#include "layer/autonomous/robotimpl.h"
-#include "layer/autonomous/fieldimpl.h"
-#include "layer/dataanalysis/dataanalyserimpl.h"
-#include "layer/hardware/robotimpl.h"
-#include <QtGui/QApplication>
+#include "main/gameremotecontrol.h"
 #include <iostream>
 
-using namespace RoboHockey;
-using namespace RoboHockey::Layer;
-using namespace RoboHockey::Layer::View;
+using namespace RoboHockey::Main;
 using namespace std;
 
 int main(int argc, char **argv)
 {
+	GameRemoteControl game(argc, argv);
+	bool running = true;
+
 	cout << "starting the remote control" << endl;
 
-	QApplication application(argc, argv);
-	QStringList arguments = application.arguments();
-	string playerServer;
-
-	if (arguments.size() == 2)
-		playerServer = arguments[1].toStdString();
-	else
+	while(running)
 	{
-		cout << "no server selected, using localhost" << endl;
-		playerServer = "localhost";
+		game.execute();
+		running = game.keepRunning();
 	}
-
-	Model model;
-	Controller controller(model);
-	Hardware::Robot *hardwareRobot = new Hardware::RobotImpl(playerServer);
-	DataAnalysis::DataAnalyser *dataAnalyser = new DataAnalysis::DataAnalyserImpl(hardwareRobot);
-	Autonomous::RobotImpl autonomousRobot(dataAnalyser);
-	Autonomous::FieldImpl autonomousField(
-				dataAnalyser->getOdometry(), dataAnalyser->getLidar(), dataAnalyser->getCamera(),
-				autonomousRobot);
-	RobotDriver robotDriver(autonomousRobot, autonomousField, model);
-	RobotDriverLoop loop(robotDriver);
-
-	controller.show();
-	return application.exec();
 }

@@ -21,8 +21,8 @@ namespace View
 	public slots:
 		void mousePressEvent(QMouseEvent *ev);
 	};
+}
+}
+}
 
-}
-}
-}
 #endif

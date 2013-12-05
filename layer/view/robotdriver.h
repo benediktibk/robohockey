@@ -30,7 +30,6 @@ namespace View
 
 	private:
 		bool cantReachTargetOrStuckAtObstacleNewTillLastCall();
-		bool reachedTargetNewTillLastCall();
 
 	private:
 		Autonomous::Robot &m_robot;

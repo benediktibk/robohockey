@@ -1,5 +1,4 @@
 #include "main/gameautomatic.h"
-#include "common/console.h"
 #include <iostream>
 
 using namespace std;
@@ -17,9 +16,7 @@ int main(int argc, char **argv)
 	while(running)
 	{
 		game.execute();
-
-		char key = Console::getAsynchronousInput();
-		running = key != 'q';
+		running = game.keepRunning();
 	}
 
 	return 0;

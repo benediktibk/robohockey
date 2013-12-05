@@ -22,6 +22,8 @@ namespace Main
 		GameAutomatic(int argc, char **argv);
 		virtual ~GameAutomatic();
 
+		virtual bool keepRunning() const;
+
 	protected:
 		virtual void executeRobotControl();
 

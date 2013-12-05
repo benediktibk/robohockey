@@ -5,6 +5,8 @@
 #include "layer/autonomous/robotimpl.h"
 #include "layer/autonomous/fieldimpl.h"
 #include "layer/strategy/refereeimpl.h"
+#include <QtGui/QApplication>
+#include <QStringList>
 #include <iostream>
 #include <iomanip>
 
@@ -17,7 +19,8 @@ Game::Game(int argc, char **argv) :
 	m_robot(0),
 	m_field(0),
 	m_referee(0),
-	m_watch(new Common::Watch())
+	m_watch(new Common::Watch()),
+	m_application(new QApplication(argc, argv))
 {
 	string playerServer;
 	if (argc == 2)
@@ -37,6 +40,7 @@ Game::Game(int argc, char **argv) :
 				dataAnalyser->getOdometry(), dataAnalyser->getLidar(),
 				dataAnalyser->getCamera(), *m_robot);
 	m_referee = new Strategy::RefereeImpl();
+	m_application->arguments();
 }
 
 Game::~Game()
@@ -49,14 +53,18 @@ Game::~Game()
 	m_robot = 0;
 	delete m_referee;
 	m_referee = 0;
+	delete m_application;
+	m_application = 0;
 }
 
 void Game::execute()
 {
+	m_application->processEvents();
 	m_robot->updateSensorData();
 	m_field->update();
 	executeRobotControl();
 	m_robot->updateActuators(*m_field);
+	m_application->sendPostedEvents();
 
 	double timeDifference = m_watch->getTimeAndRestart();
 	cout << setprecision(3) << fixed << "loop time: " << timeDifference*1000 << " ms" << endl;
@@ -77,5 +85,10 @@ Autonomous::Field &Game::getField()
 Strategy::Referee &Game::getReferee()
 {
 	return *m_referee;
+}
+
+QApplication &Game::getApplication()
+{
+	return *m_application;
 }
 

@@ -1,6 +1,8 @@
 #ifndef ROBOHOCKEY_MAIN_GAME_H
 #define ROBOHOCKEY_MAIN_GAME_H
 
+class QApplication;
+
 namespace RoboHockey
 {
 namespace Common
@@ -30,18 +32,21 @@ namespace Main
 		virtual ~Game();
 
 		void execute();
+		virtual bool keepRunning() const = 0;
 
 	protected:
 		virtual void executeRobotControl() = 0;
 		Layer::Autonomous::Robot& getRobot();
 		Layer::Autonomous::Field& getField();
 		Layer::Strategy::Referee& getReferee();
+		QApplication& getApplication();
 
 	private:
 		Layer::Autonomous::Robot *m_robot;
 		Layer::Autonomous::Field *m_field;
 		Layer::Strategy::Referee *m_referee;
 		Common::Watch *m_watch;
+		QApplication *m_application;
 	};
 }
 }
