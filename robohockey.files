@@ -152,10 +152,6 @@ layer/view/model.h
 layer/view/model.cpp
 layer/view/modeltest.h
 layer/view/modeltest.cpp
-layer/view/robotdriver.h
-layer/view/robotdriver.cpp
-layer/view/robotdrivertest.h
-layer/view/robotdrivertest.cpp
 layer/autonomous/robotmock.h
 layer/autonomous/field.h
 layer/autonomous/fieldimpl.h
@@ -171,8 +167,6 @@ common/robotpositiontest.cpp
 layer/autonomous/fieldmock.h
 layer/autonomous/fieldmock.cpp
 layer/autonomous/robotmock.cpp
-layer/view/robotdriverloop.h
-layer/view/robotdriverloop.cpp
 layer/dataanalysis/cameraobject.h
 layer/dataanalysis/cameraobject.cpp
 layer/dataanalysis/cameraobjecttest.h

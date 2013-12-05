@@ -6,19 +6,15 @@ include_directories(${CMAKE_CURRENT_BINARY_DIR})
 set(LAYER_VIEW_SRC
 	controller.cpp
 	model.cpp
-	robotdriver.cpp
-	robotdriverloop.cpp
 	graph.cpp
 )
 
 set(LAYER_VIEW_TEST_SRC
 	modeltest.cpp
-	robotdrivertest.cpp
 )
 
 set(LAYER_VIEW_HEADER
 	controller.h
-	robotdriverloop.h
 	model.h
 	graph.h
 	modeltest.h
