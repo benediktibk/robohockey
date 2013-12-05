@@ -96,17 +96,25 @@ void RefereeImpl::slotDisconnected()
 void RefereeImpl::slotDetectionStart()
 {
     m_detectionStart = true;
+    m_GameStart = false;
+    m_GameOver = false;
+    m_stopMovement = false;
 }
 
 void RefereeImpl::slotGameStart()
 {
+    m_detectionStart = false;
     m_GameStart = true;
+    m_GameOver = false;
+    m_stopMovement = false;
 }
 
 void RefereeImpl::slotGameOver()
 {
-    m_GameOver = true;
+    m_detectionStart = false;
     m_GameStart = false;
+    m_GameOver = true;
+    m_stopMovement = true;
 }
 
 void RefereeImpl::slotTrueColorOfTeam(TeamColor color)
@@ -116,6 +124,9 @@ void RefereeImpl::slotTrueColorOfTeam(TeamColor color)
 
 void RefereeImpl::slotStopMovement()
 {
+    m_detectionStart = false;
+    m_GameStart = false;
+    m_GameOver = false;
     m_stopMovement = true;
 }
 
