@@ -9,7 +9,6 @@
 #include "common/compare.h"
 #include "common/path.h"
 #include "layer/autonomous/fieldimpl.h"
-#include <iostream>
 #include <math.h>
 #include <assert.h>
 
@@ -251,6 +250,7 @@ bool RobotImpl::isCurrentTargetPuckCollectable() const
 	return	distance < m_maximumDistanceToCollectPuck &&
 			orientationDifference.getValueBetweenMinusPiAndPi() < m_maximumAngleToCollectPuck.getValueBetweenMinusPiAndPi();
 }
+
 
 void RobotImpl::updateActuators(const Field &field)
 {
