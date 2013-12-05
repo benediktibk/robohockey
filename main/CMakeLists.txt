@@ -17,7 +17,23 @@ set(QT_LIBRARIES
 	${QT_QTXML_LIBRARY}
 )
 
+set(MAIN_SRC
+	game.cpp
+	gameautomatic.cpp
+	gameremotecontrol.cpp
+)
+
+set(MAIN_TEST_SRC
+	gametest.cpp
+	gamemock.cpp
+)
+
+add_library(main ${MAIN_SRC})
+add_library(maintest ${MAIN_TEST_SRC})
+
 set(LIBRARIES
+	main
+	layerview
 	layerstrategy
 	layerautonomous
 	layerdataanalysis
@@ -30,11 +46,8 @@ set(LIBRARIES
 	boost_thread-mt
 )
 
-set(LIBRARIES_REMOTECONTROL
-	layerview
-)
-
 set(LIBRARIES_TEST
+	maintest
 	layerstrategytest
 	layerviewtest
 	layerautonomoustest
@@ -52,9 +65,9 @@ add_executable(remotecontrol mainremotecontrol.cpp)
 add_executable(collisiondetection maincollisiondetection.cpp)
 
 target_link_libraries(robot ${LIBRARIES})
-target_link_libraries(testrunner ${LIBRARIES_TEST} ${LIBRARIES_REMOTECONTROL} ${LIBRARIES})
+target_link_libraries(testrunner ${LIBRARIES_TEST} ${LIBRARIES})
 target_link_libraries(calibratecamera ${LIBRARIES})
 target_link_libraries(datalogger ${LIBRARIES})
-target_link_libraries(remotecontrol ${LIBRARIES_REMOTECONTROL} ${LIBRARIES})
+target_link_libraries(remotecontrol ${LIBRARIES})
 target_link_libraries(collisiondetection ${LIBRARIES})
 

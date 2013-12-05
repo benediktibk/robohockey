@@ -281,3 +281,13 @@ layer/strategy/hideenemypuckstest.h
 layer/strategy/hideenemypuckstest.cpp
 layer/strategy/pausetest.h
 layer/strategy/pausetest.cpp
+main/gametest.h
+main/game.h
+main/gametest.cpp
+main/game.cpp
+main/gameautomatic.h
+main/gameautomatic.cpp
+main/gameremotecontrol.h
+main/gameremotecontrol.cpp
+main/gamemock.h
+main/gamemock.cpp
