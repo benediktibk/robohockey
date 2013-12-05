@@ -23,11 +23,6 @@ set(MAIN_SRC
 	gameremotecontrol.cpp
 )
 
-set(MAIN_TEST_SRC
-	gametest.cpp
-	gamemock.cpp
-)
-
 set(MAIN_HEADERS
 	game.h
 )
@@ -35,7 +30,6 @@ set(MAIN_HEADERS
 qt4_wrap_cpp(MAIN_HEADERS_MOC ${MAIN_HEADERS})
 
 add_library(main ${MAIN_SRC} ${MAIN_HEADERS_MOC})
-add_library(maintest ${MAIN_TEST_SRC} ${MAIN_HEADERS_MOC})
 
 set(LIBRARIES
 	main
@@ -53,7 +47,6 @@ set(LIBRARIES
 )
 
 set(LIBRARIES_TEST
-	maintest
 	layerstrategytest
 	layerviewtest
 	layerautonomoustest
