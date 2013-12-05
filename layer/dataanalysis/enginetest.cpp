@@ -403,6 +403,7 @@ void EngineTest::turnAround_turnedMoreThanOnce_lastRotationIsZero()
 	engine.updateSpeedAndRotation();
 	hardwareOdometry.setCurrentPosition(RobotPosition(Point(0, 0), 0.1));
 	engine.updateSpeedAndRotation();
+	engine.updateSpeedAndRotation();
 
 	CPPUNIT_ASSERT(hardwareEngine.getLastRotation() == 0);
 }
@@ -539,6 +540,7 @@ void EngineTest::goToStraightSlowlyBack_TargetPassedAfterSomeTime_lastMagnitudeI
 	engine.goToStraightSlowlyBack(Point(-1, 0));
 	engine.updateSpeedAndRotation();
 	hardwareOdometry.setCurrentPosition(RobotPosition(Point(-1.05, 0)));
+	engine.updateSpeedAndRotation();
 	engine.updateSpeedAndRotation();
 
 	CPPUNIT_ASSERT_EQUAL(0.0, hardwareEngine.getLastMagnitude());
