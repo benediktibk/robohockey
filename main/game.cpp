@@ -5,7 +5,7 @@
 #include "layer/autonomous/robotimpl.h"
 #include "layer/autonomous/fieldimpl.h"
 #include "layer/strategy/refereeimpl.h"
-#include <QtGui/QApplication>
+#include <QtCore/QCoreApplication>
 #include <QtCore/QTimer>
 #include <iostream>
 #include <iomanip>
@@ -21,7 +21,6 @@ Game::Game(int argc, char **argv) :
 	m_field(0),
 	m_referee(0),
 	m_watch(new Common::Watch()),
-	m_application(new QApplication(argc, argv)),
 	m_timer(new QTimer())
 {
 	string playerServer;
@@ -41,7 +40,10 @@ Game::Game(int argc, char **argv) :
 				dataAnalyser->getCamera(), *m_robot);
 	m_referee = new Strategy::RefereeImpl();
 
-	connect(m_timer, SIGNAL(timeout()), this, SLOT(executeOnce()));
+	connect(m_timer, SIGNAL(timeout()), this, SLOT(execute()));
+
+	m_watch->getTimeAndRestart();
+	m_timer->start(0);
 }
 
 Game::~Game()
@@ -54,29 +56,16 @@ Game::~Game()
 	m_robot = 0;
 	delete m_referee;
 	m_referee = 0;
-	delete m_application;
-	m_application = 0;
 }
 
 void Game::execute()
 {
-	m_watch->getTimeAndRestart();
-	m_timer->start(0);
-	m_application->exec();
-}
-
-void Game::executeOnce()
-{
 	Watch watch;
 
-	watch.getTimeAndRestart();
-	m_application->processEvents();
-	m_application->sendPostedEvents();
-	double timeForEventProcessing = watch.getTimeAndRestart();
 	m_robot->updateSensorData();
-	double timeForFieldUpdate = watch.getTimeAndRestart();
-	m_field->update();
 	double timeForSensorUpdate = watch.getTimeAndRestart();
+	m_field->update();
+	double timeForFieldUpdate = watch.getTimeAndRestart();
 	executeRobotControl();
 	double timeForLogic = watch.getTimeAndRestart();
 	m_robot->updateActuators(*m_field);
@@ -86,7 +75,6 @@ void Game::executeOnce()
 	if (timeDifference > 0.11 && m_robot->isMoving())
 	{
 		printTimeInMs("loop time is too high", timeDifference);
-		printTimeInMs("time spent on event processing", timeForEventProcessing);
 		printTimeInMs("time spent on sensor updates", timeForSensorUpdate);
 		printTimeInMs("time spent on field update", timeForFieldUpdate);
 		printTimeInMs("time spent on logic", timeForLogic);
@@ -96,7 +84,7 @@ void Game::executeOnce()
 	if (keepRunning())
 		m_timer->start(0);
 	else
-		m_application->quit();
+		QCoreApplication::quit();
 }
 
 Autonomous::Robot &Game::getRobot()
@@ -116,6 +104,6 @@ Strategy::Referee &Game::getReferee()
 
 void Game::printTimeInMs(const string &message, double time) const
 {
-	cout << setprecision(3) << fixed << message << ": " << time/1000 << " ms" << endl;
+	cout << setprecision(1) << fixed << message << ": " << time*1000 << " ms" << endl;
 }
 

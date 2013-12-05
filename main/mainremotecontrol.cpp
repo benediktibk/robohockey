@@ -1,10 +1,11 @@
 #include "main/gameremotecontrol.h"
+#include <QtGui/QApplication>
 
 using namespace RoboHockey::Main;
 
 int main(int argc, char **argv)
 {
+	QApplication application(argc, argv);
 	GameRemoteControl game(argc, argv);
-	game.execute();
-	return 0;
+	return application.exec();
 }

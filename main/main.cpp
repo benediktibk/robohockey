@@ -1,10 +1,11 @@
 #include "main/gameautomatic.h"
+#include <QtCore/QCoreApplication>
 
 using namespace RoboHockey::Main;
 
 int main(int argc, char **argv)
 {
+	QCoreApplication application(argc, argv);
 	GameAutomatic game(argc, argv);
-	game.execute();
-	return 0;
+	return application.exec();
 }

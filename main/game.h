@@ -4,7 +4,6 @@
 #include <string>
 #include <QtCore/QObject>
 
-class QApplication;
 class QTimer;
 
 namespace RoboHockey
@@ -38,11 +37,10 @@ namespace Main
 		Game(int argc, char **argv);
 		virtual ~Game();
 
-		void execute();
 		virtual bool keepRunning() const = 0;
 
 	private slots:
-		void executeOnce();
+		void execute();
 
 	protected:
 		virtual void executeRobotControl() = 0;
@@ -58,7 +56,6 @@ namespace Main
 		Layer::Autonomous::Field *m_field;
 		Layer::Strategy::Referee *m_referee;
 		Common::Watch *m_watch;
-		QApplication *m_application;
 		QTimer *m_timer;
 	};
 }
