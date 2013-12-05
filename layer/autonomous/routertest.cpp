@@ -71,6 +71,17 @@ void RouterTest::getPointsBesideObstacle_intersectFromRightAndCircleCenterNotOnP
 	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(2,3), router.getPointsBesideObstacle(currentPath, obstacle).front()));
 }
 
+void RouterTest::getPointsBesideObstacle_intersectFromRightAndCircleCenterNotOnPath_longPointIs2AndMinus4p4142()
+{
+	Compare compare(0.0001);
+	FieldMock field;
+	Router router(2, field);
+	Path currentPath(Point(0,2), Point(4,2), 2);
+	Circle obstacle(Point(2,0), 2.8284);
+
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(2,-4.4142), router.getPointsBesideObstacle(currentPath, obstacle).back()));
+}
+
 void RouterTest::getPointsBesideObstacle_intersectFromLeftAndCircleCenterNotOnPath_shortPointIs1p5And0p5()
 {
 	Compare compare(0.0001);
@@ -104,6 +115,17 @@ void RouterTest::getPointsBesideObstacle_intersectFromLeftAndCircleCenterIsOnPat
 	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(2,-1), router.getPointsBesideObstacle(currentPath, obstacle).front()));
 }
 
+void RouterTest::getPointsBesideObstacle_intersectFromLeftAndCircleCenterIsOnPath_longPointIs2And7p8284()
+{
+	Compare compare(0.0001);
+	FieldMock field;
+	Router router(4, field);
+	Path currentPath(Point(0,0), Point(4,0), 4);
+	Circle obstacle(Point(2,1), 2.8284);
+
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(2,7.8284), router.getPointsBesideObstacle(currentPath, obstacle).back()));
+}
+
 void RouterTest::getPointsBesideObstacle_intersectFromRightAndCircleCenterIsOnPath_shortPointIs2And3()
 {
 	Compare compare(0.0001);
@@ -113,6 +135,17 @@ void RouterTest::getPointsBesideObstacle_intersectFromRightAndCircleCenterIsOnPa
 	Circle obstacle(Point(2,0), 2.8284);
 
 	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(2,3), router.getPointsBesideObstacle(currentPath, obstacle).front()));
+}
+
+void RouterTest::getPointsBesideObstacle_intersectFromRightAndCircleCenterIsOnPath_longPointIs2AndMinus6p8282()
+{
+	Compare compare(0.0001);
+	FieldMock field;
+	Router router(4, field);
+	Path currentPath(Point(0,1), Point(4,1), 4);
+	Circle obstacle(Point(2,0), 2.8284);
+
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(2,-6.8284), router.getPointsBesideObstacle(currentPath, obstacle).back()));
 }
 
 void RouterTest::getPointsBesideObstacle_intersectFromLeftAndCircleCenterIsOnPath_shortPointIs1p5And0p5()
