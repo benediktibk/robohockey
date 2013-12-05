@@ -38,15 +38,26 @@ void RouterTest::calculateRoute_emptyField_routeHasSameWidthAsRobot()
 	CPPUNIT_ASSERT_DOUBLES_EQUAL(0.5, route.getWidth(), 0.00001);
 }
 
-void RouterTest::getPointsBesideObstacle_intersectFromLeftAndCircleCenterNotOnPath_shortPointIs2AndMinus0p25()
+void RouterTest::getPointsBesideObstacle_intersectFromLeftAndCircleCenterNotOnPath_shortPointIs2AndMinus1()
 {
 	Compare compare(0.0001);
 	FieldMock field;
-	Router router(0.5, field);
+	Router router(2, field);
 	Path currentPath(Point(0,0), Point(4,0), 2);
 	Circle obstacle(Point(2,2), 2.8284);
 
-	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(2,-0.25), router.getPointsBesideObstacle(currentPath, obstacle).front()));
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(2,-1), router.getPointsBesideObstacle(currentPath, obstacle).front()));
+}
+
+void RouterTest::getPointsBesideObstacle_intersectFromLeftAndCircleCenterNotOnPath_longPointIs2AndMinus4p8284()
+{
+	Compare compare(0.0001);
+	FieldMock field;
+	Router router(2, field);
+	Path currentPath(Point(0,0), Point(4,0), 2);
+	Circle obstacle(Point(2,2), 2.8284);
+
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(2,6.4142), router.getPointsBesideObstacle(currentPath, obstacle).back()));
 }
 
 void RouterTest::getPointsBesideObstacle_intersectFromRightAndCircleCenterNotOnPath_shortPointIs2And2p25()
