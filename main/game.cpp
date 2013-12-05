@@ -21,8 +21,7 @@ Game::Game(int argc, char **argv) :
 	m_field(0),
 	m_referee(0),
 	m_watch(new Common::Watch()),
-	m_application(new QApplication(argc, argv)),
-	m_eventLoop(new QEventLoop(0))
+	m_application(new QApplication(argc, argv))
 {
 	string playerServer;
 	if (argc == 2)
@@ -54,8 +53,6 @@ Game::~Game()
 	m_referee = 0;
 	delete m_application;
 	m_application = 0;
-	delete m_eventLoop;
-	m_eventLoop = 0;
 }
 
 void Game::execute()
@@ -65,7 +62,8 @@ void Game::execute()
 	while (keepRunning())
 	{
 		watch.getTimeAndRestart();
-		m_eventLoop->processEvents();
+		m_application->processEvents();
+		m_application->sendPostedEvents();
 		double timeForEventProcessing = watch.getTimeAndRestart();
 		m_robot->updateSensorData();
 		double timeForFieldUpdate = watch.getTimeAndRestart();

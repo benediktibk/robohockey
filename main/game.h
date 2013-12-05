@@ -4,7 +4,6 @@
 #include <string>
 
 class QApplication;
-class QEventLoop;
 
 namespace RoboHockey
 {
@@ -52,7 +51,6 @@ namespace Main
 		Layer::Strategy::Referee *m_referee;
 		Common::Watch *m_watch;
 		QApplication *m_application;
-		QEventLoop *m_eventLoop;
 	};
 }
 }
