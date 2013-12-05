@@ -77,15 +77,14 @@ void Game::execute()
 		double timeForActuatorUpdate = watch.getTimeAndRestart();
 
 		double timeDifference = m_watch->getTimeAndRestart();
-		cout << setprecision(3) << fixed << "loop time: " << timeDifference*1000 << " ms" << endl;
-		if (timeDifference > 0.11)
+		if (timeDifference > 0.11 && m_robot->isMoving())
 		{
-			cout << setprecision(3) << fixed << "loop time is too high!" << endl;
-			cout << setprecision(3) << fixed << "time spent on event processing: " << timeForEventProcessing << endl;
-			cout << setprecision(3) << fixed << "time spent on sensor updates: " << timeForSensorUpdate << endl;
-			cout << setprecision(3) << fixed << "time spent on field update: " << timeForFieldUpdate << endl;
-			cout << setprecision(3) << fixed << "time spent on logic: " << timeForLogic << endl;
-			cout << setprecision(3) << fixed << "time spent on actuator updates: " << timeForActuatorUpdate << endl;
+			printTimeInMs("loop time is too high", timeDifference);
+			printTimeInMs("time spent on event processing", timeForEventProcessing);
+			printTimeInMs("time spent on sensor updates", timeForSensorUpdate);
+			printTimeInMs("time spent on field update", timeForFieldUpdate);
+			printTimeInMs("time spent on logic", timeForLogic);
+			printTimeInMs("time spent on actuator updates", timeForActuatorUpdate);
 		}
 	}
 }
@@ -103,5 +102,10 @@ Autonomous::Field &Game::getField()
 Strategy::Referee &Game::getReferee()
 {
 	return *m_referee;
+}
+
+void Game::printTimeInMs(const string &message, double time) const
+{
+	cout << setprecision(3) << fixed << message << ": " << time/1000 << " ms" << endl;
 }
 

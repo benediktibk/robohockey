@@ -1,6 +1,8 @@
 #ifndef ROBOHOCKEY_MAIN_GAME_H
 #define ROBOHOCKEY_MAIN_GAME_H
 
+#include <string>
+
 class QApplication;
 class QEventLoop;
 
@@ -40,6 +42,9 @@ namespace Main
 		Layer::Autonomous::Robot& getRobot();
 		Layer::Autonomous::Field& getField();
 		Layer::Strategy::Referee& getReferee();
+
+	private:
+		void printTimeInMs(const std::string &message, double time) const;
 
 	private:
 		Layer::Autonomous::Robot *m_robot;
