@@ -47,7 +47,12 @@ void FieldMock::setObstacles(const vector<Circle> &obstacles)
 
 unsigned int FieldMock::enemyHiddenPucks()
 {
-    return 0;
+	return 0;
+}
+
+bool FieldMock::numberOfPucksChanged() const
+{
+	return false;
 }
 
 unsigned int FieldMock::achievedGoals()

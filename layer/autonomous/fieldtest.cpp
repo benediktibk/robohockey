@@ -506,3 +506,103 @@ void FieldTest::isPointInsideField_pointIsUnderField_false()
 	CPPUNIT_ASSERT(!field.isPointInsideField(Point(-1,-3)));
 }
 
+void FieldTest::numberOfPucksChanged_emptyField_false()
+{
+	DataAnalysis::OdometryMock odometry;
+	DataAnalysis::LidarMock lidar;
+	DataAnalysis::CameraMock camera;
+	Autonomous::RobotMock autonomousRobot;
+	FieldImpl field(odometry, lidar, camera, autonomousRobot);
+
+	field.update();
+
+	CPPUNIT_ASSERT(!field.numberOfPucksChanged());
+}
+
+void FieldTest::numberOfPucksChanged_onePuckAdded_true()
+{
+	DataAnalysis::OdometryMock odometry;
+	DataAnalysis::LidarMock lidar;
+	DataAnalysis::CameraMock camera;
+	Autonomous::RobotMock autonomousRobot;
+	FieldImpl field(odometry, lidar, camera, autonomousRobot);
+	Point ownPosition(0, 0);
+
+	DataAnalysis::LidarObjects lidarObjects(ownPosition);
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(2, -1), 0.12));
+	lidar.setAllObjects(lidarObjects);
+
+	DataAnalysis::CameraObjects cameraObjects;
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldObjectColorYellow, Point(2, -1)));
+	camera.setAllObjects(cameraObjects);
+
+	field.update();
+	CPPUNIT_ASSERT(field.numberOfPucksChanged());
+
+	field.update();
+	CPPUNIT_ASSERT(!field.numberOfPucksChanged());
+}
+
+void FieldTest::numberOfPucksChanged_onePuckRemoved_true()
+{
+	DataAnalysis::OdometryMock odometry;
+	DataAnalysis::LidarMock lidar;
+	DataAnalysis::CameraMock camera;
+	Autonomous::RobotMock autonomousRobot;
+	FieldImpl field(odometry, lidar, camera, autonomousRobot);
+	Point ownPosition(0, 0);
+
+	DataAnalysis::LidarObjects lidarObjects(ownPosition);
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(2, -1), 0.12));
+	lidar.setAllObjects(lidarObjects);
+
+	DataAnalysis::CameraObjects cameraObjects;
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldObjectColorYellow, Point(2, -1)));
+	camera.setAllObjects(cameraObjects);
+
+	field.update();
+	CPPUNIT_ASSERT(field.numberOfPucksChanged());
+
+	field.update();
+	CPPUNIT_ASSERT(!field.numberOfPucksChanged());
+
+	lidar.setAllObjects(DataAnalysis::LidarObjects(Point::zero()));
+	field.update();
+	CPPUNIT_ASSERT(field.numberOfPucksChanged());
+}
+
+
+void FieldTest::numberOfPucksChanged_onePuckAddedOnePuckRemoved_true()
+{
+	DataAnalysis::OdometryMock odometry;
+	DataAnalysis::LidarMock lidar;
+	DataAnalysis::CameraMock camera;
+	Autonomous::RobotMock autonomousRobot;
+	FieldImpl field(odometry, lidar, camera, autonomousRobot);
+	Point ownPosition(0, 0);
+
+	DataAnalysis::LidarObjects lidarObjects(ownPosition);
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(2, -1), 0.12));
+	lidar.setAllObjects(lidarObjects);
+
+	DataAnalysis::CameraObjects cameraObjects;
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldObjectColorYellow, Point(2, -1)));
+	camera.setAllObjects(cameraObjects);
+
+	field.update();
+	CPPUNIT_ASSERT(field.numberOfPucksChanged());
+
+	field.update();
+	CPPUNIT_ASSERT(!field.numberOfPucksChanged());
+
+	DataAnalysis::LidarObjects lidarObjectsSecondRun(ownPosition);
+	lidarObjectsSecondRun.addObject(DataAnalysis::LidarObject(Point(-3, 2), 0.12));
+	lidar.setAllObjects(lidarObjectsSecondRun);
+
+	DataAnalysis::CameraObjects cameraObjectsSecondRun;
+	cameraObjectsSecondRun.addObject(DataAnalysis::CameraObject(FieldObjectColorYellow, Point(-3, 2)));
+	camera.setAllObjects(cameraObjectsSecondRun);
+
+	field.update();
+	CPPUNIT_ASSERT(field.numberOfPucksChanged());
+}

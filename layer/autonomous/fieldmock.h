@@ -28,6 +28,7 @@ namespace Autonomous
 		void setFieldObjects(const std::vector<FieldObject> &objects);
 		void setObstacles(const std::vector<Common::Circle> &obstacles);
         virtual unsigned int enemyHiddenPucks();
+		virtual bool numberOfPucksChanged() const;
 
 	private:
 		std::vector<FieldObject> m_objects;
