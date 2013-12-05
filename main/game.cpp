@@ -6,7 +6,7 @@
 #include "layer/autonomous/fieldimpl.h"
 #include "layer/strategy/refereeimpl.h"
 #include <QtGui/QApplication>
-#include <QStringList>
+#include <QtCore/QTimer>
 #include <iostream>
 #include <iomanip>
 
@@ -21,7 +21,8 @@ Game::Game(int argc, char **argv) :
 	m_field(0),
 	m_referee(0),
 	m_watch(new Common::Watch()),
-	m_application(new QApplication(argc, argv))
+	m_application(new QApplication(argc, argv)),
+	m_timer(new QTimer())
 {
 	string playerServer;
 	if (argc == 2)
@@ -39,7 +40,8 @@ Game::Game(int argc, char **argv) :
 				dataAnalyser->getOdometry(), dataAnalyser->getLidar(),
 				dataAnalyser->getCamera(), *m_robot);
 	m_referee = new Strategy::RefereeImpl();
-	m_application->arguments();
+
+	connect(m_timer, SIGNAL(timeout()), this, SLOT(executeOnce()));
 }
 
 Game::~Game()
@@ -58,35 +60,43 @@ Game::~Game()
 
 void Game::execute()
 {
-	Watch watch;
 	m_watch->getTimeAndRestart();
+	m_timer->start(0);
+	m_application->exec();
+}
 
-	while (keepRunning())
+void Game::executeOnce()
+{
+	Watch watch;
+
+	watch.getTimeAndRestart();
+	m_application->processEvents();
+	m_application->sendPostedEvents();
+	double timeForEventProcessing = watch.getTimeAndRestart();
+	m_robot->updateSensorData();
+	double timeForFieldUpdate = watch.getTimeAndRestart();
+	m_field->update();
+	double timeForSensorUpdate = watch.getTimeAndRestart();
+	executeRobotControl();
+	double timeForLogic = watch.getTimeAndRestart();
+	m_robot->updateActuators(*m_field);
+	double timeForActuatorUpdate = watch.getTimeAndRestart();
+
+	double timeDifference = m_watch->getTimeAndRestart();
+	if (timeDifference > 0.11 && m_robot->isMoving())
 	{
-		watch.getTimeAndRestart();
-		m_application->processEvents();
-		m_application->sendPostedEvents();
-		double timeForEventProcessing = watch.getTimeAndRestart();
-		m_robot->updateSensorData();
-		double timeForFieldUpdate = watch.getTimeAndRestart();
-		m_field->update();
-		double timeForSensorUpdate = watch.getTimeAndRestart();
-		executeRobotControl();
-		double timeForLogic = watch.getTimeAndRestart();
-		m_robot->updateActuators(*m_field);
-		double timeForActuatorUpdate = watch.getTimeAndRestart();
-
-		double timeDifference = m_watch->getTimeAndRestart();
-		if (timeDifference > 0.11 && m_robot->isMoving())
-		{
-			printTimeInMs("loop time is too high", timeDifference);
-			printTimeInMs("time spent on event processing", timeForEventProcessing);
-			printTimeInMs("time spent on sensor updates", timeForSensorUpdate);
-			printTimeInMs("time spent on field update", timeForFieldUpdate);
-			printTimeInMs("time spent on logic", timeForLogic);
-			printTimeInMs("time spent on actuator updates", timeForActuatorUpdate);
-		}
+		printTimeInMs("loop time is too high", timeDifference);
+		printTimeInMs("time spent on event processing", timeForEventProcessing);
+		printTimeInMs("time spent on sensor updates", timeForSensorUpdate);
+		printTimeInMs("time spent on field update", timeForFieldUpdate);
+		printTimeInMs("time spent on logic", timeForLogic);
+		printTimeInMs("time spent on actuator updates", timeForActuatorUpdate);
 	}
+
+	if (keepRunning())
+		m_timer->start(0);
+	else
+		m_application->quit();
 }
 
 Autonomous::Robot &Game::getRobot()

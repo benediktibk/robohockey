@@ -2,8 +2,10 @@
 #define ROBOHOCKEY_MAIN_GAME_H
 
 #include <string>
+#include <QtCore/QObject>
 
 class QApplication;
+class QTimer;
 
 namespace RoboHockey
 {
@@ -27,14 +29,20 @@ namespace Strategy
 
 namespace Main
 {
-	class Game
+	class Game :
+			public QObject
 	{
+		Q_OBJECT
+
 	public:
 		Game(int argc, char **argv);
 		virtual ~Game();
 
 		void execute();
 		virtual bool keepRunning() const = 0;
+
+	private slots:
+		void executeOnce();
 
 	protected:
 		virtual void executeRobotControl() = 0;
@@ -51,6 +59,7 @@ namespace Main
 		Layer::Strategy::Referee *m_referee;
 		Common::Watch *m_watch;
 		QApplication *m_application;
+		QTimer *m_timer;
 	};
 }
 }

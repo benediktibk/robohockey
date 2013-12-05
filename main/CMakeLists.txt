@@ -28,8 +28,14 @@ set(MAIN_TEST_SRC
 	gamemock.cpp
 )
 
-add_library(main ${MAIN_SRC})
-add_library(maintest ${MAIN_TEST_SRC})
+set(MAIN_HEADERS
+	game.h
+)
+
+qt4_wrap_cpp(MAIN_HEADERS_MOC ${MAIN_HEADERS})
+
+add_library(main ${MAIN_SRC} ${MAIN_HEADERS_MOC})
+add_library(maintest ${MAIN_TEST_SRC} ${MAIN_HEADERS_MOC})
 
 set(LIBRARIES
 	main
