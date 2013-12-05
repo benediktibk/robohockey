@@ -27,8 +27,8 @@ namespace Autonomous
 		CPPUNIT_TEST(getPointsBesideObstacle_intersectFromLeftAndCircleCenterIsOnPath_longPointIs2And7p8284);
 		CPPUNIT_TEST(getPointsBesideObstacle_intersectFromRightAndCircleCenterIsOnPath_shortPointIs2And3);
 		CPPUNIT_TEST(getPointsBesideObstacle_intersectFromRightAndCircleCenterIsOnPath_longPointIs2AndMinus6p8282);
-		CPPUNIT_TEST(getPointsBesideObstacle_intersectFromLeftAndCircleCenterIsOnPath_shortPointIs1p5And0p5);
-		CPPUNIT_TEST(getPointsBesideObstacle_intersectFromRightAndCircleCenterIsOnPath_shortPointIs0p5And1p5);
+		CPPUNIT_TEST(getPointsBesideObstacle_intersectFromLeftAndCircleCenterIsOnPath_shortPointIs3And0);
+		CPPUNIT_TEST(getPointsBesideObstacle_intersectFromRightAndCircleCenterIsOnPath_shortPointIs0And3);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
@@ -45,8 +45,8 @@ namespace Autonomous
 		void getPointsBesideObstacle_intersectFromLeftAndCircleCenterIsOnPath_longPointIs2And7p8284();
 		void getPointsBesideObstacle_intersectFromRightAndCircleCenterIsOnPath_shortPointIs2And3();
 		void getPointsBesideObstacle_intersectFromRightAndCircleCenterIsOnPath_longPointIs2AndMinus6p8282();
-		void getPointsBesideObstacle_intersectFromLeftAndCircleCenterIsOnPath_shortPointIs1p5And0p5();
-		void getPointsBesideObstacle_intersectFromRightAndCircleCenterIsOnPath_shortPointIs0p5And1p5();
+		void getPointsBesideObstacle_intersectFromLeftAndCircleCenterIsOnPath_shortPointIs3And0();
+		void getPointsBesideObstacle_intersectFromRightAndCircleCenterIsOnPath_shortPointIs0And3();
 	};
 }
 }
