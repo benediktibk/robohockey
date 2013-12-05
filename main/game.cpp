@@ -39,6 +39,7 @@ Game::Game(int argc, char **argv) :
 				dataAnalyser->getOdometry(), dataAnalyser->getLidar(),
 				dataAnalyser->getCamera(), *m_robot);
 	m_referee = new Strategy::RefereeImpl();
+	m_application->arguments();
 }
 
 Game::~Game()
@@ -58,6 +59,7 @@ Game::~Game()
 void Game::execute()
 {
 	Watch watch;
+	m_watch->getTimeAndRestart();
 
 	while (keepRunning())
 	{
