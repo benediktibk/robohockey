@@ -20,6 +20,7 @@ namespace Autonomous
 		CPPUNIT_TEST(goTo_orientationToTargetCompletelyWrong_engineGotNoCallToGoToStraight);
 		CPPUNIT_TEST(goTo_orientationToTargetCompletelyWrong_engineGotAtLeastOneCallToTurnTo);
 		CPPUNIT_TEST(goTo_orientationToTargetCompletelyWrong_isRotating);
+		CPPUNIT_TEST(goTo_orientationToTargetCorrectAndUpdateCalledTwice_isNotInWaitingMode);
 		CPPUNIT_TEST(stuckAtObstacle_tryingToTackleObstacle_true);
 		CPPUNIT_TEST(stuckAtObstacle_notTryingToTackleObstacle_false);
 		CPPUNIT_TEST(stuckAtObstacle_updateCalledTwiceAfterStuckAtObstacle_true);
@@ -96,6 +97,7 @@ namespace Autonomous
 		void goTo_orientationToTargetCompletelyWrong_engineGotNoCallToGoToStraight();
 		void goTo_orientationToTargetCompletelyWrong_engineGotAtLeastOneCallToTurnTo();
 		void goTo_orientationToTargetCompletelyWrong_isRotating();
+		void goTo_orientationToTargetCorrectAndUpdateCalledTwice_isNotInWaitingMode();
 		void stuckAtObstacle_tryingToTackleObstacle_true();
 		void stuckAtObstacle_notTryingToTackleObstacle_false();
 		void stuckAtObstacle_updateCalledTwiceAfterStuckAtObstacle_true();

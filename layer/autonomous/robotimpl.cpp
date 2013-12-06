@@ -424,7 +424,7 @@ void RobotImpl::updateTargetOfEngineForRoute(bool routeChanged)
 			if (!routeChanged)
 				m_currentRoute->removeFirstPoint();
 
-			if (m_currentRoute->getPointCount() == 0)
+			if (m_currentRoute->getPointCount() == 0 && !routeChanged)
 				stop();
 			else
 				goToFirstPointOfRoute();

@@ -106,6 +106,25 @@ void RobotTest::goTo_orientationToTargetCompletelyWrong_isRotating()
 	CPPUNIT_ASSERT(robot.isRotating());
 }
 
+void RobotTest::goTo_orientationToTargetCorrectAndUpdateCalledTwice_isNotInWaitingMode()
+{
+	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
+	DataAnalysis::Odometry &odometry = dataAnalyser->getOdometry();
+	DataAnalysis::EngineMock &engine = dataAnalyser->getEngineMock();
+	odometry.setCurrentPosition(RobotPosition(Point(0, 0), 0));
+	RobotImpl robot(dataAnalyser);
+	FieldMock field;
+
+	robot.updateSensorData();
+	robot.goTo(Point(1, 0));
+	robot.updateActuators(field);
+	robot.updateSensorData();
+	engine.setReachedTarget(false);
+	robot.updateActuators(field);
+
+	CPPUNIT_ASSERT(!robot.reachedTarget());
+}
+
 void RobotTest::stuckAtObstacle_tryingToTackleObstacle_true()
 {
 	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
