@@ -20,7 +20,8 @@ namespace Autonomous
 		CPPUNIT_TEST(goTo_orientationToTargetCompletelyWrong_engineGotNoCallToGoToStraight);
 		CPPUNIT_TEST(goTo_orientationToTargetCompletelyWrong_engineGotAtLeastOneCallToTurnTo);
 		CPPUNIT_TEST(goTo_orientationToTargetCompletelyWrong_isRotating);
-		CPPUNIT_TEST(goTo_orientationToTargetCorrectAndUpdateCalledTwice_isNotInWaitingMode);
+		CPPUNIT_TEST(goTo_orientationToTargetCorrectAndUpdateCalledTwice_notReachedTarget);
+		CPPUNIT_TEST(goTo_orientationReachedAfterSomeTime_notReachedTarget);
 		CPPUNIT_TEST(stuckAtObstacle_tryingToTackleObstacle_true);
 		CPPUNIT_TEST(stuckAtObstacle_notTryingToTackleObstacle_false);
 		CPPUNIT_TEST(stuckAtObstacle_updateCalledTwiceAfterStuckAtObstacle_true);
@@ -47,7 +48,7 @@ namespace Autonomous
 		CPPUNIT_TEST(turnAround_empty_engineGotAtLeastOneCallToTurnAround);
 		CPPUNIT_TEST(turnAround_turnAroundDone_reachedTarget);
 		CPPUNIT_TEST(getCurrentPosition_position3And4InOdometry_3And4);
-		CPPUNIT_TEST(reachedTarget_nearlyHitTargetButTookSomeAdditionalWayToStop_true);
+		CPPUNIT_TEST(reachedTarget_nearlyHitTargetButTookSomeAdditionalWayToStop_false);
 		CPPUNIT_TEST(cantReachTarget_calledDirectAfterConstructor_false);
 		CPPUNIT_TEST(cantReachTarget_drivingTowardsTheTarget_false);
 		CPPUNIT_TEST(cantReachTarget_currentTargetSuddenlyNotPossible_true);
@@ -97,7 +98,8 @@ namespace Autonomous
 		void goTo_orientationToTargetCompletelyWrong_engineGotNoCallToGoToStraight();
 		void goTo_orientationToTargetCompletelyWrong_engineGotAtLeastOneCallToTurnTo();
 		void goTo_orientationToTargetCompletelyWrong_isRotating();
-		void goTo_orientationToTargetCorrectAndUpdateCalledTwice_isNotInWaitingMode();
+		void goTo_orientationToTargetCorrectAndUpdateCalledTwice_notReachedTarget();
+		void goTo_orientationReachedAfterSomeTime_notReachedTarget();
 		void stuckAtObstacle_tryingToTackleObstacle_true();
 		void stuckAtObstacle_notTryingToTackleObstacle_false();
 		void stuckAtObstacle_updateCalledTwiceAfterStuckAtObstacle_true();
@@ -124,7 +126,7 @@ namespace Autonomous
 		void turnAround_empty_engineGotAtLeastOneCallToTurnAround();
 		void turnAround_turnAroundDone_reachedTarget();
 		void getCurrentPosition_position3And4InOdometry_3And4();
-		void reachedTarget_nearlyHitTargetButTookSomeAdditionalWayToStop_true();
+		void reachedTarget_nearlyHitTargetButTookSomeAdditionalWayToStop_false();
 		void cantReachTarget_calledDirectAfterConstructor_false();
 		void cantReachTarget_drivingTowardsTheTarget_false();
 		void cantReachTarget_currentTargetSuddenlyNotPossible_true();

@@ -106,7 +106,7 @@ void RobotTest::goTo_orientationToTargetCompletelyWrong_isRotating()
 	CPPUNIT_ASSERT(robot.isRotating());
 }
 
-void RobotTest::goTo_orientationToTargetCorrectAndUpdateCalledTwice_isNotInWaitingMode()
+void RobotTest::goTo_orientationToTargetCorrectAndUpdateCalledTwice_notReachedTarget()
 {
 	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
 	DataAnalysis::Odometry &odometry = dataAnalyser->getOdometry();
@@ -120,6 +120,29 @@ void RobotTest::goTo_orientationToTargetCorrectAndUpdateCalledTwice_isNotInWaiti
 	robot.updateActuators(field);
 	robot.updateSensorData();
 	engine.setReachedTarget(false);
+	robot.updateActuators(field);
+
+	CPPUNIT_ASSERT(!robot.reachedTarget());
+}
+
+void RobotTest::goTo_orientationReachedAfterSomeTime_notReachedTarget()
+{
+	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
+	DataAnalysis::Odometry &odometry = dataAnalyser->getOdometry();
+	DataAnalysis::EngineMock &engine = dataAnalyser->getEngineMock();
+	odometry.setCurrentPosition(RobotPosition(Point(0, 0), 0));
+	RobotImpl robot(dataAnalyser);
+	FieldMock field;
+
+	engine.setReachedTarget(false);
+	robot.updateSensorData();
+	robot.goTo(Point(-1, 0));
+	robot.updateActuators(field);
+	robot.updateSensorData();
+	robot.updateActuators(field);
+	engine.setReachedTarget(true);
+	odometry.setCurrentPosition(RobotPosition(Point(0, 0), Angle::getHalfRotation()));
+	robot.updateSensorData();
 	robot.updateActuators(field);
 
 	CPPUNIT_ASSERT(!robot.reachedTarget());
@@ -529,7 +552,7 @@ void RobotTest::getCurrentPosition_position3And4InOdometry_3And4()
 	CPPUNIT_ASSERT(compare.isFuzzyEqual(RobotPosition(Point(3, 4), 2), robot.getCurrentPosition()));
 }
 
-void RobotTest::reachedTarget_nearlyHitTargetButTookSomeAdditionalWayToStop_true()
+void RobotTest::reachedTarget_nearlyHitTargetButTookSomeAdditionalWayToStop_false()
 {
 	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
 	DataAnalysis::OdometryMock &odometry = dataAnalyser->getOdometryMock();
@@ -538,6 +561,7 @@ void RobotTest::reachedTarget_nearlyHitTargetButTookSomeAdditionalWayToStop_true
 	RobotImpl robot(dataAnalyser);
 	FieldMock field;
 
+	engine.setReachedTarget(false);
 	odometry.setCurrentPosition(RobotPosition(Point(0, 0), 0));
 	sonar.setIsObstacleDirectInFront(false);
 	robot.updateSensorData();
@@ -555,7 +579,8 @@ void RobotTest::reachedTarget_nearlyHitTargetButTookSomeAdditionalWayToStop_true
 	robot.updateSensorData();
 	robot.updateActuators(field);
 
-	CPPUNIT_ASSERT(robot.reachedTarget());
+	CPPUNIT_ASSERT(!robot.reachedTarget());
+	CPPUNIT_ASSERT(robot.cantReachTarget());
 }
 
 void RobotTest::cantReachTarget_calledDirectAfterConstructor_false()

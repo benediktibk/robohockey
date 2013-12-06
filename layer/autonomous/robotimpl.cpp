@@ -397,6 +397,7 @@ void RobotImpl::goToFirstPointOfRoute()
 	DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
 	Point target = m_currentRoute->getFirstPoint();
 	engine.goToStraight(target);
+	m_currentRoute->removeFirstPoint();
 }
 
 void RobotImpl::updateTargetOfEngineForRoute(bool routeChanged)
@@ -421,10 +422,7 @@ void RobotImpl::updateTargetOfEngineForRoute(bool routeChanged)
 	{
 		if (m_rotationReached)
 		{
-			if (!routeChanged)
-				m_currentRoute->removeFirstPoint();
-
-			if (m_currentRoute->getPointCount() == 0 && !routeChanged)
+			if (m_currentRoute->getPointCount() == 0)
 				stop();
 			else
 				goToFirstPointOfRoute();
