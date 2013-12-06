@@ -148,6 +148,29 @@ void RobotTest::goTo_orientationReachedAfterSomeTime_notReachedTarget()
 	CPPUNIT_ASSERT(!robot.reachedTarget());
 }
 
+void RobotTest::goTo_lookingDownwardButHaveToGoUpAndOrientationReached_engineGotAtLeastOneCallToGoToStraight()
+{
+	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
+	DataAnalysis::Odometry &odometry = dataAnalyser->getOdometry();
+	DataAnalysis::EngineMock &engine = dataAnalyser->getEngineMock();
+	odometry.setCurrentPosition(RobotPosition(Point(0, 0), Angle::getThreeQuarterRotation()));
+	RobotImpl robot(dataAnalyser);
+	FieldMock field;
+
+	engine.setReachedTarget(false);
+	robot.updateSensorData();
+	robot.goTo(Point(0, 1));
+	robot.updateActuators(field);
+	robot.updateSensorData();
+	robot.updateActuators(field);
+	engine.setReachedTarget(true);
+	odometry.setCurrentPosition(RobotPosition(Point(0, 0), Angle::getQuarterRotation()));
+	robot.updateSensorData();
+	robot.updateActuators(field);
+
+	CPPUNIT_ASSERT(engine.getCallsToGoToStraight() > 0);
+}
+
 void RobotTest::stuckAtObstacle_tryingToTackleObstacle_true()
 {
 	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
