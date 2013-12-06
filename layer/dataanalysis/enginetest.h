@@ -17,8 +17,7 @@ namespace DataAnalysis
 		CPPUNIT_TEST(goToStraight_currentPositionDifferentToTarget_atLeastOneCallToSetSpeed);
 		CPPUNIT_TEST(goToStraight_lookingRightButHaveToGoLeftUp_lastRotationIsLeft);
 		CPPUNIT_TEST(goToStraight_lookingRightButHaveToGoDown_lastRotationIsRight);
-		CPPUNIT_TEST(goToStraight_startOrientationCompletelyWrong_lastMagnitudeIsZero);
-		CPPUNIT_TEST(goToStraight_startOrientationCompletelyWrong_lastRotationIsNotZero);
+		CPPUNIT_TEST(goToStraight_startOrientationCompletelyWrong_lastMagnitudeIsNotZero);
 		CPPUNIT_TEST(goToStraight_startOrientationCorrect_lastMagnitudeIsNotZero);
 		CPPUNIT_TEST(goToStraight_orientationReachedAfterSomeTime_lastMagnitudeIsNotZero);
 		CPPUNIT_TEST(stop_movingSomewhere_lastMagnitudeIsZero);
@@ -58,8 +57,7 @@ namespace DataAnalysis
 		void goToStraight_currentPositionDifferentToTarget_atLeastOneCallToSetSpeed();
 		void goToStraight_lookingRightButHaveToGoLeftUp_lastRotationIsLeft();
 		void goToStraight_lookingRightButHaveToGoDown_lastRotationIsRight();
-		void goToStraight_startOrientationCompletelyWrong_lastMagnitudeIsZero();
-		void goToStraight_startOrientationCompletelyWrong_lastRotationIsNotZero();
+		void goToStraight_startOrientationCompletelyWrong_lastMagnitudeIsNotZero();
 		void goToStraight_startOrientationCorrect_lastMagnitudeIsNotZero();
 		void goToStraight_orientationReachedAfterSomeTime_lastMagnitudeIsNotZero();
 		void stop_movingSomewhere_lastMagnitudeIsZero();
