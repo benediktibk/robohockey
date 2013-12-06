@@ -1178,21 +1178,6 @@ void RobotTest::isRotating_waiting_false()
 	CPPUNIT_ASSERT(!robot.isRotating());
 }
 
-void RobotTest::isRotating_driving_false()
-{
-	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
-	DataAnalysis::OdometryMock &odometry = dataAnalyser->getOdometryMock();
-	RobotImpl robot(dataAnalyser);
-	FieldMock field;
-
-	odometry.setCurrentPosition(RobotPosition(Point(0, 0), 0));
-	robot.updateSensorData();
-	robot.goTo(Point(4, 5));
-	robot.updateActuators(field);
-
-	CPPUNIT_ASSERT(!robot.isRotating());
-}
-
 void RobotTest::isRotating_turnTo_true()
 {
 	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();

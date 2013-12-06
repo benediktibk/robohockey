@@ -45,6 +45,7 @@ void EngineTest::goToStraight_lookingRightButHaveToGoDown_lastRotationIsRight()
 	engine.goToStraight(Point(1, -2));
 	engine.updateSpeedAndRotation();
 
+	CPPUNIT_ASSERT(hardwareEngine.getCallsToSetSpeed() > 0);
 	CPPUNIT_ASSERT(hardwareEngine.getLastRotation() < 0);
 }
 
@@ -58,6 +59,7 @@ void EngineTest::goToStraight_startOrientationCompletelyWrong_lastMagnitudeIsNot
 	engine.goToStraight(Point(-1, 0));
 	engine.updateSpeedAndRotation();
 
+	CPPUNIT_ASSERT(hardwareEngine.getCallsToSetSpeed() > 0);
 	CPPUNIT_ASSERT(hardwareEngine.getLastMagnitude() > 0);
 }
 

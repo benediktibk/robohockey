@@ -82,7 +82,6 @@ namespace Autonomous
 		CPPUNIT_TEST(updatePuckPosition_newPositionOfPuck_goToStraightSlowlyCalledTwice);
 		CPPUNIT_TEST(leaveCollectedPuck_drivenFarEnoughBack_reachedTarget);
 		CPPUNIT_TEST(isRotating_waiting_false);
-		CPPUNIT_TEST(isRotating_driving_false);
 		CPPUNIT_TEST(isRotating_turnTo_true);
 		CPPUNIT_TEST(isRotating_turnAround_true);
 		CPPUNIT_TEST(isRotating_firstPhaseOfCollectingPuck_true);
@@ -159,7 +158,6 @@ namespace Autonomous
 		void updatePuckPosition_newPositionOfPuck_goToStraightSlowlyCalledTwice();
 		void leaveCollectedPuck_drivenFarEnoughBack_reachedTarget();
 		void isRotating_waiting_false();
-		void isRotating_driving_false();
 		void isRotating_turnTo_true();
 		void isRotating_turnAround_true();
 		void isRotating_firstPhaseOfCollectingPuck_true();

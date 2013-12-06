@@ -48,10 +48,10 @@ namespace Autonomous
 
 	private:
 		void clearRoute();
-		void updateRoute(const Common::Point &ownPosition, const Field &field);
+		bool updateRoute(const Common::Point &ownPosition, const Field &field);
 		bool isRouteFeasible(const Common::Point &ownPosition, const std::vector<Common::Circle> &obstacles) const;
 		void goToFirstPointOfRoute();
-		void updateTargetOfEngineForRoute();
+		void updateTargetOfEngineForRoute(bool routeChanged);
 		void updateEngine(const Field &field);
 		void updateEngineForDriving(const Field &field);
 		void updateEngineForWaiting();
@@ -82,7 +82,7 @@ namespace Autonomous
 		bool m_stateChanged;
 		Common::Point m_startPosition;
 		bool m_puckPositionChanged;
-		bool m_rotationToPuckReached;
+		bool m_rotationReached;
 	};
 }
 }

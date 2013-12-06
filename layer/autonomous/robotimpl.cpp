@@ -60,13 +60,13 @@ bool RobotImpl::reachedTarget()
 
 void RobotImpl::updateEngineForDriving(const Field &field)
 {
-	updateRoute(getCurrentPosition().getPosition(), field);
+	bool routeChanged = updateRoute(getCurrentPosition().getPosition(), field);
 
 	//! If there is no route at this point we can't reach the target.
 	if (m_currentRoute == 0)
 		m_cantReachTarget = true;
 	else
-		updateTargetOfEngineForRoute();
+		updateTargetOfEngineForRoute(routeChanged);
 }
 
 void RobotImpl::updateEngineForWaiting()
@@ -85,10 +85,10 @@ void RobotImpl::updateEngineForCollectingPuck()
 	bool fromTargetPositionPuckCollectable = isCurrentTargetPuckCollectable();
 	bool justReachedOrientation = false;
 
-	if (!m_rotationToPuckReached && !m_stateChanged)
+	if (!m_rotationReached && !m_stateChanged)
 	{
-		m_rotationToPuckReached = engine.reachedTarget();
-		if (m_rotationToPuckReached)
+		m_rotationReached = engine.reachedTarget();
+		if (m_rotationReached)
 			justReachedOrientation = true;
 	}
 
@@ -98,7 +98,7 @@ void RobotImpl::updateEngineForCollectingPuck()
 		return;
 	}
 
-	if ((!lidarPuckCollectable || !fromTargetPositionPuckCollectable) && m_rotationToPuckReached)
+	if ((!lidarPuckCollectable || !fromTargetPositionPuckCollectable) && m_rotationReached)
 	{
 		m_cantReachTarget = true;
 		return;
@@ -111,7 +111,7 @@ void RobotImpl::updateEngineForCollectingPuck()
 
 	if (m_stateChanged || m_puckPositionChanged || justReachedOrientation)
 	{
-		if (m_rotationToPuckReached)
+		if (m_rotationReached)
 			engine.goToStraightSlowly(m_currentTarget);
 		else
 			engine.turnToTarget(m_currentTarget);
@@ -236,7 +236,7 @@ void RobotImpl::changeIntoState(RobotState state)
 	m_tryingToTackleObstacle = false;
 	m_state = state;
 	m_stateChanged = true;
-	m_rotationToPuckReached = false;
+	m_rotationReached = false;
 }
 
 bool RobotImpl::isCurrentTargetPuckCollectable() const
@@ -340,7 +340,7 @@ bool RobotImpl::isRotating() const
 	case RobotStateWaiting:
 		return false;
 	case RobotStateDriving:
-		return false;
+		return !m_rotationReached;
 	case RobotStateTurnAround:
 		return true;
 	case RobotStateTurnTo:
@@ -348,7 +348,7 @@ bool RobotImpl::isRotating() const
 	case RobotStateLeavingPuck:
 		return false;
 	case RobotStateCollectingPuck:
-		return !m_rotationToPuckReached;
+		return !m_rotationReached;
 	}
 
 	assert(false);
@@ -361,25 +361,23 @@ void RobotImpl::clearRoute()
 	m_currentRoute = 0;
 }
 
-void RobotImpl::updateRoute(const Point &ownPosition, const Field &field)
+bool RobotImpl::updateRoute(const Point &ownPosition, const Field &field)
 {
 	Router router(m_robotWidth, field);
 	vector<Circle> obstacles = field.getAllObstacles();
 
 	if (isRouteFeasible(ownPosition, obstacles))
-		return;
+		return false;
 
 	//! If the current route is not feasible anymore we try to create a new one.
 	clearRoute();
 	m_currentRoute = new Route(m_robotWidth);
 	*m_currentRoute = router.calculateRoute(ownPosition, m_currentTarget);
 
-	//! If this one is now feasible we go towards the first point.
-	if (isRouteFeasible(ownPosition, obstacles))
-		goToFirstPointOfRoute();
-	//! If the route is still not feasible we clear it to signal that something went wrong.
-	else
+	if (!isRouteFeasible(ownPosition, obstacles))
 		clearRoute();
+
+	return true;
 }
 
 bool RobotImpl::isRouteFeasible(const Point &ownPosition, const vector<Circle> &obstacles) const
@@ -401,18 +399,38 @@ void RobotImpl::goToFirstPointOfRoute()
 	engine.goToStraight(target);
 }
 
-void RobotImpl::updateTargetOfEngineForRoute()
+void RobotImpl::updateTargetOfEngineForRoute(bool routeChanged)
 {
 	DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
 
-	if (engine.reachedTarget())
-	{
-		m_currentRoute->removeFirstPoint();
+	if (routeChanged)
+		m_rotationReached = false;
 
-		if (m_currentRoute->getPointCount() == 0)
-			stop();
+	if (!m_rotationReached)
+	{
+		const RobotPosition position = getCurrentPosition();
+		const Angle &orientation = position.getOrientation();
+		const Angle targetOrientation(position.getPosition(), m_currentRoute->getFirstPoint());
+		Compare compare(0.01);
+
+		if (compare.isFuzzyEqual(orientation, targetOrientation))
+			m_rotationReached = true;
+	}
+
+	if (engine.reachedTarget() || routeChanged)
+	{
+		if (m_rotationReached)
+		{
+			if (!routeChanged)
+				m_currentRoute->removeFirstPoint();
+
+			if (m_currentRoute->getPointCount() == 0)
+				stop();
+			else
+				goToFirstPointOfRoute();
+		}
 		else
-			goToFirstPointOfRoute();
+			engine.turnToTarget(m_currentRoute->getFirstPoint());
 	}
 }
 
