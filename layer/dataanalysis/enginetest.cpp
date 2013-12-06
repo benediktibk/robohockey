@@ -303,7 +303,7 @@ void EngineTest::tryingToTackleObstacle_turningToTargetAndForwardMovementLocked_
 	CPPUNIT_ASSERT(!engine.tryingToTackleObstacle());
 }
 
-void EngineTest::tryingToTackleObstacle_turningToNewTargetAndForwardMovementLocked_false()
+void EngineTest::tryingToTackleObstacle_turningToNewTargetAndForwardMovementLocked_true()
 {
 	Hardware::EngineMock hardwareEngine;
 	Hardware::OdometryMock hardwareOdometry;
@@ -316,7 +316,7 @@ void EngineTest::tryingToTackleObstacle_turningToNewTargetAndForwardMovementLock
 	engine.goToStraight(Point(-1, 0));
 	engine.updateSpeedAndRotation();
 
-	CPPUNIT_ASSERT(!engine.tryingToTackleObstacle());
+	CPPUNIT_ASSERT(engine.tryingToTackleObstacle());
 }
 
 void EngineTest::tryingToTackleObstacle_stoppedAndForwardMovementLocked_false()

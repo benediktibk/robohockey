@@ -35,7 +35,7 @@ namespace DataAnalysis
 		CPPUNIT_TEST(tryingToTackleObstacle_drivingForwardAndForwardMovementNotLocked_false);
 		CPPUNIT_TEST(tryingToTackleObstacle_turningAroundAndForwardMovementLocked_false);
 		CPPUNIT_TEST(tryingToTackleObstacle_turningToTargetAndForwardMovementLocked_false);
-		CPPUNIT_TEST(tryingToTackleObstacle_turningToNewTargetAndForwardMovementLocked_false);
+		CPPUNIT_TEST(tryingToTackleObstacle_turningToNewTargetAndForwardMovementLocked_true);
 		CPPUNIT_TEST(tryingToTackleObstacle_stoppedAndForwardMovementLocked_false);
 		CPPUNIT_TEST(turnAround_turnedNotAHalfYet_lastRotationIsGreaterThanZero);
 		CPPUNIT_TEST(turnAround_turnedMoreThanAHalft_lastRotationIsGreaterThanZero);
@@ -76,7 +76,7 @@ namespace DataAnalysis
 		void tryingToTackleObstacle_drivingForwardAndForwardMovementNotLocked_false();
 		void tryingToTackleObstacle_turningAroundAndForwardMovementLocked_false();
 		void tryingToTackleObstacle_turningToTargetAndForwardMovementLocked_false();
-		void tryingToTackleObstacle_turningToNewTargetAndForwardMovementLocked_false();
+		void tryingToTackleObstacle_turningToNewTargetAndForwardMovementLocked_true();
 		void tryingToTackleObstacle_stoppedAndForwardMovementLocked_false();
 		void turnAround_turnedNotAHalfYet_lastRotationIsGreaterThanZero();
 		void turnAround_turnedMoreThanAHalft_lastRotationIsGreaterThanZero();

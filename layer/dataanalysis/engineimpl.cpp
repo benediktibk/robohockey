@@ -33,37 +33,25 @@ EngineImpl::~EngineImpl()
 void EngineImpl::goToStraight(const Common::Point &position)
 {
 	m_target = position;
-	RobotPosition currentRobotPosition = m_odometry.getCurrentPosition();
-	m_startPosition = currentRobotPosition.getPosition();
-	m_rotationReached = false;
-	m_engineState = EngineStateDriving;
+	switchIntoState(EngineStateDriving);
 }
 
 void EngineImpl::goToStraightSlowly(const Point &position)
 {
 	m_target = position;
-	RobotPosition currentRobotPosition = m_odometry.getCurrentPosition();
-	m_startPosition = currentRobotPosition.getPosition();
-	m_rotationReached = true;
-	m_engineState = EngineStateDrivingSlowly;
+	switchIntoState(EngineStateDrivingSlowly);
 }
 
 void EngineImpl::goToStraightThrough(const Point &position)
 {
 	m_target = position;
-	RobotPosition currentRobotPosition = m_odometry.getCurrentPosition();
-	m_startPosition = currentRobotPosition.getPosition();
-	m_rotationReached = false;
-	m_engineState = EngineStateDrivingThrough;
+	switchIntoState(EngineStateDrivingThrough);
 }
 
 void EngineImpl::goToStraightSlowlyBack(const Point &position)
 {
 	m_target = position;
-	RobotPosition currentRobotPosition = m_odometry.getCurrentPosition();
-	m_startPosition = currentRobotPosition.getPosition();
-	m_rotationReached = true;
-	m_engineState = EngineStateDrivingSlowlyBack;
+	switchIntoState(EngineStateDrivingSlowlyBack);
 }
 
 void EngineImpl::updateSpeedAndRotation()
@@ -90,22 +78,18 @@ void EngineImpl::updateSpeedAndRotation()
 
 void EngineImpl::stop()
 {
-	m_engineState = EngineStateStopped;
-	m_tryingToTackleObstacle = false;
+	switchIntoState(EngineStateStopped);
 }
 
 void EngineImpl::turnAround()
 {
-	RobotPosition currentRobotPosition = m_odometry.getCurrentPosition();
-	m_startOrientation = currentRobotPosition.getOrientation();
-	m_oneHalfTurnDone = false;
-	m_engineState = EngineStateTurnAround;
+	switchIntoState(EngineStateTurnAround);
 }
 
 void EngineImpl::turnToTarget(const Point &position)
 {
 	m_target = position;
-	m_engineState = EngineStateRotating;
+	switchIntoState(EngineStateRotating);
 }
 
 void EngineImpl::lockForwardMovement()
@@ -184,17 +168,7 @@ void EngineImpl::updateSpeedAndRotationForTurnAround()
 void EngineImpl::updateSpeedAndRotationForDriving()
 {
 	RobotPosition currentPosition = m_odometry.getCurrentPosition();
-	Compare angleCompare(0.1);
-	Angle targetOrientation(currentPosition.getPosition(), m_target);
-	Angle currentOrientation = currentPosition.getOrientation();
-
-	if (angleCompare.isFuzzyEqual(targetOrientation, currentOrientation))
-		m_rotationReached = true;
-
-	if (m_rotationReached)
-		driveAndTurn(currentPosition);
-	else
-		turnOnly(targetOrientation, currentOrientation);
+	driveAndTurn(currentPosition);
 }
 
 void EngineImpl::updateSpeedAndRotationForRotating()
@@ -278,4 +252,14 @@ void EngineImpl::setSpeed(double magnitude, double rotationSpeed)
 	m_speedTresholder->tresholdWheelSpeeds(magnitude, rotationSpeed);
 	m_desiredSpeed = magnitude;
 	m_engine.setSpeed(magnitude, rotationSpeed);
+}
+
+void EngineImpl::switchIntoState(EngineState state)
+{
+	RobotPosition currentRobotPosition = m_odometry.getCurrentPosition();
+	m_startPosition = currentRobotPosition.getPosition();
+	m_rotationReached = false;
+	m_tryingToTackleObstacle = false;
+	m_oneHalfTurnDone = false;
+	m_engineState = state;
 }
