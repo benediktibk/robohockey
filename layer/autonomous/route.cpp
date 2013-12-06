@@ -33,6 +33,14 @@ const Point &Route::getLastPoint() const
 	return m_points.back();
 }
 
+const Point &Route::getSecondPoint() const
+{
+	assert(getPointCount() > 1);
+	list<Point>::const_iterator iterator = m_points.begin();
+	++iterator;
+	return *iterator;
+}
+
 const Point &Route::getFirstPoint() const
 {
 	assert(getPointCount() > 0);
@@ -54,16 +62,22 @@ bool Route::intersectsWith(const vector<Circle> &objects) const
 {
 	list<Point>::const_iterator pointsEnd = m_points.end();
 	--pointsEnd;
+
 	for(list<Point>::const_iterator k = m_points.begin(); k != pointsEnd; ++k)
 	{
 		list<Point>::const_iterator nextElement = k;
 		++nextElement;
 		Path currentPath(*k,*nextElement, m_width);
 		for(vector<Circle>::const_iterator i = objects.begin(); i != objects.end(); ++i)
-		{
 			if(currentPath.intersectsWith(*i))
 				return true;
-		}
 	}
+
 	return false;
+}
+
+void Route::replaceFirstPoint(const Point &point)
+{
+	assert(isValid());
+	*(m_points.begin()) = point;
 }

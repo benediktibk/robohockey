@@ -21,10 +21,12 @@ namespace Autonomous
 		size_t getPointCount() const;
 		bool isValid() const;
 		const Common::Point& getLastPoint() const;
+		const Common::Point& getSecondPoint() const;
 		const Common::Point& getFirstPoint() const;
 		void removeFirstPoint();
 		double getWidth() const;
 		bool intersectsWith(const std::vector<Common::Circle> &objects) const;
+		void replaceFirstPoint(const Common::Point &point);
 
 	private:
 		std::list<Common::Point> m_points;

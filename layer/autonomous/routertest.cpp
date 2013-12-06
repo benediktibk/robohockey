@@ -18,14 +18,14 @@ void RouterTest::calculateRoute_emptyField_validRoute()
 	CPPUNIT_ASSERT(route.isValid());
 }
 
-void RouterTest::calculateRoute_emptyField_onlyPointOfRouteIsTarget()
+void RouterTest::calculateRoute_emptyField_routeHasTwoPoints()
 {
 	FieldMock field;
 	Router router(0.5, field);
 
 	Route route = router.calculateRoute(Point(1, 1), Point(1, 2));
 
-	CPPUNIT_ASSERT_EQUAL((size_t)1, route.getPointCount());
+	CPPUNIT_ASSERT_EQUAL((size_t)2, route.getPointCount());
 }
 
 void RouterTest::calculateRoute_emptyField_routeHasSameWidthAsRobot()

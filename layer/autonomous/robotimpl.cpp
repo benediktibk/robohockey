@@ -60,7 +60,7 @@ bool RobotImpl::reachedTarget()
 
 void RobotImpl::updateEngineForDriving(const Field &field)
 {
-	bool routeChanged = updateRoute(getCurrentPosition().getPosition(), field);
+	bool routeChanged = updateRoute(field);
 
 	//! If there is no route at this point we can't reach the target.
 	if (m_currentRoute == 0)
@@ -263,6 +263,12 @@ void RobotImpl::updateSensorData()
 	m_stateChanged = false;
 	m_puckPositionChanged = false;
 	m_dataAnalyser->updateSensorData();
+
+	if (m_currentRoute != 0 && m_currentRoute->isValid())
+	{
+		const RobotPosition position = getCurrentPosition();
+		m_currentRoute->replaceFirstPoint(position.getPosition());
+	}
 }
 
 void RobotImpl::stop()
@@ -361,12 +367,14 @@ void RobotImpl::clearRoute()
 	m_currentRoute = 0;
 }
 
-bool RobotImpl::updateRoute(const Point &ownPosition, const Field &field)
+bool RobotImpl::updateRoute(const Field &field)
 {
+	const RobotPosition robotPosition = getCurrentPosition();
+	const Point &ownPosition = robotPosition.getPosition();
 	Router router(m_robotWidth, field);
 	vector<Circle> obstacles = field.getAllObstacles();
 
-	if (isRouteFeasible(ownPosition, obstacles))
+	if (isRouteFeasible(obstacles))
 		return false;
 
 	//! If the current route is not feasible anymore we try to create a new one.
@@ -374,30 +382,26 @@ bool RobotImpl::updateRoute(const Point &ownPosition, const Field &field)
 	m_currentRoute = new Route(m_robotWidth);
 	*m_currentRoute = router.calculateRoute(ownPosition, m_currentTarget);
 
-	if (!isRouteFeasible(ownPosition, obstacles))
+	if (!isRouteFeasible(obstacles))
 		clearRoute();
 
 	return true;
 }
 
-bool RobotImpl::isRouteFeasible(const Point &ownPosition, const vector<Circle> &obstacles) const
+bool RobotImpl::isRouteFeasible(const vector<Circle> &obstacles) const
 {
 	if (m_currentRoute == 0)
 		return false;
 
-	if (!m_currentRoute->isValid())
-		return false;
-
-	Path path(ownPosition, m_currentRoute->getFirstPoint(), m_robotWidth);
-	return !path.intersectsWith(obstacles) && !m_currentRoute->intersectsWith(obstacles);
+	return	m_currentRoute->isValid() &&
+			!m_currentRoute->intersectsWith(obstacles);
 }
 
-void RobotImpl::goToFirstPointOfRoute()
+void RobotImpl::goToNextPointOfRoute()
 {
 	DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
 	Point target = m_currentRoute->getFirstPoint();
 	engine.goToStraight(target);
-	m_currentRoute->removeFirstPoint();
 }
 
 void RobotImpl::updateTargetOfEngineForRoute(bool routeChanged)
@@ -407,25 +411,27 @@ void RobotImpl::updateTargetOfEngineForRoute(bool routeChanged)
 	if (routeChanged)
 		m_rotationReached = false;
 
+	if (engine.reachedTarget() && m_rotationReached)
+		m_currentRoute->removeFirstPoint();
+
 	if (!m_rotationReached)
 	{
 		const RobotPosition position = getCurrentPosition();
 		const Angle &orientation = position.getOrientation();
-		const Angle targetOrientation(position.getPosition(), m_currentRoute->getFirstPoint());
+		const Angle targetOrientation(position.getPosition(), m_currentRoute->getSecondPoint());
 		Compare compare(0.01);
 
 		if (compare.isFuzzyEqual(orientation, targetOrientation))
 			m_rotationReached = true;
 	}
-
 	if (engine.reachedTarget() || routeChanged)
 	{
 		if (m_rotationReached)
 		{
-			if (m_currentRoute->getPointCount() == 0)
+			if (m_currentRoute->getPointCount() == 1)
 				stop();
 			else
-				goToFirstPointOfRoute();
+				goToNextPointOfRoute();
 		}
 		else
 			engine.turnToTarget(m_currentRoute->getFirstPoint());

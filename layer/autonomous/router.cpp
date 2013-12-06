@@ -16,10 +16,11 @@ Router::Router(double robotWidth, const Field &field) :
 	m_robotWidth(robotWidth)
 { }
 
-Route Router::calculateRoute(const Point &/*start*/, const Point &end) const
+Route Router::calculateRoute(const Point &start, const Point &end) const
 {
 	vector<Circle> obstacles = m_field.getAllObstacles();
 	Route route(m_robotWidth);
+	route.addPoint(start);
 	route.addPoint(end);
 
 	if (route.intersectsWith(obstacles))

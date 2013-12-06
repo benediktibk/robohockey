@@ -15,7 +15,7 @@ namespace Autonomous
 	{
 		CPPUNIT_TEST_SUITE(RouterTest);
 		CPPUNIT_TEST(calculateRoute_emptyField_validRoute);
-		CPPUNIT_TEST(calculateRoute_emptyField_onlyPointOfRouteIsTarget);
+		CPPUNIT_TEST(calculateRoute_emptyField_routeHasTwoPoints);
 		CPPUNIT_TEST(calculateRoute_emptyField_routeHasSameWidthAsRobot);
 		CPPUNIT_TEST(getPointsBesideObstacle_intersectFromLeftAndCircleCenterNotOnPath_shortPointIs2AndMinus1);
 		CPPUNIT_TEST(getPointsBesideObstacle_intersectFromLeftAndCircleCenterNotOnPath_longPointIs2And6p4142);
@@ -33,7 +33,7 @@ namespace Autonomous
 
 	private:
 		void calculateRoute_emptyField_validRoute();
-		void calculateRoute_emptyField_onlyPointOfRouteIsTarget();
+		void calculateRoute_emptyField_routeHasTwoPoints();
 		void calculateRoute_emptyField_routeHasSameWidthAsRobot();
 		void getPointsBesideObstacle_intersectFromLeftAndCircleCenterNotOnPath_shortPointIs2AndMinus1();
 		void getPointsBesideObstacle_intersectFromLeftAndCircleCenterNotOnPath_longPointIs2And6p4142();
