@@ -16,13 +16,14 @@ void InitialStateTest::nextState_detectionStart_calibrate()
     RefereeMock referee;
     InitialState initialState(robot, field, referee);
     referee.setDetectionStart(true);
+    referee.setGameStart(true);
     State *state;
     state = initialState.nextState();
     Calibrate *stateCasted = dynamic_cast<Calibrate*>(state);
     CPPUNIT_ASSERT(stateCasted != 0);
 }
 
-void InitialStateTest::nextState_gameStart_initialState()
+void InitialStateTest::nextState_gameStartAndDetectionStart_calibrate()
 {
     RobotMock robot;
     FieldMock field;
@@ -35,5 +36,6 @@ void InitialStateTest::nextState_gameStart_initialState()
     Calibrate *stateCasted = dynamic_cast<Calibrate*>(state);
     CPPUNIT_ASSERT(stateCasted == 0);
 }
+
 
 
