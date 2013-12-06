@@ -12,7 +12,7 @@ using namespace RoboHockey::Common;
 using namespace RoboHockey::Layer;
 using namespace RoboHockey::Layer::Autonomous;
 
-void RobotTest::goTo_positionDifferentToCurrentOne_engineGotAtLeastOneCallToGoToStraight()
+void RobotTest::goTo_positionDifferentToCurrentOne_engineGotAtLeastOneCallToGoToStraightOrTurnTo()
 {
 	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
 	DataAnalysis::Odometry &odometry = dataAnalyser->getOdometry();
@@ -25,7 +25,85 @@ void RobotTest::goTo_positionDifferentToCurrentOne_engineGotAtLeastOneCallToGoTo
 	robot.goTo(Point(5, 4));
 	robot.updateActuators(field);
 
+	CPPUNIT_ASSERT(engine.getCallsToGoToStraight() > 0 || engine.getCallsToTurnToTarget() > 0);
+}
+
+void RobotTest::goTo_orientationToTargetCorrect_engineGotAtLeastOneCallToGoToStraight()
+{
+	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
+	DataAnalysis::Odometry &odometry = dataAnalyser->getOdometry();
+	DataAnalysis::EngineMock &engine = dataAnalyser->getEngineMock();
+	odometry.setCurrentPosition(RobotPosition(Point(0, 0), 0));
+	RobotImpl robot(dataAnalyser);
+	FieldMock field;
+
+	robot.updateSensorData();
+	robot.goTo(Point(1, 0));
+	robot.updateActuators(field);
+
 	CPPUNIT_ASSERT(engine.getCallsToGoToStraight() > 0);
+}
+
+void RobotTest::goTo_orientationToTargetCorrect_isNotRotating()
+{
+	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
+	DataAnalysis::Odometry &odometry = dataAnalyser->getOdometry();
+	odometry.setCurrentPosition(RobotPosition(Point(0, 0), 0));
+	RobotImpl robot(dataAnalyser);
+	FieldMock field;
+
+	robot.updateSensorData();
+	robot.goTo(Point(1, 0));
+	robot.updateActuators(field);
+
+	CPPUNIT_ASSERT(!robot.isRotating());
+}
+
+void RobotTest::goTo_orientationToTargetCompletelyWrong_engineGotNoCallToGoToStraight()
+{
+	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
+	DataAnalysis::Odometry &odometry = dataAnalyser->getOdometry();
+	DataAnalysis::EngineMock &engine = dataAnalyser->getEngineMock();
+	odometry.setCurrentPosition(RobotPosition(Point(0, 0), 0));
+	RobotImpl robot(dataAnalyser);
+	FieldMock field;
+
+	robot.updateSensorData();
+	robot.goTo(Point(-1, 0));
+	robot.updateActuators(field);
+
+	CPPUNIT_ASSERT(engine.getCallsToGoToStraight() == 0);
+}
+
+void RobotTest::goTo_orientationToTargetCompletelyWrong_engineGotAtLeastOneCallToTurnTo()
+{
+	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
+	DataAnalysis::Odometry &odometry = dataAnalyser->getOdometry();
+	DataAnalysis::EngineMock &engine = dataAnalyser->getEngineMock();
+	odometry.setCurrentPosition(RobotPosition(Point(0, 0), 0));
+	RobotImpl robot(dataAnalyser);
+	FieldMock field;
+
+	robot.updateSensorData();
+	robot.goTo(Point(-1, 0));
+	robot.updateActuators(field);
+
+	CPPUNIT_ASSERT(engine.getCallsToTurnToTarget() > 0);
+}
+
+void RobotTest::goTo_orientationToTargetCompletelyWrong_isRotating()
+{
+	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
+	DataAnalysis::Odometry &odometry = dataAnalyser->getOdometry();
+	odometry.setCurrentPosition(RobotPosition(Point(0, 0), 0));
+	RobotImpl robot(dataAnalyser);
+	FieldMock field;
+
+	robot.updateSensorData();
+	robot.goTo(Point(-1, 0));
+	robot.updateActuators(field);
+
+	CPPUNIT_ASSERT(robot.isRotating());
 }
 
 void RobotTest::stuckAtObstacle_tryingToTackleObstacle_true()

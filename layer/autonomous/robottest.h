@@ -14,7 +14,12 @@ namespace Autonomous
 			public CPPUNIT_NS::TestFixture
 	{
 		CPPUNIT_TEST_SUITE(RobotTest);
-		CPPUNIT_TEST(goTo_positionDifferentToCurrentOne_engineGotAtLeastOneCallToGoToStraight);
+		CPPUNIT_TEST(goTo_positionDifferentToCurrentOne_engineGotAtLeastOneCallToGoToStraightOrTurnTo);
+		CPPUNIT_TEST(goTo_orientationToTargetCorrect_engineGotAtLeastOneCallToGoToStraight);
+		CPPUNIT_TEST(goTo_orientationToTargetCorrect_isNotRotating);
+		CPPUNIT_TEST(goTo_orientationToTargetCompletelyWrong_engineGotNoCallToGoToStraight);
+		CPPUNIT_TEST(goTo_orientationToTargetCompletelyWrong_engineGotAtLeastOneCallToTurnTo);
+		CPPUNIT_TEST(goTo_orientationToTargetCompletelyWrong_isRotating);
 		CPPUNIT_TEST(stuckAtObstacle_tryingToTackleObstacle_true);
 		CPPUNIT_TEST(stuckAtObstacle_notTryingToTackleObstacle_false);
 		CPPUNIT_TEST(stuckAtObstacle_updateCalledTwiceAfterStuckAtObstacle_true);
@@ -86,7 +91,12 @@ namespace Autonomous
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
-		void goTo_positionDifferentToCurrentOne_engineGotAtLeastOneCallToGoToStraight();
+		void goTo_positionDifferentToCurrentOne_engineGotAtLeastOneCallToGoToStraightOrTurnTo();
+		void goTo_orientationToTargetCorrect_engineGotAtLeastOneCallToGoToStraight();
+		void goTo_orientationToTargetCorrect_isNotRotating();
+		void goTo_orientationToTargetCompletelyWrong_engineGotNoCallToGoToStraight();
+		void goTo_orientationToTargetCompletelyWrong_engineGotAtLeastOneCallToTurnTo();
+		void goTo_orientationToTargetCompletelyWrong_isRotating();
 		void stuckAtObstacle_tryingToTackleObstacle_true();
 		void stuckAtObstacle_notTryingToTackleObstacle_false();
 		void stuckAtObstacle_updateCalledTwiceAfterStuckAtObstacle_true();
