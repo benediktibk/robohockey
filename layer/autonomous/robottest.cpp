@@ -37,8 +37,12 @@ void RobotTest::goTo_orientationToTargetCorrect_engineGotAtLeastOneCallToGoToStr
 	RobotImpl robot(dataAnalyser);
 	FieldMock field;
 
+	engine.setReachedTarget(false);
 	robot.updateSensorData();
 	robot.goTo(Point(1, 0));
+	robot.updateActuators(field);
+	engine.setReachedTarget(true);
+	robot.updateSensorData();
 	robot.updateActuators(field);
 
 	CPPUNIT_ASSERT(engine.getCallsToGoToStraight() > 0);
@@ -48,12 +52,16 @@ void RobotTest::goTo_orientationToTargetCorrect_isNotRotating()
 {
 	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
 	DataAnalysis::Odometry &odometry = dataAnalyser->getOdometry();
+	DataAnalysis::EngineMock &engine = dataAnalyser->getEngineMock();
 	odometry.setCurrentPosition(RobotPosition(Point(0, 0), 0));
 	RobotImpl robot(dataAnalyser);
 	FieldMock field;
 
+	engine.setReachedTarget(true);
 	robot.updateSensorData();
 	robot.goTo(Point(1, 0));
+	robot.updateActuators(field);
+	robot.updateSensorData();
 	robot.updateActuators(field);
 
 	CPPUNIT_ASSERT(!robot.isRotating());

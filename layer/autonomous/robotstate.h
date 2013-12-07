@@ -7,7 +7,7 @@ namespace Layer
 {
 namespace Autonomous
 {
-	enum RobotState {RobotStateWaiting, RobotStateDriving, RobotStateTurnAround, RobotStateCollectingPuck, RobotStateLeavingPuck, RobotStateTurnTo};
+	enum RobotState {RobotStateWaiting, RobotStateDrivingStraightPart, RobotStateDrivingTurningPart, RobotStateTurnAround, RobotStateCollectingPuck, RobotStateLeavingPuck, RobotStateTurnTo};
 }
 }
 }

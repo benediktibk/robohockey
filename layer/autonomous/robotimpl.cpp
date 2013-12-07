@@ -26,8 +26,7 @@ RobotImpl::RobotImpl(DataAnalysis::DataAnalyser *dataAnalyser) :
 	m_cantReachTarget(false),
 	m_currentRoute(0),
 	m_state(RobotStateWaiting),
-	m_stateChanged(false),
-	m_pointReached(false)
+	m_stateChanged(false)
 { }
 
 RobotImpl::~RobotImpl()
@@ -39,7 +38,8 @@ RobotImpl::~RobotImpl()
 
 void RobotImpl::goTo(const Point &position)
 {
-	changeIntoState(RobotStateDriving);
+	clearRoute();
+	changeIntoState(RobotStateDrivingTurningPart);
 	m_currentTarget = position;
 }
 
@@ -59,15 +59,47 @@ bool RobotImpl::reachedTarget()
 	return m_state == RobotStateWaiting && !m_cantReachTarget;
 }
 
-void RobotImpl::updateEngineForDriving(const Field &field)
+void RobotImpl::updateEngineForDrivingStraightPart(const Field &field)
 {
+	DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
 	bool routeChanged = updateRoute(field);
 
 	//! If there is no route at this point we can't reach the target.
 	if (m_currentRoute == 0)
 		m_cantReachTarget = true;
 	else
-		updateTargetOfEngineForRoute(routeChanged);
+	{
+		if (routeChanged)
+			changeIntoState(RobotStateDrivingTurningPart);
+		else if (m_stateChanged)
+			engine.goToStraight(m_currentRoute->getSecondPoint());
+		else if (engine.reachedTarget())
+		{
+			m_currentRoute->removeFirstPoint();
+
+			if (m_currentRoute->getPointCount() == 1)
+				changeIntoState(RobotStateWaiting);
+		}
+	}
+}
+
+void RobotImpl::updateEngineForDrivingTurningPart(const Field &field)
+{
+	DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
+	bool routeChanged = updateRoute(field);
+
+	if (m_currentRoute == 0)
+		m_cantReachTarget = true;
+	else
+	{
+		if (m_stateChanged || routeChanged)
+			engine.turnToTarget(m_currentRoute->getSecondPoint());
+		else if (engine.reachedTarget())
+		{
+			changeIntoState(RobotStateDrivingStraightPart);
+			updateEngine(field);
+		}
+	}
 }
 
 void RobotImpl::updateEngineForWaiting()
@@ -166,8 +198,11 @@ void RobotImpl::updateEngine(const Field &field)
 
 	switch(m_state)
 	{
-	case RobotStateDriving:
-		updateEngineForDriving(field);
+	case RobotStateDrivingStraightPart:
+		updateEngineForDrivingStraightPart(field);
+		break;
+	case RobotStateDrivingTurningPart:
+		updateEngineForDrivingTurningPart(field);
 		break;
 	case RobotStateWaiting:
 		updateEngineForWaiting();
@@ -218,7 +253,8 @@ bool RobotImpl::enableCollisionDetectionWithSonar() const
 	case RobotStateCollectingPuck:
 		result = false;
 		break;
-	case RobotStateDriving:
+	case RobotStateDrivingStraightPart:
+	case RobotStateDrivingTurningPart:
 	case RobotStateLeavingPuck:
 	case RobotStateTurnTo:
 	case RobotStateTurnAround:
@@ -231,14 +267,12 @@ bool RobotImpl::enableCollisionDetectionWithSonar() const
 
 void RobotImpl::changeIntoState(RobotState state)
 {
-	clearRoute();
 	m_currentTarget = Point();
 	m_cantReachTarget = false;
 	m_tryingToTackleObstacle = false;
 	m_state = state;
 	m_stateChanged = true;
 	m_rotationReached = false;
-	m_pointReached = false;
 }
 
 bool RobotImpl::isCurrentTargetPuckCollectable() const
@@ -347,8 +381,10 @@ bool RobotImpl::isRotating() const
 	{
 	case RobotStateWaiting:
 		return false;
-	case RobotStateDriving:
-		return !m_rotationReached;
+	case RobotStateDrivingStraightPart:
+		return false;
+	case RobotStateDrivingTurningPart:
+		return true;
 	case RobotStateTurnAround:
 		return true;
 	case RobotStateTurnTo:
@@ -397,41 +433,6 @@ bool RobotImpl::isRouteFeasible(const vector<Circle> &obstacles) const
 
 	return	m_currentRoute->isValid() &&
 			!m_currentRoute->intersectsWith(obstacles);
-}
-
-void RobotImpl::goToNextPointOfRoute()
-{
-	DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
-	Point target = m_currentRoute->getFirstPoint();
-	engine.goToStraight(target);
-}
-
-void RobotImpl::updateTargetOfEngineForRoute(bool routeChanged)
-{
-	DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
-
-	Compare compare(0.05);
-	const RobotPosition position = getCurrentPosition();
-	const Angle &orientation = position.getOrientation();
-	const Angle targetOrientation(position.getPosition(), m_currentRoute->getSecondPoint());
-	bool oldPointReached = m_pointReached;
-	m_pointReached = compare.isFuzzyEqual(m_currentRoute->getFirstPoint(), m_currentRoute->getSecondPoint());
-	bool oldRotationReached = m_rotationReached;
-	m_rotationReached = compare.isFuzzyEqual(orientation, targetOrientation);
-
-	if (m_pointReached)
-		m_currentRoute->removeFirstPoint();
-
-	if (m_currentRoute->getPointCount() == 1)
-	{
-		stop();
-		return;
-	}
-
-	if (m_rotationReached && !oldRotationReached)
-		goToNextPointOfRoute();
-	else if ((m_pointReached && !oldPointReached) || (!m_rotationReached && routeChanged))
-		engine.turnToTarget(m_currentRoute->getSecondPoint());
 }
 
 RobotImpl::RobotImpl(const RobotImpl &) :
