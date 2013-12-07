@@ -17,7 +17,8 @@ EngineMock::EngineMock() :
 	m_callsToLockForwardMovement(0),
 	m_callsToUnlockForwardMovement(0),
 	m_tryingToTackleObstacle(false),
-	m_reachedTarget(true)
+	m_reachedTarget(true),
+	m_isGoingStraight(false)
 { }
 
 void EngineMock::goToStraight(const Point &)
@@ -99,6 +100,11 @@ double EngineMock::getCurrentSpeed() const
 void EngineMock::updateSensorData()
 { }
 
+bool EngineMock::isGoingStraight() const
+{
+	return m_isGoingStraight;
+}
+
 unsigned int EngineMock::getCallsToGoToStraight() const
 {
 	return m_callsToGoToStraight;
@@ -162,6 +168,11 @@ void EngineMock::setTryingToTackleObstacle(bool value)
 void EngineMock::setReachedTarget(bool value)
 {
 	m_reachedTarget = value;
+}
+
+void EngineMock::setIsGoingStraight(bool value)
+{
+	m_isGoingStraight = value;
 }
 
 

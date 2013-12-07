@@ -44,6 +44,8 @@ void RobotTest::goTo_orientationToTargetCorrect_engineGotAtLeastOneCallToGoToStr
 	engine.setReachedTarget(true);
 	robot.updateSensorData();
 	robot.updateActuators(field);
+	robot.updateSensorData();
+	robot.updateActuators(field);
 
 	CPPUNIT_ASSERT(engine.getCallsToGoToStraight() > 0);
 }
@@ -175,6 +177,8 @@ void RobotTest::goTo_lookingDownwardButHaveToGoUpAndOrientationReached_engineGot
 	odometry.setCurrentPosition(RobotPosition(Point(0, 0), Angle::getQuarterRotation()));
 	robot.updateSensorData();
 	robot.updateActuators(field);
+	robot.updateSensorData();
+	robot.updateActuators(field);
 
 	CPPUNIT_ASSERT(engine.getCallsToGoToStraight() > 0);
 }
@@ -200,6 +204,7 @@ void RobotTest::goTo_targetPositionReached_reachedTarget()
 	robot.updateActuators(field);
 	odometry.setCurrentPosition(RobotPosition(Point(0, 1), Angle::getQuarterRotation()));
 	engine.setReachedTarget(true);
+	engine.setIsGoingStraight(false);
 	robot.updateSensorData();
 	robot.updateActuators(field);
 

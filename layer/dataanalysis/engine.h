@@ -33,6 +33,7 @@ namespace DataAnalysis
 		virtual bool isMoving() const = 0;
 		virtual double getCurrentSpeed() const = 0;
 		virtual void updateSensorData() = 0;
+		virtual bool isGoingStraight() const = 0;
 	};
 }
 }

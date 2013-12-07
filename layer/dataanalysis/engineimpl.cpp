@@ -132,6 +132,11 @@ void EngineImpl::updateSensorData()
 	m_isMoving = m_engine.isMoving();
 }
 
+bool EngineImpl::isGoingStraight() const
+{
+	return m_engineState == EngineStateDriving;
+}
+
 const Point &EngineImpl::getStartPosition() const
 {
 	return m_startPosition;

@@ -31,6 +31,7 @@ namespace DataAnalysis
 		virtual bool isMoving() const;
 		virtual double getCurrentSpeed() const;
 		virtual void updateSensorData();
+		virtual bool isGoingStraight() const;
 
 		unsigned int getCallsToGoToStraight() const;
 		unsigned int getCallsToGoToStraightSlowly() const;
@@ -45,6 +46,7 @@ namespace DataAnalysis
 		unsigned int getCallsToUnlockForwardMovement() const;
 		void setTryingToTackleObstacle(bool value);
 		void setReachedTarget(bool value);
+		void setIsGoingStraight(bool value);
 
 	private:
 		unsigned int m_callsToGoToStraight;
@@ -60,6 +62,7 @@ namespace DataAnalysis
 		unsigned int m_callsToUnlockForwardMovement;
 		bool m_tryingToTackleObstacle;
 		bool m_reachedTarget;
+		bool m_isGoingStraight;
 	};
 }
 }
