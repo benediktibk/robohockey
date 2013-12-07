@@ -407,40 +407,31 @@ void RobotImpl::goToNextPointOfRoute()
 void RobotImpl::updateTargetOfEngineForRoute(bool routeChanged)
 {
 	DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
-	bool pointReached = false;
-
-	if (routeChanged)
-		m_rotationReached = false;
 
 	Compare compare(0.01);
-	pointReached = compare.isFuzzyEqual(m_currentRoute->getFirstPoint(), m_currentRoute->getSecondPoint());
+	const RobotPosition position = getCurrentPosition();
+	const Angle &orientation = position.getOrientation();
+	const Angle targetOrientation(position.getPosition(), m_currentRoute->getSecondPoint());
+	bool pointReached = compare.isFuzzyEqual(m_currentRoute->getFirstPoint(), m_currentRoute->getSecondPoint());
+	bool oldRotationReached = m_rotationReached;
+	m_rotationReached = compare.isFuzzyEqual(orientation, targetOrientation);
 
 	if (pointReached)
 		m_currentRoute->removeFirstPoint();
 
-	if (!m_rotationReached)
+	if (m_currentRoute->getPointCount() == 1)
 	{
-		const RobotPosition position = getCurrentPosition();
-		const Angle &orientation = position.getOrientation();
-		const Angle targetOrientation(position.getPosition(), m_currentRoute->getSecondPoint());
-		Compare compare(0.01);
-
-		if (compare.isFuzzyEqual(orientation, targetOrientation))
-			m_rotationReached = true;
+		stop();
+		return;
 	}
 
-	if (pointReached || !m_rotationReached)
-	{
-		if (m_currentRoute->getPointCount() == 1)
-		{
-			stop();
-			return;
-		}
-
-		engine.turnToTarget(m_currentRoute->getFirstPoint());
-	}
-	else if (m_rotationReached)
+	if (m_rotationReached && !oldRotationReached)
 		goToNextPointOfRoute();
+	else
+	{
+		if (pointReached || routeChanged)
+			engine.turnToTarget(m_currentRoute->getSecondPoint());
+	}
 }
 
 RobotImpl::RobotImpl(const RobotImpl &) :
