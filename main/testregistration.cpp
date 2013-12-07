@@ -31,6 +31,7 @@
 #include "layer/view/modeltest.h"
 #include "layer/strategy/statemachinetest.h"
 #include "layer/strategy/initialstatetest.h"
+#include "layer/strategy/calibratetest.h"
 #include "common/pathtest.h"
 #include "common/linetest.h"
 #include "common/pathintersectpointstest.h"
@@ -71,4 +72,5 @@ CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Autonomous::FieldObjectDistan
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::View::ModelTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Strategy::StateMachineTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Strategy::InitialStateTest);
+CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Strategy::CalibrateTest);
 

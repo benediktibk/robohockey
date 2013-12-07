@@ -17,9 +17,9 @@ set(LAYER_STRATEGY_TEST_SRC
 	statemock.cpp
 	statemachinetest.cpp
 	initialstatetest.cpp
+	calibratetest.cpp
 	refereemock.cpp
 	achievegoalstest.cpp
-	calibratetest.cpp
 	hideenemypucks.cpp
 	pausetest.cpp
 )
