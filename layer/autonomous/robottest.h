@@ -10,6 +10,8 @@ namespace Layer
 {
 namespace Autonomous
 {
+	class RouterMock;
+
 	class RobotTest :
 			public CPPUNIT_NS::TestFixture
 	{
@@ -93,6 +95,10 @@ namespace Autonomous
 		CPPUNIT_TEST(isRotating_leavingPuck_false);
 		CPPUNIT_TEST_SUITE_END();
 
+	public:
+		virtual void setUp();
+		virtual void tearDown();
+
 	private:
 		void goTo_positionDifferentToCurrentOne_engineGotAtLeastOneCallToGoToStraightOrTurnTo();
 		void goTo_orientationToTargetCorrect_engineGotAtLeastOneCallToGoToStraight();
@@ -171,6 +177,9 @@ namespace Autonomous
 		void isRotating_firstPhaseOfCollectingPuck_true();
 		void isRotating_secondPhaseOfCollectingPuck_false();
 		void isRotating_leavingPuck_false();
+
+	private:
+		RouterMock *m_routerMock;
 	};
 }
 }

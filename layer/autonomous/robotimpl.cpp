@@ -1,6 +1,7 @@
 #include "layer/autonomous/robotimpl.h"
 #include "layer/autonomous/route.h"
 #include "layer/autonomous/router.h"
+#include "layer/autonomous/fieldimpl.h"
 #include "layer/dataanalysis/dataanalyser.h"
 #include "layer/dataanalysis/engine.h"
 #include "layer/dataanalysis/sonar.h"
@@ -8,7 +9,6 @@
 #include "layer/dataanalysis/lidar.h"
 #include "common/compare.h"
 #include "common/path.h"
-#include "layer/autonomous/fieldimpl.h"
 #include <math.h>
 #include <assert.h>
 
@@ -17,11 +17,12 @@ using namespace RoboHockey::Layer::Autonomous;
 using namespace RoboHockey::Layer;
 using namespace std;
 
-RobotImpl::RobotImpl(DataAnalysis::DataAnalyser *dataAnalyser) :
+RobotImpl::RobotImpl(DataAnalysis::DataAnalyser *dataAnalyser, Router *router) :
 	m_robotWidth(0.38),
 	m_maximumDistanceToCollectPuck(0.75),
 	m_maximumAngleToCollectPuck(10.0/180*M_PI),
 	m_dataAnalyser(dataAnalyser),
+	m_router(router),
 	m_tryingToTackleObstacle(false),
 	m_cantReachTarget(false),
 	m_currentRoute(0),
@@ -33,6 +34,8 @@ RobotImpl::~RobotImpl()
 {
 	delete m_dataAnalyser;
 	m_dataAnalyser = 0;
+	delete m_router;
+	m_router = 0;
 	clearRoute();
 }
 
@@ -407,7 +410,6 @@ bool RobotImpl::updateRoute(const Field &field)
 {
 	const RobotPosition robotPosition = getCurrentPosition();
 	const Point &ownPosition = robotPosition.getPosition();
-	Router router(m_robotWidth, field);
 	vector<Circle> obstacles = field.getAllObstacles();
 
 	if (isRouteFeasible(obstacles))
@@ -416,7 +418,7 @@ bool RobotImpl::updateRoute(const Field &field)
 	//! If the current route is not feasible anymore we try to create a new one.
 	clearRoute();
 	m_currentRoute = new Route(m_robotWidth);
-	*m_currentRoute = router.calculateRoute(ownPosition, m_currentTarget);
+	*m_currentRoute = m_router->calculateRoute(ownPosition, m_currentTarget, field);
 
 	if (!isRouteFeasible(obstacles))
 		clearRoute();

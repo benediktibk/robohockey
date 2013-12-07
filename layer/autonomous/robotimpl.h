@@ -18,12 +18,13 @@ namespace DataAnalysis
 namespace Autonomous
 {
 	class Route;
+	class Router;
 
 	class RobotImpl :
 			public Robot
 	{
 	public:
-		RobotImpl(DataAnalysis::DataAnalyser *dataAnalyser);
+		RobotImpl(DataAnalysis::DataAnalyser *dataAnalyser, Router *router);
 		virtual ~RobotImpl();
 
 		virtual void goTo(const Common::Point &position);
@@ -73,6 +74,7 @@ namespace Autonomous
 		const double m_maximumDistanceToCollectPuck;
 		const Common::Angle m_maximumAngleToCollectPuck;
 		DataAnalysis::DataAnalyser *m_dataAnalyser;
+		Router *m_router;
 		bool m_tryingToTackleObstacle;
 		bool m_cantReachTarget;
 		Route *m_currentRoute;

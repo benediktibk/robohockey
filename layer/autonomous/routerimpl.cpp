@@ -1,4 +1,4 @@
-#include "layer/autonomous/router.h"
+#include "layer/autonomous/routerimpl.h"
 #include "layer/autonomous/field.h"
 #include "layer/autonomous/route.h"
 #include "common/path.h"
@@ -11,14 +11,13 @@ using namespace std;
 using namespace RoboHockey::Common;
 using namespace RoboHockey::Layer::Autonomous;
 
-Router::Router(double robotWidth, const Field &field) :
-	m_field(field),
+RouterImpl::RouterImpl(double robotWidth) :
 	m_robotWidth(robotWidth)
 { }
 
-Route Router::calculateRoute(const Point &start, const Point &end) const
+Route RouterImpl::calculateRoute(const Point &start, const Point &end, const Field &field) const
 {
-	vector<Circle> obstacles = m_field.getAllObstacles();
+	vector<Circle> obstacles = field.getAllObstacles();
 	Route route(m_robotWidth);
 	route.addPoint(start);
 	route.addPoint(end);
@@ -29,7 +28,7 @@ Route Router::calculateRoute(const Point &start, const Point &end) const
 		return route;
 }
 
-vector<Point> Router::getPointsBesideObstacle(const Path &path, const Circle &obstacle) const
+vector<Point> RouterImpl::getPointsBesideObstacle(const Path &path, const Circle &obstacle) const
 {
 	vector<Point> pointsBesideObstacle;
 	PathIntersectPoints intersectionPoints = path.getIntersectPoints(obstacle);

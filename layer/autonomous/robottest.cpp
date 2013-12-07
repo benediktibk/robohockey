@@ -1,6 +1,7 @@
 #include "layer/autonomous/robottest.h"
 #include "layer/autonomous/robotimpl.h"
 #include "layer/autonomous/fieldmock.h"
+#include "layer/autonomous/routermock.h"
 #include "layer/dataanalysis/dataanalysermock.h"
 #include "layer/dataanalysis/dataanalyserimpl.h"
 #include "layer/hardware/robotmock.h"
@@ -12,13 +13,23 @@ using namespace RoboHockey::Common;
 using namespace RoboHockey::Layer;
 using namespace RoboHockey::Layer::Autonomous;
 
+void RobotTest::setUp()
+{
+	m_routerMock = new RouterMock();
+}
+
+void RobotTest::tearDown()
+{
+	m_routerMock = 0;
+}
+
 void RobotTest::goTo_positionDifferentToCurrentOne_engineGotAtLeastOneCallToGoToStraightOrTurnTo()
 {
 	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
 	DataAnalysis::Odometry &odometry = dataAnalyser->getOdometry();
 	DataAnalysis::EngineMock &engine = dataAnalyser->getEngineMock();
 	odometry.setCurrentPosition(RobotPosition(Point(2, 3), 1));
-	RobotImpl robot(dataAnalyser);
+	RobotImpl robot(dataAnalyser, m_routerMock);
 	FieldMock field;
 
 	robot.updateSensorData();
@@ -34,7 +45,7 @@ void RobotTest::goTo_orientationToTargetCorrect_engineGotAtLeastOneCallToGoToStr
 	DataAnalysis::Odometry &odometry = dataAnalyser->getOdometry();
 	DataAnalysis::EngineMock &engine = dataAnalyser->getEngineMock();
 	odometry.setCurrentPosition(RobotPosition(Point(0, 0), 0));
-	RobotImpl robot(dataAnalyser);
+	RobotImpl robot(dataAnalyser, m_routerMock);
 	FieldMock field;
 
 	engine.setReachedTarget(false);
@@ -56,7 +67,7 @@ void RobotTest::goTo_orientationToTargetCorrect_isNotRotating()
 	DataAnalysis::Odometry &odometry = dataAnalyser->getOdometry();
 	DataAnalysis::EngineMock &engine = dataAnalyser->getEngineMock();
 	odometry.setCurrentPosition(RobotPosition(Point(0, 0), 0));
-	RobotImpl robot(dataAnalyser);
+	RobotImpl robot(dataAnalyser, m_routerMock);
 	FieldMock field;
 
 	engine.setReachedTarget(true);
@@ -75,7 +86,7 @@ void RobotTest::goTo_orientationToTargetCompletelyWrong_engineGotNoCallToGoToStr
 	DataAnalysis::Odometry &odometry = dataAnalyser->getOdometry();
 	DataAnalysis::EngineMock &engine = dataAnalyser->getEngineMock();
 	odometry.setCurrentPosition(RobotPosition(Point(0, 0), 0));
-	RobotImpl robot(dataAnalyser);
+	RobotImpl robot(dataAnalyser, m_routerMock);
 	FieldMock field;
 
 	robot.updateSensorData();
@@ -91,7 +102,7 @@ void RobotTest::goTo_orientationToTargetCompletelyWrong_engineGotAtLeastOneCallT
 	DataAnalysis::Odometry &odometry = dataAnalyser->getOdometry();
 	DataAnalysis::EngineMock &engine = dataAnalyser->getEngineMock();
 	odometry.setCurrentPosition(RobotPosition(Point(0, 0), 0));
-	RobotImpl robot(dataAnalyser);
+	RobotImpl robot(dataAnalyser, m_routerMock);
 	FieldMock field;
 
 	robot.updateSensorData();
@@ -106,7 +117,7 @@ void RobotTest::goTo_orientationToTargetCompletelyWrong_isRotating()
 	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
 	DataAnalysis::Odometry &odometry = dataAnalyser->getOdometry();
 	odometry.setCurrentPosition(RobotPosition(Point(0, 0), 0));
-	RobotImpl robot(dataAnalyser);
+	RobotImpl robot(dataAnalyser, m_routerMock);
 	FieldMock field;
 
 	robot.updateSensorData();
@@ -122,7 +133,7 @@ void RobotTest::goTo_orientationToTargetCorrectAndUpdateCalledTwice_notReachedTa
 	DataAnalysis::Odometry &odometry = dataAnalyser->getOdometry();
 	DataAnalysis::EngineMock &engine = dataAnalyser->getEngineMock();
 	odometry.setCurrentPosition(RobotPosition(Point(0, 0), 0));
-	RobotImpl robot(dataAnalyser);
+	RobotImpl robot(dataAnalyser, m_routerMock);
 	FieldMock field;
 
 	robot.updateSensorData();
@@ -141,7 +152,7 @@ void RobotTest::goTo_orientationReachedAfterSomeTime_notReachedTarget()
 	DataAnalysis::Odometry &odometry = dataAnalyser->getOdometry();
 	DataAnalysis::EngineMock &engine = dataAnalyser->getEngineMock();
 	odometry.setCurrentPosition(RobotPosition(Point(0, 0), 0));
-	RobotImpl robot(dataAnalyser);
+	RobotImpl robot(dataAnalyser, m_routerMock);
 	FieldMock field;
 
 	engine.setReachedTarget(false);
@@ -164,7 +175,7 @@ void RobotTest::goTo_lookingDownwardButHaveToGoUpAndOrientationReached_engineGot
 	DataAnalysis::Odometry &odometry = dataAnalyser->getOdometry();
 	DataAnalysis::EngineMock &engine = dataAnalyser->getEngineMock();
 	odometry.setCurrentPosition(RobotPosition(Point(0, 0), Angle::getThreeQuarterRotation()));
-	RobotImpl robot(dataAnalyser);
+	RobotImpl robot(dataAnalyser, m_routerMock);
 	FieldMock field;
 
 	engine.setReachedTarget(false);
@@ -189,7 +200,7 @@ void RobotTest::goTo_targetPositionReached_reachedTarget()
 	DataAnalysis::Odometry &odometry = dataAnalyser->getOdometry();
 	DataAnalysis::EngineMock &engine = dataAnalyser->getEngineMock();
 	odometry.setCurrentPosition(RobotPosition(Point(0, 0), Angle::getThreeQuarterRotation()));
-	RobotImpl robot(dataAnalyser);
+	RobotImpl robot(dataAnalyser, m_routerMock);
 	FieldMock field;
 
 	engine.setReachedTarget(false);
@@ -216,7 +227,7 @@ void RobotTest::stuckAtObstacle_tryingToTackleObstacle_true()
 	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
 	DataAnalysis::EngineMock &engine = dataAnalyser->getEngineMock();
 	engine.setTryingToTackleObstacle(true);
-	RobotImpl robot(dataAnalyser);
+	RobotImpl robot(dataAnalyser, m_routerMock);
 	FieldMock field;
 
 	robot.updateSensorData();
@@ -230,7 +241,7 @@ void RobotTest::stuckAtObstacle_notTryingToTackleObstacle_false()
 	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
 	DataAnalysis::EngineMock &engine = dataAnalyser->getEngineMock();
 	engine.setTryingToTackleObstacle(false);
-	RobotImpl robot(dataAnalyser);
+	RobotImpl robot(dataAnalyser, m_routerMock);
 
 	CPPUNIT_ASSERT(!robot.stuckAtObstacle());
 }
@@ -240,7 +251,7 @@ void RobotTest::stuckAtObstacle_updateCalledTwiceAfterStuckAtObstacle_true()
 	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
 	DataAnalysis::EngineMock &engine = dataAnalyser->getEngineMock();
 	engine.setTryingToTackleObstacle(true);
-	RobotImpl robot(dataAnalyser);
+	RobotImpl robot(dataAnalyser, m_routerMock);
 	FieldMock field;
 
 	robot.updateSensorData();
@@ -257,7 +268,7 @@ void RobotTest::stuckAtObstacle_newTargetSet_false()
 	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
 	DataAnalysis::EngineMock &engine = dataAnalyser->getEngineMock();
 	engine.setTryingToTackleObstacle(true);
-	RobotImpl robot(dataAnalyser);
+	RobotImpl robot(dataAnalyser, m_routerMock);
 	FieldMock field;
 
 	robot.updateSensorData();
@@ -275,7 +286,7 @@ void RobotTest::stuckAtObstacle_collectPuckInFrontCalled_false()
 	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
 	DataAnalysis::EngineMock &engine = dataAnalyser->getEngineMock();
 	engine.setTryingToTackleObstacle(true);
-	RobotImpl robot(dataAnalyser);
+	RobotImpl robot(dataAnalyser, m_routerMock);
 	FieldMock field;
 
 	robot.updateSensorData();
@@ -294,7 +305,7 @@ void RobotTest::stuckAtObstacle_turnAroundCalled_false()
 	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
 	DataAnalysis::EngineMock &engine = dataAnalyser->getEngineMock();
 	engine.setTryingToTackleObstacle(true);
-	RobotImpl robot(dataAnalyser);
+	RobotImpl robot(dataAnalyser, m_routerMock);
 	FieldMock field;
 
 	robot.updateSensorData();
@@ -312,7 +323,7 @@ void RobotTest::stuckAtObstacle_leavePuckCalled_false()
 	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
 	DataAnalysis::EngineMock &engine = dataAnalyser->getEngineMock();
 	engine.setTryingToTackleObstacle(true);
-	RobotImpl robot(dataAnalyser);
+	RobotImpl robot(dataAnalyser, m_routerMock);
 	FieldMock field;
 
 	robot.updateSensorData();
@@ -330,7 +341,7 @@ void RobotTest::stuckAtObstacle_turnToCalled_false()
 	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
 	DataAnalysis::EngineMock &engine = dataAnalyser->getEngineMock();
 	engine.setTryingToTackleObstacle(true);
-	RobotImpl robot(dataAnalyser);
+	RobotImpl robot(dataAnalyser, m_routerMock);
 	FieldMock field;
 
 	robot.updateSensorData();
@@ -347,7 +358,7 @@ void RobotTest::reachedTarget_engineSaysNotReached_false()
 {
 	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
 	DataAnalysis::EngineMock &engine = dataAnalyser->getEngineMock();
-	RobotImpl robot(dataAnalyser);
+	RobotImpl robot(dataAnalyser, m_routerMock);
 	FieldMock field;
 	engine.setReachedTarget(false);
 
@@ -362,7 +373,7 @@ void RobotTest::reachedTarget_currentPositionIsTargetPosition_true()
 {
 	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
 	DataAnalysis::EngineMock &engine = dataAnalyser->getEngineMock();
-	RobotImpl robot(dataAnalyser);
+	RobotImpl robot(dataAnalyser, m_routerMock);
 	FieldMock field;
 	engine.setReachedTarget(true);
 
@@ -375,7 +386,7 @@ void RobotTest::reachedTarget_currentPositionIsTargetPosition_true()
 void RobotTest::updateActuators_empty_layerBelowGotAtLeastOneCallToUpdateActuators()
 {
 	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
-	RobotImpl robot(dataAnalyser);
+	RobotImpl robot(dataAnalyser, m_routerMock);
 	FieldMock field;
 
 	robot.updateSensorData();
@@ -387,7 +398,7 @@ void RobotTest::updateActuators_empty_layerBelowGotAtLeastOneCallToUpdateActuato
 void RobotTest::updateSensorData_empty_layerBelowGotAtLeastOneCallToUpdateSensorData()
 {
 	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
-	RobotImpl robot(dataAnalyser);
+	RobotImpl robot(dataAnalyser, m_routerMock);
 	FieldMock field;
 
 	robot.updateSensorData();
@@ -400,7 +411,7 @@ void RobotTest::stop_empty_engineGotAtLeastOneCallToStop()
 {
 	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
 	DataAnalysis::EngineMock &engine = dataAnalyser->getEngineMock();
-	RobotImpl robot(dataAnalyser);
+	RobotImpl robot(dataAnalyser, m_routerMock);
 	FieldMock field;
 
 	robot.updateSensorData();
@@ -414,7 +425,7 @@ void RobotTest::stuckAtObstacle_empty_engineGotAtLeastOneCallToTryingToTackleObs
 {
 	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
 	DataAnalysis::EngineMock &engine = dataAnalyser->getEngineMock();
-	RobotImpl robot(dataAnalyser);
+	RobotImpl robot(dataAnalyser, m_routerMock);
 	FieldMock field;
 
 	robot.updateSensorData();
@@ -430,7 +441,7 @@ void RobotTest::turnToTarget_validPoint_engineGotAtLeastOneCallToTurnToTarget()
 	DataAnalysis::EngineMock &engine = dataAnalyser->getEngineMock();
 	DataAnalysis::OdometryMock &odometry = dataAnalyser->getOdometryMock();
 	odometry.setCurrentPosition(RobotPosition(Point(0, 0), 0));
-	RobotImpl robot(dataAnalyser);
+	RobotImpl robot(dataAnalyser, m_routerMock);
 	FieldMock field;
 
 	robot.updateSensorData();
@@ -445,7 +456,7 @@ void RobotTest::turnToTarget_orientationReached_reachedTarget()
 	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
 	DataAnalysis::OdometryMock &odometry = dataAnalyser->getOdometryMock();
 	odometry.setCurrentPosition(RobotPosition(Point(0, 0), 0));
-	RobotImpl robot(dataAnalyser);
+	RobotImpl robot(dataAnalyser, m_routerMock);
 	FieldMock field;
 
 	robot.updateSensorData();
@@ -464,7 +475,7 @@ void RobotTest::updateActuators_notTryingToTackleObstacle_engineGotNoCallToStop(
 	DataAnalysis::EngineMock &engine = dataAnalyser->getEngineMock();
 	engine.setTryingToTackleObstacle(false);
 	engine.setReachedTarget(false);
-	RobotImpl robot(dataAnalyser);
+	RobotImpl robot(dataAnalyser, m_routerMock);
 	robot.goTo(Point(10, 0));
 	FieldMock field;
 
@@ -479,7 +490,7 @@ void RobotTest::updateActuators_tryingToTackleObstacle_engineGotAtLeastOneCallTo
 	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
 	DataAnalysis::EngineMock &engine = dataAnalyser->getEngineMock();
 	engine.setTryingToTackleObstacle(true);
-	RobotImpl robot(dataAnalyser);
+	RobotImpl robot(dataAnalyser, m_routerMock);
 	robot.goTo(Point(10, 0));
 	FieldMock field;
 
@@ -494,7 +505,7 @@ void RobotTest::updateActuators_tryingToTackleObstacle_targetNotReached()
 	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
 	DataAnalysis::EngineMock &engine = dataAnalyser->getEngineMock();
 	engine.setTryingToTackleObstacle(true);
-	RobotImpl robot(dataAnalyser);
+	RobotImpl robot(dataAnalyser, m_routerMock);
 	robot.goTo(Point(10, 0));
 	FieldMock field;
 
@@ -509,7 +520,7 @@ void RobotTest::updateSensorData_noObstacleDirectInFront_engineGotNoCallToLockFo
 	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
 	DataAnalysis::EngineMock &engine = dataAnalyser->getEngineMock();
 	DataAnalysis::SonarMock &sonar = dataAnalyser->getSonarMock();
-	RobotImpl robot(dataAnalyser);
+	RobotImpl robot(dataAnalyser, m_routerMock);
 	FieldMock field;
 	sonar.setIsObstacleDirectInFront(false);
 
@@ -524,7 +535,7 @@ void RobotTest::updateSensorData_noObstacleDirectInFront_engineGotAtLeastOneCall
 	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
 	DataAnalysis::EngineMock &engine = dataAnalyser->getEngineMock();
 	DataAnalysis::SonarMock &sonar = dataAnalyser->getSonarMock();
-	RobotImpl robot(dataAnalyser);
+	RobotImpl robot(dataAnalyser, m_routerMock);
 	sonar.setIsObstacleDirectInFront(false);
 	FieldMock field;
 
@@ -539,7 +550,7 @@ void RobotTest::updateSensorData_obstacleDirectInFront_engineGotAtLeastOneCallTo
 	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
 	DataAnalysis::EngineMock &engine = dataAnalyser->getEngineMock();
 	DataAnalysis::SonarMock &sonar = dataAnalyser->getSonarMock();
-	RobotImpl robot(dataAnalyser);
+	RobotImpl robot(dataAnalyser, m_routerMock);
 	sonar.setIsObstacleDirectInFront(true);
 	FieldMock field;
 
@@ -555,7 +566,7 @@ void RobotTest::updateSensorData_0bstacleDirectInFront_engineGotNoCallToUnlockFo
 	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
 	DataAnalysis::EngineMock &engine = dataAnalyser->getEngineMock();
 	DataAnalysis::SonarMock &sonar = dataAnalyser->getSonarMock();
-	RobotImpl robot(dataAnalyser);
+	RobotImpl robot(dataAnalyser, m_routerMock);
 	FieldMock field;
 	sonar.setIsObstacleDirectInFront(true);
 
@@ -570,7 +581,7 @@ void RobotTest::turnAround_empty_engineGotAtLeastOneCallToTurnAround()
 {
 	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
 	DataAnalysis::EngineMock &engine = dataAnalyser->getEngineMock();
-	RobotImpl robot(dataAnalyser);
+	RobotImpl robot(dataAnalyser, m_routerMock);
 	FieldMock field;
 
 	robot.updateSensorData();
@@ -584,7 +595,7 @@ void RobotTest::turnAround_turnAroundDone_reachedTarget()
 {
 	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
 	DataAnalysis::OdometryMock &odometry = dataAnalyser->getOdometryMock();
-	RobotImpl robot(dataAnalyser);
+	RobotImpl robot(dataAnalyser, m_routerMock);
 	FieldMock field;
 
 	robot.updateSensorData();
@@ -604,7 +615,7 @@ void RobotTest::getCurrentPosition_position3And4InOdometry_3And4()
 {
 	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
 	DataAnalysis::OdometryMock &odometry = dataAnalyser->getOdometryMock();
-	RobotImpl robot(dataAnalyser);
+	RobotImpl robot(dataAnalyser, m_routerMock);
 	FieldMock field;
 	odometry.setCurrentPosition(RobotPosition(Point(3, 4), 2));
 
@@ -621,7 +632,7 @@ void RobotTest::reachedTarget_nearlyHitTargetButTookSomeAdditionalWayToStop_fals
 	DataAnalysis::OdometryMock &odometry = dataAnalyser->getOdometryMock();
 	DataAnalysis::EngineMock &engine = dataAnalyser->getEngineMock();
 	DataAnalysis::SonarMock &sonar = dataAnalyser->getSonarMock();
-	RobotImpl robot(dataAnalyser);
+	RobotImpl robot(dataAnalyser, m_routerMock);
 	FieldMock field;
 
 	engine.setReachedTarget(false);
@@ -649,7 +660,7 @@ void RobotTest::reachedTarget_nearlyHitTargetButTookSomeAdditionalWayToStop_fals
 void RobotTest::cantReachTarget_calledDirectAfterConstructor_false()
 {
 	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
-	RobotImpl robot(dataAnalyser);
+	RobotImpl robot(dataAnalyser, m_routerMock);
 	FieldMock field;
 
 	robot.updateSensorData();
@@ -661,7 +672,7 @@ void RobotTest::cantReachTarget_calledDirectAfterConstructor_false()
 void RobotTest::cantReachTarget_drivingTowardsTheTarget_false()
 {
 	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
-	RobotImpl robot(dataAnalyser);
+	RobotImpl robot(dataAnalyser, m_routerMock);
 	FieldMock field;
 
 	robot.updateSensorData();
@@ -676,7 +687,7 @@ void RobotTest::cantReachTarget_currentTargetSuddenlyNotPossible_true()
 	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
 	DataAnalysis::EngineMock &engine = dataAnalyser->getEngineMock();
 	engine.setReachedTarget(false);
-	RobotImpl robot(dataAnalyser);
+	RobotImpl robot(dataAnalyser, m_routerMock);
 	FieldMock field;
 
 	robot.updateSensorData();
@@ -696,7 +707,7 @@ void RobotTest::cantReachTarget_notPossibleAnymoreDuringDriving_true()
 	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
 	DataAnalysis::EngineMock &engine = dataAnalyser->getEngineMock();
 	engine.setReachedTarget(false);
-	RobotImpl robot(dataAnalyser);
+	RobotImpl robot(dataAnalyser, m_routerMock);
 	FieldMock field;
 	vector<Circle> obstacles;
 	obstacles.push_back(Circle(Point(10, 0), 2));
@@ -712,7 +723,7 @@ void RobotTest::cantReachTarget_notPossibleAnymoreDuringDriving_true()
 void RobotTest::cantReachTarget_onlyLastTargetNotPossibleToReach_false()
 {
 	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
-	RobotImpl robot(dataAnalyser);
+	RobotImpl robot(dataAnalyser, m_routerMock);
 	FieldMock field;
 	vector<Circle> obstacles;
 	obstacles.push_back(Circle(Point(10, 0), 2));
@@ -731,7 +742,7 @@ void RobotTest::cantReachTarget_onlyLastTargetNotPossibleToReach_false()
 void RobotTest::cantReachTarget_updateTwiceCalled_true()
 {
 	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
-	RobotImpl robot(dataAnalyser);
+	RobotImpl robot(dataAnalyser, m_routerMock);
 	FieldMock field;
 	vector<Circle> obstacles;
 	obstacles.push_back(Circle(Point(10, 0), 2));
@@ -749,7 +760,7 @@ void RobotTest::cantReachTarget_updateTwiceCalled_true()
 void RobotTest::cantReachTarget_newTargetSet_false()
 {
 	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
-	RobotImpl robot(dataAnalyser);
+	RobotImpl robot(dataAnalyser, m_routerMock);
 	FieldMock field;
 	vector<Circle> obstacles;
 	obstacles.push_back(Circle(Point(10, 0), 2));
@@ -766,7 +777,7 @@ void RobotTest::cantReachTarget_collectPuckInFrontCalled_false()
 {
 	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
 	DataAnalysis::LidarMock &lidar = dataAnalyser->getLidarMock();
-	RobotImpl robot(dataAnalyser);
+	RobotImpl robot(dataAnalyser, m_routerMock);
 	FieldMock field;
 	vector<Circle> obstacles;
 	obstacles.push_back(Circle(Point(10, 0), 2));
@@ -786,7 +797,7 @@ void RobotTest::cantReachTarget_collectPuckInFrontCalled_false()
 void RobotTest::cantReachTarget_turnAroundCalled_false()
 {
 	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
-	RobotImpl robot(dataAnalyser);
+	RobotImpl robot(dataAnalyser, m_routerMock);
 	FieldMock field;
 	vector<Circle> obstacles;
 	obstacles.push_back(Circle(Point(10, 0), 2));
@@ -805,7 +816,7 @@ void RobotTest::cantReachTarget_turnAroundCalled_false()
 void RobotTest::cantReachTarget_turnToCalled_false()
 {
 	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
-	RobotImpl robot(dataAnalyser);
+	RobotImpl robot(dataAnalyser, m_routerMock);
 	FieldMock field;
 	vector<Circle> obstacles;
 	obstacles.push_back(Circle(Point(10, 0), 2));
@@ -824,7 +835,7 @@ void RobotTest::cantReachTarget_turnToCalled_false()
 void RobotTest::cantReachTarget_leavePuckCalled_false()
 {
 	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
-	RobotImpl robot(dataAnalyser);
+	RobotImpl robot(dataAnalyser, m_routerMock);
 	FieldMock field;
 	vector<Circle> obstacles;
 	obstacles.push_back(Circle(Point(10, 0), 2));
@@ -844,7 +855,7 @@ void RobotTest::cantReachTarget_stuckAtObstacle_true()
 {
 	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
 	DataAnalysis::EngineMock &engine = dataAnalyser->getEngineMock();
-	RobotImpl robot(dataAnalyser);
+	RobotImpl robot(dataAnalyser, m_routerMock);
 	FieldMock field;
 
 	robot.updateSensorData();
@@ -862,7 +873,7 @@ void RobotTest::isPuckCollected_lidarSaysNo_false()
 	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
 	DataAnalysis::LidarMock &lidar = dataAnalyser->getLidarMock();
 	lidar.setPuckCollected(false);
-	RobotImpl robot(dataAnalyser);
+	RobotImpl robot(dataAnalyser, m_routerMock);
 	FieldMock field;
 
 	robot.updateSensorData();
@@ -876,7 +887,7 @@ void RobotTest::isPuckCollected_lidarSaysYes_true()
 	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
 	DataAnalysis::LidarMock &lidar = dataAnalyser->getLidarMock();
 	lidar.setPuckCollected(true);
-	RobotImpl robot(dataAnalyser);
+	RobotImpl robot(dataAnalyser, m_routerMock);
 	FieldMock field;
 
 	robot.updateSensorData();
@@ -890,7 +901,7 @@ void RobotTest::isPuckCollectable_lidarSaysNo_false()
 	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
 	DataAnalysis::LidarMock &lidar = dataAnalyser->getLidarMock();
 	lidar.setPuckCollectable(false);
-	RobotImpl robot(dataAnalyser);
+	RobotImpl robot(dataAnalyser, m_routerMock);
 	FieldMock field;
 
 	robot.updateSensorData();
@@ -904,7 +915,7 @@ void RobotTest::isPuckCollectable_lidarSaysYes_true()
 	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
 	DataAnalysis::LidarMock &lidar = dataAnalyser->getLidarMock();
 	lidar.setPuckCollectable(true);
-	RobotImpl robot(dataAnalyser);
+	RobotImpl robot(dataAnalyser, m_routerMock);
 	FieldMock field;
 
 	robot.updateSensorData();
@@ -921,7 +932,7 @@ void RobotTest::collectPuckInFront_puckAhead_notStuckAtObstacle()
 	Hardware::SonarMock &sonar = hardwareRobot->getSonarMock();
 	lidar.readSensorDataFromFile("resources/testfiles/lidar_34.txt");
 	sonar.readSensorDataFromFile("resources/testfiles/sonar_3.txt");
-	RobotImpl robot(dataAnalyser);
+	RobotImpl robot(dataAnalyser, m_routerMock);
 	FieldMock field;
 
 	robot.updateSensorData();
@@ -939,7 +950,7 @@ void RobotTest::collectPuckInFront_puckAheadAndStartedToMove_notStuckAtObstacle(
 	Hardware::SonarMock &sonar = hardwareRobot->getSonarMock();
 	lidar.readSensorDataFromFile("resources/testfiles/lidar_34.txt");
 	sonar.readSensorDataFromFile("resources/testfiles/sonar_3.txt");
-	RobotImpl robot(dataAnalyser);
+	RobotImpl robot(dataAnalyser, m_routerMock);
 	FieldMock field;
 
 	robot.updateSensorData();
@@ -959,7 +970,7 @@ void RobotTest::collectPuckInFront_puckAheadAndAlreadyUpdatedTheEngine_notStuckA
 	Hardware::SonarMock &sonar = hardwareRobot->getSonarMock();
 	lidar.readSensorDataFromFile("resources/testfiles/lidar_34.txt");
 	sonar.readSensorDataFromFile("resources/testfiles/sonar_3.txt");
-	RobotImpl robot(dataAnalyser);
+	RobotImpl robot(dataAnalyser, m_routerMock);
 	FieldMock field;
 
 	robot.updateSensorData();
@@ -977,7 +988,7 @@ void RobotTest::collectPuckInFront_puckCollectedButEngineTargetNotReached_reache
 	DataAnalysis::OdometryMock &odometry = dataAnalyser->getOdometryMock();
 	DataAnalysis::LidarMock &lidar = dataAnalyser->getLidarMock();
 	DataAnalysis::EngineMock &engine = dataAnalyser->getEngineMock();
-	RobotImpl robot(dataAnalyser);
+	RobotImpl robot(dataAnalyser, m_routerMock);
 	FieldMock field;
 
 	engine.setReachedTarget(false);
@@ -1000,7 +1011,7 @@ void RobotTest::collectPuckInFront_puckNotYetCollected_notReachedTarget()
 	DataAnalysis::OdometryMock &odometry = dataAnalyser->getOdometryMock();
 	DataAnalysis::LidarMock &lidar = dataAnalyser->getLidarMock();
 	DataAnalysis::EngineMock &engine = dataAnalyser->getEngineMock();
-	RobotImpl robot(dataAnalyser);
+	RobotImpl robot(dataAnalyser, m_routerMock);
 	FieldMock field;
 
 	engine.setReachedTarget(false);
@@ -1023,7 +1034,7 @@ void RobotTest::collectPuckInFront_drivenToFarAndPuckNotYetCollected_notReachedT
 	DataAnalysis::OdometryMock &odometry = dataAnalyser->getOdometryMock();
 	DataAnalysis::LidarMock &lidar = dataAnalyser->getLidarMock();
 	DataAnalysis::EngineMock &engine = dataAnalyser->getEngineMock();
-	RobotImpl robot(dataAnalyser);
+	RobotImpl robot(dataAnalyser, m_routerMock);
 	FieldMock field;
 
 	engine.setReachedTarget(false);
@@ -1046,7 +1057,7 @@ void RobotTest::collectPuckInFront_drivenToFarAndPuckNotYetCollected_cantReachTa
 	DataAnalysis::OdometryMock &odometry = dataAnalyser->getOdometryMock();
 	DataAnalysis::LidarMock &lidar = dataAnalyser->getLidarMock();
 	DataAnalysis::EngineMock &engine = dataAnalyser->getEngineMock();
-	RobotImpl robot(dataAnalyser);
+	RobotImpl robot(dataAnalyser, m_routerMock);
 	FieldMock field;
 
 	engine.setReachedTarget(false);
@@ -1069,7 +1080,7 @@ void RobotTest::collectPuckInFront_noPuckAhead_cantReachTarget()
 	DataAnalysis::LidarMock &lidar = dataAnalyser->getLidarMock();
 	DataAnalysis::OdometryMock &odometry = dataAnalyser->getOdometryMock();
 	DataAnalysis::EngineMock &engine = dataAnalyser->getEngineMock();
-	RobotImpl robot(dataAnalyser);
+	RobotImpl robot(dataAnalyser, m_routerMock);
 	FieldMock field;
 
 	odometry.setCurrentPosition(RobotPosition(Point(0, 0), 0));
@@ -1088,7 +1099,7 @@ void RobotTest::collectPuckInFront_puckAhead_canReachTarget()
 {
 	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
 	DataAnalysis::LidarMock &lidar = dataAnalyser->getLidarMock();
-	RobotImpl robot(dataAnalyser);
+	RobotImpl robot(dataAnalyser, m_routerMock);
 	FieldMock field;
 
 	lidar.setPuckCollectable(true);
@@ -1105,7 +1116,7 @@ void RobotTest::collectPuckInFront_differentPuckAheadThanDesiredOne_cantReachTar
 	DataAnalysis::LidarMock &lidar = dataAnalyser->getLidarMock();
 	DataAnalysis::OdometryMock &odometry = dataAnalyser->getOdometryMock();
 	DataAnalysis::EngineMock &engine = dataAnalyser->getEngineMock();
-	RobotImpl robot(dataAnalyser);
+	RobotImpl robot(dataAnalyser, m_routerMock);
 	FieldMock field;
 
 	odometry.setCurrentPosition(RobotPosition(Point(0, 0), Angle::getQuarterRotation()));
@@ -1130,7 +1141,7 @@ void RobotTest::collectPuckInFront_validPuck_isCollectingPuck()
 {
 	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
 	DataAnalysis::LidarMock &lidar = dataAnalyser->getLidarMock();
-	RobotImpl robot(dataAnalyser);
+	RobotImpl robot(dataAnalyser, m_routerMock);
 	FieldMock field;
 
 	lidar.setPuckCollectable(true);
@@ -1145,7 +1156,7 @@ void RobotTest::collectPuckInFront_puckCollected_isNotCollectingPuck()
 {
 	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
 	DataAnalysis::LidarMock &lidar = dataAnalyser->getLidarMock();
-	RobotImpl robot(dataAnalyser);
+	RobotImpl robot(dataAnalyser, m_routerMock);
 	FieldMock field;
 
 	lidar.setPuckCollectable(true);
@@ -1164,7 +1175,7 @@ void RobotTest::collectPuckInFront_lookingLeftAndPuckAhead_canReachTarget()
 	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
 	DataAnalysis::LidarMock &lidar = dataAnalyser->getLidarMock();
 	DataAnalysis::OdometryMock &odometry = dataAnalyser->getOdometryMock();
-	RobotImpl robot(dataAnalyser);
+	RobotImpl robot(dataAnalyser, m_routerMock);
 	FieldMock field;
 
 	lidar.setPuckCollectable(true);
@@ -1180,7 +1191,7 @@ void RobotTest::collectPuckInFront_orientationWrongAtBegin_canReachTarget()
 {
 	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
 	DataAnalysis::OdometryMock &odometry = dataAnalyser->getOdometryMock();
-	RobotImpl robot(dataAnalyser);
+	RobotImpl robot(dataAnalyser, m_routerMock);
 	FieldMock field;
 
 	odometry.setCurrentPosition(RobotPosition(Point(0, 0), Angle::getHalfRotation()));
@@ -1196,7 +1207,7 @@ void RobotTest::collectPuckInFront_orientationWrongAtBegin_engineGotCallToTurnTo
 	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
 	DataAnalysis::OdometryMock &odometry = dataAnalyser->getOdometryMock();
 	DataAnalysis::EngineMock &engine = dataAnalyser->getEngineMock();
-	RobotImpl robot(dataAnalyser);
+	RobotImpl robot(dataAnalyser, m_routerMock);
 	FieldMock field;
 
 	odometry.setCurrentPosition(RobotPosition(Point(0, 0), Angle::getHalfRotation()));
@@ -1213,7 +1224,7 @@ void RobotTest::collectPuckInFront_orientationWrongAtBeginAndOrientationReached_
 	DataAnalysis::OdometryMock &odometry = dataAnalyser->getOdometryMock();
 	DataAnalysis::EngineMock &engine = dataAnalyser->getEngineMock();
 	DataAnalysis::LidarMock &lidar = dataAnalyser->getLidarMock();
-	RobotImpl robot(dataAnalyser);
+	RobotImpl robot(dataAnalyser, m_routerMock);
 	FieldMock field;
 
 	odometry.setCurrentPosition(RobotPosition(Point(0, 0), Angle::getHalfRotation()));
@@ -1235,7 +1246,7 @@ void RobotTest::updatePuckPosition_newPositionOfPuck_goToStraightSlowlyCalledTwi
 	DataAnalysis::LidarMock &lidar = dataAnalyser->getLidarMock();
 	DataAnalysis::OdometryMock &odometry = dataAnalyser->getOdometryMock();
 	DataAnalysis::EngineMock &engine = dataAnalyser->getEngineMock();
-	RobotImpl robot(dataAnalyser);
+	RobotImpl robot(dataAnalyser, m_routerMock);
 	FieldMock field;
 
 	lidar.setPuckCollectable(true);
@@ -1257,7 +1268,7 @@ void RobotTest::leaveCollectedPuck_drivenFarEnoughBack_reachedTarget()
 {
 	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
 	DataAnalysis::OdometryMock &odometry = dataAnalyser->getOdometryMock();
-	RobotImpl robot(dataAnalyser);
+	RobotImpl robot(dataAnalyser, m_routerMock);
 	FieldMock field;
 
 	odometry.setCurrentPosition(RobotPosition(Point(0, 0), 0));
@@ -1275,7 +1286,7 @@ void RobotTest::isRotating_waiting_false()
 {
 	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
 	DataAnalysis::OdometryMock &odometry = dataAnalyser->getOdometryMock();
-	RobotImpl robot(dataAnalyser);
+	RobotImpl robot(dataAnalyser, m_routerMock);
 	FieldMock field;
 
 	odometry.setCurrentPosition(RobotPosition(Point(0, 0), 0));
@@ -1289,7 +1300,7 @@ void RobotTest::isRotating_turnTo_true()
 {
 	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
 	DataAnalysis::OdometryMock &odometry = dataAnalyser->getOdometryMock();
-	RobotImpl robot(dataAnalyser);
+	RobotImpl robot(dataAnalyser, m_routerMock);
 	FieldMock field;
 
 	odometry.setCurrentPosition(RobotPosition(Point(0, 0), 0));
@@ -1304,7 +1315,7 @@ void RobotTest::isRotating_turnAround_true()
 {
 	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
 	DataAnalysis::OdometryMock &odometry = dataAnalyser->getOdometryMock();
-	RobotImpl robot(dataAnalyser);
+	RobotImpl robot(dataAnalyser, m_routerMock);
 	FieldMock field;
 
 	odometry.setCurrentPosition(RobotPosition(Point(0, 0), 0));
@@ -1320,7 +1331,7 @@ void RobotTest::isRotating_firstPhaseOfCollectingPuck_true()
 	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
 	DataAnalysis::OdometryMock &odometry = dataAnalyser->getOdometryMock();
 	DataAnalysis::LidarMock &lidar = dataAnalyser->getLidarMock();
-	RobotImpl robot(dataAnalyser);
+	RobotImpl robot(dataAnalyser, m_routerMock);
 	FieldMock field;
 
 	lidar.setPuckCollectable(false);
@@ -1337,7 +1348,7 @@ void RobotTest::isRotating_secondPhaseOfCollectingPuck_false()
 	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
 	DataAnalysis::OdometryMock &odometry = dataAnalyser->getOdometryMock();
 	DataAnalysis::LidarMock &lidar = dataAnalyser->getLidarMock();
-	RobotImpl robot(dataAnalyser);
+	RobotImpl robot(dataAnalyser, m_routerMock);
 	FieldMock field;
 
 	lidar.setPuckCollectable(false);
@@ -1357,7 +1368,7 @@ void RobotTest::isRotating_leavingPuck_false()
 {
 	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
 	DataAnalysis::OdometryMock &odometry = dataAnalyser->getOdometryMock();
-	RobotImpl robot(dataAnalyser);
+	RobotImpl robot(dataAnalyser, m_routerMock);
 	FieldMock field;
 
 	odometry.setCurrentPosition(RobotPosition(Point(0, 0), 0));

@@ -5,7 +5,7 @@ set(LAYER_AUTONOMOUS_SRC
 	borderstone.cpp
 	borderstonedistances.cpp
 	fielddetector.cpp
-	router.cpp
+	routerimpl.cpp
 	route.cpp
 	fieldobjectdistancecompare.cpp
 )
@@ -22,6 +22,7 @@ set(LAYER_AUTONOMOUS_TEST_SRC
 	routetest.cpp
 	routertest.cpp
 	fieldobjectdistancecomparetest.cpp
+	routermock.cpp
 )
 
 add_library(layerautonomous ${LAYER_AUTONOMOUS_SRC})

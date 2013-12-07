@@ -4,6 +4,7 @@
 #include "layer/hardware/robotimpl.h"
 #include "layer/autonomous/robotimpl.h"
 #include "layer/autonomous/fieldimpl.h"
+#include "layer/autonomous/routerimpl.h"
 #include "layer/strategy/refereeimpl.h"
 #include <QtCore/QCoreApplication>
 #include <QtCore/QTimer>
@@ -34,7 +35,8 @@ Game::Game(int argc, char **argv) :
 
 	Hardware::Robot *hardwareRobot = new Hardware::RobotImpl(playerServer);
 	DataAnalysis::DataAnalyser *dataAnalyser = new DataAnalysis::DataAnalyserImpl(hardwareRobot);
-	m_robot = new Autonomous::RobotImpl(dataAnalyser);
+	Autonomous::Router *router = new Autonomous::RouterImpl(0.38);
+	m_robot = new Autonomous::RobotImpl(dataAnalyser, router);
 	m_field = new Autonomous::FieldImpl(
 				dataAnalyser->getOdometry(), dataAnalyser->getLidar(),
 				dataAnalyser->getCamera(), *m_robot);
