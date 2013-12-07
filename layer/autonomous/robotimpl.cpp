@@ -26,7 +26,8 @@ RobotImpl::RobotImpl(DataAnalysis::DataAnalyser *dataAnalyser) :
 	m_cantReachTarget(false),
 	m_currentRoute(0),
 	m_state(RobotStateWaiting),
-	m_stateChanged(false)
+	m_stateChanged(false),
+	m_pointReached(false)
 { }
 
 RobotImpl::~RobotImpl()
@@ -237,6 +238,7 @@ void RobotImpl::changeIntoState(RobotState state)
 	m_state = state;
 	m_stateChanged = true;
 	m_rotationReached = false;
+	m_pointReached = false;
 }
 
 bool RobotImpl::isCurrentTargetPuckCollectable() const
@@ -408,15 +410,16 @@ void RobotImpl::updateTargetOfEngineForRoute(bool routeChanged)
 {
 	DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
 
-	Compare compare(0.01);
+	Compare compare(0.05);
 	const RobotPosition position = getCurrentPosition();
 	const Angle &orientation = position.getOrientation();
 	const Angle targetOrientation(position.getPosition(), m_currentRoute->getSecondPoint());
-	bool pointReached = compare.isFuzzyEqual(m_currentRoute->getFirstPoint(), m_currentRoute->getSecondPoint());
+	bool oldPointReached = m_pointReached;
+	m_pointReached = compare.isFuzzyEqual(m_currentRoute->getFirstPoint(), m_currentRoute->getSecondPoint());
 	bool oldRotationReached = m_rotationReached;
 	m_rotationReached = compare.isFuzzyEqual(orientation, targetOrientation);
 
-	if (pointReached)
+	if (m_pointReached)
 		m_currentRoute->removeFirstPoint();
 
 	if (m_currentRoute->getPointCount() == 1)
@@ -427,11 +430,8 @@ void RobotImpl::updateTargetOfEngineForRoute(bool routeChanged)
 
 	if (m_rotationReached && !oldRotationReached)
 		goToNextPointOfRoute();
-	else
-	{
-		if (pointReached || routeChanged)
-			engine.turnToTarget(m_currentRoute->getSecondPoint());
-	}
+	else if ((m_pointReached && !oldPointReached) || (!m_rotationReached && routeChanged))
+		engine.turnToTarget(m_currentRoute->getSecondPoint());
 }
 
 RobotImpl::RobotImpl(const RobotImpl &) :

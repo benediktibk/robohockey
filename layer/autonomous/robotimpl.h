@@ -83,7 +83,7 @@ namespace Autonomous
 		Common::Point m_startPosition;
 		bool m_puckPositionChanged;
 		bool m_rotationReached;
-		bool m_lastPointApproaching;
+		bool m_pointReached;
 	};
 }
 }
