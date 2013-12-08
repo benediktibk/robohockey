@@ -90,7 +90,7 @@ bool FieldImpl::calibratePosition()
 
 unsigned int FieldImpl::achievedGoals()
 {
-    return 0;
+    return m_achievedGoals;
 }
 
 unsigned int FieldImpl::enemyHiddenPucks()
