@@ -23,7 +23,7 @@ void InitialStateTest::nextState_detectionStart_calibrate()
     CPPUNIT_ASSERT(stateCasted != 0);
 }
 
-void InitialStateTest::nextState_gameStartAndDetectionStart_calibrate()
+void InitialStateTest::nextState_gameStartAndNotDetectionStart_notCalibrate()
 {
     RobotMock robot;
     FieldMock field;

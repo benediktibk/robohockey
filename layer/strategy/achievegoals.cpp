@@ -13,10 +13,10 @@ AchieveGoals::AchieveGoals(Robot &robot, Field &field, Referee &referee) :
 
 State* AchieveGoals::nextState()
 {
-    if(m_field.achievedGoals() < 3)
-        return 0;
-    else if(m_referee.stopMovement() || m_referee.gameOver())
+    if(m_referee.stopMovement() || m_referee.gameOver())
         return new Pause(m_robot, m_field, m_referee);
+    else if(m_field.achievedGoals() < 3)
+        return 0;
     else
         return new HideEnemyPucks(m_robot, m_field, m_referee);
 }
