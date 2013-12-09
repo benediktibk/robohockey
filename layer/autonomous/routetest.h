@@ -34,6 +34,7 @@ namespace Autonomous
 		CPPUNIT_TEST(intersectsWith_threeRoutePartsAndOneNotDisturbingObstacle_false);
 		CPPUNIT_TEST(intersectsWith_widthTooSmallForIntersection_false);
 		CPPUNIT_TEST(getLength_from1And2To3And2To3And5_5);
+		CPPUNIT_TEST(add_validRoute_countOfPointsIsCorrect);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
@@ -58,6 +59,7 @@ namespace Autonomous
 		void intersectsWith_threeRoutePartsAndOneNotDisturbingObstacle_false();
 		void intersectsWith_widthTooSmallForIntersection_false();
 		void getLength_from1And2To3And2To3And5_5();
+		void add_validRoute_countOfPointsIsCorrect();
 	};
 }
 }

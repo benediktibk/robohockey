@@ -32,6 +32,7 @@ namespace Autonomous
 		CPPUNIT_TEST(getPointsBesideObstacle_intersectFromRightAndCircleCenterIsOnPath_longPointIs2AndMinus6p8282);
 		CPPUNIT_TEST(getPointsBesideObstacle_intersectFromLeftAndCircleCenterIsOnPath_shortPointIs3And0);
 		CPPUNIT_TEST(getPointsBesideObstacle_intersectFromRightAndCircleCenterIsOnPath_shortPointIs0And3);
+		CPPUNIT_TEST(getPointsBesideObstacle_pathFrom1And1To1And10AndSmallObstacleBetween_resultSizeIs2);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
@@ -53,6 +54,7 @@ namespace Autonomous
 		void getPointsBesideObstacle_intersectFromRightAndCircleCenterIsOnPath_longPointIs2AndMinus6p8282();
 		void getPointsBesideObstacle_intersectFromLeftAndCircleCenterIsOnPath_shortPointIs3And0();
 		void getPointsBesideObstacle_intersectFromRightAndCircleCenterIsOnPath_shortPointIs0And3();
+		void getPointsBesideObstacle_pathFrom1And1To1And10AndSmallObstacleBetween_resultSizeIs2();
 	};
 }
 }

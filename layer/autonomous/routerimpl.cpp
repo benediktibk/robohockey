@@ -8,6 +8,7 @@
 #include <math.h>
 #include <assert.h>
 #include <algorithm>
+#include <limits>
 
 using namespace std;
 using namespace RoboHockey::Common;
@@ -19,7 +20,13 @@ RouterImpl::RouterImpl(double robotWidth) :
 
 Route RouterImpl::calculateRoute(const Point &start, const Point &end, const Field &field) const
 {
-	vector<Route> routes = calculateRoutesRecursive(start, end, field);
+	Path startPart(start, start, m_robotWidth);
+	const vector<Circle> obstacles = field.getAllObstacles();
+
+	if (startPart.intersectsWith(obstacles))
+		return Route(m_robotWidth);
+
+	vector<Route> routes = calculateRoutesRecursive(start, end, obstacles);
 
 	if (routes.size() == 0)
 		return Route(m_robotWidth);
@@ -65,7 +72,75 @@ vector<Point> RouterImpl::getPointsBesideObstacle(const Path &path, const Circle
 	return pointsBesideObstacle;
 }
 
-vector<Route> RouterImpl::calculateRoutesRecursive(const Point &/*start*/, const Point /*end*/, const Field &/*field*/) const
+vector<Route> RouterImpl::calculateRoutesRecursive(const Point &start, const Point &end, const vector<Circle> &obstacles) const
 {
-	return vector<Route>();
+	vector<Route> result;
+	Path endPart(end, end, m_robotWidth);
+
+	if (endPart.intersectsWith(obstacles))
+		return result;
+
+	Path directPath(start, end, m_robotWidth);
+	vector<Circle> realObstacles;
+
+	for (vector<Circle>::const_iterator i = obstacles.begin(); i != obstacles.end(); ++i)
+		if (directPath.intersectsWith(*i))
+			realObstacles.push_back(*i);
+
+	if (realObstacles.size() == 0)
+	{
+		Route directRoute(m_robotWidth);
+		directRoute.addPoint(start);
+		directRoute.addPoint(end);
+		result.push_back(directRoute);
+		return result;
+	}
+
+	double closestDistance = numeric_limits<double>::max();
+	Circle closestObstacle;
+
+	for (vector<Circle>::const_iterator i = realObstacles.begin(); i != realObstacles.end(); ++i)
+	{
+		const Circle &obstacle = *i;
+		double distance = obstacle.getDistanceTo(start);
+
+		if (distance < closestDistance)
+		{
+			closestDistance = distance;
+			closestObstacle = obstacle;
+		}
+	}
+
+	vector<Point> pointsBesideObstacle = getPointsBesideObstacle(directPath, closestObstacle);
+	for (vector<Point>::const_iterator i = pointsBesideObstacle.begin(); i != pointsBesideObstacle.end(); ++i)
+	{
+		const Point &pointBesideObstacle = *i;
+		vector<Route> startParts = calculateRoutesRecursive(start, pointBesideObstacle, obstacles);
+		vector<Route> completeRoutes = calculateRoutesRecursive(startParts, end, obstacles);
+		result.insert(result.end(), completeRoutes.begin(), completeRoutes.end());
+	}
+
+	return result;
+}
+
+vector<Route> RouterImpl::calculateRoutesRecursive(const vector<Route> &startRoutes, const Point &end, const vector<Circle> &obstacles) const
+{
+	vector<Route> result;
+
+	for (vector<Route>::const_iterator i = startRoutes.begin(); i != startRoutes.end(); ++i)
+	{
+		const Route &startRoute = *i;
+		const Common::Point &start = startRoute.getLastPoint();
+		vector<Route> routes = calculateRoutesRecursive(start, end, obstacles);
+
+		for (vector<Route>::const_iterator j = routes.begin(); j != routes.end(); ++j)
+		{
+			const Route &endRoute = *j;
+			Route completeRoute = startRoute;
+			completeRoute.add(endRoute);
+			result.push_back(completeRoute);
+		}
+	}
+
+	return result;
 }

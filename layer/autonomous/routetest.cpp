@@ -223,3 +223,18 @@ void RouteTest::getLength_from1And2To3And2To3And5_5()
 
 	CPPUNIT_ASSERT_DOUBLES_EQUAL(5, route.getLength(), 0.00001);
 }
+
+void RouteTest::add_validRoute_countOfPointsIsCorrect()
+{
+	Route one(0.2);
+	one.addPoint(Point(1, 2));
+	one.addPoint(Point(3, 2));
+	one.addPoint(Point(3, 5));
+	Route two(0.2);
+	two.addPoint(Point(3, 5));
+	two.addPoint(Point(7, 7));
+
+	one.add(two);
+
+	CPPUNIT_ASSERT_EQUAL((size_t)4, one.getPointCount());
+}

@@ -17,6 +17,15 @@ void Route::addPoint(const Point &point)
 	m_points.push_back(point);
 }
 
+void Route::add(const Route &route)
+{
+	assert(getLastPoint() == route.getFirstPoint());
+
+	list<Point>::const_iterator begin = route.m_points.begin();
+	++begin;
+	m_points.insert(m_points.end(), begin, route.m_points.end());
+}
+
 size_t Route::getPointCount() const
 {
 	return m_points.size();

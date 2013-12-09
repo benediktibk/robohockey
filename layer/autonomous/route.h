@@ -18,6 +18,7 @@ namespace Autonomous
 		Route(double width);
 
 		void addPoint(const Common::Point &point);
+		void add(const Route &route);
 		size_t getPointCount() const;
 		bool isValid() const;
 		const Common::Point& getLastPoint() const;
