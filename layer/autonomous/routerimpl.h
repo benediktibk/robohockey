@@ -29,6 +29,9 @@ namespace Autonomous
 		std::vector<Common::Point> getPointsBesideObstacle(const Common::Path &path, const Common::Circle &obstacle) const;
 
 	private:
+		std::vector<Route> calculateRoutesRecursive(const Common::Point &start, const Common::Point end, const Field &field) const;
+
+	private:
 		double m_robotWidth;
 	};
 }

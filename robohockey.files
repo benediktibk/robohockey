@@ -348,3 +348,7 @@ layer/autonomous/fieldobjectdistancecompare.h
 layer/autonomous/router.h
 layer/autonomous/routermock.h
 layer/autonomous/routermock.cpp
+layer/autonomous/routelengthcomparetest.h
+layer/autonomous/routelengthcompare.h
+layer/autonomous/routelengthcomparetest.cpp
+layer/autonomous/routelengthcompare.cpp

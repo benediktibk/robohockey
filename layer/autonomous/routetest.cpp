@@ -213,3 +213,13 @@ void RouteTest::intersectsWith_widthTooSmallForIntersection_false()
 
 	CPPUNIT_ASSERT(!route.intersectsWith(obstacles));
 }
+
+void RouteTest::getLength_from1And2To3And2To3And5_5()
+{
+	Route route(0.2);
+	route.addPoint(Point(1, 2));
+	route.addPoint(Point(3, 2));
+	route.addPoint(Point(3, 5));
+
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(5, route.getLength(), 0.00001);
+}

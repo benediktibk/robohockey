@@ -17,15 +17,14 @@ RouterImpl::RouterImpl(double robotWidth) :
 
 Route RouterImpl::calculateRoute(const Point &start, const Point &end, const Field &field) const
 {
-	vector<Circle> obstacles = field.getAllObstacles();
-	Route route(m_robotWidth);
-	route.addPoint(start);
-	route.addPoint(end);
+	vector<Route> routes = calculateRoutesRecursive(start, end, field);
 
-	if (route.intersectsWith(obstacles))
+	if (routes.size() == 0)
 		return Route(m_robotWidth);
 	else
-		return route;
+	{
+		return Route(m_robotWidth);
+	}
 }
 
 vector<Point> RouterImpl::getPointsBesideObstacle(const Path &path, const Circle &obstacle) const
@@ -60,4 +59,9 @@ vector<Point> RouterImpl::getPointsBesideObstacle(const Path &path, const Circle
 	pointsBesideObstacle.push_back(shortPointBesideObstacle);
 	pointsBesideObstacle.push_back(longPointBesdieObstacle);
 	return pointsBesideObstacle;
+}
+
+vector<Route> RouterImpl::calculateRoutesRecursive(const Point &/*start*/, const Point /*end*/, const Field &/*field*/) const
+{
+	return vector<Route>();
 }

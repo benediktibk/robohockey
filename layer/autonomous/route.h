@@ -27,6 +27,7 @@ namespace Autonomous
 		double getWidth() const;
 		bool intersectsWith(const std::vector<Common::Circle> &objects) const;
 		void replaceFirstPoint(const Common::Point &point);
+		double getLength() const;
 
 	private:
 		std::list<Common::Point> m_points;

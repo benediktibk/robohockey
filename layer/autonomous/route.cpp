@@ -81,3 +81,21 @@ void Route::replaceFirstPoint(const Point &point)
 	assert(isValid());
 	*(m_points.begin()) = point;
 }
+
+double Route::getLength() const
+{
+	double totalLength = 0;
+	list<Point>::const_iterator end = m_points.end();
+	--end;
+
+	for (list<Point>::const_iterator i = m_points.begin(); i != end; ++i)
+	{
+		list<Point>::const_iterator next = i;
+		++next;
+		const Point &currentPoint = *i;
+		const Point &nextPoint = *next;
+		totalLength += currentPoint.distanceTo(nextPoint);
+	}
+
+	return totalLength;
+}
