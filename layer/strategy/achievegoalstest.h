@@ -17,12 +17,16 @@ class AchieveGoalsTest:
         CPPUNIT_TEST(nextState_stopMovement_pause);
         CPPUNIT_TEST(nextState_gameOver_pause);
         CPPUNIT_TEST(nextState_achievedGoals3_hideEnemyPucks);
+        CPPUNIT_TEST(nextState_achievedGoals1_notHideEnemyPucks);
+        CPPUNIT_TEST(nextState_achievedGoals1_notPause);
         CPPUNIT_TEST_SUITE_END();
 
     private:
         void nextState_stopMovement_pause();
         void nextState_gameOver_pause();
         void nextState_achievedGoals3_hideEnemyPucks();
+        void nextState_achievedGoals1_notHideEnemyPucks();
+        void nextState_achievedGoals1_notPause();
 
 
 
