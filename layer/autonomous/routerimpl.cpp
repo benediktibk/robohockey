@@ -123,11 +123,9 @@ vector<Route> RouterImpl::calculateRoutesRecursive(const Point &start, const Poi
 	vector<Point> pointsBesideObstacle = getPointsBesideObstacle(directPath, closestObstacle);
 	assert(pointsBesideObstacle.size() == 2);
 
-	/*!
-	 * The first point beside the obstacle should usually be the shorter one. In some
-	 * weird cases when we are very close to the obstacle this doesn't hold, therefore
-	 * we can't make an assertion on this.
-	 */
+	if (start.distanceTo(pointsBesideObstacle.front()) < start.distanceTo(pointsBesideObstacle.back()))
+		reverse(pointsBesideObstacle.begin(), pointsBesideObstacle.end());
+
 	for (vector<Point>::const_iterator i = pointsBesideObstacle.begin(); i != pointsBesideObstacle.end() && result.size() == 0; ++i)
 	{
 		const Point &pointBesideObstacle = *i;
