@@ -145,6 +145,46 @@ void RouterTest::calculateRoute_oneBigObstacleCloseToStart_routeIsNotIntersectin
 	CPPUNIT_ASSERT(!route.intersectsWith(obstacles));
 }
 
+void RouterTest::calculateRoute_oneBigObstacleCloseToEnd_validRoute()
+{
+	FieldMock field;
+	RouterImpl router(0.5);
+	vector<Circle> obstacles;
+	obstacles.push_back(Circle(Point(3.7, 0), 2));
+	field.setObstacles(obstacles);
+
+	Route route = router.calculateRoute(Point(0, 0), Point(5, 0), field);
+
+	CPPUNIT_ASSERT(route.isValid());
+}
+
+void RouterTest::calculateRoute_oneBigObstacleCloseToEnd_routeIsNotTooLong()
+{
+	FieldMock field;
+	RouterImpl router(0.5);
+	vector<Circle> obstacles;
+	obstacles.push_back(Circle(Point(3.7, 0), 2));
+	field.setObstacles(obstacles);
+
+	Route route = router.calculateRoute(Point(0, 0), Point(5, 0), field);
+
+	double routeLength = route.getLength();
+	CPPUNIT_ASSERT(routeLength < 6.5);
+}
+
+void RouterTest::calculateRoute_oneBigObstacleCloseToEnd_routeIsNotIntersectingWithObstacles()
+{
+	FieldMock field;
+	RouterImpl router(0.5);
+	vector<Circle> obstacles;
+	obstacles.push_back(Circle(Point(3.7, 0), 2));
+	field.setObstacles(obstacles);
+
+	Route route = router.calculateRoute(Point(0, 0), Point(5, 0), field);
+
+	CPPUNIT_ASSERT(!route.intersectsWith(obstacles));
+}
+
 void RouterTest::getPointsBesideObstacle_intersectFromLeftAndCircleCenterNotOnPath_shortPointIs2AndMinus1()
 {
 	Compare compare(0.0001);
