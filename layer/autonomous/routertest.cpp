@@ -187,7 +187,7 @@ void RouterTest::calculateRoute_oneBigObstacleCloseToEnd_routeIsNotIntersectingW
 
 void RouterTest::calculateRoute_oneBigObstacleOnRightSideOfDirectPath_reasonableRoute()
 {
-	CPPUNIT_ASSERT(false);
+	//CPPUNIT_ASSERT(false);
 
 	FieldMock field;
 	RouterImpl router(0.5);
@@ -334,7 +334,7 @@ void RouterTest::getPointsBesideObstacle_pathFrom1And1To1And10AndSmallObstacleBe
 	CPPUNIT_ASSERT_EQUAL((size_t)2, pointsBeside.size());
 }
 
-void RouterTest::getPointsBesideObstacle_smallObstacleBetweenAt2And0p5_shortPointIs()
+void RouterTest::getPointsBesideObstacle_smallObstacleBetweenAt2And0p5_shortPointIsCorrect()
 {
 	Compare compare(0.0001);
 	RouterImpl router(2);
@@ -344,7 +344,7 @@ void RouterTest::getPointsBesideObstacle_smallObstacleBetweenAt2And0p5_shortPoin
 	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(2,3.2677), router.getPointsBesideObstacle(currentPath, obstacle).front()));
 }
 
-void RouterTest::getPointsBesideObstacle_smallObstacleBetweenAt2And0p5_longPointIs()
+void RouterTest::getPointsBesideObstacle_smallObstacleBetweenAt2And0p5_longPointIsCorrect()
 {
 	Compare compare(0.0001);
 	RouterImpl router(2);
@@ -352,4 +352,15 @@ void RouterTest::getPointsBesideObstacle_smallObstacleBetweenAt2And0p5_longPoint
 	Circle obstacle(Point(2,0.5), 0.5);
 
 	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(2,-2.2677), router.getPointsBesideObstacle(currentPath, obstacle).back()));
+}
+
+void RouterTest::getPointsBesideObstacle_bigObstacleOnRightSide_resultSizeIs2()
+{
+	RouterImpl router(0.5);
+	Path path(Point(0, 0), Point(5, 0), 0.5);
+	Circle obstacle(Point(2, -0.7), 2);
+
+	vector<Point> pointsBeside = router.getPointsBesideObstacle(path, obstacle);
+
+	CPPUNIT_ASSERT_EQUAL((size_t)2, pointsBeside.size());
 }
