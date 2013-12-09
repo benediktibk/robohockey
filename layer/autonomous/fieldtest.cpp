@@ -189,6 +189,38 @@ void FieldTest::update_twoObjectsFromLidarAndOneFromCameraNoColorAnymoreDuringSe
 	CPPUNIT_ASSERT_EQUAL(FieldObjectColorYellow, fieldObjects.front().getColor());
 }
 
+void FieldTest::update_oneObjectOutAndOneObjectInsideOfCalibratedField_correctObjectAddedToField()
+{
+	DataAnalysis::OdometryMock odometry;
+	DataAnalysis::LidarMock lidar;
+	DataAnalysis::CameraMock camera;
+	Autonomous::RobotMock autonomousRobot;
+	FieldImpl field(odometry, lidar, camera, autonomousRobot);
+
+	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 1), 0.06));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 1.833), 0.06));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 2.666), 0.06));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 3.916), 0.06));
+	lidar.setAllObjects(lidarObjects);
+
+	field.update();
+
+	CPPUNIT_ASSERT_EQUAL((size_t) 4, field.getAllFieldObjects().size());
+
+	CPPUNIT_ASSERT(field.calibratePosition());
+
+	DataAnalysis::LidarObjects lidarObjectsAfterCalibration(odometry.getCurrentPosition().getPosition());
+	lidarObjectsAfterCalibration.addObject(DataAnalysis::LidarObject(Point(1,1), 0.06));
+	lidarObjectsAfterCalibration.addObject(DataAnalysis::LidarObject(Point(-2, 2.6), 0.06));
+	lidar.setAllObjects(lidarObjectsAfterCalibration);
+
+	field.update();
+
+	CPPUNIT_ASSERT_EQUAL((size_t) 1, field.getAllFieldObjects().size());
+	CPPUNIT_ASSERT_EQUAL(Point(1,1), field.getAllFieldObjects().front().getCircle().getCenter());
+}
+
 void FieldTest::tryToDetectField_noValidPattern_false()
 {
 	DataAnalysis::OdometryMock odometry;
