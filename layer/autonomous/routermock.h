@@ -13,7 +13,13 @@ namespace Autonomous
 			public Router
 	{
 	public:
+		RouterMock();
+
 		virtual Route calculateRoute(const Common::Point &start, const Common::Point &end, const Field &field) const;
+		void setChessMode(bool value);
+
+	private:
+		bool m_chessMode;
 	};
 }
 }
