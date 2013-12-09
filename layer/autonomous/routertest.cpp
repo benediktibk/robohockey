@@ -187,8 +187,6 @@ void RouterTest::calculateRoute_oneBigObstacleCloseToEnd_routeIsNotIntersectingW
 
 void RouterTest::calculateRoute_oneBigObstacleOnRightSideOfDirectPath_reasonableRoute()
 {
-	//CPPUNIT_ASSERT(false);
-
 	FieldMock field;
 	RouterImpl router(0.5);
 	vector<Circle> obstacles;
@@ -363,4 +361,34 @@ void RouterTest::getPointsBesideObstacle_bigObstacleOnRightSide_resultSizeIs2()
 	vector<Point> pointsBeside = router.getPointsBesideObstacle(path, obstacle);
 
 	CPPUNIT_ASSERT_EQUAL((size_t)2, pointsBeside.size());
+}
+
+void RouterTest::getPointsBesideObstacle_bigObstacleOnRightSide_bothPointsDoNotIntersectWithTheObstacle()
+{
+	RouterImpl router(0.5);
+	Path path(Point(0, 0), Point(5, 0), 0.5);
+	Circle obstacle(Point(2, -0.7), 2);
+
+	vector<Point> pointsBeside = router.getPointsBesideObstacle(path, obstacle);
+
+	Path one(pointsBeside.front(), pointsBeside.front(), 0.5);
+	Path two(pointsBeside.back(), pointsBeside.back(), 0.5);
+	CPPUNIT_ASSERT(!one.intersectsWith(obstacle));
+	CPPUNIT_ASSERT(!two.intersectsWith(obstacle));
+}
+
+void RouterTest::getPointsBesideObstacle_bigObstacleOnRightSide_bothPointsHaveReasonableCoordinates()
+{
+	RouterImpl router(0.5);
+	Path path(Point(0, 0), Point(5, 0), 0.5);
+	Circle obstacle(Point(2, -0.7), 2);
+
+	vector<Point> pointsBeside = router.getPointsBesideObstacle(path, obstacle);
+
+	const Point &one = pointsBeside.front();
+	const Point &two = pointsBeside.back();
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(2, one.getX(), 0.0001);
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(2, two.getX(), 0.0001);
+	CPPUNIT_ASSERT(one.getY() > 0.3 || one.getY() < -1.7);
+	CPPUNIT_ASSERT(two.getY() > 0.3 || two.getY() < -1.7);
 }

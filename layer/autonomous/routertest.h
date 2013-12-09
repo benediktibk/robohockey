@@ -45,6 +45,8 @@ namespace Autonomous
 		CPPUNIT_TEST(getPointsBesideObstacle_smallObstacleBetweenAt2And0p5_shortPointIsCorrect);
 		CPPUNIT_TEST(getPointsBesideObstacle_smallObstacleBetweenAt2And0p5_longPointIsCorrect);
 		CPPUNIT_TEST(getPointsBesideObstacle_bigObstacleOnRightSide_resultSizeIs2);
+		CPPUNIT_TEST(getPointsBesideObstacle_bigObstacleOnRightSide_bothPointsDoNotIntersectWithTheObstacle);
+		CPPUNIT_TEST(getPointsBesideObstacle_bigObstacleOnRightSide_bothPointsHaveReasonableCoordinates);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
@@ -79,6 +81,8 @@ namespace Autonomous
 		void getPointsBesideObstacle_smallObstacleBetweenAt2And0p5_shortPointIsCorrect();
 		void getPointsBesideObstacle_smallObstacleBetweenAt2And0p5_longPointIsCorrect();
 		void getPointsBesideObstacle_bigObstacleOnRightSide_resultSizeIs2();
+		void getPointsBesideObstacle_bigObstacleOnRightSide_bothPointsDoNotIntersectWithTheObstacle();
+		void getPointsBesideObstacle_bigObstacleOnRightSide_bothPointsHaveReasonableCoordinates();
 	};
 }
 }
