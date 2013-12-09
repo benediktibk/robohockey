@@ -145,6 +145,16 @@ FieldObjectColor Controller::getSeletectedPuckColor() const
 	}
 }
 
+QPointF Controller::calculatePositionInGUI(const Point &/*point*/)
+{
+	return QPointF();
+}
+
+Point Controller::calculatePositionInReal(const QPointF &point)
+{
+	return Point(point.x() / (double) m_pixelPerMeter, -1.0 * point.y() / (double) m_pixelPerMeter);
+}
+
 void Controller::on_turnAround_clicked()
 {
 	m_model.setTurnAround(true);
@@ -204,7 +214,7 @@ void Controller::update()
 void Controller::mouseClickInGraph(QPointF point)
 {
 	vector<Point> target = m_model.getAllTargetPoints();
-	target.push_back(Point(point.x() / (double) m_pixelPerMeter, -1.0 * point.y() / (double) m_pixelPerMeter));
+	target.push_back(calculatePositionInReal(point));
 	m_model.setTargetPoints(target);
 }
 
