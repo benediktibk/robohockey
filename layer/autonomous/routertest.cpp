@@ -92,6 +92,19 @@ void RouterTest::calculateRoute_oneObstacleBetween_routeIsNotTooLong()
 	CPPUNIT_ASSERT(routeLength < 9.5);
 }
 
+void RouterTest::calculateRoute_oneObstacleBetween_routeIsNotIntersectingWithObstacles()
+{
+	FieldMock field;
+	RouterImpl router(0.5);
+	vector<Circle> obstacles;
+	obstacles.push_back(Circle(Point(1, 5), 0.1));
+	field.setObstacles(obstacles);
+
+	Route route = router.calculateRoute(Point(1, 1), Point(1, 10), field);
+
+	CPPUNIT_ASSERT(!route.intersectsWith(obstacles));
+}
+
 void RouterTest::getPointsBesideObstacle_intersectFromLeftAndCircleCenterNotOnPath_shortPointIs2AndMinus1()
 {
 	Compare compare(0.0001);
