@@ -26,6 +26,10 @@ namespace Autonomous
 		CPPUNIT_TEST(goTo_orientationReachedAfterSomeTime_notReachedTarget);
 		CPPUNIT_TEST(goTo_lookingDownwardButHaveToGoUpAndOrientationReached_engineGotAtLeastOneCallToGoToStraight);
 		CPPUNIT_TEST(goTo_targetPositionReached_reachedTarget);
+		CPPUNIT_TEST(goTo_firstPointReached_notReachedTarget);
+		CPPUNIT_TEST(goTo_firstPointReached_engineGotOneCallToTurnTo);
+		CPPUNIT_TEST(goTo_firstPointReached_lastArgumentOfTurnToIsTargetPoint);
+		CPPUNIT_TEST(goTo_firstPointAndRotationReached_engineGotOneCallToGoToStraight);
 		CPPUNIT_TEST(stuckAtObstacle_tryingToTackleObstacle_true);
 		CPPUNIT_TEST(stuckAtObstacle_notTryingToTackleObstacle_false);
 		CPPUNIT_TEST(stuckAtObstacle_updateCalledTwiceAfterStuckAtObstacle_true);
@@ -110,6 +114,10 @@ namespace Autonomous
 		void goTo_orientationReachedAfterSomeTime_notReachedTarget();
 		void goTo_lookingDownwardButHaveToGoUpAndOrientationReached_engineGotAtLeastOneCallToGoToStraight();
 		void goTo_targetPositionReached_reachedTarget();
+		void goTo_firstPointReached_notReachedTarget();
+		void goTo_firstPointReached_engineGotOneCallToTurnTo();
+		void goTo_firstPointReached_lastArgumentOfTurnToIsTargetPoint();
+		void goTo_firstPointAndRotationReached_engineGotOneCallToGoToStraight();
 		void stuckAtObstacle_tryingToTackleObstacle_true();
 		void stuckAtObstacle_notTryingToTackleObstacle_false();
 		void stuckAtObstacle_updateCalledTwiceAfterStuckAtObstacle_true();

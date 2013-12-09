@@ -5,40 +5,35 @@ using namespace RoboHockey::Common;
 using namespace RoboHockey::Layer::DataAnalysis;
 
 EngineMock::EngineMock() :
-	m_callsToGoToStraight(0),
-	m_callsToGoToStraightSlowly(0),
-	m_callsToGoToStraightThrough(0),
-	m_callsToGoToStraightSlowlyBack(0),
-	m_callsToStop(0),
-	m_callsToUpdateSpeedAndMagnitude(0),
-	m_callsToTryingToTackleObstacle(0),
-	m_callsToTurnToTarget(0),
-	m_callsToTurnAround(0),
-	m_callsToLockForwardMovement(0),
-	m_callsToUnlockForwardMovement(0),
 	m_tryingToTackleObstacle(false),
 	m_reachedTarget(true),
 	m_isGoingStraight(false)
-{ }
+{
+	resetCounters();
+}
 
-void EngineMock::goToStraight(const Point &)
+void EngineMock::goToStraight(const Point &target)
 {
 	++m_callsToGoToStraight;
+	m_lastTarget = target;
 }
 
-void EngineMock::goToStraightSlowly(const Point &)
+void EngineMock::goToStraightSlowly(const Point &target)
 {
 	++m_callsToGoToStraightSlowly;
+	m_lastTarget = target;
 }
 
-void EngineMock::goToStraightThrough(const Point &)
+void EngineMock::goToStraightThrough(const Point &target)
 {
 	++m_callsToGoToStraightThrough;
+	m_lastTarget = target;
 }
 
-void EngineMock::goToStraightSlowlyBack(const Point &)
+void EngineMock::goToStraightSlowlyBack(const Point &target)
 {
 	++m_callsToGoToStraightSlowlyBack;
+	m_lastTarget = target;
 }
 
 void EngineMock::updateSpeedAndRotation()
@@ -56,9 +51,10 @@ void EngineMock::turnAround()
 	++m_callsToTurnAround;
 }
 
-void EngineMock::turnToTarget(const Point &)
+void EngineMock::turnToTarget(const Point &target)
 {
 	++m_callsToTurnToTarget;
+	m_lastTarget = target;
 }
 
 void EngineMock::lockForwardMovement()
@@ -173,6 +169,26 @@ void EngineMock::setReachedTarget(bool value)
 void EngineMock::setIsGoingStraight(bool value)
 {
 	m_isGoingStraight = value;
+}
+
+void EngineMock::resetCounters()
+{
+	m_callsToGoToStraight = 0;
+	m_callsToGoToStraightSlowly = 0;
+	m_callsToGoToStraightThrough = 0;
+	m_callsToGoToStraightSlowlyBack = 0;
+	m_callsToStop = 0;
+	m_callsToUpdateSpeedAndMagnitude = 0;
+	m_callsToTryingToTackleObstacle = 0;
+	m_callsToTurnToTarget = 0;
+	m_callsToTurnAround = 0;
+	m_callsToLockForwardMovement = 0;
+	m_callsToUnlockForwardMovement = 0;
+}
+
+const Point &EngineMock::getLastTarget() const
+{
+	return m_lastTarget;
 }
 
 

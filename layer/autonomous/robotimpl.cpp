@@ -80,6 +80,11 @@ void RobotImpl::updateEngineForDrivingStraightPart(const Field &field)
 
 			if (m_currentRoute->getPointCount() == 1)
 				changeIntoState(RobotStateWaiting);
+			else
+			{
+				changeIntoState(RobotStateDrivingTurningPart);
+				engine.turnToTarget(m_currentRoute->getSecondPoint());
+			}
 		}
 	}
 }

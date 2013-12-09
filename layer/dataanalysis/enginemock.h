@@ -2,6 +2,7 @@
 #define ROBOHOCKEY_LAYER_DATAANALYSIS_ENGINEMOCK_H
 
 #include "layer/dataanalysis/engine.h"
+#include "common/point.h"
 
 namespace RoboHockey
 {
@@ -47,6 +48,8 @@ namespace DataAnalysis
 		void setTryingToTackleObstacle(bool value);
 		void setReachedTarget(bool value);
 		void setIsGoingStraight(bool value);
+		void resetCounters();
+		const Common::Point& getLastTarget() const;
 
 	private:
 		unsigned int m_callsToGoToStraight;
@@ -63,6 +66,7 @@ namespace DataAnalysis
 		bool m_tryingToTackleObstacle;
 		bool m_reachedTarget;
 		bool m_isGoingStraight;
+		Common::Point m_lastTarget;
 	};
 }
 }
