@@ -79,6 +79,7 @@ bool FieldImpl::calibratePosition()
 		transformCoordinateSystem(newOrigin, detector.getRotation());
 		cout << "Found borderstones -> System transformed." << endl;
 		m_fieldState = FieldStateCalibrated;
+		removeAllFieldObjectsOutsideOfField();
 	}
 	else
 		cout << "Didn't find enough borderstones." << endl;
@@ -100,10 +101,7 @@ unsigned int FieldImpl::enemyHiddenPucks()
 
 bool FieldImpl::isPointInsideField(const Point &point) const
 {
-	if (m_fieldState == FieldStateUnknownPosition)
-		return true;
-
-	return ( point.getX() < 5.0 && point.getX() > 0 && point.getY() < 3.0 && point.getY() > 0.0);
+	return isPointFuzzyInsideField(point, 0.0);
 }
 
 bool FieldImpl::numberOfPucksChanged() const
@@ -120,6 +118,9 @@ void FieldImpl::updateWithLidarData()
 
 	for (vector<DataAnalysis::LidarObject>::const_iterator i = objectsInRange.begin(); i != objectsInRange.end(); ++i)
 	{
+		if (!isPointFuzzyInsideField((*i).getCenter(), 0.5))
+			continue;
+
 		if (inVisibleArea.size() != 0)
 		{
 			vector<FieldObject>::iterator currentObject = getNextObjectFromPosition(inVisibleArea, (*i).getCenter());
@@ -346,4 +347,24 @@ vector<FieldObject> FieldImpl::moveAllFieldObjectsInVisibleAreaToTemporaryVector
 	}
 
 	return result;
+}
+
+bool FieldImpl::isPointFuzzyInsideField(const Point &point, double epsilon) const
+{
+	if (m_fieldState != FieldStateCalibrated)
+		return true;
+
+	return ( point.getX() < (5.0 + epsilon) && point.getX() > (0 -epsilon) && point.getY() < (3.0 + epsilon) && point.getY() > (0.0 - epsilon));
+}
+
+void FieldImpl::removeAllFieldObjectsOutsideOfField()
+{
+	for (vector<FieldObject>::iterator i = m_fieldObjects.begin(); i != m_fieldObjects.end(); ++i)
+	{
+		if (!isPointFuzzyInsideField((*i).getCircle().getCenter(), 0.5))
+		{
+			m_fieldObjects.erase(i);
+			i--;
+		}
+	}
 }

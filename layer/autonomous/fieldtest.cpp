@@ -189,7 +189,39 @@ void FieldTest::update_twoObjectsFromLidarAndOneFromCameraNoColorAnymoreDuringSe
 	CPPUNIT_ASSERT_EQUAL(FieldObjectColorYellow, fieldObjects.front().getColor());
 }
 
-void FieldTest::tryToDetectField_noValidPattern_false()
+void FieldTest::update_oneObjectOutAndOneObjectInsideOfCalibratedField_correctObjectAddedToField()
+{
+	DataAnalysis::OdometryMock odometry;
+	DataAnalysis::LidarMock lidar;
+	DataAnalysis::CameraMock camera;
+	Autonomous::RobotMock autonomousRobot;
+	FieldImpl field(odometry, lidar, camera, autonomousRobot);
+
+	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 1), 0.06));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 1.833), 0.06));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 2.666), 0.06));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 3.916), 0.06));
+	lidar.setAllObjects(lidarObjects);
+
+	field.update();
+
+	CPPUNIT_ASSERT_EQUAL((size_t) 4, field.getAllFieldObjects().size());
+
+	CPPUNIT_ASSERT(field.calibratePosition());
+
+	DataAnalysis::LidarObjects lidarObjectsAfterCalibration(odometry.getCurrentPosition().getPosition());
+	lidarObjectsAfterCalibration.addObject(DataAnalysis::LidarObject(Point(1,1), 0.06));
+	lidarObjectsAfterCalibration.addObject(DataAnalysis::LidarObject(Point(-2, 2.6), 0.06));
+	lidar.setAllObjects(lidarObjectsAfterCalibration);
+
+	field.update();
+
+	CPPUNIT_ASSERT_EQUAL((size_t) 1, field.getAllFieldObjects().size());
+	CPPUNIT_ASSERT_EQUAL(Point(1,1), field.getAllFieldObjects().front().getCircle().getCenter());
+}
+
+void FieldTest::calibratePosition_noValidPattern_false()
 {
 	DataAnalysis::OdometryMock odometry;
 	DataAnalysis::LidarMock lidar;
@@ -209,7 +241,7 @@ void FieldTest::tryToDetectField_noValidPattern_false()
 	CPPUNIT_ASSERT(!field.calibratePosition());
 }
 
-void FieldTest::tryToDetectField_validPattern_true()
+void FieldTest::calibratePosition_validPattern_true()
 {
 	DataAnalysis::OdometryMock odometry;
 	DataAnalysis::LidarMock lidar;
@@ -229,7 +261,7 @@ void FieldTest::tryToDetectField_validPattern_true()
 	CPPUNIT_ASSERT(field.calibratePosition());
 }
 
-void FieldTest::tryToDetectField_noValidPattern_noTransformation()
+void FieldTest::calibratePosition_noValidPattern_noTransformation()
 {
 	Compare compare(0.01);
 	DataAnalysis::OdometryMock odometry;
@@ -254,7 +286,7 @@ void FieldTest::tryToDetectField_noValidPattern_noTransformation()
 	CPPUNIT_ASSERT(compare.isFuzzyEqual(fieldObjects.front().getCircle(), lidarObjectsVector.front()));
 }
 
-void FieldTest::tryToDetectField_validPattern_transformed()
+void FieldTest::calibratePosition_validPattern_transformed()
 {
 	Compare compare(0.01);
 	DataAnalysis::OdometryMock odometry;
@@ -279,7 +311,7 @@ void FieldTest::tryToDetectField_validPattern_transformed()
 	CPPUNIT_ASSERT(!compare.isFuzzyEqual(fieldObjects.front().getCircle(), lidarObjectsVector.front()));
 }
 
-void FieldTest::tryToDetectField_validPattern_correctNumberOfFieldObjects()
+void FieldTest::calibratePosition_validPattern_correctNumberOfFieldObjects()
 {
 	DataAnalysis::OdometryMock odometry;
 	DataAnalysis::LidarMock lidar;
@@ -303,7 +335,7 @@ void FieldTest::tryToDetectField_validPattern_correctNumberOfFieldObjects()
 	CPPUNIT_ASSERT_EQUAL(lidarObjectsVector.size(), fieldObjects.size());
 }
 
-void FieldTest::tryToDetectField_validPattern_correctTransformation()
+void FieldTest::calibratePosition_validPattern_correctTransformation()
 {
 	Compare compare(0.05);
 	DataAnalysis::OdometryMock odometry;
@@ -333,7 +365,7 @@ void FieldTest::tryToDetectField_validPattern_correctTransformation()
 	CPPUNIT_ASSERT(result);
 }
 
-void FieldTest::tryToDetectField_realWorldExample_positionIsCorrect()
+void FieldTest::calibratePosition_realWorldExample_positionIsCorrect()
 {
 	Hardware::RobotMock *hardwareRobot = new Hardware::RobotMock();
 	DataAnalysis::DataAnalyserImpl dataAnalyser(hardwareRobot);
@@ -351,6 +383,30 @@ void FieldTest::tryToDetectField_realWorldExample_positionIsCorrect()
 	Compare compare(0.5);
 	RobotPosition position = odometry.getCurrentPosition();
 	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(2.5, 1.5), position.getPosition()));
+}
+
+void FieldTest::calibratePosition_validPattern_objectsOutsideFieldAreDeleted()
+{
+	Compare compare(0.05);
+	DataAnalysis::OdometryMock odometry;
+	DataAnalysis::LidarMock lidar;
+	DataAnalysis::CameraMock camera;
+	Autonomous::RobotMock autonomousRobot;
+	FieldImpl field(odometry, lidar, camera, autonomousRobot);
+
+	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 1), 0.06));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 1.833), 0.06));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 2.666), 0.06));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 3.916), 0.06));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(5.7, 1.3), 0.06));
+	lidar.setAllObjects(lidarObjects);
+
+	field.update();
+	CPPUNIT_ASSERT_EQUAL((size_t) 5, field.getAllFieldObjects().size());
+
+	field.calibratePosition();
+	CPPUNIT_ASSERT_EQUAL((size_t) 4, field.getAllFieldObjects().size());
 }
 
 void FieldTest::getObjectsWithColorOrderedByDistance_oneObjectWithCorrectColorAndOneWithNoColor_resultSizeIsCorrect()
