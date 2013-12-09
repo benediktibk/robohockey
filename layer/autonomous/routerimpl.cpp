@@ -43,7 +43,7 @@ vector<Point> RouterImpl::getPointsBesideObstacle(const Path &path, const Circle
 	vector<Point> pointsBesideObstacle;
 	PathIntersectPoints intersectionPoints = path.getIntersectPoints(obstacle);
 	Point shortPointBesideObstacle;
-	Point longPointBesdieObstacle;
+	Point longPointBesideObstacle;
 	double offsetDistanceLongPoint = sqrt(2)*0.5*(m_robotWidth + obstacle.getDiameter()) + 0.5*m_robotWidth;
 	Angle offsetAngleShortPoint = path.getAgnleBetweenStartAndEnd();
 
@@ -68,16 +68,16 @@ vector<Point> RouterImpl::getPointsBesideObstacle(const Path &path, const Circle
 			offsetAngleShortPoint = offsetAngleShortPoint + Angle::getQuarterRotation();
 
 		shortPointBesideObstacle = centerBetweenIntersectPoints + Point(offsetDistanceShortPoint, offsetAngleShortPoint);
-		longPointBesdieObstacle = centerBetweenIntersectPoints + Point(offsetDistanceLongPoint, offsetAngleShortPoint + Angle::getHalfRotation());
+		longPointBesideObstacle = centerBetweenIntersectPoints + Point(offsetDistanceLongPoint, offsetAngleShortPoint + Angle::getHalfRotation());
 	}
 	else
 	{
 		shortPointBesideObstacle = obstacle.getCenter() + Point(offsetDistanceLongPoint, offsetAngleShortPoint + Angle::getQuarterRotation());
-		longPointBesdieObstacle = obstacle.getCenter() + Point(offsetDistanceLongPoint, offsetAngleShortPoint + Angle::getThreeQuarterRotation());
+		longPointBesideObstacle = obstacle.getCenter() + Point(offsetDistanceLongPoint, offsetAngleShortPoint + Angle::getThreeQuarterRotation());
 	}
 
 	pointsBesideObstacle.push_back(shortPointBesideObstacle);
-	pointsBesideObstacle.push_back(longPointBesdieObstacle);
+	pointsBesideObstacle.push_back(longPointBesideObstacle);
 	return pointsBesideObstacle;
 }
 

@@ -185,8 +185,10 @@ void RouterTest::calculateRoute_oneBigObstacleCloseToEnd_routeIsNotIntersectingW
 	CPPUNIT_ASSERT(!route.intersectsWith(obstacles));
 }
 
-void RouterTest::calculateRoute_oneBigObstacleOnReftSideOfDirectPath_reasonableRoute()
+void RouterTest::calculateRoute_oneBigObstacleOnRightSideOfDirectPath_reasonableRoute()
 {
+	CPPUNIT_ASSERT(false);
+
 	FieldMock field;
 	RouterImpl router(0.5);
 	vector<Circle> obstacles;
