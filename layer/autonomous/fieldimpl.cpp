@@ -117,6 +117,9 @@ void FieldImpl::updateWithLidarData()
 
 	for (vector<DataAnalysis::LidarObject>::const_iterator i = objectsInRange.begin(); i != objectsInRange.end(); ++i)
 	{
+		if (!isPointFuzzyInsideField((*i).getCenter(), 0.5))
+			continue;
+
 		if (inVisibleArea.size() != 0)
 		{
 			vector<FieldObject>::iterator currentObject = getNextObjectFromPosition(inVisibleArea, (*i).getCenter());
@@ -347,7 +350,7 @@ vector<FieldObject> FieldImpl::moveAllFieldObjectsInVisibleAreaToTemporaryVector
 
 bool FieldImpl::isPointFuzzyInsideField(const Point &point, double epsilon) const
 {
-	if (m_fieldState == FieldStateUnknownPosition)
+	if (m_fieldState != FieldStateCalibrated)
 		return true;
 
 	return ( point.getX() < (5.0 + epsilon) && point.getX() > (0 -epsilon) && point.getY() < (3.0 + epsilon) && point.getY() > (0.0 - epsilon));
