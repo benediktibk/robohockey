@@ -5,6 +5,7 @@
 #include "common/compare.h"
 #include "common/path.h"
 
+using namespace std;
 using namespace RoboHockey::Common;
 using namespace RoboHockey::Layer::Autonomous;
 
@@ -36,6 +37,45 @@ void RouterTest::calculateRoute_emptyField_routeHasSameWidthAsRobot()
 	Route route = router.calculateRoute(Point(1, 1), Point(1, 2), field);
 
 	CPPUNIT_ASSERT_DOUBLES_EQUAL(0.5, route.getWidth(), 0.00001);
+}
+
+void RouterTest::calculateRoute_obstacleAtStartOfRoute_invalidRoute()
+{
+	FieldMock field;
+	RouterImpl router(0.5);
+	vector<Circle> obstacles;
+	obstacles.push_back(Circle(Point(1, 1), 0.1));
+	field.setObstacles(obstacles);
+
+	Route route = router.calculateRoute(Point(1, 1), Point(1, 10), field);
+
+	CPPUNIT_ASSERT(!route.isValid());
+}
+
+void RouterTest::calculateRoute_obstacleAtEndOfRoute_invalidRoute()
+{
+	FieldMock field;
+	RouterImpl router(0.5);
+	vector<Circle> obstacles;
+	obstacles.push_back(Circle(Point(1, 10), 0.1));
+	field.setObstacles(obstacles);
+
+	Route route = router.calculateRoute(Point(1, 1), Point(1, 10), field);
+
+	CPPUNIT_ASSERT(!route.isValid());
+}
+
+void RouterTest::calculateRoute_oneObstacleBetween_validRoute()
+{
+	FieldMock field;
+	RouterImpl router(0.5);
+	vector<Circle> obstacles;
+	obstacles.push_back(Circle(Point(1, 5), 0.1));
+	field.setObstacles(obstacles);
+
+	Route route = router.calculateRoute(Point(1, 1), Point(1, 10), field);
+
+	CPPUNIT_ASSERT(route.isValid());
 }
 
 void RouterTest::getPointsBesideObstacle_intersectFromLeftAndCircleCenterNotOnPath_shortPointIs2AndMinus1()

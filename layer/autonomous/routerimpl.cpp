@@ -1,11 +1,13 @@
 #include "layer/autonomous/routerimpl.h"
 #include "layer/autonomous/field.h"
 #include "layer/autonomous/route.h"
+#include "layer/autonomous/routelengthcompare.h"
 #include "common/path.h"
 #include "common/pathintersectpoints.h"
 #include "common/angle.h"
 #include <math.h>
 #include <assert.h>
+#include <algorithm>
 
 using namespace std;
 using namespace RoboHockey::Common;
@@ -23,7 +25,9 @@ Route RouterImpl::calculateRoute(const Point &start, const Point &end, const Fie
 		return Route(m_robotWidth);
 	else
 	{
-		return Route(m_robotWidth);
+		RouteLengthCompare lengthCompare;
+		sort(routes.begin(), routes.end(), lengthCompare);
+		return routes.front();
 	}
 }
 
