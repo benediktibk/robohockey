@@ -67,8 +67,6 @@ void RouterTest::calculateRoute_obstacleAtEndOfRoute_invalidRoute()
 
 void RouterTest::calculateRoute_oneObstacleBetween_validRoute()
 {
-	//CPPUNIT_ASSERT(false);
-
 	FieldMock field;
 	RouterImpl router(0.5);
 	vector<Circle> obstacles;
@@ -209,4 +207,24 @@ void RouterTest::getPointsBesideObstacle_pathFrom1And1To1And10AndSmallObstacleBe
 	vector<Point> pointsBeside = router.getPointsBesideObstacle(path, obstacle);
 
 	CPPUNIT_ASSERT_EQUAL((size_t)2, pointsBeside.size());
+}
+
+void RouterTest::getPointsBesideObstacle_smallObstacleBetweenAt2And0p5_shortPointIs()
+{
+	Compare compare(0.0001);
+	RouterImpl router(2);
+	Path currentPath(Point(0,0), Point(4,0), 2);
+	Circle obstacle(Point(2,0.5), 0.5);
+
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(2,3.2677), router.getPointsBesideObstacle(currentPath, obstacle).front()));
+}
+
+void RouterTest::getPointsBesideObstacle_smallObstacleBetweenAt2And0p5_longPointIs()
+{
+	Compare compare(0.0001);
+	RouterImpl router(2);
+	Path currentPath(Point(0,0), Point(4,0), 2);
+	Circle obstacle(Point(2,0.5), 0.5);
+
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(2,-2.2677), router.getPointsBesideObstacle(currentPath, obstacle).back()));
 }
