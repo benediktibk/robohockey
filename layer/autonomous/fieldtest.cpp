@@ -221,7 +221,7 @@ void FieldTest::update_oneObjectOutAndOneObjectInsideOfCalibratedField_correctOb
 	CPPUNIT_ASSERT_EQUAL(Point(1,1), field.getAllFieldObjects().front().getCircle().getCenter());
 }
 
-void FieldTest::tryToDetectField_noValidPattern_false()
+void FieldTest::calibratePosition_noValidPattern_false()
 {
 	DataAnalysis::OdometryMock odometry;
 	DataAnalysis::LidarMock lidar;
@@ -241,7 +241,7 @@ void FieldTest::tryToDetectField_noValidPattern_false()
 	CPPUNIT_ASSERT(!field.calibratePosition());
 }
 
-void FieldTest::tryToDetectField_validPattern_true()
+void FieldTest::calibratePosition_validPattern_true()
 {
 	DataAnalysis::OdometryMock odometry;
 	DataAnalysis::LidarMock lidar;
@@ -261,7 +261,7 @@ void FieldTest::tryToDetectField_validPattern_true()
 	CPPUNIT_ASSERT(field.calibratePosition());
 }
 
-void FieldTest::tryToDetectField_noValidPattern_noTransformation()
+void FieldTest::calibratePosition_noValidPattern_noTransformation()
 {
 	Compare compare(0.01);
 	DataAnalysis::OdometryMock odometry;
@@ -286,7 +286,7 @@ void FieldTest::tryToDetectField_noValidPattern_noTransformation()
 	CPPUNIT_ASSERT(compare.isFuzzyEqual(fieldObjects.front().getCircle(), lidarObjectsVector.front()));
 }
 
-void FieldTest::tryToDetectField_validPattern_transformed()
+void FieldTest::calibratePosition_validPattern_transformed()
 {
 	Compare compare(0.01);
 	DataAnalysis::OdometryMock odometry;
@@ -311,7 +311,7 @@ void FieldTest::tryToDetectField_validPattern_transformed()
 	CPPUNIT_ASSERT(!compare.isFuzzyEqual(fieldObjects.front().getCircle(), lidarObjectsVector.front()));
 }
 
-void FieldTest::tryToDetectField_validPattern_correctNumberOfFieldObjects()
+void FieldTest::calibratePosition_validPattern_correctNumberOfFieldObjects()
 {
 	DataAnalysis::OdometryMock odometry;
 	DataAnalysis::LidarMock lidar;
@@ -335,7 +335,7 @@ void FieldTest::tryToDetectField_validPattern_correctNumberOfFieldObjects()
 	CPPUNIT_ASSERT_EQUAL(lidarObjectsVector.size(), fieldObjects.size());
 }
 
-void FieldTest::tryToDetectField_validPattern_correctTransformation()
+void FieldTest::calibratePosition_validPattern_correctTransformation()
 {
 	Compare compare(0.05);
 	DataAnalysis::OdometryMock odometry;
@@ -365,7 +365,7 @@ void FieldTest::tryToDetectField_validPattern_correctTransformation()
 	CPPUNIT_ASSERT(result);
 }
 
-void FieldTest::tryToDetectField_realWorldExample_positionIsCorrect()
+void FieldTest::calibratePosition_realWorldExample_positionIsCorrect()
 {
 	Hardware::RobotMock *hardwareRobot = new Hardware::RobotMock();
 	DataAnalysis::DataAnalyserImpl dataAnalyser(hardwareRobot);
