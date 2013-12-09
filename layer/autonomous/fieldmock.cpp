@@ -57,5 +57,10 @@ bool FieldMock::numberOfPucksChanged() const
 
 unsigned int FieldMock::achievedGoals()
 {
-    return 0;
+    return m_achievedGoals;
+}
+
+void FieldMock::setAchievedGoals(unsigned int goalsAchieved)
+{
+    m_achievedGoals = goalsAchieved;
 }

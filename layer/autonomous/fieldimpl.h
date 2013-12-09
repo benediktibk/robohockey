@@ -80,6 +80,7 @@ namespace Autonomous
 		std::vector<Common::Circle> m_obstacles;
 		FieldState m_fieldState;
 		bool m_numberOfPucksChanged;
+        unsigned int m_achievedGoals;
 	};
 }
 }
