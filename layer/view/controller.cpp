@@ -59,7 +59,6 @@ Controller::Controller(Model &model) :
 	m_triangle = m_scene->addPolygon(triangle);
 
 	m_graph->setScene(m_scene);
-	m_graph->setSceneRect(0, 0, 4, 6);
 	m_graph->resize(900, 600);
 	m_graph->setBackgroundBrush(QBrush(Qt::white, Qt::SolidPattern));
 
