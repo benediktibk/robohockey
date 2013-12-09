@@ -68,8 +68,10 @@ PathIntersectPoints Path::getIntersectPoints(const Circle &circle) const
 	if(intersectPointsStart.getIntersectPointsCount() != 0)
 		return intersectPointsStart;
 	PathIntersectPoints intersectPointsEnd(endOutline.getIntersectPoints(circle), PathIntersectPoints::IntersectTypeFromEnd);
+	if(intersectPointsEnd.getIntersectPointsCount() != 0)
+		return intersectPointsEnd;
 
-	return intersectPointsEnd;
+	return PathIntersectPoints(vector<Point>(), PathIntersectPoints::IntersectTypeNoIntersect);
 }
 
 Angle Path::getAgnleBetweenStartAndEnd() const

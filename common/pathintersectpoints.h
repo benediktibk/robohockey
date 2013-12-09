@@ -14,7 +14,8 @@ public:
 	enum IntersectType { IntersectTypeFromLeft,
 						 IntersectTypeFromRight,
 						 IntersectTypeFromEnd,
-						 IntersectTypeFromStart
+						 IntersectTypeFromStart,
+						 IntersectTypeNoIntersect
 					   };
 
 public:
