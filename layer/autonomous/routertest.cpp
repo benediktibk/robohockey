@@ -105,6 +105,19 @@ void RouterTest::calculateRoute_oneObstacleBetween_routeIsNotIntersectingWithObs
 	CPPUNIT_ASSERT(!route.intersectsWith(obstacles));
 }
 
+void RouterTest::calculateRoute_oneBigObstacleCloseToStart_validRoute()
+{
+	FieldMock field;
+	RouterImpl router(0.5);
+	vector<Circle> obstacles;
+	obstacles.push_back(Circle(Point(1.3, 0), 2));
+	field.setObstacles(obstacles);
+
+	Route route = router.calculateRoute(Point(0, 0), Point(5, 0), field);
+
+	CPPUNIT_ASSERT(route.isValid());
+}
+
 void RouterTest::getPointsBesideObstacle_intersectFromLeftAndCircleCenterNotOnPath_shortPointIs2AndMinus1()
 {
 	Compare compare(0.0001);
