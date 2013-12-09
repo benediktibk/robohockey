@@ -68,6 +68,7 @@ namespace Autonomous
 		std::vector<FieldObject> getObjectsWithColor(Common::FieldObjectColor color) const;
 
 		virtual std::vector<FieldObject> moveAllFieldObjectsInVisibleAreaToTemporaryVector();
+		bool isPointFuzzyInsideField(const Common::Point &point, double epsilon) const;
 
 	private:
 		DataAnalysis::Odometry *m_odometry;

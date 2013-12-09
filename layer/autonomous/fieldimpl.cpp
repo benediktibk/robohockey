@@ -100,10 +100,7 @@ unsigned int FieldImpl::enemyHiddenPucks()
 
 bool FieldImpl::isPointInsideField(const Point &point) const
 {
-	if (m_fieldState == FieldStateUnknownPosition)
-		return true;
-
-	return ( point.getX() < 5.0 && point.getX() > 0 && point.getY() < 3.0 && point.getY() > 0.0);
+	return isPointFuzzyInsideField(point, 0.0);
 }
 
 bool FieldImpl::numberOfPucksChanged() const
@@ -346,4 +343,12 @@ vector<FieldObject> FieldImpl::moveAllFieldObjectsInVisibleAreaToTemporaryVector
 	}
 
 	return result;
+}
+
+bool FieldImpl::isPointFuzzyInsideField(const Point &point, double epsilon) const
+{
+	if (m_fieldState == FieldStateUnknownPosition)
+		return true;
+
+	return ( point.getX() < (5.0 + epsilon) && point.getX() > (0 -epsilon) && point.getY() < (3.0 + epsilon) && point.getY() > (0.0 - epsilon));
 }
