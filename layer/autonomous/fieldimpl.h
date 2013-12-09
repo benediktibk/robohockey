@@ -69,6 +69,7 @@ namespace Autonomous
 
 		virtual std::vector<FieldObject> moveAllFieldObjectsInVisibleAreaToTemporaryVector();
 		bool isPointFuzzyInsideField(const Common::Point &point, double epsilon) const;
+		void removeAllFieldObjectsOutsideOfField();
 
 	private:
 		DataAnalysis::Odometry *m_odometry;

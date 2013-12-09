@@ -79,6 +79,7 @@ bool FieldImpl::calibratePosition()
 		transformCoordinateSystem(newOrigin, detector.getRotation());
 		cout << "Found borderstones -> System transformed." << endl;
 		m_fieldState = FieldStateCalibrated;
+		removeAllFieldObjectsOutsideOfField();
 	}
 	else
 		cout << "Didn't find enough borderstones." << endl;
@@ -354,4 +355,16 @@ bool FieldImpl::isPointFuzzyInsideField(const Point &point, double epsilon) cons
 		return true;
 
 	return ( point.getX() < (5.0 + epsilon) && point.getX() > (0 -epsilon) && point.getY() < (3.0 + epsilon) && point.getY() > (0.0 - epsilon));
+}
+
+void FieldImpl::removeAllFieldObjectsOutsideOfField()
+{
+	for (vector<FieldObject>::iterator i = m_fieldObjects.begin(); i != m_fieldObjects.end(); ++i)
+	{
+		if (!isPointFuzzyInsideField((*i).getCircle().getCenter(), 0.5))
+		{
+			m_fieldObjects.erase(i);
+			i--;
+		}
+	}
 }
