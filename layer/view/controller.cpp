@@ -147,6 +147,7 @@ FieldObjectColor Controller::getSeletectedPuckColor() const
 
 QPointF Controller::calculatePositionInGUI(const Point &/*point*/)
 {
+	//! @todo implement this and replace all point-calculations with these functions here
 	return QPointF();
 }
 
