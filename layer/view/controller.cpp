@@ -144,12 +144,6 @@ FieldObjectColor Controller::getSeletectedPuckColor() const
 	}
 }
 
-QPointF Controller::calculatePositionInGUI(const Point &/*point*/)
-{
-	//! @todo implement this and replace all point-calculations with these functions here
-	return QPointF();
-}
-
 Point Controller::calculatePositionInReal(const QPointF &point)
 {
 	return Point(point.x() / (double) m_pixelPerMeter, -1.0 * point.y() / (double) m_pixelPerMeter);

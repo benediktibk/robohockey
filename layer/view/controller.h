@@ -65,7 +65,6 @@ namespace View
 		QString convertIntoString(double value) const;
 		QString convertIntoString(const Common::Point &value) const;
 		Common::FieldObjectColor getSeletectedPuckColor() const;
-		QPointF calculatePositionInGUI(const Common::Point &point);
 		Common::Point calculatePositionInReal(const QPointF &point);
 
 	private:
