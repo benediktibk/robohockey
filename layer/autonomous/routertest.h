@@ -24,6 +24,7 @@ namespace Autonomous
 		CPPUNIT_TEST(calculateRoute_oneObstacleBetween_routeIsNotIntersectingWithObstacles);
 		CPPUNIT_TEST(calculateRoute_oneBigObstacleCloseToStart_validRoute);
 		CPPUNIT_TEST(calculateRoute_oneBigObstacleCloseToStart_routeIsNotTooLong);
+		CPPUNIT_TEST(calculateRoute_oneBigObstacleCloseToStart_routeIsNotIntersectingWithObstacles);
 		CPPUNIT_TEST(getPointsBesideObstacle_intersectFromLeftAndCircleCenterNotOnPath_shortPointIs2AndMinus1);
 		CPPUNIT_TEST(getPointsBesideObstacle_intersectFromLeftAndCircleCenterNotOnPath_longPointIs2And6p4142);
 		CPPUNIT_TEST(getPointsBesideObstacle_intersectFromRightAndCircleCenterNotOnPath_shortPointIs2And3);
@@ -52,6 +53,7 @@ namespace Autonomous
 		void calculateRoute_oneObstacleBetween_routeIsNotIntersectingWithObstacles();
 		void calculateRoute_oneBigObstacleCloseToStart_validRoute();
 		void calculateRoute_oneBigObstacleCloseToStart_routeIsNotTooLong();
+		void calculateRoute_oneBigObstacleCloseToStart_routeIsNotIntersectingWithObstacles();
 		void getPointsBesideObstacle_intersectFromLeftAndCircleCenterNotOnPath_shortPointIs2AndMinus1();
 		void getPointsBesideObstacle_intersectFromLeftAndCircleCenterNotOnPath_longPointIs2And6p4142();
 		void getPointsBesideObstacle_intersectFromRightAndCircleCenterNotOnPath_shortPointIs2And3();
