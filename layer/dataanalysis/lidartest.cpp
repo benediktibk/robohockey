@@ -415,6 +415,20 @@ void LidarTest::getAllObjects_twoBorderStonesInFrontOfWall_objectCountIs2()
 	CPPUNIT_ASSERT_EQUAL((size_t)2, objectsInForeground.size());
 }
 
+void LidarTest::getAllObjects_puckInFrontOfOtherRobot_puckIsDetetected()
+{
+	Hardware::LidarMock hardwareLidar;
+	hardwareLidar.readSensorDataFromFile("resources/testfiles/lidar_37.txt");
+	LidarImpl lidar(hardwareLidar);
+	RobotPosition ownPosition(Point(0, 0), 0);
+
+	lidar.updateSensorData();
+	LidarObjects objects = lidar.getAllObjects(ownPosition);
+
+	vector<LidarObject> objectsInForeground = objects.getObjectsWithDistanceBelow(1);
+	CPPUNIT_ASSERT_EQUAL((size_t)1, objectsInForeground.size());
+}
+
 void LidarTest::isObstacleInFront_noObstacleInFront_false()
 {
 	Hardware::LidarMock hardwareLidar;
