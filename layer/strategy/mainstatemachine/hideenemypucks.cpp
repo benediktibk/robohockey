@@ -1,7 +1,7 @@
 #include "layer/strategy/mainstatemachine/hideenemypucks.h"
-#include "layer/strategy/mainstatemachine/referee.h"
-#include "layer/autonomous/field.h"
 #include "layer/strategy/mainstatemachine/drivetofinalposition.h"
+#include "layer/strategy/common/referee.h"
+#include "layer/autonomous/field.h"
 
 using namespace RoboHockey::Layer::Strategy::Common;
 using namespace RoboHockey::Layer::Strategy::MainStateMachine;

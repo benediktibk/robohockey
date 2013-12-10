@@ -3,10 +3,9 @@
 #include "layer/strategy/common/statemock.h"
 #include "layer/autonomous/robotmock.h"
 #include "layer/autonomous/fieldmock.h"
-#include "layer/strategy/mainstatemachine/refereemock.h"
+#include "layer/strategy/common/refereemock.h"
 
 using namespace RoboHockey::Layer::Strategy::Common;
-using namespace RoboHockey::Layer::Strategy::MainStateMachine;
 using namespace RoboHockey::Layer::Autonomous;
 
 void StateMachineTest::update_empty_stateGotAtLeastOneCallToNextState()

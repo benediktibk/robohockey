@@ -16,7 +16,7 @@ class DriveToFinalPosition:
         public Common::State
     {
     public:
-        DriveToFinalPosition(Autonomous::Robot &robot, Autonomous::Field &field, MainStateMachine::Referee &referee);
+		DriveToFinalPosition(Autonomous::Robot &robot, Autonomous::Field &field, Common::Referee &referee);
 
         virtual State* nextState();
         virtual void update();

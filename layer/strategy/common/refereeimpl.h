@@ -1,7 +1,7 @@
-#ifndef ROBOHOCKEY_LAYER_STRATEGY_MAINSTATEMACHINE_REFEREEIMPL_H
-#define ROBOHOCKEY_LAYER_STRATEGY_MAINSTATEMACHINE_REFEREEIMPL_H
+#ifndef ROBOHOCKEY_LAYER_STRATEGY_COMMON_REFEREEIMPL_H
+#define ROBOHOCKEY_LAYER_STRATEGY_COMMON_REFEREEIMPL_H
 
-#include "layer/strategy/mainstatemachine/referee.h"
+#include "layer/strategy/common/referee.h"
 #include <QtCore/QObject>
 
 namespace Extern
@@ -18,7 +18,7 @@ namespace Layer
 {
 namespace Strategy
 {
-namespace MainStateMachine
+namespace Common
 {
     class RefereeImpl :
             public QObject,

@@ -324,8 +324,6 @@ layer/strategy/common/statemock.h
 layer/strategy/common/statemachinetest.h
 layer/strategy/common/statemachine.h
 layer/strategy/common/state.h
-layer/strategy/mainstatemachine/refereemock.cpp
-layer/strategy/mainstatemachine/refereeimpl.cpp
 layer/strategy/mainstatemachine/pausetest.cpp
 layer/strategy/mainstatemachine/pause.cpp
 layer/strategy/mainstatemachine/initialstatetest.cpp
@@ -336,9 +334,6 @@ layer/strategy/mainstatemachine/calibratetest.cpp
 layer/strategy/mainstatemachine/calibrate.cpp
 layer/strategy/mainstatemachine/achievegoalstest.cpp
 layer/strategy/mainstatemachine/achievegoals.cpp
-layer/strategy/mainstatemachine/refereemock.h
-layer/strategy/mainstatemachine/refereeimpl.h
-layer/strategy/mainstatemachine/referee.h
 layer/strategy/mainstatemachine/pausetest.h
 layer/strategy/mainstatemachine/pause.h
 layer/strategy/mainstatemachine/initialstatetest.h
@@ -358,3 +353,9 @@ layer/strategy/mainstatemachine/drivetofinalpositiontest.cpp
 layer/strategy/mainstatemachine/drivetofinalposition.cpp
 layer/strategy/fielddetectionstatemachine/CMakeLists.txt
 layer/strategy/drivepuckstatemachine/CMakeLists.txt
+layer/strategy/common/refereemock.cpp
+layer/strategy/common/refereeimpl.cpp
+layer/strategy/common/refereemock.h
+layer/strategy/common/refereeimpl.h
+layer/strategy/common/referee.h
+layer/strategy/common/statemock.cpp

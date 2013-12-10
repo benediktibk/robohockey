@@ -1,6 +1,6 @@
 #include "layer/strategy/mainstatemachine/pause.h"
 #include "layer/strategy/mainstatemachine/calibrate.h"
-#include "layer/strategy/mainstatemachine/referee.h"
+#include "layer/strategy/common/referee.h"
 
 using namespace RoboHockey::Layer::Strategy::Common;
 using namespace RoboHockey::Layer::Strategy::MainStateMachine;

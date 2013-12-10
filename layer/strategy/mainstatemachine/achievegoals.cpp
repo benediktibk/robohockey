@@ -1,5 +1,5 @@
 #include "layer/strategy/mainstatemachine/achievegoals.h"
-#include "layer/strategy/mainstatemachine/referee.h"
+#include "layer/strategy/common/referee.h"
 #include "layer/autonomous/field.h"
 #include "layer/strategy/mainstatemachine/pause.h"
 #include "layer/strategy/mainstatemachine/hideenemypucks.h"
