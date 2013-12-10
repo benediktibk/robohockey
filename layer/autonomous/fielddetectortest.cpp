@@ -66,3 +66,20 @@ void FieldDetectorTest::tryToDetectField_5invalidPoints_false()
 
 	CPPUNIT_ASSERT(!result);
 }
+
+void FieldDetectorTest::tryToDetectField_7validPoints_true()
+{
+	vector<Point> testPoints;
+	testPoints.push_back(Point(1,-0.25));
+	testPoints.push_back(Point(1,-0.666));
+	testPoints.push_back(Point(1,1));
+	testPoints.push_back(Point(1,1.833));
+	testPoints.push_back(Point(1,2.666));
+	testPoints.push_back(Point(1,3.916));
+	testPoints.push_back(Point(1,4.333));
+
+	FieldDetector fieldDetector(Point(), testPoints);
+	bool result = fieldDetector.tryToDetectField();
+
+	CPPUNIT_ASSERT(result);
+}

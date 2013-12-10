@@ -18,6 +18,7 @@ namespace Autonomous
 		CPPUNIT_TEST(tryToDetectField_4validFieldPoints_correctNewOrigin);
 		CPPUNIT_TEST(tryToDetectField_4validFieldPoints_correctRotation);
 		CPPUNIT_TEST(tryToDetectField_5invalidPoints_false);
+		CPPUNIT_TEST(tryToDetectField_7validPoints_true);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
@@ -25,6 +26,7 @@ namespace Autonomous
 		void tryToDetectField_4validFieldPoints_correctNewOrigin();
 		void tryToDetectField_4validFieldPoints_correctRotation();
 		void tryToDetectField_5invalidPoints_false();
+		void tryToDetectField_7validPoints_true();
 
 
 	};
