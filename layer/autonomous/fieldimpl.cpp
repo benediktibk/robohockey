@@ -222,7 +222,7 @@ vector<FieldObject>::iterator FieldImpl::getNextObjectFromPosition(std::vector<F
 
 bool FieldImpl::tryToMergeLidarAndFieldObject(FieldObject &fieldObject, const DataAnalysis::LidarObject &lidarObject)
 {
-	Compare positionCompare(0.09);
+	Compare positionCompare(0.15);
 	Point newCenter;
 	double diameter = 0.0;
 
