@@ -12,8 +12,6 @@ namespace Strategy
 {
 namespace MainStateMachine
 {
-    class Calibrate;
-    class AchieveGoals;
     class Pause :
 			public Common::State
     {

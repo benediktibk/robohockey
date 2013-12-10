@@ -12,11 +12,23 @@ namespace Strategy
 {
 namespace MainStateMachine
 {
-	class PauseTest
+    class PauseTest :
+            public CPPUNIT_NS::TestFixture
 	{
-	public:
-		PauseTest();
+        CPPUNIT_TEST_SUITE(PauseTest);
+        CPPUNIT_TEST(nextState_detectionStart_Calibrate);
+        CPPUNIT_TEST(nextState_gameStart_AchieveGoals);
+        CPPUNIT_TEST(nextState_achieveGoals2_AchieveGoals);
+        CPPUNIT_TEST(nextState_gameOver_Pause);
+        CPPUNIT_TEST(nextState_stopMovement_Pause);
+        CPPUNIT_TEST_SUITE_END();
 
+    private:
+        void nextState_detectionStart_Calibrate();
+        void nextState_gameStart_AchieveGoals();
+        void nextState_achieveGoals2_AchieveGoals();
+        void nextState_gameOver_Pause();
+        void nextState_stopMovement_Pause();
 	};
 }
 }
@@ -24,5 +36,3 @@ namespace MainStateMachine
 }
 
 #endif
-
-
