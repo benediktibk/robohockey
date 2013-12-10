@@ -35,12 +35,12 @@ bool LidarMock::isPuckCollected() const
 
 Angle LidarMock::getMaximumAngleRight() const
 {
-	return Angle::getQuarterRotation();
+	return Angle::getQuarterRotation()*(-1);
 }
 
 Angle LidarMock::getMaximumAngleLeft() const
 {
-	return Angle::getQuarterRotation()*(-1);
+	return Angle::getQuarterRotation();
 }
 
 void LidarMock::setAllObjects(const LidarObjects &objects)
