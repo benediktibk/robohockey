@@ -355,8 +355,10 @@ void RouterTest::calculateRoute_onlyPossiblePointBesideIsBlockedByAnotherObstacl
 	obstacles.push_back(Circle(Point(5, 1), 2));
 	obstacles.push_back(Circle(Point(5, 2.5), 1));
 	field.setObstacles(obstacles);
+	RobotPosition start(Point(0, 0), 0);
+	RobotPosition end(Point(10, 0), 0);
 
-	Route route = router.calculateRoute(Point(0, 0), Point(10, 0), field);
+	Route route = router.calculateRoute(start, end, field);
 
 	CPPUNIT_ASSERT(route.isValid());
 	CPPUNIT_ASSERT(!route.intersectsWith(obstacles));
