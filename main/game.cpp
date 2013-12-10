@@ -72,7 +72,7 @@ void Game::execute()
 	 * but still the loop time is very high. Therefore we check if
 	 * the robot is moving previously to avoid this problem.
 	 */
-	bool isMoving = m_robot->isMoving();
+	bool isMovingPreviously = m_robot->isMoving();
 	m_robot->updateSensorData();
 	double timeForSensorUpdate = watch.getTimeAndRestart();
 	m_field->update();
@@ -81,9 +81,10 @@ void Game::execute()
 	double timeForLogic = watch.getTimeAndRestart();
 	m_robot->updateActuators(*m_field);
 	double timeForActuatorUpdate = watch.getTimeAndRestart();
+	bool isMovingAfterwards = m_robot->isMoving();
 
 	double timeDifference = m_watch->getTimeAndRestart();
-	if (timeDifference > 0.11 && isMoving)
+	if (timeDifference > 0.11 && isMovingPreviously && isMovingAfterwards)
 	{
 		printTimeInMs("loop time is too high", timeDifference);
 		printTimeInMs("time spent on sensor updates", timeForSensorUpdate);
