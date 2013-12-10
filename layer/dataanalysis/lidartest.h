@@ -27,8 +27,8 @@ namespace DataAnalysis
 		CPPUNIT_TEST(getAllObjects_oneTooBigObjectInFront_objectCountIs0);
 		CPPUNIT_TEST(getAllObjects_lookingIntoLeftUpperDirectionAndObjectSlightlyLeft_onlyObjectIsCorrect);
 		CPPUNIT_TEST(getAllObjects_twoObjects_objectCountIs2);
-		CPPUNIT_TEST(getAllObjects_oneObjectBehindAnotherOneLeft_objectCountIs2);
-		CPPUNIT_TEST(getAllObjects_oneObjectBehindAnotherOneRight_objectCountIs2);
+		CPPUNIT_TEST(getAllObjects_oneObjectBehindAnotherOneLeft_objectCountIsAtLeast1);
+		CPPUNIT_TEST(getAllObjects_oneObjectBehindAnotherOneRight_objectCountIsAtLeast1);
 		CPPUNIT_TEST(getAllObjects_objectAtLeftBorder_objectCountIs0);
 		CPPUNIT_TEST(getAllObjects_objectAtRightBorder_objectCountIs0);
 		CPPUNIT_TEST(getAllObjects_realWorldExample_runsThroughWithoutACrash);
@@ -41,6 +41,7 @@ namespace DataAnalysis
 		CPPUNIT_TEST(getAllObjects_maximumDistanceToBoundaryPostOfOwnFieldPart_distanceAndDiameterIsCorrect);
 		CPPUNIT_TEST(getAllObjects_twoObjectsInFrontOfWall_objectCountIs2);
 		CPPUNIT_TEST(getAllObjects_twoObjectsWithADistanceOfOneMeter_objectCountIs2);
+		CPPUNIT_TEST(getAllObjects_twoBorderStonesInFrontOfWall_objectCountIs2);
 		CPPUNIT_TEST(isObstacleInFront_noObstacleInFront_false);
 		CPPUNIT_TEST(isObstacleInFront_puckCollected_false);
 		CPPUNIT_TEST(isObstacleInFront_obstacleOnLeftSide_true);
@@ -81,8 +82,8 @@ namespace DataAnalysis
 		void getAllObjects_oneTooBigObjectInFront_objectCountIs0();
 		void getAllObjects_lookingIntoLeftUpperDirectionAndObjectSlightlyLeft_onlyObjectIsCorrect();
 		void getAllObjects_twoObjects_objectCountIs2();
-		void getAllObjects_oneObjectBehindAnotherOneLeft_objectCountIs2();
-		void getAllObjects_oneObjectBehindAnotherOneRight_objectCountIs2();
+		void getAllObjects_oneObjectBehindAnotherOneLeft_objectCountIsAtLeast1();
+		void getAllObjects_oneObjectBehindAnotherOneRight_objectCountIsAtLeast1();
 		void getAllObjects_objectAtLeftBorder_objectCountIs0();
 		void getAllObjects_objectAtRightBorder_objectCountIs0();
 		void getAllObjects_realWorldExample_runsThroughWithoutACrash();
@@ -95,6 +96,7 @@ namespace DataAnalysis
 		void getAllObjects_maximumDistanceToBoundaryPostOfOwnFieldPart_distanceAndDiameterIsCorrect();
 		void getAllObjects_twoObjectsInFrontOfWall_objectCountIs2();
 		void getAllObjects_twoObjectsWithADistanceOfOneMeter_objectCountIs2();
+		void getAllObjects_twoBorderStonesInFrontOfWall_objectCountIs2();
 		void isObstacleInFront_noObstacleInFront_false();
 		void isObstacleInFront_puckCollected_false();
 		void isObstacleInFront_obstacleOnLeftSide_true();

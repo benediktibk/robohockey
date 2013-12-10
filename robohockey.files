@@ -352,3 +352,4 @@ layer/autonomous/routelengthcomparetest.h
 layer/autonomous/routelengthcompare.h
 layer/autonomous/routelengthcomparetest.cpp
 layer/autonomous/routelengthcompare.cpp
+resources/testfiles/lidar_36.txt

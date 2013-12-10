@@ -17,7 +17,7 @@ LidarImpl::LidarImpl(Hardware::Lidar &lidar) :
 	m_lidar(lidar),
 	m_minimumSensorNumber(lidar.getMinimumSensorNumber()),
 	m_maximumSensorNumber(lidar.getMaximumSensorNumber()),
-	m_edgeTreshold(0.25),
+	m_edgeTreshold(0.14),
 	m_minimumWidthInSensorNumbers(3),
 	m_maximumWidthInMeter(0.7),
 	m_maximumDistance(4),
