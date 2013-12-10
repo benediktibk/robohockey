@@ -5,6 +5,7 @@
 #include "common/path.h"
 #include "common/pathintersectpoints.h"
 #include "common/angle.h"
+#include "common/line.h"
 #include <math.h>
 #include <assert.h>
 #include <algorithm>
@@ -27,7 +28,7 @@ Route RouterImpl::calculateRoute(const Point &start, const Point &end, const Fie
 	if (startPart.intersectsWith(obstacles))
 		return Route(m_robotWidth);
 
-	vector<Route> routes = calculateStartParts(start, end, field, obstacles, 0);
+	vector<Route> routes = calculateStartParts(start, end, field, obstacles, 0, true, true);
 
 	if (routes.size() == 0)
 		return Route(m_robotWidth);
@@ -84,7 +85,7 @@ vector<Point> RouterImpl::getPointsBesideObstacle(const Path &path, const Circle
 
 vector<Route> RouterImpl::calculateStartParts(
 		const Point &start, const Point &end, const Field &field,
-		const vector<Circle> &obstacles, unsigned int searchDepth) const
+		const vector<Circle> &obstacles, unsigned int searchDepth, bool /*canGoLeft*/, bool /*canGoRight*/) const
 {
 	vector<Route> result;
 
@@ -111,9 +112,9 @@ vector<Route> RouterImpl::calculateStartParts(
 	Circle closestObstacle = findClosestObstacle(realObstacles, start);
 	vector<Point> pointsBesideObstacle = getPointsBesideObstacle(directPath, closestObstacle);
 	assert(pointsBesideObstacle.size() == 2);
-
-	if (start.distanceTo(pointsBesideObstacle.front()) > start.distanceTo(pointsBesideObstacle.back()))
-		reverse(pointsBesideObstacle.begin(), pointsBesideObstacle.end());
+//	Line line(start, end);
+//	Point leftPoint;
+//	Point rightPoint;
 
 	for (vector<Point>::const_iterator i = pointsBesideObstacle.begin(); i != pointsBesideObstacle.end() && result.size() == 0; ++i)
 	{
@@ -122,7 +123,7 @@ vector<Route> RouterImpl::calculateStartParts(
 		if (!field.isPointInsideField(pointBesideObstacle))
 			continue;
 
-		vector<Route> startParts = calculateStartParts(start, pointBesideObstacle, field, obstacles, searchDepth);
+		vector<Route> startParts = calculateStartParts(start, pointBesideObstacle, field, obstacles, searchDepth, true, true);
 		vector<Route> completeRoutes = calculateEndParts(startParts, end, field, obstacles, searchDepth);
 		result.insert(result.end(), completeRoutes.begin(), completeRoutes.end());
 	}
@@ -140,7 +141,7 @@ vector<Route> RouterImpl::calculateEndParts(
 	{
 		const Route &startRoute = *i;
 		const Common::Point &start = startRoute.getLastPoint();
-		vector<Route> routes = calculateStartParts(start, end, field, obstacles, searchDepth);
+		vector<Route> routes = calculateStartParts(start, end, field, obstacles, searchDepth, true, true);
 
 		for (vector<Route>::const_iterator j = routes.begin(); j != routes.end(); ++j)
 		{
