@@ -340,6 +340,24 @@ void RouterTest::calculateRoute_shortWayOutsideField_noPointOfRouteIsOutside()
 	CPPUNIT_ASSERT(routeIsInsideField(route, field));
 }
 
+void RouterTest::calculateRoute_onlyPossiblePointBesideIsBlockedByAnotherObstacle_reasonableRoute()
+{
+	FieldMock field;
+	field.setNegativeCoordinatesOutside(true);
+	RouterImpl router(0.5);
+	vector<Circle> obstacles;
+	obstacles.push_back(Circle(Point(5, 1), 2));
+	obstacles.push_back(Circle(Point(5, 2.5), 1));
+	field.setObstacles(obstacles);
+
+	Route route = router.calculateRoute(Point(0, 0), Point(10, 0), field);
+
+	CPPUNIT_ASSERT(route.isValid());
+	CPPUNIT_ASSERT(!route.intersectsWith(obstacles));
+	double routeLength = route.getLength();
+	CPPUNIT_ASSERT(routeLength < 10);
+}
+
 void RouterTest::getPointsBesideObstacle_intersectFromLeftAndCircleCenterNotOnPath_shortPointIs2AndMinus1()
 {
 	Compare compare(0.0001);
