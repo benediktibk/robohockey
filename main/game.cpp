@@ -87,7 +87,12 @@ void Game::execute()
 	double timeForEventProcessing =
 			timeDifference -
 			(timeForActuatorUpdate + timeForFieldUpdate + timeForLogic + timeForSensorUpdate);
-	if (timeDifference > 0.11 && isMovingPreviously && isMovingAfterwards)
+
+	/*!
+	 * Actually we get data every 100ms, but the Read-function of
+	 * the player client sometimes needs up to 160ms.
+	 */
+	if (timeDifference > 0.17 && isMovingPreviously && isMovingAfterwards)
 	{
 		printTimeInMs("loop time is too high", timeDifference);
 		printTimeInMs("time spent on sensor updates", timeForSensorUpdate);
