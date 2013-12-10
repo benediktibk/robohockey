@@ -83,6 +83,7 @@ namespace Autonomous
 		FieldState m_fieldState;
 		bool m_numberOfPucksChanged;
         unsigned int m_achievedGoals;
+        unsigned int m_hiddenPucks;
 	};
 }
 }
