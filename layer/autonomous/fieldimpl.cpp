@@ -96,7 +96,7 @@ unsigned int FieldImpl::achievedGoals()
 
 unsigned int FieldImpl::enemyHiddenPucks()
 {
-    return 0;
+    return m_hiddenPucks;
 }
 
 bool FieldImpl::isPointInsideField(const Point &point) const

@@ -6,6 +6,7 @@
 #include "common/pathintersectpoints.h"
 #include "common/angle.h"
 #include "common/line.h"
+#include "common/robotposition.h"
 #include <math.h>
 #include <assert.h>
 #include <algorithm>
@@ -20,15 +21,15 @@ RouterImpl::RouterImpl(double robotWidth) :
 	m_robotWidth(robotWidth)
 { }
 
-Route RouterImpl::calculateRoute(const Point &start, const Point &end, const Field &field) const
+Route RouterImpl::calculateRoute(const RobotPosition &start, const RobotPosition &end, const Field &field) const
 {
-	Path startPart(start, start, m_robotWidth);
+	Path startPart(start.getPosition(), start.getPosition(), m_robotWidth);
 	const vector<Circle> obstacles = field.getAllObstacles();
 
 	if (startPart.intersectsWith(obstacles))
 		return Route(m_robotWidth);
 
-	vector<Route> routes = calculateStartParts(start, end, field, obstacles, 0, true, true);
+	vector<Route> routes = calculateStartParts(start.getPosition(), end.getPosition(), field, obstacles, 0, true, true);
 
 	if (routes.size() == 0)
 		return Route(m_robotWidth);
@@ -65,9 +66,17 @@ vector<Point> RouterImpl::getPointsBesideObstacle(const Path &path, const Circle
 			offsetDistanceLongPoint -= centerBetweenIntersectPoints.distanceTo(obstacle.getCenter());
 		}
 		if(intersectionPoints.getIntersectTypeFrom() == PathIntersectPoints::IntersectTypeFromLeft)
+		{
 			offsetAngleShortPoint = offsetAngleShortPoint + Angle::getThreeQuarterRotation();
+			if(Line(intersectionPoints.front(), intersectionPoints.back()).isTargetPointRightOfLine(obstacle.getCenter()) && !path.isCircleCenterOnPath(obstacle))
+				offsetAngleShortPoint = offsetAngleShortPoint- Angle::getHalfRotation();
+		}
 		else
+		{
 			offsetAngleShortPoint = offsetAngleShortPoint + Angle::getQuarterRotation();
+			if(!Line(intersectionPoints.front(), intersectionPoints.back()).isTargetPointRightOfLine(obstacle.getCenter()) && !path.isCircleCenterOnPath(obstacle))
+				offsetAngleShortPoint = offsetAngleShortPoint- Angle::getHalfRotation();
+		}
 
 		shortPointBesideObstacle = centerBetweenIntersectPoints + Point(offsetDistanceShortPoint, offsetAngleShortPoint);
 		longPointBesideObstacle = centerBetweenIntersectPoints + Point(offsetDistanceLongPoint, offsetAngleShortPoint + Angle::getHalfRotation());

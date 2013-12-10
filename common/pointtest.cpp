@@ -149,20 +149,3 @@ void PointTest::rotate_3And4By2_correctResult()
 	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(-4.8856302169442, 1.0633049342885), point));
 }
 
-void PointTest::isTargetPointRightOfLine_rightOfLine_true()
-{
-	Point start(1, 2);
-	Point direction(1, 1.5);
-	Point target(5, -10);
-
-	CPPUNIT_ASSERT(Point::isTargetPointRightOfLine(start, direction, target));
-}
-
-void PointTest::isTargetPointRightOfLine_leftOfLine_false()
-{
-	Point start(1, 2);
-	Point direction(1, 1.5);
-	Point target(-15, 10);
-
-	CPPUNIT_ASSERT(!Point::isTargetPointRightOfLine(start, direction, target));
-}

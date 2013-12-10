@@ -5,6 +5,8 @@
 #include "common/compare.h"
 #include "common/path.h"
 #include "common/watch.h"
+#include "common/angle.h"
+#include "common/robotposition.h"
 #include <assert.h>
 
 using namespace std;

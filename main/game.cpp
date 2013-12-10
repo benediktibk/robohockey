@@ -5,7 +5,7 @@
 #include "layer/autonomous/robotimpl.h"
 #include "layer/autonomous/fieldimpl.h"
 #include "layer/autonomous/routerimpl.h"
-#include "layer/strategy/refereeimpl.h"
+#include "layer/strategy/mainstatemachine/refereeimpl.h"
 #include <QtCore/QCoreApplication>
 #include <QtCore/QTimer>
 #include <iostream>
@@ -40,7 +40,7 @@ Game::Game(int argc, char **argv) :
 	m_field = new Autonomous::FieldImpl(
 				dataAnalyser->getOdometry(), dataAnalyser->getLidar(),
 				dataAnalyser->getCamera(), *m_robot);
-	m_referee = new Strategy::RefereeImpl();
+	m_referee = new Strategy::MainStateMachine::RefereeImpl();
 
 	connect(m_timer, SIGNAL(timeout()), this, SLOT(execute()));
 
@@ -118,7 +118,7 @@ Autonomous::Field &Game::getField()
 	return *m_field;
 }
 
-Strategy::Referee &Game::getReferee()
+Strategy::MainStateMachine::Referee &Game::getReferee()
 {
 	return *m_referee;
 }

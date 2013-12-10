@@ -11,6 +11,7 @@ namespace Common
 	class Point;
 	class Circle;
 	class Path;
+	class RobotPosition;
 }
 
 namespace Layer
@@ -25,7 +26,7 @@ namespace Autonomous
 	public:
 		RouterImpl(double robotWidth);
 
-		virtual Route calculateRoute(const Common::Point &start, const Common::Point &end, const Field &field) const;
+		virtual Route calculateRoute(const RoboHockey::Common::RobotPosition &start, const RoboHockey::Common::RobotPosition &end, const Field &field) const;
 		std::vector<Common::Point> getPointsBesideObstacle(const Common::Path &path, const Common::Circle &obstacle) const;
 
 	private:

@@ -15,7 +15,7 @@ namespace Autonomous
 	public:
 		RouterMock();
 
-		virtual Route calculateRoute(const Common::Point &start, const Common::Point &end, const Field &field) const;
+		virtual Route calculateRoute(const Common::RobotPosition &start, const Common::RobotPosition &end, const Field &field) const;
 		void setChessMode(bool value);
 
 	private:

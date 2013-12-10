@@ -9,7 +9,10 @@ namespace Layer
 {
 namespace Strategy
 {
+namespace Common
+{
 	class StateMachine;
+}
 }
 }
 
@@ -28,7 +31,7 @@ namespace Main
 		virtual void executeRobotControl();
 
 	private:
-		Layer::Strategy::StateMachine *m_stateMachine;
+		Layer::Strategy::Common::StateMachine *m_stateMachine;
 	};
 }
 }

@@ -22,6 +22,7 @@ namespace Autonomous
 		virtual std::vector<FieldObject> getObjectsWithColorOrderdByDistance(Common::FieldObjectColor color, const Common::Point &position) const;
 		virtual unsigned int achievedGoals();
 		virtual void setAchievedGoals(unsigned int goalsAchieved);
+        virtual void setEnemyHiddenPucks(unsigned int enemyHiddenPucks);
 		virtual bool calibratePosition();
 		virtual bool isPointInsideField(const Common::Point &point) const;
 		virtual unsigned int enemyHiddenPucks();
@@ -36,6 +37,7 @@ namespace Autonomous
 		std::vector<Common::Circle> m_obstacles;
 		unsigned int m_achievedGoals;
 		bool m_negativeCoordinatesOutside;
+        unsigned int m_hiddenPucks;
 	};
 }
 }

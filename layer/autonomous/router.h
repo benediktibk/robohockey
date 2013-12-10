@@ -5,7 +5,7 @@ namespace RoboHockey
 {
 namespace Common
 {
-	class Point;
+	class RobotPosition;
 }
 
 namespace Layer
@@ -20,7 +20,7 @@ namespace Autonomous
 	public:
 		virtual ~Router() { }
 
-		virtual Route calculateRoute(const Common::Point &start, const Common::Point &end, const Field &field) const = 0;
+		virtual Route calculateRoute(const Common::RobotPosition &start, const Common::RobotPosition &end, const Field &field) const = 0;
 	};
 }
 }
