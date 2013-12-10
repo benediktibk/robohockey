@@ -356,3 +356,5 @@ layer/strategy/mainstatemachine/drivetofinalpositiontest.h
 layer/strategy/mainstatemachine/drivetofinalposition.h
 layer/strategy/mainstatemachine/drivetofinalpositiontest.cpp
 layer/strategy/mainstatemachine/drivetofinalposition.cpp
+layer/strategy/fielddetectionstatemachine/CMakeLists.txt
+layer/strategy/drivepuckstatemachine/CMakeLists.txt
