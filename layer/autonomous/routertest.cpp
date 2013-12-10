@@ -5,6 +5,7 @@
 #include "common/compare.h"
 #include "common/path.h"
 #include "common/watch.h"
+#include <assert.h>
 
 using namespace std;
 using namespace RoboHockey::Common;
@@ -323,6 +324,22 @@ void RouterTest::calculateRoute_severalObjectsAndOneOnTheWay_calculationIsNotToo
 	CPPUNIT_ASSERT(time < 0.2);
 }
 
+void RouterTest::calculateRoute_shortWayOutsideField_noPointOfRouteIsOutside()
+{
+	FieldMock field;
+	field.setNegativeCoordinatesOutside(true);
+	RouterImpl router(0.5);
+	vector<Circle> obstacles;
+	obstacles.push_back(Circle(Point(5, 1), 2));
+	field.setObstacles(obstacles);
+
+	Route route = router.calculateRoute(Point(0, 0), Point(10, 0), field);
+
+	CPPUNIT_ASSERT(route.isValid());
+	CPPUNIT_ASSERT(!route.intersectsWith(obstacles));
+	CPPUNIT_ASSERT(routeIsInsideField(route, field));
+}
+
 void RouterTest::getPointsBesideObstacle_intersectFromLeftAndCircleCenterNotOnPath_shortPointIs2AndMinus1()
 {
 	Compare compare(0.0001);
@@ -513,4 +530,16 @@ void RouterTest::getPointsBesideObstacle_bigObstacleOnRightSide_bothPointsHaveRe
 	CPPUNIT_ASSERT_DOUBLES_EQUAL(2, two.getX(), 0.0001);
 	CPPUNIT_ASSERT(one.getY() > 0.3 || one.getY() < -1.7);
 	CPPUNIT_ASSERT(two.getY() > 0.3 || two.getY() < -1.7);
+}
+
+bool RouterTest::routeIsInsideField(const Route &route, const Field &field)
+{
+	assert(route.isValid());
+	list<Point> points = route.getAllPoints();
+
+	for (list<Point>::const_iterator i = points.begin(); i != points.end(); ++i)
+		if (!field.isPointInsideField(*i))
+			return false;
+
+	return true;
 }

@@ -10,6 +10,9 @@ namespace Layer
 {
 namespace Autonomous
 {
+	class Route;
+	class Field;
+
 	class RouterTest :
 			public CPPUNIT_NS::TestFixture
 	{
@@ -35,6 +38,7 @@ namespace Autonomous
 		CPPUNIT_TEST(calculateRoute_obstacleOnWayToAndFromPointBesideObstacle_reasonableRoute);
 		CPPUNIT_TEST(calculateRoute_goingBetweenTwoObstacles_directRoute);
 		CPPUNIT_TEST(calculateRoute_severalObjectsAndOneOnTheWay_calculationIsNotTooSlow);
+		CPPUNIT_TEST(calculateRoute_shortWayOutsideField_noPointOfRouteIsOutside);
 		CPPUNIT_TEST(getPointsBesideObstacle_intersectFromLeftAndCircleCenterNotOnPath_shortPointIs2AndMinus1);
 		CPPUNIT_TEST(getPointsBesideObstacle_intersectFromLeftAndCircleCenterNotOnPath_longPointIs2And6p4142);
 		CPPUNIT_TEST(getPointsBesideObstacle_intersectFromRightAndCircleCenterNotOnPath_shortPointIs2And3);
@@ -77,6 +81,7 @@ namespace Autonomous
 		void calculateRoute_obstacleOnWayToAndFromPointBesideObstacle_reasonableRoute();
 		void calculateRoute_goingBetweenTwoObstacles_directRoute();
 		void calculateRoute_severalObjectsAndOneOnTheWay_calculationIsNotTooSlow();
+		void calculateRoute_shortWayOutsideField_noPointOfRouteIsOutside();
 		void getPointsBesideObstacle_intersectFromLeftAndCircleCenterNotOnPath_shortPointIs2AndMinus1();
 		void getPointsBesideObstacle_intersectFromLeftAndCircleCenterNotOnPath_longPointIs2And6p4142();
 		void getPointsBesideObstacle_intersectFromRightAndCircleCenterNotOnPath_shortPointIs2And3();
@@ -95,6 +100,9 @@ namespace Autonomous
 		void getPointsBesideObstacle_bigObstacleOnRightSide_resultSizeIs2();
 		void getPointsBesideObstacle_bigObstacleOnRightSide_bothPointsDoNotIntersectWithTheObstacle();
 		void getPointsBesideObstacle_bigObstacleOnRightSide_bothPointsHaveReasonableCoordinates();
+
+	private:
+		static bool routeIsInsideField(const Route &route, const Field &field);
 	};
 }
 }
