@@ -84,6 +84,9 @@ void Game::execute()
 	bool isMovingAfterwards = m_robot->isMoving();
 
 	double timeDifference = m_watch->getTimeAndRestart();
+	double timeForEventProcessing =
+			timeDifference -
+			(timeForActuatorUpdate + timeForFieldUpdate + timeForLogic + timeForSensorUpdate);
 	if (timeDifference > 0.11 && isMovingPreviously && isMovingAfterwards)
 	{
 		printTimeInMs("loop time is too high", timeDifference);
@@ -91,6 +94,7 @@ void Game::execute()
 		printTimeInMs("time spent on field update", timeForFieldUpdate);
 		printTimeInMs("time spent on logic", timeForLogic);
 		printTimeInMs("time spent on actuator updates", timeForActuatorUpdate);
+		printTimeInMs("time spent on event processing", timeForEventProcessing);
 	}
 
 	if (keepRunning())
