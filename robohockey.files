@@ -354,3 +354,7 @@ layer/autonomous/routelengthcomparetest.cpp
 layer/autonomous/routelengthcompare.cpp
 resources/testfiles/lidar_36.txt
 resources/testfiles/lidar_37.txt
+layer/strategy/drivetofinalposition.h
+layer/strategy/drivetofinalposition.cpp
+layer/strategy/drivetofinalpositiontest.h
+layer/strategy/drivetofinalpositiontest.cpp

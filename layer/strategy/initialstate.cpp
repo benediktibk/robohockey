@@ -1,5 +1,6 @@
 #include "layer/strategy/initialstate.h"
 #include "layer/strategy/referee.h"
+#include "layer/strategy/calibrate.h"
 
 using namespace RoboHockey::Layer::Strategy;
 using namespace RoboHockey::Layer::Autonomous;

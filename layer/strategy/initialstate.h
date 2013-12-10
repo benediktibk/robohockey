@@ -2,7 +2,6 @@
 #define ROBOHOCKEY_LAYER_STRATEGY_INITIALSTATE_H
 
 #include "layer/strategy/state.h"
-#include "layer/strategy/calibrate.h"
 
 namespace RoboHockey
 {
