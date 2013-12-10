@@ -47,7 +47,7 @@ bool EngineImpl::isMoving()
 	m_orientation = m_engine->GetYaw();
 
 	if(m_orientation_equal && m_posX_equal && m_posY_equal)
-		return !m_enabled;
+		return m_enabled;
 	else
 		return true;
 }
