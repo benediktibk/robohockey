@@ -330,15 +330,17 @@ vector<FieldObject> FieldImpl::getObjectsWithColor(FieldObjectColor color) const
 vector<FieldObject> FieldImpl::moveAllFieldObjectsInVisibleAreaToTemporaryVector()
 {
 	vector<FieldObject> result;
-	Point referencePoint = m_position->getPosition();
-	Point directionVector(1, m_position->getOrientation());
-	directionVector.rotate(Angle::getQuarterRotation());
+	Point pointRobot = m_position->getPosition();
+	Angle angleRobot = m_position->getOrientation();
 
 	for (vector<FieldObject>::iterator i = m_fieldObjects.begin(); i != m_fieldObjects.end(); ++i)
 	{
 		Point currentCenter = ((*i).getCircle()).getCenter();
+		Angle angleToXAxis(pointRobot, currentCenter);
+		Angle angleToRobotDirection = angleToXAxis - angleRobot;
 
-		if (Point::isTargetPointRightOfLine(referencePoint, directionVector, currentCenter))
+		if (angleToRobotDirection.getValueBetweenMinusPiAndPi() > m_lidar->getMaximumAngleRight().getValueBetweenMinusPiAndPi()
+				&& angleRobot.getValueBetweenMinusPiAndPi() < m_lidar->getMaximumAngleLeft().getValueBetweenMinusPiAndPi())
 		{
 			m_fieldObjects.erase(i);
 			result.push_back(*i);
