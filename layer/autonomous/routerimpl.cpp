@@ -160,10 +160,9 @@ vector<Route> RouterImpl::calculateStartPartsWithCoveredEnd(
 	double desiredLength = directionLength + 2*diameter;
 	Point directionModified = direction/directionLength*desiredLength;
 	Point extendedEnd = start + directionModified;
-	vector<Route> startParts = calculateRoutesToPointsBesideObstacle(
+	return calculateRoutesToPointsBesideObstacle(
 				obstacle, start, extendedEnd, field, obstacles, canGoLeft, canGoRight,
 				searchDepth);
-	return calculateEndParts(startParts, end, field, obstacles, searchDepth);
 }
 
 vector<Route> RouterImpl::calculateEndParts(
