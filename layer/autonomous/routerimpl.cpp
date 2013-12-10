@@ -97,11 +97,7 @@ vector<Route> RouterImpl::calculateRoutesRecursive(
 		return result;
 
 	Path directPath(start, end, m_robotWidth);
-	vector<Circle> realObstacles;
-
-	for (vector<Circle>::const_iterator i = obstacles.begin(); i != obstacles.end(); ++i)
-		if (directPath.intersectsWith(*i))
-			realObstacles.push_back(*i);
+	vector<Circle> realObstacles = findRealObstacles(obstacles, directPath);
 
 	if (realObstacles.size() == 0)
 	{
@@ -168,6 +164,17 @@ vector<Route> RouterImpl::calculateRoutesRecursive(
 			result.push_back(completeRoute);
 		}
 	}
+
+	return result;
+}
+
+vector<Circle> RouterImpl::findRealObstacles(const vector<Circle> &obstacles, const Path &path) const
+{
+	vector<Circle> result;
+
+	for (vector<Circle>::const_iterator i = obstacles.begin(); i != obstacles.end(); ++i)
+		if (path.intersectsWith(*i))
+			result.push_back(*i);
 
 	return result;
 }
