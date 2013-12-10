@@ -235,6 +235,44 @@ void RouterTest::calculateRoute_obstacleOnWayToPointBesideObstacle_reasonableRou
 	CPPUNIT_ASSERT(routeLength < 6.5);
 }
 
+void RouterTest::calculateRoute_obstacleOnWayToTargetFromPointBesideObstacle_reasonableRoute()
+{
+	FieldMock field;
+	RouterImpl router(0.5);
+	vector<Circle> obstacles;
+	obstacles.push_back(Circle(Point(3, 0), 2));
+	obstacles.push_back(Circle(Point(5, -1), 1));
+	obstacles.push_back(Circle(Point(5, 1), 1));
+	field.setObstacles(obstacles);
+
+	Route route = router.calculateRoute(Point(0, 0), Point(10, 0), field);
+
+	CPPUNIT_ASSERT(route.isValid());
+	CPPUNIT_ASSERT(!route.intersectsWith(obstacles));
+	double routeLength = route.getLength();
+	CPPUNIT_ASSERT(routeLength < 11);
+}
+
+void RouterTest::calculateRoute_obstacleOnWayToAndFromPointBesideObstacle_reasonableRoute()
+{
+	FieldMock field;
+	RouterImpl router(0.5);
+	vector<Circle> obstacles;
+	obstacles.push_back(Circle(Point(3, 0), 2));
+	obstacles.push_back(Circle(Point(1, -1), 1));
+	obstacles.push_back(Circle(Point(1, 1), 1));
+	obstacles.push_back(Circle(Point(5, -1), 1));
+	obstacles.push_back(Circle(Point(5, 1), 1));
+	field.setObstacles(obstacles);
+
+	Route route = router.calculateRoute(Point(0, 0), Point(10, 0), field);
+
+	CPPUNIT_ASSERT(route.isValid());
+	CPPUNIT_ASSERT(!route.intersectsWith(obstacles));
+	double routeLength = route.getLength();
+	CPPUNIT_ASSERT(routeLength < 11.5);
+}
+
 void RouterTest::getPointsBesideObstacle_intersectFromLeftAndCircleCenterNotOnPath_shortPointIs2AndMinus1()
 {
 	Compare compare(0.0001);
