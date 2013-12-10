@@ -30,10 +30,11 @@
 #include "layer/autonomous/fieldobjectdistancecomparetest.h"
 #include "layer/autonomous/routelengthcomparetest.h"
 #include "layer/view/modeltest.h"
-#include "layer/strategy/statemachinetest.h"
-#include "layer/strategy/initialstatetest.h"
-#include "layer/strategy/calibratetest.h"
-#include "layer/strategy/achievegoalstest.h"
+#include "layer/strategy/common/statemachinetest.h"
+#include "layer/strategy/mainstatemachine/initialstatetest.h"
+#include "layer/strategy/mainstatemachine/calibratetest.h"
+#include "layer/strategy/mainstatemachine/achievegoalstest.h"
+#include "layer/strategy/mainstatemachine/hideenemypuckstest.h"
 #include "common/pathtest.h"
 #include "common/linetest.h"
 #include "common/pathintersectpointstest.h"
@@ -73,9 +74,10 @@ CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Autonomous::RouterTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Autonomous::FieldObjectDistanceCompareTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Autonomous::RouteLengthCompareTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::View::ModelTest);
-CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Strategy::StateMachineTest);
-CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Strategy::InitialStateTest);
-CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Strategy::CalibrateTest);
-CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Strategy::AchieveGoalsTest);
+CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Strategy::Common::StateMachineTest);
+CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Strategy::MainStateMachine::InitialStateTest);
+CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Strategy::MainStateMachine::CalibrateTest);
+CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Strategy::MainStateMachine::AchieveGoalsTest);
+CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Strategy::MainStateMachine::HideEnemyPucksTest);
 
 

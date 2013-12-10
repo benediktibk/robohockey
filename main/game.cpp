@@ -5,7 +5,7 @@
 #include "layer/autonomous/robotimpl.h"
 #include "layer/autonomous/fieldimpl.h"
 #include "layer/autonomous/routerimpl.h"
-#include "layer/strategy/refereeimpl.h"
+#include "layer/strategy/mainstatemachine/refereeimpl.h"
 #include <QtCore/QCoreApplication>
 #include <QtCore/QTimer>
 #include <iostream>
@@ -40,7 +40,7 @@ Game::Game(int argc, char **argv) :
 	m_field = new Autonomous::FieldImpl(
 				dataAnalyser->getOdometry(), dataAnalyser->getLidar(),
 				dataAnalyser->getCamera(), *m_robot);
-	m_referee = new Strategy::RefereeImpl();
+	m_referee = new Strategy::MainStateMachine::RefereeImpl();
 
 	connect(m_timer, SIGNAL(timeout()), this, SLOT(execute()));
 
@@ -87,7 +87,12 @@ void Game::execute()
 	double timeForEventProcessing =
 			timeDifference -
 			(timeForActuatorUpdate + timeForFieldUpdate + timeForLogic + timeForSensorUpdate);
-	if (timeDifference > 0.11 && isMovingPreviously && isMovingAfterwards)
+
+	/*!
+	 * Actually we get data every 100ms, but the Read-function of
+	 * the player client sometimes needs up to 160ms.
+	 */
+	if (timeDifference > 0.17 && isMovingPreviously && isMovingAfterwards)
 	{
 		printTimeInMs("loop time is too high", timeDifference);
 		printTimeInMs("time spent on sensor updates", timeForSensorUpdate);
@@ -113,7 +118,7 @@ Autonomous::Field &Game::getField()
 	return *m_field;
 }
 
-Strategy::Referee &Game::getReferee()
+Strategy::MainStateMachine::Referee &Game::getReferee()
 {
 	return *m_referee;
 }
