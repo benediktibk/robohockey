@@ -6,6 +6,7 @@
 #include "common/pathintersectpoints.h"
 #include "common/angle.h"
 #include "common/line.h"
+#include "common/robotposition.h"
 #include <math.h>
 #include <assert.h>
 #include <algorithm>
@@ -20,15 +21,15 @@ RouterImpl::RouterImpl(double robotWidth) :
 	m_robotWidth(robotWidth)
 { }
 
-Route RouterImpl::calculateRoute(const Point &start, const Point &end, const Field &field) const
+Route RouterImpl::calculateRoute(const RobotPosition &start, const RobotPosition &end, const Field &field) const
 {
-	Path startPart(start, start, m_robotWidth);
+	Path startPart(start.getPosition(), start.getPosition(), m_robotWidth);
 	const vector<Circle> obstacles = field.getAllObstacles();
 
 	if (startPart.intersectsWith(obstacles))
 		return Route(m_robotWidth);
 
-	vector<Route> routes = calculateRoutesRecursive(start, end, obstacles, 0);
+	vector<Route> routes = calculateRoutesRecursive(start.getPosition(), end.getPosition(), obstacles, 0);
 
 	if (routes.size() == 0)
 		return Route(m_robotWidth);
