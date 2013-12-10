@@ -1,6 +1,6 @@
 #include "main/gameautomatic.h"
-#include "layer/strategy/statemachine.h"
-#include "layer/strategy/initialstate.h"
+#include "layer/strategy/common/statemachine.h"
+#include "layer/strategy/mainstatemachine/initialstate.h"
 #include "common/console.h"
 #include <iostream>
 

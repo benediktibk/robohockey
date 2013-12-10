@@ -5,7 +5,7 @@
 #include "layer/autonomous/robotimpl.h"
 #include "layer/autonomous/fieldimpl.h"
 #include "layer/autonomous/routerimpl.h"
-#include "layer/strategy/refereeimpl.h"
+#include "layer/strategy/mainstatemachine/refereeimpl.h"
 #include <QtCore/QCoreApplication>
 #include <QtCore/QTimer>
 #include <iostream>
