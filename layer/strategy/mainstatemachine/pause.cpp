@@ -1,6 +1,7 @@
 #include "layer/strategy/mainstatemachine/pause.h"
 #include "layer/strategy/mainstatemachine/calibrate.h"
-#include "layer/strategy/mainstatemachine/referee.h"
+#include "layer/strategy/common/referee.h"
+#include "layer/autonomous/field.h"
 
 using namespace RoboHockey::Layer::Strategy::Common;
 using namespace RoboHockey::Layer::Strategy::MainStateMachine;
@@ -12,9 +13,11 @@ Pause::Pause(Robot &robot, Field &field, Referee &referee) :
 
 State* Pause::nextState()
 {
-    if(m_referee.detectionStart())
+    if(m_referee.gameStart())
+        return new AchieveGoals(m_robot, m_field, m_referee);
+    else if(m_referee.detectionStart())
         return new Calibrate(m_robot, m_field, m_referee);
-    else if(m_referee.gameStart())
+    else if(m_field.achievedGoals() < 3 && not m_referee.stopMovement() && not m_referee.gameOver())
         return new AchieveGoals(m_robot, m_field, m_referee);
     else
         return 0;

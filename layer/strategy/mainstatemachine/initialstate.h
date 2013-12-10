@@ -15,7 +15,7 @@ namespace MainStateMachine
 			public Common::State
 	{
 	public:
-        InitialState(Autonomous::Robot &robot, Autonomous::Field &field, Referee &referee);
+		InitialState(Autonomous::Robot &robot, Autonomous::Field &field, Common::Referee &referee);
 
 		virtual State* nextState();
 		virtual void update();

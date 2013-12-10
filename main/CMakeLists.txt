@@ -48,8 +48,8 @@ set(LIBRARIES
 )
 
 set(LIBRARIES_TEST
-	layerstrategycommontest
 	layerstrategymainstatemachinetest
+	layerstrategycommontest
 	layerviewtest
 	layerautonomoustest
 	layerdataanalysistest

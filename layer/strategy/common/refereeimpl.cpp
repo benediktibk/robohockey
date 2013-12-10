@@ -1,8 +1,8 @@
-#include "layer/strategy/mainstatemachine/refereeimpl.h"
+#include "layer/strategy/common/refereeimpl.h"
 #include "extern/angelina/referee.h"
 #include "common/point.h"
 
-using namespace RoboHockey::Layer::Strategy::MainStateMachine;
+using namespace RoboHockey::Layer::Strategy::Common;
 using namespace Extern::Angelina;
 
 RefereeImpl::RefereeImpl():

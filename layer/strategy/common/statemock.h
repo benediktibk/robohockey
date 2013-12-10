@@ -15,7 +15,7 @@ namespace Common
 			public State
 	{
 	public:
-		StateMock(Autonomous::Robot &robot, Autonomous::Field &field, MainStateMachine::Referee &referee);
+		StateMock(Autonomous::Robot &robot, Autonomous::Field &field, Referee &referee);
 
 		virtual State* nextState();
 		virtual void update();

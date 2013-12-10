@@ -1,11 +1,10 @@
 #include "layer/strategy/common/statemachine.h"
 #include "layer/strategy/common/state.h"
 #include "layer/autonomous/robot.h"
-#include "layer/strategy/mainstatemachine/referee.h"
+#include "layer/strategy/common/referee.h"
 #include <assert.h>
 
 using namespace RoboHockey::Layer::Strategy::Common;
-using namespace RoboHockey::Layer::Strategy::MainStateMachine;
 
 StateMachine::StateMachine(State *initialState, Autonomous::Robot &robot, Autonomous::Field &field, Referee &referee) :
 	m_currentState(initialState),

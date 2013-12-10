@@ -1,7 +1,7 @@
-#ifndef ROBOHOCKEY_LAYER_STRATEGY_MAINSTATEMACHINE_REFEREEMOCK_H
-#define ROBOHOCKEY_LAYER_STRATEGY_MAINSTATEMACHINE_REFEREEMOCK_H
+#ifndef ROBOHOCKEY_LAYER_STRATEGY_COMMON_REFEREEMOCK_H
+#define ROBOHOCKEY_LAYER_STRATEGY_COMMON_REFEREEMOCK_H
 
-#include "layer/strategy/mainstatemachine/referee.h"
+#include "layer/strategy/common/referee.h"
 
 namespace RoboHockey
 {
@@ -9,7 +9,7 @@ namespace Layer
 {
 namespace Strategy
 {
-namespace MainStateMachine
+namespace Common
 {
     class RefereeMock :
             public Referee

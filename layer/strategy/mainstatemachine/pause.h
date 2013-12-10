@@ -12,13 +12,11 @@ namespace Strategy
 {
 namespace MainStateMachine
 {
-    class Calibrate;
-    class AchieveGoals;
     class Pause :
 			public Common::State
     {
     public:
-        Pause(Autonomous::Robot &robot, Autonomous::Field &field, Referee &referee);
+		Pause(Autonomous::Robot &robot, Autonomous::Field &field, Common::Referee &referee);
         virtual State* nextState();
         virtual void update();
     };

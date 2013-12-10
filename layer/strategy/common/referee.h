@@ -1,5 +1,5 @@
-#ifndef ROBOHOCKEY_LAYER_STRATEGY_MAINSTATEMACHINE_REFEREE_H
-#define ROBOHOCKEY_LAYER_STRATEGY_MAINSTATEMACHINE_REFEREE_H
+#ifndef ROBOHOCKEY_LAYER_STRATEGY_COMMON_REFEREE_H
+#define ROBOHOCKEY_LAYER_STRATEGY_COMMON_REFEREE_H
 
 #include "extern/angelina/teamcolor.h"
 
@@ -14,7 +14,7 @@ namespace Layer
 {
 namespace Strategy
 {
-namespace MainStateMachine
+namespace Common
 {
     class Referee
     {

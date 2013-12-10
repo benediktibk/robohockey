@@ -569,3 +569,23 @@ bool RouterTest::routeIsInsideField(const Route &route, const Field &field)
 
 	return true;
 }
+
+void RouterTest::getPointsBesideObstacle_bigObstacleOnRightSide_shortPointIs2And1p1615()
+{
+	Compare compare(0.0001);
+	RouterImpl router(0.5);
+	Path currentPath(Point(0,0), Point(4,0), 0.5);
+	Circle obstacle(Point(2,-0.5), 2);
+
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(2,1.1615), router.getPointsBesideObstacle(currentPath, obstacle).front()));
+}
+
+void RouterTest::getPointsBesideObstacle_bigObstacleOnRightSide_longPointIs2AndMinus2p5177()
+{
+	Compare compare(0.0001);
+	RouterImpl router(0.5);
+	Path currentPath(Point(0,0), Point(4,0), 0.5);
+	Circle obstacle(Point(2,-0.5), 2);
+
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(2,-2.5177), router.getPointsBesideObstacle(currentPath, obstacle).back()));
+}
