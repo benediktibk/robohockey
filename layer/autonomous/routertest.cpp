@@ -273,6 +273,23 @@ void RouterTest::calculateRoute_obstacleOnWayToAndFromPointBesideObstacle_reason
 	CPPUNIT_ASSERT(routeLength < 11.5);
 }
 
+void RouterTest::calculateRoute_goingBetweenTwoObstacles_directRoute()
+{
+	FieldMock field;
+	RouterImpl router(0.5);
+	vector<Circle> obstacles;
+	obstacles.push_back(Circle(Point(1, -0.8), 1));
+	obstacles.push_back(Circle(Point(1, 0.8), 1));
+	field.setObstacles(obstacles);
+
+	Route route = router.calculateRoute(Point(0, 0), Point(2, 0), field);
+
+	CPPUNIT_ASSERT(route.isValid());
+	CPPUNIT_ASSERT(!route.intersectsWith(obstacles));
+	double routeLength = route.getLength();
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(2, routeLength, 0.01);
+}
+
 void RouterTest::getPointsBesideObstacle_intersectFromLeftAndCircleCenterNotOnPath_shortPointIs2AndMinus1()
 {
 	Compare compare(0.0001);
