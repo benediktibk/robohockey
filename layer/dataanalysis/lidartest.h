@@ -21,17 +21,17 @@ namespace DataAnalysis
 			public CPPUNIT_NS::TestFixture
 	{
 		CPPUNIT_TEST_SUITE(LidarTest);
+		CPPUNIT_TEST(constructor_empty_maximumAngleLeftIs0);
+		CPPUNIT_TEST(constructor_empty_maximumAngleRightIs0);
 		CPPUNIT_TEST(getAllObjects_mockHardwareLidar_atLeastOneCallToGetDistance);
 		CPPUNIT_TEST(getAllObjects_oneTooBigObjectInFront_objectCountIs0);
 		CPPUNIT_TEST(getAllObjects_lookingIntoLeftUpperDirectionAndObjectSlightlyLeft_onlyObjectIsCorrect);
 		CPPUNIT_TEST(getAllObjects_twoObjects_objectCountIs2);
 		CPPUNIT_TEST(getAllObjects_oneObjectBehindAnotherOneLeft_objectCountIs2);
 		CPPUNIT_TEST(getAllObjects_oneObjectBehindAnotherOneRight_objectCountIs2);
-		CPPUNIT_TEST(getAllObjects_objectAtLeftBorder_objectCountIs1);
-		CPPUNIT_TEST(getAllObjects_objectAtRightBorder_objectCountIs1);
+		CPPUNIT_TEST(getAllObjects_objectAtLeftBorder_objectCountIs0);
+		CPPUNIT_TEST(getAllObjects_objectAtRightBorder_objectCountIs0);
 		CPPUNIT_TEST(getAllObjects_realWorldExample_runsThroughWithoutACrash);
-		CPPUNIT_TEST(getAllObjects_objectRightOfView_positionOfOnlyObjectIsCorrect);
-		CPPUNIT_TEST(getAllObjects_objectLeftOfView_positionOfOnlyObjectIsCorrect);
 		CPPUNIT_TEST(getAllObjects_puckDirectInFront_onlyObjectIsCorrect);
 		CPPUNIT_TEST(getAllobjects_oneBoundaryPostInRange_diameterIsCorrect);
 		CPPUNIT_TEST(getAllObjects_onePuckALittleBitDistant_diameterIsCorrect);
@@ -68,20 +68,24 @@ namespace DataAnalysis
 		CPPUNIT_TEST(isPuckCollectable_puckCloseButTooMuchRight_false);
 		CPPUNIT_TEST(isPuckCollectable_twoPucksBeside_true);
 		CPPUNIT_TEST(isPuckCollectable_onePuckCloseEnoughtAndAnotherOneStraightAhead_false);
+		CPPUNIT_TEST(getMaximumAngleLeft_noObjects_piHalf);
+		CPPUNIT_TEST(getMaximumAngleRight_noObjects_minusPiHalf);
+		CPPUNIT_TEST(getMaximumAngleLeft_objectAtLeftBorder_reducedViewArea);
+		CPPUNIT_TEST(getMaximumAngleRight_objectAtRightBorder_reducedViewArea);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
+		void constructor_empty_maximumAngleLeftIs0();
+		void constructor_empty_maximumAngleRightIs0();
 		void getAllObjects_mockHardwareLidar_atLeastOneCallToGetDistance();
 		void getAllObjects_oneTooBigObjectInFront_objectCountIs0();
 		void getAllObjects_lookingIntoLeftUpperDirectionAndObjectSlightlyLeft_onlyObjectIsCorrect();
 		void getAllObjects_twoObjects_objectCountIs2();
 		void getAllObjects_oneObjectBehindAnotherOneLeft_objectCountIs2();
 		void getAllObjects_oneObjectBehindAnotherOneRight_objectCountIs2();
-		void getAllObjects_objectAtLeftBorder_objectCountIs1();
-		void getAllObjects_objectAtRightBorder_objectCountIs1();
+		void getAllObjects_objectAtLeftBorder_objectCountIs0();
+		void getAllObjects_objectAtRightBorder_objectCountIs0();
 		void getAllObjects_realWorldExample_runsThroughWithoutACrash();
-		void getAllObjects_objectRightOfView_positionOfOnlyObjectIsCorrect();
-		void getAllObjects_objectLeftOfView_positionOfOnlyObjectIsCorrect();
 		void getAllObjects_puckDirectInFront_onlyObjectIsCorrect();
 		void getAllobjects_oneBoundaryPostInRange_diameterIsCorrect();
 		void getAllObjects_onePuckALittleBitDistant_diameterIsCorrect();
@@ -118,6 +122,10 @@ namespace DataAnalysis
 		void isPuckCollectable_puckCloseButTooMuchRight_false();
 		void isPuckCollectable_twoPucksBeside_true();
 		void isPuckCollectable_onePuckCloseEnoughtAndAnotherOneStraightAhead_false();
+		void getMaximumAngleLeft_noObjects_piHalf();
+		void getMaximumAngleRight_noObjects_minusPiHalf();
+		void getMaximumAngleLeft_objectAtLeftBorder_reducedViewArea();
+		void getMaximumAngleRight_objectAtRightBorder_reducedViewArea();
 
 	private:
 		static const double m_maximumDistance;

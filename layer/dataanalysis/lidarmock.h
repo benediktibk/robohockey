@@ -20,6 +20,8 @@ namespace DataAnalysis
 		virtual void updateSensorData();
 		virtual bool isPuckCollectable(double maximumDistance, const Common::Angle &maximumAngle) const;
 		virtual bool isPuckCollected() const;
+		virtual Common::Angle getMaximumAngleRight() const;
+		virtual Common::Angle getMaximumAngleLeft() const;
 
 		void setAllObjects(const LidarObjects &objects);
 		void setPuckCollected(bool value);

@@ -23,7 +23,9 @@ LidarImpl::LidarImpl(Hardware::Lidar &lidar) :
 	m_maximumDistance(4),
 	m_lowPassPart(new Common::DiscreteFunction(0, m_maximumSensorNumber)),
 	m_highPassPart(new Common::DiscreteFunction(0, m_maximumSensorNumber)),
-	m_rawData(new Common::DiscreteFunction(0, m_maximumSensorNumber))
+	m_rawData(new Common::DiscreteFunction(0, m_maximumSensorNumber)),
+	m_maximumAngleRight(0),
+	m_maximumAngleLeft(0)
 { }
 
 LidarImpl::~LidarImpl()
@@ -86,7 +88,13 @@ void LidarImpl::updateSensorData()
 	list<int> negativeEdges = m_highPassPart->getPositionsWithValuesBelow((-1)*m_edgeTreshold);
 	positiveEdges = replaceFollowingEdgesWithBiggestMagnitudePosition(positiveEdges, *m_highPassPart);
 	negativeEdges = replaceFollowingEdgesWithBiggestMagnitudePosition(negativeEdges, *m_highPassPart);
-	list<pair<int, int> > startAndEndOfObjects = findStartAndEndOfObjects(positiveEdges, negativeEdges);
+	int viewAreaMinimum = 0;
+	int viewAreaMaximum = 0;
+	list<pair<int, int> > startAndEndOfObjects = findStartAndEndOfObjects(
+				positiveEdges, negativeEdges, viewAreaMinimum, viewAreaMaximum);
+
+	m_maximumAngleRight = calculateOrientationFromSensorNumber(viewAreaMinimum);
+	m_maximumAngleLeft = calculateOrientationFromSensorNumber(viewAreaMaximum);
 
 	for (list<pair<int, int> >::iterator i = startAndEndOfObjects.begin(); i != startAndEndOfObjects.end(); ++i)
 	{
@@ -147,8 +155,18 @@ bool LidarImpl::isPuckCollected() const
 	return candidatesForPuckByAngleAndDistance.size() == 1;
 }
 
+Angle LidarImpl::getMaximumAngleRight() const
+{
+	return m_maximumAngleRight;
+}
+
+Angle LidarImpl::getMaximumAngleLeft() const
+{
+	return m_maximumAngleLeft;
+}
+
 list<pair<int, int> > LidarImpl::findStartAndEndOfObjects(
-		const list<int> &positiveEdges, const list<int> &negativeEdges) const
+		const list<int> &positiveEdges, const list<int> &negativeEdges, int &viewAreaMinimum, int &viewAreaMaximum) const
 {
 	list<pair<int, int> > result;
 	vector<int> allEdges; // true: positive edge; false: negative edge
@@ -180,10 +198,14 @@ list<pair<int, int> > LidarImpl::findStartAndEndOfObjects(
 			allEdges.push_back(*negativeEdgeIterator);
 
 	if (allEdges.size() == 0)
+	{
+		viewAreaMinimum = 0;
+		viewAreaMaximum = m_maximumSensorNumber;
 		return result;
+	}
 
-	result.push_back(pair<int, int>(0, allEdges.front()));
-	result.push_back(pair<int, int>(allEdges.back(), m_maximumSensorNumber));
+	viewAreaMinimum = allEdges.front();
+	viewAreaMaximum = allEdges.back();
 
 	for (vector<int>::const_iterator i = allEdges.begin(); i != allEdges.end() - 1; ++i)
 		result.push_back(pair<int, int>(*i, *(i + 1)));

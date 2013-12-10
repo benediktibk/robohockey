@@ -8,6 +8,7 @@ namespace RoboHockey
 namespace Common
 {
 	class RobotPosition;
+	class Angle;
 }
 
 namespace Layer
@@ -28,6 +29,9 @@ namespace DataAnalysis
 		virtual void updateSensorData() = 0;
 		virtual bool isPuckCollectable(double maximumDistance, const Common::Angle &maximumAngle) const = 0;
 		virtual bool isPuckCollected() const = 0;
+		//! Be careful, this one will usually be negative (in terms of mathematical positive direction)
+		virtual Common::Angle getMaximumAngleRight() const = 0;
+		virtual Common::Angle getMaximumAngleLeft() const = 0;
 	};
 }
 }

@@ -2,6 +2,7 @@
 #define ROBOHOCKEY_LAYER_DATAANALYSIS_LIDARIMPL_H
 
 #include "layer/dataanalysis/lidar.h"
+#include "common/angle.h"
 #include <vector>
 #include <utility>
 
@@ -10,7 +11,6 @@ namespace RoboHockey
 namespace Common
 {
 	class DiscreteFunction;
-	class Angle;
 }
 
 namespace Layer
@@ -39,10 +39,13 @@ namespace DataAnalysis
 		virtual void updateSensorData();
 		virtual bool isPuckCollectable(double maximumDistance, const Common::Angle &maximumAngle) const;
 		virtual bool isPuckCollected() const;
+		virtual Common::Angle getMaximumAngleRight() const;
+		virtual Common::Angle getMaximumAngleLeft() const;
 
 	private:
 		std::list<std::pair<int, int> > findStartAndEndOfObjects(
-				const std::list<int> &positiveEdges, const std::list<int> &negativeEdges) const;
+				const std::list<int> &positiveEdges, const std::list<int> &negativeEdges,
+				int &viewAreaMinimum, int &viewAreaMaximum) const;
 		Common::DiscreteFunction* readInData() const;
 		Common::Angle calculateOrientationFromSensorNumber(unsigned int value) const;
 		double calculateMinimumDistanceToObstacle(const Common::Angle &angle, double speed) const;
@@ -64,6 +67,8 @@ namespace DataAnalysis
 		Common::DiscreteFunction *m_highPassPart;
 		Common::DiscreteFunction *m_rawData;
 		std::vector<LidarInternalObject*> m_objects;
+		Common::Angle m_maximumAngleRight;
+		Common::Angle m_maximumAngleLeft;
 	};
 }
 }
