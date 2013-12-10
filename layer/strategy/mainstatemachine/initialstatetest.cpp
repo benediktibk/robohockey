@@ -6,7 +6,8 @@
 #include "layer/autonomous/fieldmock.h"
 #include "layer/strategy/mainstatemachine/refereemock.h"
 
-using namespace RoboHockey::Layer::Strategy;
+using namespace RoboHockey::Layer::Strategy::Common;
+using namespace RoboHockey::Layer::Strategy::MainStateMachine;
 using namespace RoboHockey::Layer::Autonomous;
 
 void InitialStateTest::nextState_detectionStart_calibrate()

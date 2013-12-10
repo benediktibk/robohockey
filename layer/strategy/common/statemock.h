@@ -9,11 +9,13 @@ namespace Layer
 {
 namespace Strategy
 {
+namespace Common
+{
 	class StateMock :
 			public State
 	{
 	public:
-        StateMock(Autonomous::Robot &robot, Autonomous::Field &field, Referee &referee);
+		StateMock(Autonomous::Robot &robot, Autonomous::Field &field, MainStateMachine::Referee &referee);
 
 		virtual State* nextState();
 		virtual void update();
@@ -27,6 +29,7 @@ namespace Strategy
 		unsigned int m_callsToUpdate;
 		State *m_nextState;
 	};
+}
 }
 }
 }

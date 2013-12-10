@@ -10,6 +10,8 @@ namespace Layer
 {
 namespace Strategy
 {
+namespace MainStateMachine
+{
 class CalibrateTest:
         public CPPUNIT_NS::TestFixture
     {
@@ -37,8 +39,8 @@ class CalibrateTest:
         void nextState_detectionStart_notPause();
         void nextState_detectionStartAndGameStart_AchieveGoals();
         void nextState_GameStartAndGameOver_notCalibrate();
-};
-
+	};
+}
 }
 }
 }

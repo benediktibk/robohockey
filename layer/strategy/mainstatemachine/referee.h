@@ -14,6 +14,8 @@ namespace Layer
 {
 namespace Strategy
 {
+namespace MainStateMachine
+{
     class Referee
     {
     public:
@@ -24,7 +26,7 @@ namespace Strategy
         virtual void sendAlive() = 0;
         virtual void tellTeamColor(Extern::Angelina::TeamColor color) = 0;
         virtual void reportGoal() = 0;
-        virtual void tellEgoPos(const Common::Point &position) = 0;
+		virtual void tellEgoPos(const RoboHockey::Common::Point &position) = 0;
         virtual bool detectionStart() = 0;
         virtual bool gameStart() = 0;
         virtual bool gameOver() = 0;
@@ -33,6 +35,7 @@ namespace Strategy
         virtual bool isValid() = 0;
 
     };
+}
 }
 }
 }

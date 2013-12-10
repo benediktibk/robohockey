@@ -9,8 +9,10 @@ namespace Layer
 {
 namespace Strategy
 {
+namespace MainStateMachine
+{
     class AchieveGoals :
-            public State
+			public Common::State
     {
     public:
         AchieveGoals(Autonomous::Robot &robot, Autonomous::Field &field, Referee &referee);
@@ -20,6 +22,7 @@ namespace Strategy
 
     private:
     };
+}
 }
 }
 }

@@ -13,11 +13,16 @@ namespace Autonomous
 
 namespace Strategy
 {
-    class Referee;
+namespace MainStateMachine
+{
+	class Referee;
+}
+namespace Common
+{
     class State
 	{
 	public:
-        State(Autonomous::Robot &robot, Autonomous::Field &field, Referee &referee);
+		State(Autonomous::Robot &robot, Autonomous::Field &field, MainStateMachine::Referee &referee);
 		virtual ~State();
 
 		virtual State* nextState() = 0;
@@ -26,8 +31,9 @@ namespace Strategy
 	protected:
 		Autonomous::Robot &m_robot;
         Autonomous::Field &m_field;
-        Referee &m_referee;
+		MainStateMachine::Referee &m_referee;
 	};
+}
 }
 }
 }

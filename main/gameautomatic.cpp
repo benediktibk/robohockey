@@ -8,7 +8,8 @@ using namespace std;
 using namespace RoboHockey;
 using namespace RoboHockey::Common;
 using namespace RoboHockey::Main;
-using namespace RoboHockey::Layer::Strategy;
+using namespace RoboHockey::Layer::Strategy::Common;
+using namespace RoboHockey::Layer::Strategy::MainStateMachine;
 
 GameAutomatic::GameAutomatic(int argc, char **argv) :
 	Game(argc, argv),

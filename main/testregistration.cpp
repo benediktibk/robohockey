@@ -73,9 +73,9 @@ CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Autonomous::RouterTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Autonomous::FieldObjectDistanceCompareTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Autonomous::RouteLengthCompareTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::View::ModelTest);
-CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Strategy::StateMachineTest);
-CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Strategy::InitialStateTest);
-CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Strategy::CalibrateTest);
-CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Strategy::AchieveGoalsTest);
+CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Strategy::Common::StateMachineTest);
+CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Strategy::MainStateMachine::InitialStateTest);
+CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Strategy::MainStateMachine::CalibrateTest);
+CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Strategy::MainStateMachine::AchieveGoalsTest);
 
 

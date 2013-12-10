@@ -3,7 +3,8 @@
 #include "layer/strategy/mainstatemachine/achievegoals.h"
 #include "layer/strategy/mainstatemachine/pause.h"
 
-using namespace RoboHockey::Layer::Strategy;
+using namespace RoboHockey::Layer::Strategy::Common;
+using namespace RoboHockey::Layer::Strategy::MainStateMachine;
 using namespace RoboHockey::Layer::Autonomous;
 
 Calibrate::Calibrate(Robot &robot, Field &field, Referee &referee) :

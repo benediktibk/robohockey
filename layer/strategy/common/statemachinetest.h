@@ -10,6 +10,8 @@ namespace Layer
 {
 namespace Strategy
 {
+namespace Common
+{
 	class StateMachineTest :
 			public CPPUNIT_NS::TestFixture
 	{
@@ -30,6 +32,7 @@ namespace Strategy
 		void update_stateChange_currentStateIsNewOne();
 		void update_stateChange_currentStateGotAtLeastOneCallToUpdate();
 	};
+}
 }
 }
 }

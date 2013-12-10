@@ -10,16 +10,19 @@ namespace Layer
 {
 namespace Strategy
 {
-class HideEnemyPucks :
-        public State
+namespace MainStateMachine
 {
-public:
-    HideEnemyPucks(Autonomous::Robot &robot, Autonomous::Field &field, Referee &referee);
+class HideEnemyPucks :
+		public Common::State
+	{
+	public:
+		HideEnemyPucks(Autonomous::Robot &robot, Autonomous::Field &field, Referee &referee);
 
-    virtual State* nextState();
-    virtual void update();
+		virtual State* nextState();
+		virtual void update();
 
-};
+	};
+}
 }
 }
 }

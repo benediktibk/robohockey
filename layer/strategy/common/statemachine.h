@@ -13,13 +13,18 @@ namespace Autonomous
 
 namespace Strategy
 {
-	class State;
+namespace MainStateMachine
+{
 	class Referee;
+}
+namespace Common
+{
+	class State;
 
 	class StateMachine
 	{
 	public:
-		StateMachine(State *initialState, Autonomous::Robot &robot, Autonomous::Field &field, Referee &referee);
+		StateMachine(State *initialState, Autonomous::Robot &robot, Autonomous::Field &field, MainStateMachine::Referee &referee);
 		~StateMachine();
 
 		void update();
@@ -29,8 +34,9 @@ namespace Strategy
 		State *m_currentState;
 		Autonomous::Robot &m_robot;
 		Autonomous::Field &m_field;
-		Referee &m_referee;
+		MainStateMachine::Referee &m_referee;
 	};
+}
 }
 }
 }

@@ -1,6 +1,7 @@
 #include "layer/strategy/common/statemock.h"
 
-using namespace RoboHockey::Layer::Strategy;
+using namespace RoboHockey::Layer::Strategy::Common;
+using namespace RoboHockey::Layer::Strategy::MainStateMachine;
 using namespace RoboHockey::Layer::Autonomous;
 
 StateMock::StateMock(Autonomous::Robot &robot, Autonomous::Field &field, Referee &referee) :

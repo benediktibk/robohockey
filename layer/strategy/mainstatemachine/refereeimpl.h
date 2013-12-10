@@ -18,6 +18,8 @@ namespace Layer
 {
 namespace Strategy
 {
+namespace MainStateMachine
+{
     class RefereeImpl :
             public QObject,
             public Referee
@@ -30,7 +32,7 @@ namespace Strategy
         virtual void sendAlive();
         virtual void tellTeamColor(Extern::Angelina::TeamColor color);
         virtual void reportGoal();
-        virtual void tellEgoPos(const Common::Point &position);
+		virtual void tellEgoPos(const RoboHockey::Common::Point &position);
         virtual bool detectionStart();
         virtual bool gameStart();
         virtual bool gameOver();
@@ -60,6 +62,7 @@ namespace Strategy
         bool m_ConnectFailed;
         bool m_isValid;
     };
+}
 }
 }
 }

@@ -40,7 +40,7 @@ Game::Game(int argc, char **argv) :
 	m_field = new Autonomous::FieldImpl(
 				dataAnalyser->getOdometry(), dataAnalyser->getLidar(),
 				dataAnalyser->getCamera(), *m_robot);
-	m_referee = new Strategy::RefereeImpl();
+	m_referee = new Strategy::MainStateMachine::RefereeImpl();
 
 	connect(m_timer, SIGNAL(timeout()), this, SLOT(execute()));
 
@@ -113,7 +113,7 @@ Autonomous::Field &Game::getField()
 	return *m_field;
 }
 
-Strategy::Referee &Game::getReferee()
+Strategy::MainStateMachine::Referee &Game::getReferee()
 {
 	return *m_referee;
 }

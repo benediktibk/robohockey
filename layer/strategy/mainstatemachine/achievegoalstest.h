@@ -10,6 +10,8 @@ namespace Layer
 {
 namespace Strategy
 {
+namespace MainStateMachine
+{
 class AchieveGoalsTest:
         public CPPUNIT_NS::TestFixture
     {
@@ -33,6 +35,7 @@ class AchieveGoalsTest:
 
     
     };
+}
 }
 }
 }

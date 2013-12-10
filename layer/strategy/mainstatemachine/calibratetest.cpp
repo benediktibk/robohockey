@@ -9,7 +9,8 @@
 #include "layer/strategy/mainstatemachine/pause.h"
 #include "layer/strategy/mainstatemachine/initialstate.h"
 
-using namespace RoboHockey::Layer::Strategy;
+using namespace RoboHockey::Layer::Strategy::Common;
+using namespace RoboHockey::Layer::Strategy::MainStateMachine;
 using namespace RoboHockey::Layer::Autonomous;
 
 void CalibrateTest::nextState_gameStart_achieveGoals()

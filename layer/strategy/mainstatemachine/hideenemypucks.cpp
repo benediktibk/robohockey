@@ -2,7 +2,8 @@
 #include "layer/strategy/mainstatemachine/referee.h"
 #include "layer/autonomous/field.h"
 
-using namespace RoboHockey::Layer::Strategy;
+using namespace RoboHockey::Layer::Strategy::Common;
+using namespace RoboHockey::Layer::Strategy::MainStateMachine;
 
 HideEnemyPucks::HideEnemyPucks(Autonomous::Robot &robot, Autonomous::Field &field, Referee &referee):
     State(robot, field, referee)

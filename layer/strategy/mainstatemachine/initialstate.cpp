@@ -1,7 +1,8 @@
 #include "layer/strategy/mainstatemachine/initialstate.h"
 #include "layer/strategy/mainstatemachine/referee.h"
 
-using namespace RoboHockey::Layer::Strategy;
+using namespace RoboHockey::Layer::Strategy::Common;
+using namespace RoboHockey::Layer::Strategy::MainStateMachine;
 using namespace RoboHockey::Layer::Autonomous;
 
 InitialState::InitialState(Robot &robot, Field &field, Referee &referee) :

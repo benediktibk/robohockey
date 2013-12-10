@@ -10,12 +10,15 @@ namespace Layer
 {
 namespace Strategy
 {
-class PauseTest
+namespace MainStateMachine
 {
-public:
-    PauseTest();
-    
-};
+	class PauseTest
+	{
+	public:
+		PauseTest();
+
+	};
+}
 }
 }
 }

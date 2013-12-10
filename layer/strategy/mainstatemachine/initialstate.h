@@ -10,8 +10,10 @@ namespace Layer
 {
 namespace Strategy
 {
+namespace MainStateMachine
+{
     class InitialState :
-			public State
+			public Common::State
 	{
 	public:
         InitialState(Autonomous::Robot &robot, Autonomous::Field &field, Referee &referee);
@@ -20,6 +22,7 @@ namespace Strategy
 		virtual void update();
 
 	};
+}
 }
 }
 }

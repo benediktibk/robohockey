@@ -2,7 +2,8 @@
 #include "layer/strategy/mainstatemachine/calibrate.h"
 #include "layer/strategy/mainstatemachine/referee.h"
 
-using namespace RoboHockey::Layer::Strategy;
+using namespace RoboHockey::Layer::Strategy::Common;
+using namespace RoboHockey::Layer::Strategy::MainStateMachine;
 using namespace RoboHockey::Layer::Autonomous;
 
 Pause::Pause(Robot &robot, Field &field, Referee &referee) :

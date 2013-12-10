@@ -10,12 +10,15 @@ namespace Layer
 {
 namespace Strategy
 {
-class HideEnemyPucksTest
+namespace MainStateMachine
 {
-public:
-    HideEnemyPucksTest();
-    
-};
+	class HideEnemyPucksTest
+	{
+	public:
+		HideEnemyPucksTest();
+
+	};
+}
 }
 }
 }

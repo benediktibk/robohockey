@@ -2,7 +2,7 @@
 #include "extern/angelina/referee.h"
 #include "common/point.h"
 
-using namespace RoboHockey::Layer::Strategy;
+using namespace RoboHockey::Layer::Strategy::MainStateMachine;
 using namespace Extern::Angelina;
 
 RefereeImpl::RefereeImpl():
