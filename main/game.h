@@ -22,7 +22,10 @@ namespace Autonomous
 }
 namespace Strategy
 {
+namespace MainStateMachine
+{
 	class Referee;
+}
 }
 }
 
@@ -46,7 +49,7 @@ namespace Main
 		virtual void executeRobotControl() = 0;
 		Layer::Autonomous::Robot& getRobot();
 		Layer::Autonomous::Field& getField();
-		Layer::Strategy::Referee& getReferee();
+		Layer::Strategy::MainStateMachine::Referee& getReferee();
 
 	private:
 		void printTimeInMs(const std::string &message, double time) const;
@@ -54,7 +57,7 @@ namespace Main
 	private:
 		Layer::Autonomous::Robot *m_robot;
 		Layer::Autonomous::Field *m_field;
-		Layer::Strategy::Referee *m_referee;
+		Layer::Strategy::MainStateMachine::Referee *m_referee;
 		Common::Watch *m_watch;
 		QTimer *m_timer;
 	};
