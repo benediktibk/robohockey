@@ -201,6 +201,22 @@ void RouterTest::calculateRoute_oneBigObstacleOnRightSideOfDirectPath_reasonable
 	CPPUNIT_ASSERT(routeLength < 5.5);
 }
 
+void RouterTest::calculateRoute_oneBigObstacleOnLeftSideOfDirectPath_reasonableRoute()
+{
+	FieldMock field;
+	RouterImpl router(0.5);
+	vector<Circle> obstacles;
+	obstacles.push_back(Circle(Point(2, 0.7), 2));
+	field.setObstacles(obstacles);
+
+	Route route = router.calculateRoute(Point(0, 0), Point(5, 0), field);
+
+	CPPUNIT_ASSERT(route.isValid());
+	CPPUNIT_ASSERT(!route.intersectsWith(obstacles));
+	double routeLength = route.getLength();
+	CPPUNIT_ASSERT(routeLength < 5.5);
+}
+
 void RouterTest::getPointsBesideObstacle_intersectFromLeftAndCircleCenterNotOnPath_shortPointIs2AndMinus1()
 {
 	Compare compare(0.0001);
