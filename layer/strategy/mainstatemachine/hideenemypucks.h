@@ -16,7 +16,7 @@ class HideEnemyPucks :
 		public Common::State
 	{
 	public:
-		HideEnemyPucks(Autonomous::Robot &robot, Autonomous::Field &field, Referee &referee);
+		HideEnemyPucks(Autonomous::Robot &robot, Autonomous::Field &field, Common::Referee &referee);
 
 		virtual State* nextState();
 		virtual void update();

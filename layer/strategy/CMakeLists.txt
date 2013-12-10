@@ -1,2 +1,4 @@
 add_subdirectory(common)
 add_subdirectory(mainstatemachine)
+add_subdirectory(drivepuckstatemachine)
+add_subdirectory(fielddetectionstatemachine)

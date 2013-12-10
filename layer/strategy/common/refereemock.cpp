@@ -1,6 +1,6 @@
-#include "layer/strategy/mainstatemachine/refereemock.h"
+#include "layer/strategy/common/refereemock.h"
 
-using namespace RoboHockey::Layer::Strategy::MainStateMachine;
+using namespace RoboHockey::Layer::Strategy::Common;
 using namespace Extern::Angelina;
 
 RefereeMock::RefereeMock()

@@ -16,11 +16,17 @@ class DriveToFinalPositionTest :
         public CPPUNIT_NS::TestFixture
     {
         CPPUNIT_TEST_SUITE(DriveToFinalPositionTest);
-        CPPUNIT_TEST(nextState_stopMovement_pause);
+        CPPUNIT_TEST(nextState_stopMovement_Pause);
+        CPPUNIT_TEST(nextState_achieveGoals2_AchieveGoals);
+        CPPUNIT_TEST(nextState_gameOver_Pause);
+        CPPUNIT_TEST(nextState_notAllEnemyPucksHidden_HideEnemyPucks);
         CPPUNIT_TEST_SUITE_END();
 
     private:
-        void nextState_stopMovement_pause();
+        void nextState_stopMovement_Pause();
+        void nextState_gameOver_Pause();
+        void nextState_achieveGoals2_AchieveGoals();
+        void nextState_notAllEnemyPucksHidden_HideEnemyPucks();
     };
 }
 }
