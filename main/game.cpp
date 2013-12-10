@@ -64,6 +64,14 @@ void Game::execute()
 {
 	Watch watch;
 
+	/*!
+	 * Unfortunately disabling the engine is very slow, this seems
+	 * to be a blocking call. If we then decide to stop and disable
+	 * the engine we would get in this iteration a very loop time.
+	 * After this step the robot would say he is not moving anymore,
+	 * but still the loop time is very high. Therefore we check if
+	 * the robot is moving previously to avoid this problem.
+	 */
 	bool isMoving = m_robot->isMoving();
 	m_robot->updateSensorData();
 	double timeForSensorUpdate = watch.getTimeAndRestart();
