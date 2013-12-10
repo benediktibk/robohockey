@@ -29,8 +29,6 @@ namespace Common
 		 CPPUNIT_TEST(rotate_1And0ByPiHalf_0And1);
 		 CPPUNIT_TEST(rotate_1And0ByMinusPiHalf_0AndMinus1);
 		 CPPUNIT_TEST(rotate_3And4By2_correctResult);
-		 CPPUNIT_TEST(isTargetPointRightOfLine_rightOfLine_true);
-		 CPPUNIT_TEST(isTargetPointRightOfLine_leftOfLine_false);
 		 CPPUNIT_TEST_SUITE_END();
 
 	private:
@@ -51,8 +49,6 @@ namespace Common
 		 void rotate_1And0ByPiHalf_0And1();
 		 void rotate_1And0ByMinusPiHalf_0AndMinus1();
 		 void rotate_3And4By2_correctResult();
-		 void isTargetPointRightOfLine_rightOfLine_true();
-		 void isTargetPointRightOfLine_leftOfLine_false();
 	};
 }
 }

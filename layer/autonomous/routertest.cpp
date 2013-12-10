@@ -4,6 +4,8 @@
 #include "layer/autonomous/route.h"
 #include "common/compare.h"
 #include "common/path.h"
+#include "common/angle.h"
+#include "common/robotposition.h"
 
 using namespace std;
 using namespace RoboHockey::Common;

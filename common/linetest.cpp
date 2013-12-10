@@ -101,3 +101,19 @@ void LineTest::getIntersectPoints_circleIntersectsLineButOnlyTheHigherPointIsOnT
 
 	CPPUNIT_ASSERT_EQUAL((size_t)2, line.getIntersectPoints(Circle(Point(0,0), 5)).size());
 }
+
+void LineTest::isTargetPointRightOfLine_rightOfLine_true()
+{
+	Line line(Point(1, 2), Point(1, 1.5));
+	Point target(5, -10);
+
+	CPPUNIT_ASSERT(line.isTargetPointRightOfLine(target));
+}
+
+void LineTest::isTargetPointRightOfLine_leftOfLine_false()
+{
+	Line line(Point(1, 2), Point(1, 1.5));
+	Point target(-15, 10);
+
+	CPPUNIT_ASSERT(!line.isTargetPointRightOfLine(target));
+}
