@@ -107,16 +107,17 @@ vector<Route> RouterImpl::calculateStartParts(
 	if (searchDepth > m_maximumSearchDepth)
 		return vector<Route>();
 
-	vector<Route> startParts;
 	Path endPart(end, end, m_robotWidth);
 	bool endCovered = endPart.intersectsWith(obstacles);
 	if (endCovered)
-		startParts = calculateStartPartsWithCoveredEnd(
-				start, end, field, obstacles, searchDepth, canGoLeft, canGoRight);
+	{
+		vector<Route> startParts = calculateStartPartsWithCoveredEnd(
+				start, end, field, obstacles, searchDepth, canGoLeft, canGoRight);;
+		return calculateEndParts(startParts, end, field, obstacles, searchDepth);
+	}
 	else
-		startParts = calculateStartPartsWithFreeEnd(
+		return calculateStartPartsWithFreeEnd(
 				start, end, field, obstacles, searchDepth, canGoLeft, canGoRight);
-	return calculateEndParts(startParts, end, field, obstacles, searchDepth);
 }
 
 vector<Route> RouterImpl::calculateStartPartsWithFreeEnd(
