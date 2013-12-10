@@ -26,17 +26,67 @@ void HideEnemyPucksTest::nextState_notAllEnemyPucksHidden_notAchieveGoals()
     CPPUNIT_ASSERT(stateCasted == 0);
 }
 
+void HideEnemyPucksTest::nextState_stopMovement_Pause()
+{
+    RobotMock robot;
+    FieldMock field;
+    RefereeMock referee;
+    HideEnemyPucks hideEnemyPucks(robot, field, referee);
+    referee.setGameOver(false);
+    referee.setStopMovement(true);
+    field.setAchievedGoals(3);
+    field.setEnemyHiddenPucks(3);
+    State *state;
+    state = hideEnemyPucks.nextState();
+    Pause *stateCasted = dynamic_cast<Pause*>(state);
+    CPPUNIT_ASSERT(stateCasted != 0);
+}
+
+void HideEnemyPucksTest::nextState_gameOver_Pause()
+{
+    RobotMock robot;
+    FieldMock field;
+    RefereeMock referee;
+    HideEnemyPucks hideEnemyPucks(robot, field, referee);
+    referee.setGameOver(true);
+    referee.setStopMovement(false);
+    field.setAchievedGoals(3);
+    field.setEnemyHiddenPucks(3);
+    State *state;
+    state = hideEnemyPucks.nextState();
+    Pause *stateCasted = dynamic_cast<Pause*>(state);
+    CPPUNIT_ASSERT(stateCasted != 0);
+}
+
 void HideEnemyPucksTest::nextState_allEnemyPucksHidden_DriveToFinalPosition()
 {
     RobotMock robot;
     FieldMock field;
     RefereeMock referee;
     HideEnemyPucks hideEnemyPucks(robot, field, referee);
+    referee.setGameOver(false);
+    referee.setStopMovement(false);
     field.setAchievedGoals(3);
     field.setEnemyHiddenPucks(3);
     State *state;
     state = hideEnemyPucks.nextState();
     DriveToFinalPosition *stateCasted = dynamic_cast<DriveToFinalPosition*>(state);
-    CPPUNIT_ASSERT(stateCasted == 0);
+    CPPUNIT_ASSERT(stateCasted != 0);
+}
+
+void HideEnemyPucksTest::nextState_achievedGoals2_AchieveGoals()
+{
+    RobotMock robot;
+    FieldMock field;
+    RefereeMock referee;
+    HideEnemyPucks hideEnemyPucks(robot, field, referee);
+    referee.setGameOver(false);
+    referee.setStopMovement(false);
+    field.setAchievedGoals(2);
+    field.setEnemyHiddenPucks(3);
+    State *state;
+    state = hideEnemyPucks.nextState();
+    AchieveGoals *stateCasted = dynamic_cast<AchieveGoals*>(state);
+    CPPUNIT_ASSERT(stateCasted != 0);
 }
 
