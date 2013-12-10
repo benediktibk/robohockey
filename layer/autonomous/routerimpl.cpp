@@ -27,7 +27,7 @@ Route RouterImpl::calculateRoute(const Point &start, const Point &end, const Fie
 	if (startPart.intersectsWith(obstacles))
 		return Route(m_robotWidth);
 
-	vector<Route> routes = calculateRoutesRecursive(start, end, obstacles, 0);
+	vector<Route> routes = calculateRoutesRecursive(start, end, field, obstacles, 0);
 
 	if (routes.size() == 0)
 		return Route(m_robotWidth);
@@ -83,7 +83,8 @@ vector<Point> RouterImpl::getPointsBesideObstacle(const Path &path, const Circle
 }
 
 vector<Route> RouterImpl::calculateRoutesRecursive(
-		const Point &start, const Point &end, const vector<Circle> &obstacles, unsigned int searchDepth) const
+		const Point &start, const Point &end, const Field &field,
+		const vector<Circle> &obstacles, unsigned int searchDepth) const
 {
 	vector<Route> result;
 
@@ -135,8 +136,12 @@ vector<Route> RouterImpl::calculateRoutesRecursive(
 	for (vector<Point>::const_iterator i = pointsBesideObstacle.begin(); i != pointsBesideObstacle.end() && result.size() == 0; ++i)
 	{
 		const Point &pointBesideObstacle = *i;
-		vector<Route> startParts = calculateRoutesRecursive(start, pointBesideObstacle, obstacles, searchDepth);
-		vector<Route> completeRoutes = calculateRoutesRecursive(startParts, end, obstacles, searchDepth);
+
+		if (!field.isPointInsideField(pointBesideObstacle))
+			continue;
+
+		vector<Route> startParts = calculateRoutesRecursive(start, pointBesideObstacle, field, obstacles, searchDepth);
+		vector<Route> completeRoutes = calculateRoutesRecursive(startParts, end, field, obstacles, searchDepth);
 		result.insert(result.end(), completeRoutes.begin(), completeRoutes.end());
 	}
 
@@ -144,7 +149,8 @@ vector<Route> RouterImpl::calculateRoutesRecursive(
 }
 
 vector<Route> RouterImpl::calculateRoutesRecursive(
-		const vector<Route> &startRoutes, const Point &end, const vector<Circle> &obstacles, unsigned int searchDepth) const
+		const vector<Route> &startRoutes, const Point &end, const Field &field,
+		const vector<Circle> &obstacles, unsigned int searchDepth) const
 {
 	vector<Route> result;
 
@@ -152,7 +158,7 @@ vector<Route> RouterImpl::calculateRoutesRecursive(
 	{
 		const Route &startRoute = *i;
 		const Common::Point &start = startRoute.getLastPoint();
-		vector<Route> routes = calculateRoutesRecursive(start, end, obstacles, searchDepth);
+		vector<Route> routes = calculateRoutesRecursive(start, end, field, obstacles, searchDepth);
 
 		for (vector<Route>::const_iterator j = routes.begin(); j != routes.end(); ++j)
 		{
