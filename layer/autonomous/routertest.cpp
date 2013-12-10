@@ -4,6 +4,7 @@
 #include "layer/autonomous/route.h"
 #include "common/compare.h"
 #include "common/path.h"
+#include "common/watch.h"
 
 using namespace std;
 using namespace RoboHockey::Common;
@@ -288,6 +289,38 @@ void RouterTest::calculateRoute_goingBetweenTwoObstacles_directRoute()
 	CPPUNIT_ASSERT(!route.intersectsWith(obstacles));
 	double routeLength = route.getLength();
 	CPPUNIT_ASSERT_DOUBLES_EQUAL(2, routeLength, 0.01);
+}
+
+void RouterTest::calculateRoute_severalObjectsAndOneOnTheWay_calculationIsNotTooSlow()
+{
+	FieldMock field;
+	RouterImpl router(0.5);
+	vector<Circle> obstacles;
+	obstacles.push_back(Circle(Point(0, 0), 0.1));
+	obstacles.push_back(Circle(Point(0.5, 0), 0.1));
+	obstacles.push_back(Circle(Point(2, 0), 0.1));
+	obstacles.push_back(Circle(Point(3.5, 0), 0.1));
+	obstacles.push_back(Circle(Point(4, 0), 0.1));
+	obstacles.push_back(Circle(Point(0, 3), 0.1));
+	obstacles.push_back(Circle(Point(0.5, 3), 0.1));
+	obstacles.push_back(Circle(Point(2, 3), 0.1));
+	obstacles.push_back(Circle(Point(3.5, 3), 0.1));
+	obstacles.push_back(Circle(Point(4, 3), 0.1));
+	obstacles.push_back(Circle(Point(2, 2), 0.1));
+	obstacles.push_back(Circle(Point(0, 5), 0.1));
+	obstacles.push_back(Circle(Point(0.5, 5), 0.1));
+	obstacles.push_back(Circle(Point(2, 5), 0.1));
+	obstacles.push_back(Circle(Point(3.5, 5), 0.1));
+	obstacles.push_back(Circle(Point(4, 5), 0.1));
+	field.setObstacles(obstacles);
+
+	Watch watch;
+	Route route = router.calculateRoute(Point(1, 2), Point(3, 2), field);
+	double time = watch.getTimeAndRestart();
+
+	CPPUNIT_ASSERT(route.isValid());
+	CPPUNIT_ASSERT(!route.intersectsWith(obstacles));
+	CPPUNIT_ASSERT(time < 0.2);
 }
 
 void RouterTest::getPointsBesideObstacle_intersectFromLeftAndCircleCenterNotOnPath_shortPointIs2AndMinus1()
