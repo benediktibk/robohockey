@@ -5,6 +5,7 @@
 #include "common/path.h"
 #include "common/pathintersectpoints.h"
 #include "common/angle.h"
+#include "common/line.h"
 #include <math.h>
 #include <assert.h>
 #include <algorithm>
@@ -64,9 +65,17 @@ vector<Point> RouterImpl::getPointsBesideObstacle(const Path &path, const Circle
 			offsetDistanceLongPoint -= centerBetweenIntersectPoints.distanceTo(obstacle.getCenter());
 		}
 		if(intersectionPoints.getIntersectTypeFrom() == PathIntersectPoints::IntersectTypeFromLeft)
+		{
 			offsetAngleShortPoint = offsetAngleShortPoint + Angle::getThreeQuarterRotation();
+			if(Line(intersectionPoints.front(), intersectionPoints.back()).isTargetPointRightOfLine(obstacle.getCenter()) && !path.isCircleCenterOnPath(obstacle))
+				offsetAngleShortPoint = offsetAngleShortPoint- Angle::getHalfRotation();
+		}
 		else
+		{
 			offsetAngleShortPoint = offsetAngleShortPoint + Angle::getQuarterRotation();
+			if(!Line(intersectionPoints.front(), intersectionPoints.back()).isTargetPointRightOfLine(obstacle.getCenter()) && !path.isCircleCenterOnPath(obstacle))
+				offsetAngleShortPoint = offsetAngleShortPoint- Angle::getHalfRotation();
+		}
 
 		shortPointBesideObstacle = centerBetweenIntersectPoints + Point(offsetDistanceShortPoint, offsetAngleShortPoint);
 		longPointBesideObstacle = centerBetweenIntersectPoints + Point(offsetDistanceLongPoint, offsetAngleShortPoint + Angle::getHalfRotation());
