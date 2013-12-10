@@ -17,8 +17,10 @@ void RouterTest::calculateRoute_emptyField_validRoute()
 {
 	FieldMock field;
 	RouterImpl router(0.5);
+	RobotPosition start(Point(1, 1), Angle::getQuarterRotation());
+	RobotPosition end(Point(1, 2), Angle::getQuarterRotation());
 
-	Route route = router.calculateRoute(Point(1, 1), Point(1, 2), field);
+	Route route = router.calculateRoute(start, end, field);
 
 	CPPUNIT_ASSERT(route.isValid());
 }
@@ -304,11 +306,11 @@ void RouterTest::calculateRoute_severalObjectsAndOneOnTheWay_calculationIsNotToo
 	obstacles.push_back(Circle(Point(2, 0), 0.1));
 	obstacles.push_back(Circle(Point(3.5, 0), 0.1));
 	obstacles.push_back(Circle(Point(4, 0), 0.1));
-	obstacles.push_back(Circle(Point(0, 3), 0.1));
-	obstacles.push_back(Circle(Point(0.5, 3), 0.1));
-	obstacles.push_back(Circle(Point(2, 3), 0.1));
-	obstacles.push_back(Circle(Point(3.5, 3), 0.1));
-	obstacles.push_back(Circle(Point(4, 3), 0.1));
+	obstacles.push_back(Circle(Point(0, 7), 0.1));
+	obstacles.push_back(Circle(Point(0.5, 7), 0.1));
+	obstacles.push_back(Circle(Point(2, 7), 0.1));
+	obstacles.push_back(Circle(Point(3.5, 7), 0.1));
+	obstacles.push_back(Circle(Point(4, 7), 0.1));
 	obstacles.push_back(Circle(Point(2, 2), 0.1));
 	obstacles.push_back(Circle(Point(0, 5), 0.1));
 	obstacles.push_back(Circle(Point(0.5, 5), 0.1));
@@ -316,9 +318,11 @@ void RouterTest::calculateRoute_severalObjectsAndOneOnTheWay_calculationIsNotToo
 	obstacles.push_back(Circle(Point(3.5, 5), 0.1));
 	obstacles.push_back(Circle(Point(4, 5), 0.1));
 	field.setObstacles(obstacles);
+	RobotPosition start(Point(1, 2), 0);
+	RobotPosition end(Point(3, 2), 0);
 
 	Watch watch;
-	Route route = router.calculateRoute(Point(1, 2), Point(3, 2), field);
+	Route route = router.calculateRoute(start, end, field);
 	double time = watch.getTimeAndRestart();
 
 	CPPUNIT_ASSERT(route.isValid());
