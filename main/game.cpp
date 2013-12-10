@@ -64,6 +64,7 @@ void Game::execute()
 {
 	Watch watch;
 
+	bool isMoving = m_robot->isMoving();
 	m_robot->updateSensorData();
 	double timeForSensorUpdate = watch.getTimeAndRestart();
 	m_field->update();
@@ -74,7 +75,7 @@ void Game::execute()
 	double timeForActuatorUpdate = watch.getTimeAndRestart();
 
 	double timeDifference = m_watch->getTimeAndRestart();
-	if (timeDifference > 0.11 && m_robot->isMoving())
+	if (timeDifference > 0.11 && isMoving)
 	{
 		printTimeInMs("loop time is too high", timeDifference);
 		printTimeInMs("time spent on sensor updates", timeForSensorUpdate);
