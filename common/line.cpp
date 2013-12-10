@@ -82,3 +82,8 @@ vector<Point> Line::getIntersectPoints(const Circle &circle) const
 	}
 	return intersectPoints;
 }
+
+bool Line::isTargetPointRightOfLine(const Point &target)
+{
+	return 0 < (m_end.getY()*(target.getX() - m_start.getX()) - m_end.getX()*(target.getY() - m_start.getY()));
+}
