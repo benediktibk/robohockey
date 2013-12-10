@@ -119,39 +119,10 @@ vector<Route> RouterImpl::calculateStartParts(
 	}
 
 	Circle closestObstacle = findClosestObstacle(realObstacles, start);
-	vector<Point> pointsBesideObstacle = getPointsBesideObstacle(directPath, closestObstacle);
-	assert(pointsBesideObstacle.size() == 2);
-	Line line(start, end);
-	Point leftPoint;
-	Point rightPoint;
-
-	if (line.isTargetPointRightOfLine(pointsBesideObstacle.front()))
-	{
-		rightPoint = pointsBesideObstacle.front();
-		leftPoint = pointsBesideObstacle.back();
-	}
-	else
-	{
-		rightPoint = pointsBesideObstacle.back();
-		leftPoint = pointsBesideObstacle.front();
-	}
-
-	vector<Route> allStartParts;
-	if (canGoRight && field.isPointInsideField(rightPoint))
-	{
-		vector<Route> startParts = calculateStartParts(
-					start, rightPoint, field, obstacles, searchDepth, false, true);
-		allStartParts.insert(allStartParts.end(), startParts.begin(), startParts.end());
-	}
-
-	if (canGoLeft && field.isPointInsideField(leftPoint))
-	{
-		vector<Route> startParts = calculateStartParts(
-					start, leftPoint, field, obstacles, searchDepth, true, false);
-		allStartParts.insert(allStartParts.end(), startParts.begin(), startParts.end());
-	}
-
-	return calculateEndParts(allStartParts, end, field, obstacles, searchDepth);
+	vector<Route> startParts = calculateRoutesToPointsBesideObstacle(
+				closestObstacle, start, end, field, obstacles, canGoLeft, canGoRight,
+				searchDepth);
+	return calculateEndParts(startParts, end, field, obstacles, searchDepth);
 }
 
 vector<Route> RouterImpl::calculateEndParts(
@@ -209,4 +180,44 @@ Circle RouterImpl::findClosestObstacle(const vector<Circle> &obstacles, const Po
 	}
 
 	return closestObstacle;
+}
+
+vector<Route> RouterImpl::calculateRoutesToPointsBesideObstacle(
+		const Circle &obstacle, const Point &start, const Point &end, const Field &field,
+		const vector<Circle> &obstacles, bool canGoLeft, bool canGoRight, unsigned int searchDepth) const
+{
+	Path path(start, end, m_robotWidth);
+	vector<Point> pointsBesideObstacle = getPointsBesideObstacle(path, obstacle);
+	assert(pointsBesideObstacle.size() == 2);
+	Line line(start, end);
+	Point leftPoint;
+	Point rightPoint;
+
+	if (line.isTargetPointRightOfLine(pointsBesideObstacle.front()))
+	{
+		rightPoint = pointsBesideObstacle.front();
+		leftPoint = pointsBesideObstacle.back();
+	}
+	else
+	{
+		rightPoint = pointsBesideObstacle.back();
+		leftPoint = pointsBesideObstacle.front();
+	}
+
+	vector<Route> result;
+	if (canGoRight && field.isPointInsideField(rightPoint))
+	{
+		vector<Route> startParts = calculateStartParts(
+					start, rightPoint, field, obstacles, searchDepth, false, true);
+		result.insert(result.end(), startParts.begin(), startParts.end());
+	}
+
+	if (canGoLeft && field.isPointInsideField(leftPoint))
+	{
+		vector<Route> startParts = calculateStartParts(
+					start, leftPoint, field, obstacles, searchDepth, true, false);
+		result.insert(result.end(), startParts.begin(), startParts.end());
+	}
+
+	return result;
 }
