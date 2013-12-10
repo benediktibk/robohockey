@@ -1,6 +1,7 @@
 #include "layer/strategy/hideenemypucks.h"
 #include "layer/strategy/referee.h"
 #include "layer/autonomous/field.h"
+#include "layer/strategy/drivetofinalposition.h"
 
 using namespace RoboHockey::Layer::Strategy;
 
@@ -14,6 +15,8 @@ State* HideEnemyPucks::nextState()
         return new Pause(m_robot, m_field, m_referee);
     else if(m_field.achievedGoals() < 3)
         return new AchieveGoals(m_robot, m_field, m_referee);
+    else if(m_field.enemyHiddenPucks() >= 3)
+        return new DriveToFinalPosition(m_robot, m_field, m_referee);
     else
         return 0;
 }

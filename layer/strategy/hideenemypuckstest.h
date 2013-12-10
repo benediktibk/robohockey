@@ -15,10 +15,12 @@ class HideEnemyPucksTest:
     {
         CPPUNIT_TEST_SUITE(HideEnemyPucksTest);
         CPPUNIT_TEST(nextState_notAllEnemyPucksHidden_notAchieveGoals);
+        CPPUNIT_TEST(nextState_allEnemyPucksHidden_DriveToFinalPosition);
         CPPUNIT_TEST_SUITE_END();
 
     private:
         void nextState_notAllEnemyPucksHidden_notAchieveGoals();
+        void nextState_allEnemyPucksHidden_DriveToFinalPosition();
     };
 }
 }

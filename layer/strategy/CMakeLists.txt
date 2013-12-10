@@ -11,6 +11,7 @@ set(LAYER_STRATEGY_SRC
 	refereeimpl.cpp
 	pause.cpp
 	hideenemypucks.cpp
+	drivetofinalposition.cpp
 )
 
 set(LAYER_STRATEGY_TEST_SRC
@@ -22,6 +23,7 @@ set(LAYER_STRATEGY_TEST_SRC
 	achievegoalstest.cpp
 	hideenemypuckstest.cpp
 	pausetest.cpp
+	drivetofinalpositiontest.cpp
 )
 
 set(MOC_H

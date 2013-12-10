@@ -13,10 +13,11 @@ namespace Strategy
 class DriveToFinalPosition:
         public State
     {
-    DriveToFinalPosition(Autonomous::Robot &robot, Autonomous::Field &field, Referee &referee);
+    public:
+        DriveToFinalPosition(Autonomous::Robot &robot, Autonomous::Field &field, Referee &referee);
 
-    virtual State* nextState();
-    virtual void update();
+        virtual State* nextState();
+        virtual void update();
 
     };
 }
