@@ -16,7 +16,7 @@ set(LAYER_STRATEGY_MAINSTATEMACHINE_TEST_SRC
 	calibratetest.cpp
 	refereemock.cpp
 	achievegoalstest.cpp
-	hideenemypucks.cpp
+	hideenemypuckstest.cpp
 	pausetest.cpp
 )
 

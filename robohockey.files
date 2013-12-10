@@ -320,10 +320,10 @@ layer/autonomous/routelengthcomparetest.cpp
 layer/autonomous/routelengthcompare.cpp
 resources/testfiles/lidar_36.txt
 resources/testfiles/lidar_37.txt
-layer/strategy/common/statemock.cpp
-layer/strategy/common/statemachinetest.cpp
-layer/strategy/common/statemachine.cpp
-layer/strategy/common/state.cpp
+layer/strategy/drivetofinalposition.h
+layer/strategy/drivetofinalposition.cpp
+layer/strategy/drivetofinalpositiontest.h
+layer/strategy/drivetofinalpositiontest.cpp
 layer/strategy/common/statemock.h
 layer/strategy/common/statemachinetest.h
 layer/strategy/common/statemachine.h

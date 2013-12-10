@@ -5,6 +5,7 @@
 #include "layer/autonomous/robotmock.h"
 #include "layer/autonomous/fieldmock.h"
 #include "layer/strategy/mainstatemachine/refereemock.h"
+#include "layer/strategy/mainstatemachine/calibrate.h"
 
 using namespace RoboHockey::Layer::Strategy::Common;
 using namespace RoboHockey::Layer::Strategy::MainStateMachine;

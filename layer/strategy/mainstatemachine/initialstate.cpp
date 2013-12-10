@@ -1,5 +1,6 @@
 #include "layer/strategy/mainstatemachine/initialstate.h"
 #include "layer/strategy/mainstatemachine/referee.h"
+#include "layer/strategy/mainstatemachine/calibrate.h"
 
 using namespace RoboHockey::Layer::Strategy::Common;
 using namespace RoboHockey::Layer::Strategy::MainStateMachine;

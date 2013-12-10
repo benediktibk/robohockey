@@ -34,6 +34,7 @@
 #include "layer/strategy/mainstatemachine/initialstatetest.h"
 #include "layer/strategy/mainstatemachine/calibratetest.h"
 #include "layer/strategy/mainstatemachine/achievegoalstest.h"
+#include "layer/strategy/mainstatemachine/hideenemypuckstest.h"
 #include "common/pathtest.h"
 #include "common/linetest.h"
 #include "common/pathintersectpointstest.h"
@@ -77,5 +78,6 @@ CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Strategy::Common::StateMachin
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Strategy::MainStateMachine::InitialStateTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Strategy::MainStateMachine::CalibrateTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Strategy::MainStateMachine::AchieveGoalsTest);
+CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Strategy::MainStateMachine::HideEnemyPucksTest);
 
 
