@@ -10,16 +10,18 @@ namespace Layer
 {
 namespace Strategy
 {
-class HideEnemyPucksTest
-{
-public:
-    HideEnemyPucksTest();
-    
-};
+class HideEnemyPucksTest:
+        public CPPUNIT_NS::TestFixture
+    {
+        CPPUNIT_TEST_SUITE(HideEnemyPucksTest);
+        CPPUNIT_TEST(nextState_notAllEnemyPucksHidden_notAchieveGoals);
+        CPPUNIT_TEST_SUITE_END();
+
+    private:
+        void nextState_notAllEnemyPucksHidden_notAchieveGoals();
+    };
 }
 }
 }
 
 #endif
-
-
