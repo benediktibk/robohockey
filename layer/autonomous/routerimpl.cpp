@@ -108,21 +108,7 @@ vector<Route> RouterImpl::calculateRoutesRecursive(
 		return result;
 	}
 
-	double closestDistance = numeric_limits<double>::max();
-	Circle closestObstacle;
-
-	for (vector<Circle>::const_iterator i = realObstacles.begin(); i != realObstacles.end(); ++i)
-	{
-		const Circle &obstacle = *i;
-		double distance = obstacle.getDistanceTo(start);
-
-		if (distance < closestDistance)
-		{
-			closestDistance = distance;
-			closestObstacle = obstacle;
-		}
-	}
-
+	Circle closestObstacle = findClosestObstacle(realObstacles, start);
 	vector<Point> pointsBesideObstacle = getPointsBesideObstacle(directPath, closestObstacle);
 	assert(pointsBesideObstacle.size() == 2);
 
@@ -177,4 +163,26 @@ vector<Circle> RouterImpl::findRealObstacles(const vector<Circle> &obstacles, co
 			result.push_back(*i);
 
 	return result;
+}
+
+Circle RouterImpl::findClosestObstacle(const vector<Circle> &obstacles, const Point &point) const
+{
+	assert(obstacles.size() > 0);
+
+	double closestDistance = numeric_limits<double>::max();
+	Circle closestObstacle;
+
+	for (vector<Circle>::const_iterator i = obstacles.begin(); i != obstacles.end(); ++i)
+	{
+		const Circle &obstacle = *i;
+		double distance = obstacle.getDistanceTo(point);
+
+		if (distance < closestDistance)
+		{
+			closestDistance = distance;
+			closestObstacle = obstacle;
+		}
+	}
+
+	return closestObstacle;
 }
