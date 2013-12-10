@@ -4,7 +4,8 @@ using namespace std;
 using namespace RoboHockey::Common;
 using namespace RoboHockey::Layer::Autonomous;
 
-FieldMock::FieldMock()
+FieldMock::FieldMock() :
+	m_negativeCoordinatesOutside(false)
 { }
 
 void FieldMock::update()
@@ -27,12 +28,15 @@ vector<FieldObject> FieldMock::getObjectsWithColorOrderdByDistance(FieldObjectCo
 
 bool FieldMock::calibratePosition()
 {
-    return false;
+	return false;
 }
 
-bool FieldMock::isPointInsideField(const Point &/*point*/) const
+bool FieldMock::isPointInsideField(const Point &point) const
 {
-	return true;
+	if (m_negativeCoordinatesOutside && (point.getX() < 0 || point.getY() < 0))
+		return false;
+	else
+		return true;
 }
 
 void FieldMock::setFieldObjects(const vector<FieldObject> &objects)
@@ -42,7 +46,12 @@ void FieldMock::setFieldObjects(const vector<FieldObject> &objects)
 
 void FieldMock::setObstacles(const vector<Circle> &obstacles)
 {
-    m_obstacles = obstacles;
+	m_obstacles = obstacles;
+}
+
+void FieldMock::setNegativeCoordinatesOutside(bool value)
+{
+	m_negativeCoordinatesOutside = value;
 }
 
 unsigned int FieldMock::enemyHiddenPucks()
@@ -57,10 +66,10 @@ bool FieldMock::numberOfPucksChanged() const
 
 unsigned int FieldMock::achievedGoals()
 {
-    return m_achievedGoals;
+	return m_achievedGoals;
 }
 
 void FieldMock::setAchievedGoals(unsigned int goalsAchieved)
 {
-    m_achievedGoals = goalsAchieved;
+	m_achievedGoals = goalsAchieved;
 }
