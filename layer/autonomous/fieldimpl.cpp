@@ -339,8 +339,8 @@ vector<FieldObject> FieldImpl::moveAllFieldObjectsInVisibleAreaToTemporaryVector
 		Angle angleToXAxis(robotPosition, objectPosition);
 		Angle angleToRobotDirection = angleToXAxis - robotAngle;
 
-		if (angleToRobotDirection.getValueBetweenMinusPiAndPi() > m_lidar->getMaximumAngleRight().getValueBetweenMinusPiAndPi()
-				&& robotAngle.getValueBetweenMinusPiAndPi() < m_lidar->getMaximumAngleLeft().getValueBetweenMinusPiAndPi())
+		if (Angle(angleToRobotDirection - m_lidar->getMaximumAngleRight()).getValueBetweenMinusPiAndPi() > 0
+				&& Angle(m_lidar->getMaximumAngleLeft() - angleToRobotDirection).getValueBetweenMinusPiAndPi() > 0)
 		{
 			m_fieldObjects.erase(i);
 			result.push_back(*i);
