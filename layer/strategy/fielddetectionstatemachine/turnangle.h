@@ -5,6 +5,10 @@
 
 namespace RoboHockey
 {
+namespace Common
+{
+	class Angle;
+}
 namespace Layer
 {
 namespace Strategy
@@ -15,7 +19,7 @@ namespace FieldDetectionStateMachine
 			public Common::State
 	{
 	public:
-		TurnAngle(Autonomous::Robot &robot, Autonomous::Field &field, Common::Referee &referee);
+		TurnAngle(Autonomous::Robot &robot, Autonomous::Field &field, Common::Referee &referee, RoboHockey::Common::Angle angle);
 
 		virtual State* nextState();
 		virtual void update();
