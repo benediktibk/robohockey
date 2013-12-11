@@ -29,6 +29,7 @@ namespace Autonomous
 		CPPUNIT_TEST(tryToDetectField_3pointsNearMixed_correctNewOrigin);
 		CPPUNIT_TEST(tryToDetectField_3pointsNearMidMixed_correctNewOrigin);
 		CPPUNIT_TEST(tryToDetectField_3pointsNearNearMixed_correctNewOrigin);
+		CPPUNIT_TEST(tryToDetectField_3pointsNearMixedMid_correctNewOrigin);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
@@ -47,6 +48,7 @@ namespace Autonomous
 		void tryToDetectField_3pointsNearMixed_correctNewOrigin();
 		void tryToDetectField_3pointsNearMidMixed_correctNewOrigin();
 		void tryToDetectField_3pointsNearNearMixed_correctNewOrigin();
+		void tryToDetectField_3pointsNearMixedMid_correctNewOrigin();
 
 
 	};
