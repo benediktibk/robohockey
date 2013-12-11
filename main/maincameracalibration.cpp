@@ -169,9 +169,11 @@ bool compareCurrentPointsWithDefault(vector<Point2f> &resultPoints, double toler
 	{
 		if (fabs((resultPoints[0]).x - (defaultChessboardPoints[0]).x) < fabs((resultPoints[defaultChessboardPoints.size() - 1]).x - (defaultChessboardPoints[0]).x))
 		{
-			cout << "X: " << (resultPoints[0]).x - (defaultChessboardPoints[0]).x << " Y: " << (resultPoints[0]).y - (defaultChessboardPoints[0]).y << endl;
+			cout << "X: " << setprecision(1) << fixed << (resultPoints[0]).x - (defaultChessboardPoints[0]).x << " Y: " << (resultPoints[0]).y - (defaultChessboardPoints[0]).y << endl;
+			cout << "X: " << setprecision(1) << fixed << (resultPoints[defaultChessboardPoints.size() - 1]).x - (defaultChessboardPoints[defaultChessboardPoints.size() - 1]).x << " Y: " << (resultPoints[defaultChessboardPoints.size() - 1]).y - (defaultChessboardPoints[defaultChessboardPoints.size() - 1]).y << endl;
 		} else {
-			cout << "X: " << (resultPoints[0]).x - (defaultChessboardPoints[defaultChessboardPoints.size() - 1]).x << " Y: " << (resultPoints[defaultChessboardPoints.size() - 1]).y - (defaultChessboardPoints[0]).y << endl;
+			cout << "X: " << setprecision(1) << fixed << (resultPoints[0]).x - (defaultChessboardPoints[defaultChessboardPoints.size() - 1]).x << " Y: " << (resultPoints[defaultChessboardPoints.size() - 1]).y - (defaultChessboardPoints[0]).y << endl;
+			cout << "X: " << setprecision(1) << fixed << (resultPoints[defaultChessboardPoints.size() - 1]).x - (defaultChessboardPoints[0]).x << " Y: " << (resultPoints[0]).y - (defaultChessboardPoints[defaultChessboardPoints.size() - 1]).y << endl;
 		}
 	}
 
