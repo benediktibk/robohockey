@@ -43,6 +43,7 @@ namespace Autonomous
 		CPPUNIT_TEST(numberOfPucksChanged_onePuckAdded_true);
 		CPPUNIT_TEST(numberOfPucksChanged_onePuckRemoved_true);
 		CPPUNIT_TEST(numberOfPucksChanged_onePuckAddedOnePuckRemoved_true);
+		CPPUNIT_TEST(getTargetPositionForGoalDetection_correctPosition);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
@@ -75,6 +76,7 @@ namespace Autonomous
 		void numberOfPucksChanged_onePuckAdded_true();
 		void numberOfPucksChanged_onePuckRemoved_true();
 		void numberOfPucksChanged_onePuckAddedOnePuckRemoved_true();
+		void getTargetPositionForGoalDetection_correctPosition();
 	};
 }
 }

@@ -7,6 +7,7 @@
 #include "layer/dataanalysis/dataanalyserimpl.h"
 #include "layer/hardware/robotmock.h"
 #include "common/compare.h"
+#include "common/robotposition.h"
 
 using namespace RoboHockey::Common;
 using namespace RoboHockey::Layer;
@@ -661,4 +662,15 @@ void FieldTest::numberOfPucksChanged_onePuckAddedOnePuckRemoved_true()
 
 	field.update();
 	CPPUNIT_ASSERT(field.numberOfPucksChanged());
+}
+
+void FieldTest::getTargetPositionForGoalDetection_correctPosition()
+{
+	DataAnalysis::OdometryMock odometry;
+	DataAnalysis::LidarMock lidar;
+	DataAnalysis::CameraMock camera;
+	Autonomous::RobotMock autonomousRobot;
+	FieldImpl field(odometry, lidar, camera, autonomousRobot);
+
+	CPPUNIT_ASSERT_EQUAL(RobotPosition(Point(1.17333333333, 1.5), Angle::getHalfRotation()), field.getTargetPositionForGoalDetection());
 }
