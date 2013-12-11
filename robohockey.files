@@ -376,3 +376,7 @@ layer/strategy/fielddetectionstatemachine/checkgoalcolor.h
 layer/strategy/fielddetectionstatemachine/checkgoalcolortest.cpp
 layer/strategy/fielddetectionstatemachine/checkgoalcolor.cpp
 layer/strategy/common/statemachine.cpp
+layer/strategy/fielddetectionstatemachine/turnangletest.h
+layer/strategy/fielddetectionstatemachine/turnangle.h
+layer/strategy/fielddetectionstatemachine/turnangletest.cpp
+layer/strategy/fielddetectionstatemachine/turnangle.cpp

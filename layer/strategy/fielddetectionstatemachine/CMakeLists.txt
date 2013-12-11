@@ -2,12 +2,14 @@ set(LAYER_STRATEGY_FIELDDETECTIONSTATEMACHINE_SRC
 	initialstate.cpp
 	detectfield.cpp
 	checkgoalcolor.cpp
+	turnangle.cpp
 )
 
 set(LAYER_STRATEGY_FIELDDETECTIONSTATEMACHINE_TEST_SRC
 	initialstatetest.cpp
 	detectfieldtest.cpp
 	checkgoalcolortest.cpp
+	turnangletest.cpp
 )
 
 add_library(layerstrategyfielddetectionstatemachine ${LAYER_STRATEGY_FIELDDETECTIONSTATEMACHINE_SRC})
