@@ -16,9 +16,12 @@ namespace FieldDetectionStateMachine
 			public CPPUNIT_NS::TestFixture
 	{
 		CPPUNIT_TEST_SUITE(DetectFieldTest);
+		CPPUNIT_TEST(nextState_notCalibrated_turnAngle);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
+
+		void nextState_notCalibrated_turnAngle();
 
 	};
 }
