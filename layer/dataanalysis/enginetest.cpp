@@ -503,7 +503,7 @@ void EngineTest::goToStraightThrough_TargetAlmostReachedAfterSomeTime_lastMagnit
 	hardwareOdometry.setCurrentPosition(RobotPosition(Point(-0.95, 0), M_PI));
 	engine.updateSpeedAndRotation();
 
-	CPPUNIT_ASSERT_EQUAL(0.5, hardwareEngine.getLastMagnitude());
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(0.5, hardwareEngine.getLastMagnitude(), 0.025);
 }
 
 void EngineTest::goToStraightSlowlyBack_currentPositionDifferentToTarget_atLeastOneCallToSetSpeed()

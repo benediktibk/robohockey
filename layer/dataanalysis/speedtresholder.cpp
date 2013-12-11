@@ -8,7 +8,7 @@ using namespace RoboHockey::Layer::DataAnalysis;
 SpeedTresholder::SpeedTresholder() :
 	m_wheelDiameter(0.19),
 	m_axisLength(0.38),
-	m_maximumWheelSpeed(1.7*M_PI),
+	m_maximumWheelSpeed(1.7*M_PI*0.95),
 	m_minimumWheelSpeed(0.3)
 { }
 

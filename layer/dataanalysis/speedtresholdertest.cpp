@@ -24,7 +24,7 @@ void SpeedTresholderTest::tresholdWheelSpeeds_06and0_0507and0()
 
 	tresholder.tresholdWheelSpeeds(magnitude, rotationSpeed);
 
-	CPPUNIT_ASSERT_DOUBLES_EQUAL(0.507367213, magnitude, 0.001);
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(0.507367213, magnitude, 0.05);
 	CPPUNIT_ASSERT_DOUBLES_EQUAL(0, rotationSpeed, 0.001);
 }
 
@@ -36,7 +36,7 @@ void SpeedTresholderTest::tresholdWheelSpeeds_minus06and0_minus0507and0()
 
 	tresholder.tresholdWheelSpeeds(magnitude, rotationSpeed);
 
-	CPPUNIT_ASSERT_DOUBLES_EQUAL(-0.507367213, magnitude, 0.001);
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(-0.507367213, magnitude, 0.05);
 	CPPUNIT_ASSERT_DOUBLES_EQUAL(0, rotationSpeed, 0.001);
 }
 
@@ -49,7 +49,7 @@ void SpeedTresholderTest::tresholdWheelSpeeds_0and3pi_0and267()
 	tresholder.tresholdWheelSpeeds(magnitude, rotationSpeed);
 
 	CPPUNIT_ASSERT_DOUBLES_EQUAL(0, magnitude, 0.001);
-	CPPUNIT_ASSERT_DOUBLES_EQUAL(2.670353756, rotationSpeed, 0.001);
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(2.670353756, rotationSpeed, 0.2);
 }
 
 void SpeedTresholderTest::tresholdWheelSpeeds_05andpi_magnitudeToRotationSpeedRatioIsCorrect()
