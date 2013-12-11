@@ -56,6 +56,11 @@ const Point &Route::getFirstPoint() const
 	return m_points.front();
 }
 
+list<Point> Route::getAllPoints() const
+{
+	return m_points;
+}
+
 void Route::removeFirstPoint()
 {
 	assert(getPointCount() > 0);

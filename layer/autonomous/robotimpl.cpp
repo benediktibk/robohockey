@@ -242,11 +242,6 @@ void RobotImpl::detectCollisions()
 		engine.lockForwardMovement();
 	else
 		engine.unlockForwardMovement();
-
-	m_dataAnalyser->updateActuators();
-
-	if (engine.tryingToTackleObstacle())
-		m_tryingToTackleObstacle = true;
 }
 
 bool RobotImpl::enableCollisionDetectionWithSonar() const
@@ -293,11 +288,15 @@ bool RobotImpl::isCurrentTargetPuckCollectable() const
 			orientationDifference.getValueBetweenMinusPiAndPi() < m_maximumAngleToCollectPuck.getValueBetweenMinusPiAndPi();
 }
 
-
 void RobotImpl::updateActuators(const Field &field)
 {
 	detectCollisions();
 	updateEngine(field);
+	m_dataAnalyser->updateActuators();
+
+	DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
+	if (engine.tryingToTackleObstacle())
+		m_tryingToTackleObstacle = true;
 }
 
 void RobotImpl::updateSensorData()

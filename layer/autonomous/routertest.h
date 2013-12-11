@@ -10,6 +10,9 @@ namespace Layer
 {
 namespace Autonomous
 {
+	class Route;
+	class Field;
+
 	class RouterTest :
 			public CPPUNIT_NS::TestFixture
 	{
@@ -34,6 +37,9 @@ namespace Autonomous
 		CPPUNIT_TEST(calculateRoute_obstacleOnWayToTargetFromPointBesideObstacle_reasonableRoute);
 		CPPUNIT_TEST(calculateRoute_obstacleOnWayToAndFromPointBesideObstacle_reasonableRoute);
 		CPPUNIT_TEST(calculateRoute_goingBetweenTwoObstacles_directRoute);
+		CPPUNIT_TEST(calculateRoute_severalObjectsAndOneOnTheWay_calculationIsNotTooSlow);
+		CPPUNIT_TEST(calculateRoute_shortWayOutsideField_noPointOfRouteIsOutside);
+		CPPUNIT_TEST(calculateRoute_onlyPossiblePointBesideIsBlockedByAnotherObstacle_reasonableRoute);
 		CPPUNIT_TEST(getPointsBesideObstacle_intersectFromLeftAndCircleCenterNotOnPath_shortPointIs2AndMinus1);
 		CPPUNIT_TEST(getPointsBesideObstacle_intersectFromLeftAndCircleCenterNotOnPath_longPointIs2And6p4142);
 		CPPUNIT_TEST(getPointsBesideObstacle_intersectFromRightAndCircleCenterNotOnPath_shortPointIs2And3);
@@ -52,6 +58,8 @@ namespace Autonomous
 		CPPUNIT_TEST(getPointsBesideObstacle_bigObstacleOnRightSide_resultSizeIs2);
 		CPPUNIT_TEST(getPointsBesideObstacle_bigObstacleOnRightSide_bothPointsDoNotIntersectWithTheObstacle);
 		CPPUNIT_TEST(getPointsBesideObstacle_bigObstacleOnRightSide_bothPointsHaveReasonableCoordinates);
+		CPPUNIT_TEST(getPointsBesideObstacle_bigObstacleOnRightSide_shortPointIs2And1p1615);
+		CPPUNIT_TEST(getPointsBesideObstacle_bigObstacleOnRightSide_longPointIs2AndMinus2p5177);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
@@ -75,6 +83,9 @@ namespace Autonomous
 		void calculateRoute_obstacleOnWayToTargetFromPointBesideObstacle_reasonableRoute();
 		void calculateRoute_obstacleOnWayToAndFromPointBesideObstacle_reasonableRoute();
 		void calculateRoute_goingBetweenTwoObstacles_directRoute();
+		void calculateRoute_severalObjectsAndOneOnTheWay_calculationIsNotTooSlow();
+		void calculateRoute_shortWayOutsideField_noPointOfRouteIsOutside();
+		void calculateRoute_onlyPossiblePointBesideIsBlockedByAnotherObstacle_reasonableRoute();
 		void getPointsBesideObstacle_intersectFromLeftAndCircleCenterNotOnPath_shortPointIs2AndMinus1();
 		void getPointsBesideObstacle_intersectFromLeftAndCircleCenterNotOnPath_longPointIs2And6p4142();
 		void getPointsBesideObstacle_intersectFromRightAndCircleCenterNotOnPath_shortPointIs2And3();
@@ -92,7 +103,12 @@ namespace Autonomous
 		void getPointsBesideObstacle_smallObstacleBetweenAt2And0p5_longPointIsCorrect();
 		void getPointsBesideObstacle_bigObstacleOnRightSide_resultSizeIs2();
 		void getPointsBesideObstacle_bigObstacleOnRightSide_bothPointsDoNotIntersectWithTheObstacle();
-		void getPointsBesideObstacle_bigObstacleOnRightSide_bothPointsHaveReasonableCoordinates();
+		void getPointsBesideObstacle_bigObstacleOnRightSide_bothPointsHaveReasonableCoordinates();	
+		void getPointsBesideObstacle_bigObstacleOnRightSide_shortPointIs2And1p1615();
+		void getPointsBesideObstacle_bigObstacleOnRightSide_longPointIs2AndMinus2p5177();
+
+	private:
+		static bool routeIsInsideField(const Route &route, const Field &field);
 	};
 }
 }

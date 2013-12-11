@@ -620,6 +620,8 @@ void RobotTest::updateActuators_tryingToTackleObstacle_engineGotAtLeastOneCallTo
 
 	robot.updateSensorData();
 	robot.updateActuators(field);
+	robot.updateSensorData();
+	robot.updateActuators(field);
 
 	CPPUNIT_ASSERT(engine.getCallsToStop() > 0);
 }
