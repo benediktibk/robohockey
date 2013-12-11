@@ -23,7 +23,7 @@ Game::Game(int argc, char **argv) :
 	m_referee(0),
 	m_watch(new Common::Watch()),
 	m_timer(new QTimer()),
-	m_loopTimeMaximum(0.15),
+	m_loopTimeMaximum(0.2),
 	m_loopTimeWeight(0.1),
 	m_loopTimeAverage(0)
 {
@@ -101,7 +101,7 @@ void Game::execute()
 	 * Actually we get data every 100ms, but the Read-function of
 	 * the player client sometimes needs up to 160ms.
 	 */
-	if (m_loopTimeAverage > m_loopTimeMaximum && isMovingPreviously && isMovingAfterwards)
+	if (m_loopTimeAverage > m_loopTimeMaximum && timeDifference > m_loopTimeMaximum && isMovingPreviously && isMovingAfterwards)
 	{
 		printTimeInMs("loop time is too high", timeDifference);
 		printTimeInMs("time spent on sensor updates", timeForSensorUpdate);
