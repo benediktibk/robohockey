@@ -23,11 +23,13 @@ namespace View
 
 		void setData(
 				const std::vector<Autonomous::FieldObject> &fieldObjects,
+                const std::list<Common::Point> &routeList,
 				bool stuckAtObstacle, bool reachedTarget, const Common::RobotPosition &currentPosition,
 				const Common::Point &currentTarget, bool isMoving, bool cantReachTarget, bool isPuckCollected,
 				bool isPuckCollectable, bool closestPuckPositionValid, const Common::Point &closestPuckPosition,
 				bool isRotating);
 		const std::vector<Autonomous::FieldObject>& getAllFieldObjects() const;
+        const std::list<Common::Point>& getAllRoutePoints();
 		const std::vector<Common::Point>& getAllTargetPoints() const;
 		void setTargetPoints(const std::vector<Common::Point> &targets);
 		bool stuckAtObstacle() const;
@@ -64,6 +66,7 @@ namespace View
 
 	private:
 		std::vector<Autonomous::FieldObject> m_fieldObjects;
+        std::list<Common::Point> m_routeList;
 		std::vector<Common::Point> m_targetPositions;
 		bool m_stuckAtObstacle;
 		bool m_reachedTarget;

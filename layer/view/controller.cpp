@@ -271,13 +271,30 @@ void Controller::updateTargets()
 void Controller::updateObjects()
 {
 	vector<FieldObject> object = m_model.getAllFieldObjects();
+    list<Point> listToDraw = m_model.getAllRoutePoints();
+    size_t size_list = listToDraw.size();
 	size_t size_object = object.size();
+
+    while (size_object < m_routePositions.size())
+    {
+        m_scene->removeItem(m_routePositions.back());
+        m_routePositions.pop_back();
+    }
+
 
 	while (size_object < m_objectPositions.size())
 	{
 		m_scene->removeItem(m_objectPositions.back());
 		m_objectPositions.pop_back();
 	}
+
+    while(size_list > m_routePositions.size())
+    {
+        QGraphicsLineItem* itemList = new QGraphicsLineItem();
+        m_routePositions.push_back(itemList);
+        m_scene->addItem(itemList);
+    }
+
 
 	while(size_object > m_objectPositions.size())
 	{
@@ -308,6 +325,24 @@ void Controller::updateObjects()
 		else
 			currentItem.setBrush(Qt::white);
 	}
+
+    for (size_t i = 0; i < m_routePositions.size(); ++i)
+    {
+        QGraphicsLineItem &currentItemLine = *(m_routePositions[i]);
+        std::list<Point>::iterator it = listToDraw.begin();
+        std::advance(it, i);
+        Point route = *it;
+        Point route2 = *(it++);
+        double route_x = route.getX();
+        double route_y = route.getY();
+        double route_x2 = route2.getX();
+        double route_y2 = route2.getY();
+        currentItemLine.setLine(route_x, route_y, route_x2, route_y2);
+        QPen pen;
+        pen.setColor(Qt::green);
+        pen.setWidthF(0.36 * m_pixelPerMeter);
+        currentItemLine.setPen(pen);
+    }
 
 	const RobotPosition &robotPosition = m_model.getCurrentPosition();
 	const Point &position = robotPosition.getPosition();

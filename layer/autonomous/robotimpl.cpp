@@ -355,7 +355,12 @@ RobotPosition RobotImpl::getCurrentPosition() const
 Point RobotImpl::getCurrentTarget() const
 {
 	DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
-	return engine.getCurrentTarget();
+    return engine.getCurrentTarget();
+}
+
+Route* RobotImpl::getAllRoutePoints() const
+{
+    return m_currentRoute;
 }
 
 bool RobotImpl::cantReachTarget() const

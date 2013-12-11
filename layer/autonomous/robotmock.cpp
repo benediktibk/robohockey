@@ -1,5 +1,6 @@
 #include "layer/autonomous/robotmock.h"
 #include "common/robotposition.h"
+#include "layer/autonomous/route.h"
 
 using namespace RoboHockey::Common;
 using namespace RoboHockey::Layer::Autonomous;
@@ -67,7 +68,12 @@ void RobotMock::setReachedTarget(bool value)
 
 const Point &RobotMock::getLastTarget() const
 {
-	return m_lastTarget;
+    return m_lastTarget;
+}
+
+Route* RobotMock::getAllRoutePoints() const
+{
+    return 0;
 }
 
 unsigned int RobotMock::getCallsToStop() const

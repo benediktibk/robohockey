@@ -5,6 +5,7 @@
 #include "layer/view/controller.h"
 #include <QtGui/QApplication>
 #include <iostream>
+#include "layer/autonomous/route.h"
 
 using namespace std;
 using namespace RoboHockey::Common;
@@ -125,9 +126,13 @@ void GameRemoteControl::executeRobotControl()
 			m_model->setCalibratePosition(false);
 		}
 	}
-
+    std::list<Common::Point> listOfRoute;
+    if (robot.getAllRoutePoints() != 0)
+    {
+        listOfRoute = robot.getAllRoutePoints()->getAllPoints();
+    }
 	m_model->setData(
-				field.getAllFieldObjects(), robot.stuckAtObstacle(),
+                field.getAllFieldObjects(), listOfRoute, robot.stuckAtObstacle(),
 				robot.reachedTarget(), robot.getCurrentPosition(),
 				robot.getCurrentTarget(), robot.isMoving(), robot.cantReachTarget(),
 				robot.isPuckCollected(), robot.isPuckCollectable(), closestPuckValid,
