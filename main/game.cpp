@@ -23,7 +23,7 @@ Game::Game(int argc, char **argv) :
 	m_referee(0),
 	m_watch(new Common::Watch()),
 	m_timer(new QTimer()),
-	m_loopTimeMaximum(0.17),
+	m_loopTimeMaximum(0.15),
 	m_loopTimeWeight(0.2),
 	m_loopTimeAverage(0)
 {
