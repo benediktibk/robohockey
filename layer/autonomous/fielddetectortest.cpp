@@ -82,4 +82,94 @@ void FieldDetectorTest::tryToDetectField_7validPoints_true()
 	bool result = fieldDetector.tryToDetectField();
 
 	CPPUNIT_ASSERT(result);
+	CPPUNIT_ASSERT_EQUAL(Point(1,1-(1.25+0.416)), fieldDetector.getNewOrigin());
+}
+
+void FieldDetectorTest::tryToDetectField_3pointsFar_correctNewOrigin()
+{
+	vector<Point> testPoints;
+	testPoints.push_back(Point(1,2.666));
+	testPoints.push_back(Point(1,3.916));
+	testPoints.push_back(Point(1,4.333));
+
+	FieldDetector fieldDetector(Point(), testPoints);
+	bool result = fieldDetector.tryToDetectField();
+
+	CPPUNIT_ASSERT(result);
+	CPPUNIT_ASSERT_EQUAL(Point(1,1-(1.25+0.416)), fieldDetector.getNewOrigin());
+}
+
+void FieldDetectorTest::tryToDetectField_3pointsFarMixed_correctNewOrigin()
+{
+	vector<Point> testPoints;
+	testPoints.push_back(Point(1,3.916));
+	testPoints.push_back(Point(1,2.666));
+	testPoints.push_back(Point(1,4.333));
+
+	FieldDetector fieldDetector(Point(), testPoints);
+	bool result = fieldDetector.tryToDetectField();
+
+	CPPUNIT_ASSERT(result);
+	CPPUNIT_ASSERT_EQUAL(Point(1,1-(1.25+0.416)), fieldDetector.getNewOrigin());
+
+}
+
+void FieldDetectorTest::tryToDetectField_3pointsFarMid_correctNewOrigin()
+{
+	vector<Point> testPoints;
+	testPoints.push_back(Point(1,1.833));
+	testPoints.push_back(Point(1,2.666));
+	testPoints.push_back(Point(1,3.916));
+
+	FieldDetector fieldDetector(Point(), testPoints);
+	bool result = fieldDetector.tryToDetectField();
+
+	CPPUNIT_ASSERT(result);
+	CPPUNIT_ASSERT_EQUAL(Point(1,1-(1.25+0.416)), fieldDetector.getNewOrigin());
+
+}
+
+void FieldDetectorTest::tryToDetectField_3pointsFarMidMixed_correctNewOrigin()
+{
+	vector<Point> testPoints;
+	testPoints.push_back(Point(1,1.833));
+	testPoints.push_back(Point(1,3.916));
+	testPoints.push_back(Point(1,2.666));
+
+	FieldDetector fieldDetector(Point(), testPoints);
+	bool result = fieldDetector.tryToDetectField();
+
+	CPPUNIT_ASSERT(result);
+	CPPUNIT_ASSERT_EQUAL(Point(1,1-(1.25+0.416)), fieldDetector.getNewOrigin());
+
+}
+
+void FieldDetectorTest::tryToDetectField_3pointsMid_correctNewOrigin()
+{
+	vector<Point> testPoints;
+	testPoints.push_back(Point(1,1));
+	testPoints.push_back(Point(1,1.833));
+	testPoints.push_back(Point(1,2.666));
+
+	FieldDetector fieldDetector(Point(), testPoints);
+	bool result = fieldDetector.tryToDetectField();
+
+	CPPUNIT_ASSERT(result);
+	CPPUNIT_ASSERT_EQUAL(Point(1,1-(1.25+0.416)), fieldDetector.getNewOrigin());
+
+}
+
+void FieldDetectorTest::tryToDetectField_3pointsMidMixed_correctNewOrigin()
+{
+	vector<Point> testPoints;
+	testPoints.push_back(Point(1,1.833));
+	testPoints.push_back(Point(1,1));
+	testPoints.push_back(Point(1,2.666));
+
+	FieldDetector fieldDetector(Point(), testPoints);
+	bool result = fieldDetector.tryToDetectField();
+
+	CPPUNIT_ASSERT(result);
+	CPPUNIT_ASSERT_EQUAL(Point(1,1-(1.25+0.416)), fieldDetector.getNewOrigin());
+
 }
