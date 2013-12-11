@@ -255,3 +255,15 @@ void FieldDetectorTest::tryToDetectField_3pointsNearMixedMid_correctNewOrigin()
 	CPPUNIT_ASSERT(result);
 	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(1,1-(1.25+0.416)), fieldDetector.getNewOrigin()));
 }
+
+void FieldDetectorTest::tryToDetectField_3pointsCorrectDistanceButWrongArragement_false()
+{
+	vector<Point> testPoints;
+	testPoints.push_back(Point(1,1));
+	testPoints.push_back(Point(1,-0.25));
+	testPoints.push_back(Point(1,1.75));
+	FieldDetector fieldDetector(Point(), testPoints);
+	bool result = fieldDetector.tryToDetectField();
+
+	CPPUNIT_ASSERT(!result);
+}
