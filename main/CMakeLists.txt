@@ -34,6 +34,8 @@ add_library(main ${MAIN_SRC} ${MAIN_HEADERS_MOC})
 set(LIBRARIES
 	main
 	layerview
+	layerstrategyfielddetectionstatemachine
+	layerstrategydrivepuckstatemachine
 	layerstrategymainstatemachine
 	layerstrategycommon
 	layerautonomous
@@ -48,6 +50,8 @@ set(LIBRARIES
 )
 
 set(LIBRARIES_TEST
+	layerstrategyfielddetectionstatemachinetest
+	layerstrategydrivepuckstatemachinetest
 	layerstrategymainstatemachinetest
 	layerstrategycommontest
 	layerviewtest

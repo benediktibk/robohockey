@@ -37,6 +37,10 @@
 #include "layer/strategy/mainstatemachine/hideenemypuckstest.h"
 #include "layer/strategy/mainstatemachine/pausetest.h"
 #include "layer/strategy/mainstatemachine/drivetofinalpositiontest.h"
+#include "layer/strategy/fielddetectionstatemachine/initialstatetest.h"
+#include "layer/strategy/fielddetectionstatemachine/detectfieldtest.h"
+#include "layer/strategy/fielddetectionstatemachine/checkgoalcolortest.h"
+#include "layer/strategy/drivepuckstatemachine/initialstatetest.h"
 #include "common/pathtest.h"
 #include "common/linetest.h"
 #include "common/pathintersectpointstest.h"
@@ -83,5 +87,9 @@ CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Strategy::MainStateMachine::A
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Strategy::MainStateMachine::HideEnemyPucksTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Strategy::MainStateMachine::PauseTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Strategy::MainStateMachine::DriveToFinalPositionTest);
+CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Strategy::FieldDetectionStateMachine::InitialStateTest);
+CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Strategy::FieldDetectionStateMachine::DetectFieldTest);
+CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Strategy::FieldDetectionStateMachine::CheckGoalColorTest);
+CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Strategy::DrivePuckStateMachine::InitialStateTest);
 
 
