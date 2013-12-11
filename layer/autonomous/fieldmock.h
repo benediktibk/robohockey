@@ -31,6 +31,7 @@ namespace Autonomous
 		void setFieldObjects(const std::vector<FieldObject> &objects);
 		void setObstacles(const std::vector<Common::Circle> &obstacles);
 		void setNegativeCoordinatesOutside(bool value);
+		void setCalibrationReturn(bool value);
 
 	private:
 		std::vector<FieldObject> m_objects;
@@ -38,6 +39,7 @@ namespace Autonomous
 		unsigned int m_achievedGoals;
 		bool m_negativeCoordinatesOutside;
         unsigned int m_hiddenPucks;
+		bool m_calibrated;
 	};
 }
 }

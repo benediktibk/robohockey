@@ -5,7 +5,8 @@ using namespace RoboHockey::Common;
 using namespace RoboHockey::Layer::Autonomous;
 
 FieldMock::FieldMock() :
-	m_negativeCoordinatesOutside(false)
+	m_negativeCoordinatesOutside(false),
+	m_calibrated(false)
 { }
 
 void FieldMock::update()
@@ -28,7 +29,7 @@ vector<FieldObject> FieldMock::getObjectsWithColorOrderdByDistance(FieldObjectCo
 
 bool FieldMock::calibratePosition()
 {
-	return false;
+	return m_calibrated;
 }
 
 bool FieldMock::isPointInsideField(const Point &point) const
@@ -52,6 +53,11 @@ void FieldMock::setObstacles(const vector<Circle> &obstacles)
 void FieldMock::setNegativeCoordinatesOutside(bool value)
 {
 	m_negativeCoordinatesOutside = value;
+}
+
+void FieldMock::setCalibrationReturn(bool value)
+{
+	m_calibrated = value;
 }
 
 unsigned int FieldMock::enemyHiddenPucks()
