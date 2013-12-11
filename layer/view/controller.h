@@ -3,10 +3,12 @@
 
 #include <QtGui/QMainWindow>
 #include "common/fieldobjectcolor.h"
+#include "common/point.h"
 
 class QGraphicsScene;
 class QGraphicsEllipseItem;
 class QGraphicsPolygonItem;
+class QGraphicsLineItem;
 
 namespace Ui
 {
@@ -74,7 +76,8 @@ namespace View
 		QGraphicsScene *m_scene;
 		std::vector<QGraphicsEllipseItem*> m_targetPositions;
 		std::vector<QGraphicsEllipseItem*> m_objectPositions;
-		QGraphicsPolygonItem *m_triangle;
+        std::vector<QGraphicsLineItem*> m_routePositions;
+        QGraphicsPolygonItem *m_triangle;
 		int m_pixelPerMeter;
 		double m_robotDiameter;
 		double m_targetSpotDiameter;

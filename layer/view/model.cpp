@@ -25,12 +25,14 @@ Model::Model() :
 {}
 
 void Model::setData(const vector<FieldObject> &fieldObjects,
+        const std::list<Common::Point> &routeList,
 		bool stuckAtObstacle, bool reachedTarget,
 		const RobotPosition &currentPosition, const Point &currentTarget,
 		bool isMoving, bool cantReachTarget, bool isPuckCollected, bool isPuckCollectable,
 		bool closestPuckPositionValid, const Point &closestPuckPosition, bool isRotating)
 {
 	m_fieldObjects = fieldObjects;
+    m_routeList = routeList;
 	m_stuckAtObstacle = stuckAtObstacle;
 	m_reachedTarget = reachedTarget;
 	m_currentPosition = currentPosition;
@@ -48,7 +50,12 @@ void Model::setData(const vector<FieldObject> &fieldObjects,
 
 const vector<FieldObject> &Model::getAllFieldObjects() const
 {
-	return m_fieldObjects;
+    return m_fieldObjects;
+}
+
+const list<Point> &Model::getAllRoutePoints()
+{
+    return m_routeList;
 }
 
 const vector<Point> &Model::getAllTargetPoints() const

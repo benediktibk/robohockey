@@ -31,6 +31,7 @@ namespace Autonomous
 		void setStuckAtObstacle(bool value);
 		void setReachedTarget(bool value);
 		const Common::Point& getLastTarget() const;
+        virtual Route* getAllRoutePoints() const;
 		unsigned int getCallsToStop() const;
 		virtual void collectPuckInFront(const Common::Point &puckPosition);
 		virtual void updatePuckPosition(const Common::Point &puckPosition);
