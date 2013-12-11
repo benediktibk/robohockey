@@ -40,6 +40,7 @@
 #include "layer/strategy/fielddetectionstatemachine/initialstatetest.h"
 #include "layer/strategy/fielddetectionstatemachine/detectfieldtest.h"
 #include "layer/strategy/fielddetectionstatemachine/checkgoalcolortest.h"
+#include "layer/strategy/fielddetectionstatemachine/turnangletest.h"
 #include "layer/strategy/drivepuckstatemachine/initialstatetest.h"
 #include "common/pathtest.h"
 #include "common/linetest.h"
@@ -90,6 +91,7 @@ CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Strategy::MainStateMachine::D
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Strategy::FieldDetectionStateMachine::InitialStateTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Strategy::FieldDetectionStateMachine::DetectFieldTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Strategy::FieldDetectionStateMachine::CheckGoalColorTest);
+CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Strategy::FieldDetectionStateMachine::TurnAngleTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Strategy::DrivePuckStateMachine::InitialStateTest);
 
 

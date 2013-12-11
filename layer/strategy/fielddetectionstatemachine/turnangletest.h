@@ -12,7 +12,7 @@ namespace Strategy
 {
 namespace FieldDetectionStateMachine
 {
-class TurnAngleTest :
+	class TurnAngleTest :
 		public CPPUNIT_NS::TestFixture
 	{
 		CPPUNIT_TEST_SUITE(TurnAngleTest);
