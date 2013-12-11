@@ -60,6 +60,9 @@ namespace Main
 		Layer::Strategy::Common::Referee *m_referee;
 		Common::Watch *m_watch;
 		QTimer *m_timer;
+		const double m_loopTimeMaximum;
+		const double m_loopTimeWeight;
+		double m_loopTimeAverage;
 	};
 }
 }

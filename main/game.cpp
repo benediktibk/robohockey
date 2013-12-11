@@ -22,7 +22,10 @@ Game::Game(int argc, char **argv) :
 	m_field(0),
 	m_referee(0),
 	m_watch(new Common::Watch()),
-	m_timer(new QTimer())
+	m_timer(new QTimer()),
+	m_loopTimeMaximum(0.17),
+	m_loopTimeWeight(0.2),
+	m_loopTimeAverage(0)
 {
 	string playerServer;
 	if (argc == 2)
@@ -89,10 +92,16 @@ void Game::execute()
 			(timeForActuatorUpdate + timeForFieldUpdate + timeForLogic + timeForSensorUpdate);
 
 	/*!
+	 * Sometimes we get very high peaks for just one loop, caused by the player library.
+	 * To avoid this we only look at the moving average of the loop time.
+	 */
+	m_loopTimeAverage = m_loopTimeAverage*(1 - m_loopTimeWeight) + m_loopTimeWeight*timeDifference;
+
+	/*!
 	 * Actually we get data every 100ms, but the Read-function of
 	 * the player client sometimes needs up to 160ms.
 	 */
-	if (timeDifference > 0.17 && isMovingPreviously && isMovingAfterwards)
+	if (m_loopTimeAverage > m_loopTimeMaximum && isMovingPreviously && isMovingAfterwards)
 	{
 		printTimeInMs("loop time is too high", timeDifference);
 		printTimeInMs("time spent on sensor updates", timeForSensorUpdate);
