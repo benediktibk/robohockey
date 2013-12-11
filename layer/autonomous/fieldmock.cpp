@@ -1,4 +1,5 @@
 #include "layer/autonomous/fieldmock.h"
+#include "common/robotposition.h"
 
 using namespace std;
 using namespace RoboHockey::Common;
@@ -68,6 +69,11 @@ unsigned int FieldMock::enemyHiddenPucks()
 bool FieldMock::numberOfPucksChanged() const
 {
 	return false;
+}
+
+RobotPosition FieldMock::getTargetPositionForGoalDetection() const
+{
+	return RobotPosition();
 }
 
 unsigned int FieldMock::achievedGoals()

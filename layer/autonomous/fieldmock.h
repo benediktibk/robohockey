@@ -27,6 +27,7 @@ namespace Autonomous
 		virtual bool isPointInsideField(const Common::Point &point) const;
 		virtual unsigned int enemyHiddenPucks();
 		virtual bool numberOfPucksChanged() const;
+		virtual Common::RobotPosition getTargetPositionForGoalDetection() const;
 
 		void setFieldObjects(const std::vector<FieldObject> &objects);
 		void setObstacles(const std::vector<Common::Circle> &obstacles);

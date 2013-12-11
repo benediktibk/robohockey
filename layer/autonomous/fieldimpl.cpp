@@ -109,6 +109,13 @@ bool FieldImpl::numberOfPucksChanged() const
 	return m_numberOfPucksChanged;
 }
 
+RobotPosition FieldImpl::getTargetPositionForGoalDetection() const
+{
+	if (m_fieldState == FieldStateCalibrated)
+		return RobotPosition(Point(5.0/6.0 + 0.34,1.5), Angle::getHalfRotation());
+	return RobotPosition();
+}
+
 void FieldImpl::updateWithLidarData()
 {
 	const DataAnalysis::LidarObjects &lidarObjects =  m_lidar->getAllObjects(*m_position);

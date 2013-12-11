@@ -10,6 +10,7 @@ namespace RoboHockey
 namespace Common
 {
 	class Point;
+	class RobotPosition;
 }
 namespace Layer
 {
@@ -30,6 +31,8 @@ namespace Autonomous
 		virtual bool isPointInsideField(const Common::Point &point) const = 0;
         virtual unsigned int enemyHiddenPucks() = 0;
 		virtual bool numberOfPucksChanged() const = 0;
+
+		virtual Common::RobotPosition getTargetPositionForGoalDetection() const = 0;
 	};
 }
 }

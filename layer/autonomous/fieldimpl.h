@@ -49,6 +49,7 @@ namespace Autonomous
         unsigned int enemyHiddenPucks();
 		virtual bool isPointInsideField(const Common::Point &point) const;
 		virtual bool numberOfPucksChanged() const;
+		virtual Common::RobotPosition getTargetPositionForGoalDetection() const;
 
 	private:
 		void updateWithLidarData();
