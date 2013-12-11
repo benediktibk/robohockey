@@ -15,7 +15,6 @@ using namespace RoboHockey::Layer::Autonomous;
 TurnAngle::TurnAngle(Autonomous::Robot &robot, Autonomous::Field &field, Common::Referee &referee, Angle angle) :
 	State(robot, field, referee)
 {
-	assert(m_robot.reachedTarget());
 	Point target(1, 0);
 	target.rotate(m_robot.getCurrentPosition().getOrientation() + angle);
 	m_robot.turnTo(target);
