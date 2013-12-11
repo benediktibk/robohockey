@@ -11,10 +11,7 @@ DetectField::DetectField(Robot &robot, Field &field, Referee &referee) :
 
 State* DetectField::nextState()
 {
-	if(m_referee.detectionStart())
-		return 0;
-	else
-		return 0;
+	return 0;
 }
 
 void DetectField::update()

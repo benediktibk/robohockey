@@ -11,10 +11,7 @@ CheckGoalColor::CheckGoalColor(Robot &robot, Field &field, Referee &referee) :
 
 State* CheckGoalColor::nextState()
 {
-	if(m_referee.detectionStart())
-		return 0;
-	else
-		return 0;
+	return 0;
 }
 
 void CheckGoalColor::update()
