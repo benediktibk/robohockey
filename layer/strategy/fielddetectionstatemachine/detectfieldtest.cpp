@@ -63,5 +63,26 @@ void DetectFieldTest::nextState_calibrated_driveTo()
 	CPPUNIT_ASSERT(stateCasted != 0);
 }
 
+void DetectFieldTest::nextState_calibratedOnSecondTry_driveTo()
+{
+	RobotMock robot;
+	FieldMock field;
+	RefereeMock referee;
+	DetectField detectFieldState(robot, field, referee);
 
+	field.setCalibrationReturn(false);
+	detectFieldState.update();
 
+	State *state;
+	state = detectFieldState.nextState();
+	DriveTo *stateCasted = dynamic_cast<DriveTo*>(state);
+	CPPUNIT_ASSERT(stateCasted == 0);
+
+	field.setCalibrationReturn(true);
+	detectFieldState.update();
+
+	state = detectFieldState.nextState();
+	stateCasted = dynamic_cast<DriveTo*>(state);
+	CPPUNIT_ASSERT(stateCasted != 0);
+
+}
