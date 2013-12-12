@@ -22,6 +22,7 @@ namespace Common
 		bool isCircleCenterOnPath(const Circle &circle) const;
 		PathIntersectPoints getIntersectPoints(const Circle &circle) const;
 		Angle getAngleBetweenStartAndEnd() const;
+		//Point getShortestPointToPath(const Point &point) const;
 
 	private:
 		Point m_start;

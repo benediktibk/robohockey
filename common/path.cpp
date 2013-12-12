@@ -78,3 +78,8 @@ Angle Path::getAngleBetweenStartAndEnd() const
 {
 	return Angle(m_start, m_end);
 }
+
+/*Point Path::getShortestPointToPath(const Point &point) const
+{
+
+}*/
