@@ -43,7 +43,7 @@ namespace Autonomous
 		CPPUNIT_TEST(numberOfPucksChanged_onePuckAdded_true);
 		CPPUNIT_TEST(numberOfPucksChanged_onePuckRemoved_true);
 		CPPUNIT_TEST(numberOfPucksChanged_onePuckAddedOnePuckRemoved_true);
-		CPPUNIT_TEST(getTargetPositionForGoalDetection_correctPosition);
+		CPPUNIT_TEST(getTargetsForGoalDetection_correctPosition);
 		CPPUNIT_TEST(getAllSoftObstacles_oneBluePuck_resultSizeIs1);
 		CPPUNIT_TEST(getAllSoftObstacles_oneSmallObstacleWithUnknownColor_resultSizeIs1);
 		CPPUNIT_TEST(getAllSoftObstacles_oneGreenObstacle_resultSizeIs0);
@@ -53,6 +53,9 @@ namespace Autonomous
 		CPPUNIT_TEST(getAllHardObstacles_oneBigObstacle_resultSizeIs1);
 		CPPUNIT_TEST(getAllHardObstacles_oneSmallObstacleWithUnknownColor_resultSizeIs0);
 		CPPUNIT_TEST(getAllHardObstacles_oneBigObstacleDisappeared_resultSizeIs0);
+		CPPUNIT_TEST(getTargetsForScoringGoals_always_numberOfPositionsBigger4);
+		CPPUNIT_TEST(getTargetsForFinalPosition_always_numberOfPositionsBigger1);
+		CPPUNIT_TEST(getTargetsForSearchingPucks_always_numberOfPositionsBigger5);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
@@ -85,7 +88,7 @@ namespace Autonomous
 		void numberOfPucksChanged_onePuckAdded_true();
 		void numberOfPucksChanged_onePuckRemoved_true();
 		void numberOfPucksChanged_onePuckAddedOnePuckRemoved_true();
-		void getTargetPositionForGoalDetection_correctPosition();
+		void getTargetsForGoalDetection_correctPosition();
 		void getAllSoftObstacles_oneBluePuck_resultSizeIs1();
 		void getAllSoftObstacles_oneSmallObstacleWithUnknownColor_resultSizeIs1();
 		void getAllSoftObstacles_oneGreenObstacle_resultSizeIs0();
@@ -95,6 +98,9 @@ namespace Autonomous
 		void getAllHardObstacles_oneBigObstacle_resultSizeIs1();
 		void getAllHardObstacles_oneSmallObstacleWithUnknownColor_resultSizeIs0();
 		void getAllHardObstacles_oneBigObstacleDisappeared_resultSizeIs0();
+		void getTargetsForScoringGoals_always_numberOfPositionsBigger4();
+		void getTargetsForFinalPosition_always_numberOfPositionsBigger1();
+		void getTargetsForSearchingPucks_always_numberOfPositionsBigger5();
 	};
 }
 }

@@ -664,7 +664,7 @@ void FieldTest::numberOfPucksChanged_onePuckAddedOnePuckRemoved_true()
 	CPPUNIT_ASSERT(field.numberOfPucksChanged());
 }
 
-void FieldTest::getTargetPositionForGoalDetection_correctPosition()
+void FieldTest::getTargetsForGoalDetection_correctPosition()
 {
 	DataAnalysis::OdometryMock odometry;
 	DataAnalysis::LidarMock lidar;
@@ -864,4 +864,38 @@ void FieldTest::getAllHardObstacles_oneBigObstacleDisappeared_resultSizeIs0()
 	vector<Circle> obstacles = field.getAllHardObstacles();
 
 	CPPUNIT_ASSERT_EQUAL((size_t)0, obstacles.size());
+}
+
+void FieldTest::getTargetsForScoringGoals_always_numberOfPositionsBigger4()
+{
+	DataAnalysis::OdometryMock odometry;
+	DataAnalysis::LidarMock lidar;
+	DataAnalysis::CameraMock camera;
+	Autonomous::RobotMock autonomousRobot;
+	FieldImpl field(odometry, lidar, camera, autonomousRobot);
+
+	CPPUNIT_ASSERT((size_t) 4 < field.getTargetsForScoringGoals().size());
+}
+
+void FieldTest::getTargetsForFinalPosition_always_numberOfPositionsBigger1()
+{
+	DataAnalysis::OdometryMock odometry;
+	DataAnalysis::LidarMock lidar;
+	DataAnalysis::CameraMock camera;
+	Autonomous::RobotMock autonomousRobot;
+	FieldImpl field(odometry, lidar, camera, autonomousRobot);
+
+	CPPUNIT_ASSERT((size_t) 1 < field.getTargetsForFinalPosition().size());
+
+}
+
+void FieldTest::getTargetsForSearchingPucks_always_numberOfPositionsBigger5()
+{
+	DataAnalysis::OdometryMock odometry;
+	DataAnalysis::LidarMock lidar;
+	DataAnalysis::CameraMock camera;
+	Autonomous::RobotMock autonomousRobot;
+	FieldImpl field(odometry, lidar, camera, autonomousRobot);
+
+	CPPUNIT_ASSERT((size_t) 5 < field.getTargetsForSearchingPucks().size());
 }
