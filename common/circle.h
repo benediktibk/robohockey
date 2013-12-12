@@ -3,6 +3,7 @@
 
 #include "common/point.h"
 #include "common/rectangle.h"
+#include <vector>
 
 namespace RoboHockey
 {
@@ -21,6 +22,8 @@ namespace Common
 		Rectangle getBoundingRectangle() const;
 		double getDistanceTo(const Common::Point &position) const;
 		bool overlapsWith(const Circle &circle) const;
+		std::vector<Common::Point> getIntersectionPoints(const Circle &circle) const;
+		bool isOnCircle(const Point &point, const Compare &compare) const;
 
 	private:
 		Point m_center;

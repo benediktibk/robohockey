@@ -1,6 +1,9 @@
 #include "common/circletest.h"
 #include "common/circle.h"
+#include "common/compare.h"
+#include <math.h>
 
+using namespace std;
 using namespace RoboHockey::Common;
 
 void CircleTest::constructor_empty_diameterIs0()
@@ -117,4 +120,85 @@ void CircleTest::overlapsWith_closeTogetherButTooSmallDiameters_false()
 	Circle two(Point(1, 2.5), 0.2);
 
 	CPPUNIT_ASSERT(!one.overlapsWith(two));
+}
+
+void CircleTest::getIntersectionPoints_farAway_resultSizeIs0()
+{
+	Circle one(Point(10, 20), 1);
+	Circle two(Point(-10, 4), 2);
+
+	vector<Point> result = one.getIntersectionPoints(two);
+
+	CPPUNIT_ASSERT_EQUAL((size_t)0, result.size());
+}
+
+void CircleTest::getIntersectionPoints_touching_resultSizeIs1()
+{
+	Circle one(Point(0, 1), 2);
+	Circle two(Point(0, -1), 2);
+
+	vector<Point> result = one.getIntersectionPoints(two);
+
+	CPPUNIT_ASSERT_EQUAL((size_t)1, result.size());
+}
+
+void CircleTest::getIntersectionPoints_intersecting_resultSizeIs2()
+{
+	Circle one(Point(0, 1), 2);
+	Circle two(Point(0, 0.25), 1);
+
+	vector<Point> result = one.getIntersectionPoints(two);
+
+	CPPUNIT_ASSERT_EQUAL((size_t)2, result.size());
+}
+
+void CircleTest::getIntersectionPoints_touching_pointIsCorrect()
+{
+	Circle one(Point(2, 3), 1);
+	Circle two(Point(3, 4), sqrt(2) - 0.5);
+
+	vector<Point> result = one.getIntersectionPoints(two);
+
+	Compare compare(0.01);
+	CPPUNIT_ASSERT(result.size() > 0);
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(2 + 0.5/sqrt(2), 3 + 0.5/sqrt(2)), result.front()));
+}
+
+void CircleTest::getIntersectionPoints_intersection_pointsCorrect()
+{
+	Circle one(Point(-1, 2), 3);
+	Circle two(Point(-0.25, 1), 1);
+
+	vector<Point> result = one.getIntersectionPoints(two);
+
+	Compare compare(0.01);
+	CPPUNIT_ASSERT(result.size() > 0);
+	CPPUNIT_ASSERT(one.isOnCircle(result[0], compare));
+	CPPUNIT_ASSERT(one.isOnCircle(result[1], compare));
+	CPPUNIT_ASSERT(two.isOnCircle(result[0], compare));
+	CPPUNIT_ASSERT(two.isOnCircle(result[1], compare));
+}
+
+void CircleTest::isOnCircle_insideTheCircle_false()
+{
+	Circle circle(Point(1, 2), 0.5);
+
+	Compare compare(0.001);
+	CPPUNIT_ASSERT(!circle.isOnCircle(Point(1.2, 2.1), compare));
+}
+
+void CircleTest::isOnCircle_outsideTheCircle_false()
+{
+	Circle circle(Point(1, 2), 0.5);
+
+	Compare compare(0.001);
+	CPPUNIT_ASSERT(!circle.isOnCircle(Point(10, 1), compare));
+}
+
+void CircleTest::isOnCircle_onTheCircle_true()
+{
+	Circle circle(Point(1, 2), 0.5);
+
+	Compare compare(0.001);
+	CPPUNIT_ASSERT(!circle.isOnCircle(Point(1.45825756949558400066, 2.2), compare));
 }

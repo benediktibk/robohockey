@@ -2,6 +2,7 @@
 #include "common/compare.h"
 #include <assert.h>
 
+using namespace std;
 using namespace RoboHockey::Common;
 
 Circle::Circle() :
@@ -48,6 +49,17 @@ double Circle::getDistanceTo(const Point &position) const
 }
 
 bool Circle::overlapsWith(const Circle &/*circle*/) const
+{
+	return false;
+}
+
+vector<Point> Circle::getIntersectionPoints(const Circle &/*circle*/) const
+{
+	vector<Point> result;
+	return result;
+}
+
+bool Circle::isOnCircle(const Point &/*point*/, const Compare &/*compare*/) const
 {
 	return false;
 }
