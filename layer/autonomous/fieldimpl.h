@@ -50,6 +50,8 @@ namespace Autonomous
 		unsigned int enemyHiddenPucks();
 		virtual bool isPointInsideField(const Common::Point &point) const;
 		virtual bool numberOfPucksChanged() const;
+		virtual bool isCalibrated() const;
+		virtual Common::FieldObjectColor getOwnTeamColor() const;
 		virtual Common::RobotPosition getTargetPositionForGoalDetection() const;
 
 	private:
@@ -87,6 +89,7 @@ namespace Autonomous
 		bool m_numberOfPucksChanged;
 		unsigned int m_achievedGoals;
 		unsigned int m_hiddenPucks;
+		Common::FieldObjectColor m_teamColor;
 	};
 }
 }

@@ -22,7 +22,8 @@ FieldImpl::FieldImpl(DataAnalysis::Odometry &odometry, const DataAnalysis::Lidar
 	m_robot(&autonomousRobot),
 	m_position(new Common::RobotPosition(m_odometry->getCurrentPosition())),
 	m_fieldState(FieldStateUnknownPosition),
-	m_numberOfPucksChanged(false)
+	m_numberOfPucksChanged(false),
+	m_teamColor(FieldObjectColorUnknown)
 { }
 
 FieldImpl::~FieldImpl()
@@ -107,6 +108,16 @@ unsigned int FieldImpl::enemyHiddenPucks()
 bool FieldImpl::isPointInsideField(const Point &point) const
 {
 	return isPointFuzzyInsideField(point, 0.0);
+}
+
+bool FieldImpl::isCalibrated() const
+{
+	return m_fieldState == FieldStateCalibrated;
+}
+
+FieldObjectColor FieldImpl::getOwnTeamColor() const
+{
+	return m_teamColor;
 }
 
 bool FieldImpl::numberOfPucksChanged() const

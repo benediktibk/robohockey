@@ -7,7 +7,8 @@ using namespace RoboHockey::Layer::Autonomous;
 
 FieldMock::FieldMock() :
 	m_negativeCoordinatesOutside(false),
-	m_calibrated(false)
+	m_calibrated(false),
+	m_teamColor(FieldObjectColorUnknown)
 { }
 
 void FieldMock::update()
@@ -69,6 +70,16 @@ void FieldMock::setNegativeCoordinatesOutside(bool value)
 void FieldMock::setCalibrationReturn(bool value)
 {
 	m_calibrated = value;
+}
+
+bool FieldMock::isCalibrated() const
+{
+	return m_calibrated;
+}
+
+FieldObjectColor FieldMock::getOwnTeamColor() const
+{
+	return m_teamColor;
 }
 
 unsigned int FieldMock::enemyHiddenPucks()
