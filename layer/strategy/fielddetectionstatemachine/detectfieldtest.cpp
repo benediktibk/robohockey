@@ -4,6 +4,7 @@
 #include "layer/strategy/common/statemachine.h"
 #include "layer/strategy/common/statemock.h"
 #include "layer/strategy/common/refereemock.h"
+#include "layer/strategy/common/driveto.h"
 #include "layer/autonomous/robotmock.h"
 #include "layer/autonomous/fieldmock.h"
 
@@ -44,6 +45,22 @@ void DetectFieldTest::nextState_notCalibrated1Try_NULL()
 	state = detectFieldState.nextState();
 	TurnAngle *stateCasted = dynamic_cast<TurnAngle*>(state);
 	CPPUNIT_ASSERT(stateCasted == 0);
+}
+
+void DetectFieldTest::nextState_calibrated_driveTo()
+{
+	RobotMock robot;
+	FieldMock field;
+	RefereeMock referee;
+	DetectField detectFieldState(robot, field, referee);
+
+	field.setCalibrationReturn(true);
+	detectFieldState.update();
+
+	State *state;
+	state = detectFieldState.nextState();
+	DriveTo *stateCasted = dynamic_cast<DriveTo*>(state);
+	CPPUNIT_ASSERT(stateCasted != 0);
 }
 
 
