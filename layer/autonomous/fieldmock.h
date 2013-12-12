@@ -43,6 +43,7 @@ namespace Autonomous
 		void setHardObstacles(const std::vector<Common::Circle> &obstacles);
 		void setNegativeCoordinatesOutside(bool value);
 		void setCalibrationReturn(bool value);
+		void setOwnTeamColor(Common::FieldObjectColor teamColor);
 
 	private:
 		std::vector<FieldObject> m_objects;
