@@ -1,4 +1,7 @@
 #include "layer/strategy/fielddetectionstatemachine/calibrationfinished.h"
+#include "layer/strategy/common/referee.h"
+#include "layer/autonomous/robot.h"
+#include "layer/autonomous/field.h"
 
 using namespace RoboHockey::Layer::Strategy::Common;
 using namespace RoboHockey::Layer::Strategy::FieldDetectionStateMachine;
