@@ -7,7 +7,7 @@ namespace RoboHockey
 {
 namespace Common
 {
-    class Point;
+	class Point;
 }
 
 namespace Layer
@@ -16,30 +16,28 @@ namespace Strategy
 {
 namespace Common
 {
-    class Referee
-    {
-    public:
-        virtual ~Referee() { }
+	class Referee
+	{
+	public:
+		virtual ~Referee() { }
 
-        virtual void reportReady() = 0;
-        virtual void reportDone() = 0;
-        virtual void sendAlive() = 0;
-        virtual void tellTeamColor(Extern::Angelina::TeamColor color) = 0;
-        virtual void reportGoal() = 0;
+		virtual void reportReady() = 0;
+		virtual void reportDone() = 0;
+		virtual void sendAlive() = 0;
+		virtual void tellTeamColor(Extern::Angelina::TeamColor color) = 0;
+		virtual void reportGoal() = 0;
 		virtual void tellEgoPos(const RoboHockey::Common::Point &position) = 0;
-        virtual bool detectionStart() = 0;
-        virtual bool gameStart() = 0;
-        virtual bool gameOver() = 0;
-        virtual Extern::Angelina::TeamColor trueColorOfTeam() = 0;
-        virtual bool stopMovement() = 0;
-        virtual bool isValid() = 0;
+		virtual bool detectionStart() = 0;
+		virtual bool gameStart() = 0;
+		virtual bool gameOver() = 0;
+		virtual Extern::Angelina::TeamColor trueColorOfTeam() = 0;
+		virtual bool stopMovement() = 0;
+		virtual bool isValid() = 0;
 
-    };
+	};
 }
 }
 }
 }
 
 #endif
-
-
