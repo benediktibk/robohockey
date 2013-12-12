@@ -672,7 +672,7 @@ void FieldTest::getTargetPositionForGoalDetection_correctPosition()
 	Autonomous::RobotMock autonomousRobot;
 	FieldImpl field(odometry, lidar, camera, autonomousRobot);
 
-	CPPUNIT_ASSERT_EQUAL(RobotPosition(Point(1.17333333333, 1.5), Angle::getHalfRotation()), field.getTargetPositionForGoalDetection());
+	CPPUNIT_ASSERT_EQUAL(RobotPosition(Point(1.17333333333, 1.5), Angle::getHalfRotation()), field.getTargetsForGoalDetection().front());
 }
 
 void FieldTest::getAllSoftObstacles_oneBluePuck_resultSizeIs1()

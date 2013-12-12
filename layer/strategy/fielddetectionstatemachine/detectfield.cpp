@@ -27,10 +27,7 @@ State* DetectField::nextState()
 	else
 		//! @todo use different state if DriveTo can't reach target!
 	{
-		std::list<RobotPosition> targetList;
-		targetList.push_back(m_field.getTargetPositionForGoalDetection());
-
-		return new DriveTo(m_robot, m_field, m_referee, targetList,
+		return new DriveTo(m_robot, m_field, m_referee, m_field.getTargetsForGoalDetection(),
 						   new CheckGoalColor(m_robot, m_field, m_referee),
 						   new CheckGoalColor(m_robot, m_field, m_referee));
 	}

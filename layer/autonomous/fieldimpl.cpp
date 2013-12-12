@@ -125,9 +125,12 @@ bool FieldImpl::numberOfPucksChanged() const
 	return m_numberOfPucksChanged;
 }
 
-RobotPosition FieldImpl::getTargetPositionForGoalDetection() const
+std::list<RobotPosition> FieldImpl::getTargetsForGoalDetection() const
 {
-	return RobotPosition(Point(5.0/6.0 + 0.34,1.5), Angle::getHalfRotation());
+	list<RobotPosition> targetList;
+	targetList.push_back(RobotPosition(Point(5.0/6.0 + 0.34,1.5), Angle::getHalfRotation()));
+
+	return targetList;
 }
 
 std::list<RobotPosition> FieldImpl::getTargetsForScoringGoals() const

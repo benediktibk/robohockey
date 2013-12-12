@@ -92,9 +92,9 @@ bool FieldMock::numberOfPucksChanged() const
 	return false;
 }
 
-RobotPosition FieldMock::getTargetPositionForGoalDetection() const
+std::list<RobotPosition> FieldMock::getTargetsForGoalDetection() const
 {
-	return RobotPosition();
+	return list<RobotPosition>();
 }
 
 std::list<RobotPosition> FieldMock::getTargetsForScoringGoals() const
