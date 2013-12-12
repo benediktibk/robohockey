@@ -22,21 +22,25 @@ RouterImpl::RouterImpl(double robotWidth) :
 	m_robotWidth(robotWidth)
 { }
 
-Route RouterImpl::calculateRoute(const RobotPosition &start, const RobotPosition &end, const Field &field) const
+Route RouterImpl::calculateRoute(
+		const RobotPosition &start, const RobotPosition &end, const Field &field) const
 {
-	const vector<Circle> obstacles = field.getAllObstacles();
+	const vector<Circle> softObstacles = field.getAllSoftObstacles();
+	const vector<Circle> hardObstacles = field.getAllHardObstacles();
 
-	Path startPart(start.getPosition(), start.getPosition(), m_robotWidth);
-	if (startPart.intersectsWith(obstacles))
+	Path startPart(start.getPosition(), start.getPosition(), sqrt(2)*m_robotWidth);
+	if (startPart.intersectsWith(hardObstacles))
 		return Route(m_robotWidth);
 
-	Path endPart(end.getPosition(), end.getPosition(), m_robotWidth);
-	if (endPart.intersectsWith(obstacles))
+	Path endPart(end.getPosition(), end.getPosition(), sqrt(2)*m_robotWidth);
+	if (	endPart.intersectsWith(hardObstacles) ||
+			endPart.intersectsWith(softObstacles))
 		return Route(m_robotWidth);
 
 	const Point &startPosition = start.getPosition();
 	const Point &endPosition = end.getPosition();
-	vector<Route> routes = calculateStartParts(startPosition, endPosition, field, obstacles, 0, true, true);
+	const vector<Circle> allObstacles = filterObstacles(softObstacles, hardObstacles, startPosition);
+	vector<Route> routes = calculateStartParts(startPosition, endPosition, field, allObstacles, 0, true, true);
 
 	if (routes.size() == 0)
 		return Route(m_robotWidth);
@@ -97,6 +101,27 @@ vector<Point> RouterImpl::getPointsBesideObstacle(const Path &path, const Circle
 	pointsBesideObstacle.push_back(shortPointBesideObstacle);
 	pointsBesideObstacle.push_back(longPointBesideObstacle);
 	return pointsBesideObstacle;
+}
+
+vector<Circle> RouterImpl::filterObstacles(
+		const vector<Circle> &softObstacles,
+		const vector<Circle> &hardObstacles,
+		const Point &position) const
+{
+	vector<Circle> allObstacles;
+	allObstacles.reserve(hardObstacles.size() + softObstacles.size());
+	allObstacles.insert(allObstacles.end(), hardObstacles.begin(), hardObstacles.end());
+	Path startPart(position, position, sqrt(2)*m_robotWidth);
+
+	for (vector<Circle>::const_iterator i = softObstacles.begin(); i != softObstacles.end(); ++i)
+	{
+		const Circle &obstacle = *i;
+
+		if (!startPart.intersectsWith(obstacle))
+			allObstacles.push_back(obstacle);
+	}
+
+	return allObstacles;
 }
 
 vector<Route> RouterImpl::calculateStartParts(

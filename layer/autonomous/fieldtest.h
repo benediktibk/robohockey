@@ -44,6 +44,15 @@ namespace Autonomous
 		CPPUNIT_TEST(numberOfPucksChanged_onePuckRemoved_true);
 		CPPUNIT_TEST(numberOfPucksChanged_onePuckAddedOnePuckRemoved_true);
 		CPPUNIT_TEST(getTargetPositionForGoalDetection_correctPosition);
+		CPPUNIT_TEST(getAllSoftObstacles_oneBluePuck_resultSizeIs1);
+		CPPUNIT_TEST(getAllSoftObstacles_oneSmallObstacleWithUnknownColor_resultSizeIs1);
+		CPPUNIT_TEST(getAllSoftObstacles_oneGreenObstacle_resultSizeIs0);
+		CPPUNIT_TEST(getAllSoftObstacles_oneBigObstacle_resultSizeIs0);
+		CPPUNIT_TEST(getAllSoftObstacles_onePuckDisappeared_resultSizeIs0);
+		CPPUNIT_TEST(getAllHardObstacles_oneGreenObject_resultSizeIs1);
+		CPPUNIT_TEST(getAllHardObstacles_oneBigObstacle_resultSizeIs1);
+		CPPUNIT_TEST(getAllHardObstacles_oneSmallObstacleWithUnknownColor_resultSizeIs0);
+		CPPUNIT_TEST(getAllHardObstacles_oneBigObstacleDisappeared_resultSizeIs0);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
@@ -77,6 +86,15 @@ namespace Autonomous
 		void numberOfPucksChanged_onePuckRemoved_true();
 		void numberOfPucksChanged_onePuckAddedOnePuckRemoved_true();
 		void getTargetPositionForGoalDetection_correctPosition();
+		void getAllSoftObstacles_oneBluePuck_resultSizeIs1();
+		void getAllSoftObstacles_oneSmallObstacleWithUnknownColor_resultSizeIs1();
+		void getAllSoftObstacles_oneGreenObstacle_resultSizeIs0();
+		void getAllSoftObstacles_oneBigObstacle_resultSizeIs0();
+		void getAllSoftObstacles_onePuckDisappeared_resultSizeIs0();
+		void getAllHardObstacles_oneGreenObject_resultSizeIs1();
+		void getAllHardObstacles_oneBigObstacle_resultSizeIs1();
+		void getAllHardObstacles_oneSmallObstacleWithUnknownColor_resultSizeIs0();
+		void getAllHardObstacles_oneBigObstacleDisappeared_resultSizeIs0();
 	};
 }
 }

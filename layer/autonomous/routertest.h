@@ -21,7 +21,7 @@ namespace Autonomous
 		CPPUNIT_TEST(calculateRoute_emptyField_routeHasTwoPoints);
 		CPPUNIT_TEST(calculateRoute_emptyField_routeHasSameWidthAsRobot);
 		CPPUNIT_TEST(calculateRoute_obstacleAtStartOfRoute_invalidRoute);
-		CPPUNIT_TEST(calculateRoute_obstacleAtEndOfRoute_invalidRoute);
+		CPPUNIT_TEST(calculateRoute_softObstacleAtEndOfRoute_invalidRoute);
 		CPPUNIT_TEST(calculateRoute_oneObstacleBetween_validRoute);
 		CPPUNIT_TEST(calculateRoute_oneObstacleBetween_routeIsNotTooLong);
 		CPPUNIT_TEST(calculateRoute_oneObstacleBetween_routeIsNotIntersectingWithObstacles);
@@ -40,6 +40,8 @@ namespace Autonomous
 		CPPUNIT_TEST(calculateRoute_severalObjectsAndOneOnTheWay_calculationIsNotTooSlow);
 		CPPUNIT_TEST(calculateRoute_shortWayOutsideField_noPointOfRouteIsOutside);
 		CPPUNIT_TEST(calculateRoute_onlyPossiblePointBesideIsBlockedByAnotherObstacle_reasonableRoute);
+		CPPUNIT_TEST(calculateRoute_softObstacleAtOwnPosition_validRoute);
+		CPPUNIT_TEST(calculateRoute_hardObstacleAtOwnPosition_invalidRoute);
 		CPPUNIT_TEST(getPointsBesideObstacle_intersectFromLeftAndCircleCenterNotOnPath_shortPointIs2AndMinus1);
 		CPPUNIT_TEST(getPointsBesideObstacle_intersectFromLeftAndCircleCenterNotOnPath_longPointIs2And6p4142);
 		CPPUNIT_TEST(getPointsBesideObstacle_intersectFromRightAndCircleCenterNotOnPath_shortPointIs2And3);
@@ -67,7 +69,7 @@ namespace Autonomous
 		void calculateRoute_emptyField_routeHasTwoPoints();
 		void calculateRoute_emptyField_routeHasSameWidthAsRobot();
 		void calculateRoute_obstacleAtStartOfRoute_invalidRoute();
-		void calculateRoute_obstacleAtEndOfRoute_invalidRoute();
+		void calculateRoute_softObstacleAtEndOfRoute_invalidRoute();
 		void calculateRoute_oneObstacleBetween_validRoute();
 		void calculateRoute_oneObstacleBetween_routeIsNotTooLong();
 		void calculateRoute_oneObstacleBetween_routeIsNotIntersectingWithObstacles();
@@ -86,6 +88,8 @@ namespace Autonomous
 		void calculateRoute_severalObjectsAndOneOnTheWay_calculationIsNotTooSlow();
 		void calculateRoute_shortWayOutsideField_noPointOfRouteIsOutside();
 		void calculateRoute_onlyPossiblePointBesideIsBlockedByAnotherObstacle_reasonableRoute();
+		void calculateRoute_softObstacleAtOwnPosition_validRoute();
+		void calculateRoute_hardObstacleAtOwnPosition_invalidRoute();
 		void getPointsBesideObstacle_intersectFromLeftAndCircleCenterNotOnPath_shortPointIs2AndMinus1();
 		void getPointsBesideObstacle_intersectFromLeftAndCircleCenterNotOnPath_longPointIs2And6p4142();
 		void getPointsBesideObstacle_intersectFromRightAndCircleCenterNotOnPath_shortPointIs2And3();
@@ -103,7 +107,7 @@ namespace Autonomous
 		void getPointsBesideObstacle_smallObstacleBetweenAt2And0p5_longPointIsCorrect();
 		void getPointsBesideObstacle_bigObstacleOnRightSide_resultSizeIs2();
 		void getPointsBesideObstacle_bigObstacleOnRightSide_bothPointsDoNotIntersectWithTheObstacle();
-		void getPointsBesideObstacle_bigObstacleOnRightSide_bothPointsHaveReasonableCoordinates();	
+		void getPointsBesideObstacle_bigObstacleOnRightSide_bothPointsHaveReasonableCoordinates();
 		void getPointsBesideObstacle_bigObstacleOnRightSide_shortPointIs2And1p1615();
 		void getPointsBesideObstacle_bigObstacleOnRightSide_longPointIs2AndMinus2p5177();
 

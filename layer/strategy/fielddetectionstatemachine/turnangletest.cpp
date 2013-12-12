@@ -21,6 +21,7 @@ void TurnAngleTest::nextState_targetReached_detectField()
 	RefereeMock referee;
 	TurnAngle turnAngleState(robot, field, referee, Angle::getThreeQuarterRotation());
 
+	turnAngleState.update();
 	robot.setReachedTarget(true);
 
 	State *state;
@@ -36,6 +37,7 @@ void TurnAngleTest::nextState_targetNotReached_NULL()
 	RefereeMock referee;
 	TurnAngle turnAngleState(robot, field, referee, Angle::getThreeQuarterRotation());
 
+	turnAngleState.update();
 	robot.setReachedTarget(false);
 
 	State *state;
