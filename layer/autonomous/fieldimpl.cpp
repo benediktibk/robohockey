@@ -159,7 +159,25 @@ std::list<RobotPosition> FieldImpl::getTargetsForFinalPosition() const
 
 std::list<RobotPosition> FieldImpl::getTargetsForSearchingPucks() const
 {
-	return list<RobotPosition>();
+	vector<RobotPosition> targetVector;
+	list<RobotPosition> targetList;
+
+	targetVector.push_back(RobotPosition( Point(1.4, 0.6), Angle()));
+	targetVector.push_back(RobotPosition( Point(1.4, 2.4), Angle()));
+	targetVector.push_back(RobotPosition( Point(2.0, 1.0), Angle()));
+	targetVector.push_back(RobotPosition( Point(2.0, 2.0), Angle()));
+	targetVector.push_back(RobotPosition( Point(2.5, 2.2), Angle::getQuarterRotation() * 3));
+	targetVector.push_back(RobotPosition( Point(2.5, 2.2), Angle()));
+	targetVector.push_back(RobotPosition( Point(2.5, 0.8), Angle()));
+	targetVector.push_back(RobotPosition( Point(2.5, 0.8), Angle::getQuarterRotation()));
+	targetVector.push_back(RobotPosition( Point(3.0, 1.5), Angle::getEighthRotation() + Angle::getQuarterRotation()));
+	targetVector.push_back(RobotPosition( Point(3.0, 1.5), Angle::getHalfRotation() + Angle::getQuarterRotation()));
+
+	random_shuffle(targetVector.begin(), targetVector.end());
+
+	copy(targetVector.begin(), targetVector.end(), targetList.begin());
+
+	return targetList;
 }
 
 std::list<RobotPosition> FieldImpl::getTargetsForHidingEnemyPucks() const
