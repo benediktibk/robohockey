@@ -1,6 +1,8 @@
 #include "layer/strategy/fielddetectionstatemachine/detectfield.h"
 #include "layer/strategy/fielddetectionstatemachine/turnangle.h"
+#include "layer/strategy/fielddetectionstatemachine/checkgoalcolor.h"
 #include "layer/strategy/common/referee.h"
+#include "layer/strategy/common/driveto.h"
 #include "layer/autonomous/robot.h"
 #include "layer/autonomous/field.h"
 #include "common/angle.h"
@@ -23,7 +25,10 @@ State* DetectField::nextState()
 	else if (!m_successful)
 		return new TurnAngle(m_robot, m_field, m_referee, Angle::getEighthRotation());
 	else
-		return 0;
+		//! @todo use different state if DriveTo can't reach target!
+		return new DriveTo(m_robot, m_field, m_referee, m_field.getTargetPositionForGoalDetection(),
+						   new CheckGoalColor(m_robot, m_field, m_referee),
+						   new CheckGoalColor(m_robot, m_field, m_referee));
 }
 
 void DetectField::update()
