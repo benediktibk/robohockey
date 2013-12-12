@@ -11,16 +11,23 @@ using namespace RoboHockey::Layer::Strategy::FieldDetectionStateMachine;
 using namespace RoboHockey::Layer::Autonomous;
 
 DetectField::DetectField(Robot &robot, Field &field, Referee &referee) :
-	State(robot, field, referee)
+	State(robot, field, referee),
+	m_successful(false),
+	m_numberOfTries(0)
 { }
 
 State* DetectField::nextState()
 {
-	if (m_field.calibratePosition())
+	if (!m_successful && m_numberOfTries < 3)
 		return 0;
-	else
+	else if (!m_successful)
 		return new TurnAngle(m_robot, m_field, m_referee, Angle::getEighthRotation());
+	else
+		return 0;
 }
 
 void DetectField::update()
-{}
+{
+	m_successful = m_field.calibratePosition();
+	m_numberOfTries++;
+}

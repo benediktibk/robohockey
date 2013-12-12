@@ -20,6 +20,10 @@ namespace FieldDetectionStateMachine
 		virtual State* nextState();
 		virtual void update();
 
+	private:
+		bool m_successful;
+		unsigned int m_numberOfTries;
+
 	};
 }
 }
