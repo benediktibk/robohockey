@@ -2,6 +2,7 @@
 #include "common/compare.h"
 #include "common/quadraticequation.h"
 #include <assert.h>
+#include <math.h>
 
 using namespace std;
 using namespace RoboHockey::Common;
@@ -62,6 +63,7 @@ vector<Point> Circle::getIntersectionPoints(const Circle &circle) const
 {
 	assert(!(m_center == circle.getCenter()));
 
+	Compare compare(0.0001);
 	vector<Point> result;
 	double x1 = m_center.getX();
 	double y1 = m_center.getY();
@@ -70,13 +72,36 @@ vector<Point> Circle::getIntersectionPoints(const Circle &circle) const
 	double r1 = m_diameter/2;
 	double r2 = circle.getDiameter()/2;
 	double offsets = (r1*r1 + x2*x2 + y2*y2 - r2*r2 - x1*x1 - y1*y1)/2;
+
+	if (y1 == y2)
+	{
+		double x = offsets/(x2 - x1);
+		double determinant = r1*r1 - (x - x1)*(x - x1);
+
+		if (compare.isFuzzyEqual(determinant, 0))
+		{
+			result.push_back(Point(x, y1));
+			return result;
+		}
+		else if (determinant < 0)
+			return vector<Point>();
+		else
+		{
+			double squareRoot = sqrt(determinant);
+			double ySmall = y1 - squareRoot;
+			double yBig = y1 + squareRoot;
+			result.push_back(Point(x, ySmall));
+			result.push_back(Point(x, yBig));
+			return result;
+		}
+	}
+
 	double lineGradient = (x1 - x2)/(y2 - y1);
 	double lineOffset = offsets/(y2 - y1);
 	double a = 1 + lineGradient*lineGradient;
 	double b = 2*lineGradient*(lineOffset - y1) - 2*x1;
 	double c = x1*x1 + (lineOffset - y1)*(lineOffset - y1) - r1*r1;
 	QuadraticEquation equation(a, b, c);
-	Compare compare(0.0001);
 	vector<double> equationSolutions = equation.getSolutions(compare);
 
 	assert(equationSolutions.size() <= 2);

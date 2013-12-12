@@ -152,16 +152,28 @@ void CircleTest::getIntersectionPoints_intersecting_resultSizeIs2()
 	CPPUNIT_ASSERT_EQUAL((size_t)2, result.size());
 }
 
-void CircleTest::getIntersectionPoints_touching_pointIsCorrect()
+void CircleTest::getIntersectionPoints_touchingAndXCoordinatesEqual_pointIsCorrect()
 {
-	Circle one(Point(2, 3), 1);
-	Circle two(Point(3, 4), sqrt(2) - 0.5);
+	Circle one(Point(0, 1), 1);
+	Circle two(Point(0, 0), 1);
 
 	vector<Point> result = one.getIntersectionPoints(two);
 
 	Compare compare(0.01);
-	CPPUNIT_ASSERT(result.size() > 0);
-	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(2 + 0.5/sqrt(2), 3 + 0.5/sqrt(2)), result.front()));
+	CPPUNIT_ASSERT_EQUAL((size_t)1, result.size());
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(0, 0.5), result.front()));
+}
+
+void CircleTest::getIntersectionPoints_touchingAndYCoordinatesEqual_pointIsCorrect()
+{
+	Circle one(Point(0, 0), 1);
+	Circle two(Point(1, 0), 1);
+
+	vector<Point> result = one.getIntersectionPoints(two);
+
+	Compare compare(0.01);
+	CPPUNIT_ASSERT_EQUAL((size_t)1, result.size());
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(0.5, 0), result.front()));
 }
 
 void CircleTest::getIntersectionPoints_intersection_pointsCorrect()

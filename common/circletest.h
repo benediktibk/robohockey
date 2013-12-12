@@ -29,7 +29,8 @@ namespace Common
 		CPPUNIT_TEST(getIntersectionPoints_farAway_resultSizeIs0);
 		CPPUNIT_TEST(getIntersectionPoints_touching_resultSizeIs1);
 		CPPUNIT_TEST(getIntersectionPoints_intersecting_resultSizeIs2);
-		CPPUNIT_TEST(getIntersectionPoints_touching_pointIsCorrect);
+		CPPUNIT_TEST(getIntersectionPoints_touchingAndXCoordinatesEqual_pointIsCorrect);
+		CPPUNIT_TEST(getIntersectionPoints_touchingAndYCoordinatesEqual_pointIsCorrect);
 		CPPUNIT_TEST(getIntersectionPoints_intersection_pointsCorrect);
 		CPPUNIT_TEST(getIntersectionPoints_sameYCoordinates_pointsCorrect);
 		CPPUNIT_TEST(getIntersectionPoints_sameXCoordinates_pointsCorrect);
@@ -56,7 +57,8 @@ namespace Common
 		void getIntersectionPoints_farAway_resultSizeIs0();
 		void getIntersectionPoints_touching_resultSizeIs1();
 		void getIntersectionPoints_intersecting_resultSizeIs2();
-		void getIntersectionPoints_touching_pointIsCorrect();
+		void getIntersectionPoints_touchingAndXCoordinatesEqual_pointIsCorrect();
+		void getIntersectionPoints_touchingAndYCoordinatesEqual_pointIsCorrect();
 		void getIntersectionPoints_intersection_pointsCorrect();
 		void getIntersectionPoints_sameYCoordinates_pointsCorrect();
 		void getIntersectionPoints_sameXCoordinates_pointsCorrect();
