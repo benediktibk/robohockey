@@ -24,6 +24,7 @@ namespace Common
 		bool overlapsWith(const Circle &circle) const;
 		std::vector<Common::Point> getIntersectionPoints(const Circle &circle) const;
 		bool isOnCircle(const Point &point, const Compare &compare) const;
+		bool isInside(const Point &point) const;
 
 	private:
 		Point m_center;

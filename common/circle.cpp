@@ -49,9 +49,13 @@ double Circle::getDistanceTo(const Point &position) const
 	return position.distanceTo(m_center) - m_diameter/2;
 }
 
-bool Circle::overlapsWith(const Circle &/*circle*/) const
+bool Circle::overlapsWith(const Circle &circle) const
 {
-	return false;
+	if (isInside(circle.getCenter()) || circle.isInside(m_center))
+		return true;
+
+	vector<Point> intersectionPoints = getIntersectionPoints(circle);
+	return intersectionPoints.size() > 0;
 }
 
 vector<Point> Circle::getIntersectionPoints(const Circle &circle) const
@@ -105,4 +109,11 @@ bool Circle::isOnCircle(const Point &point, const Compare &compare) const
 	double leftSideOfEquation = difference.getX()*difference.getX() + difference.getY()*difference.getY();
 	double rightSideOfEquation = radius*radius;
 	return compare.isFuzzyEqual(leftSideOfEquation, rightSideOfEquation);
+}
+
+bool Circle::isInside(const Point &point) const
+{
+	double radius = m_diameter/2;
+	double distanceToCenter = m_center.distanceTo(point);
+	return distanceToCenter < radius;
 }
