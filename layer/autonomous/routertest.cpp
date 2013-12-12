@@ -408,6 +408,7 @@ void RouterTest::getPointsBesideObstacle_intersectFromLeftAndCircleCenterNotOnPa
 	Path robotBesideObstacle(pointBesideObstacle, pointBesideObstacle, 2.8284);
 
 	CPPUNIT_ASSERT(!robotBesideObstacle.intersectsWith(obstacle));
+	CPPUNIT_ASSERT(robotBesideObstacle.getDistanceToLeftPerpendicularPoint(obstacle.getCenter()) < 1.5);
 }
 
 void RouterTest::getPointsBesideObstacle_intersectFromLeftAndCircleCenterNotOnPath_longPointIs2And6p4142()
