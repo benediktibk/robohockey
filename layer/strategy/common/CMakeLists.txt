@@ -6,12 +6,14 @@ set(LAYER_STRATEGY_COMMON_SRC
 	state.cpp
 	statemachine.cpp
 	refereeimpl.cpp
+	driveto.cpp
 )
 
 set(LAYER_STRATEGY_COMMON_TEST_SRC
 	statemock.cpp
 	statemachinetest.cpp
 	refereemock.cpp
+	drivetotest.cpp
 )
 
 set(MOC_H
