@@ -275,7 +275,7 @@ void Controller::updateObjects()
     size_t size_list = listToDraw.size();
 	size_t size_object = object.size();
 
-    while (size_object < m_routePositions.size())
+    while (size_list < m_routePositions.size())
     {
         m_scene->removeItem(m_routePositions.back());
         m_routePositions.pop_back();
@@ -326,22 +326,27 @@ void Controller::updateObjects()
 			currentItem.setBrush(Qt::white);
 	}
 
-    for (size_t i = 0; i < m_routePositions.size(); ++i)
+    if(m_routePositions.size() > 1)
     {
-        QGraphicsLineItem &currentItemLine = *(m_routePositions[i]);
-        std::list<Point>::iterator it = listToDraw.begin();
-        std::advance(it, i);
-        Point route = *it;
-        Point route2 = *(it++);
-        double route_x = route.getX();
-        double route_y = route.getY();
-        double route_x2 = route2.getX();
-        double route_y2 = route2.getY();
-        currentItemLine.setLine(route_x, route_y, route_x2, route_y2);
-        QPen pen;
-        pen.setColor(Qt::green);
-        pen.setWidthF(0.36 * m_pixelPerMeter);
-        currentItemLine.setPen(pen);
+        for (size_t i = 0; i < m_routePositions.size() - 1; ++i)
+        {
+            QGraphicsLineItem &currentItemLine = *(m_routePositions[i]);
+            std::list<Point>::iterator it = listToDraw.begin();
+            std::advance(it, i);
+            Point route = *it;
+            it++;
+            Point route2 = *(it);
+            double route_x = route.getX() * m_pixelPerMeter;
+            double route_y = -1 * route.getY() * m_pixelPerMeter;
+            double route_x2 = route2.getX() * m_pixelPerMeter;
+            double route_y2 = -1 * route2.getY() * m_pixelPerMeter;
+            currentItemLine.setLine(route_x, route_y, route_x2, route_y2);
+            QPen pen;
+            pen.setColor(Qt::green);
+            pen.setWidthF(0.36 * m_pixelPerMeter);
+            currentItemLine.setPen(pen);
+            currentItemLine.setZValue(-1);
+        }
     }
 
 	const RobotPosition &robotPosition = m_model.getCurrentPosition();
