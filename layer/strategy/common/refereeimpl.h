@@ -3,6 +3,7 @@
 
 #include "layer/strategy/common/referee.h"
 #include <QtCore/QObject>
+#include <string>
 
 namespace Extern
 {
@@ -26,7 +27,7 @@ namespace Common
     {
         Q_OBJECT
     public:
-        RefereeImpl();
+        RefereeImpl(const std::string &AngelinaAdressServer);
         ~RefereeImpl();
         virtual void reportReady();
         virtual void reportDone();
