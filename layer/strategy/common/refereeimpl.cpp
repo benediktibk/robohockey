@@ -5,7 +5,7 @@
 using namespace RoboHockey::Layer::Strategy::Common;
 using namespace Extern::Angelina;
 
-RefereeImpl::RefereeImpl():
+RefereeImpl::RefereeImpl(const std::string &AngelinaAdressServer):
 	QObject(0)
 {
 	m_detectionStart = false;
@@ -25,7 +25,13 @@ RefereeImpl::RefereeImpl():
 	connect(m_referee, SIGNAL(stopMovement()),this, SLOT(slotStopMovement()));
 	connect(m_referee, SIGNAL(connected()),this, SLOT(slotConnected()));
 	connect(m_referee, SIGNAL(connectFailed()),this, SLOT(slotConnectFailed()));
-	m_referee->connectToServer("192.168.0.1", 10000);
+	m_referee->connectToServer(QString(AngelinaAdressServer.c_str()), 10000);
+}
+
+RefereeImpl::~RefereeImpl()
+{
+    delete m_referee;
+    m_referee = 0;
 }
 
 void RefereeImpl::reportReady()

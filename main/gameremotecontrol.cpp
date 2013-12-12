@@ -126,13 +126,8 @@ void GameRemoteControl::executeRobotControl()
 			m_model->setCalibratePosition(false);
 		}
 	}
-    std::list<Common::Point> listOfRoute;
-    if (robot.getAllRoutePoints() != 0)
-    {
-        listOfRoute = robot.getAllRoutePoints()->getAllPoints();
-    }
 	m_model->setData(
-                field.getAllFieldObjects(), listOfRoute, robot.stuckAtObstacle(),
+                field.getAllFieldObjects(), robot.getAllRoutePoints(), robot.stuckAtObstacle(),
 				robot.reachedTarget(), robot.getCurrentPosition(),
 				robot.getCurrentTarget(), robot.isMoving(), robot.cantReachTarget(),
 				robot.isPuckCollected(), robot.isPuckCollectable(), closestPuckValid,

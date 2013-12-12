@@ -358,9 +358,15 @@ Point RobotImpl::getCurrentTarget() const
 	return engine.getCurrentTarget();
 }
 
-Route* RobotImpl::getAllRoutePoints() const
+std::list<Point> RobotImpl::getAllRoutePoints() const
 {
-	return m_currentRoute;
+    if (m_currentRoute == 0)
+    {
+        std::list<Point> emptyList;
+        return emptyList;
+    }
+    else
+        return m_currentRoute->getAllPoints();
 }
 
 bool RobotImpl::cantReachTarget() const
