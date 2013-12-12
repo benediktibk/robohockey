@@ -132,7 +132,24 @@ RobotPosition FieldImpl::getTargetPositionForGoalDetection() const
 
 std::list<RobotPosition> FieldImpl::getTargetsForScoringGoals() const
 {
-	return list<RobotPosition>();
+	list<RobotPosition> targets;
+
+	targets.push_front(RobotPosition( Point(5 - 5.0/8.0 - 0.14, 0.9), Angle() ));
+	targets.push_back(RobotPosition( Point(5 - 5.0/8.0 + 0.14, 0.9), Angle::getHalfRotation() ));
+	targets.push_back(RobotPosition( Point(5 - 5.0/8.0, 0.9 + 0.14), Angle::getQuarterRotation() *3 ));
+	targets.push_back(RobotPosition( Point(5 - 5.0/8.0, 0.9 - 0.14), Angle::getQuarterRotation() ));
+
+	targets.push_front(RobotPosition( Point(5 - 5.0/8.0 - 0.14, 1.9), Angle() ));
+	targets.push_back(RobotPosition( Point(5 - 5.0/8.0 + 0.14, 1.9), Angle::getHalfRotation() ));
+	targets.push_back(RobotPosition( Point(5 - 5.0/8.0, 1.9 + 0.14), Angle::getQuarterRotation() *3 ));
+	targets.push_back(RobotPosition( Point(5 - 5.0/8.0, 1.9 - 0.14), Angle::getQuarterRotation() ));
+
+	targets.push_front(RobotPosition( Point(5 - 5.0/8.0 - 0.14, 1.5), Angle() ));
+	targets.push_back(RobotPosition( Point(5 - 5.0/8.0 + 0.14, 1.5), Angle::getHalfRotation() ));
+	targets.push_back(RobotPosition( Point(5 - 5.0/8.0, 1.5 + 0.14), Angle::getQuarterRotation() *3 ));
+	targets.push_back(RobotPosition( Point(5 - 5.0/8.0, 1.5 - 0.14), Angle::getQuarterRotation() ));
+
+	return targets;
 }
 
 std::list<RobotPosition> FieldImpl::getTargetsForFinalPosition() const
