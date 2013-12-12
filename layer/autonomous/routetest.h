@@ -29,6 +29,7 @@ namespace Autonomous
 		CPPUNIT_TEST(intersectsWith_oneObstacleFarAway_false);
 		CPPUNIT_TEST(intersectsWith_oneObstacleOnTheWay_true);
 		CPPUNIT_TEST(intersectsWith_oneObstacleFarAwayAndOneOnTheWay_true);
+		CPPUNIT_TEST(intersectsWith_bigObstacleButOnlyOneNode_false);
 		CPPUNIT_TEST(intersectsWith_firstRoutePartIntersectingWithObstacle_true);
 		CPPUNIT_TEST(intersectsWith_secondRoutePartIntersectingWithObstacle_true);
 		CPPUNIT_TEST(intersectsWith_threeRoutePartsAndOneNotDisturbingObstacle_false);
