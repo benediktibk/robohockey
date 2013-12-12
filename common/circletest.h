@@ -31,6 +31,8 @@ namespace Common
 		CPPUNIT_TEST(getIntersectionPoints_intersecting_resultSizeIs2);
 		CPPUNIT_TEST(getIntersectionPoints_touching_pointIsCorrect);
 		CPPUNIT_TEST(getIntersectionPoints_intersection_pointsCorrect);
+		CPPUNIT_TEST(getIntersectionPoints_sameYCoordinates_pointsCorrect);
+		CPPUNIT_TEST(getIntersectionPoints_sameXCoordinates_pointsCorrect);
 		CPPUNIT_TEST(isOnCircle_insideTheCircle_false);
 		CPPUNIT_TEST(isOnCircle_outsideTheCircle_false);
 		CPPUNIT_TEST(isOnCircle_onTheCircle_true);
@@ -56,6 +58,8 @@ namespace Common
 		void getIntersectionPoints_intersecting_resultSizeIs2();
 		void getIntersectionPoints_touching_pointIsCorrect();
 		void getIntersectionPoints_intersection_pointsCorrect();
+		void getIntersectionPoints_sameYCoordinates_pointsCorrect();
+		void getIntersectionPoints_sameXCoordinates_pointsCorrect();
 		void isOnCircle_insideTheCircle_false();
 		void isOnCircle_outsideTheCircle_false();
 		void isOnCircle_onTheCircle_true();

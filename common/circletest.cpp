@@ -179,6 +179,36 @@ void CircleTest::getIntersectionPoints_intersection_pointsCorrect()
 	CPPUNIT_ASSERT(two.isOnCircle(result[1], compare));
 }
 
+void CircleTest::getIntersectionPoints_sameYCoordinates_pointsCorrect()
+{
+	Circle one(Point(0, 2), 1);
+	Circle two(Point(0.25, 2), 1);
+
+	vector<Point> result = one.getIntersectionPoints(two);
+
+	Compare compare(0.01);
+	CPPUNIT_ASSERT(result.size() > 0);
+	CPPUNIT_ASSERT(one.isOnCircle(result[0], compare));
+	CPPUNIT_ASSERT(one.isOnCircle(result[1], compare));
+	CPPUNIT_ASSERT(two.isOnCircle(result[0], compare));
+	CPPUNIT_ASSERT(two.isOnCircle(result[1], compare));
+}
+
+void CircleTest::getIntersectionPoints_sameXCoordinates_pointsCorrect()
+{
+	Circle one(Point(1, 0.25), 1);
+	Circle two(Point(1, 0.5), 1);
+
+	vector<Point> result = one.getIntersectionPoints(two);
+
+	Compare compare(0.01);
+	CPPUNIT_ASSERT(result.size() > 0);
+	CPPUNIT_ASSERT(one.isOnCircle(result[0], compare));
+	CPPUNIT_ASSERT(one.isOnCircle(result[1], compare));
+	CPPUNIT_ASSERT(two.isOnCircle(result[0], compare));
+	CPPUNIT_ASSERT(two.isOnCircle(result[1], compare));
+}
+
 void CircleTest::isOnCircle_insideTheCircle_false()
 {
 	Circle circle(Point(1, 2), 0.5);
