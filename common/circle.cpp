@@ -59,6 +59,14 @@ bool Circle::overlapsWith(const Circle &circle) const
 	return intersectionPoints.size() > 0;
 }
 
+bool Circle::overlapsWith(const vector<Circle> &circles) const
+{
+	for (vector<Circle>::const_iterator i = circles.begin(); i != circles.end(); ++i)
+		if (overlapsWith(*i))
+			return true;
+	return false;
+}
+
 vector<Point> Circle::getIntersectionPoints(const Circle &circle) const
 {
 	assert(!(m_center == circle.getCenter()));

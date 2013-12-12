@@ -22,6 +22,7 @@ namespace Common
 		Rectangle getBoundingRectangle() const;
 		double getDistanceTo(const Common::Point &position) const;
 		bool overlapsWith(const Circle &circle) const;
+		bool overlapsWith(const std::vector<Circle> &circles) const;
 		std::vector<Common::Point> getIntersectionPoints(const Circle &circle) const;
 		bool isOnCircle(const Point &point, const Compare &compare) const;
 		bool isInside(const Point &point) const;

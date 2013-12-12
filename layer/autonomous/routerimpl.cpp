@@ -28,13 +28,13 @@ Route RouterImpl::calculateRoute(
 	const vector<Circle> softObstacles = field.getAllSoftObstacles();
 	const vector<Circle> hardObstacles = field.getAllHardObstacles();
 
-	Path startPart(start.getPosition(), start.getPosition(), sqrt(2)*m_robotWidth);
-	if (startPart.intersectsWith(hardObstacles))
+	Circle startCircle(start.getPosition(), sqrt(2)*m_robotWidth);
+	if (startCircle.overlapsWith(hardObstacles))
 		return Route(m_robotWidth);
 
-	Path endPart(end.getPosition(), end.getPosition(), sqrt(2)*m_robotWidth);
-	if (	endPart.intersectsWith(hardObstacles) ||
-			endPart.intersectsWith(softObstacles))
+	Circle endCircle(end.getPosition(), sqrt(2)*m_robotWidth);
+	if (	endCircle.overlapsWith(hardObstacles) ||
+			endCircle.overlapsWith(softObstacles))
 		return Route(m_robotWidth);
 
 	const Point &startPosition = start.getPosition();
@@ -111,13 +111,13 @@ vector<Circle> RouterImpl::filterObstacles(
 	vector<Circle> allObstacles;
 	allObstacles.reserve(hardObstacles.size() + softObstacles.size());
 	allObstacles.insert(allObstacles.end(), hardObstacles.begin(), hardObstacles.end());
-	Path startPart(position, position, sqrt(2)*m_robotWidth);
+	Circle startCircle(position, sqrt(2)*m_robotWidth);
 
 	for (vector<Circle>::const_iterator i = softObstacles.begin(); i != softObstacles.end(); ++i)
 	{
 		const Circle &obstacle = *i;
 
-		if (!startPart.intersectsWith(obstacle))
+		if (!startCircle.overlapsWith(obstacle))
 			allObstacles.push_back(obstacle);
 	}
 
@@ -132,11 +132,11 @@ vector<Route> RouterImpl::calculateStartParts(
 	if (searchDepth > m_maximumSearchDepth)
 		return vector<Route>();
 
-	Path endPart(end, end, sqrt(2)*m_robotWidth);
-	bool endCovered = endPart.intersectsWith(obstacles);
+	Circle endCircle(end, sqrt(2)*m_robotWidth);
+	bool endCovered = endCircle.overlapsWith(obstacles);
 	if (endCovered)
 		return calculateStartPartsWithCoveredEnd(
-				start, end, field, obstacles, searchDepth, canGoLeft, canGoRight);
+				start, end, field, obstacles, searchDepth);
 	else
 		return calculateStartPartsWithFreeEnd(
 				start, end, field, obstacles, searchDepth, canGoLeft, canGoRight);
@@ -169,16 +169,22 @@ vector<Route> RouterImpl::calculateStartPartsWithFreeEnd(
 
 vector<Route> RouterImpl::calculateStartPartsWithCoveredEnd(
 		const Point &start, const Point &end, const Field &field, const vector<Circle> &obstacles,
-		unsigned int searchDepth, bool canGoLeft, bool canGoRight) const
+		unsigned int searchDepth) const
 {
-	Path path(end, end, sqrt(2)*m_robotWidth);
-	vector<Circle> obstaclesAtEnd = findRealObstacles(obstacles, path);
-	assert(obstaclesAtEnd.size() > 0);
+	Path path(start, end, m_robotWidth);
+	vector<Circle> obstaclesTillEnd = findRealObstacles(obstacles, path);
 
-	if (obstaclesAtEnd.size() > 1)
-		return vector<Route>();
+	if (obstaclesTillEnd.size() == 0)
+	{
+		vector<Route> result;
+		Route route(m_robotWidth);
+		route.addPoint(start);
+		route.addPoint(end);
+		result.push_back(route);
+		return result;
+	}
 
-	const Circle &obstacle = obstaclesAtEnd.front();
+	Circle obstacle = findClosestObstacle(obstaclesTillEnd, start);
 	double diameter = obstacle.getDiameter();
 	Point direction = end - start;
 	double directionLength = start.distanceTo(end);
@@ -186,7 +192,7 @@ vector<Route> RouterImpl::calculateStartPartsWithCoveredEnd(
 	Point directionModified = direction/directionLength*desiredLength;
 	Point extendedEnd = start + directionModified;
 	return calculateRoutesToPointsBesideObstacle(
-				obstacle, start, extendedEnd, field, obstacles, canGoLeft, canGoRight,
+				obstacle, start, extendedEnd, field, obstacles, true, true,
 				searchDepth);
 }
 
