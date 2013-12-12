@@ -200,5 +200,6 @@ void CircleTest::isOnCircle_onTheCircle_true()
 	Circle circle(Point(1, 2), 0.5);
 
 	Compare compare(0.001);
-	CPPUNIT_ASSERT(!circle.isOnCircle(Point(1.45825756949558400066, 2.2), compare));
+	Point point(1.15, 2.2);
+	CPPUNIT_ASSERT(circle.isOnCircle(point, compare));
 }

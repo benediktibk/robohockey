@@ -59,7 +59,11 @@ vector<Point> Circle::getIntersectionPoints(const Circle &/*circle*/) const
 	return result;
 }
 
-bool Circle::isOnCircle(const Point &/*point*/, const Compare &/*compare*/) const
+bool Circle::isOnCircle(const Point &point, const Compare &compare) const
 {
-	return false;
+	Point difference = m_center - point;
+	double radius = m_diameter/2;
+	double leftSideOfEquation = difference.getX()*difference.getX() + difference.getY()*difference.getY();
+	double rightSideOfEquation = radius*radius;
+	return compare.isFuzzyEqual(leftSideOfEquation, rightSideOfEquation);
 }
