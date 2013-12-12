@@ -27,6 +27,7 @@ namespace Common
         Q_OBJECT
     public:
         RefereeImpl();
+        ~RefereeImpl();
         virtual void reportReady();
         virtual void reportDone();
         virtual void sendAlive();

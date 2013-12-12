@@ -28,6 +28,12 @@ RefereeImpl::RefereeImpl():
     m_referee->connectToServer("192.168.0.1", 10000);
 }
 
+RefereeImpl::~RefereeImpl()
+{
+    delete m_referee;
+    m_referee = 0;
+}
+
 void RefereeImpl::reportReady()
 {
     m_referee->reportReady();

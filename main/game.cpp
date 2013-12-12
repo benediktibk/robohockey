@@ -61,6 +61,8 @@ Game::~Game()
 	m_robot = 0;
 	delete m_referee;
 	m_referee = 0;
+    delete m_timer;
+    m_timer = 0;
 }
 
 void Game::execute()

@@ -8,7 +8,6 @@
 #include <QtGui/QGraphicsScene>
 #include <math.h>
 #include <assert.h>
-#include <iostream>
 
 using namespace RoboHockey::Common;
 using namespace RoboHockey::Layer;
@@ -84,6 +83,10 @@ Controller::~Controller()
 	 for (vector<QGraphicsEllipseItem*>::iterator i = m_targetPositions.begin(); i != m_targetPositions.end(); ++i)
 		delete *i;
 	 m_targetPositions.clear();
+
+     for (vector<QGraphicsLineItem*>::iterator i = m_routePositions.begin(); i != m_routePositions.end(); ++i)
+        delete *i;
+     m_routePositions.clear();
 }
 
 void Controller::closeEvent(QCloseEvent*)
@@ -246,6 +249,7 @@ void Controller::updateTargets()
 	while (size_target < m_targetPositions.size())
 	{
 		m_scene->removeItem(m_targetPositions.back());
+        delete m_targetPositions.back();
 		m_targetPositions.pop_back();
 	}
 
@@ -351,11 +355,8 @@ void Controller::updateObjects()
             pen.setWidthF(0.36 * m_pixelPerMeter);
             currentItemLine.setPen(pen);
             currentItemLine.setZValue(-1);
-            std::cout<<start<< std::endl;
-            std::cout<<end<< std::endl;
         }
     }
-    std::cout<<"Endehier";
 
 	const RobotPosition &robotPosition = m_model.getCurrentPosition();
 	const Point &position = robotPosition.getPosition();
