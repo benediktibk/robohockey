@@ -120,6 +120,20 @@ FieldObjectColor FieldImpl::getOwnTeamColor() const
 	return m_teamColor;
 }
 
+void FieldImpl::detectTeamColorWithGoalInFront()
+{
+	assert(m_teamColor == FieldObjectColorUnknown);
+	Compare compare(0.10);
+
+	double blueGoal = m_camera->getProbabilityForBlueGoal();
+	double yellowGoal = m_camera->getProbabilityForYellowGoal();
+
+	if(compare.isStrictFuzzyGreater(blueGoal, yellowGoal))
+		m_teamColor = FieldObjectColorBlue;
+	else if (compare.isStrictFuzzyGreater(yellowGoal, blueGoal))
+		m_teamColor = FieldObjectColorYellow;
+}
+
 bool FieldImpl::numberOfPucksChanged() const
 {
 	return m_numberOfPucksChanged;

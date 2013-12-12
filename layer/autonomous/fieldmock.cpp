@@ -82,6 +82,9 @@ FieldObjectColor FieldMock::getOwnTeamColor() const
 	return m_teamColor;
 }
 
+void FieldMock::detectTeamColorWithGoalInFront()
+{ }
+
 unsigned int FieldMock::enemyHiddenPucks()
 {
 	return m_hiddenPucks;
