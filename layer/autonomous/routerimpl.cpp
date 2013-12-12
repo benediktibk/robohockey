@@ -102,17 +102,17 @@ vector<Point> RouterImpl::getPointsBesideObstacle(const Path &path, const Circle
 	}
 	else
 	{
-		double leftDistance = obstacle.getCenter().distanceTo(path.getLeftPerpendicularPoint(obstacle.getCenter()));
-		double rightDistance = obstacle.getCenter().distanceTo(path.getRightPerpendicularPoint(obstacle.getCenter()));
+		double leftDistance = radius + path.getDistanceToLeftPerpendicularPoint(obstacle.getCenter());
+		double rightDistance = radius + path.getDistanceToRightPerpendicularPoint(obstacle.getCenter());
 		if (leftDistance > rightDistance)
 		{
-			offsetDistanceShortPoint += radius + leftDistance;
-			offsetDistanceLongPoint += radius + rightDistance;
+			offsetDistanceShortPoint += leftDistance;
+			offsetDistanceLongPoint += rightDistance;
 		}
 		else
 		{
-			offsetDistanceShortPoint += radius + rightDistance;
-			offsetDistanceLongPoint += radius + leftDistance;
+			offsetDistanceShortPoint += rightDistance;
+			offsetDistanceLongPoint += leftDistance;
 		}
 		shortPointBesideObstacle = obstacle.getCenter() + Point(offsetDistanceShortPoint, offsetAngleShortPoint + Angle::getQuarterRotation());
 		longPointBesideObstacle = obstacle.getCenter() + Point(offsetDistanceLongPoint, offsetAngleShortPoint + Angle::getThreeQuarterRotation());
