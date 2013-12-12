@@ -168,7 +168,7 @@ std::list<RobotPosition> FieldImpl::getTargetsForFinalPosition() const
 std::list<RobotPosition> FieldImpl::getTargetsForSearchingPucks() const
 {
 	vector<RobotPosition> targetVector;
-	list<RobotPosition> targetList;
+	list<RobotPosition> targetList(10);
 
 	targetVector.push_back(RobotPosition( Point(1.4, 0.6), Angle()));
 	targetVector.push_back(RobotPosition( Point(1.4, 2.4), Angle()));
