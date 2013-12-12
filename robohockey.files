@@ -388,3 +388,7 @@ layer/strategy/fielddetectionstatemachine/calibrationfinishedtest.h
 layer/strategy/fielddetectionstatemachine/calibrationfinished.h
 layer/strategy/fielddetectionstatemachine/calibrationfinishedtest.cpp
 layer/strategy/fielddetectionstatemachine/calibrationfinished.cpp
+common/quadraticequationtest.h
+common/quadraticequation.h
+common/quadraticequationtest.cpp
+common/quadraticequation.cpp

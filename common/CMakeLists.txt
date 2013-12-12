@@ -11,6 +11,7 @@ set(COMMON_SRC
 	line.cpp
 	pathintersectpoints.cpp
 	console.cpp
+	quadraticequation.cpp
 )
 
 set(COMMON_TEST_SRC
@@ -25,6 +26,7 @@ set(COMMON_TEST_SRC
 	pathtest.cpp
 	linetest.cpp
 	pathintersectpointstest.cpp
+	quadraticequationtest.cpp
 )
 
 add_library(common ${COMMON_SRC})
