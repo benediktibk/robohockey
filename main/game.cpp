@@ -28,13 +28,23 @@ Game::Game(int argc, char **argv) :
 	m_loopTimeAverage(0)
 {
 	string playerServer;
-	if (argc == 2)
-		playerServer = argv[1];
-	else
+    string AngelinaAdressServer;
+    if(argc == 3)
+    {
+        playerServer = argv[1];
+        AngelinaAdressServer = argv[2];
+    }
+    else if(argc == 2)
 	{
-		cout << "no player server selected, using localhost" << endl;
-		playerServer = "localhost";
+        playerServer = argv[1];
+        AngelinaAdressServer = "localhost";
 	}
+    else
+    {
+        cout << "no player server selected, using localhost" << endl;
+        playerServer = "localhost";
+        AngelinaAdressServer = "localhost";
+    }
 
 	Hardware::Robot *hardwareRobot = new Hardware::RobotImpl(playerServer);
 	DataAnalysis::DataAnalyser *dataAnalyser = new DataAnalysis::DataAnalyserImpl(hardwareRobot);
@@ -43,7 +53,7 @@ Game::Game(int argc, char **argv) :
 	m_field = new Autonomous::FieldImpl(
 				dataAnalyser->getOdometry(), dataAnalyser->getLidar(),
 				dataAnalyser->getCamera(), *m_robot);
-	m_referee = new Strategy::Common::RefereeImpl();
+    m_referee = new Strategy::Common::RefereeImpl(AngelinaAdressServer);
 
 	connect(m_timer, SIGNAL(timeout()), this, SLOT(execute()));
 

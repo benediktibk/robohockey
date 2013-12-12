@@ -50,7 +50,15 @@ namespace Autonomous
 		unsigned int enemyHiddenPucks();
 		virtual bool isPointInsideField(const Common::Point &point) const;
 		virtual bool numberOfPucksChanged() const;
-		virtual Common::RobotPosition getTargetPositionForGoalDetection() const;
+		virtual bool isCalibrated() const;
+		virtual Common::FieldObjectColor getOwnTeamColor() const;
+		virtual void detectTeamColorWithGoalInFront();
+		virtual std::list<Common::RobotPosition> getTargetsForGoalDetection() const;
+		virtual std::list<Common::RobotPosition> getTargetsForScoringGoals() const;
+		virtual std::list<Common::RobotPosition> getTargetsForFinalPosition() const;
+		virtual std::list<Common::RobotPosition> getTargetsForSearchingPucks() const;
+		virtual std::list<Common::RobotPosition> getTargetsForHidingEnemyPucks() const;
+		virtual std::list<Common::RobotPosition> getTargetsForCollectingOnePuck() const;
 
 	private:
 		void updateWithLidarData();
@@ -87,6 +95,7 @@ namespace Autonomous
 		bool m_numberOfPucksChanged;
 		unsigned int m_achievedGoals;
 		unsigned int m_hiddenPucks;
+		Common::FieldObjectColor m_teamColor;
 	};
 }
 }

@@ -7,18 +7,20 @@
 #include "layer/autonomous/robotmock.h"
 #include "layer/autonomous/fieldmock.h"
 
+using namespace RoboHockey::Common;
 using namespace RoboHockey::Layer::Strategy::Common;
 using namespace RoboHockey::Layer::Strategy::FieldDetectionStateMachine;
 using namespace RoboHockey::Layer::Autonomous;
 
 
-void CheckGoalColorTest::nextState_afterColorCheck_driveToWaitingPosition()
+void CheckGoalColorTest::nextState_successfulColorCheck_driveToWaitingPosition()
 {
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
 	CheckGoalColor checkGoalColorState(robot, field, referee);
 
+	field.setOwnTeamColor(FieldObjectColorYellow);
 	checkGoalColorState.update();
 
 	State *state;
@@ -27,12 +29,15 @@ void CheckGoalColorTest::nextState_afterColorCheck_driveToWaitingPosition()
 	CPPUNIT_ASSERT(stateCasted != 0);
 }
 
-void CheckGoalColorTest::nextState_noColorCheck_NULL()
+void CheckGoalColorTest::nextState_unsuccessfulColorCheck_NULL()
 {
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
 	CheckGoalColor checkGoalColorState(robot, field, referee);
+
+	field.setOwnTeamColor(FieldObjectColorUnknown);
+	checkGoalColorState.update();
 
 	State *state;
 	state = checkGoalColorState.nextState();
