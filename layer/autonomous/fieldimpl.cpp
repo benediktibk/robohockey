@@ -52,9 +52,14 @@ const vector<FieldObject> &FieldImpl::getAllFieldObjects() const
 	return m_fieldObjects;
 }
 
-const vector<Circle> &FieldImpl::getAllObstacles() const
+const vector<Circle> &FieldImpl::getAllSoftObstacles() const
 {
-	return m_obstacles;
+	return m_softObstacles;
+}
+
+const vector<Circle> &FieldImpl::getAllHardObstacles() const
+{
+	return m_hardObstacles;
 }
 
 vector<FieldObject> FieldImpl::getObjectsWithColorOrderdByDistance(FieldObjectColor color, const Point &position) const
@@ -86,17 +91,17 @@ bool FieldImpl::calibratePosition()
 
 	delete input;
 
-    return result;
+	return result;
 }
 
 unsigned int FieldImpl::achievedGoals()
 {
-    return m_achievedGoals;
+	return m_achievedGoals;
 }
 
 unsigned int FieldImpl::enemyHiddenPucks()
 {
-    return m_hiddenPucks;
+	return m_hiddenPucks;
 }
 
 bool FieldImpl::isPointInsideField(const Point &point) const
@@ -193,11 +198,21 @@ void FieldImpl::updateWithCameraData()
 
 void FieldImpl::updateObstacles()
 {
-	m_obstacles.clear();
-	m_obstacles.reserve(m_fieldObjects.size());
+	m_softObstacles.clear();
+	m_hardObstacles.clear();
+	m_softObstacles.reserve(m_fieldObjects.size());
+	m_hardObstacles.reserve(m_fieldObjects.size());
 
 	for (vector<FieldObject>::const_iterator i = m_fieldObjects.begin(); i != m_fieldObjects.end(); ++i)
-		m_obstacles.push_back(i->getCircle());
+	{
+		const FieldObject &fieldObject = *i;
+		const Circle &fieldObjectCircle = fieldObject.getCircle();
+
+		if (fieldObject.getColor() == FieldObjectColorGreen || fieldObjectCircle.getDiameter() > 0.2)
+			m_hardObstacles.push_back(fieldObjectCircle);
+		else
+			m_softObstacles.push_back(i->getCircle());
+	}
 }
 
 FieldObject &FieldImpl::getNextObjectFromPosition(Point position)

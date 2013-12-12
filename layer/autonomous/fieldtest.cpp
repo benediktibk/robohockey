@@ -674,3 +674,194 @@ void FieldTest::getTargetPositionForGoalDetection_correctPosition()
 
 	CPPUNIT_ASSERT_EQUAL(RobotPosition(Point(1.17333333333, 1.5), Angle::getHalfRotation()), field.getTargetPositionForGoalDetection());
 }
+
+void FieldTest::getAllSoftObstacles_oneBluePuck_resultSizeIs1()
+{
+	DataAnalysis::OdometryMock odometry;
+	DataAnalysis::LidarMock lidar;
+	DataAnalysis::CameraMock camera;
+	Autonomous::RobotMock autonomousRobot;
+	FieldImpl field(odometry, lidar, camera, autonomousRobot);
+	RobotPosition ownPosition(Point(0, 0), 0);
+	odometry.setCurrentPosition(ownPosition);
+	DataAnalysis::LidarObjects lidarObjects(ownPosition.getPosition());
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 0), 0.06));
+	lidar.setAllObjects(lidarObjects);
+	DataAnalysis::CameraObjects cameraObjects;
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldObjectColorBlue, Point(1, 0)));
+	camera.setAllObjects(cameraObjects);
+
+	field.update();
+	vector<Circle> obstacles = field.getAllSoftObstacles();
+
+	CPPUNIT_ASSERT_EQUAL((size_t)1, obstacles.size());
+}
+
+void FieldTest::getAllSoftObstacles_oneSmallObstacleWithUnknownColor_resultSizeIs1()
+{
+	DataAnalysis::OdometryMock odometry;
+	DataAnalysis::LidarMock lidar;
+	DataAnalysis::CameraMock camera;
+	Autonomous::RobotMock autonomousRobot;
+	FieldImpl field(odometry, lidar, camera, autonomousRobot);
+	RobotPosition ownPosition(Point(0, 0), 0);
+	odometry.setCurrentPosition(ownPosition);
+	DataAnalysis::LidarObjects lidarObjects(ownPosition.getPosition());
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 0), 0.06));
+	lidar.setAllObjects(lidarObjects);
+
+	field.update();
+	vector<Circle> obstacles = field.getAllSoftObstacles();
+
+	CPPUNIT_ASSERT_EQUAL((size_t)1, obstacles.size());
+}
+
+void FieldTest::getAllSoftObstacles_oneGreenObstacle_resultSizeIs0()
+{
+	DataAnalysis::OdometryMock odometry;
+	DataAnalysis::LidarMock lidar;
+	DataAnalysis::CameraMock camera;
+	Autonomous::RobotMock autonomousRobot;
+	FieldImpl field(odometry, lidar, camera, autonomousRobot);
+	RobotPosition ownPosition(Point(0, 0), 0);
+	odometry.setCurrentPosition(ownPosition);
+	DataAnalysis::LidarObjects lidarObjects(ownPosition.getPosition());
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 0), 0.06));
+	lidar.setAllObjects(lidarObjects);
+	DataAnalysis::CameraObjects cameraObjects;
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldObjectColorGreen, Point(1, 0)));
+	camera.setAllObjects(cameraObjects);
+
+	field.update();
+	vector<Circle> obstacles = field.getAllSoftObstacles();
+
+	CPPUNIT_ASSERT_EQUAL((size_t)0, obstacles.size());
+}
+
+void FieldTest::getAllSoftObstacles_oneBigObstacle_resultSizeIs0()
+{
+	DataAnalysis::OdometryMock odometry;
+	DataAnalysis::LidarMock lidar;
+	DataAnalysis::CameraMock camera;
+	Autonomous::RobotMock autonomousRobot;
+	FieldImpl field(odometry, lidar, camera, autonomousRobot);
+	RobotPosition ownPosition(Point(0, 0), 0);
+	odometry.setCurrentPosition(ownPosition);
+	DataAnalysis::LidarObjects lidarObjects(ownPosition.getPosition());
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 0), 0.5));
+	lidar.setAllObjects(lidarObjects);
+
+	field.update();
+	vector<Circle> obstacles = field.getAllSoftObstacles();
+
+	CPPUNIT_ASSERT_EQUAL((size_t)0, obstacles.size());
+}
+
+void FieldTest::getAllSoftObstacles_onePuckDisappeared_resultSizeIs0()
+{
+	DataAnalysis::OdometryMock odometry;
+	DataAnalysis::LidarMock lidar;
+	DataAnalysis::CameraMock camera;
+	Autonomous::RobotMock autonomousRobot;
+	FieldImpl field(odometry, lidar, camera, autonomousRobot);
+	RobotPosition ownPosition(Point(0, 0), 0);
+	odometry.setCurrentPosition(ownPosition);
+	DataAnalysis::LidarObjects lidarObjects(ownPosition.getPosition());
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 0), 0.06));
+	lidar.setAllObjects(lidarObjects);
+	DataAnalysis::CameraObjects cameraObjects;
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldObjectColorBlue, Point(1, 0)));
+	camera.setAllObjects(cameraObjects);
+
+	field.update();
+	lidarObjects.clear();
+	cameraObjects.clear();
+	lidar.setAllObjects(lidarObjects);
+	camera.setAllObjects(cameraObjects);
+	field.update();
+	vector<Circle> obstacles = field.getAllSoftObstacles();
+
+	CPPUNIT_ASSERT_EQUAL((size_t)0, obstacles.size());
+}
+
+void FieldTest::getAllHardObstacles_oneGreenObject_resultSizeIs1()
+{
+	DataAnalysis::OdometryMock odometry;
+	DataAnalysis::LidarMock lidar;
+	DataAnalysis::CameraMock camera;
+	Autonomous::RobotMock autonomousRobot;
+	FieldImpl field(odometry, lidar, camera, autonomousRobot);
+	RobotPosition ownPosition(Point(0, 0), 0);
+	odometry.setCurrentPosition(ownPosition);
+	DataAnalysis::LidarObjects lidarObjects(ownPosition.getPosition());
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 0), 0.06));
+	lidar.setAllObjects(lidarObjects);
+	DataAnalysis::CameraObjects cameraObjects;
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldObjectColorGreen, Point(1, 0)));
+	camera.setAllObjects(cameraObjects);
+
+	field.update();
+	vector<Circle> obstacles = field.getAllHardObstacles();
+
+	CPPUNIT_ASSERT_EQUAL((size_t)1, obstacles.size());
+}
+
+void FieldTest::getAllHardObstacles_oneBigObstacle_resultSizeIs1()
+{
+	DataAnalysis::OdometryMock odometry;
+	DataAnalysis::LidarMock lidar;
+	DataAnalysis::CameraMock camera;
+	Autonomous::RobotMock autonomousRobot;
+	FieldImpl field(odometry, lidar, camera, autonomousRobot);
+	RobotPosition ownPosition(Point(0, 0), 0);
+	odometry.setCurrentPosition(ownPosition);
+	DataAnalysis::LidarObjects lidarObjects(ownPosition.getPosition());
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 0), 0.5));
+	lidar.setAllObjects(lidarObjects);
+
+	field.update();
+	vector<Circle> obstacles = field.getAllHardObstacles();
+
+	CPPUNIT_ASSERT_EQUAL((size_t)1, obstacles.size());
+}
+
+void FieldTest::getAllHardObstacles_oneSmallObstacleWithUnknownColor_resultSizeIs0()
+{
+	DataAnalysis::OdometryMock odometry;
+	DataAnalysis::LidarMock lidar;
+	DataAnalysis::CameraMock camera;
+	Autonomous::RobotMock autonomousRobot;
+	FieldImpl field(odometry, lidar, camera, autonomousRobot);
+	RobotPosition ownPosition(Point(0, 0), 0);
+	odometry.setCurrentPosition(ownPosition);
+	DataAnalysis::LidarObjects lidarObjects(ownPosition.getPosition());
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 0), 0.06));
+	lidar.setAllObjects(lidarObjects);
+
+	field.update();
+	vector<Circle> obstacles = field.getAllHardObstacles();
+
+	CPPUNIT_ASSERT_EQUAL((size_t)0, obstacles.size());
+}
+
+void FieldTest::getAllHardObstacles_oneBigObstacleDisappeared_resultSizeIs0()
+{
+	DataAnalysis::OdometryMock odometry;
+	DataAnalysis::LidarMock lidar;
+	DataAnalysis::CameraMock camera;
+	Autonomous::RobotMock autonomousRobot;
+	FieldImpl field(odometry, lidar, camera, autonomousRobot);
+	RobotPosition ownPosition(Point(0, 0), 0);
+	odometry.setCurrentPosition(ownPosition);
+	DataAnalysis::LidarObjects lidarObjects(ownPosition.getPosition());
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 0), 0.5));
+	lidar.setAllObjects(lidarObjects);
+
+	field.update();
+	lidarObjects.clear();
+	lidar.setAllObjects(lidarObjects);
+	field.update();
+	vector<Circle> obstacles = field.getAllHardObstacles();
+
+	CPPUNIT_ASSERT_EQUAL((size_t)0, obstacles.size());
+}

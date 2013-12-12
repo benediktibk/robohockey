@@ -355,12 +355,12 @@ RobotPosition RobotImpl::getCurrentPosition() const
 Point RobotImpl::getCurrentTarget() const
 {
 	DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
-    return engine.getCurrentTarget();
+	return engine.getCurrentTarget();
 }
 
 Route* RobotImpl::getAllRoutePoints() const
 {
-    return m_currentRoute;
+	return m_currentRoute;
 }
 
 bool RobotImpl::cantReachTarget() const
@@ -419,9 +419,11 @@ bool RobotImpl::updateRoute(const Field &field)
 {
 	const RobotPosition robotPosition = getCurrentPosition();
 	const Point &ownPosition = robotPosition.getPosition();
-	vector<Circle> obstacles = field.getAllObstacles();
+	vector<Circle> softObstacles = field.getAllSoftObstacles();
+	vector<Circle> hardObstacles = field.getAllHardObstacles();
+	vector<Circle> allObstacles = m_router->filterObstacles(softObstacles, hardObstacles, robotPosition.getPosition());
 
-	if (isRouteFeasible(obstacles))
+	if (isRouteFeasible(allObstacles))
 		return false;
 
 	//! If the current route is not feasible anymore we try to create a new one.
@@ -429,7 +431,7 @@ bool RobotImpl::updateRoute(const Field &field)
 	m_currentRoute = new Route(m_robotWidth);
 	*m_currentRoute = m_router->calculateRoute(ownPosition, m_currentTarget, field);
 
-	if (!isRouteFeasible(obstacles))
+	if (!isRouteFeasible(allObstacles))
 		clearRoute();
 
 	return true;

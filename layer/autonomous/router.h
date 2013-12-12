@@ -1,11 +1,15 @@
 #ifndef ROBOHOCKEY_LAYER_AUTONOMOUS_ROUTER_H
 #define ROBOHOCKEY_LAYER_AUTONOMOUS_ROUTER_H
 
+#include <vector>
+
 namespace RoboHockey
 {
 namespace Common
 {
 	class RobotPosition;
+	class Circle;
+	class Point;
 }
 
 namespace Layer
@@ -20,7 +24,10 @@ namespace Autonomous
 	public:
 		virtual ~Router() { }
 
-		virtual Route calculateRoute(const Common::RobotPosition &start, const Common::RobotPosition &end, const Field &field) const = 0;
+		virtual Route calculateRoute(
+				const Common::RobotPosition &start, const Common::RobotPosition &end, const Field &field) const = 0;
+		virtual std::vector<Common::Circle> filterObstacles(const std::vector<Common::Circle> &softObstacles,
+				const std::vector<Common::Circle> &hardObstacles, const Common::Point &position) const = 0;
 	};
 }
 }

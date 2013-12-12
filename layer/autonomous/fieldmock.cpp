@@ -18,9 +18,14 @@ const vector<FieldObject>& FieldMock::getAllFieldObjects() const
 	return m_objects;
 }
 
-const vector<Circle>& FieldMock::getAllObstacles() const
+const vector<Circle>& FieldMock::getAllSoftObstacles() const
 {
-	return m_obstacles;
+	return m_softObstacles;
+}
+
+const vector<Circle> &FieldMock::getAllHardObstacles() const
+{
+	return m_hardObstacles;
 }
 
 vector<FieldObject> FieldMock::getObjectsWithColorOrderdByDistance(FieldObjectColor, const Point&) const
@@ -46,9 +51,14 @@ void FieldMock::setFieldObjects(const vector<FieldObject> &objects)
 	m_objects = objects;
 }
 
-void FieldMock::setObstacles(const vector<Circle> &obstacles)
+void FieldMock::setSoftObstacles(const vector<Circle> &obstacles)
 {
-	m_obstacles = obstacles;
+	m_softObstacles = obstacles;
+}
+
+void FieldMock::setHardObstacles(const std::vector<Circle> &obstacles)
+{
+	m_hardObstacles = obstacles;
 }
 
 void FieldMock::setNegativeCoordinatesOutside(bool value)
@@ -63,7 +73,7 @@ void FieldMock::setCalibrationReturn(bool value)
 
 unsigned int FieldMock::enemyHiddenPucks()
 {
-    return m_hiddenPucks;
+	return m_hiddenPucks;
 }
 
 bool FieldMock::numberOfPucksChanged() const
@@ -88,5 +98,5 @@ void FieldMock::setAchievedGoals(unsigned int goalsAchieved)
 
 void FieldMock::setEnemyHiddenPucks(unsigned int enemyHiddenPucks)
 {
-    m_hiddenPucks = enemyHiddenPucks;
+	m_hiddenPucks = enemyHiddenPucks;
 }

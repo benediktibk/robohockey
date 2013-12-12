@@ -32,9 +32,9 @@ namespace Autonomous
 			public Field
 	{
 	private:
-			enum FieldState { FieldStateUnknownPosition,
-							  FieldStateCalibrated
-							};
+		enum FieldState { FieldStateUnknownPosition,
+						  FieldStateCalibrated
+						};
 
 	public:
 		FieldImpl(DataAnalysis::Odometry &odometry, const DataAnalysis::Lidar &lidar, DataAnalysis::Camera &camera, Robot &autonomousRobot);
@@ -42,11 +42,12 @@ namespace Autonomous
 
 		virtual void update();
 		virtual const std::vector<FieldObject>& getAllFieldObjects() const;
-		virtual const std::vector<Common::Circle>& getAllObstacles() const;
+		virtual const std::vector<Common::Circle>& getAllSoftObstacles() const;
+		virtual const std::vector<Common::Circle>& getAllHardObstacles() const;
 		virtual std::vector<FieldObject> getObjectsWithColorOrderdByDistance(Common::FieldObjectColor color, const Common::Point &position) const;
 		virtual bool calibratePosition();
-        unsigned int achievedGoals();
-        unsigned int enemyHiddenPucks();
+		unsigned int achievedGoals();
+		unsigned int enemyHiddenPucks();
 		virtual bool isPointInsideField(const Common::Point &point) const;
 		virtual bool numberOfPucksChanged() const;
 		virtual Common::RobotPosition getTargetPositionForGoalDetection() const;
@@ -79,12 +80,13 @@ namespace Autonomous
 		const Robot *m_robot;
 
 		Common::RobotPosition *m_position;
-        std::vector<FieldObject> m_fieldObjects;
-		std::vector<Common::Circle> m_obstacles;
+		std::vector<FieldObject> m_fieldObjects;
+		std::vector<Common::Circle> m_softObstacles;
+		std::vector<Common::Circle> m_hardObstacles;
 		FieldState m_fieldState;
 		bool m_numberOfPucksChanged;
-        unsigned int m_achievedGoals;
-        unsigned int m_hiddenPucks;
+		unsigned int m_achievedGoals;
+		unsigned int m_hiddenPucks;
 	};
 }
 }

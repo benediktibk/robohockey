@@ -821,7 +821,7 @@ void RobotTest::cantReachTarget_currentTargetSuddenlyNotPossible_true()
 	robot.updateActuators(field);
 	vector<Circle> obstacles;
 	obstacles.push_back(Circle(Point(10, 0), 2));
-	field.setObstacles(obstacles);
+	field.setSoftObstacles(obstacles);
 	robot.updateSensorData();
 	robot.updateActuators(field);
 
@@ -837,7 +837,7 @@ void RobotTest::cantReachTarget_notPossibleAnymoreDuringDriving_true()
 	FieldMock field;
 	vector<Circle> obstacles;
 	obstacles.push_back(Circle(Point(10, 0), 2));
-	field.setObstacles(obstacles);
+	field.setSoftObstacles(obstacles);
 
 	robot.updateSensorData();
 	robot.goTo(Point(10, 0));
@@ -853,7 +853,7 @@ void RobotTest::cantReachTarget_onlyLastTargetNotPossibleToReach_false()
 	FieldMock field;
 	vector<Circle> obstacles;
 	obstacles.push_back(Circle(Point(10, 0), 2));
-	field.setObstacles(obstacles);
+	field.setSoftObstacles(obstacles);
 
 	robot.updateSensorData();
 	robot.goTo(Point(10, 0));
@@ -872,7 +872,7 @@ void RobotTest::cantReachTarget_updateTwiceCalled_true()
 	FieldMock field;
 	vector<Circle> obstacles;
 	obstacles.push_back(Circle(Point(10, 0), 2));
-	field.setObstacles(obstacles);
+	field.setSoftObstacles(obstacles);
 
 	robot.updateSensorData();
 	robot.goTo(Point(10, 0));
@@ -890,7 +890,7 @@ void RobotTest::cantReachTarget_newTargetSet_false()
 	FieldMock field;
 	vector<Circle> obstacles;
 	obstacles.push_back(Circle(Point(10, 0), 2));
-	field.setObstacles(obstacles);
+	field.setSoftObstacles(obstacles);
 
 	robot.goTo(Point(10, 0));
 	robot.updateActuators(field);
@@ -907,7 +907,7 @@ void RobotTest::cantReachTarget_collectPuckInFrontCalled_false()
 	FieldMock field;
 	vector<Circle> obstacles;
 	obstacles.push_back(Circle(Point(10, 0), 2));
-	field.setObstacles(obstacles);
+	field.setSoftObstacles(obstacles);
 
 	robot.updateSensorData();
 	robot.goTo(Point(10, 0));
@@ -927,7 +927,7 @@ void RobotTest::cantReachTarget_turnAroundCalled_false()
 	FieldMock field;
 	vector<Circle> obstacles;
 	obstacles.push_back(Circle(Point(10, 0), 2));
-	field.setObstacles(obstacles);
+	field.setSoftObstacles(obstacles);
 
 	robot.updateSensorData();
 	robot.goTo(Point(10, 0));
@@ -946,7 +946,7 @@ void RobotTest::cantReachTarget_turnToCalled_false()
 	FieldMock field;
 	vector<Circle> obstacles;
 	obstacles.push_back(Circle(Point(10, 0), 2));
-	field.setObstacles(obstacles);
+	field.setSoftObstacles(obstacles);
 
 	robot.updateSensorData();
 	robot.goTo(Point(10, 0));
@@ -965,7 +965,7 @@ void RobotTest::cantReachTarget_leavePuckCalled_false()
 	FieldMock field;
 	vector<Circle> obstacles;
 	obstacles.push_back(Circle(Point(10, 0), 2));
-	field.setObstacles(obstacles);
+	field.setSoftObstacles(obstacles);
 
 	robot.updateSensorData();
 	robot.goTo(Point(10, 0));

@@ -57,6 +57,11 @@ size_t LidarObjects::getObjectCount() const
 	return m_objectsSortedByDistance.size();
 }
 
+void LidarObjects::clear()
+{
+	m_objectsSortedByDistance.clear();
+}
+
 void LidarObjects::operator=(const LidarObjects &objects)
 {
 	m_ownPosition = objects.m_ownPosition;
