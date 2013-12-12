@@ -62,3 +62,59 @@ void CircleTest::getDistanceTo_euclideanDistance5AndDiameter2_4()
 
 	CPPUNIT_ASSERT_DOUBLES_EQUAL(4, distance, 0.00001);
 }
+
+void CircleTest::overlapsWith_farAway_false()
+{
+	Circle one(Point(-5, 2), 1);
+	Circle two(Point(10, -4), 0.5);
+
+	CPPUNIT_ASSERT(!one.overlapsWith(two));
+}
+
+void CircleTest::overlapsWith_secondOneInsideFirstOne_true()
+{
+	Circle one(Point(-5, 2), 10);
+	Circle two(Point(-4, 1), 1);
+
+	CPPUNIT_ASSERT(one.overlapsWith(two));
+}
+
+void CircleTest::overlapsWith_firstOneInsideSecondOne_true()
+{
+	Circle one(Point(0, 1), 0.25);
+	Circle two(Point(0, -1), 5);
+
+	CPPUNIT_ASSERT(one.overlapsWith(two));
+}
+
+void CircleTest::overlapsWith_touching_true()
+{
+	Circle one(Point(1, 0), 2);
+	Circle two(Point(-1, 0), 2);
+
+	CPPUNIT_ASSERT(one.overlapsWith(two));
+}
+
+void CircleTest::overlapsWith_crossingWithCenterOutside_true()
+{
+	Circle one(Point(1, 2), 3);
+	Circle two(Point(1.5, 2.5), 2);
+
+	CPPUNIT_ASSERT(one.overlapsWith(two));
+}
+
+void CircleTest::overlapsWith_crossingWithCenterInside_true()
+{
+	Circle one(Point(1, 2), 3);
+	Circle two(Point(1.25, 2.25), 2);
+
+	CPPUNIT_ASSERT(one.overlapsWith(two));
+}
+
+void CircleTest::overlapsWith_closeTogetherButTooSmallDiameters_false()
+{
+	Circle one(Point(1, 2), 0.25);
+	Circle two(Point(1, 2.5), 0.2);
+
+	CPPUNIT_ASSERT(!one.overlapsWith(two));
+}

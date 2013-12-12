@@ -20,6 +20,7 @@ namespace Common
 		double getDiameter() const;
 		Rectangle getBoundingRectangle() const;
 		double getDistanceTo(const Common::Point &position) const;
+		bool overlapsWith(const Circle &circle) const;
 
 	private:
 		Point m_center;

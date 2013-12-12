@@ -46,3 +46,8 @@ double Circle::getDistanceTo(const Point &position) const
 {
 	return position.distanceTo(m_center) - m_diameter/2;
 }
+
+bool Circle::overlapsWith(const Circle &/*circle*/) const
+{
+	return false;
+}

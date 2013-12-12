@@ -19,6 +19,13 @@ namespace Common
 		CPPUNIT_TEST(setDiameter_3_diameterIs3);
 		CPPUNIT_TEST(getBoundingRectangle_validCircle_correctResult);
 		CPPUNIT_TEST(getDistanceTo_euclideanDistance5AndDiameter2_4);
+		CPPUNIT_TEST(overlapsWith_farAway_false);
+		CPPUNIT_TEST(overlapsWith_secondOneInsideFirstOne_true);
+		CPPUNIT_TEST(overlapsWith_firstOneInsideSecondOne_true);
+		CPPUNIT_TEST(overlapsWith_touching_true);
+		CPPUNIT_TEST(overlapsWith_crossingWithCenterOutside_true);
+		CPPUNIT_TEST(overlapsWith_crossingWithCenterInside_true);
+		CPPUNIT_TEST(overlapsWith_closeTogetherButTooSmallDiameters_false);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
@@ -29,6 +36,13 @@ namespace Common
 		void setDiameter_3_diameterIs3();
 		void getBoundingRectangle_validCircle_correctResult();
 		void getDistanceTo_euclideanDistance5AndDiameter2_4();
+		void overlapsWith_farAway_false();
+		void overlapsWith_secondOneInsideFirstOne_true();
+		void overlapsWith_firstOneInsideSecondOne_true();
+		void overlapsWith_touching_true();
+		void overlapsWith_crossingWithCenterOutside_true();
+		void overlapsWith_crossingWithCenterInside_true();
+		void overlapsWith_closeTogetherButTooSmallDiameters_false();
 	};
 }
 }
