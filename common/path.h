@@ -24,6 +24,8 @@ namespace Common
 		Angle getAngleBetweenStartAndEnd() const;
 		Point getLeftPerpendicularPoint(const Point &point) const;
 		Point getRightPerpendicularPoint(const Point &point) const;
+		double getDistanceToLeftPerpendicularPoint(const Point &point) const;
+		double getDistanceToRightPerpendicularPoint(const Point &point) const;
 
 	private:
 		Point m_start;

@@ -32,6 +32,8 @@ namespace Common
 		 CPPUNIT_TEST(getAngleBetweenStartAndEnd_StartIs1And1EndIs0And0_AngleIsMinusPiQuarter);
 		 CPPUNIT_TEST(getLeftPerpendicularPoint_pointIs1And2_resultIsCorrect);
 		 CPPUNIT_TEST(getRightPerpendicularPoint_pointIs1And2_resultIsCorrect);
+		 CPPUNIT_TEST(getDistanceToLeftPerpendicularPoint_pointIs1And2_resultIsCorrect);
+		 CPPUNIT_TEST(getDistanceToRightPerpendicularPoint_pointIs1And2_resultIsCorrect);
 		 CPPUNIT_TEST_SUITE_END();
 
 	private:
@@ -55,6 +57,8 @@ namespace Common
 		 void getAngleBetweenStartAndEnd_StartIs1And1EndIs0And0_AngleIsMinusPiQuarter();
 		 void getLeftPerpendicularPoint_pointIs1And2_resultIsCorrect();
 		 void getRightPerpendicularPoint_pointIs1And2_resultIsCorrect();
+		 void getDistanceToLeftPerpendicularPoint_pointIs1And2_resultIsCorrect();
+		 void getDistanceToRightPerpendicularPoint_pointIs1And2_resultIsCorrect();
 	};
 }
 }

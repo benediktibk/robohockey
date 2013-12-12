@@ -98,3 +98,13 @@ Point Path::getRightPerpendicularPoint(const Point &point) const
 
 	return rightOutline.getPerpendicularPoint(point);
 }
+
+double Path::getDistanceToLeftPerpendicularPoint(const Point &point) const
+{
+	return point.distanceTo(this->getLeftPerpendicularPoint(point));
+}
+
+double Path::getDistanceToRightPerpendicularPoint(const Point &point) const
+{
+	return point.distanceTo(this->getRightPerpendicularPoint(point));
+}
