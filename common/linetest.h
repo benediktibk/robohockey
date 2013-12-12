@@ -27,7 +27,8 @@ namespace Common
 		 CPPUNIT_TEST(getIntersectPoints_circleIntersectsLineButOnlyTheHigherPointIsOnTheLine_intersectPointsCountIs2);
 		 CPPUNIT_TEST(isTargetPointRightOfLine_rightOfLine_true);
 		 CPPUNIT_TEST(isTargetPointRightOfLine_leftOfLine_false);
-		 CPPUNIT_TEST(getPerpendicularPoint_pointIs2And1_resultIsCorrect);
+		 CPPUNIT_TEST(getPerpendicularPoint_pointIs1And2_resultIsCorrect);
+		 CPPUNIT_TEST(getPerpendicularPoint_pointIs1p5And2_resultIsCorrect);
 		 CPPUNIT_TEST_SUITE_END();
 
 	private:
@@ -46,7 +47,8 @@ namespace Common
 		 void getIntersectPoints_circleIntersectsLineButOnlyTheHigherPointIsOnTheLine_intersectPointsCountIs2();
 		 void isTargetPointRightOfLine_rightOfLine_true();
 		 void isTargetPointRightOfLine_leftOfLine_false();
-		 void getPerpendicularPoint_pointIs2And1_resultIsCorrect();
+		 void getPerpendicularPoint_pointIs1And2_resultIsCorrect();
+		 void getPerpendicularPoint_pointIs1p5And2_resultIsCorrect();
 	};
 }
 }

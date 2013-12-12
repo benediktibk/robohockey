@@ -136,3 +136,11 @@ void PathTest::getAngleBetweenStartAndEnd_StartIs1And1EndIs0And0_AngleIsMinusPiQ
 
 	CPPUNIT_ASSERT(compare.isFuzzyEqual(angle.getValueBetweenMinusPiAndPi(), path.getAngleBetweenStartAndEnd()));
 }
+
+void PathTest::getShortestPointToPath_pointIs1And2_resultIsCorrect()
+{
+	Path path(Point(1,1), Point(4,4), 2.8284);
+	Point target(1,2);
+
+	CPPUNIT_ASSERT_EQUAL(Point(0.5,2.5), path.getShortestPointToPath(target));
+}
