@@ -125,7 +125,7 @@ void PathTest::getAngleBetweenStartAndEnd_StartIs0And0EndIs1And1_AngleIsPiQuarte
 	Compare compare(0.0001);
 	Path path(Point(0,0), Point(1,1), 1);
 
-	CPPUNIT_ASSERT(compare.isFuzzyEqual(Angle::getEighthRotation(), path.getAgnleBetweenStartAndEnd()));
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(Angle::getEighthRotation(), path.getAngleBetweenStartAndEnd()));
 }
 
 void PathTest::getAngleBetweenStartAndEnd_StartIs1And1EndIs0And0_AngleIsMinusPiQuarter()
@@ -134,5 +134,5 @@ void PathTest::getAngleBetweenStartAndEnd_StartIs1And1EndIs0And0_AngleIsMinusPiQ
 	Path path(Point(1,1), Point(0,0), 1);
 	Angle angle = Angle::getHalfRotation() + Angle::getEighthRotation();
 
-	CPPUNIT_ASSERT(compare.isFuzzyEqual(angle.getValueBetweenMinusPiAndPi(), path.getAgnleBetweenStartAndEnd()));
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(angle.getValueBetweenMinusPiAndPi(), path.getAngleBetweenStartAndEnd()));
 }

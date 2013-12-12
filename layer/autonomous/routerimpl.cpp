@@ -59,7 +59,7 @@ vector<Point> RouterImpl::getPointsBesideObstacle(const Path &path, const Circle
 	Point shortPointBesideObstacle;
 	Point longPointBesideObstacle;
 	double offsetDistanceLongPoint = 0.5*(1.01 + sqrt(2))*m_robotWidth;
-	Angle offsetAngleShortPoint = path.getAgnleBetweenStartAndEnd();
+	Angle offsetAngleShortPoint = path.getAngleBetweenStartAndEnd();
 
 	assert(intersectionPoints.getIntersectTypeFrom() != PathIntersectPoints::IntersectTypeFromStart);
 	assert(intersectionPoints.getIntersectTypeFrom() != PathIntersectPoints::IntersectTypeFromEnd);
