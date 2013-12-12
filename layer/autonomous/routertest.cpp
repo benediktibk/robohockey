@@ -51,14 +51,14 @@ void RouterTest::calculateRoute_obstacleAtStartOfRoute_invalidRoute()
 	RouterImpl router(0.5);
 	vector<Circle> obstacles;
 	obstacles.push_back(Circle(Point(1, 1), 0.1));
-	field.setSoftObstacles(obstacles);
+	field.setHardObstacles(obstacles);
 
 	Route route = router.calculateRoute(Point(1, 1), Point(1, 10), field);
 
 	CPPUNIT_ASSERT(!route.isValid());
 }
 
-void RouterTest::calculateRoute_obstacleAtEndOfRoute_invalidRoute()
+void RouterTest::calculateRoute_softObstacleAtEndOfRoute_invalidRoute()
 {
 	FieldMock field;
 	RouterImpl router(0.5);
@@ -144,7 +144,7 @@ void RouterTest::calculateRoute_oneBigObstacleCloseToStart_routeIsNotIntersectin
 	RouterImpl router(0.5);
 	vector<Circle> obstacles;
 	obstacles.push_back(Circle(Point(1.3, 0), 2));
-	field.setSoftObstacles(obstacles);
+	field.setHardObstacles(obstacles);
 
 	Route route = router.calculateRoute(Point(0, 0), Point(5, 0), field);
 
@@ -365,6 +365,38 @@ void RouterTest::calculateRoute_onlyPossiblePointBesideIsBlockedByAnotherObstacl
 	double routeLength = route.getLength();
 	//! 10 is definitely too small, but I have not yet found a reasonable value for this test case.
 	CPPUNIT_ASSERT(routeLength < 10);
+}
+
+void RouterTest::calculateRoute_softObstacleAtOwnPosition_validRoute()
+{
+	FieldMock field;
+	field.setNegativeCoordinatesOutside(true);
+	RouterImpl router(0.5);
+	vector<Circle> obstacles;
+	obstacles.push_back(Circle(Point(0, 0), 0.1));
+	field.setSoftObstacles(obstacles);
+	RobotPosition start(Point(0, 0), 0);
+	RobotPosition end(Point(10, 0), 0);
+
+	Route route = router.calculateRoute(start, end, field);
+
+	CPPUNIT_ASSERT(route.isValid());
+}
+
+void RouterTest::calculateRoute_hardObstacleAtOwnPosition_invalidRoute()
+{
+	FieldMock field;
+	field.setNegativeCoordinatesOutside(true);
+	RouterImpl router(0.5);
+	vector<Circle> obstacles;
+	obstacles.push_back(Circle(Point(0, 0), 0.1));
+	field.setHardObstacles(obstacles);
+	RobotPosition start(Point(0, 0), 0);
+	RobotPosition end(Point(10, 0), 0);
+
+	Route route = router.calculateRoute(start, end, field);
+
+	CPPUNIT_ASSERT(!route.isValid());
 }
 
 void RouterTest::getPointsBesideObstacle_intersectFromLeftAndCircleCenterNotOnPath_shortPointIs2AndMinus1()

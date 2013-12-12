@@ -56,6 +56,11 @@ void FieldMock::setSoftObstacles(const vector<Circle> &obstacles)
 	m_softObstacles = obstacles;
 }
 
+void FieldMock::setHardObstacles(const std::vector<Circle> &obstacles)
+{
+	m_hardObstacles = obstacles;
+}
+
 void FieldMock::setNegativeCoordinatesOutside(bool value)
 {
 	m_negativeCoordinatesOutside = value;
