@@ -899,3 +899,51 @@ void FieldTest::getTargetsForSearchingPucks_always_numberOfPositionsBigger5()
 
 	CPPUNIT_ASSERT((size_t) 5 < field.getTargetsForSearchingPucks().size());
 }
+
+void FieldTest::detectTeamColorWithGoalInFront_yellowMuchBiggerBlue_teamYellow()
+{
+	DataAnalysis::OdometryMock odometry;
+	DataAnalysis::LidarMock lidar;
+	DataAnalysis::CameraMock camera;
+	Autonomous::RobotMock autonomousRobot;
+	FieldImpl field(odometry, lidar, camera, autonomousRobot);
+
+	camera.setProbabilityForYellowGoal(0.82);
+	camera.setProbabilityForBlueGoal(0.27);
+
+	field.detectTeamColorWithGoalInFront();
+
+	CPPUNIT_ASSERT_EQUAL(FieldObjectColorYellow, field.getOwnTeamColor());
+}
+
+void FieldTest::detectTeamColorWithGoalInFront_yellowMuchSmallerBlue_teamBlue()
+{
+	DataAnalysis::OdometryMock odometry;
+	DataAnalysis::LidarMock lidar;
+	DataAnalysis::CameraMock camera;
+	Autonomous::RobotMock autonomousRobot;
+	FieldImpl field(odometry, lidar, camera, autonomousRobot);
+
+	camera.setProbabilityForYellowGoal(0.13);
+	camera.setProbabilityForBlueGoal(0.77);
+
+	field.detectTeamColorWithGoalInFront();
+
+	CPPUNIT_ASSERT_EQUAL(FieldObjectColorBlue, field.getOwnTeamColor());
+}
+
+void FieldTest::detectTeamColorWithGoalInFront_yellowAndBlueFuzzyEqual_teamUnknown()
+{
+	DataAnalysis::OdometryMock odometry;
+	DataAnalysis::LidarMock lidar;
+	DataAnalysis::CameraMock camera;
+	Autonomous::RobotMock autonomousRobot;
+	FieldImpl field(odometry, lidar, camera, autonomousRobot);
+
+	camera.setProbabilityForYellowGoal(0.43);
+	camera.setProbabilityForBlueGoal(0.47);
+
+	field.detectTeamColorWithGoalInFront();
+
+	CPPUNIT_ASSERT_EQUAL(FieldObjectColorUnknown, field.getOwnTeamColor());
+}

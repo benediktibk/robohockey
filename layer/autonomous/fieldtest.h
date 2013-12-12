@@ -56,6 +56,9 @@ namespace Autonomous
 		CPPUNIT_TEST(getTargetsForScoringGoals_always_numberOfPositionsBigger4);
 		CPPUNIT_TEST(getTargetsForFinalPosition_always_numberOfPositionsBigger1);
 		CPPUNIT_TEST(getTargetsForSearchingPucks_always_numberOfPositionsBigger5);
+		CPPUNIT_TEST(detectTeamColorWithGoalInFront_yellowMuchBiggerBlue_teamYellow);
+		CPPUNIT_TEST(detectTeamColorWithGoalInFront_yellowMuchSmallerBlue_teamBlue);
+		CPPUNIT_TEST(detectTeamColorWithGoalInFront_yellowAndBlueFuzzyEqual_teamUnknown);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
@@ -101,6 +104,9 @@ namespace Autonomous
 		void getTargetsForScoringGoals_always_numberOfPositionsBigger4();
 		void getTargetsForFinalPosition_always_numberOfPositionsBigger1();
 		void getTargetsForSearchingPucks_always_numberOfPositionsBigger5();
+		void detectTeamColorWithGoalInFront_yellowMuchBiggerBlue_teamYellow();
+		void detectTeamColorWithGoalInFront_yellowMuchSmallerBlue_teamBlue();
+		void detectTeamColorWithGoalInFront_yellowAndBlueFuzzyEqual_teamUnknown();
 	};
 }
 }
