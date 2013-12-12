@@ -79,20 +79,22 @@ Angle Path::getAngleBetweenStartAndEnd() const
 	return Angle(m_start, m_end);
 }
 
-Point Path::getShortestPointToPath(const Point &point) const
+Point Path::getLeftPerpendicularPoint(const Point &point) const
 {
 	Angle angleBetweenPoints(m_start, m_end);
 	Point startLeft(m_start + Point(sqrt(2)*0.5*m_width, Angle::getQuarterRotation() + Angle::getEighthRotation() + angleBetweenPoints));
-	Point startRight(m_start + Point(sqrt(2)*0.5*m_width, angleBetweenPoints - Angle::getQuarterRotation() - Angle::getEighthRotation()));
 	Point endLeft(m_end + Point(sqrt(2)*0.5*m_width, Angle::getEighthRotation() + angleBetweenPoints));
-	Point endRight(m_end + Point(sqrt(2)*0.5*m_width, angleBetweenPoints - Angle::getEighthRotation()));
 	Line leftOutline(startLeft, endLeft);
-	Line rightOutline(startRight, endRight);
-	Point leftPoint = leftOutline.getPerpendicularPoint(point);
-	Point rightPoint = rightOutline.getPerpendicularPoint(point);
 
-	if(leftPoint.distanceTo(point) < rightPoint.distanceTo(point))
-		return leftPoint;
-	else
-		return rightPoint;
+	return leftOutline.getPerpendicularPoint(point);
+}
+
+Point Path::getRightPerpendicularPoint(const Point &point) const
+{
+	Angle angleBetweenPoints(m_start, m_end);
+	Point startRight(m_start + Point(sqrt(2)*0.5*m_width, angleBetweenPoints - Angle::getQuarterRotation() - Angle::getEighthRotation()));
+	Point endRight(m_end + Point(sqrt(2)*0.5*m_width, angleBetweenPoints - Angle::getEighthRotation()));
+	Line rightOutline(startRight, endRight);
+
+	return rightOutline.getPerpendicularPoint(point);
 }
