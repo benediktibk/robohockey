@@ -25,5 +25,3 @@ void CalibrationFinishedTest::nextState_always_NULL()
 	CPPUNIT_ASSERT(state == 0);
 
 }
-
-
