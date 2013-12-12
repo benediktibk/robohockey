@@ -24,7 +24,7 @@ vector<Point> Line::getIntersectPoints(const Circle &circle) const
 	if(compare.isFuzzyEqual(end.getX(), start.getX()))
 	{
 		gradient = 0;
-		angleForVerticalLines = Angle::getHalfRotation() + Angle::getQuarterRotation();
+		angleForVerticalLines = Angle::getThreeQuarterRotation();
 		start.rotate(angleForVerticalLines);
 		end.rotate(angleForVerticalLines);
 	}
@@ -81,6 +81,20 @@ vector<Point> Line::getIntersectPoints(const Circle &circle) const
 		}
 	}
 	return intersectPoints;
+}
+
+Point Line::getPerpendicularPoint(Point point) const
+{
+	Angle angleBetweenPoints(m_start, m_end);
+
+	point = point - m_start;
+	point.rotate(Angle::getFullRotation() - angleBetweenPoints);
+
+	Point perpendicularPoint(point.getX(),0);
+	perpendicularPoint.rotate(angleBetweenPoints);
+	perpendicularPoint = perpendicularPoint + m_start;
+
+	return perpendicularPoint;
 }
 
 bool Line::isTargetPointRightOfLine(const Point &target)

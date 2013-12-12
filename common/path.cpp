@@ -74,7 +74,37 @@ PathIntersectPoints Path::getIntersectPoints(const Circle &circle) const
 	return PathIntersectPoints(vector<Point>(), PathIntersectPoints::IntersectTypeNoIntersect);
 }
 
-Angle Path::getAgnleBetweenStartAndEnd() const
+Angle Path::getAngleBetweenStartAndEnd() const
 {
 	return Angle(m_start, m_end);
+}
+
+Point Path::getLeftPerpendicularPoint(const Point &point) const
+{
+	Angle angleBetweenPoints(m_start, m_end);
+	Point startLeft(m_start + Point(sqrt(2)*0.5*m_width, Angle::getQuarterRotation() + Angle::getEighthRotation() + angleBetweenPoints));
+	Point endLeft(m_end + Point(sqrt(2)*0.5*m_width, Angle::getEighthRotation() + angleBetweenPoints));
+	Line leftOutline(startLeft, endLeft);
+
+	return leftOutline.getPerpendicularPoint(point);
+}
+
+Point Path::getRightPerpendicularPoint(const Point &point) const
+{
+	Angle angleBetweenPoints(m_start, m_end);
+	Point startRight(m_start + Point(sqrt(2)*0.5*m_width, angleBetweenPoints - Angle::getQuarterRotation() - Angle::getEighthRotation()));
+	Point endRight(m_end + Point(sqrt(2)*0.5*m_width, angleBetweenPoints - Angle::getEighthRotation()));
+	Line rightOutline(startRight, endRight);
+
+	return rightOutline.getPerpendicularPoint(point);
+}
+
+double Path::getDistanceToLeftPerpendicularPoint(const Point &point) const
+{
+	return point.distanceTo(this->getLeftPerpendicularPoint(point));
+}
+
+double Path::getDistanceToRightPerpendicularPoint(const Point &point) const
+{
+	return point.distanceTo(this->getRightPerpendicularPoint(point));
 }

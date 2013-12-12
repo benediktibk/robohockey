@@ -22,7 +22,8 @@ FieldImpl::FieldImpl(DataAnalysis::Odometry &odometry, const DataAnalysis::Lidar
 	m_robot(&autonomousRobot),
 	m_position(new Common::RobotPosition(m_odometry->getCurrentPosition())),
 	m_fieldState(FieldStateUnknownPosition),
-	m_numberOfPucksChanged(false)
+	m_numberOfPucksChanged(false),
+	m_teamColor(FieldObjectColorUnknown)
 { }
 
 FieldImpl::~FieldImpl()
@@ -109,14 +110,106 @@ bool FieldImpl::isPointInsideField(const Point &point) const
 	return isPointFuzzyInsideField(point, 0.0);
 }
 
+bool FieldImpl::isCalibrated() const
+{
+	return m_fieldState == FieldStateCalibrated;
+}
+
+FieldObjectColor FieldImpl::getOwnTeamColor() const
+{
+	return m_teamColor;
+}
+
+void FieldImpl::detectTeamColorWithGoalInFront()
+{
+	assert(m_teamColor == FieldObjectColorUnknown);
+	Compare compare(0.10);
+
+	double blueGoal = m_camera->getProbabilityForBlueGoal();
+	double yellowGoal = m_camera->getProbabilityForYellowGoal();
+
+	if(compare.isStrictFuzzyGreater(blueGoal, yellowGoal))
+		m_teamColor = FieldObjectColorBlue;
+	else if (compare.isStrictFuzzyGreater(yellowGoal, blueGoal))
+		m_teamColor = FieldObjectColorYellow;
+}
+
 bool FieldImpl::numberOfPucksChanged() const
 {
 	return m_numberOfPucksChanged;
 }
 
-RobotPosition FieldImpl::getTargetPositionForGoalDetection() const
+std::list<RobotPosition> FieldImpl::getTargetsForGoalDetection() const
 {
-	return RobotPosition(Point(5.0/6.0 + 0.34,1.5), Angle::getHalfRotation());
+	list<RobotPosition> targetList;
+	targetList.push_back(RobotPosition(Point(5.0/6.0 + 0.34,1.5), Angle::getHalfRotation()));
+
+	return targetList;
+}
+
+std::list<RobotPosition> FieldImpl::getTargetsForScoringGoals() const
+{
+	list<RobotPosition> targetList;
+
+	targetList.push_front(RobotPosition( Point(5 - 5.0/8.0 - 0.14, 0.9), Angle() ));
+	targetList.push_back(RobotPosition( Point(5 - 5.0/8.0 + 0.14, 0.9), Angle::getHalfRotation() ));
+	targetList.push_back(RobotPosition( Point(5 - 5.0/8.0, 0.9 + 0.14), Angle::getQuarterRotation() *3 ));
+	targetList.push_back(RobotPosition( Point(5 - 5.0/8.0, 0.9 - 0.14), Angle::getQuarterRotation() ));
+
+	targetList.push_front(RobotPosition( Point(5 - 5.0/8.0 - 0.14, 1.9), Angle() ));
+	targetList.push_back(RobotPosition( Point(5 - 5.0/8.0 + 0.14, 1.9), Angle::getHalfRotation() ));
+	targetList.push_back(RobotPosition( Point(5 - 5.0/8.0, 1.9 + 0.14), Angle::getQuarterRotation() *3 ));
+	targetList.push_back(RobotPosition( Point(5 - 5.0/8.0, 1.9 - 0.14), Angle::getQuarterRotation() ));
+
+	targetList.push_front(RobotPosition( Point(5 - 5.0/8.0 - 0.14, 1.5), Angle() ));
+	targetList.push_back(RobotPosition( Point(5 - 5.0/8.0 + 0.14, 1.5), Angle::getHalfRotation() ));
+	targetList.push_back(RobotPosition( Point(5 - 5.0/8.0, 1.5 + 0.14), Angle::getQuarterRotation() *3 ));
+	targetList.push_back(RobotPosition( Point(5 - 5.0/8.0, 1.5 - 0.14), Angle::getQuarterRotation() ));
+
+	return targetList;
+}
+
+std::list<RobotPosition> FieldImpl::getTargetsForFinalPosition() const
+{
+	list<RobotPosition> targetList;
+	//! @todo maybe we should make these points dependend on the fieldobjects.
+	targetList.push_back(RobotPosition( Point(4, 0.5), Angle::getQuarterRotation() + Angle::getEighthRotation() ));
+	targetList.push_back(RobotPosition( Point(4, 2.5), Angle::getHalfRotation() + Angle::getEighthRotation() ));
+
+	return targetList;
+}
+
+std::list<RobotPosition> FieldImpl::getTargetsForSearchingPucks() const
+{
+	vector<RobotPosition> targetVector;
+	list<RobotPosition> targetList(10);
+
+	targetVector.push_back(RobotPosition( Point(1.4, 0.6), Angle()));
+	targetVector.push_back(RobotPosition( Point(1.4, 2.4), Angle()));
+	targetVector.push_back(RobotPosition( Point(2.0, 1.0), Angle()));
+	targetVector.push_back(RobotPosition( Point(2.0, 2.0), Angle()));
+	targetVector.push_back(RobotPosition( Point(2.5, 2.2), Angle::getQuarterRotation() * 3));
+	targetVector.push_back(RobotPosition( Point(2.5, 2.2), Angle()));
+	targetVector.push_back(RobotPosition( Point(2.5, 0.8), Angle()));
+	targetVector.push_back(RobotPosition( Point(2.5, 0.8), Angle::getQuarterRotation()));
+	targetVector.push_back(RobotPosition( Point(3.0, 1.5), Angle::getEighthRotation() + Angle::getQuarterRotation()));
+	targetVector.push_back(RobotPosition( Point(3.0, 1.5), Angle::getHalfRotation() + Angle::getQuarterRotation()));
+
+	random_shuffle(targetVector.begin(), targetVector.end());
+
+	copy(targetVector.begin(), targetVector.end(), targetList.begin());
+
+	return targetList;
+}
+
+std::list<RobotPosition> FieldImpl::getTargetsForHidingEnemyPucks() const
+{
+	return list<RobotPosition>();
+}
+
+std::list<RobotPosition> FieldImpl::getTargetsForCollectingOnePuck() const
+{
+	return list<RobotPosition>();
 }
 
 void FieldImpl::updateWithLidarData()

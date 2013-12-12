@@ -16,6 +16,7 @@ namespace Common
 		Line(const Point &start, const Point &end);
 
 		std::vector<Point> getIntersectPoints(const Circle &circle) const;
+		Point getPerpendicularPoint(Point point) const;
 		bool isTargetPointRightOfLine(const Point &target);
 
 	private:

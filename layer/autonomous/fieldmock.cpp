@@ -7,7 +7,8 @@ using namespace RoboHockey::Layer::Autonomous;
 
 FieldMock::FieldMock() :
 	m_negativeCoordinatesOutside(false),
-	m_calibrated(false)
+	m_calibrated(false),
+	m_teamColor(FieldObjectColorUnknown)
 { }
 
 void FieldMock::update()
@@ -71,6 +72,24 @@ void FieldMock::setCalibrationReturn(bool value)
 	m_calibrated = value;
 }
 
+void FieldMock::setOwnTeamColor(FieldObjectColor teamColor)
+{
+	m_teamColor = teamColor;
+}
+
+bool FieldMock::isCalibrated() const
+{
+	return m_calibrated;
+}
+
+FieldObjectColor FieldMock::getOwnTeamColor() const
+{
+	return m_teamColor;
+}
+
+void FieldMock::detectTeamColorWithGoalInFront()
+{ }
+
 unsigned int FieldMock::enemyHiddenPucks()
 {
 	return m_hiddenPucks;
@@ -81,9 +100,34 @@ bool FieldMock::numberOfPucksChanged() const
 	return false;
 }
 
-RobotPosition FieldMock::getTargetPositionForGoalDetection() const
+std::list<RobotPosition> FieldMock::getTargetsForGoalDetection() const
 {
-	return RobotPosition();
+	return list<RobotPosition>();
+}
+
+std::list<RobotPosition> FieldMock::getTargetsForScoringGoals() const
+{
+	return list<RobotPosition>();
+}
+
+std::list<RobotPosition> FieldMock::getTargetsForFinalPosition() const
+{
+	return list<RobotPosition>();
+}
+
+std::list<RobotPosition> FieldMock::getTargetsForSearchingPucks() const
+{
+	return list<RobotPosition>();
+}
+
+std::list<RobotPosition> FieldMock::getTargetsForHidingEnemyPucks() const
+{
+	return list<RobotPosition>();
+}
+
+std::list<RobotPosition> FieldMock::getTargetsForCollectingOnePuck() const
+{
+	return list<RobotPosition>();
 }
 
 unsigned int FieldMock::achievedGoals()

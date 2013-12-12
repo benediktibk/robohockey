@@ -125,7 +125,7 @@ void PathTest::getAngleBetweenStartAndEnd_StartIs0And0EndIs1And1_AngleIsPiQuarte
 	Compare compare(0.0001);
 	Path path(Point(0,0), Point(1,1), 1);
 
-	CPPUNIT_ASSERT(compare.isFuzzyEqual(Angle::getEighthRotation(), path.getAgnleBetweenStartAndEnd()));
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(Angle::getEighthRotation(), path.getAngleBetweenStartAndEnd()));
 }
 
 void PathTest::getAngleBetweenStartAndEnd_StartIs1And1EndIs0And0_AngleIsMinusPiQuarter()
@@ -134,5 +134,37 @@ void PathTest::getAngleBetweenStartAndEnd_StartIs1And1EndIs0And0_AngleIsMinusPiQ
 	Path path(Point(1,1), Point(0,0), 1);
 	Angle angle = Angle::getHalfRotation() + Angle::getEighthRotation();
 
-	CPPUNIT_ASSERT(compare.isFuzzyEqual(angle.getValueBetweenMinusPiAndPi(), path.getAgnleBetweenStartAndEnd()));
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(angle.getValueBetweenMinusPiAndPi(), path.getAngleBetweenStartAndEnd()));
+}
+
+void PathTest::getLeftPerpendicularPoint_pointIs1And2_resultIsCorrect()
+{
+	Path path(Point(1,1), Point(4,4), 2.8284);
+	Point target(1,2);
+
+	CPPUNIT_ASSERT_EQUAL(Point(0.5,2.5), path.getLeftPerpendicularPoint(target));
+}
+
+void PathTest::getRightPerpendicularPoint_pointIs1And2_resultIsCorrect()
+{
+	Path path(Point(1,1), Point(4,4), 2.8284);
+	Point target(1,2);
+
+	CPPUNIT_ASSERT_EQUAL(Point(2.5,0.5), path.getRightPerpendicularPoint(target));
+}
+
+void PathTest::getDistanceToLeftPerpendicularPoint_pointIs1And2_resultIsCorrect()
+{
+	Path path(Point(1,1), Point(4,4), 2.8284);
+	Point target(1,2);
+
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(0.707, path.getDistanceToLeftPerpendicularPoint(target), 0.001);
+}
+
+void PathTest::getDistanceToRightPerpendicularPoint_pointIs1And2_resultIsCorrect()
+{
+	Path path(Point(1,1), Point(4,4), 2.8284);
+	Point target(1,2);
+
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(2.121, path.getDistanceToRightPerpendicularPoint(target), 0.001);
 }

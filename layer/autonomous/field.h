@@ -2,6 +2,7 @@
 #define ROBOHOCKEY_LAYER_AUTONOMOUS_FIELD_H
 
 #include <vector>
+#include <list>
 #include "common/fieldobjectcolor.h"
 #include "layer/autonomous/fieldobject.h"
 
@@ -32,8 +33,16 @@ namespace Autonomous
 		virtual bool isPointInsideField(const Common::Point &point) const = 0;
 		virtual unsigned int enemyHiddenPucks() = 0;
 		virtual bool numberOfPucksChanged() const = 0;
+		virtual bool isCalibrated() const = 0;
+		virtual Common::FieldObjectColor getOwnTeamColor() const = 0;
+		virtual void detectTeamColorWithGoalInFront() = 0;
 
-		virtual Common::RobotPosition getTargetPositionForGoalDetection() const = 0;
+		virtual std::list<Common::RobotPosition> getTargetsForGoalDetection() const = 0;
+		virtual std::list<Common::RobotPosition> getTargetsForScoringGoals() const = 0;
+		virtual std::list<Common::RobotPosition> getTargetsForFinalPosition() const = 0;
+		virtual std::list<Common::RobotPosition> getTargetsForSearchingPucks() const = 0;
+		virtual std::list<Common::RobotPosition> getTargetsForHidingEnemyPucks() const = 0;
+		virtual std::list<Common::RobotPosition> getTargetsForCollectingOnePuck() const = 0;
 	};
 }
 }

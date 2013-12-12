@@ -24,12 +24,12 @@ double CameraMock::getProbabilityForBlueGoal()
 	return m_probabilityForBlue;
 }
 
-void CameraMock::setProbabilityForYellowGoal(bool value)
+void CameraMock::setProbabilityForYellowGoal(double value)
 {
 	m_probabilityForYellow = value;
 }
 
-void CameraMock::setProbabilityForBlueGoal(bool value)
+void CameraMock::setProbabilityForBlueGoal(double value)
 {
 	m_probabilityForBlue = value;
 }

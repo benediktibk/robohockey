@@ -19,8 +19,8 @@ namespace DataAnalysis
 		virtual double getProbabilityForYellowGoal();
 		virtual double getProbabilityForBlueGoal();
 
-		void setProbabilityForYellowGoal(bool value);
-		void setProbabilityForBlueGoal(bool value);
+		void setProbabilityForYellowGoal(double value);
+		void setProbabilityForBlueGoal(double value);
 
 		void setAllObjects(const CameraObjects &objects);
 

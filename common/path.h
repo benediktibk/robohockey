@@ -21,7 +21,11 @@ namespace Common
 		bool intersectsWith(const std::vector<Circle> &circles) const;
 		bool isCircleCenterOnPath(const Circle &circle) const;
 		PathIntersectPoints getIntersectPoints(const Circle &circle) const;
-		Angle getAgnleBetweenStartAndEnd() const;
+		Angle getAngleBetweenStartAndEnd() const;
+		Point getLeftPerpendicularPoint(const Point &point) const;
+		Point getRightPerpendicularPoint(const Point &point) const;
+		double getDistanceToLeftPerpendicularPoint(const Point &point) const;
+		double getDistanceToRightPerpendicularPoint(const Point &point) const;
 
 	private:
 		Point m_start;
