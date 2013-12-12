@@ -25,6 +25,19 @@ void CheckGoalColorTest::nextState_afterColorCheck_driveToWaitingPosition()
 	state = checkGoalColorState.nextState();
 	DriveTo *stateCasted = dynamic_cast<DriveTo*>(state);
 	CPPUNIT_ASSERT(stateCasted != 0);
+}
+
+void CheckGoalColorTest::nextState_noColorCheck_NULL()
+{
+	RobotMock robot;
+	FieldMock field;
+	RefereeMock referee;
+	CheckGoalColor checkGoalColorState(robot, field, referee);
+
+	State *state;
+	state = checkGoalColorState.nextState();
+	DriveTo *stateCasted = dynamic_cast<DriveTo*>(state);
+	CPPUNIT_ASSERT(stateCasted == 0);
 
 }
 

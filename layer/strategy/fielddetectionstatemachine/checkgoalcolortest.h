@@ -17,10 +17,12 @@ class CheckGoalColorTest :
 	{
 		CPPUNIT_TEST_SUITE(CheckGoalColorTest);
 		CPPUNIT_TEST(nextState_afterColorCheck_driveToWaitingPosition);
+		CPPUNIT_TEST(nextState_noColorCheck_NULL);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
 		void nextState_afterColorCheck_driveToWaitingPosition();
+		void nextState_noColorCheck_NULL();
 	};
 }
 }
