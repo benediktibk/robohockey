@@ -24,6 +24,10 @@ namespace FieldDetectionStateMachine
 		virtual State* nextState();
 		virtual void update();
 
+	private:
+		RoboHockey::Common::Angle &m_angle;
+		bool m_targetSet;
+
 	};
 }
 }
