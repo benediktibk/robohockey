@@ -48,6 +48,7 @@ namespace Autonomous
 		virtual bool isRotating() const;
 		void setIsMoving(bool value);
 		void setIsRotating(bool value);
+		void setCantReachedTarget(bool value);
 
 	private:
 		Common::Point m_lastTarget;
@@ -58,6 +59,7 @@ namespace Autonomous
 		unsigned int m_callsToStop;
 		bool m_isMoving;
 		bool m_isRotating;
+		bool m_cantReachTarget;
 	};
 }
 }
