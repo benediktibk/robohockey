@@ -16,8 +16,17 @@ class DriveToTest :
 		public CPPUNIT_NS::TestFixture
 	{
 		CPPUNIT_TEST_SUITE(DriveToTest);
+		CPPUNIT_TEST(nextState_didntReachedTarget_NULL);
+		CPPUNIT_TEST(nextState_reachedTarget_stateAfterReachedTarget);
+		CPPUNIT_TEST(nextState_cantReachTarget_stateAfterCantReachTarget);
+		CPPUNIT_TEST(nextState_stuckAtObstacle_stateAfterCantReachTarget);
 		CPPUNIT_TEST_SUITE_END();
+
 	private:
+		void nextState_didntReachedTarget_NULL();
+		void nextState_reachedTarget_stateAfterReachedTarget();
+		void nextState_cantReachTarget_stateAfterCantReachTarget();
+		void nextState_stuckAtObstacle_stateAfterCantReachTarget();
 		
 	};
 }
