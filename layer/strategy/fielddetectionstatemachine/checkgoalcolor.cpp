@@ -34,6 +34,6 @@ State* CheckGoalColor::nextState()
 
 void CheckGoalColor::update()
 {
-	//! @todo implement Goal Color Detection!
-	m_successful = true;
+	m_field.detectTeamColorWithGoalInFront();
+	m_successful = (m_field.getOwnTeamColor() != FieldObjectColorUnknown);
 }
