@@ -26,9 +26,14 @@ State* DetectField::nextState()
 		return new TurnAngle(m_robot, m_field, m_referee, Angle::getEighthRotation());
 	else
 		//! @todo use different state if DriveTo can't reach target!
-		return new DriveTo(m_robot, m_field, m_referee, m_field.getTargetPositionForGoalDetection(),
+	{
+		std::list<RobotPosition> targetList;
+		targetList.push_back(m_field.getTargetPositionForGoalDetection());
+
+		return new DriveTo(m_robot, m_field, m_referee, targetList,
 						   new CheckGoalColor(m_robot, m_field, m_referee),
 						   new CheckGoalColor(m_robot, m_field, m_referee));
+	}
 }
 
 void DetectField::update()

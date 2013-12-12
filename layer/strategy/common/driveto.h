@@ -3,6 +3,7 @@
 
 #include "layer/strategy/common/state.h"
 #include "common/robotposition.h"
+#include <list>
 
 namespace RoboHockey
 {
@@ -21,14 +22,14 @@ namespace Common
 	{
 	public:
 		DriveTo(Autonomous::Robot &robot, Autonomous::Field &field, Common::Referee &referee,
-				const RoboHockey::Common::RobotPosition target,
+				std::list<RoboHockey::Common::RobotPosition> targetList,
 				State *stateAfterTargetReached, State *stateAfterTargetUnreachable);
 
 		virtual State* nextState();
 		virtual void update();
 
 	private:
-		const RoboHockey::Common::RobotPosition m_target;
+		std::list<RoboHockey::Common::RobotPosition> m_target;
 		State *m_stateAfterTargetReached;
 		State *m_stateAfterTargetUnreachable;
 		bool m_targetSet;

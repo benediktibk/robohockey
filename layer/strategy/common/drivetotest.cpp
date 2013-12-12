@@ -19,7 +19,9 @@ void DriveToTest::nextState_didntReachedTarget_NULL()
 	RefereeMock referee;
 	State *stateAfterTargetReached = new StateMock(robot, field, referee);
 	State *stateAfterTargetUnreachable = new StateMock(robot, field, referee);
-	DriveTo driveToState(robot, field, referee, RobotPosition(), stateAfterTargetReached, stateAfterTargetUnreachable);
+	std::list<RobotPosition> targetList;
+	targetList.push_back(RobotPosition());
+	DriveTo driveToState(robot, field, referee, targetList, stateAfterTargetReached, stateAfterTargetUnreachable);
 
 	driveToState.update();
 	robot.setReachedTarget(false);
@@ -37,7 +39,9 @@ void DriveToTest::nextState_reachedTarget_stateAfterReachedTarget()
 	RefereeMock referee;
 	State *stateAfterTargetReached = new StateMock(robot, field, referee);
 	State *stateAfterTargetUnreachable = new StateMock(robot, field, referee);
-	DriveTo driveToState(robot, field, referee, RobotPosition(), stateAfterTargetReached, stateAfterTargetUnreachable);
+	std::list<RobotPosition> targetList;
+	targetList.push_back(RobotPosition());
+	DriveTo driveToState(robot, field, referee, targetList, stateAfterTargetReached, stateAfterTargetUnreachable);
 
 	driveToState.update();
 	robot.setReachedTarget(true);
@@ -55,7 +59,9 @@ void DriveToTest::nextState_cantReachTarget_stateAfterCantReachTarget()
 	RefereeMock referee;
 	State *stateAfterTargetReached = new StateMock(robot, field, referee);
 	State *stateAfterTargetUnreachable = new StateMock(robot, field, referee);
-	DriveTo driveToState(robot, field, referee, RobotPosition(), stateAfterTargetReached, stateAfterTargetUnreachable);
+	std::list<RobotPosition> targetList;
+	targetList.push_back(RobotPosition());
+	DriveTo driveToState(robot, field, referee, targetList, stateAfterTargetReached, stateAfterTargetUnreachable);
 
 	driveToState.update();
 	robot.setReachedTarget(true);
@@ -74,7 +80,9 @@ void DriveToTest::nextState_stuckAtObstacle_stateAfterCantReachTarget()
 	RefereeMock referee;
 	State *stateAfterTargetReached = new StateMock(robot, field, referee);
 	State *stateAfterTargetUnreachable = new StateMock(robot, field, referee);
-	DriveTo driveToState(robot, field, referee, RobotPosition(), stateAfterTargetReached, stateAfterTargetUnreachable);
+	std::list<RobotPosition> targetList;
+	targetList.push_back(RobotPosition());
+	DriveTo driveToState(robot, field, referee, targetList, stateAfterTargetReached, stateAfterTargetUnreachable);
 
 	driveToState.update();
 	robot.setReachedTarget(true);

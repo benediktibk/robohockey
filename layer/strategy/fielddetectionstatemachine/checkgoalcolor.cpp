@@ -20,10 +20,15 @@ State* CheckGoalColor::nextState()
 {
 	//! @todo Replace Target Point with target point from field.
 	if (m_successful)
+	{
+		std::list<RobotPosition> targetList;
+		targetList.push_back(RobotPosition(Point(5.0/6.0, 1.5), Angle()));
+
 		return new DriveTo(m_robot, m_field, m_referee,
-						   RobotPosition(Point(5.0/6.0, 1.5), Angle()),
+						   targetList,
 						   new CalibrationFinished(m_robot, m_field, m_referee),
 						   new CalibrationFinished(m_robot, m_field, m_referee));
+	}
 	return 0;
 }
 

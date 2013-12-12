@@ -10,10 +10,10 @@ using namespace RoboHockey::Layer::Strategy::Common;
 using namespace RoboHockey::Layer::Autonomous;
 
 DriveTo::DriveTo(Autonomous::Robot &robot, Autonomous::Field &field, Common::Referee &referee,
-				 const RobotPosition target,
+				 std::list<RobotPosition> targetList,
 				 State *stateAfterTargetReached, State *stateAfterTargetUnreachable) :
 	State(robot,field, referee),
-	m_target(target),
+	m_target(targetList),
 	m_stateAfterTargetReached(stateAfterTargetReached),
 	m_stateAfterTargetUnreachable(stateAfterTargetUnreachable),
 	m_targetSet(false)
@@ -50,5 +50,5 @@ State* DriveTo::nextState()
 void DriveTo::update()
 {
 	m_targetSet = true;
-	m_robot.goTo(m_target.getPosition());
+	m_robot.goTo(m_target.front().getPosition());
 }
