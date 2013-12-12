@@ -156,7 +156,7 @@ vector<Route> RouterImpl::calculateStartParts(
 	bool endCovered = endCircle.overlapsWith(obstacles);
 	if (endCovered)
 		return calculateStartPartsWithCoveredEnd(
-				start, end, field, obstacles, searchDepth);
+				start, end, field, obstacles, searchDepth, canGoLeft, canGoRight);
 	else
 		return calculateStartPartsWithFreeEnd(
 				start, end, field, obstacles, searchDepth, canGoLeft, canGoRight);
@@ -189,7 +189,7 @@ vector<Route> RouterImpl::calculateStartPartsWithFreeEnd(
 
 vector<Route> RouterImpl::calculateStartPartsWithCoveredEnd(
 		const Point &start, const Point &end, const Field &field, const vector<Circle> &obstacles,
-		unsigned int searchDepth) const
+		unsigned int searchDepth, bool canGoLeft, bool canGoRight) const
 {
 	Path path(start, end, m_robotWidth);
 	vector<Circle> obstaclesTillEnd = findRealObstacles(obstacles, path);
@@ -212,7 +212,7 @@ vector<Route> RouterImpl::calculateStartPartsWithCoveredEnd(
 	Point directionModified = direction/directionLength*desiredLength;
 	Point extendedEnd = start + directionModified;
 	return calculateRoutesToPointsBesideObstacle(
-				obstacle, start, extendedEnd, field, obstacles, true, true,
+				obstacle, start, extendedEnd, field, obstacles, canGoLeft, canGoRight,
 				searchDepth);
 }
 
