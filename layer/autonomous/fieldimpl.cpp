@@ -130,6 +130,31 @@ RobotPosition FieldImpl::getTargetPositionForGoalDetection() const
 	return RobotPosition(Point(5.0/6.0 + 0.34,1.5), Angle::getHalfRotation());
 }
 
+std::list<RobotPosition> FieldImpl::getTargetsForScoringGoals() const
+{
+	return list<RobotPosition>();
+}
+
+std::list<RobotPosition> FieldImpl::getTargetsForFinalPosition() const
+{
+	return list<RobotPosition>();
+}
+
+std::list<RobotPosition> FieldImpl::getTargetsForSearchingPucks() const
+{
+	return list<RobotPosition>();
+}
+
+std::list<RobotPosition> FieldImpl::getTargetsForHidingEnemyPucks() const
+{
+	return list<RobotPosition>();
+}
+
+std::list<RobotPosition> FieldImpl::getTargetsForCollectingOnePuck() const
+{
+	return list<RobotPosition>();
+}
+
 void FieldImpl::updateWithLidarData()
 {
 	const DataAnalysis::LidarObjects &lidarObjects =  m_lidar->getAllObjects(*m_position);

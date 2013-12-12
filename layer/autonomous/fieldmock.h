@@ -31,6 +31,11 @@ namespace Autonomous
 		virtual bool isCalibrated() const;
 		virtual Common::FieldObjectColor getOwnTeamColor() const;
 		virtual Common::RobotPosition getTargetPositionForGoalDetection() const;
+		virtual std::list<Common::RobotPosition> getTargetsForScoringGoals() const;
+		virtual std::list<Common::RobotPosition> getTargetsForFinalPosition() const;
+		virtual std::list<Common::RobotPosition> getTargetsForSearchingPucks() const;
+		virtual std::list<Common::RobotPosition> getTargetsForHidingEnemyPucks() const;
+		virtual std::list<Common::RobotPosition> getTargetsForCollectingOnePuck() const;
 
 		void setFieldObjects(const std::vector<FieldObject> &objects);
 		void setSoftObstacles(const std::vector<Common::Circle> &obstacles);

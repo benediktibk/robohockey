@@ -97,6 +97,31 @@ RobotPosition FieldMock::getTargetPositionForGoalDetection() const
 	return RobotPosition();
 }
 
+std::list<RobotPosition> FieldMock::getTargetsForScoringGoals() const
+{
+	return list<RobotPosition>();
+}
+
+std::list<RobotPosition> FieldMock::getTargetsForFinalPosition() const
+{
+	return list<RobotPosition>();
+}
+
+std::list<RobotPosition> FieldMock::getTargetsForSearchingPucks() const
+{
+	return list<RobotPosition>();
+}
+
+std::list<RobotPosition> FieldMock::getTargetsForHidingEnemyPucks() const
+{
+	return list<RobotPosition>();
+}
+
+std::list<RobotPosition> FieldMock::getTargetsForCollectingOnePuck() const
+{
+	return list<RobotPosition>();
+}
+
 unsigned int FieldMock::achievedGoals()
 {
 	return m_achievedGoals;
