@@ -37,6 +37,6 @@ void QuadraticEquationTest::getSolutions_twoRealSolutions_solutionsAreCorrect()
 	CPPUNIT_ASSERT_EQUAL((size_t)2, result.size());
 	double smallSolution = min(result[0], result[1]);
 	double bigSolution = max(result[0], result[1]);
-	CPPUNIT_ASSERT_DOUBLES_EQUAL(-1.83972473588516838806, smallSolution, 0.0001);
-	CPPUNIT_ASSERT_DOUBLES_EQUAL(0.33972473588516838806, bigSolution, 0.0001);
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(-1, smallSolution, 0.0001);
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(-0.5, bigSolution, 0.0001);
 }
