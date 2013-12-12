@@ -69,9 +69,9 @@ vector<Point> Circle::getIntersectionPoints(const Circle &circle) const
 	double y2 = circle.getCenter().getY();
 	double r1 = m_diameter/2;
 	double r2 = circle.getDiameter()/2;
-	double offsets = ((r1*r1 - r2*r2) - (x1*x1 - x2*x2) - (y1*y1 - y2*y2))/2;
-	double lineGradient = (x2 - x1)/(y1 - y2);
-	double lineOffset = offsets/(y1 - y2);
+	double offsets = (r1*r1 + x2*x2 + y2*y2 - r2*r2 - x1*x1 - y1*y1)/2;
+	double lineGradient = (x1 - x2)/(y2 - y1);
+	double lineOffset = offsets/(y2 - y1);
 	double a = 1 + lineGradient*lineGradient;
 	double b = 2*lineGradient*(lineOffset - y1) - 2*x1;
 	double c = x1*x1 + (lineOffset - y1)*(lineOffset - y1) - r1*r1;
