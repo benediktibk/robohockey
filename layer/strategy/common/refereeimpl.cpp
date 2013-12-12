@@ -55,6 +55,7 @@ void RefereeImpl::reportGoal()
 
 void RefereeImpl::tellEgoPos(const RoboHockey::Common::Point &position)
 {
+	//! @todo transform into coordinate system of angelina (dependend on team color!)
 	m_referee->tellEgoPos(position.getX(),position.getY());
 }
 
