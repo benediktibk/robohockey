@@ -7,6 +7,7 @@
 #include "common/watch.h"
 #include "common/angle.h"
 #include "common/robotposition.h"
+#include "common/line.h"
 #include <assert.h>
 
 using namespace std;
@@ -631,4 +632,31 @@ void RouterTest::getPointsBesideObstacle_bigObstacleOnRightSide_longPointIs2AndM
 	Circle obstacle(Point(2,-0.5), 2);
 
 	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(2,-2.5177), router.getPointsBesideObstacle(currentPath, obstacle).back()));
+}
+
+void RouterTest::getPointsBesideObstacle_bigObstacleCloseOnLeftSide_onePointIsLeftAndOneRight()
+{
+	RouterImpl router(0.5);
+	Point start(3, -1.3606);
+	Point end(5, 0);
+	Circle obstacle(Point(3, 0), 2);
+	Path path(start, end, 0.5);
+
+	vector<Point> points = router.getPointsBesideObstacle(path, obstacle);
+
+	Line line(start, end);
+	unsigned int pointsLeft = 0;
+	unsigned int pointsRight = 0;
+	CPPUNIT_ASSERT(path.intersectsWith(obstacle));
+	CPPUNIT_ASSERT_EQUAL((size_t)2, points.size());
+	if (line.isTargetPointRightOfLine(points[0]))
+		++pointsRight;
+	else
+		++pointsLeft;
+	if (line.isTargetPointRightOfLine(points[1]))
+		++pointsRight;
+	else
+		++pointsLeft;
+	CPPUNIT_ASSERT_EQUAL((unsigned int)1, pointsLeft);
+	CPPUNIT_ASSERT_EQUAL((unsigned int)1, pointsRight);
 }

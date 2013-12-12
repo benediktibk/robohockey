@@ -62,6 +62,7 @@ namespace Autonomous
 		CPPUNIT_TEST(getPointsBesideObstacle_bigObstacleOnRightSide_bothPointsHaveReasonableCoordinates);
 		CPPUNIT_TEST(getPointsBesideObstacle_bigObstacleOnRightSide_shortPointIs2And1p1615);
 		CPPUNIT_TEST(getPointsBesideObstacle_bigObstacleOnRightSide_longPointIs2AndMinus2p5177);
+		CPPUNIT_TEST(getPointsBesideObstacle_bigObstacleCloseOnLeftSide_onePointIsLeftAndOneRight);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
@@ -110,6 +111,7 @@ namespace Autonomous
 		void getPointsBesideObstacle_bigObstacleOnRightSide_bothPointsHaveReasonableCoordinates();
 		void getPointsBesideObstacle_bigObstacleOnRightSide_shortPointIs2And1p1615();
 		void getPointsBesideObstacle_bigObstacleOnRightSide_longPointIs2AndMinus2p5177();
+		void getPointsBesideObstacle_bigObstacleCloseOnLeftSide_onePointIsLeftAndOneRight();
 
 	private:
 		static bool routeIsInsideField(const Route &route, const Field &field);
