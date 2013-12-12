@@ -22,16 +22,17 @@ RouterImpl::RouterImpl(double robotWidth) :
 	m_robotWidth(robotWidth)
 { }
 
-Route RouterImpl::calculateRoute(const RobotPosition &start, const RobotPosition &end, const Field &field) const
+Route RouterImpl::calculateRoute(
+		const RobotPosition &start, const RobotPosition &end, const Field &field) const
 {
 	const vector<Circle> softObstacles = field.getAllSoftObstacles();
 	const vector<Circle> hardObstacles = field.getAllHardObstacles();
 
-	Path startPart(start.getPosition(), start.getPosition(), m_robotWidth);
+	Path startPart(start.getPosition(), start.getPosition(), sqrt(2)*m_robotWidth);
 	if (startPart.intersectsWith(hardObstacles))
 		return Route(m_robotWidth);
 
-	Path endPart(end.getPosition(), end.getPosition(), m_robotWidth);
+	Path endPart(end.getPosition(), end.getPosition(), sqrt(2)*m_robotWidth);
 	if (	endPart.intersectsWith(hardObstacles) ||
 			endPart.intersectsWith(softObstacles))
 		return Route(m_robotWidth);

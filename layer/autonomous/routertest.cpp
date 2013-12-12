@@ -157,9 +157,9 @@ void RouterTest::calculateRoute_oneBigObstacleCloseToEnd_validRoute()
 	RouterImpl router(0.5);
 	vector<Circle> obstacles;
 	obstacles.push_back(Circle(Point(3.7, 0), 2));
-	field.setSoftObstacles(obstacles);
+	field.setHardObstacles(obstacles);
 
-	Route route = router.calculateRoute(Point(0, 0), Point(5, 0), field);
+	Route route = router.calculateRoute(Point(0, 0), Point(5.5, 0), field);
 
 	CPPUNIT_ASSERT(route.isValid());
 }
@@ -172,7 +172,7 @@ void RouterTest::calculateRoute_oneBigObstacleCloseToEnd_routeIsNotTooLong()
 	obstacles.push_back(Circle(Point(3.7, 0), 2));
 	field.setSoftObstacles(obstacles);
 
-	Route route = router.calculateRoute(Point(0, 0), Point(5, 0), field);
+	Route route = router.calculateRoute(Point(0, 0), Point(5.5, 0), field);
 
 	double routeLength = route.getLength();
 	CPPUNIT_ASSERT(routeLength < 6.5);
@@ -186,7 +186,7 @@ void RouterTest::calculateRoute_oneBigObstacleCloseToEnd_routeIsNotIntersectingW
 	obstacles.push_back(Circle(Point(3.7, 0), 2));
 	field.setSoftObstacles(obstacles);
 
-	Route route = router.calculateRoute(Point(0, 0), Point(5, 0), field);
+	Route route = router.calculateRoute(Point(0, 0), Point(5.5, 0), field);
 
 	CPPUNIT_ASSERT(!route.intersectsWith(obstacles));
 }

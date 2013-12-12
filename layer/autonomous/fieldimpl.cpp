@@ -211,7 +211,7 @@ void FieldImpl::updateObstacles()
 		if (fieldObject.getColor() == FieldObjectColorGreen || fieldObjectCircle.getDiameter() > 0.2)
 			m_hardObstacles.push_back(fieldObjectCircle);
 		else
-			m_softObstacles.push_back(fieldObjectCircle);
+			m_softObstacles.push_back(i->getCircle());
 	}
 }
 
