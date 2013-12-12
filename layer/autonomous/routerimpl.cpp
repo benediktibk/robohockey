@@ -24,7 +24,7 @@ RouterImpl::RouterImpl(double robotWidth) :
 
 Route RouterImpl::calculateRoute(const RobotPosition &start, const RobotPosition &end, const Field &field) const
 {
-	const vector<Circle> obstacles = field.getAllObstacles();
+	const vector<Circle> obstacles = field.getAllSoftObstacles();
 
 	Path startPart(start.getPosition(), start.getPosition(), m_robotWidth);
 	if (startPart.intersectsWith(obstacles))

@@ -29,6 +29,7 @@ namespace DataAnalysis
 		std::vector<LidarObject> getObjectsWithDistanceBelow(double distance) const;
 		std::list<LidarObject> getObjectsInRegionOfInterest(const Common::Rectangle &rectangle) const;
 		size_t getObjectCount() const;
+		void clear();
 
 		void operator=(const LidarObjects &objects);
 

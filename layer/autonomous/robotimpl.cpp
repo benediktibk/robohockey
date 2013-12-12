@@ -419,7 +419,7 @@ bool RobotImpl::updateRoute(const Field &field)
 {
 	const RobotPosition robotPosition = getCurrentPosition();
 	const Point &ownPosition = robotPosition.getPosition();
-	vector<Circle> obstacles = field.getAllObstacles();
+	vector<Circle> obstacles = field.getAllSoftObstacles();
 
 	if (isRouteFeasible(obstacles))
 		return false;

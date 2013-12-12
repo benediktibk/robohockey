@@ -51,7 +51,7 @@ void RouterTest::calculateRoute_obstacleAtStartOfRoute_invalidRoute()
 	RouterImpl router(0.5);
 	vector<Circle> obstacles;
 	obstacles.push_back(Circle(Point(1, 1), 0.1));
-	field.setObstacles(obstacles);
+	field.setSoftObstacles(obstacles);
 
 	Route route = router.calculateRoute(Point(1, 1), Point(1, 10), field);
 
@@ -64,7 +64,7 @@ void RouterTest::calculateRoute_obstacleAtEndOfRoute_invalidRoute()
 	RouterImpl router(0.5);
 	vector<Circle> obstacles;
 	obstacles.push_back(Circle(Point(1, 10), 0.1));
-	field.setObstacles(obstacles);
+	field.setSoftObstacles(obstacles);
 
 	Route route = router.calculateRoute(Point(1, 1), Point(1, 10), field);
 
@@ -77,7 +77,7 @@ void RouterTest::calculateRoute_oneObstacleBetween_validRoute()
 	RouterImpl router(0.5);
 	vector<Circle> obstacles;
 	obstacles.push_back(Circle(Point(1, 5), 0.1));
-	field.setObstacles(obstacles);
+	field.setSoftObstacles(obstacles);
 
 	Route route = router.calculateRoute(Point(1, 1), Point(1, 10), field);
 
@@ -90,7 +90,7 @@ void RouterTest::calculateRoute_oneObstacleBetween_routeIsNotTooLong()
 	RouterImpl router(0.5);
 	vector<Circle> obstacles;
 	obstacles.push_back(Circle(Point(1, 5), 0.1));
-	field.setObstacles(obstacles);
+	field.setSoftObstacles(obstacles);
 
 	Route route = router.calculateRoute(Point(1, 1), Point(1, 10), field);
 
@@ -104,7 +104,7 @@ void RouterTest::calculateRoute_oneObstacleBetween_routeIsNotIntersectingWithObs
 	RouterImpl router(0.5);
 	vector<Circle> obstacles;
 	obstacles.push_back(Circle(Point(1, 5), 0.1));
-	field.setObstacles(obstacles);
+	field.setSoftObstacles(obstacles);
 
 	Route route = router.calculateRoute(Point(1, 1), Point(1, 10), field);
 
@@ -117,7 +117,7 @@ void RouterTest::calculateRoute_oneBigObstacleCloseToStart_validRoute()
 	RouterImpl router(0.5);
 	vector<Circle> obstacles;
 	obstacles.push_back(Circle(Point(1.3, 0), 2));
-	field.setObstacles(obstacles);
+	field.setSoftObstacles(obstacles);
 
 	Route route = router.calculateRoute(Point(0, 0), Point(5, 0), field);
 
@@ -130,7 +130,7 @@ void RouterTest::calculateRoute_oneBigObstacleCloseToStart_routeIsNotTooLong()
 	RouterImpl router(0.5);
 	vector<Circle> obstacles;
 	obstacles.push_back(Circle(Point(1.3, 0), 2));
-	field.setObstacles(obstacles);
+	field.setSoftObstacles(obstacles);
 
 	Route route = router.calculateRoute(Point(0, 0), Point(5, 0), field);
 
@@ -144,7 +144,7 @@ void RouterTest::calculateRoute_oneBigObstacleCloseToStart_routeIsNotIntersectin
 	RouterImpl router(0.5);
 	vector<Circle> obstacles;
 	obstacles.push_back(Circle(Point(1.3, 0), 2));
-	field.setObstacles(obstacles);
+	field.setSoftObstacles(obstacles);
 
 	Route route = router.calculateRoute(Point(0, 0), Point(5, 0), field);
 
@@ -157,7 +157,7 @@ void RouterTest::calculateRoute_oneBigObstacleCloseToEnd_validRoute()
 	RouterImpl router(0.5);
 	vector<Circle> obstacles;
 	obstacles.push_back(Circle(Point(3.7, 0), 2));
-	field.setObstacles(obstacles);
+	field.setSoftObstacles(obstacles);
 
 	Route route = router.calculateRoute(Point(0, 0), Point(5, 0), field);
 
@@ -170,7 +170,7 @@ void RouterTest::calculateRoute_oneBigObstacleCloseToEnd_routeIsNotTooLong()
 	RouterImpl router(0.5);
 	vector<Circle> obstacles;
 	obstacles.push_back(Circle(Point(3.7, 0), 2));
-	field.setObstacles(obstacles);
+	field.setSoftObstacles(obstacles);
 
 	Route route = router.calculateRoute(Point(0, 0), Point(5, 0), field);
 
@@ -184,7 +184,7 @@ void RouterTest::calculateRoute_oneBigObstacleCloseToEnd_routeIsNotIntersectingW
 	RouterImpl router(0.5);
 	vector<Circle> obstacles;
 	obstacles.push_back(Circle(Point(3.7, 0), 2));
-	field.setObstacles(obstacles);
+	field.setSoftObstacles(obstacles);
 
 	Route route = router.calculateRoute(Point(0, 0), Point(5, 0), field);
 
@@ -197,7 +197,7 @@ void RouterTest::calculateRoute_oneBigObstacleOnRightSideOfDirectPath_reasonable
 	RouterImpl router(0.5);
 	vector<Circle> obstacles;
 	obstacles.push_back(Circle(Point(2, -0.7), 2));
-	field.setObstacles(obstacles);
+	field.setSoftObstacles(obstacles);
 
 	Route route = router.calculateRoute(Point(0, 0), Point(5, 0), field);
 
@@ -213,7 +213,7 @@ void RouterTest::calculateRoute_oneBigObstacleOnLeftSideOfDirectPath_reasonableR
 	RouterImpl router(0.5);
 	vector<Circle> obstacles;
 	obstacles.push_back(Circle(Point(2, 0.7), 2));
-	field.setObstacles(obstacles);
+	field.setSoftObstacles(obstacles);
 
 	Route route = router.calculateRoute(Point(0, 0), Point(5, 0), field);
 
@@ -231,7 +231,7 @@ void RouterTest::calculateRoute_obstacleOnWayToPointBesideObstacle_reasonableRou
 	obstacles.push_back(Circle(Point(3, 0), 2));
 	obstacles.push_back(Circle(Point(1, -1), 1));
 	obstacles.push_back(Circle(Point(1, 1), 1));
-	field.setObstacles(obstacles);
+	field.setSoftObstacles(obstacles);
 
 	Route route = router.calculateRoute(Point(0, 0), Point(5, 0), field);
 
@@ -249,7 +249,7 @@ void RouterTest::calculateRoute_obstacleOnWayToTargetFromPointBesideObstacle_rea
 	obstacles.push_back(Circle(Point(3, 0), 2));
 	obstacles.push_back(Circle(Point(5, -1), 1));
 	obstacles.push_back(Circle(Point(5, 1), 1));
-	field.setObstacles(obstacles);
+	field.setSoftObstacles(obstacles);
 
 	Route route = router.calculateRoute(Point(0, 0), Point(10, 0), field);
 
@@ -269,7 +269,7 @@ void RouterTest::calculateRoute_obstacleOnWayToAndFromPointBesideObstacle_reason
 	obstacles.push_back(Circle(Point(1, 1), 1));
 	obstacles.push_back(Circle(Point(5, -1), 1));
 	obstacles.push_back(Circle(Point(5, 1), 1));
-	field.setObstacles(obstacles);
+	field.setSoftObstacles(obstacles);
 
 	Route route = router.calculateRoute(Point(0, 0), Point(10, 0), field);
 
@@ -286,7 +286,7 @@ void RouterTest::calculateRoute_goingBetweenTwoObstacles_directRoute()
 	vector<Circle> obstacles;
 	obstacles.push_back(Circle(Point(1, -0.8), 1));
 	obstacles.push_back(Circle(Point(1, 0.8), 1));
-	field.setObstacles(obstacles);
+	field.setSoftObstacles(obstacles);
 
 	Route route = router.calculateRoute(Point(0, 0), Point(2, 0), field);
 
@@ -317,7 +317,7 @@ void RouterTest::calculateRoute_severalObjectsAndOneOnTheWay_calculationIsNotToo
 	obstacles.push_back(Circle(Point(2, 5), 0.1));
 	obstacles.push_back(Circle(Point(3.5, 5), 0.1));
 	obstacles.push_back(Circle(Point(4, 5), 0.1));
-	field.setObstacles(obstacles);
+	field.setSoftObstacles(obstacles);
 	RobotPosition start(Point(1, 2), 0);
 	RobotPosition end(Point(3, 2), 0);
 
@@ -337,7 +337,7 @@ void RouterTest::calculateRoute_shortWayOutsideField_noPointOfRouteIsOutside()
 	RouterImpl router(0.5);
 	vector<Circle> obstacles;
 	obstacles.push_back(Circle(Point(5, 1), 2));
-	field.setObstacles(obstacles);
+	field.setSoftObstacles(obstacles);
 
 	Route route = router.calculateRoute(Point(0, 0), Point(10, 0), field);
 
@@ -354,7 +354,7 @@ void RouterTest::calculateRoute_onlyPossiblePointBesideIsBlockedByAnotherObstacl
 	vector<Circle> obstacles;
 	obstacles.push_back(Circle(Point(5, 1), 2));
 	obstacles.push_back(Circle(Point(5, 2.5), 1));
-	field.setObstacles(obstacles);
+	field.setSoftObstacles(obstacles);
 	RobotPosition start(Point(0, 0), 0);
 	RobotPosition end(Point(10, 0), 0);
 
