@@ -12,7 +12,7 @@ using namespace RoboHockey::Layer::Strategy::FieldDetectionStateMachine;
 using namespace RoboHockey::Layer::Autonomous;
 
 
-void DetectFieldTest::nextState_notCalibrated_turnAngle()
+void DetectFieldTest::nextState_notCalibrated3Tries_turnAngle()
 {
 	RobotMock robot;
 	FieldMock field;
@@ -20,12 +20,30 @@ void DetectFieldTest::nextState_notCalibrated_turnAngle()
 	DetectField detectFieldState(robot, field, referee);
 
 	field.setCalibrationReturn(false);
+	detectFieldState.update();
+	detectFieldState.update();
+	detectFieldState.update();
 
 	State *state;
 	state = detectFieldState.nextState();
 	TurnAngle *stateCasted = dynamic_cast<TurnAngle*>(state);
-	CPPUNIT_ASSERT(stateCasted != 0);
+	CPPUNIT_ASSERT(stateCasted != 0);	
+}
 
+void DetectFieldTest::nextState_notCalibrated1Try_NULL()
+{
+	RobotMock robot;
+	FieldMock field;
+	RefereeMock referee;
+	DetectField detectFieldState(robot, field, referee);
+
+	field.setCalibrationReturn(false);
+	detectFieldState.update();
+
+	State *state;
+	state = detectFieldState.nextState();
+	TurnAngle *stateCasted = dynamic_cast<TurnAngle*>(state);
+	CPPUNIT_ASSERT(stateCasted == 0);
 }
 
 
