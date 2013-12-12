@@ -117,3 +117,11 @@ void LineTest::isTargetPointRightOfLine_leftOfLine_false()
 
 	CPPUNIT_ASSERT(!line.isTargetPointRightOfLine(target));
 }
+
+void LineTest::getPerpendicularPoint_pointIs2And1_resultIsCorrect()
+{
+	Line line(Point(1, 1), Point(3, 3));
+	Point target(2, 1);
+
+	CPPUNIT_ASSERT_EQUAL(Point(1.5,1.5), line.getPerpendicularPoint(target));
+}

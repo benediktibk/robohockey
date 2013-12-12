@@ -92,6 +92,7 @@ Point Line::getPerpendicularPoint(Point point) const
 
 	Point perpendicularPoint(point.getX(),0);
 	perpendicularPoint.rotate(angleBetweenPoints);
+	perpendicularPoint = perpendicularPoint + m_start;
 
 	return perpendicularPoint;
 }
