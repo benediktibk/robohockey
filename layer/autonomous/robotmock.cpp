@@ -71,9 +71,10 @@ const Point &RobotMock::getLastTarget() const
     return m_lastTarget;
 }
 
-Route* RobotMock::getAllRoutePoints() const
+std::list<Point> RobotMock::getAllRoutePoints() const
 {
-    return 0;
+    std::list<Common::Point> listOfRoutetest;
+    return listOfRoutetest;
 }
 
 unsigned int RobotMock::getCallsToStop() const

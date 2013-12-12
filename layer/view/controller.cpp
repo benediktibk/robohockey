@@ -8,6 +8,7 @@
 #include <QtGui/QGraphicsScene>
 #include <math.h>
 #include <assert.h>
+#include <iostream>
 
 using namespace RoboHockey::Common;
 using namespace RoboHockey::Layer;
@@ -240,7 +241,7 @@ void Controller::puckColorChanged()
 void Controller::updateTargets()
 {
 	vector<Point> target = m_model.getAllTargetPoints();
-	size_t size_target = target.size();
+    size_t size_target = target.size();
 
 	while (size_target < m_targetPositions.size())
 	{
@@ -275,20 +276,22 @@ void Controller::updateObjects()
     size_t size_list = listToDraw.size();
 	size_t size_object = object.size();
 
-    while (size_list < m_routePositions.size())
+    while (size_list <= m_routePositions.size() && size_list > 0)
     {
         m_scene->removeItem(m_routePositions.back());
+        delete m_routePositions.back();
         m_routePositions.pop_back();
     }
 
 
-	while (size_object < m_objectPositions.size())
+    while (size_object < m_objectPositions.size())
 	{
 		m_scene->removeItem(m_objectPositions.back());
+        delete m_objectPositions.back();
 		m_objectPositions.pop_back();
 	}
 
-    while(size_list > m_routePositions.size())
+    while(size_list > m_routePositions.size() +1 && size_list > 1)
     {
         QGraphicsLineItem* itemList = new QGraphicsLineItem();
         m_routePositions.push_back(itemList);
@@ -326,28 +329,33 @@ void Controller::updateObjects()
 			currentItem.setBrush(Qt::white);
 	}
 
-    if(m_routePositions.size() > 1)
+    if(m_routePositions.size() > 0)
     {
-        for (size_t i = 0; i < m_routePositions.size() - 1; ++i)
+        std::list<Point>::iterator customEnd = listToDraw.end();
+        --customEnd;
+        size_t routePositionIndex = 0;
+        for (std::list<Point>::iterator i = listToDraw.begin(); i != customEnd; ++i, ++routePositionIndex)
         {
-            QGraphicsLineItem &currentItemLine = *(m_routePositions[i]);
-            std::list<Point>::iterator it = listToDraw.begin();
-            std::advance(it, i);
-            Point route = *it;
-            it++;
-            Point route2 = *(it);
-            double route_x = route.getX() * m_pixelPerMeter;
-            double route_y = -1 * route.getY() * m_pixelPerMeter;
-            double route_x2 = route2.getX() * m_pixelPerMeter;
-            double route_y2 = -1 * route2.getY() * m_pixelPerMeter;
+            QGraphicsLineItem &currentItemLine = *(m_routePositions[routePositionIndex]);
+            Point start = *i;
+            std::list<Point>::iterator k = i;
+            ++k;
+            Point end = *(k);
+            double route_x = start.getX() * m_pixelPerMeter;
+            double route_y = -1 * start.getY() * m_pixelPerMeter;
+            double route_x2 = end.getX() * m_pixelPerMeter;
+            double route_y2 = -1 * end.getY() * m_pixelPerMeter;
             currentItemLine.setLine(route_x, route_y, route_x2, route_y2);
             QPen pen;
             pen.setColor(Qt::green);
             pen.setWidthF(0.36 * m_pixelPerMeter);
             currentItemLine.setPen(pen);
             currentItemLine.setZValue(-1);
+            std::cout<<start<< std::endl;
+            std::cout<<end<< std::endl;
         }
     }
+    std::cout<<"Endehier";
 
 	const RobotPosition &robotPosition = m_model.getCurrentPosition();
 	const Point &position = robotPosition.getPosition();

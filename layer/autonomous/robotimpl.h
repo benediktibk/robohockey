@@ -41,7 +41,7 @@ namespace Autonomous
 		virtual void turnAround();
 		virtual Common::RobotPosition getCurrentPosition() const;
 		virtual Common::Point getCurrentTarget() const;
-        virtual Route *getAllRoutePoints() const;
+        virtual std::list<Common::Point> getAllRoutePoints() const;
 		virtual bool cantReachTarget() const;
 		virtual bool isPuckCollected() const;
 		virtual bool isPuckCollectable() const;

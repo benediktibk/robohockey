@@ -3,6 +3,7 @@
 
 #include "layer/autonomous/fieldobject.h"
 #include <vector>
+#include <list>
 
 namespace RoboHockey
 {
@@ -39,7 +40,7 @@ namespace Autonomous
 		virtual void turnAround() = 0;
 		virtual Common::RobotPosition getCurrentPosition() const = 0;
 		virtual Common::Point getCurrentTarget() const = 0;
-        virtual Route* getAllRoutePoints() const = 0;
+        virtual std::list<Common::Point> getAllRoutePoints() const = 0;
 		virtual bool cantReachTarget() const = 0;
 		virtual bool isPuckCollected() const = 0;
 		virtual bool isPuckCollectable() const = 0;
