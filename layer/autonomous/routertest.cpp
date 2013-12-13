@@ -528,24 +528,28 @@ void RouterTest::getPointsBesideObstacle_intersectFromRightAndCircleCenterIsOnPa
 	CPPUNIT_ASSERT(robotBesideObstacle.getDistanceTo(obstacle.getCenter()) < 1.5);
 }
 
-void RouterTest::getPointsBesideObstacle_intersectFromLeftAndCircleCenterIsOnPath_shortPointIs3And0()
+void RouterTest::getPointsBesideObstacle_intersectFromLeftAndCircleCenterIsOnPath_shortPointIsOk()
 {
-	Compare compare(0.0001);
-	RouterImpl router(2.8284);
-	Path currentPath(Point(0,0), Point(3,3), 2.8284);
+	RouterImpl router(1.4142);
+	Path currentPath(Point(0,0), Point(3,3), 1.4142);
 	Circle obstacle(Point(1,2), 2);
+	Point pointBesideObstacle = router.getPointsBesideObstacle(currentPath, obstacle).front();
+	Circle robotBesideObstacle(pointBesideObstacle, 2);
 
-	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(3,0), router.getPointsBesideObstacle(currentPath, obstacle).front()));
+	CPPUNIT_ASSERT(!robotBesideObstacle.overlapsWith(obstacle));
+	CPPUNIT_ASSERT(robotBesideObstacle.getDistanceTo(obstacle.getCenter()) < 1.1);
 }
 
-void RouterTest::getPointsBesideObstacle_intersectFromRightAndCircleCenterIsOnPath_shortPointIs0And3()
+void RouterTest::getPointsBesideObstacle_intersectFromRightAndCircleCenterIsOnPath_shortPointIsOk()
 {
-	Compare compare(0.0001);
-	RouterImpl router(2.8284);
-	Path currentPath(Point(0,0), Point(3,3), 2.8284);
+	RouterImpl router(1.4142);
+	Path currentPath(Point(0,0), Point(3,3), 1.4142);
 	Circle obstacle(Point(2,1), 2);
+	Point pointBesideObstacle = router.getPointsBesideObstacle(currentPath, obstacle).front();
+	Circle robotBesideObstacle(pointBesideObstacle, 2);
 
-	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(0,3), router.getPointsBesideObstacle(currentPath, obstacle).front()));
+	CPPUNIT_ASSERT(!robotBesideObstacle.overlapsWith(obstacle));
+	CPPUNIT_ASSERT(robotBesideObstacle.getDistanceTo(obstacle.getCenter()) < 1.1);
 }
 
 void RouterTest::getPointsBesideObstacle_pathFrom1And1To1And10AndSmallObstacleBetween_resultSizeIs2()
@@ -561,22 +565,26 @@ void RouterTest::getPointsBesideObstacle_pathFrom1And1To1And10AndSmallObstacleBe
 
 void RouterTest::getPointsBesideObstacle_smallObstacleBetweenAt2And0p5_shortPointIsCorrect()
 {
-	Compare compare(0.0001);
 	RouterImpl router(2);
 	Path currentPath(Point(0,0), Point(4,0), 2);
 	Circle obstacle(Point(2,0.5), 0.5);
+	Point pointBesideObstacle = router.getPointsBesideObstacle(currentPath, obstacle).front();
+	Circle robotBesideObstacle(pointBesideObstacle, 2.8284);
 
-	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(2,3.2677), router.getPointsBesideObstacle(currentPath, obstacle).front()));
+	CPPUNIT_ASSERT(!robotBesideObstacle.overlapsWith(obstacle));
+	CPPUNIT_ASSERT(robotBesideObstacle.getDistanceTo(obstacle.getCenter()) < 0.35);
 }
 
 void RouterTest::getPointsBesideObstacle_smallObstacleBetweenAt2And0p5_longPointIsCorrect()
 {
-	Compare compare(0.0001);
 	RouterImpl router(2);
 	Path currentPath(Point(0,0), Point(4,0), 2);
 	Circle obstacle(Point(2,0.5), 0.5);
+	Point pointBesideObstacle = router.getPointsBesideObstacle(currentPath, obstacle).back();
+	Circle robotBesideObstacle(pointBesideObstacle, 2.8284);
 
-	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(2,-2.2677), router.getPointsBesideObstacle(currentPath, obstacle).back()));
+	CPPUNIT_ASSERT(!robotBesideObstacle.overlapsWith(obstacle));
+	CPPUNIT_ASSERT(robotBesideObstacle.getDistanceTo(obstacle.getCenter()) < 0.35);
 }
 
 void RouterTest::getPointsBesideObstacle_bigObstacleOnRightSide_resultSizeIs2()
@@ -661,6 +669,11 @@ void RouterTest::getPointsBesideObstacle_bigObstacleCloseOnLeftSide_onePointIsLe
 	Path path(start, end, 0.5);
 
 	vector<Point> points = router.getPointsBesideObstacle(path, obstacle);
+
+	Circle robotShortObstacle(points.front(), 0.707);
+	CPPUNIT_ASSERT(!robotShortObstacle.overlapsWith(obstacle));
+	Circle robotLongObstacle(points.front(), 0.707);
+	CPPUNIT_ASSERT(!robotLongObstacle.overlapsWith(obstacle));
 
 	Line line(start, end);
 	CPPUNIT_ASSERT(path.intersectsWith(obstacle));
