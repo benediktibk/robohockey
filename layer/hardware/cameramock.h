@@ -16,6 +16,7 @@ namespace Hardware
 	public:
 		CameraMock();
 		CameraMock(std::string filename);
+		~CameraMock();
 
 		virtual cv::Mat getFrame();
 		virtual bool isValid() const;

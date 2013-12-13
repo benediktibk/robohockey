@@ -22,6 +22,12 @@ CameraMock::CameraMock(std::string filename) :
 		*m_testpicture = img;
 }
 
+CameraMock::~CameraMock()
+{
+	delete m_testpicture;
+	m_testpicture = 0;
+}
+
 cv::Mat CameraMock::getFrame()
 {
 	++m_callsToGetFrame;
