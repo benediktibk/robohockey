@@ -133,18 +133,18 @@ QString Controller::convertIntoString(const Point &value) const
 	return result;
 }
 
-FieldObjectColor Controller::getSeletectedPuckColor() const
+FieldColor Controller::getSeletectedPuckColor() const
 {
 	if (m_ui->bluePuckButton->isChecked())
-		return FieldObjectColorBlue;
+		return FieldColorBlue;
 	else if (m_ui->yellowPuckButton->isChecked())
-		return FieldObjectColorYellow;
+		return FieldColorYellow;
 	else if(m_ui->anyPuckButton->isChecked())
-		return FieldObjectColorUnknown;
+		return FieldColorUnknown;
 	else
 	{
 		assert(false);
-		return FieldObjectColorUnknown;
+		return FieldColorUnknown;
 	}
 }
 
@@ -323,11 +323,11 @@ void Controller::updateObjects()
 		double centerY = center.getY();
 		currentItem.setRect(centerX, -1.0 * centerY, diameter, diameter);
 
-		if (currentObject.getColor() == FieldObjectColorBlue)
+		if (currentObject.getColor() == FieldColorBlue)
 			currentItem.setBrush(Qt::blue);
-		else if (currentObject.getColor() == FieldObjectColorGreen)
+		else if (currentObject.getColor() == FieldColorGreen)
 			currentItem.setBrush(Qt::green);
-		else if (currentObject.getColor() == FieldObjectColorYellow)
+		else if (currentObject.getColor() == FieldColorYellow)
 			currentItem.setBrush(Qt::yellow);
 		else
 			currentItem.setBrush(Qt::white);

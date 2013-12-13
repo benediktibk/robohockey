@@ -13,13 +13,14 @@ using namespace RoboHockey::Layer::Autonomous;
 
 CheckGoalColor::CheckGoalColor(Robot &robot, Field &field, Referee &referee) :
 	State(robot, field, referee),
-	m_successful(false)
+	m_teamColorSend(false),
+	m_gotResponse(false)
 { }
 
 State* CheckGoalColor::nextState()
 {
 	//! @todo Replace Target Point with target point from field.
-	if (m_successful)
+	if (m_teamColorSend && m_gotResponse)
 	{
 		std::list<RobotPosition> targetList;
 		targetList.push_back(RobotPosition(Point(5.0/6.0, 1.5), Angle()));
@@ -34,6 +35,24 @@ State* CheckGoalColor::nextState()
 
 void CheckGoalColor::update()
 {
-	m_field.detectTeamColorWithGoalInFront();
-	m_successful = (m_field.getOwnTeamColor() != FieldObjectColorUnknown);
+	if (!m_teamColorSend)
+	{
+		m_field.detectTeamColorWithGoalInFront();
+
+		if (m_field.getOwnTeamColor() != FieldColorUnknown)
+		{
+			m_referee.tellTeamColor(m_field.getOwnTeamColor());
+			m_teamColorSend = true;
+		}
+	}
+
+	FieldColor refResponse = FieldColorUnknown;
+	refResponse = m_referee.trueColorOfTeam();
+
+	if (refResponse != FieldColorUnknown)
+	{
+		m_field.setTrueTeamColor(refResponse);
+		m_gotResponse = true;
+	}
+
 }

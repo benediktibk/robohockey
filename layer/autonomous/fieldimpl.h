@@ -2,7 +2,7 @@
 #define ROBOHOCKEY_LAYER_AUTONOMOUS_FIELDIMPL_H
 
 #include "layer/autonomous/field.h"
-#include "common/fieldobjectcolor.h"
+#include "common/fieldcolor.h"
 #include <vector>
 
 namespace RoboHockey
@@ -44,14 +44,14 @@ namespace Autonomous
 		virtual const std::vector<FieldObject>& getAllFieldObjects() const;
 		virtual const std::vector<Common::Circle>& getAllSoftObstacles() const;
 		virtual const std::vector<Common::Circle>& getAllHardObstacles() const;
-		virtual std::vector<FieldObject> getObjectsWithColorOrderdByDistance(Common::FieldObjectColor color, const Common::Point &position) const;
+		virtual std::vector<FieldObject> getObjectsWithColorOrderdByDistance(Common::FieldColor color, const Common::Point &position) const;
 		virtual bool calibratePosition();
 		unsigned int achievedGoals();
 		unsigned int enemyHiddenPucks();
 		virtual bool isPointInsideField(const Common::Point &point) const;
 		virtual bool numberOfPucksChanged() const;
 		virtual bool isCalibrated() const;
-		virtual Common::FieldObjectColor getOwnTeamColor() const;
+		virtual Common::FieldColor getOwnTeamColor() const;
 		virtual void detectTeamColorWithGoalInFront();
 		virtual std::list<Common::RobotPosition> getTargetsForGoalDetection() const;
 		virtual std::list<Common::RobotPosition> getTargetsForScoringGoals() const;
@@ -59,6 +59,7 @@ namespace Autonomous
 		virtual std::list<Common::RobotPosition> getTargetsForSearchingPucks() const;
 		virtual std::list<Common::RobotPosition> getTargetsForHidingEnemyPucks() const;
 		virtual std::list<Common::RobotPosition> getTargetsForCollectingOnePuck() const;
+		virtual void setTrueTeamColor(Common::FieldColor trueTeamColor);
 
 	private:
 		void updateWithLidarData();
@@ -74,8 +75,8 @@ namespace Autonomous
 		void moveCoordinateSystem(Common::Point &newOrigin);
 		void rotateCoordinateSystem(double alpha);
 
-		std::vector<Common::Point> *getPointsOfObjectsWithDiameterAndColor(double diameter, Common::FieldObjectColor color);
-		std::vector<FieldObject> getObjectsWithColor(Common::FieldObjectColor color) const;
+		std::vector<Common::Point> *getPointsOfObjectsWithDiameterAndColor(double diameter, Common::FieldColor color);
+		std::vector<FieldObject> getObjectsWithColor(Common::FieldColor color) const;
 
 		virtual std::vector<FieldObject> moveAllFieldObjectsInVisibleAreaToTemporaryVector();
 		bool isPointFuzzyInsideField(const Common::Point &point, double epsilon) const;
@@ -95,7 +96,7 @@ namespace Autonomous
 		bool m_numberOfPucksChanged;
 		unsigned int m_achievedGoals;
 		unsigned int m_hiddenPucks;
-		Common::FieldObjectColor m_teamColor;
+		Common::FieldColor m_teamColor;
 	};
 }
 }

@@ -2,7 +2,7 @@
 #define ROBOHOCKEY_LAYER_VIEW_CONTROLLER_H
 
 #include <QtGui/QMainWindow>
-#include "common/fieldobjectcolor.h"
+#include "common/fieldcolor.h"
 #include "common/point.h"
 
 class QGraphicsScene;
@@ -66,7 +66,7 @@ namespace View
 		QString convertIntoString(bool value) const;
 		QString convertIntoString(double value) const;
 		QString convertIntoString(const Common::Point &value) const;
-		Common::FieldObjectColor getSeletectedPuckColor() const;
+		Common::FieldColor getSeletectedPuckColor() const;
 		Common::Point calculatePositionInReal(const QPointF &point);
 
 	private:

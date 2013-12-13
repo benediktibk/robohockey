@@ -3,7 +3,7 @@
 using namespace RoboHockey::Layer::DataAnalysis;
 using namespace RoboHockey::Common;
 
-CameraObject::CameraObject(FieldObjectColor color, const Point &position) :
+CameraObject::CameraObject(FieldColor color, const Point &position) :
 	m_color(color),
 	m_position(position)
 {
@@ -14,7 +14,7 @@ Point CameraObject::getPosition() const
 	return m_position;
 }
 
-FieldObjectColor CameraObject::getColor() const
+FieldColor CameraObject::getColor() const
 {
 	return m_color;
 }
