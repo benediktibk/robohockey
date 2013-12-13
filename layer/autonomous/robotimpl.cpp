@@ -39,7 +39,7 @@ RobotImpl::~RobotImpl()
 	clearRoute();
 }
 
-void RobotImpl::goTo(const Point &position)
+void RobotImpl::goTo(const RobotPosition &position)
 {
 	clearRoute();
 	changeIntoState(RobotStateDrivingTurningPart);
@@ -49,7 +49,7 @@ void RobotImpl::goTo(const Point &position)
 void RobotImpl::turnTo(const Point &position)
 {
 	changeIntoState(RobotStateTurnTo);
-	m_currentTarget = position;
+	m_currentTarget.setPosition(position);
 }
 
 bool RobotImpl::stuckAtObstacle()
@@ -151,9 +151,9 @@ void RobotImpl::updateEngineForCollectingPuck()
 	if (m_stateChanged || m_puckPositionChanged || justReachedOrientation)
 	{
 		if (m_rotationReached)
-			engine.goToStraightSlowly(m_currentTarget);
+			engine.goToStraightSlowly(m_currentTarget.getPosition());
 		else
-			engine.turnToTarget(m_currentTarget);
+			engine.turnToTarget(m_currentTarget.getPosition());
 	}
 }
 
@@ -188,7 +188,7 @@ void RobotImpl::updateEngineForTurnTo()
 	DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
 
 	if (m_stateChanged)
-		engine.turnToTarget(m_currentTarget);
+		engine.turnToTarget(m_currentTarget.getPosition());
 	else if (engine.reachedTarget())
 		changeIntoState(RobotStateWaiting);
 }
@@ -268,7 +268,7 @@ bool RobotImpl::enableCollisionDetectionWithSonar() const
 
 void RobotImpl::changeIntoState(RobotState state)
 {
-	m_currentTarget = Point();
+	m_currentTarget = RobotPosition();
 	m_cantReachTarget = false;
 	m_tryingToTackleObstacle = false;
 	m_state = state;
@@ -279,9 +279,9 @@ void RobotImpl::changeIntoState(RobotState state)
 bool RobotImpl::isCurrentTargetPuckCollectable() const
 {
 	RobotPosition currentPosition = getCurrentPosition();
-	Angle orientationAbsolute(currentPosition.getPosition(), m_currentTarget);
+	Angle orientationAbsolute(currentPosition.getPosition(), m_currentTarget.getPosition());
 	Angle orientationDifference = orientationAbsolute - currentPosition.getOrientation();
-	double distance = m_currentTarget.distanceTo(currentPosition.getPosition());
+	double distance = m_currentTarget.distanceTo(currentPosition);
 	orientationDifference.abs();
 
 	return	distance < m_maximumDistanceToCollectPuck &&
@@ -320,14 +320,14 @@ void RobotImpl::stop()
 void RobotImpl::collectPuckInFront(const Point &puckPosition)
 {
 	changeIntoState(RobotStateCollectingPuck);
-	m_currentTarget = puckPosition;
+	m_currentTarget.setPosition(puckPosition);
 	m_startPosition = getCurrentPosition().getPosition();
 }
 
 void RobotImpl::updatePuckPosition(const Point &puckPosition)
 {
 	assert(m_state == RobotStateCollectingPuck);
-	m_currentTarget = puckPosition;
+	m_currentTarget.setPosition(puckPosition);
 	m_puckPositionChanged = true;
 }
 
@@ -360,13 +360,13 @@ Point RobotImpl::getCurrentTarget() const
 
 std::list<Point> RobotImpl::getAllRoutePoints() const
 {
-    if (m_currentRoute == 0)
-    {
-        std::list<Point> emptyList;
-        return emptyList;
-    }
-    else
-        return m_currentRoute->getAllPoints();
+	if (m_currentRoute == 0)
+	{
+		std::list<Point> emptyList;
+		return emptyList;
+	}
+	else
+		return m_currentRoute->getAllPoints();
 }
 
 bool RobotImpl::cantReachTarget() const
@@ -424,7 +424,6 @@ void RobotImpl::clearRoute()
 bool RobotImpl::updateRoute(const Field &field)
 {
 	const RobotPosition robotPosition = getCurrentPosition();
-	const Point &ownPosition = robotPosition.getPosition();
 	vector<Circle> softObstacles = field.getAllSoftObstacles();
 	vector<Circle> hardObstacles = field.getAllHardObstacles();
 	vector<Circle> allObstacles = m_router->filterObstacles(softObstacles, hardObstacles, robotPosition.getPosition());
@@ -435,7 +434,7 @@ bool RobotImpl::updateRoute(const Field &field)
 	//! If the current route is not feasible anymore we try to create a new one.
 	clearRoute();
 	m_currentRoute = new Route(m_robotWidth);
-	*m_currentRoute = m_router->calculateRoute(ownPosition, m_currentTarget, field);
+	*m_currentRoute = m_router->calculateRoute(robotPosition, m_currentTarget, field);
 
 	if (!isRouteFeasible(allObstacles))
 		clearRoute();

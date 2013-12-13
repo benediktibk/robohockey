@@ -528,7 +528,7 @@ void EngineTest::goToStraightSlowlyBack_TargetPassedAfterSomeTime_lastMagnitudeI
 
 	engine.goToStraightSlowlyBack(Point(-1, 0));
 	engine.updateSpeedAndRotation();
-	hardwareOdometry.setCurrentPosition(RobotPosition(Point(-1.05, 0)));
+	hardwareOdometry.setCurrentPosition(RobotPosition(Point(-1.05, 0), 0));
 	engine.updateSpeedAndRotation();
 	engine.updateSpeedAndRotation();
 

@@ -2,6 +2,7 @@
 #define ROBOHOCKEY_LAYER_AUTONOMOUS_ROBOTMOCK_H
 
 #include "layer/autonomous/robot.h"
+#include "common/robotposition.h"
 
 namespace RoboHockey
 {
@@ -20,7 +21,7 @@ namespace Autonomous
 	public:
 		RobotMock();
 
-		virtual void goTo(const Common::Point &position);
+		virtual void goTo(const Common::RobotPosition &position);
 		virtual bool stuckAtObstacle();
 		virtual bool reachedTarget();
 		virtual void updateActuators(const Field &field);
@@ -30,8 +31,8 @@ namespace Autonomous
 		unsigned int getCallsToUpdateSensorData() const;
 		void setStuckAtObstacle(bool value);
 		void setReachedTarget(bool value);
-		const Common::Point& getLastTarget() const;
-        virtual std::list<Common::Point> getAllRoutePoints() const;
+		const Common::RobotPosition &getLastTarget() const;
+		virtual std::list<Common::Point> getAllRoutePoints() const;
 		unsigned int getCallsToStop() const;
 		virtual void collectPuckInFront(const Common::Point &puckPosition);
 		virtual void updatePuckPosition(const Common::Point &puckPosition);
@@ -51,7 +52,7 @@ namespace Autonomous
 		void setCantReachedTarget(bool value);
 
 	private:
-		Common::Point m_lastTarget;
+		Common::RobotPosition m_lastTarget;
 		bool m_stuckAtObstacle;
 		bool m_reachedTarget;
 		unsigned int m_callsToUpdateActuators;

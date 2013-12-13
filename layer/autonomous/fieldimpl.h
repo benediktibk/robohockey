@@ -46,8 +46,8 @@ namespace Autonomous
 		virtual const std::vector<Common::Circle>& getAllHardObstacles() const;
 		virtual std::vector<FieldObject> getObjectsWithColorOrderdByDistance(Common::FieldColor color, const Common::Point &position) const;
 		virtual bool calibratePosition();
-		unsigned int achievedGoals();
-		unsigned int enemyHiddenPucks();
+		virtual unsigned int getNumberOfAchievedGoals();
+		virtual unsigned int getNumberOfHiddenPucks();
 		virtual bool isPointInsideField(const Common::Point &point) const;
 		virtual bool numberOfPucksChanged() const;
 		virtual bool isCalibrated() const;
@@ -60,6 +60,8 @@ namespace Autonomous
 		virtual std::list<Common::RobotPosition> getTargetsForHidingEnemyPucks() const;
 		virtual std::list<Common::RobotPosition> getTargetsForCollectingOnePuck() const;
 		virtual void setTrueTeamColor(Common::FieldColor trueTeamColor);
+		virtual Common::RobotPosition getNewOriginOfFieldDetection();
+		virtual void transformFieldToNewOrigin(const Common::RobotPosition newOrigin);
 
 	private:
 		void updateWithLidarData();

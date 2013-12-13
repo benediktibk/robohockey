@@ -73,34 +73,23 @@ vector<FieldObject> FieldImpl::getObjectsWithColorOrderdByDistance(FieldColor co
 
 bool FieldImpl::calibratePosition()
 {
-	vector<Point> *input = getPointsOfObjectsWithDiameterAndColor(0.06, FieldColorGreen);
+	RobotPosition newOrigin = getNewOriginOfFieldDetection();
+	Point newOriginPoint = newOrigin.getPosition();
 
-	FieldDetector detector(m_position->getPosition(), *input);
-
-	bool result = detector.tryToDetectField();
+	bool result = !(newOrigin.getPosition() == Point::zero()) || !(newOrigin.getOrientation().getValueBetweenMinusPiAndPi() == 0.0);
 
 	if (result)
-	{
-		Point newOrigin = detector.getNewOrigin();
-		transformCoordinateSystem(newOrigin, detector.getRotation());
-		cout << "Found borderstones -> System transformed." << endl;
-		m_fieldState = FieldStateCalibrated;
-		removeAllFieldObjectsOutsideOfField();
-	}
-	else
-		cout << "Didn't find enough borderstones." << endl;
-
-	delete input;
+		transformCoordinateSystem(newOriginPoint, newOrigin.getOrientation().getValueBetweenMinusPiAndPi());
 
 	return result;
 }
 
-unsigned int FieldImpl::achievedGoals()
+unsigned int FieldImpl::getNumberOfAchievedGoals()
 {
 	return m_achievedGoals;
 }
 
-unsigned int FieldImpl::enemyHiddenPucks()
+unsigned int FieldImpl::getNumberOfHiddenPucks()
 {
 	return m_hiddenPucks;
 }
@@ -218,6 +207,34 @@ void FieldImpl::setTrueTeamColor(FieldColor trueTeamColor)
 	assert(trueTeamColor != FieldColorGreen);
 
 	m_teamColor = trueTeamColor;
+}
+
+RobotPosition FieldImpl::getNewOriginOfFieldDetection()
+{
+	vector<Point> *input = getPointsOfObjectsWithDiameterAndColor(0.06, FieldColorGreen);
+
+	FieldDetector detector(m_position->getPosition(), *input);
+
+	bool result = detector.tryToDetectField();
+
+	Point newOrigin;
+	double rotation = 0.0;
+
+	if (result)
+	{
+		newOrigin = detector.getNewOrigin();
+		rotation = detector.getRotation();
+	}
+
+	delete input;
+
+	return RobotPosition( newOrigin, Angle(rotation) );
+}
+
+void FieldImpl::transformFieldToNewOrigin(const RobotPosition newOrigin)
+{
+	Point newOriginPoint = newOrigin.getPosition();
+	transformCoordinateSystem(newOriginPoint, newOrigin.getOrientation().getValueBetweenMinusPiAndPi());
 }
 
 void FieldImpl::updateWithLidarData()
@@ -366,6 +383,9 @@ void FieldImpl::transformCoordinateSystem(Point &newOrigin, double rotation)
 {
 	moveCoordinateSystem(newOrigin);
 	rotateCoordinateSystem(rotation);
+
+	m_fieldState = FieldStateCalibrated;
+	removeAllFieldObjectsOutsideOfField();
 }
 
 void FieldImpl::moveCoordinateSystem(Point &newOrigin)

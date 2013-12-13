@@ -352,14 +352,14 @@ void LidarTest::getAllObjects_maximumDistanceToBoundaryPostOfOwnFieldPart_distan
 
 	for (vector<LidarObject>::const_iterator i = objectsInForeground.begin(); i != objectsInForeground.end(); ++i)
 	{
-		double distance = ownPosition.distanceTo(i->getCenter());
+		double distance = ownPosition.getPosition().distanceTo(i->getCenter());
 		if (distance > 2.5)
 			farDistantObjects.push_back(*i);
 	}
 
 	CPPUNIT_ASSERT_EQUAL((size_t)1, farDistantObjects.size());
 	const LidarObject &object = farDistantObjects.front();
-	double distance = ownPosition.distanceTo(object.getCenter());
+	double distance = ownPosition.getPosition().distanceTo(object.getCenter());
 	Compare compare(0.05);
 	CPPUNIT_ASSERT(compare.isFuzzyEqual(3.06, distance));
 	CPPUNIT_ASSERT(compare.isFuzzyEqual(0.06, object.getDiameter()));

@@ -18,11 +18,11 @@ State *DriveToFinalPosition::nextState()
 {
     if(m_referee.stopMovement() || m_referee.gameOver())
         return new Pause(m_robot, m_field, m_referee);
-    else if(m_field.achievedGoals() < 3)
+    else if(m_field.getNumberOfAchievedGoals() < 3)
         return new AchieveGoals(m_robot, m_field, m_referee);
     else if(m_robot.reachedTarget())
         return new Pause(m_robot, m_field, m_referee);
-    else if(m_field.enemyHiddenPucks() < 3 && m_field.achievedGoals() >= 3)
+    else if(m_field.getNumberOfHiddenPucks() < 3 && m_field.getNumberOfAchievedGoals() >= 3)
         return new HideEnemyPucks(m_robot, m_field, m_referee);
     else
         return 0;

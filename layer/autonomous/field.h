@@ -23,7 +23,7 @@ namespace Autonomous
 		virtual ~Field() { }
 
 		virtual void update() = 0;
-		virtual unsigned int achievedGoals() = 0;
+		virtual unsigned int getNumberOfAchievedGoals() = 0;
 		virtual const std::vector<FieldObject>& getAllFieldObjects() const = 0;
 		virtual const std::vector<Common::Circle>& getAllSoftObstacles() const = 0;
 		virtual const std::vector<Common::Circle>& getAllHardObstacles() const = 0;
@@ -31,12 +31,14 @@ namespace Autonomous
 
 		virtual bool calibratePosition() = 0;
 		virtual bool isPointInsideField(const Common::Point &point) const = 0;
-		virtual unsigned int enemyHiddenPucks() = 0;
+		virtual unsigned int getNumberOfHiddenPucks() = 0;
 		virtual bool numberOfPucksChanged() const = 0;
 		virtual bool isCalibrated() const = 0;
 		virtual Common::FieldColor getOwnTeamColor() const = 0;
 		virtual void detectTeamColorWithGoalInFront() = 0;
 		virtual void setTrueTeamColor(Common::FieldColor trueTeamColor) = 0;
+		virtual Common::RobotPosition getNewOriginOfFieldDetection() = 0;
+		virtual void transformFieldToNewOrigin(const Common::RobotPosition newOrigin) = 0;
 
 		virtual std::list<Common::RobotPosition> getTargetsForGoalDetection() const = 0;
 		virtual std::list<Common::RobotPosition> getTargetsForScoringGoals() const = 0;
