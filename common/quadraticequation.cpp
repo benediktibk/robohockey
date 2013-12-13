@@ -17,19 +17,19 @@ QuadraticEquation::QuadraticEquation(double a, double b, double c) :
 vector<double> QuadraticEquation::getSolutions(const Compare &compare) const
 {
 	vector<double> solutions;
-	double determinant = m_b*m_b-4*m_a*m_c;
+	double discriminant = m_b*m_b-4*m_a*m_c;
 
-	if (compare.isFuzzyEqual(0, determinant))
+	if (compare.isFuzzyEqual(0, discriminant))
 	{
 		double onlySolution = (-1)*m_b/(2*m_a);
 		solutions.push_back(onlySolution);
 		return solutions;
 	}
-	else if (determinant < 0)
+	else if (discriminant < 0)
 		return solutions;
 	else
 	{
-		double squareRoot = sqrt(determinant);
+		double squareRoot = sqrt(discriminant);
 		double firstSolution = ((-1)*m_b + squareRoot)/(2*m_a);
 		double secondSolution = ((-1)*m_b - squareRoot)/(2*m_a);
 		solutions.push_back(firstSolution);
