@@ -60,9 +60,7 @@ vector<Point> RouterImpl::getPointsBesideObstacle(const Path &path, const Circle
 	PathIntersectPoints intersectionPoints = path.getIntersectPoints(obstacle);
 	Point shortPointBesideObstacle;
 	Point longPointBesideObstacle;
-	double offsetDistanceLongPoint = 0.51*sqrt(2)*m_robotWidth;
-	double offsetDistanceShortPoint = offsetDistanceLongPoint;
-	double radius = obstacle.getDiameter()/2;
+	double offsetDistanceLongPoint = 0.51*sqrt(2)*m_robotWidth + obstacle.getDiameter()/2;
 	Angle offsetAngleShortPoint = path.getAngleBetweenStartAndEnd();
 
 	assert(intersectionPoints.getIntersectTypeFrom() != PathIntersectPoints::IntersectTypeFromStart);
@@ -71,9 +69,10 @@ vector<Point> RouterImpl::getPointsBesideObstacle(const Path &path, const Circle
 	if(intersectionPoints.getIntersectTypeFrom() != PathIntersectPoints::IntersectTypeNoIntersect)
 	{
 		Point centerBetweenIntersectPoints = (intersectionPoints.front() + intersectionPoints.back())/2;
-		double distanceIntersectPointsCenterToCircle = radius - centerBetweenIntersectPoints.distanceTo(obstacle.getCenter());
-		offsetDistanceShortPoint += distanceIntersectPointsCenterToCircle;
-		offsetDistanceLongPoint += distanceIntersectPointsCenterToCircle;
+		offsetDistanceLongPoint -= centerBetweenIntersectPoints.distanceTo(obstacle.getCenter());
+		double offsetDistanceShortPoint = offsetDistanceLongPoint;
+		Line line(path.getCenterLine());
+		line.shiftParallel(intersectionPoints.front());
 
 		if(!path.isCircleCenterOnPath(obstacle))
 			offsetDistanceLongPoint += 2*centerBetweenIntersectPoints.distanceTo(obstacle.getCenter());
@@ -82,13 +81,13 @@ vector<Point> RouterImpl::getPointsBesideObstacle(const Path &path, const Circle
 		if(intersectionPoints.getIntersectTypeFrom() == PathIntersectPoints::IntersectTypeFromLeft)
 		{
 			offsetAngleShortPoint = offsetAngleShortPoint + Angle::getThreeQuarterRotation();
-			if(Line(intersectionPoints.front(), intersectionPoints.back()).isTargetPointRightOfLine(obstacle.getCenter()) && !path.isCircleCenterOnPath(obstacle))
+			if(line.isTargetPointRightOfLine(obstacle.getCenter()) && !path.isCircleCenterOnPath(obstacle))
 				offsetAngleShortPoint = offsetAngleShortPoint - Angle::getHalfRotation();
 		}
 		else
 		{
 			offsetAngleShortPoint = offsetAngleShortPoint + Angle::getQuarterRotation();
-			if(!Line(intersectionPoints.front(), intersectionPoints.back()).isTargetPointRightOfLine(obstacle.getCenter()) && !path.isCircleCenterOnPath(obstacle))
+			if(!line.isTargetPointRightOfLine(obstacle.getCenter()) && !path.isCircleCenterOnPath(obstacle))
 				offsetAngleShortPoint = offsetAngleShortPoint - Angle::getHalfRotation();
 		}
 		shortPointBesideObstacle = centerBetweenIntersectPoints + Point(offsetDistanceShortPoint, offsetAngleShortPoint);
@@ -96,19 +95,7 @@ vector<Point> RouterImpl::getPointsBesideObstacle(const Path &path, const Circle
 	}
 	else
 	{
-		double leftDistance = radius + path.getDistanceToLeftPerpendicularPoint(obstacle.getCenter());
-		double rightDistance = radius + path.getDistanceToRightPerpendicularPoint(obstacle.getCenter());
-		if (leftDistance > rightDistance)
-		{
-			offsetDistanceShortPoint += leftDistance;
-			offsetDistanceLongPoint += rightDistance;
-		}
-		else
-		{
-			offsetDistanceShortPoint += rightDistance;
-			offsetDistanceLongPoint += leftDistance;
-		}
-		shortPointBesideObstacle = obstacle.getCenter() + Point(offsetDistanceShortPoint, offsetAngleShortPoint + Angle::getQuarterRotation());
+		shortPointBesideObstacle = obstacle.getCenter() + Point(offsetDistanceLongPoint, offsetAngleShortPoint + Angle::getQuarterRotation());
 		longPointBesideObstacle = obstacle.getCenter() + Point(offsetDistanceLongPoint, offsetAngleShortPoint + Angle::getThreeQuarterRotation());
 	}
 
@@ -294,8 +281,7 @@ vector<Route> RouterImpl::calculateRoutesToPointsBesideObstacle(
 	vector<Point> pointsBesideObstacle = getPointsBesideObstacle(path, obstacle);
 	assert(pointsBesideObstacle.size() == 2);
 	Line line(start, end);
-	//! @todo assert
-	//assert(line.isOnePointLeftAndOneRightOfLine(pointsBesideObstacle[0], pointsBesideObstacle[1]));
+	assert(line.isOnePointLeftAndOneRightOfLine(pointsBesideObstacle[0], pointsBesideObstacle[1]));
 	Point leftPoint;
 	Point rightPoint;
 

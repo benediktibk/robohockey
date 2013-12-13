@@ -105,7 +105,7 @@ void LineTest::getIntersectPoints_circleIntersectsLineButOnlyTheHigherPointIsOnT
 void LineTest::isTargetPointRightOfLine_rightOfLine_true()
 {
 	Line line(Point(1, 2), Point(1, 1.5));
-	Point target(5, -10);
+	Point target(-5, -10);
 
 	CPPUNIT_ASSERT(line.isTargetPointRightOfLine(target));
 }
@@ -113,7 +113,7 @@ void LineTest::isTargetPointRightOfLine_rightOfLine_true()
 void LineTest::isTargetPointRightOfLine_leftOfLine_false()
 {
 	Line line(Point(1, 2), Point(1, 1.5));
-	Point target(-15, 10);
+	Point target(5, 10);
 
 	CPPUNIT_ASSERT(!line.isTargetPointRightOfLine(target));
 }
@@ -132,4 +132,22 @@ void LineTest::getPerpendicularPoint_pointIs1p5And2_resultIsCorrect()
 	Point target(1.5, 2);
 
 	CPPUNIT_ASSERT_EQUAL(Point(2,1), line.getPerpendicularPoint(target));
+}
+
+void LineTest::isOnePointLeftAndOneRightOfLine_strangeExample_resultIsTrue()
+{
+	Line line(Point(3,-1.36), Point(5,0));
+	Point targetLeft(3.76,-1.12);
+	Point targetRight(2.5,1.12);
+
+	CPPUNIT_ASSERT(line.isOnePointLeftAndOneRightOfLine(targetLeft, targetRight));
+}
+
+void LineTest::shiftParallel_shiftLine_resultIsCorrect()
+{
+	Line line(Point(0,0), Point(3,1));
+	line.shiftParallel(Point(2,2));
+
+	CPPUNIT_ASSERT_EQUAL(Point(2,2), line.getStart());
+	CPPUNIT_ASSERT_EQUAL(Point(5,3), line.getEnd());
 }

@@ -19,10 +19,13 @@ namespace Common
 		Point getPerpendicularPoint(Point point) const;
 		bool isTargetPointRightOfLine(const Point &target) const;
 		bool isOnePointLeftAndOneRightOfLine(const Point &one, const Point &two) const;
+		void shiftParallel(const Point &point);
+		Point getStart() const;
+		Point getEnd() const;
 
 	private:
-		const Point m_start;
-		const Point m_end;
+		Point m_start;
+		Point m_end;
 	};
 }
 }

@@ -11,6 +11,7 @@ namespace Common
 	class Circle;
 	class Angle;
 	class PathIntersectPoints;
+	class Line;
 
 	class Path
 	{
@@ -26,6 +27,7 @@ namespace Common
 		Point getRightPerpendicularPoint(const Point &point) const;
 		double getDistanceToLeftPerpendicularPoint(const Point &point) const;
 		double getDistanceToRightPerpendicularPoint(const Point &point) const;
+		Line getCenterLine() const;
 
 	private:
 		Point m_start;

@@ -50,6 +50,28 @@ double CameraImpl::getProbabilityForBlueGoal()
 	return (static_cast<double>(countNonZero(goal))/static_cast<double>(range.area()));
 }
 
+double CameraImpl::getProbabilityForCollectedYellowPuck()
+{
+	assert(m_camera.isValid());
+	Mat puck;
+	filterFrameAndConvertToHLS();
+	inRange(m_filteredFrame, Scalar(18, 20, 50), Scalar(28, 255, 255), puck);
+	Rect range(153, 230, 17, 10);
+	puck = puck(range);
+	return (static_cast<double>(countNonZero(puck))/static_cast<double>(range.area()));
+}
+
+double CameraImpl::getProbabilityForCollectedBluePuck()
+{
+	assert(m_camera.isValid());
+	Mat puck;
+	filterFrameAndConvertToHLS();
+	inRange(m_filteredFrame, Scalar(95, 20, 40), Scalar(107, 255, 255), puck);
+	Rect range(153, 230, 17, 10);
+	puck = puck(range);
+	return (static_cast<double>(countNonZero(puck))/static_cast<double>(range.area()));
+}
+
 
 void CameraImpl::filterFrameAndConvertToHLS()
 {

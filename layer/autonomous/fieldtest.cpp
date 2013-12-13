@@ -244,7 +244,7 @@ void FieldTest::update_threeObjectsAndTwoObjectsInGoal_twoAchievedGoals()
 
     field.update();
 
-    CPPUNIT_ASSERT(field.achievedGoals() == 2);
+    CPPUNIT_ASSERT(field.getNumberOfAchievedGoals() == 2);
 
 }
 

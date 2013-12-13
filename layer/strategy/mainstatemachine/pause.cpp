@@ -17,7 +17,7 @@ State* Pause::nextState()
         return new AchieveGoals(m_robot, m_field, m_referee);
     else if(m_referee.detectionStart())
         return new Calibrate(m_robot, m_field, m_referee);
-    else if(m_field.achievedGoals() < 3 && not m_referee.stopMovement() && not m_referee.gameOver())
+    else if(m_field.getNumberOfAchievedGoals() < 3 && not m_referee.stopMovement() && not m_referee.gameOver())
         return new AchieveGoals(m_robot, m_field, m_referee);
     else
         return 0;

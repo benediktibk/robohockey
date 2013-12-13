@@ -46,8 +46,8 @@ namespace Autonomous
 		virtual const std::vector<Common::Circle>& getAllHardObstacles() const;
 		virtual std::vector<FieldObject> getObjectsWithColorOrderdByDistance(Common::FieldColor color, const Common::Point &position) const;
 		virtual bool calibratePosition();
-		unsigned int achievedGoals();
-		unsigned int enemyHiddenPucks();
+		virtual unsigned int getNumberOfAchievedGoals();
+		virtual unsigned int getNumberOfHiddenPucks();
 		virtual bool isPointInsideField(const Common::Point &point) const;
 		virtual bool numberOfPucksChanged() const;
 		virtual bool isCalibrated() const;
@@ -68,7 +68,7 @@ namespace Autonomous
 		void updateWithOdometryData();
 		void updateWithCameraData();
 		void updateObstacles();
-        void updateAchieveGoals();
+        void updateAchievedGoals();
 
 		FieldObject& getNextObjectFromPosition(Common::Point position);
 		std::vector<FieldObject>::iterator getNextObjectFromPosition(std::vector<FieldObject> &fieldObjects, Common::Point position);

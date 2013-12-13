@@ -24,6 +24,8 @@ namespace DataAnalysis
 		virtual CameraObjects getAllCameraObjects(const Common::RobotPosition &position);
 		virtual double getProbabilityForYellowGoal();
 		virtual double getProbabilityForBlueGoal();
+		virtual double getProbabilityForCollectedYellowPuck();
+		virtual double getProbabilityForCollectedBluePuck();
 
 	private:
 		void filterFrameAndConvertToHLS();

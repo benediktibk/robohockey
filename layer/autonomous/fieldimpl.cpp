@@ -47,7 +47,7 @@ void FieldImpl::update()
 		updateObstacles();
 	}
 
-    updateAchieveGoals();
+    updateAchievedGoals();
 }
 
 const vector<FieldObject> &FieldImpl::getAllFieldObjects() const
@@ -86,12 +86,12 @@ bool FieldImpl::calibratePosition()
 	return result;
 }
 
-unsigned int FieldImpl::achievedGoals()
+unsigned int FieldImpl::getNumberOfAchievedGoals()
 {
 	return m_achievedGoals;
 }
 
-unsigned int FieldImpl::enemyHiddenPucks()
+unsigned int FieldImpl::getNumberOfHiddenPucks()
 {
 	return m_hiddenPucks;
 }
@@ -335,7 +335,7 @@ void FieldImpl::updateObstacles()
     }
 }
 
-void FieldImpl::updateAchieveGoals()
+void FieldImpl::updateAchievedGoals()
 {
     std::vector<FieldObject> objectsToCheck = m_fieldObjects;
     size_t numberOfObjects = objectsToCheck.size();
@@ -343,6 +343,8 @@ void FieldImpl::updateAchieveGoals()
     Point corner2(4.583, 2);
     Rectangle goal(corner1, corner2);
     unsigned int achievedGoals = 0;
+    if(numberOfObjects != 0)
+    {
     for (size_t i=0; i <= numberOfObjects; i++)
     {
         const FieldObject &currentObject = objectsToCheck[i];
@@ -354,6 +356,9 @@ void FieldImpl::updateAchieveGoals()
         }
     }
     m_achievedGoals = achievedGoals;
+    }
+    else
+    m_achievedGoals = 0;
 }
 
 FieldObject &FieldImpl::getNextObjectFromPosition(Point position)

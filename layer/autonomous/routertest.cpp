@@ -174,6 +174,8 @@ void RouterTest::calculateRoute_oneBigObstacleCloseToStart_routeIsNotIntersectin
 
 void RouterTest::calculateRoute_oneBigObstacleCloseToEnd_validRoute()
 {
+	CPPUNIT_ASSERT(false);
+
 	FieldMock field;
 	RouterImpl router(0.5);
 	vector<Circle> obstacles;
@@ -189,6 +191,8 @@ void RouterTest::calculateRoute_oneBigObstacleCloseToEnd_validRoute()
 
 void RouterTest::calculateRoute_oneBigObstacleCloseToEnd_routeIsNotTooLong()
 {
+	CPPUNIT_ASSERT(false);
+
 	FieldMock field;
 	RouterImpl router(0.5);
 	vector<Circle> obstacles;
@@ -205,6 +209,8 @@ void RouterTest::calculateRoute_oneBigObstacleCloseToEnd_routeIsNotTooLong()
 
 void RouterTest::calculateRoute_oneBigObstacleCloseToEnd_routeIsNotIntersectingWithObstacles()
 {
+	CPPUNIT_ASSERT(false);
+
 	FieldMock field;
 	RouterImpl router(0.5);
 	vector<Circle> obstacles;
@@ -220,6 +226,8 @@ void RouterTest::calculateRoute_oneBigObstacleCloseToEnd_routeIsNotIntersectingW
 
 void RouterTest::calculateRoute_oneBigObstacleOnRightSideOfDirectPath_reasonableRoute()
 {
+	CPPUNIT_ASSERT(false);
+
 	FieldMock field;
 	RouterImpl router(0.5);
 	vector<Circle> obstacles;
@@ -238,6 +246,8 @@ void RouterTest::calculateRoute_oneBigObstacleOnRightSideOfDirectPath_reasonable
 
 void RouterTest::calculateRoute_oneBigObstacleOnLeftSideOfDirectPath_reasonableRoute()
 {
+	CPPUNIT_ASSERT(false);
+
 	FieldMock field;
 	RouterImpl router(0.5);
 	vector<Circle> obstacles;
@@ -256,6 +266,8 @@ void RouterTest::calculateRoute_oneBigObstacleOnLeftSideOfDirectPath_reasonableR
 
 void RouterTest::calculateRoute_obstacleOnWayToPointBesideObstacle_reasonableRoute()
 {
+	CPPUNIT_ASSERT(false);
+
 	FieldMock field;
 	RouterImpl router(0.5);
 	vector<Circle> obstacles;
@@ -276,8 +288,6 @@ void RouterTest::calculateRoute_obstacleOnWayToPointBesideObstacle_reasonableRou
 
 void RouterTest::calculateRoute_obstacleOnWayToTargetFromPointBesideObstacle_reasonableRoute()
 {
-	CPPUNIT_ASSERT(false);
-
 	FieldMock field;
 	RouterImpl router(0.5);
 	vector<Circle> obstacles;
@@ -298,6 +308,8 @@ void RouterTest::calculateRoute_obstacleOnWayToTargetFromPointBesideObstacle_rea
 
 void RouterTest::calculateRoute_obstacleOnWayToAndFromPointBesideObstacle_reasonableRoute()
 {
+	CPPUNIT_ASSERT(false);
+
 	FieldMock field;
 	RouterImpl router(0.5);
 	vector<Circle> obstacles;
@@ -406,8 +418,7 @@ void RouterTest::calculateRoute_onlyPossiblePointBesideIsBlockedByAnotherObstacl
 	CPPUNIT_ASSERT(route.isValid());
 	CPPUNIT_ASSERT(!route.intersectsWith(obstacles));
 	double routeLength = route.getLength();
-	//! 10 is definitely too small, but I have not yet found a reasonable value for this test case.
-	CPPUNIT_ASSERT(routeLength < 10);
+	CPPUNIT_ASSERT(routeLength < 12.5);
 }
 
 void RouterTest::calculateRoute_softObstacleAtOwnPosition_validRoute()
@@ -640,10 +651,10 @@ void RouterTest::getPointsBesideObstacle_bigObstacleOnRightSide_bothPointsDoNotI
 
 	vector<Point> pointsBeside = router.getPointsBesideObstacle(path, obstacle);
 
-	Path one(pointsBeside.front(), pointsBeside.front(), 0.5);
-	Path two(pointsBeside.back(), pointsBeside.back(), 0.5);
-	CPPUNIT_ASSERT(!one.intersectsWith(obstacle));
-	CPPUNIT_ASSERT(!two.intersectsWith(obstacle));
+	Circle one(pointsBeside.front(), 0.707);
+	Circle two(pointsBeside.back(), 0.707);
+	CPPUNIT_ASSERT(!one.overlapsWith(obstacle));
+	CPPUNIT_ASSERT(!two.overlapsWith(obstacle));
 }
 
 void RouterTest::getPointsBesideObstacle_bigObstacleOnRightSide_bothPointsHaveReasonableCoordinates()
@@ -674,24 +685,28 @@ bool RouterTest::routeIsInsideField(const Route &route, const Field &field)
 	return true;
 }
 
-void RouterTest::getPointsBesideObstacle_bigObstacleOnRightSide_shortPointIs2And1p1615()
+void RouterTest::getPointsBesideObstacle_bigObstacleOnRightSide_shortPointIsCorrect()
 {
-	Compare compare(0.0001);
 	RouterImpl router(0.5);
 	Path currentPath(Point(0,0), Point(4,0), 0.5);
 	Circle obstacle(Point(2,-0.5), 2);
+	Point pointBesideObstacle = router.getPointsBesideObstacle(currentPath, obstacle).front();
+	Circle robotBesideObstacle(pointBesideObstacle, 0.707);
 
-	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(2,1.1615), router.getPointsBesideObstacle(currentPath, obstacle).front()));
+	CPPUNIT_ASSERT(!robotBesideObstacle.overlapsWith(obstacle));
+	CPPUNIT_ASSERT(robotBesideObstacle.getDistanceTo(obstacle.getCenter()) < 1.5);
 }
 
-void RouterTest::getPointsBesideObstacle_bigObstacleOnRightSide_longPointIs2AndMinus2p5177()
+void RouterTest::getPointsBesideObstacle_bigObstacleOnRightSide_longPointIsCorrect()
 {
-	Compare compare(0.0001);
 	RouterImpl router(0.5);
 	Path currentPath(Point(0,0), Point(4,0), 0.5);
 	Circle obstacle(Point(2,-0.5), 2);
+	Point pointBesideObstacle = router.getPointsBesideObstacle(currentPath, obstacle).back();
+	Circle robotBesideObstacle(pointBesideObstacle, 0.707);
 
-	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(2,-2.5177), router.getPointsBesideObstacle(currentPath, obstacle).back()));
+	CPPUNIT_ASSERT(!robotBesideObstacle.overlapsWith(obstacle));
+	CPPUNIT_ASSERT(robotBesideObstacle.getDistanceTo(obstacle.getCenter()) < 1.5);
 }
 
 void RouterTest::getPointsBesideObstacle_bigObstacleCloseOnLeftSide_onePointIsLeftAndOneRight()
@@ -706,7 +721,7 @@ void RouterTest::getPointsBesideObstacle_bigObstacleCloseOnLeftSide_onePointIsLe
 
 	Circle robotShortObstacle(points.front(), 0.707);
 	CPPUNIT_ASSERT(!robotShortObstacle.overlapsWith(obstacle));
-	Circle robotLongObstacle(points.front(), 0.707);
+	Circle robotLongObstacle(points.back(), 0.707);
 	CPPUNIT_ASSERT(!robotLongObstacle.overlapsWith(obstacle));
 
 	Line line(start, end);

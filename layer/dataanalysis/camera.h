@@ -23,6 +23,8 @@ namespace DataAnalysis
 		virtual CameraObjects getAllCameraObjects(const Common::RobotPosition &position) = 0;
 		virtual double getProbabilityForYellowGoal() = 0;
 		virtual double getProbabilityForBlueGoal() = 0;
+		virtual double getProbabilityForCollectedYellowPuck() = 0;
+		virtual double getProbabilityForCollectedBluePuck() = 0;
 	};
 }
 }
