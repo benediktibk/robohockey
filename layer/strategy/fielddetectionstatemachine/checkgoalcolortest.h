@@ -16,13 +16,15 @@ class CheckGoalColorTest :
 		public CPPUNIT_NS::TestFixture
 	{
 		CPPUNIT_TEST_SUITE(CheckGoalColorTest);
-		CPPUNIT_TEST(nextState_successfulColorCheck_driveToWaitingPosition);
+		CPPUNIT_TEST(nextState_successfulColorCheckNoResponse_NULL);
 		CPPUNIT_TEST(nextState_unsuccessfulColorCheck_NULL);
+		CPPUNIT_TEST(nextState_successfulColorCheckGotResponse_driveTo);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
-		void nextState_successfulColorCheck_driveToWaitingPosition();
+		void nextState_successfulColorCheckNoResponse_NULL();
 		void nextState_unsuccessfulColorCheck_NULL();
+		void nextState_successfulColorCheckGotResponse_driveTo();
 	};
 }
 }
