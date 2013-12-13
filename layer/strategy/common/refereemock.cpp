@@ -15,7 +15,7 @@ void RefereeMock::reportDone()
 void RefereeMock::sendAlive()
 { }
 
-void RefereeMock::tellTeamColor(Extern::Angelina::TeamColor)
+void RefereeMock::tellTeamColor(RoboHockey::Common::FieldColor)
 { }
 
 void RefereeMock::reportGoal()
@@ -39,9 +39,9 @@ bool RefereeMock::gameOver()
 	return m_gameOver;
 }
 
-Extern::Angelina::TeamColor RefereeMock::trueColorOfTeam()
+RoboHockey::Common::FieldColor RefereeMock::trueColorOfTeam()
 {
-	return blue;
+	return RoboHockey::Common::FieldColorBlue;
 }
 
 bool RefereeMock::stopMovement()

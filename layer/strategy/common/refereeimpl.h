@@ -32,13 +32,13 @@ namespace Common
 		virtual void reportReady();
 		virtual void reportDone();
 		virtual void sendAlive();
-		virtual void tellTeamColor(Extern::Angelina::TeamColor color);
+		virtual void tellTeamColor(RoboHockey::Common::FieldColor color);
 		virtual void reportGoal();
 		virtual void tellEgoPos(const RoboHockey::Common::Point &position);
 		virtual bool detectionStart();
 		virtual bool gameStart();
 		virtual bool gameOver();
-		virtual Extern::Angelina::TeamColor trueColorOfTeam();
+		virtual RoboHockey::Common::FieldColor trueColorOfTeam();
 		virtual bool stopMovement();
 		virtual bool isValid();
 
@@ -58,7 +58,7 @@ namespace Common
 		bool m_detectionStart;
 		bool m_GameStart;
 		bool m_GameOver;
-		Extern::Angelina::TeamColor m_trueColorOfTeam;
+		RoboHockey::Common::FieldColor m_trueColorOfTeam;
 		bool m_stopMovement;
 		bool m_Connected;
 		bool m_ConnectFailed;
