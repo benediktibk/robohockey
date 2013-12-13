@@ -670,7 +670,7 @@ void RouterTest::getPointsBesideObstacle_bigObstacleCloseOnLeftSide_onePointIsLe
 
 	Circle robotShortObstacle(points.front(), 0.707);
 	CPPUNIT_ASSERT(!robotShortObstacle.overlapsWith(obstacle));
-	Circle robotLongObstacle(points.front(), 0.707);
+	Circle robotLongObstacle(points.back(), 0.707);
 	CPPUNIT_ASSERT(!robotLongObstacle.overlapsWith(obstacle));
 
 	Line line(start, end);
