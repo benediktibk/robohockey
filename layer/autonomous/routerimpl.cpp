@@ -181,7 +181,7 @@ vector<Route> RouterImpl::calculateStartPartsWithFreeEnd(
 	vector<Route> startParts = calculateRoutesToPointsBesideObstacle(
 				closestObstacle, start, end, field, obstacles, canGoLeft, canGoRight,
 				searchDepth, extendedConsideredObstacles);
-	return calculateEndParts(startParts, end, field, obstacles, searchDepth);
+	return calculateEndParts(startParts, end, field, obstacles, searchDepth, extendedConsideredObstacles);
 }
 
 vector<Route> RouterImpl::calculateStartPartsWithCoveredEnd(
@@ -217,7 +217,7 @@ vector<Route> RouterImpl::calculateStartPartsWithCoveredEnd(
 
 vector<Route> RouterImpl::calculateEndParts(
 		const vector<Route> &startRoutes, const Point &end, const Field &field,
-		const vector<Circle> &obstacles, unsigned int searchDepth) const
+		const vector<Circle> &obstacles, unsigned int searchDepth, const list<Circle> &consideredObstacles) const
 {
 	Compare compare(0.01);
 	vector<Route> result;
@@ -232,7 +232,6 @@ vector<Route> RouterImpl::calculateEndParts(
 			result.push_back(startRoute);
 		else
 		{
-			list<Circle> consideredObstacles;
 			vector<Route> routes = calculateStartParts(
 						start, end, field, obstacles, searchDepth, true, true, consideredObstacles);
 
@@ -287,6 +286,7 @@ vector<Route> RouterImpl::calculateRoutesToPointsBesideObstacle(
 		const vector<Circle> &obstacles, bool canGoLeft, bool canGoRight, unsigned int searchDepth,
 		const list<Circle> &consideredObstacles) const
 {
+	assert(consideredObstacles.back() == obstacle);
 	if (detectLoopInConsideredObstacles(consideredObstacles))
 		return vector<Route>();
 
@@ -311,14 +311,22 @@ vector<Route> RouterImpl::calculateRoutesToPointsBesideObstacle(
 	}
 
 	vector<Route> result;
-	if (canGoRight && field.isPointInsideField(rightPoint))
+	bool equalToLastObstacle = false;
+	if (consideredObstacles.size() > 1)
+	{
+		list<Circle>::const_reverse_iterator nextToLast = consideredObstacles.rbegin();
+		++nextToLast;
+		equalToLastObstacle = *nextToLast == obstacle;
+	}
+
+	if ((canGoRight || !equalToLastObstacle) && field.isPointInsideField(rightPoint))
 	{
 		vector<Route> startParts = calculateStartParts(
 					start, rightPoint, field, obstacles, searchDepth, false, true, consideredObstacles);
 		result.insert(result.end(), startParts.begin(), startParts.end());
 	}
 
-	if (canGoLeft && field.isPointInsideField(leftPoint))
+	if ((canGoLeft || !equalToLastObstacle)  && field.isPointInsideField(leftPoint))
 	{
 		vector<Route> startParts = calculateStartParts(
 					start, leftPoint, field, obstacles, searchDepth, true, false, consideredObstacles);
