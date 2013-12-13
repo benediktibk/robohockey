@@ -21,7 +21,8 @@ namespace FieldDetectionStateMachine
 		virtual void update();
 
 	private:
-		bool m_successful;
+		bool m_teamColorSend;
+		bool m_gotResponse;
 
 	};
 }
