@@ -142,3 +142,12 @@ void LineTest::isOnePointLeftAndOneRightOfLine_strangeExample_resultIsTrue()
 
 	CPPUNIT_ASSERT(line.isOnePointLeftAndOneRightOfLine(targetLeft, targetRight));
 }
+
+void LineTest::shiftParallel_shiftLine_resultIsCorrect()
+{
+	Line line(Point(0,0), Point(3,1));
+	line.shiftParallel(Point(2,2));
+
+	CPPUNIT_ASSERT_EQUAL(Point(2,2), line.getStart());
+	CPPUNIT_ASSERT_EQUAL(Point(5,3), line.getEnd());
+}

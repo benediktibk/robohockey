@@ -125,3 +125,20 @@ bool Line::isOnePointLeftAndOneRightOfLine(const Point &one, const Point &two) c
 
 	return pointsLeft == 1 && pointsRight == 1;
 }
+
+void Line::shiftParallel(const Point &point)
+{
+	Point direction(m_end - m_start);
+	m_start = point;
+	m_end = m_start + direction;
+}
+
+Point Line::getStart() const
+{
+	return m_start;
+}
+
+Point Line::getEnd() const
+{
+	return m_end;
+}

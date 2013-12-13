@@ -30,6 +30,7 @@ namespace Common
 		 CPPUNIT_TEST(getPerpendicularPoint_pointIs1And2_resultIsCorrect);
 		 CPPUNIT_TEST(getPerpendicularPoint_pointIs1p5And2_resultIsCorrect);
 		 CPPUNIT_TEST(isOnePointLeftAndOneRightOfLine_strangeExample_resultIsTrue);
+		 CPPUNIT_TEST(shiftParallel_shiftLine_resultIsCorrect);
 		 CPPUNIT_TEST_SUITE_END();
 
 	private:
@@ -51,6 +52,7 @@ namespace Common
 		 void getPerpendicularPoint_pointIs1And2_resultIsCorrect();
 		 void getPerpendicularPoint_pointIs1p5And2_resultIsCorrect();
 		 void isOnePointLeftAndOneRightOfLine_strangeExample_resultIsTrue();
+		 void shiftParallel_shiftLine_resultIsCorrect();
 	};
 }
 }
