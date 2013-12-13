@@ -382,7 +382,6 @@ vector<FieldObject>::iterator FieldImpl::getNextObjectFromPosition(std::vector<F
 		if ( position.distanceTo((*i).getCircle().getCenter()) < position.distanceTo((*result).getCircle().getCenter()))
 			result = i;
 	}
-
 	return result;
 }
 
@@ -403,7 +402,6 @@ bool FieldImpl::tryToMergeLidarAndFieldObject(FieldObject &fieldObject, const Da
 		m_fieldObjects.push_back(FieldObject( Circle(newCenter, diameter), fieldObject.getColor()));
 		return true;
 	}
-
 	return false;
 }
 
@@ -438,7 +436,6 @@ void FieldImpl::moveCoordinateSystem(Point &newOrigin)
 
 	m_fieldObjects.clear();
 	m_fieldObjects = newSystem;
-
 }
 
 void FieldImpl::rotateCoordinateSystem(double alpha)
@@ -470,7 +467,6 @@ void FieldImpl::rotateCoordinateSystem(double alpha)
 
 	m_fieldObjects.clear();
 	m_fieldObjects = newSystem;
-
 }
 
 std::vector<Point> *FieldImpl::getPointsOfObjectsWithDiameterAndColor(double diameter, FieldColor color)
@@ -520,7 +516,6 @@ vector<FieldObject> FieldImpl::moveAllFieldObjectsInVisibleAreaToTemporaryVector
 		}
 		++i;
 	}
-
 	return result;
 }
 
