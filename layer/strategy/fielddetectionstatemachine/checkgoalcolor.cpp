@@ -46,6 +46,13 @@ void CheckGoalColor::update()
 		}
 	}
 
+	FieldColor refResponse = FieldColorUnknown;
+	refResponse = m_referee.trueColorOfTeam();
 
+	if (refResponse != FieldColorUnknown)
+	{
+		m_field.setTrueTeamColor(refResponse);
+		m_gotResponse = true;
+	}
 
 }
