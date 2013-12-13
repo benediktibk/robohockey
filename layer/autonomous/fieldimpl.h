@@ -60,6 +60,8 @@ namespace Autonomous
 		virtual std::list<Common::RobotPosition> getTargetsForHidingEnemyPucks() const;
 		virtual std::list<Common::RobotPosition> getTargetsForCollectingOnePuck() const;
 		virtual void setTrueTeamColor(Common::FieldColor trueTeamColor);
+		virtual Common::RobotPosition getNewOriginOfFieldDetection();
+		virtual void transformFieldToNewOrigin(const Common::RobotPosition newOrigin);
 
 	private:
 		void updateWithLidarData();
