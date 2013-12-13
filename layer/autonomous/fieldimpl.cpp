@@ -84,12 +84,12 @@ bool FieldImpl::calibratePosition()
 	return result;
 }
 
-unsigned int FieldImpl::achievedGoals()
+unsigned int FieldImpl::getNumberOfAchievedGoals()
 {
 	return m_achievedGoals;
 }
 
-unsigned int FieldImpl::enemyHiddenPucks()
+unsigned int FieldImpl::getNumberOfHiddenPucks()
 {
 	return m_hiddenPucks;
 }
