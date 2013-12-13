@@ -3,6 +3,7 @@
 #include "common/angle.h"
 #include <iostream>
 #include <math.h>
+#include <assert.h>
 
 using namespace std;
 using namespace RoboHockey::Common;
@@ -16,6 +17,7 @@ FieldDetector::FieldDetector(const Point &currentPosition, vector<Point> &points
 bool FieldDetector::tryToDetectField()
 {
 	vector<Point*> currentPoints;
+	bool result = false;
 
 	for (vector<Point>::iterator i = m_points.begin(); i != m_points.end(); ++i)
 	{
@@ -27,29 +29,45 @@ bool FieldDetector::tryToDetectField()
 		BorderStone root(*i, BorderStoneFieldDistanceRoot, m_distanceChecker, *i);
 		root.searchNeighbourBorderStones(currentPoints);
 
-		// Add One, as root is a BorderStone, too
+		//! Add One, as root is a BorderStone, too
 		int numberOfFoundBorderStones = 1 + root.getNumberOfChildrenRecursive();
 
 		if (numberOfFoundBorderStones > 2)
 		{
 			if (tryToFigureOutNewOrigin(root))
-				return true;
+				result = true;
 		}
 
 	}
 
 
-	return false;
+	return result;
 }
 
 
 Point FieldDetector::getNewOrigin()
 {
+	assert(m_newOrigins.size() != (size_t) 0);
+
+	Point medianPoint;
+
+	for (vector<RobotPosition>::const_iterator it = m_newOrigins.begin(); it != m_newOrigins.end(); ++it)
+		medianPoint = medianPoint + (*it).getPosition() * 1.0/(double) m_newOrigins.size();
+
+	return medianPoint;
 	return m_newOrigin;
 }
 
 double FieldDetector::getRotation()
 {
+	assert(m_newOrigins.size() != (size_t) 0);
+
+	Angle medianRotation;
+
+	for (vector<RobotPosition>::const_iterator it = m_newOrigins.begin(); it != m_newOrigins.end(); ++it)
+		medianRotation = medianRotation + (*it).getOrientation() * 1.0/(double) m_newOrigins.size();
+
+	return medianRotation.getValueBetweenMinusPiAndPi();
 	return m_rotation;
 }
 
@@ -94,7 +112,7 @@ bool FieldDetector::tryToFigureOutNewOrigin(BorderStone &root)
 	{
 		if (linear)
 		{
-			cornerOne = root + normFromRoot * (standardDistanceA + standardDistanceB);
+			cornerOne = root + normFromRoot * (standardDistanceA + standardDistanceB + standardDistanceC * 2);
 			cornerTwo = root + normToRoot * (standardDistanceA + standardDistanceB);
 		} else
 		{
@@ -182,6 +200,8 @@ bool FieldDetector::tryToFigureOutNewOrigin(BorderStone &root)
 	}
 
 	m_newOrigin = possibleNewOrigin;
+
+	m_newOrigins.push_back( RobotPosition( m_newOrigin, m_rotation) );
 
 	return true;
 }

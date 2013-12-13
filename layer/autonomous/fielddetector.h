@@ -3,6 +3,7 @@
 
 #include <vector>
 #include "common/point.h"
+#include "common/robotposition.h"
 #include "layer/autonomous/borderstonedistances.h"
 
 namespace RoboHockey
@@ -31,6 +32,7 @@ namespace Autonomous
 		BorderStoneDistances m_distanceChecker;
 		Common::Point m_newOrigin;
 		double m_rotation;
+		std::vector<Common::RobotPosition> m_newOrigins;
 	};
 }
 }
