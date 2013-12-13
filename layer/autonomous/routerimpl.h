@@ -3,6 +3,7 @@
 
 #include "layer/autonomous/router.h"
 #include <vector>
+#include <list>
 
 namespace RoboHockey
 {
@@ -31,20 +32,21 @@ namespace Autonomous
 		std::vector<Common::Point> getPointsBesideObstacle(const Common::Path &path, const Common::Circle &obstacle) const;
 		std::vector<Common::Circle> filterObstacles(const std::vector<Common::Circle> &softObstacles,
 				const std::vector<Common::Circle> &hardObstacles, const Common::Point &position) const;
+		bool detectLoopInConsideredObstacles(const std::list<Common::Circle> &obstacles) const;
 
 	private:
 		std::vector<Route> calculateStartParts(
 				const Common::Point &start, const Common::Point &end, const Field &field,
 				const std::vector<Common::Circle> &obstacles, unsigned int searchDepth,
-				bool canGoLeft, bool canGoRight) const;
+				bool canGoLeft, bool canGoRight, const std::list<Common::Circle> &consideredObstacles) const;
 		std::vector<Route> calculateStartPartsWithFreeEnd(
 				const Common::Point &start, const Common::Point &end, const Field &field,
 				const std::vector<Common::Circle> &obstacles, unsigned int searchDepth,
-				bool canGoLeft, bool canGoRight) const;
+				bool canGoLeft, bool canGoRight, const std::list<Common::Circle> &consideredObstacles) const;
 		std::vector<Route> calculateStartPartsWithCoveredEnd(
 				const Common::Point &start, const Common::Point &end, const Field &field,
 				const std::vector<Common::Circle> &obstacles, unsigned int searchDepth,
-				bool canGoLeft, bool canGoRight) const;
+				bool canGoLeft, bool canGoRight, const std::list<Common::Circle> &consideredObstacles) const;
 		std::vector<Route> calculateEndParts(
 				const std::vector<Route> &startRoutes, const Common::Point &end, const Field &field,
 				const std::vector<Common::Circle> &obstacles, unsigned int searchDepth) const;
@@ -53,7 +55,7 @@ namespace Autonomous
 		std::vector<Route> calculateRoutesToPointsBesideObstacle(
 				const Common::Circle &obstacle, const Common::Point &start, const Common::Point &end,
 				const Field &field, const std::vector<Common::Circle> &obstacles, bool canGoLeft, bool canGoRight,
-				unsigned int searchDepth) const;
+				unsigned int searchDepth, const std::list<Common::Circle> &consideredObstacles) const;
 
 	private:
 		const unsigned int m_maximumSearchDepth;

@@ -226,8 +226,6 @@ void RouterTest::calculateRoute_oneBigObstacleOnLeftSideOfDirectPath_reasonableR
 
 void RouterTest::calculateRoute_obstacleOnWayToPointBesideObstacle_reasonableRoute()
 {
-	CPPUNIT_ASSERT(false);
-
 	FieldMock field;
 	RouterImpl router(0.5);
 	vector<Circle> obstacles;
@@ -266,8 +264,6 @@ void RouterTest::calculateRoute_obstacleOnWayToTargetFromPointBesideObstacle_rea
 
 void RouterTest::calculateRoute_obstacleOnWayToAndFromPointBesideObstacle_reasonableRoute()
 {
-	CPPUNIT_ASSERT(false);
-
 	FieldMock field;
 	RouterImpl router(0.5);
 	vector<Circle> obstacles;
@@ -355,8 +351,6 @@ void RouterTest::calculateRoute_shortWayOutsideField_noPointOfRouteIsOutside()
 
 void RouterTest::calculateRoute_onlyPossiblePointBesideIsBlockedByAnotherObstacle_reasonableRoute()
 {
-	CPPUNIT_ASSERT(false);
-
 	FieldMock field;
 	field.setNegativeCoordinatesOutside(true);
 	RouterImpl router(0.5);
@@ -408,126 +402,148 @@ void RouterTest::calculateRoute_hardObstacleAtOwnPosition_invalidRoute()
 	CPPUNIT_ASSERT(!route.isValid());
 }
 
-void RouterTest::getPointsBesideObstacle_intersectFromLeftAndCircleCenterNotOnPath_shortPointIs2AndMinus1()
+void RouterTest::getPointsBesideObstacle_intersectFromLeftAndCircleCenterNotOnPath_shortPointIsCorrect()
 {
 	RouterImpl router(2);
 	Path currentPath(Point(0,0), Point(4,0), 2);
 	Circle obstacle(Point(2,2), 2.8284);
 	Point pointBesideObstacle = router.getPointsBesideObstacle(currentPath, obstacle).front();
-	Path robotBesideObstacle(pointBesideObstacle, pointBesideObstacle, 2.8284);
+	Circle robotBesideObstacle(pointBesideObstacle, 2.8284);
 
-	CPPUNIT_ASSERT(!robotBesideObstacle.intersectsWith(obstacle));
-	CPPUNIT_ASSERT(robotBesideObstacle.getDistanceToLeftPerpendicularPoint(obstacle.getCenter()) < 1.5);
+	CPPUNIT_ASSERT(!robotBesideObstacle.overlapsWith(obstacle));
+	CPPUNIT_ASSERT(robotBesideObstacle.getDistanceTo(obstacle.getCenter()) < 1.5);
 }
 
-void RouterTest::getPointsBesideObstacle_intersectFromLeftAndCircleCenterNotOnPath_longPointIs2And6p4142()
+void RouterTest::getPointsBesideObstacle_intersectFromLeftAndCircleCenterNotOnPath_longPointIsCorrect()
 {
-	Compare compare(0.0001);
 	RouterImpl router(2);
 	Path currentPath(Point(0,0), Point(4,0), 2);
 	Circle obstacle(Point(2,2), 2.8284);
+	Point pointBesideObstacle = router.getPointsBesideObstacle(currentPath, obstacle).back();
+	Circle robotBesideObstacle(pointBesideObstacle, 2.8284);
 
-	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(2,6.4142), router.getPointsBesideObstacle(currentPath, obstacle).back()));
+	CPPUNIT_ASSERT(!robotBesideObstacle.overlapsWith(obstacle));
+	CPPUNIT_ASSERT(robotBesideObstacle.getDistanceTo(obstacle.getCenter()) < 1.5);
 }
 
-void RouterTest::getPointsBesideObstacle_intersectFromRightAndCircleCenterNotOnPath_shortPointIs2And3()
+void RouterTest::getPointsBesideObstacle_intersectFromRightAndCircleCenterNotOnPath_shortPointIsCorrect()
 {
-	Compare compare(0.0001);
 	RouterImpl router(2);
 	Path currentPath(Point(0,2), Point(4,2), 2);
 	Circle obstacle(Point(2,0), 2.8284);
+	Point pointBesideObstacle = router.getPointsBesideObstacle(currentPath, obstacle).front();
+	Circle robotBesideObstacle(pointBesideObstacle, 2.8284);
 
-	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(2,3), router.getPointsBesideObstacle(currentPath, obstacle).front()));
+	CPPUNIT_ASSERT(!robotBesideObstacle.overlapsWith(obstacle));
+	CPPUNIT_ASSERT(robotBesideObstacle.getDistanceTo(obstacle.getCenter()) < 1.5);
 }
 
-void RouterTest::getPointsBesideObstacle_intersectFromRightAndCircleCenterNotOnPath_longPointIs2AndMinus4p4142()
+void RouterTest::getPointsBesideObstacle_intersectFromRightAndCircleCenterNotOnPath_longPointIsCorrect()
 {
-	Compare compare(0.0001);
 	RouterImpl router(2);
 	Path currentPath(Point(0,2), Point(4,2), 2);
 	Circle obstacle(Point(2,0), 2.8284);
+	Point pointBesideObstacle = router.getPointsBesideObstacle(currentPath, obstacle).back();
+	Circle robotBesideObstacle(pointBesideObstacle, 2.8284);
 
-	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(2,-4.4142), router.getPointsBesideObstacle(currentPath, obstacle).back()));
+	CPPUNIT_ASSERT(!robotBesideObstacle.overlapsWith(obstacle));
+	CPPUNIT_ASSERT(robotBesideObstacle.getDistanceTo(obstacle.getCenter()) < 1.5);
 }
 
-void RouterTest::getPointsBesideObstacle_intersectFromLeftAndCircleCenterNotOnPath_shortPointIs1p5And0p5()
+void RouterTest::getPointsBesideObstacle_intersectFromLeftAndCircleCenterNotOnPath_shortPointIsOk()
 {
-	Compare compare(0.0001);
 	RouterImpl router(1.4142);
 	Path currentPath(Point(0,0), Point(3,3), 1.4142);
 	Circle obstacle(Point(0,2), 2);
+	Point pointBesideObstacle = router.getPointsBesideObstacle(currentPath, obstacle).front();
+	Circle robotBesideObstacle(pointBesideObstacle, 2);
 
-	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(1.5,0.5), router.getPointsBesideObstacle(currentPath, obstacle).front()));
+	CPPUNIT_ASSERT(!robotBesideObstacle.overlapsWith(obstacle));
+	CPPUNIT_ASSERT(robotBesideObstacle.getDistanceTo(obstacle.getCenter()) < 1.1);
 }
 
-void RouterTest::getPointsBesideObstacle_intersectFromRightAndCircleCenterNotOnPath_shortPointIs0p5And1p5()
+void RouterTest::getPointsBesideObstacle_intersectFromRightAndCircleCenterNotOnPath_shortPointIsOk()
 {
-	Compare compare(0.0001);
 	RouterImpl router(1.4142);
 	Path currentPath(Point(0,0), Point(3,3), 1.4142);
 	Circle obstacle(Point(2,0), 2);
+	Point pointBesideObstacle = router.getPointsBesideObstacle(currentPath, obstacle).front();
+	Circle robotBesideObstacle(pointBesideObstacle, 2);
 
-	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(0.5,1.5), router.getPointsBesideObstacle(currentPath, obstacle).front()));
+	CPPUNIT_ASSERT(!robotBesideObstacle.overlapsWith(obstacle));
+	CPPUNIT_ASSERT(robotBesideObstacle.getDistanceTo(obstacle.getCenter()) < 1.1);
 }
 
-void RouterTest::getPointsBesideObstacle_intersectFromLeftAndCircleCenterIsOnPath_shortPointIs2AndMinus3()
+void RouterTest::getPointsBesideObstacle_intersectFromLeftAndCircleCenterIsOnPath_shortPointIsCorrect()
 {
-	Compare compare(0.0001);
-	RouterImpl router(4);
-	Path currentPath(Point(0,0), Point(4,0), 4);
+	RouterImpl router(2);
+	Path currentPath(Point(0,0), Point(4,0), 2);
 	Circle obstacle(Point(2,1), 2.8284);
+	Point pointBesideObstacle = router.getPointsBesideObstacle(currentPath, obstacle).front();
+	Circle robotBesideObstacle(pointBesideObstacle, 2.8284);
 
-	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(2,-3), router.getPointsBesideObstacle(currentPath, obstacle).front()));
+	CPPUNIT_ASSERT(!robotBesideObstacle.overlapsWith(obstacle));
+	CPPUNIT_ASSERT(robotBesideObstacle.getDistanceTo(obstacle.getCenter()) < 1.5);
 }
 
-void RouterTest::getPointsBesideObstacle_intersectFromLeftAndCircleCenterIsOnPath_longPointIs2And7p8284()
+void RouterTest::getPointsBesideObstacle_intersectFromLeftAndCircleCenterIsOnPath_longPointIsCorrect()
 {
-	Compare compare(0.0001);
-	RouterImpl router(4);
-	Path currentPath(Point(0,0), Point(4,0), 4);
+	RouterImpl router(2);
+	Path currentPath(Point(0,0), Point(4,0), 2);
 	Circle obstacle(Point(2,1), 2.8284);
+	Point pointBesideObstacle = router.getPointsBesideObstacle(currentPath, obstacle).back();
+	Circle robotBesideObstacle(pointBesideObstacle, 2.8284);
 
-	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(2,7.8284), router.getPointsBesideObstacle(currentPath, obstacle).back()));
+	CPPUNIT_ASSERT(!robotBesideObstacle.overlapsWith(obstacle));
+	CPPUNIT_ASSERT(robotBesideObstacle.getDistanceTo(obstacle.getCenter()) < 1.5);
 }
 
-void RouterTest::getPointsBesideObstacle_intersectFromRightAndCircleCenterIsOnPath_shortPointIs2And3()
+void RouterTest::getPointsBesideObstacle_intersectFromRightAndCircleCenterIsOnPath_shortPointIsCorrect()
 {
-	Compare compare(0.0001);
-	RouterImpl router(4);
-	Path currentPath(Point(0,2), Point(4,2), 4);
-	Circle obstacle(Point(2,-1), 2.8284);
+	RouterImpl router(2);
+	Path currentPath(Point(0,0), Point(4,0), 2);
+	Circle obstacle(Point(2,1), 2.8284);
+	Point pointBesideObstacle = router.getPointsBesideObstacle(currentPath, obstacle).front();
+	Circle robotBesideObstacle(pointBesideObstacle, 2.8284);
 
-	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(2,3), router.getPointsBesideObstacle(currentPath, obstacle).front()));
+	CPPUNIT_ASSERT(!robotBesideObstacle.overlapsWith(obstacle));
+	CPPUNIT_ASSERT(robotBesideObstacle.getDistanceTo(obstacle.getCenter()) < 1.5);
 }
 
-void RouterTest::getPointsBesideObstacle_intersectFromRightAndCircleCenterIsOnPath_longPointIs2AndMinus6p8282()
+void RouterTest::getPointsBesideObstacle_intersectFromRightAndCircleCenterIsOnPath_longPointIsCorrect()
 {
-	Compare compare(0.0001);
-	RouterImpl router(4);
-	Path currentPath(Point(0,1), Point(4,1), 4);
-	Circle obstacle(Point(2,0), 2.8284);
+	RouterImpl router(2);
+	Path currentPath(Point(0,0), Point(4,0), 2);
+	Circle obstacle(Point(2,1), 2.8284);
+	Point pointBesideObstacle = router.getPointsBesideObstacle(currentPath, obstacle).back();
+	Circle robotBesideObstacle(pointBesideObstacle, 2.8284);
 
-	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(2,-6.8284), router.getPointsBesideObstacle(currentPath, obstacle).back()));
+	CPPUNIT_ASSERT(!robotBesideObstacle.overlapsWith(obstacle));
+	CPPUNIT_ASSERT(robotBesideObstacle.getDistanceTo(obstacle.getCenter()) < 1.5);
 }
 
-void RouterTest::getPointsBesideObstacle_intersectFromLeftAndCircleCenterIsOnPath_shortPointIs3And0()
+void RouterTest::getPointsBesideObstacle_intersectFromLeftAndCircleCenterIsOnPath_shortPointIsOk()
 {
-	Compare compare(0.0001);
-	RouterImpl router(2.8284);
-	Path currentPath(Point(0,0), Point(3,3), 2.8284);
+	RouterImpl router(1.4142);
+	Path currentPath(Point(0,0), Point(3,3), 1.4142);
 	Circle obstacle(Point(1,2), 2);
+	Point pointBesideObstacle = router.getPointsBesideObstacle(currentPath, obstacle).front();
+	Circle robotBesideObstacle(pointBesideObstacle, 2);
 
-	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(3,0), router.getPointsBesideObstacle(currentPath, obstacle).front()));
+	CPPUNIT_ASSERT(!robotBesideObstacle.overlapsWith(obstacle));
+	CPPUNIT_ASSERT(robotBesideObstacle.getDistanceTo(obstacle.getCenter()) < 1.1);
 }
 
-void RouterTest::getPointsBesideObstacle_intersectFromRightAndCircleCenterIsOnPath_shortPointIs0And3()
+void RouterTest::getPointsBesideObstacle_intersectFromRightAndCircleCenterIsOnPath_shortPointIsOk()
 {
-	Compare compare(0.0001);
-	RouterImpl router(2.8284);
-	Path currentPath(Point(0,0), Point(3,3), 2.8284);
+	RouterImpl router(1.4142);
+	Path currentPath(Point(0,0), Point(3,3), 1.4142);
 	Circle obstacle(Point(2,1), 2);
+	Point pointBesideObstacle = router.getPointsBesideObstacle(currentPath, obstacle).front();
+	Circle robotBesideObstacle(pointBesideObstacle, 2);
 
-	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(0,3), router.getPointsBesideObstacle(currentPath, obstacle).front()));
+	CPPUNIT_ASSERT(!robotBesideObstacle.overlapsWith(obstacle));
+	CPPUNIT_ASSERT(robotBesideObstacle.getDistanceTo(obstacle.getCenter()) < 1.1);
 }
 
 void RouterTest::getPointsBesideObstacle_pathFrom1And1To1And10AndSmallObstacleBetween_resultSizeIs2()
@@ -543,22 +559,26 @@ void RouterTest::getPointsBesideObstacle_pathFrom1And1To1And10AndSmallObstacleBe
 
 void RouterTest::getPointsBesideObstacle_smallObstacleBetweenAt2And0p5_shortPointIsCorrect()
 {
-	Compare compare(0.0001);
 	RouterImpl router(2);
 	Path currentPath(Point(0,0), Point(4,0), 2);
 	Circle obstacle(Point(2,0.5), 0.5);
+	Point pointBesideObstacle = router.getPointsBesideObstacle(currentPath, obstacle).front();
+	Circle robotBesideObstacle(pointBesideObstacle, 2.8284);
 
-	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(2,3.2677), router.getPointsBesideObstacle(currentPath, obstacle).front()));
+	CPPUNIT_ASSERT(!robotBesideObstacle.overlapsWith(obstacle));
+	CPPUNIT_ASSERT(robotBesideObstacle.getDistanceTo(obstacle.getCenter()) < 0.35);
 }
 
 void RouterTest::getPointsBesideObstacle_smallObstacleBetweenAt2And0p5_longPointIsCorrect()
 {
-	Compare compare(0.0001);
 	RouterImpl router(2);
 	Path currentPath(Point(0,0), Point(4,0), 2);
 	Circle obstacle(Point(2,0.5), 0.5);
+	Point pointBesideObstacle = router.getPointsBesideObstacle(currentPath, obstacle).back();
+	Circle robotBesideObstacle(pointBesideObstacle, 2.8284);
 
-	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(2,-2.2677), router.getPointsBesideObstacle(currentPath, obstacle).back()));
+	CPPUNIT_ASSERT(!robotBesideObstacle.overlapsWith(obstacle));
+	CPPUNIT_ASSERT(robotBesideObstacle.getDistanceTo(obstacle.getCenter()) < 0.35);
 }
 
 void RouterTest::getPointsBesideObstacle_bigObstacleOnRightSide_resultSizeIs2()
@@ -644,19 +664,137 @@ void RouterTest::getPointsBesideObstacle_bigObstacleCloseOnLeftSide_onePointIsLe
 
 	vector<Point> points = router.getPointsBesideObstacle(path, obstacle);
 
+	Circle robotShortObstacle(points.front(), 0.707);
+	CPPUNIT_ASSERT(!robotShortObstacle.overlapsWith(obstacle));
+	Circle robotLongObstacle(points.front(), 0.707);
+	CPPUNIT_ASSERT(!robotLongObstacle.overlapsWith(obstacle));
+
 	Line line(start, end);
-	unsigned int pointsLeft = 0;
-	unsigned int pointsRight = 0;
 	CPPUNIT_ASSERT(path.intersectsWith(obstacle));
 	CPPUNIT_ASSERT_EQUAL((size_t)2, points.size());
-	if (line.isTargetPointRightOfLine(points[0]))
-		++pointsRight;
-	else
-		++pointsLeft;
-	if (line.isTargetPointRightOfLine(points[1]))
-		++pointsRight;
-	else
-		++pointsLeft;
-	CPPUNIT_ASSERT_EQUAL((unsigned int)1, pointsLeft);
-	CPPUNIT_ASSERT_EQUAL((unsigned int)1, pointsRight);
+	CPPUNIT_ASSERT(line.isOnePointLeftAndOneRightOfLine(points[0], points[1]));
+}
+
+void RouterTest::detectLoopInConsideredObstacles_noObstacles_false()
+{
+	RouterImpl router(0.5);
+	list<Circle> obstacles;
+
+	CPPUNIT_ASSERT(!router.detectLoopInConsideredObstacles(obstacles));
+}
+
+void RouterTest::detectLoopInConsideredObstacles_oneObstacle_false()
+{
+	RouterImpl router(0.5);
+	list<Circle> obstacles;
+	obstacles.push_back(Circle(Point(2, 3), 1));
+
+	CPPUNIT_ASSERT(!router.detectLoopInConsideredObstacles(obstacles));
+}
+
+void RouterTest::detectLoopInConsideredObstacles_twiceTheSameObstacle_false()
+{
+	RouterImpl router(0.5);
+	list<Circle> obstacles;
+	obstacles.push_back(Circle(Point(2, 3), 1));
+	obstacles.push_back(Circle(Point(2, 3), 1));
+
+	CPPUNIT_ASSERT(!router.detectLoopInConsideredObstacles(obstacles));
+}
+
+void RouterTest::detectLoopInConsideredObstacles_twiceTheSameObstacleAtEnd_false()
+{
+	RouterImpl router(0.5);
+	list<Circle> obstacles;
+	obstacles.push_back(Circle(Point(-2, 3), 1));
+	obstacles.push_back(Circle(Point(2, 5), 1));
+	obstacles.push_back(Circle(Point(2, 3), 1));
+	obstacles.push_back(Circle(Point(2, 3), 1));
+
+	CPPUNIT_ASSERT(!router.detectLoopInConsideredObstacles(obstacles));
+}
+
+void RouterTest::detectLoopInConsideredObstacles_thriceTheSameObstacle_false()
+{
+	RouterImpl router(0.5);
+	list<Circle> obstacles;
+	obstacles.push_back(Circle(Point(2, 3), 1));
+	obstacles.push_back(Circle(Point(2, 3), 1));
+	obstacles.push_back(Circle(Point(2, 3), 1));
+
+	CPPUNIT_ASSERT(!router.detectLoopInConsideredObstacles(obstacles));
+}
+
+void RouterTest::detectLoopInConsideredObstacles_twiceTheSameObstacleInTheMiddle_false()
+{
+	RouterImpl router(0.5);
+	list<Circle> obstacles;
+	obstacles.push_back(Circle(Point(-3, 3), 2));
+	obstacles.push_back(Circle(Point(2, 3), 1));
+	obstacles.push_back(Circle(Point(2, 3), 1));
+	obstacles.push_back(Circle(Point(2, 4), 0.5));
+
+	CPPUNIT_ASSERT(!router.detectLoopInConsideredObstacles(obstacles));
+}
+
+void RouterTest::detectLoopInConsideredObstacles_twiceTheSameObstacleAtBegin_false()
+{
+	RouterImpl router(0.5);
+	list<Circle> obstacles;
+	obstacles.push_back(Circle(Point(2, 3), 1));
+	obstacles.push_back(Circle(Point(2, 3), 1));
+	obstacles.push_back(Circle(Point(2, 4), 0.5));
+
+	CPPUNIT_ASSERT(!router.detectLoopInConsideredObstacles(obstacles));
+}
+
+void RouterTest::detectLoopInConsideredObstacles_loopOverOne_true()
+{
+	RouterImpl router(0.5);
+	list<Circle> obstacles;
+	obstacles.push_back(Circle(Point(2, 3), 1));
+	obstacles.push_back(Circle(Point(2, 4), 0.5));
+	obstacles.push_back(Circle(Point(2, 3), 1));
+
+	CPPUNIT_ASSERT(router.detectLoopInConsideredObstacles(obstacles));
+}
+
+void RouterTest::detectLoopInConsideredObstacles_loopOverTwo_true()
+{
+	RouterImpl router(0.5);
+	list<Circle> obstacles;
+	obstacles.push_back(Circle(Point(2, 3), 1));
+	obstacles.push_back(Circle(Point(2, 4), 0.5));
+	obstacles.push_back(Circle(Point(2, 4), 0.5));
+	obstacles.push_back(Circle(Point(2, 3), 1));
+
+	CPPUNIT_ASSERT(router.detectLoopInConsideredObstacles(obstacles));
+}
+
+void RouterTest::detectLoopInConsideredObstacles_sameAsSecond_true()
+{
+	RouterImpl router(0.5);
+	list<Circle> obstacles;
+	obstacles.push_back(Circle(Point(1, 1), 0.5));
+	obstacles.push_back(Circle(Point(2, 3), 1));
+	obstacles.push_back(Circle(Point(2, 4), 0.5));
+	obstacles.push_back(Circle(Point(2, 4), 0.5));
+	obstacles.push_back(Circle(Point(1, 1), 0.25));
+	obstacles.push_back(Circle(Point(2, 3), 1));
+
+	CPPUNIT_ASSERT(router.detectLoopInConsideredObstacles(obstacles));
+}
+
+void RouterTest::detectLoopInConsideredObstacles_somewhereInBetweenALoop_false()
+{
+	RouterImpl router(0.5);
+	list<Circle> obstacles;
+	obstacles.push_back(Circle(Point(1, 1), 0.5));
+	obstacles.push_back(Circle(Point(2, 3), 1));
+	obstacles.push_back(Circle(Point(2, 4), 0.5));
+	obstacles.push_back(Circle(Point(2, 3), 1));
+	obstacles.push_back(Circle(Point(2, 4), 0.5));
+	obstacles.push_back(Circle(Point(1, 1), 0.25));
+
+	CPPUNIT_ASSERT(!router.detectLoopInConsideredObstacles(obstacles));
 }

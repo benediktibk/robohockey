@@ -150,3 +150,8 @@ bool Circle::isInside(const Point &point) const
 	double distanceToCenter = m_center.distanceTo(point);
 	return distanceToCenter < radius;
 }
+
+bool Circle::operator==(const Circle &circle) const
+{
+	return m_center == circle.getCenter() && m_diameter == circle.getDiameter();
+}
