@@ -56,8 +56,7 @@ double CameraImpl::getProbabilityForCollectedYellowPuck()
 	Mat puck;
 	filterFrameAndConvertToHLS();
 	inRange(m_filteredFrame, Scalar(18, 20, 50), Scalar(28, 255, 255), puck);
-	//! @todo find rect
-	Rect range(103, 180, 114, 60);
+	Rect range(153, 230, 17, 10);
 	puck = puck(range);
 	return (static_cast<double>(countNonZero(puck))/static_cast<double>(range.area()));
 }
@@ -68,8 +67,7 @@ double CameraImpl::getProbabilityForCollectedBluePuck()
 	Mat puck;
 	filterFrameAndConvertToHLS();
 	inRange(m_filteredFrame, Scalar(95, 20, 40), Scalar(107, 255, 255), puck);
-	//! @todo find rect
-	Rect range(103, 180, 114, 60);
+	Rect range(153, 230, 17, 10);
 	puck = puck(range);
 	return (static_cast<double>(countNonZero(puck))/static_cast<double>(range.area()));
 }
