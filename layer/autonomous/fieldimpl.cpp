@@ -46,6 +46,8 @@ void FieldImpl::update()
 			updateWithCameraData();
 		updateObstacles();
 	}
+
+    updateAchieveGoals();
 }
 
 const vector<FieldObject> &FieldImpl::getAllFieldObjects() const
@@ -330,7 +332,28 @@ void FieldImpl::updateObstacles()
 			m_hardObstacles.push_back(fieldObjectCircle);
 		else
 			m_softObstacles.push_back(i->getCircle());
-	}
+    }
+}
+
+void FieldImpl::updateAchieveGoals()
+{
+    std::vector<FieldObject> objectsToCheck = m_fieldObjects;
+    size_t numberOfObjects = objectsToCheck.size();
+    Point corner1(4.167, 1);
+    Point corner2(4.583, 2);
+    Rectangle goal(corner1, corner2);
+    unsigned int achievedGoals = 0;
+    for (size_t i=0; i <= numberOfObjects; i++)
+    {
+        const FieldObject &currentObject = objectsToCheck[i];
+        const Circle &currentCircle = currentObject.getCircle();
+        Point center = currentCircle.getCenter();
+        if (currentObject.getColor() == m_teamColor && goal.isInside(center, 0.001))
+        {
+            achievedGoals++;
+        }
+    }
+    m_achievedGoals = achievedGoals;
 }
 
 FieldObject &FieldImpl::getNextObjectFromPosition(Point position)

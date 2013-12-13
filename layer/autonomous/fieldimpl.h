@@ -68,6 +68,7 @@ namespace Autonomous
 		void updateWithOdometryData();
 		void updateWithCameraData();
 		void updateObstacles();
+        void updateAchieveGoals();
 
 		FieldObject& getNextObjectFromPosition(Common::Point position);
 		std::vector<FieldObject>::iterator getNextObjectFromPosition(std::vector<FieldObject> &fieldObjects, Common::Point position);

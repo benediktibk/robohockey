@@ -219,7 +219,33 @@ void FieldTest::update_oneObjectOutAndOneObjectInsideOfCalibratedField_correctOb
 	field.update();
 
 	CPPUNIT_ASSERT_EQUAL((size_t) 1, field.getAllFieldObjects().size());
-	CPPUNIT_ASSERT_EQUAL(Point(1,1), field.getAllFieldObjects().front().getCircle().getCenter());
+    CPPUNIT_ASSERT_EQUAL(Point(1,1), field.getAllFieldObjects().front().getCircle().getCenter());
+}
+
+void FieldTest::update_threeObjectsAndTwoObjectsInGoal_twoAchievedGoals()
+{
+    DataAnalysis::OdometryMock odometry;
+    DataAnalysis::LidarMock lidar;
+    DataAnalysis::CameraMock camera;
+    Autonomous::RobotMock autonomousRobot;
+    FieldImpl field(odometry, lidar, camera, autonomousRobot);
+
+    field.setTrueTeamColor(FieldColorYellow);
+    DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
+    lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 2), 0.1));
+    lidarObjects.addObject(DataAnalysis::LidarObject(Point(4.3, 1.5), 0.1));
+    lidarObjects.addObject(DataAnalysis::LidarObject(Point(4.6, 1.8), 0.1));
+    lidar.setAllObjects(lidarObjects);
+    DataAnalysis::CameraObjects cameraObjects;
+    cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(1, 2)));
+    cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(4.3, 1.5)));
+    cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(4.6, 1.8)));
+    camera.setAllObjects(cameraObjects);
+
+    field.update();
+
+    CPPUNIT_ASSERT(field.achievedGoals() == 2);
+
 }
 
 void FieldTest::calibratePosition_noValidPattern_false()
