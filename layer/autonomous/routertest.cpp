@@ -420,8 +420,7 @@ void RouterTest::calculateRoute_onlyPossiblePointBesideIsBlockedByAnotherObstacl
 	CPPUNIT_ASSERT(route.isValid());
 	CPPUNIT_ASSERT(!route.intersectsWith(obstacles));
 	double routeLength = route.getLength();
-	//! 10 is definitely too small, but I have not yet found a reasonable value for this test case.
-	CPPUNIT_ASSERT(routeLength < 10);
+	CPPUNIT_ASSERT(routeLength < 12.5);
 }
 
 void RouterTest::calculateRoute_softObstacleAtOwnPosition_validRoute()
