@@ -13,20 +13,21 @@ using namespace RoboHockey::Layer::Strategy::FieldDetectionStateMachine;
 using namespace RoboHockey::Layer::Autonomous;
 
 
-void CheckGoalColorTest::nextState_successfulColorCheck_driveToWaitingPosition()
+void CheckGoalColorTest::nextState_successfulColorCheckNoResponse_NULL()
 {
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
 	CheckGoalColor checkGoalColorState(robot, field, referee);
 
-	field.setOwnTeamColor(FieldObjectColorYellow);
+	field.setTrueTeamColor(FieldColorYellow);
+	referee.setTrueColorOfTeam(FieldColorUnknown);
 	checkGoalColorState.update();
 
 	State *state;
 	state = checkGoalColorState.nextState();
 	DriveTo *stateCasted = dynamic_cast<DriveTo*>(state);
-	CPPUNIT_ASSERT(stateCasted != 0);
+	CPPUNIT_ASSERT(stateCasted == 0);
 }
 
 void CheckGoalColorTest::nextState_unsuccessfulColorCheck_NULL()
@@ -36,7 +37,7 @@ void CheckGoalColorTest::nextState_unsuccessfulColorCheck_NULL()
 	RefereeMock referee;
 	CheckGoalColor checkGoalColorState(robot, field, referee);
 
-	field.setOwnTeamColor(FieldObjectColorUnknown);
+	field.setTrueTeamColor(FieldColorUnknown);
 	checkGoalColorState.update();
 
 	State *state;
@@ -44,6 +45,30 @@ void CheckGoalColorTest::nextState_unsuccessfulColorCheck_NULL()
 	DriveTo *stateCasted = dynamic_cast<DriveTo*>(state);
 	CPPUNIT_ASSERT(stateCasted == 0);
 
+}
+
+void CheckGoalColorTest::nextState_successfulColorCheckGotResponse_driveTo()
+{
+	RobotMock robot;
+	FieldMock field;
+	RefereeMock referee;
+	CheckGoalColor checkGoalColorState(robot, field, referee);
+
+	field.setTrueTeamColor(FieldColorYellow);
+	referee.setTrueColorOfTeam(FieldColorUnknown);
+	checkGoalColorState.update();
+
+	State *state;
+	state = checkGoalColorState.nextState();
+	DriveTo *stateCasted = dynamic_cast<DriveTo*>(state);
+	CPPUNIT_ASSERT(stateCasted == 0);
+
+	referee.setTrueColorOfTeam(FieldColorYellow);
+	checkGoalColorState.update();
+
+	state = checkGoalColorState.nextState();
+	stateCasted = dynamic_cast<DriveTo*>(state);
+	CPPUNIT_ASSERT(stateCasted != 0);
 }
 
 

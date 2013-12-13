@@ -4,7 +4,7 @@ using namespace RoboHockey::Layer::Autonomous;
 using namespace RoboHockey::Common;
 
 
-FieldObject::FieldObject(const Circle &circle, FieldObjectColor color) :
+FieldObject::FieldObject(const Circle &circle, FieldColor color) :
 	m_circle(circle),
 	m_color(color)
 { }
@@ -14,12 +14,12 @@ const Circle &FieldObject::getCircle() const
 	return m_circle;
 }
 
-FieldObjectColor FieldObject::getColor() const
+FieldColor FieldObject::getColor() const
 {
 	return m_color;
 }
 
-void FieldObject::setColor(FieldObjectColor color)
+void FieldObject::setColor(FieldColor color)
 {
 	m_color = color;
 }

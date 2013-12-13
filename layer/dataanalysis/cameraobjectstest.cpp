@@ -9,7 +9,7 @@ using namespace RoboHockey::Common;
 void CameraObjectsTest::getObjectCount_add1Object_objectCountIs1()
 {
 	CameraObjects objects;
-	CameraObject objectOne(FieldObjectColorUnknown, Point(0,0));
+	CameraObject objectOne(FieldColorUnknown, Point(0,0));
 
 	objects.addObject(objectOne);
 
@@ -19,22 +19,22 @@ void CameraObjectsTest::getObjectCount_add1Object_objectCountIs1()
 void CameraObjectsTest::getColorType_add2Objects_secondObjectIsYellow()
 {
 	CameraObjects objects;
-	CameraObject objectOne(FieldObjectColorUnknown, Point(0,0));
-	CameraObject objectTwo(FieldObjectColorYellow, Point(0,1));
+	CameraObject objectOne(FieldColorUnknown, Point(0,0));
+	CameraObject objectTwo(FieldColorYellow, Point(0,1));
 
 	objects.addObject(objectOne);
 	objects.addObject(objectTwo);
 
-	CPPUNIT_ASSERT_EQUAL(FieldObjectColorYellow, objects.back().getColor());
+	CPPUNIT_ASSERT_EQUAL(FieldColorYellow, objects.back().getColor());
 }
 
 void CameraObjectsTest::getCameraObjectAtPosition_4ObjectsAndPositionIs3And3_ObjectAtPositionIsObject3()
 {
 	CameraObjects objects;
-	CameraObject objectOne(FieldObjectColorUnknown, Point(0,0));
-	CameraObject objectTwo(FieldObjectColorYellow, Point(0,1));
-	CameraObject objectThree(FieldObjectColorBlue, Point(3.03,3.04));
-	CameraObject objectFour(FieldObjectColorGreen, Point(3.03,3.5));
+	CameraObject objectOne(FieldColorUnknown, Point(0,0));
+	CameraObject objectTwo(FieldColorYellow, Point(0,1));
+	CameraObject objectThree(FieldColorBlue, Point(3.03,3.04));
+	CameraObject objectFour(FieldColorGreen, Point(3.03,3.5));
 
 	objects.addObject(objectOne);
 	objects.addObject(objectTwo);
@@ -47,9 +47,9 @@ void CameraObjectsTest::getCameraObjectAtPosition_4ObjectsAndPositionIs3And3_Obj
 void CameraObjectsTest::getCameraObjectAtPosition_3ObjectsAndPositionIs3And3AndNoObjectInRange_NextObjectAtPositionIsObject2()
 {
 	CameraObjects objects;
-	CameraObject objectOne(FieldObjectColorUnknown, Point(0,0));
-	CameraObject objectTwo(FieldObjectColorYellow, Point(0,1));
-	CameraObject objectThree(FieldObjectColorBlue, Point(3.5,3.5));
+	CameraObject objectOne(FieldColorUnknown, Point(0,0));
+	CameraObject objectTwo(FieldColorYellow, Point(0,1));
+	CameraObject objectThree(FieldColorBlue, Point(3.5,3.5));
 
 	objects.addObject(objectOne);
 	objects.addObject(objectTwo);

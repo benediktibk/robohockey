@@ -3,7 +3,7 @@
 
 #include <vector>
 #include <list>
-#include "common/fieldobjectcolor.h"
+#include "common/fieldcolor.h"
 #include "layer/autonomous/fieldobject.h"
 
 namespace RoboHockey
@@ -27,15 +27,16 @@ namespace Autonomous
 		virtual const std::vector<FieldObject>& getAllFieldObjects() const = 0;
 		virtual const std::vector<Common::Circle>& getAllSoftObstacles() const = 0;
 		virtual const std::vector<Common::Circle>& getAllHardObstacles() const = 0;
-		virtual std::vector<FieldObject> getObjectsWithColorOrderdByDistance(Common::FieldObjectColor color, const Common::Point &position) const = 0;
+		virtual std::vector<FieldObject> getObjectsWithColorOrderdByDistance(Common::FieldColor color, const Common::Point &position) const = 0;
 
 		virtual bool calibratePosition() = 0;
 		virtual bool isPointInsideField(const Common::Point &point) const = 0;
 		virtual unsigned int enemyHiddenPucks() = 0;
 		virtual bool numberOfPucksChanged() const = 0;
 		virtual bool isCalibrated() const = 0;
-		virtual Common::FieldObjectColor getOwnTeamColor() const = 0;
+		virtual Common::FieldColor getOwnTeamColor() const = 0;
 		virtual void detectTeamColorWithGoalInFront() = 0;
+		virtual void setTrueTeamColor(Common::FieldColor trueTeamColor) = 0;
 
 		virtual std::list<Common::RobotPosition> getTargetsForGoalDetection() const = 0;
 		virtual std::list<Common::RobotPosition> getTargetsForScoringGoals() const = 0;

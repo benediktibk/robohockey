@@ -1,9 +1,11 @@
 #include "layer/strategy/common/refereemock.h"
 
+using namespace RoboHockey::Common;
 using namespace RoboHockey::Layer::Strategy::Common;
 using namespace Extern::Angelina;
 
-RefereeMock::RefereeMock()
+RefereeMock::RefereeMock() :
+	m_trueColor(FieldColorUnknown)
 { }
 
 void RefereeMock::reportReady()
@@ -15,7 +17,7 @@ void RefereeMock::reportDone()
 void RefereeMock::sendAlive()
 { }
 
-void RefereeMock::tellTeamColor(Extern::Angelina::TeamColor)
+void RefereeMock::tellTeamColor(RoboHockey::Common::FieldColor)
 { }
 
 void RefereeMock::reportGoal()
@@ -39,9 +41,9 @@ bool RefereeMock::gameOver()
 	return m_gameOver;
 }
 
-Extern::Angelina::TeamColor RefereeMock::trueColorOfTeam()
+RoboHockey::Common::FieldColor RefereeMock::trueColorOfTeam()
 {
-	return blue;
+	return m_trueColor;
 }
 
 bool RefereeMock::stopMovement()
@@ -72,4 +74,9 @@ void RefereeMock::setGameOver(bool value)
 void RefereeMock::setStopMovement(bool value)
 {
 	m_stopMovement = value;
+}
+
+void RefereeMock::setTrueColorOfTeam(FieldColor color)
+{
+	m_trueColor = color;
 }

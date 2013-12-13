@@ -56,8 +56,8 @@ namespace View
 		bool isPuckCollectable() const;
 		bool isClosestPuckValid() const;
 		const Common::Point &getClosestPuckPosition() const;
-		Common::FieldObjectColor getPuckColor() const;
-		void setPuckColor(Common::FieldObjectColor color);
+		Common::FieldColor getPuckColor() const;
+		void setPuckColor(Common::FieldColor color);
 		bool isRotating() const;
 
 	signals:
@@ -85,7 +85,7 @@ namespace View
 		bool m_isPuckCollectable;
 		Common::Point m_closestPuckPosition;
 		bool m_closestPuckValid;
-		Common::FieldObjectColor m_puckColor;
+		Common::FieldColor m_puckColor;
 		bool m_isRotating;
 	};
 }

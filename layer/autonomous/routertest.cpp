@@ -657,18 +657,7 @@ void RouterTest::getPointsBesideObstacle_bigObstacleCloseOnLeftSide_onePointIsLe
 	//CPPUNIT_ASSERT(!Path(points.front(), points.front(), 0.707).intersectsWith(obstacle));
 	//CPPUNIT_ASSERT(!Path(points.back(), points.back(), 0.707).intersectsWith(obstacle));
 	Line line(start, end);
-	unsigned int pointsLeft = 0;
-	unsigned int pointsRight = 0;
 	CPPUNIT_ASSERT(path.intersectsWith(obstacle));
 	CPPUNIT_ASSERT_EQUAL((size_t)2, points.size());
-	if (line.isTargetPointRightOfLine(points[0]))
-		++pointsRight;
-	else
-		++pointsLeft;
-	if (line.isTargetPointRightOfLine(points[1]))
-		++pointsRight;
-	else
-		++pointsLeft;
-	CPPUNIT_ASSERT_EQUAL((unsigned int)1, pointsLeft);
-	CPPUNIT_ASSERT_EQUAL((unsigned int)1, pointsRight);
+	CPPUNIT_ASSERT(line.isOnePointLeftAndOneRightOfLine(points[0], points[1]));
 }

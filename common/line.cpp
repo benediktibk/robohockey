@@ -97,7 +97,25 @@ Point Line::getPerpendicularPoint(Point point) const
 	return perpendicularPoint;
 }
 
-bool Line::isTargetPointRightOfLine(const Point &target)
+bool Line::isTargetPointRightOfLine(const Point &target) const
 {
 	return 0 < (m_end.getY()*(target.getX() - m_start.getX()) - m_end.getX()*(target.getY() - m_start.getY()));
+}
+
+bool Line::isOnePointLeftAndOneRightOfLine(const Point &one, const Point &two) const
+{
+	unsigned int pointsLeft = 0;
+	unsigned int pointsRight = 0;
+
+	if (isTargetPointRightOfLine(one))
+		++pointsRight;
+	else
+		++pointsLeft;
+
+	if (isTargetPointRightOfLine(two))
+		++pointsRight;
+	else
+		++pointsLeft;
+
+	return pointsLeft == 1 && pointsRight == 1;
 }

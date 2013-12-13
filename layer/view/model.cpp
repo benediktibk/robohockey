@@ -20,7 +20,7 @@ Model::Model() :
 	m_isPuckCollected(false),
 	m_isPuckCollectable(false),
 	m_closestPuckValid(false),
-	m_puckColor(FieldObjectColorBlue),
+	m_puckColor(FieldColorBlue),
 	m_isRotating(false)
 {}
 
@@ -176,12 +176,12 @@ const Point &Model::getClosestPuckPosition() const
 	return m_closestPuckPosition;
 }
 
-FieldObjectColor Model::getPuckColor() const
+FieldColor Model::getPuckColor() const
 {
 	return m_puckColor;
 }
 
-void Model::setPuckColor(FieldObjectColor color)
+void Model::setPuckColor(FieldColor color)
 {
 	m_puckColor = color;
 }

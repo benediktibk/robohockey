@@ -8,7 +8,7 @@ using namespace RoboHockey::Layer::Autonomous;
 FieldMock::FieldMock() :
 	m_negativeCoordinatesOutside(false),
 	m_calibrated(false),
-	m_teamColor(FieldObjectColorUnknown)
+	m_teamColor(FieldColorUnknown)
 { }
 
 void FieldMock::update()
@@ -29,7 +29,7 @@ const vector<Circle> &FieldMock::getAllHardObstacles() const
 	return m_hardObstacles;
 }
 
-vector<FieldObject> FieldMock::getObjectsWithColorOrderdByDistance(FieldObjectColor, const Point&) const
+vector<FieldObject> FieldMock::getObjectsWithColorOrderdByDistance(FieldColor, const Point&) const
 {
 	return vector<FieldObject>();
 }
@@ -72,7 +72,7 @@ void FieldMock::setCalibrationReturn(bool value)
 	m_calibrated = value;
 }
 
-void FieldMock::setOwnTeamColor(FieldObjectColor teamColor)
+void FieldMock::setTrueTeamColor(FieldColor teamColor)
 {
 	m_teamColor = teamColor;
 }
@@ -82,7 +82,7 @@ bool FieldMock::isCalibrated() const
 	return m_calibrated;
 }
 
-FieldObjectColor FieldMock::getOwnTeamColor() const
+FieldColor FieldMock::getOwnTeamColor() const
 {
 	return m_teamColor;
 }

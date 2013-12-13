@@ -137,7 +137,7 @@ void FieldTest::update_oneObjectFromLidarAndNoObjectFromCamera_noColor()
 
 	vector<FieldObject> fieldObjects = field.getAllFieldObjects();
 
-	CPPUNIT_ASSERT_EQUAL(FieldObjectColorUnknown, fieldObjects.front().getColor());
+	CPPUNIT_ASSERT_EQUAL(FieldColorUnknown, fieldObjects.front().getColor());
 }
 
 void FieldTest::update_twoObjectsFromLidarAndOneFromCamera_correctColor()
@@ -153,14 +153,14 @@ void FieldTest::update_twoObjectsFromLidarAndOneFromCamera_correctColor()
 	lidar.setAllObjects(lidarObjects);
 
 	DataAnalysis::CameraObjects cameraObjects;
-	cameraObjects.addObject(DataAnalysis::CameraObject(FieldObjectColorYellow, Point(1,0)));
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(1,0)));
 	camera.setAllObjects(cameraObjects);
 
 	field.update();
 
 	vector<FieldObject> fieldObjects = field.getAllFieldObjects();
 
-	CPPUNIT_ASSERT_EQUAL(FieldObjectColorYellow, fieldObjects.front().getColor());
+	CPPUNIT_ASSERT_EQUAL(FieldColorYellow, fieldObjects.front().getColor());
 }
 
 void FieldTest::update_twoObjectsFromLidarAndOneFromCameraNoColorAnymoreDuringSecondCall_stillCorrectColor()
@@ -176,7 +176,7 @@ void FieldTest::update_twoObjectsFromLidarAndOneFromCameraNoColorAnymoreDuringSe
 	lidar.setAllObjects(lidarObjects);
 
 	DataAnalysis::CameraObjects cameraObjects;
-	cameraObjects.addObject(DataAnalysis::CameraObject(FieldObjectColorYellow, Point(1,0)));
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(1,0)));
 	camera.setAllObjects(cameraObjects);
 
 	field.update();
@@ -187,7 +187,7 @@ void FieldTest::update_twoObjectsFromLidarAndOneFromCameraNoColorAnymoreDuringSe
 
 	vector<FieldObject> fieldObjects = field.getAllFieldObjects();
 
-	CPPUNIT_ASSERT_EQUAL(FieldObjectColorYellow, fieldObjects.front().getColor());
+	CPPUNIT_ASSERT_EQUAL(FieldColorYellow, fieldObjects.front().getColor());
 }
 
 void FieldTest::update_oneObjectOutAndOneObjectInsideOfCalibratedField_correctObjectAddedToField()
@@ -422,11 +422,11 @@ void FieldTest::getObjectsWithColorOrderedByDistance_oneObjectWithCorrectColorAn
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(2, 1), 0.1));
 	lidar.setAllObjects(lidarObjects);
 	DataAnalysis::CameraObjects cameraObjects;
-	cameraObjects.addObject(DataAnalysis::CameraObject(FieldObjectColorYellow, Point(1, 0)));
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(1, 0)));
 	camera.setAllObjects(cameraObjects);
 	field.update();
 
-	vector<FieldObject> fieldObjects = field.getObjectsWithColorOrderdByDistance(FieldObjectColorYellow, Point(0, 0));
+	vector<FieldObject> fieldObjects = field.getObjectsWithColorOrderdByDistance(FieldColorYellow, Point(0, 0));
 
 	CPPUNIT_ASSERT_EQUAL((size_t)1, fieldObjects.size());
 }
@@ -444,12 +444,12 @@ void FieldTest::getObjectsWithColorOrderedByDistance_twoObjectsWithCorrectColorI
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(2, -1), 0.12));
 	lidar.setAllObjects(lidarObjects);
 	DataAnalysis::CameraObjects cameraObjects;
-	cameraObjects.addObject(DataAnalysis::CameraObject(FieldObjectColorYellow, Point(1, 0)));
-	cameraObjects.addObject(DataAnalysis::CameraObject(FieldObjectColorYellow, Point(2, -1)));
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(1, 0)));
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(2, -1)));
 	camera.setAllObjects(cameraObjects);
 	field.update();
 
-	vector<FieldObject> fieldObjects = field.getObjectsWithColorOrderdByDistance(FieldObjectColorYellow, ownPosition);
+	vector<FieldObject> fieldObjects = field.getObjectsWithColorOrderdByDistance(FieldColorYellow, ownPosition);
 
 	CPPUNIT_ASSERT_EQUAL((size_t)2, fieldObjects.size());
 	const FieldObject &firstObject = fieldObjects.front();
@@ -472,12 +472,12 @@ void FieldTest::getObjectsWithColorOrderedByDistance_twoObjectsWithCorrectColorI
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 0), 0.12));
 	lidar.setAllObjects(lidarObjects);
 	DataAnalysis::CameraObjects cameraObjects;
-	cameraObjects.addObject(DataAnalysis::CameraObject(FieldObjectColorYellow, Point(2, -1)));
-	cameraObjects.addObject(DataAnalysis::CameraObject(FieldObjectColorYellow, Point(1, 0)));
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(2, -1)));
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(1, 0)));
 	camera.setAllObjects(cameraObjects);
 	field.update();
 
-	vector<FieldObject> fieldObjects = field.getObjectsWithColorOrderdByDistance(FieldObjectColorYellow, ownPosition);
+	vector<FieldObject> fieldObjects = field.getObjectsWithColorOrderdByDistance(FieldColorYellow, ownPosition);
 
 	CPPUNIT_ASSERT_EQUAL((size_t)2, fieldObjects.size());
 	const FieldObject &firstObject = fieldObjects.front();
@@ -590,7 +590,7 @@ void FieldTest::numberOfPucksChanged_onePuckAdded_true()
 	lidar.setAllObjects(lidarObjects);
 
 	DataAnalysis::CameraObjects cameraObjects;
-	cameraObjects.addObject(DataAnalysis::CameraObject(FieldObjectColorYellow, Point(2, -1)));
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(2, -1)));
 	camera.setAllObjects(cameraObjects);
 
 	field.update();
@@ -614,7 +614,7 @@ void FieldTest::numberOfPucksChanged_onePuckRemoved_true()
 	lidar.setAllObjects(lidarObjects);
 
 	DataAnalysis::CameraObjects cameraObjects;
-	cameraObjects.addObject(DataAnalysis::CameraObject(FieldObjectColorYellow, Point(2, -1)));
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(2, -1)));
 	camera.setAllObjects(cameraObjects);
 
 	field.update();
@@ -643,7 +643,7 @@ void FieldTest::numberOfPucksChanged_onePuckAddedOnePuckRemoved_true()
 	lidar.setAllObjects(lidarObjects);
 
 	DataAnalysis::CameraObjects cameraObjects;
-	cameraObjects.addObject(DataAnalysis::CameraObject(FieldObjectColorYellow, Point(2, -1)));
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(2, -1)));
 	camera.setAllObjects(cameraObjects);
 
 	field.update();
@@ -657,7 +657,7 @@ void FieldTest::numberOfPucksChanged_onePuckAddedOnePuckRemoved_true()
 	lidar.setAllObjects(lidarObjectsSecondRun);
 
 	DataAnalysis::CameraObjects cameraObjectsSecondRun;
-	cameraObjectsSecondRun.addObject(DataAnalysis::CameraObject(FieldObjectColorYellow, Point(-3, 2)));
+	cameraObjectsSecondRun.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(-3, 2)));
 	camera.setAllObjects(cameraObjectsSecondRun);
 
 	field.update();
@@ -688,7 +688,7 @@ void FieldTest::getAllSoftObstacles_oneBluePuck_resultSizeIs1()
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 0), 0.06));
 	lidar.setAllObjects(lidarObjects);
 	DataAnalysis::CameraObjects cameraObjects;
-	cameraObjects.addObject(DataAnalysis::CameraObject(FieldObjectColorBlue, Point(1, 0)));
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorBlue, Point(1, 0)));
 	camera.setAllObjects(cameraObjects);
 
 	field.update();
@@ -729,7 +729,7 @@ void FieldTest::getAllSoftObstacles_oneGreenObstacle_resultSizeIs0()
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 0), 0.06));
 	lidar.setAllObjects(lidarObjects);
 	DataAnalysis::CameraObjects cameraObjects;
-	cameraObjects.addObject(DataAnalysis::CameraObject(FieldObjectColorGreen, Point(1, 0)));
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorGreen, Point(1, 0)));
 	camera.setAllObjects(cameraObjects);
 
 	field.update();
@@ -770,7 +770,7 @@ void FieldTest::getAllSoftObstacles_onePuckDisappeared_resultSizeIs0()
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 0), 0.06));
 	lidar.setAllObjects(lidarObjects);
 	DataAnalysis::CameraObjects cameraObjects;
-	cameraObjects.addObject(DataAnalysis::CameraObject(FieldObjectColorBlue, Point(1, 0)));
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorBlue, Point(1, 0)));
 	camera.setAllObjects(cameraObjects);
 
 	field.update();
@@ -797,7 +797,7 @@ void FieldTest::getAllHardObstacles_oneGreenObject_resultSizeIs1()
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 0), 0.06));
 	lidar.setAllObjects(lidarObjects);
 	DataAnalysis::CameraObjects cameraObjects;
-	cameraObjects.addObject(DataAnalysis::CameraObject(FieldObjectColorGreen, Point(1, 0)));
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorGreen, Point(1, 0)));
 	camera.setAllObjects(cameraObjects);
 
 	field.update();
@@ -913,7 +913,7 @@ void FieldTest::detectTeamColorWithGoalInFront_yellowMuchBiggerBlue_teamYellow()
 
 	field.detectTeamColorWithGoalInFront();
 
-	CPPUNIT_ASSERT_EQUAL(FieldObjectColorYellow, field.getOwnTeamColor());
+	CPPUNIT_ASSERT_EQUAL(FieldColorYellow, field.getOwnTeamColor());
 }
 
 void FieldTest::detectTeamColorWithGoalInFront_yellowMuchSmallerBlue_teamBlue()
@@ -929,7 +929,7 @@ void FieldTest::detectTeamColorWithGoalInFront_yellowMuchSmallerBlue_teamBlue()
 
 	field.detectTeamColorWithGoalInFront();
 
-	CPPUNIT_ASSERT_EQUAL(FieldObjectColorBlue, field.getOwnTeamColor());
+	CPPUNIT_ASSERT_EQUAL(FieldColorBlue, field.getOwnTeamColor());
 }
 
 void FieldTest::detectTeamColorWithGoalInFront_yellowAndBlueFuzzyEqual_teamUnknown()
@@ -945,5 +945,5 @@ void FieldTest::detectTeamColorWithGoalInFront_yellowAndBlueFuzzyEqual_teamUnkno
 
 	field.detectTeamColorWithGoalInFront();
 
-	CPPUNIT_ASSERT_EQUAL(FieldObjectColorUnknown, field.getOwnTeamColor());
+	CPPUNIT_ASSERT_EQUAL(FieldColorUnknown, field.getOwnTeamColor());
 }
