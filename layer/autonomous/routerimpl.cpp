@@ -69,9 +69,9 @@ vector<Point> RouterImpl::getPointsBesideObstacle(const Path &path, const Circle
 	if(intersectionPoints.getIntersectTypeFrom() != PathIntersectPoints::IntersectTypeNoIntersect)
 	{
 		Point centerBetweenIntersectPoints = (intersectionPoints.front() + intersectionPoints.back())/2;
-		double distanceIntersectPointsCenterToCircle = obstacle.getDiameter()/2 - centerBetweenIntersectPoints.distanceTo(obstacle.getCenter());
-		offsetDistanceShortPoint = offsetDistanceShortPoint + distanceIntersectPointsCenterToCircle;
-		offsetDistanceLongPoint += distanceIntersectPointsCenterToCircle + 0.5*m_robotWidth;
+		double distanceIntersectPointsCenterToCircle = radius - centerBetweenIntersectPoints.distanceTo(obstacle.getCenter());
+		offsetDistanceShortPoint += distanceIntersectPointsCenterToCircle;
+		offsetDistanceLongPoint += distanceIntersectPointsCenterToCircle;
 
 		if(!path.isCircleCenterOnPath(obstacle))
 			offsetDistanceLongPoint += 2*centerBetweenIntersectPoints.distanceTo(obstacle.getCenter());
@@ -81,21 +81,13 @@ vector<Point> RouterImpl::getPointsBesideObstacle(const Path &path, const Circle
 		{
 			offsetAngleShortPoint = offsetAngleShortPoint + Angle::getThreeQuarterRotation();
 			if(Line(intersectionPoints.front(), intersectionPoints.back()).isTargetPointRightOfLine(obstacle.getCenter()) && !path.isCircleCenterOnPath(obstacle))
-			{
 				offsetAngleShortPoint = offsetAngleShortPoint - Angle::getHalfRotation();
-				offsetDistanceShortPoint = offsetDistanceShortPoint + 0.5*m_robotWidth;
-				offsetDistanceLongPoint = offsetDistanceLongPoint - 0.5*m_robotWidth;
-			}
 		}
 		else
 		{
 			offsetAngleShortPoint = offsetAngleShortPoint + Angle::getQuarterRotation();
 			if(!Line(intersectionPoints.front(), intersectionPoints.back()).isTargetPointRightOfLine(obstacle.getCenter()) && !path.isCircleCenterOnPath(obstacle))
-			{
 				offsetAngleShortPoint = offsetAngleShortPoint - Angle::getHalfRotation();
-				offsetDistanceShortPoint = offsetDistanceShortPoint + 0.5*m_robotWidth;
-				offsetDistanceLongPoint = offsetDistanceLongPoint - 0.5*m_robotWidth;
-			}
 		}
 		shortPointBesideObstacle = centerBetweenIntersectPoints + Point(offsetDistanceShortPoint, offsetAngleShortPoint);
 		longPointBesideObstacle = centerBetweenIntersectPoints + Point(offsetDistanceLongPoint, offsetAngleShortPoint + Angle::getHalfRotation());

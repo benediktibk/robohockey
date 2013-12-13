@@ -408,7 +408,7 @@ void RouterTest::calculateRoute_hardObstacleAtOwnPosition_invalidRoute()
 	CPPUNIT_ASSERT(!route.isValid());
 }
 
-void RouterTest::getPointsBesideObstacle_intersectFromLeftAndCircleCenterNotOnPath_shortPointIs2AndMinus1()
+void RouterTest::getPointsBesideObstacle_intersectFromLeftAndCircleCenterNotOnPath_shortPointIsCorrect()
 {
 	RouterImpl router(2);
 	Path currentPath(Point(0,0), Point(4,0), 2);
@@ -422,12 +422,14 @@ void RouterTest::getPointsBesideObstacle_intersectFromLeftAndCircleCenterNotOnPa
 
 void RouterTest::getPointsBesideObstacle_intersectFromLeftAndCircleCenterNotOnPath_longPointIs2And6p4142()
 {
-	Compare compare(0.0001);
 	RouterImpl router(2);
 	Path currentPath(Point(0,0), Point(4,0), 2);
 	Circle obstacle(Point(2,2), 2.8284);
+	Point pointBesideObstacle = router.getPointsBesideObstacle(currentPath, obstacle).back();
+	Path robotBesideObstacle(pointBesideObstacle, pointBesideObstacle, 2.8284);
 
-	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(2,6.4142), router.getPointsBesideObstacle(currentPath, obstacle).back()));
+	CPPUNIT_ASSERT(!robotBesideObstacle.intersectsWith(obstacle));
+	CPPUNIT_ASSERT(robotBesideObstacle.getDistanceToRightPerpendicularPoint(obstacle.getCenter()) < 1.5);
 }
 
 void RouterTest::getPointsBesideObstacle_intersectFromRightAndCircleCenterNotOnPath_shortPointIs2And3()
