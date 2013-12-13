@@ -60,7 +60,7 @@ void ModelTest::constructor_empty_closestPuckPositionIsNotValid()
 
 void ModelTest::constructor_empty_fieldObjectColorIsBlue()
 {
-	CPPUNIT_ASSERT_EQUAL(FieldObjectColorBlue, m_model->getPuckColor());
+	CPPUNIT_ASSERT_EQUAL(FieldColorBlue, m_model->getPuckColor());
 }
 
 void ModelTest::constructor_empty_isNotRotating()
@@ -72,8 +72,8 @@ void ModelTest::setData_twoFieldObjects_twoFieldObjects()
 {
 	vector<FieldObject> fieldObjects;
     list<Point> routeList;
-	fieldObjects.push_back(FieldObject(Circle(), FieldObjectColorUnknown));
-	fieldObjects.push_back(FieldObject(Circle(), FieldObjectColorUnknown));
+	fieldObjects.push_back(FieldObject(Circle(), FieldColorUnknown));
+	fieldObjects.push_back(FieldObject(Circle(), FieldColorUnknown));
 
     m_model->setData(fieldObjects, routeList, false, false, RobotPosition(), Point(), false, false, false, false, false, Point(), false);
 
@@ -219,14 +219,14 @@ void ModelTest::setData_isNotRotating_isNotRotating()
 
 void ModelTest::setPuckColor_puckColorYellow_puckColorIsYellow()
 {
-	m_model->setPuckColor(FieldObjectColorYellow);
+	m_model->setPuckColor(FieldColorYellow);
 
-	CPPUNIT_ASSERT_EQUAL(FieldObjectColorYellow, m_model->getPuckColor());
+	CPPUNIT_ASSERT_EQUAL(FieldColorYellow, m_model->getPuckColor());
 }
 
 void ModelTest::setPuckColor_puckColorBlue_puckColorIsBlue()
 {
-	m_model->setPuckColor(FieldObjectColorBlue);
+	m_model->setPuckColor(FieldColorBlue);
 
-	CPPUNIT_ASSERT_EQUAL(FieldObjectColorBlue, m_model->getPuckColor());
+	CPPUNIT_ASSERT_EQUAL(FieldColorBlue, m_model->getPuckColor());
 }

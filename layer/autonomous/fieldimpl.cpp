@@ -23,7 +23,7 @@ FieldImpl::FieldImpl(DataAnalysis::Odometry &odometry, const DataAnalysis::Lidar
 	m_position(new Common::RobotPosition(m_odometry->getCurrentPosition())),
 	m_fieldState(FieldStateUnknownPosition),
 	m_numberOfPucksChanged(false),
-	m_teamColor(FieldObjectColorUnknown)
+	m_teamColor(FieldColorUnknown)
 { }
 
 FieldImpl::~FieldImpl()
@@ -63,7 +63,7 @@ const vector<Circle> &FieldImpl::getAllHardObstacles() const
 	return m_hardObstacles;
 }
 
-vector<FieldObject> FieldImpl::getObjectsWithColorOrderdByDistance(FieldObjectColor color, const Point &position) const
+vector<FieldObject> FieldImpl::getObjectsWithColorOrderdByDistance(FieldColor color, const Point &position) const
 {
 	vector<FieldObject> result = getObjectsWithColor(color);
 	FieldObjectDistanceCompare compare(position);
@@ -73,7 +73,7 @@ vector<FieldObject> FieldImpl::getObjectsWithColorOrderdByDistance(FieldObjectCo
 
 bool FieldImpl::calibratePosition()
 {
-	vector<Point> *input = getPointsOfObjectsWithDiameterAndColor(0.06, FieldObjectColorGreen);
+	vector<Point> *input = getPointsOfObjectsWithDiameterAndColor(0.06, FieldColorGreen);
 
 	FieldDetector detector(m_position->getPosition(), *input);
 
@@ -115,23 +115,23 @@ bool FieldImpl::isCalibrated() const
 	return m_fieldState == FieldStateCalibrated;
 }
 
-FieldObjectColor FieldImpl::getOwnTeamColor() const
+FieldColor FieldImpl::getOwnTeamColor() const
 {
 	return m_teamColor;
 }
 
 void FieldImpl::detectTeamColorWithGoalInFront()
 {
-	assert(m_teamColor == FieldObjectColorUnknown);
+	assert(m_teamColor == FieldColorUnknown);
 	Compare compare(0.10);
 
 	double blueGoal = m_camera->getProbabilityForBlueGoal();
 	double yellowGoal = m_camera->getProbabilityForYellowGoal();
 
 	if(compare.isStrictFuzzyGreater(blueGoal, yellowGoal))
-		m_teamColor = FieldObjectColorBlue;
+		m_teamColor = FieldColorBlue;
 	else if (compare.isStrictFuzzyGreater(yellowGoal, blueGoal))
-		m_teamColor = FieldObjectColorYellow;
+		m_teamColor = FieldColorYellow;
 }
 
 bool FieldImpl::numberOfPucksChanged() const
@@ -235,13 +235,13 @@ void FieldImpl::updateWithLidarData()
 			}
 		}
 
-		FieldObject object(*i, FieldObjectColorUnknown);
+		FieldObject object(*i, FieldColorUnknown);
 		m_fieldObjects.push_back(object);
 	}
 
 	for (vector<FieldObject>::const_iterator i = inVisibleArea.begin(); i != inVisibleArea.end(); ++i)
 	{
-		if ((*i).getColor() != FieldObjectColorUnknown)
+		if ((*i).getColor() != FieldColorUnknown)
 		{
 			m_numberOfPucksChanged = true;
 			break;
@@ -275,12 +275,12 @@ void FieldImpl::updateWithCameraData()
 			nextFieldObject->setColor(currentObject.getColor());
 			Circle circle = nextFieldObject->getCircle();
 
-			if (currentObject.getColor() == FieldObjectColorBlue || currentObject.getColor() == FieldObjectColorYellow)
+			if (currentObject.getColor() == FieldColorBlue || currentObject.getColor() == FieldColorYellow)
 			{
 				circle.setDiameter(0.12);
 				nextFieldObject->setCircle(circle);
 			}
-			else if (currentObject.getColor() == FieldObjectColorGreen)
+			else if (currentObject.getColor() == FieldColorGreen)
 			{
 				circle.setDiameter(0.06);
 				nextFieldObject->setCircle(circle);
@@ -301,7 +301,7 @@ void FieldImpl::updateObstacles()
 		const FieldObject &fieldObject = *i;
 		const Circle &fieldObjectCircle = fieldObject.getCircle();
 
-		if (fieldObject.getColor() == FieldObjectColorGreen || fieldObjectCircle.getDiameter() > 0.2)
+		if (fieldObject.getColor() == FieldColorGreen || fieldObjectCircle.getDiameter() > 0.2)
 			m_hardObstacles.push_back(fieldObjectCircle);
 		else
 			m_softObstacles.push_back(i->getCircle());
@@ -344,7 +344,7 @@ bool FieldImpl::tryToMergeLidarAndFieldObject(FieldObject &fieldObject, const Da
 		newCenter  = ( fieldObject.getCircle().getCenter() + lidarObject.getCenter() ) * 0.5;
 		diameter = fieldObject.getCircle().getDiameter();
 
-		if (fieldObject.getColor() == FieldObjectColorUnknown)
+		if (fieldObject.getColor() == FieldColorUnknown)
 			diameter = 0.5 * (fieldObject.getCircle().getDiameter() + lidarObject.getDiameter());
 
 		m_fieldObjects.push_back(FieldObject( Circle(newCenter, diameter), fieldObject.getColor()));
@@ -369,7 +369,7 @@ void FieldImpl::moveCoordinateSystem(Point &newOrigin)
 		Point currentCenter = ((*i).getCircle()).getCenter();
 		double currentDiameter = ((*i).getCircle()).getDiameter();
 		Point newCenter = currentCenter - newOrigin;
-		FieldObjectColor color = (*i).getColor();
+		FieldColor color = (*i).getColor();
 
 		newSystem.push_back(FieldObject(Circle(newCenter, currentDiameter), color));
 	}
@@ -393,7 +393,7 @@ void FieldImpl::rotateCoordinateSystem(double alpha)
 	{
 		Point currentCenter = ((*i).getCircle()).getCenter();
 		double currentDiameter = ((*i).getCircle()).getDiameter();
-		FieldObjectColor color = (*i).getColor();
+		FieldColor color = (*i).getColor();
 
 		currentCenter.rotate(Angle(alpha));
 
@@ -417,19 +417,19 @@ void FieldImpl::rotateCoordinateSystem(double alpha)
 
 }
 
-std::vector<Point> *FieldImpl::getPointsOfObjectsWithDiameterAndColor(double diameter, FieldObjectColor color)
+std::vector<Point> *FieldImpl::getPointsOfObjectsWithDiameterAndColor(double diameter, FieldColor color)
 {
 	vector<Point> *resultObjects = new vector<Point>;
 
 	Compare compare(0.04);
 	for (vector<FieldObject>::iterator i = m_fieldObjects.begin(); i != m_fieldObjects.end(); ++i)
-		if (compare.isFuzzyEqual(((*i).getCircle()).getDiameter(), diameter) && ((*i).getColor() == color || (*i).getColor() == FieldObjectColorUnknown))
+		if (compare.isFuzzyEqual(((*i).getCircle()).getDiameter(), diameter) && ((*i).getColor() == color || (*i).getColor() == FieldColorUnknown))
 			resultObjects->push_back(((*i).getCircle()).getCenter());
 
 	return resultObjects;
 }
 
-vector<FieldObject> FieldImpl::getObjectsWithColor(FieldObjectColor color) const
+vector<FieldObject> FieldImpl::getObjectsWithColor(FieldColor color) const
 {
 	vector<FieldObject> result;
 

@@ -20,7 +20,7 @@ namespace Autonomous
 		virtual const std::vector<FieldObject>& getAllFieldObjects() const;
 		virtual const std::vector<Common::Circle>& getAllSoftObstacles() const;
 		virtual const std::vector<Common::Circle>& getAllHardObstacles() const;
-		virtual std::vector<FieldObject> getObjectsWithColorOrderdByDistance(Common::FieldObjectColor color, const Common::Point &position) const;
+		virtual std::vector<FieldObject> getObjectsWithColorOrderdByDistance(Common::FieldColor color, const Common::Point &position) const;
 		virtual unsigned int achievedGoals();
 		virtual void setAchievedGoals(unsigned int goalsAchieved);
 		virtual void setEnemyHiddenPucks(unsigned int enemyHiddenPucks);
@@ -29,7 +29,7 @@ namespace Autonomous
 		virtual unsigned int enemyHiddenPucks();
 		virtual bool numberOfPucksChanged() const;
 		virtual bool isCalibrated() const;
-		virtual Common::FieldObjectColor getOwnTeamColor() const;
+		virtual Common::FieldColor getOwnTeamColor() const;
 		virtual void detectTeamColorWithGoalInFront();
 		virtual std::list<Common::RobotPosition> getTargetsForGoalDetection() const;
 		virtual std::list<Common::RobotPosition> getTargetsForScoringGoals() const;
@@ -43,7 +43,7 @@ namespace Autonomous
 		void setHardObstacles(const std::vector<Common::Circle> &obstacles);
 		void setNegativeCoordinatesOutside(bool value);
 		void setCalibrationReturn(bool value);
-		void setOwnTeamColor(Common::FieldObjectColor teamColor);
+		void setOwnTeamColor(Common::FieldColor teamColor);
 
 	private:
 		std::vector<FieldObject> m_objects;
@@ -53,7 +53,7 @@ namespace Autonomous
 		bool m_negativeCoordinatesOutside;
 		unsigned int m_hiddenPucks;
 		bool m_calibrated;
-		Common::FieldObjectColor m_teamColor;
+		Common::FieldColor m_teamColor;
 	};
 }
 }

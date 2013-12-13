@@ -20,9 +20,9 @@ CameraObjects CameraImpl::getAllCameraObjects(const RobotPosition &position)
 	{
 		m_ownPosition = position;
 		filterFrameAndConvertToHLS();
-		addObjects(FieldObjectColorYellow);
-		addObjects(FieldObjectColorBlue);
-		addObjects(FieldObjectColorGreen);
+		addObjects(FieldColorYellow);
+		addObjects(FieldColorBlue);
+		addObjects(FieldColorGreen);
 	}
 
 	return m_cameraObjects;
@@ -77,7 +77,7 @@ void CameraImpl::filterFrameAndConvertToHLS()
 	cvtColor(m_filteredFrame, m_filteredFrame, CV_BGR2HLS);
 }
 
-void CameraImpl::addObjects(FieldObjectColor color)
+void CameraImpl::addObjects(FieldColor color)
 {
 	Mat colorPic, currentPic;
 	vector< vector<cv::Point> > contours;
@@ -90,25 +90,25 @@ void CameraImpl::addObjects(FieldObjectColor color)
 
 	switch (color)
 	{
-	case FieldObjectColorYellow:
+	case FieldColorYellow:
 		minValue = Scalar(18, 20, 50);
 		maxValue = Scalar(28, 255, 255);
 		areaThreshold = 1500;
 		distanceToCenter = 0.06;
 		break;
-	case FieldObjectColorBlue:
+	case FieldColorBlue:
 		minValue = Scalar(95, 20, 40);
 		maxValue = Scalar(107, 255, 255);
 		areaThreshold = 1500;
 		distanceToCenter = 0.06;
 		break;
-	case FieldObjectColorGreen:
+	case FieldColorGreen:
 		minValue = Scalar(75, 20, 55);
 		maxValue = Scalar(85, 255, 255);
 		areaThreshold = 750;
 		distanceToCenter = 0.03;
 		break;
-	case FieldObjectColorUnknown:
+	case FieldColorUnknown:
 		break;
 	}
 

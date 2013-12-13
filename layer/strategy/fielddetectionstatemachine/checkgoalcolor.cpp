@@ -35,5 +35,5 @@ State* CheckGoalColor::nextState()
 void CheckGoalColor::update()
 {
 	m_field.detectTeamColorWithGoalInFront();
-	m_successful = (m_field.getOwnTeamColor() != FieldObjectColorUnknown);
+	m_successful = (m_field.getOwnTeamColor() != FieldColorUnknown);
 }

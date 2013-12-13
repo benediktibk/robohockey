@@ -20,7 +20,7 @@ void CheckGoalColorTest::nextState_successfulColorCheck_driveToWaitingPosition()
 	RefereeMock referee;
 	CheckGoalColor checkGoalColorState(robot, field, referee);
 
-	field.setOwnTeamColor(FieldObjectColorYellow);
+	field.setOwnTeamColor(FieldColorYellow);
 	checkGoalColorState.update();
 
 	State *state;
@@ -36,7 +36,7 @@ void CheckGoalColorTest::nextState_unsuccessfulColorCheck_NULL()
 	RefereeMock referee;
 	CheckGoalColor checkGoalColorState(robot, field, referee);
 
-	field.setOwnTeamColor(FieldObjectColorUnknown);
+	field.setOwnTeamColor(FieldColorUnknown);
 	checkGoalColorState.update();
 
 	State *state;
