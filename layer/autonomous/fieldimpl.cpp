@@ -446,19 +446,23 @@ vector<FieldObject> FieldImpl::moveAllFieldObjectsInVisibleAreaToTemporaryVector
 	Point robotPosition = m_position->getPosition();
 	Angle robotAngle = m_position->getOrientation();
 
-	for (vector<FieldObject>::iterator i = m_fieldObjects.begin(); i != m_fieldObjects.end(); ++i)
+	size_t i = 0;
+	while(i < m_fieldObjects.size())
 	{
-		Point objectPosition = ((*i).getCircle()).getCenter();
+		vector<FieldObject>::iterator it = m_fieldObjects.begin() + i;
+
+		Point objectPosition = (m_fieldObjects[i].getCircle()).getCenter();
 		Angle angleToXAxis(robotPosition, objectPosition);
 		Angle angleToRobotDirection = angleToXAxis - robotAngle;
 
 		if (Angle(angleToRobotDirection - m_lidar->getMaximumAngleRight()).getValueBetweenMinusPiAndPi() > 0
 				&& Angle(m_lidar->getMaximumAngleLeft() - angleToRobotDirection).getValueBetweenMinusPiAndPi() > 0)
 		{
-			m_fieldObjects.erase(i);
-			result.push_back(*i);
-			i--;
+			result.push_back(*it);
+			m_fieldObjects.erase(it);
+			--i;
 		}
+		++i;
 	}
 
 	return result;
@@ -473,13 +477,16 @@ bool FieldImpl::isPointFuzzyInsideField(const Point &point, double epsilon) cons
 }
 
 void FieldImpl::removeAllFieldObjectsOutsideOfField()
-{
-	for (vector<FieldObject>::iterator i = m_fieldObjects.begin(); i != m_fieldObjects.end(); ++i)
+{	
+	size_t i = 0;
+	while(i < m_fieldObjects.size())
 	{
-		if (!isPointFuzzyInsideField((*i).getCircle().getCenter(), 0.5))
+		if (!isPointFuzzyInsideField(m_fieldObjects[i].getCircle().getCenter(), 0.5))
 		{
-			m_fieldObjects.erase(i);
-			i--;
+			vector<FieldObject>::iterator it = m_fieldObjects.begin() + i;
+			m_fieldObjects.erase(it);
+			--i;
 		}
+		++i;
 	}
 }
