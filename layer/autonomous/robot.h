@@ -19,14 +19,14 @@ namespace Autonomous
 {
 	class Field;
 
-    class Route;
+	class Route;
 
-    class Robot
+	class Robot
 	{
 	public:
 		virtual ~Robot() { }
 
-		virtual void goTo(const Common::Point &position) = 0;
+		virtual void goTo(const Common::RobotPosition &position) = 0;
 		virtual void turnTo(const Common::Point &position) = 0;
 		virtual bool stuckAtObstacle() = 0;
 		virtual bool reachedTarget() = 0;
@@ -40,7 +40,7 @@ namespace Autonomous
 		virtual void turnAround() = 0;
 		virtual Common::RobotPosition getCurrentPosition() const = 0;
 		virtual Common::Point getCurrentTarget() const = 0;
-        virtual std::list<Common::Point> getAllRoutePoints() const = 0;
+		virtual std::list<Common::Point> getAllRoutePoints() const = 0;
 		virtual bool cantReachTarget() const = 0;
 		virtual bool isPuckCollected() const = 0;
 		virtual bool isPuckCollectable() const = 0;

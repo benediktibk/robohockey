@@ -8,11 +8,6 @@ using namespace std;
 RobotPosition::RobotPosition()
 { }
 
-RobotPosition::RobotPosition(const Point &point):
-	m_position(point),
-	m_orientation(0)
-{ }
-
 RobotPosition::RobotPosition(const Point &point, const Angle &orientation):
 	m_position(point),
 	m_orientation(orientation)

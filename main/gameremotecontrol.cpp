@@ -85,7 +85,7 @@ void GameRemoteControl::executeRobotControl()
 		{
 			vector<Point> targetsWithoutFirstOne(targets.begin() + 1, targets.end());
 			m_model->setTargetPoints(targetsWithoutFirstOne);
-			robot.goTo(targets.front());
+			robot.goTo(RobotPosition(targets.front(), 0));
 		}
 	}
 	else
@@ -127,7 +127,7 @@ void GameRemoteControl::executeRobotControl()
 		}
 	}
 	m_model->setData(
-                field.getAllFieldObjects(), robot.getAllRoutePoints(), robot.stuckAtObstacle(),
+				field.getAllFieldObjects(), robot.getAllRoutePoints(), robot.stuckAtObstacle(),
 				robot.reachedTarget(), robot.getCurrentPosition(),
 				robot.getCurrentTarget(), robot.isMoving(), robot.cantReachTarget(),
 				robot.isPuckCollected(), robot.isPuckCollectable(), closestPuckValid,

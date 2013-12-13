@@ -27,7 +27,7 @@ namespace Autonomous
 		RobotImpl(DataAnalysis::DataAnalyser *dataAnalyser, Router *router);
 		virtual ~RobotImpl();
 
-		virtual void goTo(const Common::Point &position);
+		virtual void goTo(const Common::RobotPosition &position);
 		virtual void turnTo(const Common::Point &position);
 		virtual bool stuckAtObstacle();
 		virtual bool reachedTarget();
@@ -41,7 +41,7 @@ namespace Autonomous
 		virtual void turnAround();
 		virtual Common::RobotPosition getCurrentPosition() const;
 		virtual Common::Point getCurrentTarget() const;
-        virtual std::list<Common::Point> getAllRoutePoints() const;
+		virtual std::list<Common::Point> getAllRoutePoints() const;
 		virtual bool cantReachTarget() const;
 		virtual bool isPuckCollected() const;
 		virtual bool isPuckCollectable() const;
@@ -79,7 +79,7 @@ namespace Autonomous
 		bool m_tryingToTackleObstacle;
 		bool m_cantReachTarget;
 		Route *m_currentRoute;
-		Common::Point m_currentTarget;
+		Common::RobotPosition m_currentTarget;
 		RobotState m_state;
 		bool m_stateChanged;
 		Common::Point m_startPosition;
