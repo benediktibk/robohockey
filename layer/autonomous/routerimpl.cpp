@@ -278,8 +278,7 @@ vector<Route> RouterImpl::calculateRoutesToPointsBesideObstacle(
 	vector<Point> pointsBesideObstacle = getPointsBesideObstacle(path, obstacle);
 	assert(pointsBesideObstacle.size() == 2);
 	Line line(start, end);
-	//! @todo assert
-	//assert(line.isOnePointLeftAndOneRightOfLine(pointsBesideObstacle[0], pointsBesideObstacle[1]));
+	assert(line.isOnePointLeftAndOneRightOfLine(pointsBesideObstacle[0], pointsBesideObstacle[1]));
 	Point leftPoint;
 	Point rightPoint;
 
