@@ -72,7 +72,7 @@ void FieldMock::setCalibrationReturn(bool value)
 	m_calibrated = value;
 }
 
-void FieldMock::setOwnTeamColor(FieldColor teamColor)
+void FieldMock::setTrueTeamColor(FieldColor teamColor)
 {
 	m_teamColor = teamColor;
 }

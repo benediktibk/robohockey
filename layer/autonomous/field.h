@@ -36,6 +36,7 @@ namespace Autonomous
 		virtual bool isCalibrated() const = 0;
 		virtual Common::FieldColor getOwnTeamColor() const = 0;
 		virtual void detectTeamColorWithGoalInFront() = 0;
+		virtual void setTrueTeamColor(Common::FieldColor trueTeamColor) = 0;
 
 		virtual std::list<Common::RobotPosition> getTargetsForGoalDetection() const = 0;
 		virtual std::list<Common::RobotPosition> getTargetsForScoringGoals() const = 0;

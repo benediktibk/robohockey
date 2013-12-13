@@ -212,6 +212,14 @@ std::list<RobotPosition> FieldImpl::getTargetsForCollectingOnePuck() const
 	return list<RobotPosition>();
 }
 
+void FieldImpl::setTrueTeamColor(FieldColor trueTeamColor)
+{
+	assert(trueTeamColor != FieldColorUnknown);
+	assert(trueTeamColor != FieldColorGreen);
+
+	m_teamColor = trueTeamColor;
+}
+
 void FieldImpl::updateWithLidarData()
 {
 	const DataAnalysis::LidarObjects &lidarObjects =  m_lidar->getAllObjects(*m_position);

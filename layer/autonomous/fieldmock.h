@@ -37,13 +37,13 @@ namespace Autonomous
 		virtual std::list<Common::RobotPosition> getTargetsForSearchingPucks() const;
 		virtual std::list<Common::RobotPosition> getTargetsForHidingEnemyPucks() const;
 		virtual std::list<Common::RobotPosition> getTargetsForCollectingOnePuck() const;
+		virtual void setTrueTeamColor(Common::FieldColor);
 
 		void setFieldObjects(const std::vector<FieldObject> &objects);
 		void setSoftObstacles(const std::vector<Common::Circle> &obstacles);
 		void setHardObstacles(const std::vector<Common::Circle> &obstacles);
 		void setNegativeCoordinatesOutside(bool value);
 		void setCalibrationReturn(bool value);
-		void setOwnTeamColor(Common::FieldColor teamColor);
 
 	private:
 		std::vector<FieldObject> m_objects;
