@@ -12,7 +12,6 @@ namespace Common
 	{
 	public:
 		RobotPosition();
-		RobotPosition(const Point &point);
 		RobotPosition(const Point &point, const Angle &orientation);
 
 		void setOrientation(const Angle &orientation);

@@ -49,7 +49,8 @@ namespace Autonomous
 				bool canGoLeft, bool canGoRight, const std::list<Common::Circle> &consideredObstacles) const;
 		std::vector<Route> calculateEndParts(
 				const std::vector<Route> &startRoutes, const Common::Point &end, const Field &field,
-				const std::vector<Common::Circle> &obstacles, unsigned int searchDepth) const;
+				const std::vector<Common::Circle> &obstacles, unsigned int searchDepth,
+				const std::list<Common::Circle> &consideredObstacles) const;
 		std::vector<Common::Circle> findRealObstacles(const std::vector<Common::Circle> &obstacles, const Common::Path &path) const;
 		Common::Circle findClosestObstacle(const std::vector<Common::Circle> &obstacles, const Common::Point &point) const;
 		std::vector<Route> calculateRoutesToPointsBesideObstacle(

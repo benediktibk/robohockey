@@ -17,7 +17,7 @@ void RobotPositionTest::constructor_empty_positionIs0And0()
 
 void RobotPositionTest::constructor_4And3_positionIs4And3()
 {
-	RobotPosition position(Point(4, 3));
+	RobotPosition position(Point(4, 3), 0);
 
 	Compare compare(0.0001);
 	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(4, 3), position.getPosition()));
@@ -67,7 +67,7 @@ void RobotPositionTest::operatorAdd_4And3To5And1_9And4()
 	RobotPosition result = positionOne + positionTwo;
 
 	Compare compare(0.00001);
-	CPPUNIT_ASSERT(compare.isFuzzyEqual(RobotPosition(Point(9, 4)), result));
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(RobotPosition(Point(9, 4), 0), result));
 }
 
 void RobotPositionTest::operatorMinus_5And3From9And4_4And1()
@@ -78,7 +78,7 @@ void RobotPositionTest::operatorMinus_5And3From9And4_4And1()
 	RobotPosition result = positionOne - positionTwo;
 
 	Compare compare(0.00001);
-	CPPUNIT_ASSERT(compare.isFuzzyEqual(RobotPosition(Point(4, 1)), result));
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(RobotPosition(Point(4, 1), 0), result));
 }
 
 void RobotPositionTest::operatorMultpliyAndAssign_3And5With2_6And10()

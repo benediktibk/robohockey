@@ -17,7 +17,7 @@ RobotMock::RobotMock() :
 	m_cantReachTarget(false)
 { }
 
-void RobotMock::goTo(const Point &position)
+void RobotMock::goTo(const RobotPosition &position)
 {
 	m_lastTarget = position;
 }
@@ -67,15 +67,15 @@ void RobotMock::setReachedTarget(bool value)
 	m_reachedTarget = value;
 }
 
-const Point &RobotMock::getLastTarget() const
+const RobotPosition &RobotMock::getLastTarget() const
 {
-    return m_lastTarget;
+	return m_lastTarget;
 }
 
-std::list<Point> RobotMock::getAllRoutePoints() const
+list<Point> RobotMock::getAllRoutePoints() const
 {
-    std::list<Common::Point> listOfRoutetest;
-    return listOfRoutetest;
+	list<Common::Point> listOfRoutetest;
+	return listOfRoutetest;
 }
 
 unsigned int RobotMock::getCallsToStop() const
