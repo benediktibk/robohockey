@@ -288,8 +288,6 @@ void RouterTest::calculateRoute_obstacleOnWayToPointBesideObstacle_reasonableRou
 
 void RouterTest::calculateRoute_obstacleOnWayToTargetFromPointBesideObstacle_reasonableRoute()
 {
-	CPPUNIT_ASSERT(false);
-
 	FieldMock field;
 	RouterImpl router(0.5);
 	vector<Circle> obstacles;
