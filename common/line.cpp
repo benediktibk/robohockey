@@ -99,7 +99,13 @@ Point Line::getPerpendicularPoint(Point point) const
 
 bool Line::isTargetPointRightOfLine(const Point &target) const
 {
-	return 0 < (m_end.getY()*(target.getX() - m_start.getX()) - m_end.getX()*(target.getY() - m_start.getY()));
+	Angle angleBetweenPoints(m_start, m_end);
+	Point point(target);
+
+	point = point - m_start;
+	point.rotate(Angle::getFullRotation() - angleBetweenPoints);
+
+	return point.getY() < 0;
 }
 
 bool Line::isOnePointLeftAndOneRightOfLine(const Point &one, const Point &two) const
