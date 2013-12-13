@@ -33,8 +33,8 @@ RefereeImpl::RefereeImpl(const std::string &AngelinaAdressServer):
 
 RefereeImpl::~RefereeImpl()
 {
-    delete m_referee;
-    m_referee = 0;
+	delete m_referee;
+	m_referee = 0;
 }
 
 void RefereeImpl::reportReady()
@@ -54,7 +54,7 @@ void RefereeImpl::sendAlive()
 
 void RefereeImpl::tellTeamColor(FieldColor color)
 {
-	TeamColor teamColor;
+	TeamColor teamColor = blue;
 
 	if (color == FieldColorBlue)
 		teamColor = blue;
@@ -93,7 +93,7 @@ bool RefereeImpl::gameOver()
 }
 
 FieldColor RefereeImpl::trueColorOfTeam()
-{	
+{
 	return m_trueColorOfTeam;
 }
 
