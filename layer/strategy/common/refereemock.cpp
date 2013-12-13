@@ -75,3 +75,8 @@ void RefereeMock::setStopMovement(bool value)
 {
 	m_stopMovement = value;
 }
+
+void RefereeMock::setTrueColorOfTeam(FieldColor color)
+{
+	m_trueColor = color;
+}
