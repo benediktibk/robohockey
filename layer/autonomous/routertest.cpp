@@ -643,7 +643,7 @@ void RouterTest::getPointsBesideObstacle_bigObstacleOnRightSide_shortPointIsCorr
 	Circle robotBesideObstacle(pointBesideObstacle, 0.707);
 
 	CPPUNIT_ASSERT(!robotBesideObstacle.overlapsWith(obstacle));
-	CPPUNIT_ASSERT(robotBesideObstacle.getDistanceTo(obstacle.getCenter()) < 0.35);
+	CPPUNIT_ASSERT(robotBesideObstacle.getDistanceTo(obstacle.getCenter()) < 1.5);
 }
 
 void RouterTest::getPointsBesideObstacle_bigObstacleOnRightSide_longPointIsCorrect()
@@ -655,7 +655,7 @@ void RouterTest::getPointsBesideObstacle_bigObstacleOnRightSide_longPointIsCorre
 	Circle robotBesideObstacle(pointBesideObstacle, 0.707);
 
 	CPPUNIT_ASSERT(!robotBesideObstacle.overlapsWith(obstacle));
-	CPPUNIT_ASSERT(robotBesideObstacle.getDistanceTo(obstacle.getCenter()) < 0.35);
+	CPPUNIT_ASSERT(robotBesideObstacle.getDistanceTo(obstacle.getCenter()) < 1.5);
 }
 
 void RouterTest::getPointsBesideObstacle_bigObstacleCloseOnLeftSide_onePointIsLeftAndOneRight()
