@@ -84,18 +84,18 @@ vector<Point> Circle::getIntersectionPoints(const Circle &circle) const
 	if (y1 == y2)
 	{
 		double x = offsets/(x2 - x1);
-		double determinant = r1*r1 - (x - x1)*(x - x1);
+		double discriminant = r1*r1 - (x - x1)*(x - x1);
 
-		if (compare.isFuzzyEqual(determinant, 0))
+		if (compare.isFuzzyEqual(discriminant, 0))
 		{
 			result.push_back(Point(x, y1));
 			return result;
 		}
-		else if (determinant < 0)
+		else if (discriminant < 0)
 			return vector<Point>();
 		else
 		{
-			double squareRoot = sqrt(determinant);
+			double squareRoot = sqrt(discriminant);
 			double ySmall = y1 - squareRoot;
 			double yBig = y1 + squareRoot;
 			result.push_back(Point(x, ySmall));
