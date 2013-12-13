@@ -108,3 +108,8 @@ double Path::getDistanceToRightPerpendicularPoint(const Point &point) const
 {
 	return point.distanceTo(this->getRightPerpendicularPoint(point));
 }
+
+Line Path::getCenterLine() const
+{
+	return Line(m_start, m_end);
+}

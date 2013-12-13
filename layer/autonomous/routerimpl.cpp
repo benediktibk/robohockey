@@ -71,6 +71,8 @@ vector<Point> RouterImpl::getPointsBesideObstacle(const Path &path, const Circle
 		Point centerBetweenIntersectPoints = (intersectionPoints.front() + intersectionPoints.back())/2;
 		offsetDistanceLongPoint -= centerBetweenIntersectPoints.distanceTo(obstacle.getCenter());
 		double offsetDistanceShortPoint = offsetDistanceLongPoint;
+		Line line(path.getCenterLine());
+		line.shiftParallel(intersectionPoints.front());
 
 		if(!path.isCircleCenterOnPath(obstacle))
 			offsetDistanceLongPoint += 2*centerBetweenIntersectPoints.distanceTo(obstacle.getCenter());
@@ -79,13 +81,13 @@ vector<Point> RouterImpl::getPointsBesideObstacle(const Path &path, const Circle
 		if(intersectionPoints.getIntersectTypeFrom() == PathIntersectPoints::IntersectTypeFromLeft)
 		{
 			offsetAngleShortPoint = offsetAngleShortPoint + Angle::getThreeQuarterRotation();
-			if(Line(intersectionPoints.front(), intersectionPoints.back()).isTargetPointRightOfLine(obstacle.getCenter()) && !path.isCircleCenterOnPath(obstacle))
+			if(line.isTargetPointRightOfLine(obstacle.getCenter()) && !path.isCircleCenterOnPath(obstacle))
 				offsetAngleShortPoint = offsetAngleShortPoint - Angle::getHalfRotation();
 		}
 		else
 		{
 			offsetAngleShortPoint = offsetAngleShortPoint + Angle::getQuarterRotation();
-			if(!Line(intersectionPoints.front(), intersectionPoints.back()).isTargetPointRightOfLine(obstacle.getCenter()) && !path.isCircleCenterOnPath(obstacle))
+			if(!line.isTargetPointRightOfLine(obstacle.getCenter()) && !path.isCircleCenterOnPath(obstacle))
 				offsetAngleShortPoint = offsetAngleShortPoint - Angle::getHalfRotation();
 		}
 		shortPointBesideObstacle = centerBetweenIntersectPoints + Point(offsetDistanceShortPoint, offsetAngleShortPoint);
