@@ -287,6 +287,9 @@ vector<Route> RouterImpl::calculateRoutesToPointsBesideObstacle(
 		const vector<Circle> &obstacles, bool canGoLeft, bool canGoRight, unsigned int searchDepth,
 		const list<Circle> &consideredObstacles) const
 {
+	if (detectLoopInConsideredObstacles(consideredObstacles))
+		return vector<Route>();
+
 	Path path(start, end, m_robotWidth);
 	vector<Point> pointsBesideObstacle = getPointsBesideObstacle(path, obstacle);
 	assert(pointsBesideObstacle.size() == 2);
