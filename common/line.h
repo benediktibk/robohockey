@@ -17,7 +17,8 @@ namespace Common
 
 		std::vector<Point> getIntersectPoints(const Circle &circle) const;
 		Point getPerpendicularPoint(Point point) const;
-		bool isTargetPointRightOfLine(const Point &target);
+		bool isTargetPointRightOfLine(const Point &target) const;
+		bool isOnePointLeftAndOneRightOfLine(const Point &one, const Point &two) const;
 
 	private:
 		const Point m_start;
