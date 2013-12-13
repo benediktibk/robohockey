@@ -233,18 +233,18 @@ void FieldTest::update_threeObjectsAndTwoObjectsInGoal_twoAchievedGoals()
     field.setTrueTeamColor(FieldColorYellow);
     DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
     lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 2), 0.1));
-    lidarObjects.addObject(DataAnalysis::LidarObject(Point(4.3, 1.5), 0.1));
-    lidarObjects.addObject(DataAnalysis::LidarObject(Point(4.6, 1.8), 0.1));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(4.2, 1.5), 0.1));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(4.4, 1.8), 0.1));
     lidar.setAllObjects(lidarObjects);
     DataAnalysis::CameraObjects cameraObjects;
     cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(1, 2)));
-    cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(4.3, 1.5)));
-    cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(4.6, 1.8)));
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(4.2, 1.5)));
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(4.4, 1.8)));
     camera.setAllObjects(cameraObjects);
 
     field.update();
 
-    CPPUNIT_ASSERT(field.getNumberOfAchievedGoals() == 2);
+	CPPUNIT_ASSERT_EQUAL((unsigned int)2, field.getNumberOfAchievedGoals());
 }
 
 void FieldTest::calibratePosition_noValidPattern_false()

@@ -337,28 +337,23 @@ void FieldImpl::updateObstacles()
 
 void FieldImpl::updateAchievedGoals()
 {
-    std::vector<FieldObject> objectsToCheck = m_fieldObjects;
-    size_t numberOfObjects = objectsToCheck.size();
-    Point corner1(4.167, 1);
-    Point corner2(4.583, 2);
-    Rectangle goal(corner1, corner2);
-    unsigned int achievedGoals = 0;
-    if(numberOfObjects != 0)
-    {
-    for (size_t i=0; i <= numberOfObjects; i++)
-    {
-        const FieldObject &currentObject = objectsToCheck[i];
-        const Circle &currentCircle = currentObject.getCircle();
-        Point center = currentCircle.getCenter();
-        if (currentObject.getColor() == m_teamColor && goal.isInside(center, 0.001))
-        {
-            achievedGoals++;
-        }
-    }
-    m_achievedGoals = achievedGoals;
-    }
-    else
-    m_achievedGoals = 0;
+	Point corner1(4.167, 1);
+	Point corner2(4.583, 2);
+	Rectangle goal(corner1, corner2);
+
+	m_achievedGoals = 0;
+	if(m_fieldObjects.size() != 0)
+	{
+		for (vector<FieldObject>::const_iterator i = m_fieldObjects.begin(); i != m_fieldObjects.end(); ++i)
+		{
+			const FieldObject &fieldObject = *i;
+
+			if (fieldObject.getColor() == m_teamColor && goal.isInside(fieldObject.getCircle().getCenter(), 0.001))
+				m_achievedGoals++;
+		}
+	}
+	else
+		m_achievedGoals = 0;
 }
 
 FieldObject &FieldImpl::getNextObjectFromPosition(Point position)

@@ -24,7 +24,7 @@ namespace Autonomous
 		CPPUNIT_TEST(update_twoObjectsFromLidarAndOneFromCamera_correctColor);
 		CPPUNIT_TEST(update_twoObjectsFromLidarAndOneFromCameraNoColorAnymoreDuringSecondCall_stillCorrectColor);
 		CPPUNIT_TEST(update_oneObjectOutAndOneObjectInsideOfCalibratedField_correctObjectAddedToField);
-		//CPPUNIT_TEST(update_threeObjectsAndTwoObjectsInGoal_twoAchievedGoals);
+		CPPUNIT_TEST(update_threeObjectsAndTwoObjectsInGoal_twoAchievedGoals);
 		CPPUNIT_TEST(calibratePosition_noValidPattern_false);
 		CPPUNIT_TEST(calibratePosition_validPattern_true);
 		CPPUNIT_TEST(calibratePosition_noValidPattern_noTransformation);
