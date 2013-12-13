@@ -27,6 +27,8 @@ namespace Common
 		bool isOnCircle(const Point &point, const Compare &compare) const;
 		bool isInside(const Point &point) const;
 
+		bool operator==(const Circle &circle) const;
+
 	private:
 		Point m_center;
 		double m_diameter;

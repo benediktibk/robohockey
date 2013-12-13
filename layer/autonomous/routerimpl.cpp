@@ -332,7 +332,25 @@ vector<Route> RouterImpl::calculateRoutesToPointsBesideObstacle(
 	return result;
 }
 
-bool RouterImpl::detectLoopInConsideredObstacles(const list<Circle> &/*obstacles*/) const
+bool RouterImpl::detectLoopInConsideredObstacles(const list<Circle> &obstacles) const
 {
-	return false;
+	if (obstacles.size() == 0)
+		return false;
+
+	size_t distance = 0;
+	bool found = false;
+	const Circle &lastOne = obstacles.back();
+	list<Circle>::const_reverse_iterator i = obstacles.rbegin();
+	++i;
+	for (; i != obstacles.rend() && !found; ++i)
+	{
+		++distance;
+		if (lastOne == *i)
+			found = true;
+	}
+
+	if (found)
+		return distance > 1;
+	else
+		return false;
 }
