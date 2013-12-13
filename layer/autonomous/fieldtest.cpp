@@ -245,7 +245,6 @@ void FieldTest::update_threeObjectsAndTwoObjectsInGoal_twoAchievedGoals()
     field.update();
 
     CPPUNIT_ASSERT(field.getNumberOfAchievedGoals() == 2);
-
 }
 
 void FieldTest::calibratePosition_noValidPattern_false()
@@ -654,7 +653,6 @@ void FieldTest::numberOfPucksChanged_onePuckRemoved_true()
 	CPPUNIT_ASSERT(field.numberOfPucksChanged());
 }
 
-
 void FieldTest::numberOfPucksChanged_onePuckAddedOnePuckRemoved_true()
 {
 	DataAnalysis::OdometryMock odometry;
@@ -912,7 +910,6 @@ void FieldTest::getTargetsForFinalPosition_always_numberOfPositionsBigger1()
 	FieldImpl field(odometry, lidar, camera, autonomousRobot);
 
 	CPPUNIT_ASSERT((size_t) 1 < field.getTargetsForFinalPosition().size());
-
 }
 
 void FieldTest::getTargetsForSearchingPucks_always_numberOfPositionsBigger5()
