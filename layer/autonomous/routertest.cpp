@@ -657,3 +657,127 @@ void RouterTest::getPointsBesideObstacle_bigObstacleCloseOnLeftSide_onePointIsLe
 	CPPUNIT_ASSERT_EQUAL((size_t)2, points.size());
 	CPPUNIT_ASSERT(line.isOnePointLeftAndOneRightOfLine(points[0], points[1]));
 }
+
+void RouterTest::detectLoopInConsideredObstacles_noObstacles_false()
+{
+	RouterImpl router(0.5);
+	list<Circle> obstacles;
+
+	CPPUNIT_ASSERT(!router.detectLoopInConsideredObstacles(obstacles));
+}
+
+void RouterTest::detectLoopInConsideredObstacles_oneObstacle_false()
+{
+	RouterImpl router(0.5);
+	list<Circle> obstacles;
+	obstacles.push_back(Circle(Point(2, 3), 1));
+
+	CPPUNIT_ASSERT(!router.detectLoopInConsideredObstacles(obstacles));
+}
+
+void RouterTest::detectLoopInConsideredObstacles_twiceTheSameObstacle_false()
+{
+	RouterImpl router(0.5);
+	list<Circle> obstacles;
+	obstacles.push_back(Circle(Point(2, 3), 1));
+	obstacles.push_back(Circle(Point(2, 3), 1));
+
+	CPPUNIT_ASSERT(!router.detectLoopInConsideredObstacles(obstacles));
+}
+
+void RouterTest::detectLoopInConsideredObstacles_twiceTheSameObstacleAtEnd_false()
+{
+	RouterImpl router(0.5);
+	list<Circle> obstacles;
+	obstacles.push_back(Circle(Point(-2, 3), 1));
+	obstacles.push_back(Circle(Point(2, 5), 1));
+	obstacles.push_back(Circle(Point(2, 3), 1));
+	obstacles.push_back(Circle(Point(2, 3), 1));
+
+	CPPUNIT_ASSERT(!router.detectLoopInConsideredObstacles(obstacles));
+}
+
+void RouterTest::detectLoopInConsideredObstacles_thriceTheSameObstacle_false()
+{
+	RouterImpl router(0.5);
+	list<Circle> obstacles;
+	obstacles.push_back(Circle(Point(2, 3), 1));
+	obstacles.push_back(Circle(Point(2, 3), 1));
+	obstacles.push_back(Circle(Point(2, 3), 1));
+
+	CPPUNIT_ASSERT(!router.detectLoopInConsideredObstacles(obstacles));
+}
+
+void RouterTest::detectLoopInConsideredObstacles_twiceTheSameObstacleInTheMiddle_false()
+{
+	RouterImpl router(0.5);
+	list<Circle> obstacles;
+	obstacles.push_back(Circle(Point(-3, 3), 2));
+	obstacles.push_back(Circle(Point(2, 3), 1));
+	obstacles.push_back(Circle(Point(2, 3), 1));
+	obstacles.push_back(Circle(Point(2, 4), 0.5));
+
+	CPPUNIT_ASSERT(!router.detectLoopInConsideredObstacles(obstacles));
+}
+
+void RouterTest::detectLoopInConsideredObstacles_twiceTheSameObstacleAtBegin_false()
+{
+	RouterImpl router(0.5);
+	list<Circle> obstacles;
+	obstacles.push_back(Circle(Point(2, 3), 1));
+	obstacles.push_back(Circle(Point(2, 3), 1));
+	obstacles.push_back(Circle(Point(2, 4), 0.5));
+
+	CPPUNIT_ASSERT(!router.detectLoopInConsideredObstacles(obstacles));
+}
+
+void RouterTest::detectLoopInConsideredObstacles_loopOverOne_true()
+{
+	RouterImpl router(0.5);
+	list<Circle> obstacles;
+	obstacles.push_back(Circle(Point(2, 3), 1));
+	obstacles.push_back(Circle(Point(2, 4), 0.5));
+	obstacles.push_back(Circle(Point(2, 3), 1));
+
+	CPPUNIT_ASSERT(router.detectLoopInConsideredObstacles(obstacles));
+}
+
+void RouterTest::detectLoopInConsideredObstacles_loopOverTwo_true()
+{
+	RouterImpl router(0.5);
+	list<Circle> obstacles;
+	obstacles.push_back(Circle(Point(2, 3), 1));
+	obstacles.push_back(Circle(Point(2, 4), 0.5));
+	obstacles.push_back(Circle(Point(2, 4), 0.5));
+	obstacles.push_back(Circle(Point(2, 3), 1));
+
+	CPPUNIT_ASSERT(router.detectLoopInConsideredObstacles(obstacles));
+}
+
+void RouterTest::detectLoopInConsideredObstacles_sameAsSecond_true()
+{
+	RouterImpl router(0.5);
+	list<Circle> obstacles;
+	obstacles.push_back(Circle(Point(1, 1), 0.5));
+	obstacles.push_back(Circle(Point(2, 3), 1));
+	obstacles.push_back(Circle(Point(2, 4), 0.5));
+	obstacles.push_back(Circle(Point(2, 4), 0.5));
+	obstacles.push_back(Circle(Point(1, 1), 0.25));
+	obstacles.push_back(Circle(Point(2, 3), 1));
+
+	CPPUNIT_ASSERT(router.detectLoopInConsideredObstacles(obstacles));
+}
+
+void RouterTest::detectLoopInConsideredObstacles_somewhereInBetweenALoop_false()
+{
+	RouterImpl router(0.5);
+	list<Circle> obstacles;
+	obstacles.push_back(Circle(Point(1, 1), 0.5));
+	obstacles.push_back(Circle(Point(2, 3), 1));
+	obstacles.push_back(Circle(Point(2, 4), 0.5));
+	obstacles.push_back(Circle(Point(2, 3), 1));
+	obstacles.push_back(Circle(Point(2, 4), 0.5));
+	obstacles.push_back(Circle(Point(1, 1), 0.25));
+
+	CPPUNIT_ASSERT(!router.detectLoopInConsideredObstacles(obstacles));
+}

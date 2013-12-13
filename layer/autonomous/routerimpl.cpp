@@ -331,3 +331,8 @@ vector<Route> RouterImpl::calculateRoutesToPointsBesideObstacle(
 
 	return result;
 }
+
+bool RouterImpl::detectLoopInConsideredObstacles(const list<Circle> &/*obstacles*/) const
+{
+	return false;
+}

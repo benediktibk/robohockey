@@ -32,6 +32,7 @@ namespace Autonomous
 		std::vector<Common::Point> getPointsBesideObstacle(const Common::Path &path, const Common::Circle &obstacle) const;
 		std::vector<Common::Circle> filterObstacles(const std::vector<Common::Circle> &softObstacles,
 				const std::vector<Common::Circle> &hardObstacles, const Common::Point &position) const;
+		bool detectLoopInConsideredObstacles(const std::list<Common::Circle> &obstacles) const;
 
 	private:
 		std::vector<Route> calculateStartParts(

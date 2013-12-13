@@ -63,6 +63,17 @@ namespace Autonomous
 		CPPUNIT_TEST(getPointsBesideObstacle_bigObstacleOnRightSide_shortPointIs2And1p1615);
 		CPPUNIT_TEST(getPointsBesideObstacle_bigObstacleOnRightSide_longPointIs2AndMinus2p5177);
 		CPPUNIT_TEST(getPointsBesideObstacle_bigObstacleCloseOnLeftSide_onePointIsLeftAndOneRight);
+		CPPUNIT_TEST(detectLoopInConsideredObstacles_noObstacles_false);
+		CPPUNIT_TEST(detectLoopInConsideredObstacles_oneObstacle_false);
+		CPPUNIT_TEST(detectLoopInConsideredObstacles_twiceTheSameObstacle_false);
+		CPPUNIT_TEST(detectLoopInConsideredObstacles_twiceTheSameObstacleAtEnd_false);
+		CPPUNIT_TEST(detectLoopInConsideredObstacles_thriceTheSameObstacle_false);
+		CPPUNIT_TEST(detectLoopInConsideredObstacles_twiceTheSameObstacleInTheMiddle_false);
+		CPPUNIT_TEST(detectLoopInConsideredObstacles_twiceTheSameObstacleAtBegin_false);
+		CPPUNIT_TEST(detectLoopInConsideredObstacles_loopOverOne_true);
+		CPPUNIT_TEST(detectLoopInConsideredObstacles_loopOverTwo_true);
+		CPPUNIT_TEST(detectLoopInConsideredObstacles_sameAsSecond_true);
+		CPPUNIT_TEST(detectLoopInConsideredObstacles_somewhereInBetweenALoop_false);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
@@ -112,6 +123,17 @@ namespace Autonomous
 		void getPointsBesideObstacle_bigObstacleOnRightSide_shortPointIs2And1p1615();
 		void getPointsBesideObstacle_bigObstacleOnRightSide_longPointIs2AndMinus2p5177();
 		void getPointsBesideObstacle_bigObstacleCloseOnLeftSide_onePointIsLeftAndOneRight();
+		void detectLoopInConsideredObstacles_noObstacles_false();
+		void detectLoopInConsideredObstacles_oneObstacle_false();
+		void detectLoopInConsideredObstacles_twiceTheSameObstacle_false();
+		void detectLoopInConsideredObstacles_twiceTheSameObstacleAtEnd_false();
+		void detectLoopInConsideredObstacles_thriceTheSameObstacle_false();
+		void detectLoopInConsideredObstacles_twiceTheSameObstacleInTheMiddle_false();
+		void detectLoopInConsideredObstacles_twiceTheSameObstacleAtBegin_false();
+		void detectLoopInConsideredObstacles_loopOverOne_true();
+		void detectLoopInConsideredObstacles_loopOverTwo_true();
+		void detectLoopInConsideredObstacles_sameAsSecond_true();
+		void detectLoopInConsideredObstacles_somewhereInBetweenALoop_false();
 
 	private:
 		static bool routeIsInsideField(const Route &route, const Field &field);
