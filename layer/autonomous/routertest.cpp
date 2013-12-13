@@ -600,10 +600,10 @@ void RouterTest::getPointsBesideObstacle_bigObstacleOnRightSide_bothPointsDoNotI
 
 	vector<Point> pointsBeside = router.getPointsBesideObstacle(path, obstacle);
 
-	Path one(pointsBeside.front(), pointsBeside.front(), 0.5);
-	Path two(pointsBeside.back(), pointsBeside.back(), 0.5);
-	CPPUNIT_ASSERT(!one.intersectsWith(obstacle));
-	CPPUNIT_ASSERT(!two.intersectsWith(obstacle));
+	Circle one(pointsBeside.front(), 0.707);
+	Circle two(pointsBeside.back(), 0.707);
+	CPPUNIT_ASSERT(!one.overlapsWith(obstacle));
+	CPPUNIT_ASSERT(!two.overlapsWith(obstacle));
 }
 
 void RouterTest::getPointsBesideObstacle_bigObstacleOnRightSide_bothPointsHaveReasonableCoordinates()
@@ -634,24 +634,28 @@ bool RouterTest::routeIsInsideField(const Route &route, const Field &field)
 	return true;
 }
 
-void RouterTest::getPointsBesideObstacle_bigObstacleOnRightSide_shortPointIs2And1p1615()
+void RouterTest::getPointsBesideObstacle_bigObstacleOnRightSide_shortPointIsCorrect()
 {
-	Compare compare(0.0001);
 	RouterImpl router(0.5);
 	Path currentPath(Point(0,0), Point(4,0), 0.5);
 	Circle obstacle(Point(2,-0.5), 2);
+	Point pointBesideObstacle = router.getPointsBesideObstacle(currentPath, obstacle).front();
+	Circle robotBesideObstacle(pointBesideObstacle, 0.707);
 
-	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(2,1.1615), router.getPointsBesideObstacle(currentPath, obstacle).front()));
+	CPPUNIT_ASSERT(!robotBesideObstacle.overlapsWith(obstacle));
+	CPPUNIT_ASSERT(robotBesideObstacle.getDistanceTo(obstacle.getCenter()) < 0.35);
 }
 
-void RouterTest::getPointsBesideObstacle_bigObstacleOnRightSide_longPointIs2AndMinus2p5177()
+void RouterTest::getPointsBesideObstacle_bigObstacleOnRightSide_longPointIsCorrect()
 {
-	Compare compare(0.0001);
 	RouterImpl router(0.5);
 	Path currentPath(Point(0,0), Point(4,0), 0.5);
 	Circle obstacle(Point(2,-0.5), 2);
+	Point pointBesideObstacle = router.getPointsBesideObstacle(currentPath, obstacle).back();
+	Circle robotBesideObstacle(pointBesideObstacle, 0.707);
 
-	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(2,-2.5177), router.getPointsBesideObstacle(currentPath, obstacle).back()));
+	CPPUNIT_ASSERT(!robotBesideObstacle.overlapsWith(obstacle));
+	CPPUNIT_ASSERT(robotBesideObstacle.getDistanceTo(obstacle.getCenter()) < 0.35);
 }
 
 void RouterTest::getPointsBesideObstacle_bigObstacleCloseOnLeftSide_onePointIsLeftAndOneRight()

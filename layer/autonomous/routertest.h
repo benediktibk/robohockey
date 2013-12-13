@@ -60,8 +60,8 @@ namespace Autonomous
 		CPPUNIT_TEST(getPointsBesideObstacle_bigObstacleOnRightSide_resultSizeIs2);
 		CPPUNIT_TEST(getPointsBesideObstacle_bigObstacleOnRightSide_bothPointsDoNotIntersectWithTheObstacle);
 		CPPUNIT_TEST(getPointsBesideObstacle_bigObstacleOnRightSide_bothPointsHaveReasonableCoordinates);
-		CPPUNIT_TEST(getPointsBesideObstacle_bigObstacleOnRightSide_shortPointIs2And1p1615);
-		CPPUNIT_TEST(getPointsBesideObstacle_bigObstacleOnRightSide_longPointIs2AndMinus2p5177);
+		CPPUNIT_TEST(getPointsBesideObstacle_bigObstacleOnRightSide_shortPointIsCorrect);
+		CPPUNIT_TEST(getPointsBesideObstacle_bigObstacleOnRightSide_longPointIsCorrect);
 		CPPUNIT_TEST(getPointsBesideObstacle_bigObstacleCloseOnLeftSide_onePointIsLeftAndOneRight);
 		CPPUNIT_TEST(detectLoopInConsideredObstacles_noObstacles_false);
 		CPPUNIT_TEST(detectLoopInConsideredObstacles_oneObstacle_false);
@@ -120,8 +120,8 @@ namespace Autonomous
 		void getPointsBesideObstacle_bigObstacleOnRightSide_resultSizeIs2();
 		void getPointsBesideObstacle_bigObstacleOnRightSide_bothPointsDoNotIntersectWithTheObstacle();
 		void getPointsBesideObstacle_bigObstacleOnRightSide_bothPointsHaveReasonableCoordinates();
-		void getPointsBesideObstacle_bigObstacleOnRightSide_shortPointIs2And1p1615();
-		void getPointsBesideObstacle_bigObstacleOnRightSide_longPointIs2AndMinus2p5177();
+		void getPointsBesideObstacle_bigObstacleOnRightSide_shortPointIsCorrect();
+		void getPointsBesideObstacle_bigObstacleOnRightSide_longPointIsCorrect();
 		void getPointsBesideObstacle_bigObstacleCloseOnLeftSide_onePointIsLeftAndOneRight();
 		void detectLoopInConsideredObstacles_noObstacles_false();
 		void detectLoopInConsideredObstacles_oneObstacle_false();
