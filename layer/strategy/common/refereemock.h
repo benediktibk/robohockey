@@ -33,12 +33,14 @@ namespace Common
 		void setGameStart(bool value);
 		void setGameOver(bool value);
 		void setStopMovement(bool value);
+		void setTrueColorOfTeam(RoboHockey::Common::FieldColor color);
 
 	private:
 		bool m_detectionStart;
 		bool m_gameStart;
 		bool m_gameOver;
 		bool m_stopMovement;
+		RoboHockey::Common::FieldColor m_trueColor;
 
 
 	};

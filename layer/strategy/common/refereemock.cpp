@@ -1,9 +1,11 @@
 #include "layer/strategy/common/refereemock.h"
 
+using namespace RoboHockey::Common;
 using namespace RoboHockey::Layer::Strategy::Common;
 using namespace Extern::Angelina;
 
-RefereeMock::RefereeMock()
+RefereeMock::RefereeMock() :
+	m_trueColor(FieldColorUnknown)
 { }
 
 void RefereeMock::reportReady()
@@ -41,7 +43,7 @@ bool RefereeMock::gameOver()
 
 RoboHockey::Common::FieldColor RefereeMock::trueColorOfTeam()
 {
-	return RoboHockey::Common::FieldColorBlue;
+	return m_trueColor;
 }
 
 bool RefereeMock::stopMovement()
