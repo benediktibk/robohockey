@@ -191,18 +191,27 @@ vector<RoutingResult> RouterImpl::calculateStartPartsWithCoveredEnd(
 	const Point &startPoint = start.getPosition();
 	Path path(startPoint, end, m_robotWidth);
 	vector<Circle> obstaclesTillEnd = findRealObstacles(obstacles, path);
-	assert(obstaclesTillEnd.size() > 0);
-	Circle obstacle = findClosestObstacle(obstaclesTillEnd, startPoint);
-	double diameter = obstacle.getDiameter();
-	Point direction = end - startPoint;
-	double directionLength = startPoint.distanceTo(end);
-	double desiredLength = directionLength + 2*diameter;
-	Point directionModified = direction/directionLength*desiredLength;
-	Point extendedEnd = startPoint + directionModified;
-	return calculateRoutesToPointsBesideObstacle(
-				obstacle, start, extendedEnd, field, obstacles,
-				searchDepth, consideredObstacles, maximumRotation,
-				minimumStepAfterMaximumRotation);
+
+	if (obstaclesTillEnd.size() == 0)
+	{
+		return calculateStartPartsWithFreeDirectPath(
+					start, end, field, obstacles, searchDepth, consideredObstacles,
+					maximumRotation, minimumStepAfterMaximumRotation);
+	}
+	else
+	{
+		Circle obstacle = findClosestObstacle(obstaclesTillEnd, startPoint);
+		double diameter = obstacle.getDiameter();
+		Point direction = end - startPoint;
+		double directionLength = startPoint.distanceTo(end);
+		double desiredLength = directionLength + 2*diameter;
+		Point directionModified = direction/directionLength*desiredLength;
+		Point extendedEnd = startPoint + directionModified;
+		return calculateRoutesToPointsBesideObstacle(
+					obstacle, start, extendedEnd, field, obstacles,
+					searchDepth, consideredObstacles, maximumRotation,
+					minimumStepAfterMaximumRotation);
+	}
 }
 
 vector<RoutingResult> RouterImpl::calculateStartPartsWithFreeDirectPath(
