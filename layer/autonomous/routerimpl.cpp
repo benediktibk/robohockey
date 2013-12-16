@@ -26,7 +26,7 @@ RouterImpl::RouterImpl(double robotWidth) :
 
 Route RouterImpl::calculateRoute(
 		const RobotPosition &start, const RobotPosition &end, const Field &field,
-		const Common::Angle &/*maximumRotation*/, double /*minimumStepAfterMaximumRotation*/) const
+		const Common::Angle &maximumRotation, double minimumStepAfterMaximumRotation) const
 {
 	const vector<Circle> softObstacles = field.getAllSoftObstacles();
 	const vector<Circle> hardObstacles = field.getAllHardObstacles();
@@ -45,7 +45,8 @@ Route RouterImpl::calculateRoute(
 	const vector<Circle> allObstacles = filterObstacles(softObstacles, hardObstacles, startPosition);
 	list<RoutingObstacle> consideredObstacles;
 	vector<RoutingResult> routingResults = calculateStartParts(
-				startPosition, endPosition, field, allObstacles, 0, consideredObstacles);
+				start, endPosition, field, allObstacles, 0, consideredObstacles,
+				maximumRotation, minimumStepAfterMaximumRotation);
 
 	if (routingResults.size() == 0)
 		return Route();
@@ -135,9 +136,10 @@ vector<Circle> RouterImpl::filterObstacles(
 }
 
 vector<RoutingResult> RouterImpl::calculateStartParts(
-		const Point &start, const Point &end, const Field &field,
+		const RobotPosition &start, const Point &end, const Field &field,
 		const vector<Circle> &obstacles, unsigned int searchDepth,
-		const list<RoutingObstacle> &consideredObstacles) const
+		const list<RoutingObstacle> &consideredObstacles,
+		const Common::Angle &maximumRotation, double minimumStepAfterMaximumRotation) const
 {
 	++searchDepth;
 	if (searchDepth > m_maximumSearchDepth)
@@ -147,69 +149,78 @@ vector<RoutingResult> RouterImpl::calculateStartParts(
 	bool endCovered = endCircle.overlapsWith(obstacles);
 	if (endCovered)
 		return calculateStartPartsWithCoveredEnd(
-				start, end, field, obstacles, searchDepth, consideredObstacles);
+				start, end, field, obstacles, searchDepth, consideredObstacles,
+				maximumRotation, minimumStepAfterMaximumRotation);
 	else
 		return calculateStartPartsWithFreeEnd(
-				start, end, field, obstacles, searchDepth, consideredObstacles);
+				start, end, field, obstacles, searchDepth, consideredObstacles,
+				maximumRotation, minimumStepAfterMaximumRotation);
 }
 
 vector<RoutingResult> RouterImpl::calculateStartPartsWithFreeEnd(
-		const Point &start, const Point &end, const Field &field,
+		const RobotPosition &start, const Point &end, const Field &field,
 		const vector<Circle> &obstacles, unsigned int searchDepth,
-		const list<RoutingObstacle> &consideredObstacles) const
+		const list<RoutingObstacle> &consideredObstacles,
+		const Common::Angle &maximumRotation, double minimumStepAfterMaximumRotation) const
 {
-	Path directPath(start, end, m_robotWidth);
+	const Point &startPoint = start.getPosition();
+	Path directPath(startPoint, end, m_robotWidth);
 	vector<Circle> realObstacles = findRealObstacles(obstacles, directPath);
 
 	if (realObstacles.size() == 0)
 	{
 		vector<RoutingResult> result;
 		Route directRoute(m_robotWidth);
-		directRoute.addPoint(start);
+		directRoute.addPoint(startPoint);
 		directRoute.addPoint(end);
 		result.push_back(RoutingResult(directRoute, consideredObstacles));
 		return result;
 	}
 
-	Circle closestObstacle = findClosestObstacle(realObstacles, start);
+	Circle closestObstacle = findClosestObstacle(realObstacles, startPoint);
 	vector<RoutingResult> startParts = calculateRoutesToPointsBesideObstacle(
 				closestObstacle, start, end, field, obstacles,
-				searchDepth, consideredObstacles);
-	return calculateEndParts(startParts, end, field, obstacles, searchDepth);
+				searchDepth, consideredObstacles, maximumRotation, minimumStepAfterMaximumRotation);
+	return calculateEndParts(
+				startParts, end, field, obstacles, searchDepth, maximumRotation, minimumStepAfterMaximumRotation);
 }
 
 vector<RoutingResult> RouterImpl::calculateStartPartsWithCoveredEnd(
-		const Point &start, const Point &end, const Field &field, const vector<Circle> &obstacles,
-		unsigned int searchDepth, const list<RoutingObstacle> &consideredObstacles) const
+		const RobotPosition &start, const Point &end, const Field &field, const vector<Circle> &obstacles,
+		unsigned int searchDepth, const list<RoutingObstacle> &consideredObstacles,
+		const Common::Angle &maximumRotation, double minimumStepAfterMaximumRotation) const
 {
-	Path path(start, end, m_robotWidth);
+	const Point &startPoint = start.getPosition();
+	Path path(startPoint, end, m_robotWidth);
 	vector<Circle> obstaclesTillEnd = findRealObstacles(obstacles, path);
 
 	if (obstaclesTillEnd.size() == 0)
 	{
 		vector<RoutingResult> result;
 		Route route(m_robotWidth);
-		route.addPoint(start);
+		route.addPoint(start.getPosition());
 		route.addPoint(end);
 		result.push_back(RoutingResult(route, consideredObstacles));
 		return result;
 	}
 
-	Circle obstacle = findClosestObstacle(obstaclesTillEnd, start);
+	Circle obstacle = findClosestObstacle(obstaclesTillEnd, startPoint);
 	double diameter = obstacle.getDiameter();
-	Point direction = end - start;
-	double directionLength = start.distanceTo(end);
+	Point direction = end - startPoint;
+	double directionLength = startPoint.distanceTo(end);
 	double desiredLength = directionLength + 2*diameter;
 	Point directionModified = direction/directionLength*desiredLength;
-	Point extendedEnd = start + directionModified;
+	Point extendedEnd = startPoint + directionModified;
 	return calculateRoutesToPointsBesideObstacle(
 				obstacle, start, extendedEnd, field, obstacles,
-				searchDepth, consideredObstacles);
+				searchDepth, consideredObstacles, maximumRotation,
+				minimumStepAfterMaximumRotation);
 }
 
 vector<RoutingResult> RouterImpl::calculateEndParts(
 		const vector<RoutingResult> &startRoutes, const Point &end, const Field &field,
-		const vector<Circle> &obstacles, unsigned int searchDepth) const
+		const vector<Circle> &obstacles, unsigned int searchDepth,
+		const Common::Angle &maximumRotation, double minimumStepAfterMaximumRotation) const
 {
 	Compare compare(0.01);
 	vector<RoutingResult> result;
@@ -219,9 +230,11 @@ vector<RoutingResult> RouterImpl::calculateEndParts(
 	{
 		const Route &startRoute = i->getRoute();
 		const list<RoutingObstacle> &consideredObstacles = i->getObstacles();
-		const Common::Point &start = startRoute.getLastPoint();
+		const Common::Point &lastPoint = startRoute.getLastPoint();
+		const Common::Point &nextToLastPoint = startRoute.getNextToLastPoint();
+		RobotPosition start(lastPoint, Angle(nextToLastPoint, lastPoint));
 
-		if (compare.isFuzzyEqual(start, end))
+		if (compare.isFuzzyEqual(start.getPosition(), end))
 			result.push_back(*i);
 		else
 		{
@@ -229,7 +242,8 @@ vector<RoutingResult> RouterImpl::calculateEndParts(
 			if (consideredObstacles.size() > 0)
 				reducedConsideredObstacles.push_back(consideredObstacles.front());
 			vector<RoutingResult> routes = calculateStartParts(
-						start, end, field, obstacles, searchDepth, reducedConsideredObstacles);
+						start, end, field, obstacles, searchDepth, reducedConsideredObstacles,
+						maximumRotation, minimumStepAfterMaximumRotation);
 
 			for (vector<RoutingResult>::const_iterator j = routes.begin(); j != routes.end(); ++j)
 			{
@@ -279,14 +293,16 @@ Circle RouterImpl::findClosestObstacle(const vector<Circle> &obstacles, const Po
 }
 
 vector<RoutingResult> RouterImpl::calculateRoutesToPointsBesideObstacle(
-		const Circle &obstacle, const Point &start, const Point &end, const Field &field,
+		const Circle &obstacle, const RobotPosition &start, const Point &end, const Field &field,
 		const vector<Circle> &obstacles, unsigned int searchDepth,
-		const list<RoutingObstacle> &consideredObstacles) const
+		const list<RoutingObstacle> &consideredObstacles, const Common::Angle &maximumRotation,
+		double minimumStepAfterMaximumRotation) const
 {
-	Path path(start, end, m_robotWidth);
+	Point startPoint = start.getPosition();
+	Path path(startPoint, end, m_robotWidth);
 	vector<Point> pointsBesideObstacle = getPointsBesideObstacle(path, obstacle);
 	assert(pointsBesideObstacle.size() == 2);
-	Line line(start, end);
+	Line line(startPoint, end);
 	assert(line.isOnePointLeftAndOneRightOfLine(pointsBesideObstacle[0], pointsBesideObstacle[1]));
 	Point leftPoint;
 	Point rightPoint;
@@ -312,7 +328,8 @@ vector<RoutingResult> RouterImpl::calculateRoutesToPointsBesideObstacle(
 		if (!detectLoopInConsideredObstacles(extendedConsideredObstacles))
 		{
 			vector<RoutingResult> startParts = calculateStartParts(
-						start, rightPoint, field, obstacles, searchDepth, extendedConsideredObstacles);
+						start, rightPoint, field, obstacles, searchDepth, extendedConsideredObstacles,
+						maximumRotation, minimumStepAfterMaximumRotation);
 			result.insert(result.end(), startParts.begin(), startParts.end());
 		}
 	}
@@ -325,7 +342,8 @@ vector<RoutingResult> RouterImpl::calculateRoutesToPointsBesideObstacle(
 		if (!detectLoopInConsideredObstacles(extendedConsideredObstacles))
 		{
 			vector<RoutingResult> startParts = calculateStartParts(
-						start, leftPoint, field, obstacles, searchDepth, extendedConsideredObstacles);
+						start, leftPoint, field, obstacles, searchDepth, extendedConsideredObstacles,
+						maximumRotation, minimumStepAfterMaximumRotation);
 			result.insert(result.end(), startParts.begin(), startParts.end());
 		}
 	}
