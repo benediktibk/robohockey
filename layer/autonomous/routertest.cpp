@@ -499,8 +499,8 @@ void RouterTest::calculateRoute_sharpBendBetweenNecessary_reasonableRoute()
 	Compare compare(0.001);
 	CPPUNIT_ASSERT(route.isValid());
 	double routeLength = route.getLength();
-	CPPUNIT_ASSERT(compare.isStrictFuzzyGreater(routeLength, 10));
-	Angle maximumBend = route.getMaximumBend(Angle(0), Angle(0));
+	CPPUNIT_ASSERT(compare.isStrictFuzzyGreater(routeLength, 4));
+	Angle maximumBend = route.getMaximumBend(start.getOrientation(), end.getOrientation());
 	CPPUNIT_ASSERT(compare.isFuzzySmaller(maximumBend.getValueBetweenZeroAndTwoPi(), maximumRotation.getValueBetweenZeroAndTwoPi()));
 }
 
