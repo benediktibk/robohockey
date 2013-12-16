@@ -51,17 +51,12 @@ Route RouterImpl::calculateRoute(
 	vector<RoutingResult> routingResults = calculateStartParts(
 				start, endPosition, field, allObstacles, 0, consideredObstacles,
 				maximumRotation, minimumStepAfterMaximumRotation);
+	vector<Route> routes = fixRotationOfFinalStep(routingResults, maximumRotation, minimumStepAfterMaximumRotation);
 
-	if (routingResults.size() == 0)
+	if (routes.size() == 0)
 		return Route();
 	else
 	{
-		vector<Route> routes;
-		routes.reserve(routingResults.size());
-
-		for (vector<RoutingResult>::const_iterator i = routingResults.begin(); i != routingResults.end(); ++i)
-			routes.push_back(i->getRoute());
-
 		RouteLengthCompare lengthCompare;
 		sort(routes.begin(), routes.end(), lengthCompare);
 		return routes.front();
@@ -377,6 +372,30 @@ vector<RoutingResult> RouterImpl::calculateRoutesToPointsBesideObstacle(
 	}
 
 	return result;
+}
+
+vector<Route> RouterImpl::fixRotationOfFinalStep(
+		const vector<RoutingResult> &routes, const Angle &maximumRotation, double minimumStepAfterMaximumRotation) const
+{
+	vector<Route> result;
+	result.reserve(routes.size());
+
+	for (vector<RoutingResult>::const_iterator i = routes.begin(); i != routes.end(); ++i)
+	{
+		const Route &route = i->getRoute();
+		Route fixedRoute = fixRotationOfFinalStep(route, maximumRotation, minimumStepAfterMaximumRotation);
+
+		if (fixedRoute.isValid())
+			result.push_back(fixedRoute);
+	}
+
+	return result;
+}
+
+Route RouterImpl::fixRotationOfFinalStep(
+		const Route &route, const Angle &/*maximumRotation*/, double /*minimumStepAfterMaximumRotation*/) const
+{
+	return route;
 }
 
 bool RouterImpl::detectLoopInConsideredObstacles(const list<RoutingObstacle> &obstacles) const

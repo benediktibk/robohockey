@@ -70,6 +70,11 @@ namespace Autonomous
 				const Field &field, const std::vector<Common::Circle> &obstacles,
 				unsigned int searchDepth, const std::list<RoutingObstacle> &consideredObstacles,
 				const Common::Angle &maximumRotation, double minimumStepAfterMaximumRotation) const;
+		std::vector<Route> fixRotationOfFinalStep(
+				const std::vector<RoutingResult> &routes, const Common::Angle &maximumRotation,
+				double minimumStepAfterMaximumRotation) const;
+		Route fixRotationOfFinalStep(
+				const Route &route, const Common::Angle &maximumRotation, double minimumStepAfterMaximumRotation) const;
 
 	private:
 		const unsigned int m_maximumSearchDepth;
