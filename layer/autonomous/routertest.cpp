@@ -1051,8 +1051,9 @@ void RouterTest::calculateMaximumRotatedNextPoint_startLookingRightAndQuarterRot
 
 	Point point = router.calculateMaximumRotatedNextPoint(start, desiredRotation, maximumRotation, 1);
 
-	Compare compare(0.00001);
-	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(sqrt(2), (-1)*sqrt(2)), point));
+	Compare compare(0.001);
+	Point pointShouldBe(1.0/sqrt(2), 1.0/sqrt(2));
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(pointShouldBe, point));
 }
 
 void RouterTest::calculateMaximumRotatedNextPoint_startLookingRightAndQuarterRotationDesiredButOnlyEighthRotationAllowedShifted_correctPoint()
@@ -1065,7 +1066,8 @@ void RouterTest::calculateMaximumRotatedNextPoint_startLookingRightAndQuarterRot
 	Point point = router.calculateMaximumRotatedNextPoint(start, desiredRotation, maximumRotation, 1);
 
 	Compare compare(0.00001);
-	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(sqrt(2) + 1, (-1)*sqrt(2) + 2), point));
+	Point pointShouldBe(1/sqrt(2) + 1, 1/sqrt(2) + 2);
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(pointShouldBe, point));
 }
 
 void RouterTest::calculateMaximumRotatedNextPoint_startLookingLeftAndMinusQuarterRotationDesiredButOnlyEighthRotationAllowedShifted_correctPoint()
@@ -1078,5 +1080,6 @@ void RouterTest::calculateMaximumRotatedNextPoint_startLookingLeftAndMinusQuarte
 	Point point = router.calculateMaximumRotatedNextPoint(start, desiredRotation, maximumRotation, 1);
 
 	Compare compare(0.00001);
-	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point((-1)*sqrt(2) - 1, (-1)*sqrt(2)), point));
+	Point pointShouldBe(-1/sqrt(2) - 1, 1/sqrt(2));
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(pointShouldBe, point));
 }

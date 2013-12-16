@@ -416,8 +416,9 @@ Point RouterImpl::calculateMaximumRotatedNextPoint(
 {
 	int rotationSign = sgn(desiredRotation.getValueBetweenMinusPiAndPi());
 	Angle possibleRotation = maximumRotation.getValueBetweenZeroAndTwoPi()*rotationSign;
+	Angle totalRotation = start.getOrientation() + possibleRotation;
 	Point modifiedEnd(minimumStepAfterMaximumRotation, 0);
-	modifiedEnd.rotate(possibleRotation);
+	modifiedEnd.rotate(totalRotation);
 	modifiedEnd = start.getPosition() + modifiedEnd;
 	return modifiedEnd;
 }
