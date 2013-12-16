@@ -220,7 +220,7 @@ vector<RoutingResult> RouterImpl::calculateStartPartsWithFreeDirectPath(
 		const list<RoutingObstacle> &consideredObstacles, const Angle &maximumRotation,
 		double minimumStepAfterMaximumRotation) const
 {
-	Angle rotation = start.getOrientation() - Angle(start.getPosition(), end);
+	Angle rotation = calculateNecessaryRotation(start, end);
 	Angle rotationAbsolute = rotation;
 	rotationAbsolute.abs();
 	Compare compare(0.001);
@@ -236,11 +236,8 @@ vector<RoutingResult> RouterImpl::calculateStartPartsWithFreeDirectPath(
 	}
 	else
 	{
-		int rotationSign = sgn(rotation.getValueBetweenMinusPiAndPi());
-		Angle possibleRotation = maximumRotation.getValueBetweenZeroAndTwoPi()*rotationSign;
-		Point modifiedEnd(minimumStepAfterMaximumRotation, 0);
-		modifiedEnd.rotate(start.getOrientation() - possibleRotation);
-		modifiedEnd = start.getPosition() + modifiedEnd;
+		Point modifiedEnd = calculateMaximumRotatedNextPoint(
+					start, rotation, maximumRotation, minimumStepAfterMaximumRotation);
 		vector<RoutingResult> startParts = calculateStartParts(
 					start, modifiedEnd, field, obstacles, searchDepth, consideredObstacles,
 					maximumRotation, minimumStepAfterMaximumRotation);
@@ -405,4 +402,21 @@ bool RouterImpl::detectLoopInConsideredObstacles(const list<RoutingObstacle> &ob
 		return distance > 1;
 	else
 		return false;
+}
+
+Angle RouterImpl::calculateNecessaryRotation(const RobotPosition &start, const Point &end) const
+{
+	return start.getOrientation() - Angle::getHalfRotation() - Angle(start.getPosition(), end);
+}
+
+Point RouterImpl::calculateMaximumRotatedNextPoint(
+		const RobotPosition &start, const Angle &desiredRotation, const Angle &maximumRotation,
+		double minimumStepAfterMaximumRotation) const
+{
+	int rotationSign = sgn(desiredRotation.getValueBetweenMinusPiAndPi());
+	Angle possibleRotation = maximumRotation.getValueBetweenZeroAndTwoPi()*rotationSign;
+	Point modifiedEnd(minimumStepAfterMaximumRotation, 0);
+	modifiedEnd.rotate(start.getOrientation() - Angle::getHalfRotation() - possibleRotation);
+	modifiedEnd = start.getPosition() + modifiedEnd;
+	return modifiedEnd;
 }
