@@ -81,6 +81,12 @@ namespace Autonomous
 		CPPUNIT_TEST(detectLoopInConsideredObstacles_somewhereInBetweenALoop_false);
 		CPPUNIT_TEST(detectLoopInConsideredObstacles_triedOnceLeftAndRightBesideSameObstacleDirectFollowed_true);
 		CPPUNIT_TEST(detectLoopInConsideredObstacles_triedOnceLeftAndRightBesideSameObstacle_true);
+		CPPUNIT_TEST(calculateNecessaryRotation_startLookingRightAndTargetRight_0);
+		CPPUNIT_TEST(calculateNecessaryRotation_startLookingUpAndTargetRight_minusQuarterRotation);
+		CPPUNIT_TEST(calculateNecessaryRotation_startLookingLeftAndTargetRight_halfRotation);
+		CPPUNIT_TEST(calculateNecessaryRotation_startLookingRightAndTargetLeft_halfRotation);
+		CPPUNIT_TEST(calculateNecessaryRotation_startLookingUpAndTargetEighthRotationRight_minusEighthRotation);
+		CPPUNIT_TEST(calculateNecessaryRotation_startLookingDownAndTargetEighthRotationLeftAndShifted_eighthRotation);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
@@ -148,6 +154,12 @@ namespace Autonomous
 		void detectLoopInConsideredObstacles_somewhereInBetweenALoop_false();
 		void detectLoopInConsideredObstacles_triedOnceLeftAndRightBesideSameObstacleDirectFollowed_true();
 		void detectLoopInConsideredObstacles_triedOnceLeftAndRightBesideSameObstacle_true();
+		void calculateNecessaryRotation_startLookingRightAndTargetRight_0();
+		void calculateNecessaryRotation_startLookingUpAndTargetRight_minusQuarterRotation();
+		void calculateNecessaryRotation_startLookingLeftAndTargetRight_halfRotation();
+		void calculateNecessaryRotation_startLookingRightAndTargetLeft_halfRotation();
+		void calculateNecessaryRotation_startLookingUpAndTargetEighthRotationRight_minusEighthRotation();
+		void calculateNecessaryRotation_startLookingDownAndTargetEighthRotationLeftAndShifted_eighthRotation();
 
 	private:
 		static bool routeIsInsideField(const Route &route, const Field &field);

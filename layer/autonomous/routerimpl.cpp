@@ -406,7 +406,7 @@ bool RouterImpl::detectLoopInConsideredObstacles(const list<RoutingObstacle> &ob
 
 Angle RouterImpl::calculateNecessaryRotation(const RobotPosition &start, const Point &end) const
 {
-	return start.getOrientation() - Angle::getHalfRotation() - Angle(start.getPosition(), end);
+	return Angle(start.getPosition(), end) - start.getOrientation();
 }
 
 Point RouterImpl::calculateMaximumRotatedNextPoint(

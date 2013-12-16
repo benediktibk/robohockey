@@ -966,3 +966,77 @@ void RouterTest::detectLoopInConsideredObstacles_triedOnceLeftAndRightBesideSame
 
 	CPPUNIT_ASSERT(router.detectLoopInConsideredObstacles(obstacles));
 }
+
+void RouterTest::calculateNecessaryRotation_startLookingRightAndTargetRight_0()
+{
+	RouterImpl router(0.5);
+	RobotPosition start(Point(0, 0), Angle(0));
+	Point end(1, 0);
+
+	Angle rotation = router.calculateNecessaryRotation(start, end);
+
+	Compare compare(0.001);
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(Angle(0), rotation));
+}
+
+void RouterTest::calculateNecessaryRotation_startLookingUpAndTargetRight_minusQuarterRotation()
+{
+	RouterImpl router(0.5);
+	RobotPosition start(Point(0, 0), Angle::getQuarterRotation());
+	Point end(1, 0);
+
+	Angle rotation = router.calculateNecessaryRotation(start, end);
+
+	Compare compare(0.001);
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(Angle::getQuarterRotation()*(-1), rotation));
+}
+
+void RouterTest::calculateNecessaryRotation_startLookingLeftAndTargetRight_halfRotation()
+{
+	RouterImpl router(0.5);
+	RobotPosition start(Point(0, 0), Angle::getHalfRotation());
+	Point end(1, 0);
+
+	Angle rotation = router.calculateNecessaryRotation(start, end);
+
+	Compare compare(0.001);
+	rotation.abs();
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(Angle::getHalfRotation(), rotation));
+}
+
+void RouterTest::calculateNecessaryRotation_startLookingRightAndTargetLeft_halfRotation()
+{
+	RouterImpl router(0.5);
+	RobotPosition start(Point(0, 0), Angle(0));
+	Point end(-1, 0);
+
+	Angle rotation = router.calculateNecessaryRotation(start, end);
+
+	Compare compare(0.001);
+	rotation.abs();
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(Angle::getHalfRotation(), rotation));
+}
+
+void RouterTest::calculateNecessaryRotation_startLookingUpAndTargetEighthRotationRight_minusEighthRotation()
+{
+	RouterImpl router(0.5);
+	RobotPosition start(Point(0, 0), Angle::getQuarterRotation());
+	Point end(1, 1);
+
+	Angle rotation = router.calculateNecessaryRotation(start, end);
+
+	Compare compare(0.001);
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(Angle::getEighthRotation()*(-1), rotation));
+}
+
+void RouterTest::calculateNecessaryRotation_startLookingDownAndTargetEighthRotationLeftAndShifted_eighthRotation()
+{
+	RouterImpl router(0.5);
+	RobotPosition start(Point(-1, -2), Angle::getThreeQuarterRotation());
+	Point end(-2, -3);
+
+	Angle rotation = router.calculateNecessaryRotation(start, end);
+
+	Compare compare(0.001);
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(Angle::getEighthRotation(), rotation));
+}
