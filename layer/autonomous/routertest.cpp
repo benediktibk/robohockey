@@ -480,8 +480,8 @@ void RouterTest::calculateRoute_completeTurnAtEndNecessaryAndMaximumRotation_rea
 
 void RouterTest::calculateRoute_sharpBendBetweenNecessary_reasonableRoute()
 {
-	RobotPosition start(Point(0, 0.5), 0);
-	RobotPosition end(Point(4, 0.5), 0);
+	RobotPosition start(Point(0, 0.5), Angle(1.16321775021193));
+	RobotPosition end(Point(4, 0.5), Angle(-1.16321775021193));
 	Angle maximumRotation = Angle::getEighthRotation();
 	RouterImpl router(0.5);
 	FieldMock field;

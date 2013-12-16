@@ -211,7 +211,7 @@ vector<RoutingResult> RouterImpl::calculateStartPartsWithFreeDirectPath(
 		const list<RoutingObstacle> &consideredObstacles, const Angle &maximumRotation,
 		double minimumStepAfterMaximumRotation) const
 {
-	Angle rotation = Angle(start.getPosition(), end) + start.getOrientation();
+	Angle rotation = start.getOrientation() - Angle(start.getPosition(), end);
 	Angle rotationAbsolute = rotation;
 	rotationAbsolute.abs();
 	Compare compare(0.001);
