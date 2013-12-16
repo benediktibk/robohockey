@@ -155,3 +155,9 @@ bool Circle::operator==(const Circle &circle) const
 {
 	return m_center == circle.getCenter() && m_diameter == circle.getDiameter();
 }
+
+ostream &operator<<(ostream &stream, const Circle &circle)
+{
+	stream << "[" << circle.getCenter() << ", " << circle.getDiameter() << "]";
+	return stream;
+}

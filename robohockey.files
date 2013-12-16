@@ -392,3 +392,7 @@ common/quadraticequationtest.h
 common/quadraticequation.h
 common/quadraticequationtest.cpp
 common/quadraticequation.cpp
+layer/autonomous/routingobstacletest.h
+layer/autonomous/routingobstacle.h
+layer/autonomous/routingobstacletest.cpp
+layer/autonomous/routingobstacle.cpp

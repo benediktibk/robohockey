@@ -36,4 +36,6 @@ namespace Common
 }
 }
 
+std::ostream& operator<<(std::ostream &stream, const RoboHockey::Common::Circle &circle);
+
 #endif
