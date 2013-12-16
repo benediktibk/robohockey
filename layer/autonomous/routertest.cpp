@@ -481,17 +481,16 @@ void RouterTest::calculateRoute_completeTurnAtEndNecessaryAndMaximumRotation_rea
 void RouterTest::calculateRoute_sharpBendBetweenNecessary_reasonableRoute()
 {
 	RobotPosition start(Point(0, 0.5), 0);
-	RobotPosition end(Point(10, 0.5), 0);
+	RobotPosition end(Point(4, 0.5), 0);
 	Angle maximumRotation = Angle::getEighthRotation();
 	RouterImpl router(0.5);
 	FieldMock field;
 	field.setNegativeCoordinatesOutside(true);
 	vector<Circle> obstacles;
-	obstacles.push_back(Circle(Point(5, 0), 1));
-	obstacles.push_back(Circle(Point(5, 1), 1));
-	obstacles.push_back(Circle(Point(5, 2), 1));
-	obstacles.push_back(Circle(Point(5, 3), 1));
-	obstacles.push_back(Circle(Point(5, 4), 1));
+	obstacles.push_back(Circle(Point(2, 0), 1));
+	obstacles.push_back(Circle(Point(2, 1), 1));
+	obstacles.push_back(Circle(Point(2, 2), 1));
+	obstacles.push_back(Circle(Point(2, 3), 1));
 	field.setHardObstacles(obstacles);
 
 	Route route = router.calculateRoute(start, end, field, maximumRotation, 0.1);
