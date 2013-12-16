@@ -212,7 +212,6 @@ vector<RoutingResult> RouterImpl::calculateEndParts(
 		const vector<Circle> &obstacles, unsigned int searchDepth,
 		const Common::Angle &maximumRotation, double minimumStepAfterMaximumRotation) const
 {
-	Compare compare(0.01);
 	vector<RoutingResult> result;
 	result.reserve(startRoutes.size());
 
@@ -223,26 +222,22 @@ vector<RoutingResult> RouterImpl::calculateEndParts(
 		const Common::Point &lastPoint = startRoute.getLastPoint();
 		const Common::Point &nextToLastPoint = startRoute.getNextToLastPoint();
 		RobotPosition start(lastPoint, Angle(nextToLastPoint, lastPoint));
+		assert(!(lastPoint == end));
 
-		if (compare.isFuzzyEqual(start.getPosition(), end))
-			result.push_back(*i);
-		else
+		list<RoutingObstacle> reducedConsideredObstacles;
+		if (consideredObstacles.size() > 0)
+			reducedConsideredObstacles.push_back(consideredObstacles.front());
+		vector<RoutingResult> routes = calculateStartParts(
+					start, end, field, obstacles, searchDepth, reducedConsideredObstacles,
+					maximumRotation, minimumStepAfterMaximumRotation);
+
+		for (vector<RoutingResult>::const_iterator j = routes.begin(); j != routes.end(); ++j)
 		{
-			list<RoutingObstacle> reducedConsideredObstacles;
-			if (consideredObstacles.size() > 0)
-				reducedConsideredObstacles.push_back(consideredObstacles.front());
-			vector<RoutingResult> routes = calculateStartParts(
-						start, end, field, obstacles, searchDepth, reducedConsideredObstacles,
-						maximumRotation, minimumStepAfterMaximumRotation);
-
-			for (vector<RoutingResult>::const_iterator j = routes.begin(); j != routes.end(); ++j)
-			{
-				const Route &endRoute = j->getRoute();
-				const list<RoutingObstacle> &endObstacles = j->getObstacles();
-				Route completeRoute = startRoute;
-				completeRoute.add(endRoute);
-				result.push_back(RoutingResult(completeRoute, endObstacles));
-			}
+			const Route &endRoute = j->getRoute();
+			const list<RoutingObstacle> &endObstacles = j->getObstacles();
+			Route completeRoute = startRoute;
+			completeRoute.add(endRoute);
+			result.push_back(RoutingResult(completeRoute, endObstacles));
 		}
 	}
 
