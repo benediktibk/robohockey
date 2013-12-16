@@ -20,7 +20,7 @@ using namespace RoboHockey::Common;
 using namespace RoboHockey::Layer::Autonomous;
 
 RouterImpl::RouterImpl(double robotWidth) :
-	m_maximumSearchDepth(5),
+	m_maximumSearchDepth(7),
 	m_robotWidth(robotWidth)
 { }
 
