@@ -747,16 +747,11 @@ void RouterTest::getPointsBesideObstacle_bigObstacle_newStartBesideObstacleDoesn
 
 	vector<Point> points = router.getPointsBesideObstacle(path, obstacle);
 
+	CPPUNIT_ASSERT(points.size() == 2);
 	const Point &pointOne = points.front();
 	const Point &pointTwo = points.back();
-	Angle angleOne(Point(0, 0), pointOne);
-	Angle angleTwo(Point(0, 0), pointTwo);
-	Point differenceToNextPointOne = pointOne;
-	differenceToNextPointOne.rotate(Angle::getQuarterRotation()*(-1)*sgn(angleOne.getValueBetweenMinusPiAndPi()));
-	Point differenceToNextPointTwo = pointTwo;
-	differenceToNextPointTwo.rotate(Angle::getQuarterRotation()*(-1)*sgn(angleTwo.getValueBetweenMinusPiAndPi()));
-	Point pointOneNext = pointOne + differenceToNextPointOne;
-	Point pointTwoNext = pointTwo + differenceToNextPointTwo;
+	Point pointOneNext = pointOne + Point(5, 0);
+	Point pointTwoNext = pointTwo + Point(5, 0);
 	Path pathOne(pointOne, pointOneNext, 0.5);
 	Path pathTwo(pointTwo, pointTwoNext, 0.5);
 	PathIntersectPoints intersectionPointsOne = pathOne.getIntersectPoints(obstacle);
