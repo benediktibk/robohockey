@@ -19,7 +19,8 @@ namespace Layer
 {
 namespace Autonomous
 {
-	class Route;
+	class RoutingResult;
+	class RoutingObstacle;
 
 	class RouterImpl :
 			public Router
@@ -32,31 +33,30 @@ namespace Autonomous
 		std::vector<Common::Point> getPointsBesideObstacle(const Common::Path &path, const Common::Circle &obstacle) const;
 		std::vector<Common::Circle> filterObstacles(const std::vector<Common::Circle> &softObstacles,
 				const std::vector<Common::Circle> &hardObstacles, const Common::Point &position) const;
-		bool detectLoopInConsideredObstacles(const std::list<Common::Circle> &obstacles) const;
+		bool detectLoopInConsideredObstacles(const std::list<RoutingObstacle> &obstacles) const;
 
 	private:
-		std::vector<Route> calculateStartParts(
+		std::vector<RoutingResult> calculateStartParts(
 				const Common::Point &start, const Common::Point &end, const Field &field,
 				const std::vector<Common::Circle> &obstacles, unsigned int searchDepth,
-				bool canGoLeft, bool canGoRight, const std::list<Common::Circle> &consideredObstacles) const;
-		std::vector<Route> calculateStartPartsWithFreeEnd(
+				const std::list<RoutingObstacle> &consideredObstacles) const;
+		std::vector<RoutingResult> calculateStartPartsWithFreeEnd(
 				const Common::Point &start, const Common::Point &end, const Field &field,
 				const std::vector<Common::Circle> &obstacles, unsigned int searchDepth,
-				bool canGoLeft, bool canGoRight, const std::list<Common::Circle> &consideredObstacles) const;
-		std::vector<Route> calculateStartPartsWithCoveredEnd(
+				const std::list<RoutingObstacle> &consideredObstacles) const;
+		std::vector<RoutingResult> calculateStartPartsWithCoveredEnd(
 				const Common::Point &start, const Common::Point &end, const Field &field,
 				const std::vector<Common::Circle> &obstacles, unsigned int searchDepth,
-				bool canGoLeft, bool canGoRight, const std::list<Common::Circle> &consideredObstacles) const;
-		std::vector<Route> calculateEndParts(
-				const std::vector<Route> &startRoutes, const Common::Point &end, const Field &field,
-				const std::vector<Common::Circle> &obstacles, unsigned int searchDepth,
-				const std::list<Common::Circle> &consideredObstacles) const;
+				const std::list<RoutingObstacle> &consideredObstacles) const;
+		std::vector<RoutingResult> calculateEndParts(
+				const std::vector<RoutingResult> &startRoutes, const Common::Point &end, const Field &field,
+				const std::vector<Common::Circle> &obstacles, unsigned int searchDepth) const;
 		std::vector<Common::Circle> findRealObstacles(const std::vector<Common::Circle> &obstacles, const Common::Path &path) const;
 		Common::Circle findClosestObstacle(const std::vector<Common::Circle> &obstacles, const Common::Point &point) const;
-		std::vector<Route> calculateRoutesToPointsBesideObstacle(
+		std::vector<RoutingResult> calculateRoutesToPointsBesideObstacle(
 				const Common::Circle &obstacle, const Common::Point &start, const Common::Point &end,
-				const Field &field, const std::vector<Common::Circle> &obstacles, bool canGoLeft, bool canGoRight,
-				unsigned int searchDepth, const std::list<Common::Circle> &consideredObstacles) const;
+				const Field &field, const std::vector<Common::Circle> &obstacles,
+				unsigned int searchDepth, const std::list<RoutingObstacle> &consideredObstacles) const;
 
 	private:
 		const unsigned int m_maximumSearchDepth;
