@@ -404,3 +404,6 @@ common/signum.h
 common/signumtest.h
 common/signumtest.cpp
 testCoverage.sh
+resources/testfiles/lidar_detect3.txt
+resources/testfiles/lidar_detect2.txt
+resources/testfiles/lidar_detect1.txt

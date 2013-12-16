@@ -75,7 +75,7 @@ vector<FieldObject> FieldImpl::getObjectsWithColorOrderdByDistance(FieldColor co
 
 bool FieldImpl::calibratePosition()
 {
-	RobotPosition newOrigin = getNewOriginOfFieldDetection();
+	RobotPosition newOrigin = getNewOriginFromFieldDetection();
 	Point newOriginPoint = newOrigin.getPosition();
 
 	bool result = !(newOrigin.getPosition() == Point::zero()) || !(newOrigin.getOrientation().getValueBetweenMinusPiAndPi() == 0.0);
@@ -211,7 +211,7 @@ void FieldImpl::setTrueTeamColor(FieldColor trueTeamColor)
 	m_teamColor = trueTeamColor;
 }
 
-RobotPosition FieldImpl::getNewOriginOfFieldDetection()
+RobotPosition FieldImpl::getNewOriginFromFieldDetection()
 {
 	vector<Point> *input = getPointsOfObjectsWithDiameterAndColor(0.06, FieldColorGreen);
 
