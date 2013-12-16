@@ -21,7 +21,7 @@ double g_tolerance = 2.0;
 int main()
 {
 
-	cout << "##\n## Take a picture to current dir with 'p'.\n## Exit with 'q'\n##"<< endl;
+	cout << "##\n## Take a picture to current dir with 'p'.\n## Exit with 'q'\n## Press 'u' to en-/disable picture\n##"<< endl;
 
 	Camera *camera = new CameraImpl(0);
 
