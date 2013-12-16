@@ -32,14 +32,17 @@ Route RouterImpl::calculateRoute(
 	const vector<Circle> softObstacles = field.getAllSoftObstacles();
 	const vector<Circle> hardObstacles = field.getAllHardObstacles();
 
+	if (!field.isPointInsideField(end.getPosition()))
+		return Route();
+
 	Circle startCircle(start.getPosition(), sqrt(2)*m_robotWidth);
 	if (startCircle.overlapsWith(hardObstacles))
-		return Route(m_robotWidth);
+		return Route();
 
 	Circle endCircle(end.getPosition(), sqrt(2)*m_robotWidth);
 	if (	endCircle.overlapsWith(hardObstacles) ||
 			endCircle.overlapsWith(softObstacles))
-		return Route(m_robotWidth);
+		return Route();
 
 	const Point &startPosition = start.getPosition();
 	const Point &endPosition = end.getPosition();
