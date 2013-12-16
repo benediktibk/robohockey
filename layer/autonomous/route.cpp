@@ -135,7 +135,7 @@ Angle Route::getMaximumBend(const Angle &startOrientation, const Angle &endOrien
 	const Point &lastPoint = getLastPoint();
 	const Point &nextToLastPoint = getNextToLastPoint();
 	Angle startBend = Angle(firstPoint, secondPoint) - startOrientation;
-	Angle endBend = Angle(nextToLastPoint, lastPoint) - endOrientation;
+	Angle endBend = endOrientation - Angle(nextToLastPoint, lastPoint);
 	startBend.abs();
 	endBend.abs();
 	Angle maximumBend = startBend;
@@ -152,7 +152,7 @@ Angle Route::getMaximumBend(const Angle &startOrientation, const Angle &endOrien
 		++next;
 		list<Point>::const_iterator nextTwo = next;
 		++nextTwo;
-		Angle angle(*next, *i, *nextTwo);
+		Angle angle = Angle::getHalfRotation() - Angle(*next, *i, *nextTwo);
 
 		if (angle.getValueBetweenZeroAndTwoPi() > maximumBend.getValueBetweenZeroAndTwoPi())
 			maximumBend = angle;
