@@ -2,6 +2,8 @@
 #include "layer/autonomous/route.h"
 #include "common/compare.h"
 #include "common/angle.h"
+#include "common/robotposition.h"
+#include <math.h>
 
 using namespace std;
 using namespace RoboHockey::Common;
@@ -314,4 +316,111 @@ void RouteTest::getMaximumBend_turnAroundInQuarterSteps_quarterRotation()
 
 	Compare compare(0.0001);
 	CPPUNIT_ASSERT(compare.isFuzzyEqual(Angle::getQuarterRotation(), maximumBend));
+}
+
+void RouteTest::calculateNecessaryRotation_startLookingRightAndTargetRight_0()
+{
+	RobotPosition start(Point(0, 0), Angle(0));
+	Point end(1, 0);
+
+	Angle rotation = Route::calculateNecessaryRotation(start, end);
+
+	Compare compare(0.001);
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(Angle(0), rotation));
+}
+
+void RouteTest::calculateNecessaryRotation_startLookingUpAndTargetRight_minusQuarterRotation()
+{
+	RobotPosition start(Point(0, 0), Angle::getQuarterRotation());
+	Point end(1, 0);
+
+	Angle rotation = Route::calculateNecessaryRotation(start, end);
+
+	Compare compare(0.001);
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(Angle::getQuarterRotation()*(-1), rotation));
+}
+
+void RouteTest::calculateNecessaryRotation_startLookingLeftAndTargetRight_halfRotation()
+{
+	RobotPosition start(Point(0, 0), Angle::getHalfRotation());
+	Point end(1, 0);
+
+	Angle rotation = Route::calculateNecessaryRotation(start, end);
+
+	Compare compare(0.001);
+	rotation.abs();
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(Angle::getHalfRotation(), rotation));
+}
+
+void RouteTest::calculateNecessaryRotation_startLookingRightAndTargetLeft_halfRotation()
+{
+	RobotPosition start(Point(0, 0), Angle(0));
+	Point end(-1, 0);
+
+	Angle rotation = Route::calculateNecessaryRotation(start, end);
+
+	Compare compare(0.001);
+	rotation.abs();
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(Angle::getHalfRotation(), rotation));
+}
+
+void RouteTest::calculateNecessaryRotation_startLookingUpAndTargetEighthRotationRight_minusEighthRotation()
+{
+	RobotPosition start(Point(0, 0), Angle::getQuarterRotation());
+	Point end(1, 1);
+
+	Angle rotation = Route::calculateNecessaryRotation(start, end);
+
+	Compare compare(0.001);
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(Angle::getEighthRotation()*(-1), rotation));
+}
+
+void RouteTest::calculateNecessaryRotation_startLookingDownAndTargetEighthRotationLeftAndShifted_eighthRotation()
+{
+	RobotPosition start(Point(-1, -2), Angle::getThreeQuarterRotation());
+	Point end(0, -3);
+
+	Angle rotation = Route::calculateNecessaryRotation(start, end);
+
+	Compare compare(0.001);
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(Angle::getEighthRotation(), rotation));
+}
+
+void RouteTest::calculateMaximumRotatedNextPoint_startLookingRightAndQuarterRotationDesiredButOnlyEighthRotationAllowed_correctPoint()
+{
+	RobotPosition start(Point(0, 0), Angle(0));
+	Angle desiredRotation = Angle::getQuarterRotation();
+	Angle maximumRotation = Angle::getEighthRotation();
+
+	Point point = Route::calculateMaximumRotatedNextPoint(start, desiredRotation, maximumRotation, 1);
+
+	Compare compare(0.001);
+	Point pointShouldBe(1.0/sqrt(2), 1.0/sqrt(2));
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(pointShouldBe, point));
+}
+
+void RouteTest::calculateMaximumRotatedNextPoint_startLookingRightAndQuarterRotationDesiredButOnlyEighthRotationAllowedShifted_correctPoint()
+{
+	RobotPosition start(Point(1, 2), Angle(0));
+	Angle desiredRotation = Angle::getQuarterRotation();
+	Angle maximumRotation = Angle::getEighthRotation();
+
+	Point point = Route::calculateMaximumRotatedNextPoint(start, desiredRotation, maximumRotation, 1);
+
+	Compare compare(0.00001);
+	Point pointShouldBe(1/sqrt(2) + 1, 1/sqrt(2) + 2);
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(pointShouldBe, point));
+}
+
+void RouteTest::calculateMaximumRotatedNextPoint_startLookingLeftAndMinusQuarterRotationDesiredButOnlyEighthRotationAllowedShifted_correctPoint()
+{
+	RobotPosition start(Point(-1, 0), Angle::getHalfRotation());
+	Angle desiredRotation = Angle::getQuarterRotation()*(-1);
+	Angle maximumRotation = Angle::getEighthRotation();
+
+	Point point = Route::calculateMaximumRotatedNextPoint(start, desiredRotation, maximumRotation, 1);
+
+	Compare compare(0.00001);
+	Point pointShouldBe(-1/sqrt(2) - 1, 1/sqrt(2));
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(pointShouldBe, point));
 }

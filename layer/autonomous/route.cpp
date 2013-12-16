@@ -1,7 +1,10 @@
 #include "layer/autonomous/route.h"
 #include "common/path.h"
 #include "common/angle.h"
+#include "common/robotposition.h"
+#include "common/signum.h"
 #include <assert.h>
+#include <math.h>
 
 using namespace std;
 using namespace RoboHockey::Common;
@@ -166,4 +169,23 @@ void Route::fixRotationOfFinalStep(
 		double /*minimumStepAfterMaximumRotation*/, const vector<Circle> &/*obstacles*/)
 {
 
+}
+
+Angle Route::calculateNecessaryRotation(const RobotPosition &start, const Point &end)
+{
+	Angle angleBetweenStartAndEnd(start.getPosition(), end);
+	return angleBetweenStartAndEnd - start.getOrientation();
+}
+
+Point Route::calculateMaximumRotatedNextPoint(
+		const RobotPosition &start, const Angle &desiredRotation,
+		const Angle &maximumRotation, double minimumStepAfterMaximumRotation)
+{
+	int rotationSign = sgn(desiredRotation.getValueBetweenMinusPiAndPi());
+	Angle possibleRotation = maximumRotation.getValueBetweenZeroAndTwoPi()*rotationSign;
+	Angle totalRotation = start.getOrientation() + possibleRotation;
+	Point modifiedEnd(minimumStepAfterMaximumRotation, 0);
+	modifiedEnd.rotate(totalRotation);
+	modifiedEnd = start.getPosition() + modifiedEnd;
+	return modifiedEnd;
 }

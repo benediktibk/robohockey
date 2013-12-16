@@ -10,7 +10,6 @@
 #include "common/line.h"
 #include "common/robotposition.h"
 #include "common/compare.h"
-#include "common/signum.h"
 #include <math.h>
 #include <assert.h>
 #include <algorithm>
@@ -219,7 +218,7 @@ vector<RoutingResult> RouterImpl::calculateStartPartsWithFreeDirectPath(
 		const list<RoutingObstacle> &consideredObstacles, const Angle &maximumRotation,
 		double minimumStepAfterMaximumRotation) const
 {
-	Angle rotation = calculateNecessaryRotation(start, end);
+	Angle rotation = Route::calculateNecessaryRotation(start, end);
 	Angle rotationAbsolute = rotation;
 	rotationAbsolute.abs();
 	Compare compare(0.001);
@@ -235,7 +234,7 @@ vector<RoutingResult> RouterImpl::calculateStartPartsWithFreeDirectPath(
 	}
 	else
 	{
-		Point modifiedEnd = calculateMaximumRotatedNextPoint(
+		Point modifiedEnd = Route::calculateMaximumRotatedNextPoint(
 					start, rotation, maximumRotation, minimumStepAfterMaximumRotation);
 		vector<RoutingResult> startParts = calculateStartParts(
 					start, modifiedEnd, field, obstacles, searchDepth, consideredObstacles,
@@ -421,23 +420,4 @@ bool RouterImpl::detectLoopInConsideredObstacles(const list<RoutingObstacle> &ob
 		return distance > 1;
 	else
 		return false;
-}
-
-Angle RouterImpl::calculateNecessaryRotation(const RobotPosition &start, const Point &end) const
-{
-	Angle angleBetweenStartAndEnd(start.getPosition(), end);
-	return angleBetweenStartAndEnd - start.getOrientation();
-}
-
-Point RouterImpl::calculateMaximumRotatedNextPoint(
-		const RobotPosition &start, const Angle &desiredRotation, const Angle &maximumRotation,
-		double minimumStepAfterMaximumRotation) const
-{
-	int rotationSign = sgn(desiredRotation.getValueBetweenMinusPiAndPi());
-	Angle possibleRotation = maximumRotation.getValueBetweenZeroAndTwoPi()*rotationSign;
-	Angle totalRotation = start.getOrientation() + possibleRotation;
-	Point modifiedEnd(minimumStepAfterMaximumRotation, 0);
-	modifiedEnd.rotate(totalRotation);
-	modifiedEnd = start.getPosition() + modifiedEnd;
-	return modifiedEnd;
 }

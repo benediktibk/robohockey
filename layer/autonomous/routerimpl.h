@@ -34,11 +34,6 @@ namespace Autonomous
 		std::vector<Common::Circle> filterObstacles(const std::vector<Common::Circle> &softObstacles,
 				const std::vector<Common::Circle> &hardObstacles, const Common::Point &position) const;
 		bool detectLoopInConsideredObstacles(const std::list<RoutingObstacle> &obstacles) const;
-		Common::Angle calculateNecessaryRotation(
-				const Common::RobotPosition &start, const Common::Point &end) const;
-		Common::Point calculateMaximumRotatedNextPoint(
-				const Common::RobotPosition &start, const Common::Angle &desiredRotation,
-				const Common::Angle &maximumRotation, double minimumStepAfterMaximumRotation) const;
 
 	private:
 		std::vector<RoutingResult> calculateStartParts(

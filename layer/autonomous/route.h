@@ -8,6 +8,10 @@
 
 namespace RoboHockey
 {
+namespace Common
+{
+	class RobotPosition;
+}
 namespace Layer
 {
 namespace Autonomous
@@ -36,6 +40,13 @@ namespace Autonomous
 		void fixRotationOfFinalStep(
 				const Common::Angle &finalOrientation, const Common::Angle &maximumRotation,
 				double minimumStepAfterMaximumRotation, const std::vector<Common::Circle> &obstacles);
+
+	public:
+		static Common::Angle calculateNecessaryRotation(
+				const Common::RobotPosition &start, const Common::Point &end);
+		static Common::Point calculateMaximumRotatedNextPoint(
+				const Common::RobotPosition &start, const Common::Angle &desiredRotation,
+				const Common::Angle &maximumRotation, double minimumStepAfterMaximumRotation);
 
 	private:
 		std::list<Common::Point> m_points;
