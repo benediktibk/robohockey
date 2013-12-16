@@ -50,6 +50,11 @@ namespace Autonomous
 				const std::vector<Common::Circle> &obstacles, unsigned int searchDepth,
 				const std::list<RoutingObstacle> &consideredObstacles, const Common::Angle &maximumRotation,
 				double minimumStepAfterMaximumRotation) const;
+		std::vector<RoutingResult> calculateStartPartsWithFreeDirectPath(
+				const Common::RobotPosition &start, const Common::Point &end, const Field &field,
+				const std::vector<Common::Circle> &obstacles, unsigned int searchDepth,
+				const std::list<RoutingObstacle> &consideredObstacles,
+				const Common::Angle &maximumRotation, double minimumStepAfterMaximumRotation) const;
 		std::vector<RoutingResult> calculateEndParts(
 				const std::vector<RoutingResult> &startRoutes, const Common::Point &end, const Field &field,
 				const std::vector<Common::Circle> &obstacles, unsigned int searchDepth, const Common::Angle &maximumRotation, double minimumStepAfterMaximumRotation) const;

@@ -10,6 +10,7 @@
 #include "common/line.h"
 #include "common/robotposition.h"
 #include "common/compare.h"
+#include "common/signum.h"
 #include <math.h>
 #include <assert.h>
 #include <algorithm>
@@ -168,21 +169,18 @@ vector<RoutingResult> RouterImpl::calculateStartPartsWithFreeEnd(
 	vector<Circle> realObstacles = findRealObstacles(obstacles, directPath);
 
 	if (realObstacles.size() == 0)
+		return calculateStartPartsWithFreeDirectPath(
+					start, end, field, obstacles, searchDepth, consideredObstacles,
+					maximumRotation, minimumStepAfterMaximumRotation);
+	else
 	{
-		vector<RoutingResult> result;
-		Route directRoute(m_robotWidth);
-		directRoute.addPoint(startPoint);
-		directRoute.addPoint(end);
-		result.push_back(RoutingResult(directRoute, consideredObstacles));
-		return result;
+		Circle closestObstacle = findClosestObstacle(realObstacles, startPoint);
+		vector<RoutingResult> startParts = calculateRoutesToPointsBesideObstacle(
+					closestObstacle, start, end, field, obstacles,
+					searchDepth, consideredObstacles, maximumRotation, minimumStepAfterMaximumRotation);
+		return calculateEndParts(
+					startParts, end, field, obstacles, searchDepth, maximumRotation, minimumStepAfterMaximumRotation);
 	}
-
-	Circle closestObstacle = findClosestObstacle(realObstacles, startPoint);
-	vector<RoutingResult> startParts = calculateRoutesToPointsBesideObstacle(
-				closestObstacle, start, end, field, obstacles,
-				searchDepth, consideredObstacles, maximumRotation, minimumStepAfterMaximumRotation);
-	return calculateEndParts(
-				startParts, end, field, obstacles, searchDepth, maximumRotation, minimumStepAfterMaximumRotation);
 }
 
 vector<RoutingResult> RouterImpl::calculateStartPartsWithCoveredEnd(
@@ -205,6 +203,41 @@ vector<RoutingResult> RouterImpl::calculateStartPartsWithCoveredEnd(
 				obstacle, start, extendedEnd, field, obstacles,
 				searchDepth, consideredObstacles, maximumRotation,
 				minimumStepAfterMaximumRotation);
+}
+
+vector<RoutingResult> RouterImpl::calculateStartPartsWithFreeDirectPath(
+		const RobotPosition &start, const Point &end, const Field &field,
+		const vector<Circle> &obstacles, unsigned int searchDepth,
+		const list<RoutingObstacle> &consideredObstacles, const Angle &maximumRotation,
+		double minimumStepAfterMaximumRotation) const
+{
+	Angle rotation = Angle(start.getPosition(), end) + start.getOrientation();
+	Angle rotationAbsolute = rotation;
+	rotationAbsolute.abs();
+	Compare compare(0.001);
+
+	if (compare.isFuzzySmaller(rotationAbsolute.getValueBetweenZeroAndTwoPi(), maximumRotation.getValueBetweenZeroAndTwoPi()))
+	{
+		vector<RoutingResult> result;
+		Route directRoute(m_robotWidth);
+		directRoute.addPoint(start.getPosition());
+		directRoute.addPoint(end);
+		result.push_back(RoutingResult(directRoute, consideredObstacles));
+		return result;
+	}
+	else
+	{
+		int rotationSign = sgn(rotation.getValueBetweenMinusPiAndPi());
+		Angle possibleRotation = maximumRotation.getValueBetweenZeroAndTwoPi()*rotationSign;
+		Point modifiedEnd(minimumStepAfterMaximumRotation, 0);
+		modifiedEnd.rotate(possibleRotation);
+		vector<RoutingResult> startParts = calculateStartParts(
+					start, modifiedEnd, field, obstacles, searchDepth, consideredObstacles,
+					maximumRotation, minimumStepAfterMaximumRotation);
+		return calculateEndParts(
+					startParts, end, field, obstacles, searchDepth,
+					maximumRotation, minimumStepAfterMaximumRotation);
+	}
 }
 
 vector<RoutingResult> RouterImpl::calculateEndParts(
