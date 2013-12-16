@@ -193,17 +193,7 @@ vector<RoutingResult> RouterImpl::calculateStartPartsWithCoveredEnd(
 	const Point &startPoint = start.getPosition();
 	Path path(startPoint, end, m_robotWidth);
 	vector<Circle> obstaclesTillEnd = findRealObstacles(obstacles, path);
-
-	if (obstaclesTillEnd.size() == 0)
-	{
-		vector<RoutingResult> result;
-		Route route(m_robotWidth);
-		route.addPoint(start.getPosition());
-		route.addPoint(end);
-		result.push_back(RoutingResult(route, consideredObstacles));
-		return result;
-	}
-
+	assert(obstaclesTillEnd.size() > 0);
 	Circle obstacle = findClosestObstacle(obstaclesTillEnd, startPoint);
 	double diameter = obstacle.getDiameter();
 	Point direction = end - startPoint;
