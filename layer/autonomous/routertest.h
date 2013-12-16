@@ -63,6 +63,7 @@ namespace Autonomous
 		CPPUNIT_TEST(getPointsBesideObstacle_bigObstacleOnRightSide_shortPointIsCorrect);
 		CPPUNIT_TEST(getPointsBesideObstacle_bigObstacleOnRightSide_longPointIsCorrect);
 		CPPUNIT_TEST(getPointsBesideObstacle_bigObstacleCloseOnLeftSide_onePointIsLeftAndOneRight);
+		CPPUNIT_TEST(getPointsBesideObstacle_bigObstacle_newStartBesideObstacleDoesntIntersectWithObstacleInWorstCaseOrientationFromStart);
 		CPPUNIT_TEST(detectLoopInConsideredObstacles_noObstacles_false);
 		CPPUNIT_TEST(detectLoopInConsideredObstacles_oneObstacle_false);
 		CPPUNIT_TEST(detectLoopInConsideredObstacles_twiceTheSameObstacle_false);
@@ -74,6 +75,8 @@ namespace Autonomous
 		CPPUNIT_TEST(detectLoopInConsideredObstacles_loopOverTwo_true);
 		CPPUNIT_TEST(detectLoopInConsideredObstacles_sameAsSecond_true);
 		CPPUNIT_TEST(detectLoopInConsideredObstacles_somewhereInBetweenALoop_false);
+		CPPUNIT_TEST(detectLoopInConsideredObstacles_triedOnceLeftAndRightBesideSameObstacleDirectFollowed_true);
+		CPPUNIT_TEST(detectLoopInConsideredObstacles_triedOnceLeftAndRightBesideSameObstacle_true);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
@@ -123,6 +126,7 @@ namespace Autonomous
 		void getPointsBesideObstacle_bigObstacleOnRightSide_shortPointIsCorrect();
 		void getPointsBesideObstacle_bigObstacleOnRightSide_longPointIsCorrect();
 		void getPointsBesideObstacle_bigObstacleCloseOnLeftSide_onePointIsLeftAndOneRight();
+		void getPointsBesideObstacle_bigObstacle_newStartBesideObstacleDoesntIntersectWithObstacleInWorstCaseOrientationFromStart();
 		void detectLoopInConsideredObstacles_noObstacles_false();
 		void detectLoopInConsideredObstacles_oneObstacle_false();
 		void detectLoopInConsideredObstacles_twiceTheSameObstacle_false();
@@ -134,6 +138,8 @@ namespace Autonomous
 		void detectLoopInConsideredObstacles_loopOverTwo_true();
 		void detectLoopInConsideredObstacles_sameAsSecond_true();
 		void detectLoopInConsideredObstacles_somewhereInBetweenALoop_false();
+		void detectLoopInConsideredObstacles_triedOnceLeftAndRightBesideSameObstacleDirectFollowed_true();
+		void detectLoopInConsideredObstacles_triedOnceLeftAndRightBesideSameObstacle_true();
 
 	private:
 		static bool routeIsInsideField(const Route &route, const Field &field);

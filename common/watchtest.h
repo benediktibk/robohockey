@@ -18,4 +18,5 @@ namespace Common
 	};
 }
 }
-#endif // WATCHTEST_H
+
+#endif

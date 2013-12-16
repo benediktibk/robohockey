@@ -27,6 +27,7 @@ set(COMMON_TEST_SRC
 	linetest.cpp
 	pathintersectpointstest.cpp
 	quadraticequationtest.cpp
+	signumtest.cpp
 )
 
 add_library(common ${COMMON_SRC})

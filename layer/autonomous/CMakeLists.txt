@@ -9,6 +9,8 @@ set(LAYER_AUTONOMOUS_SRC
 	route.cpp
 	fieldobjectdistancecompare.cpp
 	routelengthcompare.cpp
+	routingobstacle.cpp
+	routingresult.cpp
 )
 
 set(LAYER_AUTONOMOUS_TEST_SRC
@@ -25,6 +27,8 @@ set(LAYER_AUTONOMOUS_TEST_SRC
 	fieldobjectdistancecomparetest.cpp
 	routermock.cpp
 	routelengthcomparetest.cpp
+	routingobstacletest.cpp
+	routingresulttest.cpp
 )
 
 add_library(layerautonomous ${LAYER_AUTONOMOUS_SRC})
