@@ -516,7 +516,7 @@ void RouterTest::calculateRoute_endRotationNotPossibleBecauseOfObstacles_invalid
 	obstacles.push_back(Circle(Point(11, 0), 1));
 	field.setHardObstacles(obstacles);
 
-	Route route = router.calculateRoute(start, end, field, maximumRotation, 0.1);
+	Route route = router.calculateRoute(start, end, field, maximumRotation, 0.5);
 
 	CPPUNIT_ASSERT(!route.isValid());
 }
