@@ -41,6 +41,7 @@ namespace Autonomous
 		CPPUNIT_TEST(getMaximumBend_oneCompleteTurnAtEnd_halfRotation);
 		CPPUNIT_TEST(getMaximumBend_halfTurnUpwardsInBetween_quarterRotation);
 		CPPUNIT_TEST(getMaximumBend_halfTurnDownwardsInBetween_quarterRotation);
+		CPPUNIT_TEST(getMaximumBend_turnAroundInQuarterSteps_quarterRotation);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
@@ -71,6 +72,7 @@ namespace Autonomous
 		void getMaximumBend_oneCompleteTurnAtEnd_halfRotation();
 		void getMaximumBend_halfTurnUpwardsInBetween_quarterRotation();
 		void getMaximumBend_halfTurnDownwardsInBetween_quarterRotation();
+		void getMaximumBend_turnAroundInQuarterSteps_quarterRotation();
 	};
 }
 }

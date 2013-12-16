@@ -301,3 +301,17 @@ void RouteTest::getMaximumBend_halfTurnDownwardsInBetween_quarterRotation()
 	Compare compare(0.0001);
 	CPPUNIT_ASSERT(compare.isFuzzyEqual(Angle::getQuarterRotation(), maximumBend));
 }
+
+void RouteTest::getMaximumBend_turnAroundInQuarterSteps_quarterRotation()
+{
+	Route route(0.5);
+	route.addPoint(Point(0, 0));
+	route.addPoint(Point(0, 0.1));
+	route.addPoint(Point(0.1, 0.1));
+	route.addPoint(Point(10, 0));
+
+	Angle maximumBend = route.getMaximumBend(Angle::getHalfRotation(), Angle(0));
+
+	Compare compare(0.0001);
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(Angle::getQuarterRotation(), maximumBend));
+}

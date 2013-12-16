@@ -230,7 +230,8 @@ vector<RoutingResult> RouterImpl::calculateStartPartsWithFreeDirectPath(
 		int rotationSign = sgn(rotation.getValueBetweenMinusPiAndPi());
 		Angle possibleRotation = maximumRotation.getValueBetweenZeroAndTwoPi()*rotationSign;
 		Point modifiedEnd(minimumStepAfterMaximumRotation, 0);
-		modifiedEnd.rotate(possibleRotation);
+		modifiedEnd.rotate(start.getOrientation() - possibleRotation);
+		modifiedEnd = start.getPosition() + modifiedEnd;
 		vector<RoutingResult> startParts = calculateStartParts(
 					start, modifiedEnd, field, obstacles, searchDepth, consideredObstacles,
 					maximumRotation, minimumStepAfterMaximumRotation);
