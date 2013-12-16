@@ -406,7 +406,8 @@ bool RouterImpl::detectLoopInConsideredObstacles(const list<RoutingObstacle> &ob
 
 Angle RouterImpl::calculateNecessaryRotation(const RobotPosition &start, const Point &end) const
 {
-	return Angle(start.getPosition(), end) - start.getOrientation();
+	Angle angleBetweenStartAndEnd(start.getPosition(), end);
+	return angleBetweenStartAndEnd - start.getOrientation();
 }
 
 Point RouterImpl::calculateMaximumRotatedNextPoint(
@@ -416,7 +417,7 @@ Point RouterImpl::calculateMaximumRotatedNextPoint(
 	int rotationSign = sgn(desiredRotation.getValueBetweenMinusPiAndPi());
 	Angle possibleRotation = maximumRotation.getValueBetweenZeroAndTwoPi()*rotationSign;
 	Point modifiedEnd(minimumStepAfterMaximumRotation, 0);
-	modifiedEnd.rotate(start.getOrientation() - Angle::getHalfRotation() - possibleRotation);
+	modifiedEnd.rotate(possibleRotation);
 	modifiedEnd = start.getPosition() + modifiedEnd;
 	return modifiedEnd;
 }

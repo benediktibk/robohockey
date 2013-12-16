@@ -11,6 +11,7 @@
 #include "common/line.h"
 #include "common/signum.h"
 #include "common/pathintersectpoints.h"
+#include <math.h>
 #include <assert.h>
 
 using namespace std;
@@ -1033,10 +1034,49 @@ void RouterTest::calculateNecessaryRotation_startLookingDownAndTargetEighthRotat
 {
 	RouterImpl router(0.5);
 	RobotPosition start(Point(-1, -2), Angle::getThreeQuarterRotation());
-	Point end(-2, -3);
+	Point end(0, -3);
 
 	Angle rotation = router.calculateNecessaryRotation(start, end);
 
 	Compare compare(0.001);
 	CPPUNIT_ASSERT(compare.isFuzzyEqual(Angle::getEighthRotation(), rotation));
+}
+
+void RouterTest::calculateMaximumRotatedNextPoint_startLookingRightAndQuarterRotationDesiredButOnlyEighthRotationAllowed_correctPoint()
+{
+	RouterImpl router(0.5);
+	RobotPosition start(Point(0, 0), Angle(0));
+	Angle desiredRotation = Angle::getQuarterRotation();
+	Angle maximumRotation = Angle::getEighthRotation();
+
+	Point point = router.calculateMaximumRotatedNextPoint(start, desiredRotation, maximumRotation, 1);
+
+	Compare compare(0.00001);
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(sqrt(2), (-1)*sqrt(2)), point));
+}
+
+void RouterTest::calculateMaximumRotatedNextPoint_startLookingRightAndQuarterRotationDesiredButOnlyEighthRotationAllowedShifted_correctPoint()
+{
+	RouterImpl router(0.5);
+	RobotPosition start(Point(1, 2), Angle(0));
+	Angle desiredRotation = Angle::getQuarterRotation();
+	Angle maximumRotation = Angle::getEighthRotation();
+
+	Point point = router.calculateMaximumRotatedNextPoint(start, desiredRotation, maximumRotation, 1);
+
+	Compare compare(0.00001);
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(sqrt(2) + 1, (-1)*sqrt(2) + 2), point));
+}
+
+void RouterTest::calculateMaximumRotatedNextPoint_startLookingLeftAndMinusQuarterRotationDesiredButOnlyEighthRotationAllowedShifted_correctPoint()
+{
+	RouterImpl router(0.5);
+	RobotPosition start(Point(-1, 0), Angle::getHalfRotation());
+	Angle desiredRotation = Angle::getQuarterRotation()*(-1);
+	Angle maximumRotation = Angle::getEighthRotation();
+
+	Point point = router.calculateMaximumRotatedNextPoint(start, desiredRotation, maximumRotation, 1);
+
+	Compare compare(0.00001);
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point((-1)*sqrt(2) - 1, (-1)*sqrt(2)), point));
 }
