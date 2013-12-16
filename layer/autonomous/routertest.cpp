@@ -177,8 +177,6 @@ void RouterTest::calculateRoute_oneBigObstacleCloseToStart_routeIsNotIntersectin
 
 void RouterTest::calculateRoute_oneBigObstacleCloseToEnd_validRoute()
 {
-	CPPUNIT_ASSERT(false);
-
 	FieldMock field;
 	RouterImpl router(0.5);
 	vector<Circle> obstacles;
@@ -194,8 +192,6 @@ void RouterTest::calculateRoute_oneBigObstacleCloseToEnd_validRoute()
 
 void RouterTest::calculateRoute_oneBigObstacleCloseToEnd_routeIsNotTooLong()
 {
-	CPPUNIT_ASSERT(false);
-
 	FieldMock field;
 	RouterImpl router(0.5);
 	vector<Circle> obstacles;
@@ -212,8 +208,6 @@ void RouterTest::calculateRoute_oneBigObstacleCloseToEnd_routeIsNotTooLong()
 
 void RouterTest::calculateRoute_oneBigObstacleCloseToEnd_routeIsNotIntersectingWithObstacles()
 {
-	CPPUNIT_ASSERT(false);
-
 	FieldMock field;
 	RouterImpl router(0.5);
 	vector<Circle> obstacles;
@@ -229,8 +223,6 @@ void RouterTest::calculateRoute_oneBigObstacleCloseToEnd_routeIsNotIntersectingW
 
 void RouterTest::calculateRoute_oneBigObstacleOnRightSideOfDirectPath_reasonableRoute()
 {
-	CPPUNIT_ASSERT(false);
-
 	FieldMock field;
 	RouterImpl router(0.5);
 	vector<Circle> obstacles;
@@ -249,8 +241,6 @@ void RouterTest::calculateRoute_oneBigObstacleOnRightSideOfDirectPath_reasonable
 
 void RouterTest::calculateRoute_oneBigObstacleOnLeftSideOfDirectPath_reasonableRoute()
 {
-	CPPUNIT_ASSERT(false);
-
 	FieldMock field;
 	RouterImpl router(0.5);
 	vector<Circle> obstacles;
@@ -269,8 +259,6 @@ void RouterTest::calculateRoute_oneBigObstacleOnLeftSideOfDirectPath_reasonableR
 
 void RouterTest::calculateRoute_obstacleOnWayToPointBesideObstacle_reasonableRoute()
 {
-	CPPUNIT_ASSERT(false);
-
 	FieldMock field;
 	RouterImpl router(0.5);
 	vector<Circle> obstacles;
@@ -291,8 +279,6 @@ void RouterTest::calculateRoute_obstacleOnWayToPointBesideObstacle_reasonableRou
 
 void RouterTest::calculateRoute_obstacleOnWayToTargetFromPointBesideObstacle_reasonableRoute()
 {
-	CPPUNIT_ASSERT(false);
-
 	FieldMock field;
 	RouterImpl router(0.5);
 	vector<Circle> obstacles;
@@ -313,8 +299,6 @@ void RouterTest::calculateRoute_obstacleOnWayToTargetFromPointBesideObstacle_rea
 
 void RouterTest::calculateRoute_obstacleOnWayToAndFromPointBesideObstacle_reasonableRoute()
 {
-	CPPUNIT_ASSERT(false);
-
 	FieldMock field;
 	RouterImpl router(0.5);
 	vector<Circle> obstacles;
@@ -408,8 +392,6 @@ void RouterTest::calculateRoute_shortWayOutsideField_noPointOfRouteIsOutside()
 
 void RouterTest::calculateRoute_onlyPossiblePointBesideIsBlockedByAnotherObstacle_reasonableRoute()
 {
-	CPPUNIT_ASSERT(false);
-
 	FieldMock field;
 	field.setNegativeCoordinatesOutside(true);
 	RouterImpl router(0.5);
