@@ -259,7 +259,7 @@ vector<RoutingResult> RouterImpl::calculateEndParts(
 
 		list<RoutingObstacle> reducedConsideredObstacles;
 		if (consideredObstacles.size() > 0)
-			reducedConsideredObstacles.push_back(consideredObstacles.front());
+			reducedConsideredObstacles.push_back(consideredObstacles.back());
 		vector<RoutingResult> routes = calculateStartParts(
 					start, end, field, obstacles, searchDepth, reducedConsideredObstacles,
 					maximumRotation, minimumStepAfterMaximumRotation);
