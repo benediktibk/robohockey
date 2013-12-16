@@ -33,6 +33,9 @@ namespace Autonomous
 		void replaceFirstPoint(const Common::Point &point);
 		double getLength() const;
 		Common::Angle getMaximumBend(const Common::Angle &startOrientation, const Common::Angle &endOrientation) const;
+		void fixRotationOfFinalStep(
+				const Common::Angle &finalOrientation, const Common::Angle &maximumRotation,
+				double minimumStepAfterMaximumRotation, const std::vector<Common::Circle> &obstacles);
 
 	private:
 		std::list<Common::Point> m_points;

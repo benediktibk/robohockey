@@ -160,3 +160,10 @@ Angle Route::getMaximumBend(const Angle &startOrientation, const Angle &endOrien
 
 	return maximumBend;
 }
+
+void Route::fixRotationOfFinalStep(
+		const Angle &/*finalOrientation*/, const Angle &/*maximumRotation*/,
+		double /*minimumStepAfterMaximumRotation*/, const vector<Circle> &/*obstacles*/)
+{
+
+}
