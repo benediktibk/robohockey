@@ -1,5 +1,6 @@
 #include "layer/autonomous/route.h"
 #include "common/path.h"
+#include "common/angle.h"
 #include <assert.h>
 
 using namespace std;
@@ -116,4 +117,9 @@ double Route::getLength() const
 	}
 
 	return totalLength;
+}
+
+Angle Route::getMaximumBend(const Angle &/*startOrientation*/, const Angle &/*endOrientation*/) const
+{
+	return Angle(0);
 }

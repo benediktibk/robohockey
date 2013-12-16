@@ -1,6 +1,7 @@
 #include "layer/autonomous/routetest.h"
 #include "layer/autonomous/route.h"
 #include "common/compare.h"
+#include "common/angle.h"
 
 using namespace std;
 using namespace RoboHockey::Common;
@@ -237,4 +238,66 @@ void RouteTest::add_validRoute_countOfPointsIsCorrect()
 	one.add(two);
 
 	CPPUNIT_ASSERT_EQUAL((size_t)4, one.getPointCount());
+}
+
+void RouteTest::getMaximumBend_directConnection_0()
+{
+	Route route(0.5);
+	route.addPoint(Point(0, 0));
+	route.addPoint(Point(1, 1));
+
+	Angle maximumBend = route.getMaximumBend(Angle::getEighthRotation(), Angle::getEighthRotation());
+
+	Compare compare(0.0001);
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(Angle(0), maximumBend));
+}
+
+void RouteTest::getMaximumBend_oneCompleteTurnAtStart_halfRotation()
+{
+	Route route(0.5);
+	route.addPoint(Point(0, 0));
+	route.addPoint(Point(1, 0));
+
+	Angle maximumBend = route.getMaximumBend(Angle::getHalfRotation(), Angle(0));
+
+	Compare compare(0.0001);
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(Angle::getHalfRotation(), maximumBend));
+}
+
+void RouteTest::getMaximumBend_oneCompleteTurnAtEnd_halfRotation()
+{
+	Route route(0.5);
+	route.addPoint(Point(0, 0));
+	route.addPoint(Point(1, 0));
+
+	Angle maximumBend = route.getMaximumBend(Angle(0), Angle::getHalfRotation());
+
+	Compare compare(0.0001);
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(Angle::getHalfRotation(), maximumBend));
+}
+
+void RouteTest::getMaximumBend_halfTurnUpwardsInBetween_quarterRotation()
+{
+	Route route(0.5);
+	route.addPoint(Point(0, 0));
+	route.addPoint(Point(1, 0));
+	route.addPoint(Point(1, 1));
+
+	Angle maximumBend = route.getMaximumBend(Angle(0), Angle::getQuarterRotation());
+
+	Compare compare(0.0001);
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(Angle::getQuarterRotation(), maximumBend));
+}
+
+void RouteTest::getMaximumBend_halfTurnDownwardsInBetween_quarterRotation()
+{
+	Route route(0.5);
+	route.addPoint(Point(0, 0));
+	route.addPoint(Point(1, 0));
+	route.addPoint(Point(1, -1));
+
+	Angle maximumBend = route.getMaximumBend(Angle(0), Angle::getQuarterRotation()*(-1));
+
+	Compare compare(0.0001);
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(Angle::getQuarterRotation(), maximumBend));
 }

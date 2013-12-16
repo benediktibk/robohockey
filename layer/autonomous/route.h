@@ -31,6 +31,7 @@ namespace Autonomous
 		bool intersectsWith(const std::vector<Common::Circle> &objects) const;
 		void replaceFirstPoint(const Common::Point &point);
 		double getLength() const;
+		Common::Angle getMaximumBend(const Common::Angle &startOrientation, const Common::Angle &endOrientation) const;
 
 	private:
 		std::list<Common::Point> m_points;

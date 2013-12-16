@@ -36,6 +36,11 @@ namespace Autonomous
 		CPPUNIT_TEST(intersectsWith_widthTooSmallForIntersection_false);
 		CPPUNIT_TEST(getLength_from1And2To3And2To3And5_5);
 		CPPUNIT_TEST(add_validRoute_countOfPointsIsCorrect);
+		CPPUNIT_TEST(getMaximumBend_directConnection_0);
+		CPPUNIT_TEST(getMaximumBend_oneCompleteTurnAtStart_halfRotation);
+		CPPUNIT_TEST(getMaximumBend_oneCompleteTurnAtEnd_halfRotation);
+		CPPUNIT_TEST(getMaximumBend_halfTurnUpwardsInBetween_quarterRotation);
+		CPPUNIT_TEST(getMaximumBend_halfTurnDownwardsInBetween_quarterRotation);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
@@ -61,6 +66,11 @@ namespace Autonomous
 		void intersectsWith_widthTooSmallForIntersection_false();
 		void getLength_from1And2To3And2To3And5_5();
 		void add_validRoute_countOfPointsIsCorrect();
+		void getMaximumBend_directConnection_0();
+		void getMaximumBend_oneCompleteTurnAtStart_halfRotation();
+		void getMaximumBend_oneCompleteTurnAtEnd_halfRotation();
+		void getMaximumBend_halfTurnUpwardsInBetween_quarterRotation();
+		void getMaximumBend_halfTurnDownwardsInBetween_quarterRotation();
 	};
 }
 }
