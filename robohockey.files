@@ -396,3 +396,7 @@ layer/autonomous/routingobstacletest.h
 layer/autonomous/routingobstacle.h
 layer/autonomous/routingobstacletest.cpp
 layer/autonomous/routingobstacle.cpp
+layer/autonomous/routingresulttest.h
+layer/autonomous/routingresult.h
+layer/autonomous/routingresulttest.cpp
+layer/autonomous/routingresult.cpp

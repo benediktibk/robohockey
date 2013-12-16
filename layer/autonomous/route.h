@@ -15,6 +15,7 @@ namespace Autonomous
 	class Route
 	{
 	public:
+		Route();
 		Route(double width);
 
 		void addPoint(const Common::Point &point);

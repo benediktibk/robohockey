@@ -6,6 +6,10 @@ using namespace std;
 using namespace RoboHockey::Common;
 using namespace RoboHockey::Layer::Autonomous;
 
+Route::Route() :
+	m_width(0)
+{ }
+
 Route::Route(double width) :
 	m_width(width)
 {
@@ -33,7 +37,7 @@ size_t Route::getPointCount() const
 
 bool Route::isValid() const
 {
-	return getPointCount() >= 1;
+	return getPointCount() >= 1 && m_width > 0;
 }
 
 const Point &Route::getLastPoint() const
