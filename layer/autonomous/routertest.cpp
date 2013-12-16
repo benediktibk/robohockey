@@ -522,6 +522,23 @@ void RouterTest::calculateRoute_endRotationNotPossibleBecauseOfObstacles_invalid
 	CPPUNIT_ASSERT(!route.isValid());
 }
 
+void RouterTest::calculateRoute_twoSmallObstaclesVeryClose_validRoute()
+{
+	RobotPosition start(Point(0.18, 0.435), Angle(-1.60978710380646));
+	RobotPosition end(Point(0.2625, -0.4625), Angle(-1.60978710380646));
+	Angle maximumRotation = Angle::getHalfRotation();
+	RouterImpl router(0.38);
+	FieldMock field;
+	vector<Circle> obstacles;
+	obstacles.push_back(Circle(Point(0, 0), 0.1));
+	obstacles.push_back(Circle(Point(0.4, 0), 0.1));
+	field.setHardObstacles(obstacles);
+
+	Route route = router.calculateRoute(start, end, field, maximumRotation, 0.1);
+
+	CPPUNIT_ASSERT(route.isValid());
+}
+
 void RouterTest::getPointsBesideObstacle_intersectFromLeftAndCircleCenterNotOnPath_shortPointIsCorrect()
 {
 	RouterImpl router(2);
