@@ -23,6 +23,7 @@ namespace Autonomous
 		size_t getPointCount() const;
 		bool isValid() const;
 		const Common::Point& getLastPoint() const;
+		const Common::Point& getNextToLastPoint() const;
 		const Common::Point& getSecondPoint() const;
 		const Common::Point& getFirstPoint() const;
 		std::list<Common::Point> getAllPoints() const;

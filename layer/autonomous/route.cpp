@@ -47,6 +47,14 @@ const Point &Route::getLastPoint() const
 	return m_points.back();
 }
 
+const Point &Route::getNextToLastPoint() const
+{
+	assert(getPointCount() > 1);
+	list<Point>::const_reverse_iterator iterator = m_points.rbegin();
+	++iterator;
+	return *iterator;
+}
+
 const Point &Route::getSecondPoint() const
 {
 	assert(getPointCount() > 1);
@@ -119,7 +127,36 @@ double Route::getLength() const
 	return totalLength;
 }
 
-Angle Route::getMaximumBend(const Angle &/*startOrientation*/, const Angle &/*endOrientation*/) const
+Angle Route::getMaximumBend(const Angle &startOrientation, const Angle &endOrientation) const
 {
-	return Angle(0);
+	assert(isValid());
+	const Point &firstPoint = getFirstPoint();
+	const Point &secondPoint = getSecondPoint();
+	const Point &lastPoint = getLastPoint();
+	const Point &nextToLastPoint = getNextToLastPoint();
+	Angle startBend = Angle(firstPoint, secondPoint) - startOrientation;
+	Angle endBend = Angle(nextToLastPoint, lastPoint) - endOrientation;
+	startBend.abs();
+	endBend.abs();
+	Angle maximumBend = startBend;
+
+	if (endBend.getValueBetweenZeroAndTwoPi() > maximumBend.getValueBetweenZeroAndTwoPi())
+		maximumBend = endBend;
+
+	list<Point>::const_iterator customEnd = m_points.end();
+	--customEnd;
+	--customEnd;
+	for (list<Point>::const_iterator i = m_points.begin(); i != customEnd; ++i)
+	{
+		list<Point>::const_iterator next = i;
+		++next;
+		list<Point>::const_iterator nextTwo = next;
+		++nextTwo;
+		Angle angle(*next, *i, *nextTwo);
+
+		if (angle.getValueBetweenZeroAndTwoPi() > maximumBend.getValueBetweenZeroAndTwoPi())
+			maximumBend = angle;
+	}
+
+	return maximumBend;
 }
