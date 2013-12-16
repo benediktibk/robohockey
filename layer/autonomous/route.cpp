@@ -5,6 +5,7 @@
 #include "common/signum.h"
 #include <assert.h>
 #include <math.h>
+#include <algorithm>
 
 using namespace std;
 using namespace RoboHockey::Common;
@@ -165,10 +166,34 @@ Angle Route::getMaximumBend(const Angle &startOrientation, const Angle &endOrien
 }
 
 void Route::fixRotationOfFinalStep(
-		const Angle &/*finalOrientation*/, const Angle &/*maximumRotation*/,
-		double /*minimumStepAfterMaximumRotation*/, const vector<Circle> &/*obstacles*/)
+		const Angle &finalOrientation, const Angle &maximumRotation,
+		double minimumStepAfterMaximumRotation)
 {
+	assert(isValid());
+	RobotPosition end(getLastPoint(), finalOrientation + Angle::getHalfRotation());
+	Angle rotation = calculateNecessaryRotation(end, getNextToLastPoint());
+	Angle rotationAbsolute = rotation;
+	rotationAbsolute.abs();
+	reverse(m_points.begin(), m_points.end());
+	list<Point>::iterator position = m_points.begin();
 
+	while (rotationAbsolute.getValueBetweenZeroAndTwoPi() > maximumRotation.getValueBetweenZeroAndTwoPi() &&
+		   position != m_points.end())
+	{
+		Point newPoint = calculateMaximumRotatedNextPoint(end, rotation, maximumRotation, minimumStepAfterMaximumRotation);
+		++position;
+		position = m_points.insert(position, newPoint);
+		list<Point>::iterator lastPosition = position;
+		--lastPosition;
+		list<Point>::iterator nextPosition = position;
+		++nextPosition;
+		end = RobotPosition(*position, Angle(*lastPosition, *position));
+		rotation = calculateNecessaryRotation(end, *nextPosition);
+		rotationAbsolute = rotation;
+		rotationAbsolute.abs();
+	}
+
+	reverse(m_points.begin(), m_points.end());
 }
 
 Angle Route::calculateNecessaryRotation(const RobotPosition &start, const Point &end)

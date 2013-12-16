@@ -39,7 +39,7 @@ namespace Autonomous
 		Common::Angle getMaximumBend(const Common::Angle &startOrientation, const Common::Angle &endOrientation) const;
 		void fixRotationOfFinalStep(
 				const Common::Angle &finalOrientation, const Common::Angle &maximumRotation,
-				double minimumStepAfterMaximumRotation, const std::vector<Common::Circle> &obstacles);
+				double minimumStepAfterMaximumRotation);
 
 	public:
 		static Common::Angle calculateNecessaryRotation(

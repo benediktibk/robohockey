@@ -51,6 +51,8 @@ namespace Autonomous
 		CPPUNIT_TEST(calculateMaximumRotatedNextPoint_startLookingRightAndQuarterRotationDesiredButOnlyEighthRotationAllowed_correctPoint);
 		CPPUNIT_TEST(calculateMaximumRotatedNextPoint_startLookingRightAndQuarterRotationDesiredButOnlyEighthRotationAllowedShifted_correctPoint);
 		CPPUNIT_TEST(calculateMaximumRotatedNextPoint_startLookingLeftAndMinusQuarterRotationDesiredButOnlyEighthRotationAllowedShifted_correctPoint);
+		CPPUNIT_TEST(fixRotationOfFinalStep_completeTurnAtEnd_validRoute);
+		CPPUNIT_TEST(fixRotationOfFinalStep_completeTurnAtEndAndLookingUp_validRoute);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
@@ -91,6 +93,8 @@ namespace Autonomous
 		void calculateMaximumRotatedNextPoint_startLookingRightAndQuarterRotationDesiredButOnlyEighthRotationAllowed_correctPoint();
 		void calculateMaximumRotatedNextPoint_startLookingRightAndQuarterRotationDesiredButOnlyEighthRotationAllowedShifted_correctPoint();
 		void calculateMaximumRotatedNextPoint_startLookingLeftAndMinusQuarterRotationDesiredButOnlyEighthRotationAllowedShifted_correctPoint();
+		void fixRotationOfFinalStep_completeTurnAtEnd_validRoute();
+		void fixRotationOfFinalStep_completeTurnAtEndAndLookingUp_validRoute();
 	};
 }
 }

@@ -45,13 +45,16 @@ Route RouterImpl::calculateRoute(
 
 	const Point &startPosition = start.getPosition();
 	const Point &endPosition = end.getPosition();
+	const Angle &startOrientation = start.getOrientation();
+	const Angle &endOrientation = end.getOrientation();
 	const vector<Circle> allObstacles = filterObstacles(softObstacles, hardObstacles, startPosition);
 	list<RoutingObstacle> consideredObstacles;
 	vector<RoutingResult> routingResults = calculateStartParts(
 				start, endPosition, field, allObstacles, 0, consideredObstacles,
 				maximumRotation, minimumStepAfterMaximumRotation);
 	vector<Route> routes = fixRotationOfFinalStep(
-				routingResults, end.getOrientation(), maximumRotation, minimumStepAfterMaximumRotation, allObstacles);
+				routingResults, startOrientation, endOrientation, maximumRotation,
+				minimumStepAfterMaximumRotation, allObstacles);
 
 	if (routes.size() == 0)
 		return Route();
@@ -375,7 +378,7 @@ vector<RoutingResult> RouterImpl::calculateRoutesToPointsBesideObstacle(
 }
 
 vector<Route> RouterImpl::fixRotationOfFinalStep(
-		const vector<RoutingResult> &routes, const Angle &finalOrientation,
+		const vector<RoutingResult> &routes, const Angle &startOrientation, const Angle &finalOrientation,
 		const Angle &maximumRotation, double minimumStepAfterMaximumRotation,
 		const std::vector<Circle> &obstacles) const
 {
@@ -385,10 +388,20 @@ vector<Route> RouterImpl::fixRotationOfFinalStep(
 	for (vector<RoutingResult>::const_iterator i = routes.begin(); i != routes.end(); ++i)
 	{
 		Route route = i->getRoute();
-		route.fixRotationOfFinalStep(finalOrientation, maximumRotation, minimumStepAfterMaximumRotation, obstacles);
+		route.fixRotationOfFinalStep(finalOrientation, maximumRotation, minimumStepAfterMaximumRotation);
 
-		if (route.isValid())
-			result.push_back(route);
+		if (!route.isValid())
+			continue;
+
+		if (route.intersectsWith(obstacles))
+			continue;
+
+		Angle maximumBend = route.getMaximumBend(startOrientation, finalOrientation);
+		maximumBend.abs();
+		if (maximumBend.getValueBetweenZeroAndTwoPi() > maximumRotation.getValueBetweenZeroAndTwoPi())
+			continue;
+
+		result.push_back(route);
 	}
 
 	return result;

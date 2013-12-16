@@ -424,3 +424,35 @@ void RouteTest::calculateMaximumRotatedNextPoint_startLookingLeftAndMinusQuarter
 	Point pointShouldBe(-1/sqrt(2) - 1, 1/sqrt(2));
 	CPPUNIT_ASSERT(compare.isFuzzyEqual(pointShouldBe, point));
 }
+
+void RouteTest::fixRotationOfFinalStep_completeTurnAtEnd_validRoute()
+{
+	Point startPoint(0, 0);
+	Point endPoint(10, 0);
+	Angle endOrientation = Angle::getHalfRotation();
+	Angle maximumRotation = Angle::getQuarterRotation();
+	Route route(0.5);
+	route.addPoint(startPoint);
+	route.addPoint(endPoint);
+
+	route.fixRotationOfFinalStep(endOrientation, maximumRotation, 0.1);
+
+	CPPUNIT_ASSERT(route.isValid());
+	CPPUNIT_ASSERT_EQUAL((size_t)4, route.getPointCount());
+}
+
+void RouteTest::fixRotationOfFinalStep_completeTurnAtEndAndLookingUp_validRoute()
+{
+	Point startPoint(0, 0);
+	Point endPoint(0, 10);
+	Angle endOrientation = Angle::getThreeQuarterRotation();
+	Angle maximumRotation = Angle::getQuarterRotation();
+	Route route(0.5);
+	route.addPoint(startPoint);
+	route.addPoint(endPoint);
+
+	route.fixRotationOfFinalStep(endOrientation, maximumRotation, 0.1);
+
+	CPPUNIT_ASSERT(route.isValid());
+	CPPUNIT_ASSERT_EQUAL((size_t)4, route.getPointCount());
+}

@@ -66,9 +66,9 @@ namespace Autonomous
 				unsigned int searchDepth, const std::list<RoutingObstacle> &consideredObstacles,
 				const Common::Angle &maximumRotation, double minimumStepAfterMaximumRotation) const;
 		std::vector<Route> fixRotationOfFinalStep(
-				const std::vector<RoutingResult> &routes, const Common::Angle &finalOrientation,
-				const Common::Angle &maximumRotation, double minimumStepAfterMaximumRotation,
-				const std::vector<Common::Circle> &obstacles) const;
+				const std::vector<RoutingResult> &routes, const Common::Angle &startOrientation,
+				const Common::Angle &finalOrientation, const Common::Angle &maximumRotation,
+				double minimumStepAfterMaximumRotation,	const std::vector<Common::Circle> &obstacles) const;
 
 	private:
 		const unsigned int m_maximumSearchDepth;
