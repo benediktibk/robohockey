@@ -400,3 +400,6 @@ layer/autonomous/routingresulttest.h
 layer/autonomous/routingresult.h
 layer/autonomous/routingresulttest.cpp
 layer/autonomous/routingresult.cpp
+common/signum.h
+common/signumtest.h
+common/signumtest.cpp

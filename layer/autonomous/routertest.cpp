@@ -9,6 +9,8 @@
 #include "common/angle.h"
 #include "common/robotposition.h"
 #include "common/line.h"
+#include "common/signum.h"
+#include "common/pathintersectpoints.h"
 #include <assert.h>
 
 using namespace std;
@@ -733,6 +735,34 @@ void RouterTest::getPointsBesideObstacle_bigObstacleCloseOnLeftSide_onePointIsLe
 	CPPUNIT_ASSERT(path.intersectsWith(obstacle));
 	CPPUNIT_ASSERT_EQUAL((size_t)2, points.size());
 	CPPUNIT_ASSERT(line.isOnePointLeftAndOneRightOfLine(points[0], points[1]));
+}
+
+void RouterTest::getPointsBesideObstacle_bigObstacle_newStartBesideObstacleDoesntIntersectWithObstacleInWorstCaseOrientationFromStart()
+{
+	RouterImpl router(0.5);
+	Point start(0, 0);
+	Point end(5, 0);
+	Circle obstacle(Point(3, 0), 2);
+	Path path(start, end, 0.5);
+
+	vector<Point> points = router.getPointsBesideObstacle(path, obstacle);
+
+	const Point &pointOne = points.front();
+	const Point &pointTwo = points.back();
+	Angle angleOne(Point(0, 0), pointOne);
+	Angle angleTwo(Point(0, 0), pointTwo);
+	Point differenceToNextPointOne = pointOne;
+	differenceToNextPointOne.rotate(Angle::getQuarterRotation()*(-1)*sgn(angleOne.getValueBetweenMinusPiAndPi()));
+	Point differenceToNextPointTwo = pointTwo;
+	differenceToNextPointTwo.rotate(Angle::getQuarterRotation()*(-1)*sgn(angleTwo.getValueBetweenMinusPiAndPi()));
+	Point pointOneNext = pointOne + differenceToNextPointOne;
+	Point pointTwoNext = pointTwo + differenceToNextPointTwo;
+	Path pathOne(pointOne, pointOneNext, 0.5);
+	Path pathTwo(pointTwo, pointTwoNext, 0.5);
+	PathIntersectPoints intersectionPointsOne = pathOne.getIntersectPoints(obstacle);
+	PathIntersectPoints intersectionPointsTwo = pathTwo.getIntersectPoints(obstacle);
+	CPPUNIT_ASSERT(intersectionPointsOne.getIntersectTypeFrom() != PathIntersectPoints::IntersectTypeFromStart);
+	CPPUNIT_ASSERT(intersectionPointsTwo.getIntersectTypeFrom() != PathIntersectPoints::IntersectTypeFromStart);
 }
 
 void RouterTest::detectLoopInConsideredObstacles_noObstacles_false()
