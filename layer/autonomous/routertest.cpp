@@ -539,6 +539,20 @@ void RouterTest::calculateRoute_twoSmallObstaclesVeryClose_validRoute()
 	CPPUNIT_ASSERT(route.isValid());
 }
 
+void RouterTest::calculateRoute_targetOutsideOfTheField_invalidRoute()
+{
+	RobotPosition start(Point(1, 1), Angle::getThreeQuarterRotation());
+	RobotPosition end(Point(1, -1), Angle::getThreeQuarterRotation());
+	Angle maximumRotation = Angle::getHalfRotation();
+	RouterImpl router(0.38);
+	FieldMock field;
+	field.setNegativeCoordinatesOutside(true);
+
+	Route route = router.calculateRoute(start, end, field, maximumRotation, 0.1);
+
+	CPPUNIT_ASSERT(!route.isValid());
+}
+
 void RouterTest::getPointsBesideObstacle_intersectFromLeftAndCircleCenterNotOnPath_shortPointIsCorrect()
 {
 	RouterImpl router(2);

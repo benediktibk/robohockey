@@ -47,6 +47,7 @@ namespace Autonomous
 		CPPUNIT_TEST(calculateRoute_sharpBendBetweenNecessary_reasonableRoute);
 		CPPUNIT_TEST(calculateRoute_endRotationNotPossibleBecauseOfObstacles_invalidRoute);
 		CPPUNIT_TEST(calculateRoute_twoSmallObstaclesVeryClose_validRoute);
+		CPPUNIT_TEST(calculateRoute_targetOutsideOfTheField_invalidRoute);
 		CPPUNIT_TEST(getPointsBesideObstacle_intersectFromLeftAndCircleCenterNotOnPath_shortPointIsCorrect);
 		CPPUNIT_TEST(getPointsBesideObstacle_intersectFromLeftAndCircleCenterNotOnPath_longPointIsCorrect);
 		CPPUNIT_TEST(getPointsBesideObstacle_intersectFromRightAndCircleCenterNotOnPath_shortPointIsCorrect);
@@ -124,6 +125,7 @@ namespace Autonomous
 		void calculateRoute_sharpBendBetweenNecessary_reasonableRoute();
 		void calculateRoute_endRotationNotPossibleBecauseOfObstacles_invalidRoute();
 		void calculateRoute_twoSmallObstaclesVeryClose_validRoute();
+		void calculateRoute_targetOutsideOfTheField_invalidRoute();
 		void getPointsBesideObstacle_intersectFromLeftAndCircleCenterNotOnPath_shortPointIsCorrect();
 		void getPointsBesideObstacle_intersectFromLeftAndCircleCenterNotOnPath_longPointIsCorrect();
 		void getPointsBesideObstacle_intersectFromRightAndCircleCenterNotOnPath_shortPointIsCorrect();
