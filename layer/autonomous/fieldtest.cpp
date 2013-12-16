@@ -970,3 +970,54 @@ void FieldTest::detectTeamColorWithGoalInFront_yellowAndBlueFuzzyEqual_teamUnkno
 
 	CPPUNIT_ASSERT_EQUAL(FieldColorUnknown, field.getOwnTeamColor());
 }
+
+void FieldTest::getNewOriginFromFieldDetection_realWorldExample1_correctNewOrigin()
+{
+	Hardware::RobotMock *hardwareRobot = new Hardware::RobotMock();
+	DataAnalysis::DataAnalyserImpl dataAnalyser(hardwareRobot);
+	Autonomous::RobotMock autonomousRobot;
+	FieldImpl field(dataAnalyser.getOdometry(), dataAnalyser.getLidar(), dataAnalyser.getCamera(), autonomousRobot);
+	Hardware::LidarMock &lidar = hardwareRobot->getLidarMock();
+	lidar.readSensorDataFromFile("resources/testfiles/lidar_detect1.txt");
+
+	dataAnalyser.updateSensorData();
+
+	field.update();
+
+	Compare compare(0.5);
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(RobotPosition(Point(0, 0), Angle()), field.getNewOriginOfFieldDetection()));
+}
+
+void FieldTest::getNewOriginFromFieldDetection_realWorldExample2_correctNewOrigin()
+{
+	Hardware::RobotMock *hardwareRobot = new Hardware::RobotMock();
+	DataAnalysis::DataAnalyserImpl dataAnalyser(hardwareRobot);
+	Autonomous::RobotMock autonomousRobot;
+	FieldImpl field(dataAnalyser.getOdometry(), dataAnalyser.getLidar(), dataAnalyser.getCamera(), autonomousRobot);
+	Hardware::LidarMock &lidar = hardwareRobot->getLidarMock();
+	lidar.readSensorDataFromFile("resources/testfiles/lidar_detect2.txt");
+
+	dataAnalyser.updateSensorData();
+
+	field.update();
+
+	Compare compare(0.5);
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(RobotPosition(Point(0, 0), Angle()), field.getNewOriginOfFieldDetection()));
+}
+
+void FieldTest::getNewOriginFromFieldDetection_realWorldExample3_correctNewOrigin()
+{
+	Hardware::RobotMock *hardwareRobot = new Hardware::RobotMock();
+	DataAnalysis::DataAnalyserImpl dataAnalyser(hardwareRobot);
+	Autonomous::RobotMock autonomousRobot;
+	FieldImpl field(dataAnalyser.getOdometry(), dataAnalyser.getLidar(), dataAnalyser.getCamera(), autonomousRobot);
+	Hardware::LidarMock &lidar = hardwareRobot->getLidarMock();
+	lidar.readSensorDataFromFile("resources/testfiles/lidar_detect3.txt");
+
+	dataAnalyser.updateSensorData();
+
+	field.update();
+
+	Compare compare(0.5);
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(RobotPosition(Point(0, 0), Angle()), field.getNewOriginOfFieldDetection()));
+}

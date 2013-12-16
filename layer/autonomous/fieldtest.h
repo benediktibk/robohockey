@@ -60,6 +60,9 @@ namespace Autonomous
 		CPPUNIT_TEST(detectTeamColorWithGoalInFront_yellowMuchBiggerBlue_teamYellow);
 		CPPUNIT_TEST(detectTeamColorWithGoalInFront_yellowMuchSmallerBlue_teamBlue);
 		CPPUNIT_TEST(detectTeamColorWithGoalInFront_yellowAndBlueFuzzyEqual_teamUnknown);
+		CPPUNIT_TEST(getNewOriginFromFieldDetection_realWorldExample1_correctNewOrigin);
+		CPPUNIT_TEST(getNewOriginFromFieldDetection_realWorldExample2_correctNewOrigin);
+		CPPUNIT_TEST(getNewOriginFromFieldDetection_realWorldExample3_correctNewOrigin);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
@@ -109,6 +112,9 @@ namespace Autonomous
 		void detectTeamColorWithGoalInFront_yellowMuchBiggerBlue_teamYellow();
 		void detectTeamColorWithGoalInFront_yellowMuchSmallerBlue_teamBlue();
 		void detectTeamColorWithGoalInFront_yellowAndBlueFuzzyEqual_teamUnknown();
+		void getNewOriginFromFieldDetection_realWorldExample1_correctNewOrigin();
+		void getNewOriginFromFieldDetection_realWorldExample2_correctNewOrigin();
+		void getNewOriginFromFieldDetection_realWorldExample3_correctNewOrigin();
 	};
 }
 }
