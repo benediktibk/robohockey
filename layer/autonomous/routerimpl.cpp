@@ -224,8 +224,11 @@ vector<RoutingResult> RouterImpl::calculateEndParts(
 			result.push_back(*i);
 		else
 		{
+			list<RoutingObstacle> reducedConsideredObstacles;
+			if (consideredObstacles.size() > 0)
+				reducedConsideredObstacles.push_back(consideredObstacles.front());
 			vector<RoutingResult> routes = calculateStartParts(
-						start, end, field, obstacles, searchDepth, consideredObstacles);
+						start, end, field, obstacles, searchDepth, reducedConsideredObstacles);
 
 			for (vector<RoutingResult>::const_iterator j = routes.begin(); j != routes.end(); ++j)
 			{
@@ -308,7 +311,7 @@ vector<RoutingResult> RouterImpl::calculateRoutesToPointsBesideObstacle(
 		if (!detectLoopInConsideredObstacles(extendedConsideredObstacles))
 		{
 			vector<RoutingResult> startParts = calculateStartParts(
-						start, rightPoint, field, obstacles, searchDepth, consideredObstacles);
+						start, rightPoint, field, obstacles, searchDepth, extendedConsideredObstacles);
 			result.insert(result.end(), startParts.begin(), startParts.end());
 		}
 	}
@@ -321,7 +324,7 @@ vector<RoutingResult> RouterImpl::calculateRoutesToPointsBesideObstacle(
 		if (!detectLoopInConsideredObstacles(extendedConsideredObstacles))
 		{
 			vector<RoutingResult> startParts = calculateStartParts(
-						start, leftPoint, field, obstacles, searchDepth, consideredObstacles);
+						start, leftPoint, field, obstacles, searchDepth, extendedConsideredObstacles);
 			result.insert(result.end(), startParts.begin(), startParts.end());
 		}
 	}
