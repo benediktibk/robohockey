@@ -434,7 +434,14 @@ bool RobotImpl::updateRoute(const Field &field)
 	//! If the current route is not feasible anymore we try to create a new one.
 	clearRoute();
 	m_currentRoute = new Route(m_robotWidth);
-	*m_currentRoute = m_router->calculateRoute(robotPosition, m_currentTarget, field);
+	Angle maximumRotation = Angle::getHalfRotation();
+	double minimumStepAfterMaximumRotation = 0.1;
+
+	if (isPuckCollected())
+		maximumRotation = Angle::getQuarterRotation();
+
+	*m_currentRoute = m_router->calculateRoute(
+				robotPosition, m_currentTarget, field, maximumRotation, minimumStepAfterMaximumRotation);
 
 	if (!isRouteFeasible(allObstacles))
 		clearRoute();

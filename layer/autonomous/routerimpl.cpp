@@ -25,7 +25,8 @@ RouterImpl::RouterImpl(double robotWidth) :
 { }
 
 Route RouterImpl::calculateRoute(
-		const RobotPosition &start, const RobotPosition &end, const Field &field) const
+		const RobotPosition &start, const RobotPosition &end, const Field &field,
+		const Common::Angle &/*maximumRotation*/, double /*minimumStepAfterMaximumRotation*/) const
 {
 	const vector<Circle> softObstacles = field.getAllSoftObstacles();
 	const vector<Circle> hardObstacles = field.getAllHardObstacles();
