@@ -521,7 +521,7 @@ void RobotTest::goTo_twoTargetsAndFirstOnePossible_canReachFirstTarget()
 	field.setNegativeCoordinatesOutside(false);
 
 	robot.updateSensorData();
-	m_targets.push_back(RobotPosition(Point(10, 0), Angle::getHalfRotation()));
+	m_targets.push_back(RobotPosition(Point(10, 0), 0));
 	m_targets.push_back(RobotPosition(Point(-5, 0), Angle::getHalfRotation()));
 	robot.goTo(m_targets);
 	robot.updateActuators(field);
@@ -546,7 +546,7 @@ void RobotTest::goTo_twoTargetsAndOnlySecondOnePossible_canReachSecondTarget()
 	field.setSoftObstacles(obstacles);
 
 	robot.updateSensorData();
-	m_targets.push_back(RobotPosition(Point(10, 0), Angle::getHalfRotation()));
+	m_targets.push_back(RobotPosition(Point(10, 0), 0));
 	m_targets.push_back(RobotPosition(Point(-5, 0), Angle::getHalfRotation()));
 	robot.goTo(m_targets);
 	robot.updateActuators(field);
