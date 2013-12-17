@@ -52,7 +52,7 @@ namespace Autonomous
 		void clearRoute();
 		bool updateRouteForTarget(
 				const Field &field, const Common::RobotPosition &target,
-				const std::vector<Common::Circle> &hardObstacles, const std::vector<Common::Circle> &filteredObstacles);
+				const std::vector<Common::Circle> &obstacles, bool ignoreSoftObstacles, bool ignoreFinalOrientation);
 		bool updateRoute(const Field &field);
 		bool isRouteFeasible(const std::vector<Common::Circle> &obstacles) const;
 		void updateEngine(const Field &field);

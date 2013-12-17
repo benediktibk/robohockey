@@ -435,7 +435,7 @@ void RobotImpl::clearRoute()
 
 bool RobotImpl::updateRouteForTarget(
 		const Field &field, const Common::RobotPosition &target,
-		const vector<Circle> &hardObstacles, const vector<Circle> &filteredObstacles)
+		const vector<Circle> &obstacles, bool ignoreSoftObstacles, bool ignoreFinalOrientation)
 {
 	const RobotPosition robotPosition = getCurrentPosition();
 	Angle maximumRotation = Angle::getHalfRotation();
@@ -447,33 +447,17 @@ bool RobotImpl::updateRouteForTarget(
 	m_ignoringSoftObstacles = false;
 	*m_currentRoute = m_router->calculateRoute(
 				robotPosition, target, field, maximumRotation,
-				minimumStepAfterMaximumRotation, m_ignoringSoftObstacles, false);
+				minimumStepAfterMaximumRotation, ignoreSoftObstacles, ignoreFinalOrientation);
 
-	if (isRouteFeasible(filteredObstacles))
-		return true;
-
-	m_ignoringSoftObstacles = true;
-	*m_currentRoute = m_router->calculateRoute(
-				robotPosition, target, field, maximumRotation,
-				minimumStepAfterMaximumRotation, m_ignoringSoftObstacles, false);
-
-	if (isRouteFeasible(hardObstacles))
-		return true;
-
-	m_ignoringSoftObstacles = true;
-	*m_currentRoute = m_router->calculateRoute(
-				robotPosition, target, field, maximumRotation,
-				minimumStepAfterMaximumRotation, m_ignoringSoftObstacles, true);
-
-	return isRouteFeasible(hardObstacles);
+	return isRouteFeasible(obstacles);
 }
 
 bool RobotImpl::updateRoute(const Field &field)
 {
 	const RobotPosition robotPosition = getCurrentPosition();
-	vector<Circle> softObstacles = field.getAllSoftObstacles();
-	vector<Circle> hardObstacles = field.getAllHardObstacles();
-	vector<Circle> allObstacles = m_router->filterObstacles(softObstacles, hardObstacles, robotPosition.getPosition());
+	const vector<Circle> softObstacles = field.getAllSoftObstacles();
+	const vector<Circle> hardObstacles = field.getAllHardObstacles();
+	const vector<Circle> allObstacles = m_router->filterObstacles(softObstacles, hardObstacles, robotPosition.getPosition());
 
 	if (	(m_ignoringSoftObstacles && isRouteFeasible(softObstacles)) ||
 			(!m_ignoringSoftObstacles && isRouteFeasible(allObstacles)))
@@ -482,8 +466,36 @@ bool RobotImpl::updateRoute(const Field &field)
 	//! If the current route is not feasible anymore we try to create a new one.
 	clearRoute();
 	m_currentRoute = new Route(m_robotWidth);
+	bool success = false;
 
-	if (!updateRouteForTarget(field, m_currentTarget, hardObstacles, allObstacles))
+	m_ignoringSoftObstacles = false;
+	for (list<RobotPosition>::const_iterator i = m_possibleTargets.begin(); i != m_possibleTargets.end() && !success; ++i)
+	{
+		m_currentTarget = *i;
+		success = updateRouteForTarget(field, m_currentTarget, allObstacles, m_ignoringSoftObstacles, false);
+	}
+
+	if (success)
+		return true;
+
+	m_ignoringSoftObstacles = true;
+	for (list<RobotPosition>::const_iterator i = m_possibleTargets.begin(); i != m_possibleTargets.end() && !success; ++i)
+	{
+		m_currentTarget = *i;
+		success = updateRouteForTarget(field, m_currentTarget, hardObstacles, m_ignoringSoftObstacles, false);
+	}
+
+	if (success)
+		return true;
+
+	m_ignoringSoftObstacles = true;
+	for (list<RobotPosition>::const_iterator i = m_possibleTargets.begin(); i != m_possibleTargets.end() && !success; ++i)
+	{
+		m_currentTarget = *i;
+		success = updateRouteForTarget(field, m_currentTarget, hardObstacles, m_ignoringSoftObstacles, true);
+	}
+
+	if (!success)
 		clearRoute();
 
 	return true;
