@@ -48,6 +48,7 @@ void FieldImpl::update()
 	}
 
     updateAchievedGoals();
+    updateHiddenPucks();
 }
 
 const vector<FieldObject> &FieldImpl::getAllFieldObjects() const
@@ -108,7 +109,15 @@ bool FieldImpl::isCalibrated() const
 
 FieldColor FieldImpl::getOwnTeamColor() const
 {
-	return m_teamColor;
+    return m_teamColor;
+}
+
+FieldColor FieldImpl::getEnemyTeamColor() const
+{
+    if (m_teamColor == FieldColorYellow)
+        return FieldColorBlue;
+    else
+        return FieldColorYellow;
 }
 
 void FieldImpl::detectTeamColorWithGoalInFront()
@@ -353,7 +362,28 @@ void FieldImpl::updateAchievedGoals()
 		}
 	}
 	else
-		m_achievedGoals = 0;
+        m_achievedGoals = 0;
+}
+
+void FieldImpl::updateHiddenPucks()
+{
+    Point corner1(3.334, 0);
+    Point corner2(5, 3);
+    Rectangle hiddenArea(corner1, corner2);
+
+    m_hiddenPucks = 0;
+    if(m_fieldObjects.size() != 0)
+    {
+        for (vector<FieldObject>::const_iterator i = m_fieldObjects.begin(); i != m_fieldObjects.end(); ++i)
+        {
+            const FieldObject &fieldObject = *i;
+
+            if (fieldObject.getColor() == getEnemyTeamColor() && hiddenArea.isInside(fieldObject.getCircle().getCenter(), 0.001))
+                m_hiddenPucks++;
+        }
+    }
+    else
+        m_hiddenPucks = 0;
 }
 
 FieldObject &FieldImpl::getNextObjectFromPosition(Point position)
