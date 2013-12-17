@@ -44,7 +44,8 @@ void RobotImpl::goTo(const list<RobotPosition> &possibleTargets)
 {
 	clearRoute();
 	changeIntoState(RobotStateDrivingTurningPart);
-	m_currentTarget = possibleTargets.front();
+	m_possibleTargets = possibleTargets;
+	m_currentTarget = m_possibleTargets.front();
 }
 
 void RobotImpl::turnTo(const Point &position)
@@ -432,6 +433,41 @@ void RobotImpl::clearRoute()
 	m_currentRoute = 0;
 }
 
+bool RobotImpl::updateRouteForTarget(
+		const Field &field, const Common::RobotPosition &target,
+		const vector<Circle> &hardObstacles, const vector<Circle> &filteredObstacles)
+{
+	const RobotPosition robotPosition = getCurrentPosition();
+	Angle maximumRotation = Angle::getHalfRotation();
+	double minimumStepAfterMaximumRotation = 0.1;
+
+	if (isPuckCollected())
+		maximumRotation = Angle::getQuarterRotation();
+
+	m_ignoringSoftObstacles = false;
+	*m_currentRoute = m_router->calculateRoute(
+				robotPosition, target, field, maximumRotation,
+				minimumStepAfterMaximumRotation, m_ignoringSoftObstacles, false);
+
+	if (isRouteFeasible(filteredObstacles))
+		return true;
+
+	m_ignoringSoftObstacles = true;
+	*m_currentRoute = m_router->calculateRoute(
+				robotPosition, target, field, maximumRotation,
+				minimumStepAfterMaximumRotation, m_ignoringSoftObstacles, false);
+
+	if (isRouteFeasible(hardObstacles))
+		return true;
+
+	m_ignoringSoftObstacles = true;
+	*m_currentRoute = m_router->calculateRoute(
+				robotPosition, target, field, maximumRotation,
+				minimumStepAfterMaximumRotation, m_ignoringSoftObstacles, true);
+
+	return isRouteFeasible(hardObstacles);
+}
+
 bool RobotImpl::updateRoute(const Field &field)
 {
 	const RobotPosition robotPosition = getCurrentPosition();
@@ -446,36 +482,8 @@ bool RobotImpl::updateRoute(const Field &field)
 	//! If the current route is not feasible anymore we try to create a new one.
 	clearRoute();
 	m_currentRoute = new Route(m_robotWidth);
-	Angle maximumRotation = Angle::getHalfRotation();
-	double minimumStepAfterMaximumRotation = 0.1;
 
-	if (isPuckCollected())
-		maximumRotation = Angle::getQuarterRotation();
-
-	m_ignoringSoftObstacles = false;
-	*m_currentRoute = m_router->calculateRoute(
-				robotPosition, m_currentTarget, field, maximumRotation,
-				minimumStepAfterMaximumRotation, m_ignoringSoftObstacles, false);
-
-	if (isRouteFeasible(allObstacles))
-		return true;
-
-	m_ignoringSoftObstacles = true;
-	allObstacles = hardObstacles;
-	*m_currentRoute = m_router->calculateRoute(
-				robotPosition, m_currentTarget, field, maximumRotation,
-				minimumStepAfterMaximumRotation, m_ignoringSoftObstacles, false);
-
-	if (isRouteFeasible(allObstacles))
-		return true;
-
-	m_ignoringSoftObstacles = true;
-	allObstacles = hardObstacles;
-	*m_currentRoute = m_router->calculateRoute(
-				robotPosition, m_currentTarget, field, maximumRotation,
-				minimumStepAfterMaximumRotation, m_ignoringSoftObstacles, true);
-
-	if (!isRouteFeasible(allObstacles))
+	if (!updateRouteForTarget(field, m_currentTarget, hardObstacles, allObstacles))
 		clearRoute();
 
 	return true;

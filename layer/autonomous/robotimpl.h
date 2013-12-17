@@ -50,6 +50,9 @@ namespace Autonomous
 
 	private:
 		void clearRoute();
+		bool updateRouteForTarget(
+				const Field &field, const Common::RobotPosition &target,
+				const std::vector<Common::Circle> &hardObstacles, const std::vector<Common::Circle> &filteredObstacles);
 		bool updateRoute(const Field &field);
 		bool isRouteFeasible(const std::vector<Common::Circle> &obstacles) const;
 		void updateEngine(const Field &field);
@@ -80,6 +83,7 @@ namespace Autonomous
 		bool m_cantReachTarget;
 		Route *m_currentRoute;
 		Common::RobotPosition m_currentTarget;
+		std::list<Common::RobotPosition> m_possibleTargets;
 		RobotState m_state;
 		bool m_stateChanged;
 		Common::Point m_startPosition;
