@@ -94,6 +94,7 @@ namespace DataAnalysis
 		CPPUNIT_TEST(canBeSeen_objectLessThanFourMetersAway_true);
 		CPPUNIT_TEST(canBeSeen_objectRightAndLookingLeft_false);
 		CPPUNIT_TEST(canBeSeen_objectRightLowerAndLookingLeft_false);
+		CPPUNIT_TEST(canBeSeen_objectDirectBehindOtherObstacle_true);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
@@ -170,6 +171,7 @@ namespace DataAnalysis
 		void canBeSeen_objectLessThanFourMetersAway_true();
 		void canBeSeen_objectRightAndLookingLeft_false();
 		void canBeSeen_objectRightLowerAndLookingLeft_false();
+		void canBeSeen_objectDirectBehindOtherObstacle_true();
 
 	private:
 		static const double m_maximumDistance;

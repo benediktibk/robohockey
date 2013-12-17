@@ -183,8 +183,8 @@ bool LidarImpl::canBeSeen(const Circle &object, const RobotPosition &ownPosition
 	if (distanceToCenter < radius)
 		return true;
 
-	Compare compare(0.001);
-	if (compare.isFuzzyEqual(radius, 0))
+	Compare radiusCompare(0.001);
+	if (radiusCompare.isFuzzyEqual(radius, 0))
 		return true;
 
 	Angle viewAngleHalf = asin(radius/distanceToCenter);
@@ -201,13 +201,14 @@ bool LidarImpl::canBeSeen(const Circle &object, const RobotPosition &ownPosition
 
 	unsigned int leftEdgeSensorNumber = calculateSensorNumberFromOrientation(leftEdge);
 	unsigned int rightEdgeSensorNumber = calculateSensorNumberFromOrientation(rightEdge);
+	Compare compare(0.07);
 
 	for (unsigned int i = rightEdgeSensorNumber; i <= leftEdgeSensorNumber; ++i)
 	{
 		double distanceToObject = calculateDistanceToObject(movedObject, i, distanceToCenter, orientationOfObject);
 		double distanceFromSensor = m_rawData->getValue(i);
 
-		if (distanceToObject < distanceFromSensor)
+		if (compare.isFuzzySmaller(distanceToObject, distanceFromSensor))
 			return true;
 	}
 
