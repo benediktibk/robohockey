@@ -20,11 +20,11 @@ RefereeImpl::RefereeImpl(const std::string &AngelinaAdressServer):
 	m_ConnectFailed = false;
 	m_isValid = false;
 	m_referee = new Extern::Angelina::Referee(0);
-	connect(m_referee, SIGNAL(disconnected()),this, SLOT(slotDisconneted()));
+	connect(m_referee, SIGNAL(disconnected()),this, SLOT(slotDisconnected()));
 	connect(m_referee, SIGNAL(detectionStart()),this, SLOT(slotDetectionStart()));
 	connect(m_referee, SIGNAL(gameStart()),this, SLOT(slotGameStart()));
 	connect(m_referee, SIGNAL(gameOver()),this, SLOT(slotGameOver()));
-	connect(m_referee, SIGNAL(trueColorOfTeam(TeamColor)),this, SLOT(slotTrueColorOfTeam(TeamColor)));
+	connect(m_referee, SIGNAL(trueColorOfTeam(Extern::Angelina::TeamColor)),this, SLOT(slotTrueColorOfTeam(Extern::Angelina::TeamColor)));
 	connect(m_referee, SIGNAL(stopMovement()),this, SLOT(slotStopMovement()));
 	connect(m_referee, SIGNAL(connected()),this, SLOT(slotConnected()));
 	connect(m_referee, SIGNAL(connectFailed()),this, SLOT(slotConnectFailed()));
@@ -74,7 +74,10 @@ void RefereeImpl::reportGoal()
 void RefereeImpl::tellEgoPos(const Point &position)
 {
 	//! @todo transform into coordinate system of angelina (dependend on team color!)
-	m_referee->tellEgoPos(position.getX(),position.getY());
+	if(m_trueColorOfTeam == FieldColorYellow)
+		m_referee->tellEgoPos(5 - position.getX(), position.getY());
+	else if (m_trueColorOfTeam == FieldColorBlue)
+		m_referee->tellEgoPos(position.getX(), 3 - position.getY());
 }
 
 bool RefereeImpl::detectionStart()

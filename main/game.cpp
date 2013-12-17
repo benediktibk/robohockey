@@ -59,6 +59,8 @@ Game::Game(int argc, char **argv) :
 
 	m_watch->getTimeAndRestart();
 	m_timer->start(0);
+	m_referee->reportReady();
+	m_referee->tellTeamColor(FieldColorBlue);
 }
 
 Game::~Game()
@@ -95,6 +97,8 @@ void Game::execute()
 	executeRobotControl();
 	double timeForLogic = watch.getTimeAndRestart();
 	m_robot->updateActuators(*m_field);
+	m_referee->tellEgoPos(m_robot->getCurrentPosition().getPosition());
+	m_referee->sendAlive();
 	double timeForActuatorUpdate = watch.getTimeAndRestart();
 	bool isMovingAfterwards = m_robot->isMoving();
 
