@@ -500,7 +500,32 @@ void FieldTest::update_fourObjectsAndThreeObjectsHidden_threeHiddenPucks()
 
     field.update();
 
-    CPPUNIT_ASSERT_EQUAL((unsigned int)3, field.getNumberOfHiddenPucks());
+	CPPUNIT_ASSERT_EQUAL((unsigned int)3, field.getNumberOfHiddenPucks());
+}
+
+void FieldTest::update_oneObjectInFrontOfLidarOneBehindOneOnLeftSide_threeObjects()
+{
+	DataAnalysis::OdometryMock odometry;
+	DataAnalysis::LidarMock lidar;
+	DataAnalysis::CameraMock camera;
+	Autonomous::RobotMock autonomousRobot;
+	FieldImpl field(odometry, lidar, camera, autonomousRobot);
+
+	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(3, 0), 0.1));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(0.5, 5), 0.15));
+
+	lidar.setAllObjects(lidarObjects);
+
+	field.update();
+
+	CPPUNIT_ASSERT_EQUAL((size_t)2, field.getAllFieldObjects().size());
+
+	DataAnalysis::LidarObjects lidarObjects2(Point(0, 0));
+	lidarObjects2.addObject(DataAnalysis::LidarObject(Point(1, 0), 1));
+	lidarObjects2.addObject(DataAnalysis::LidarObject(Point(0.5, 5), 0.15));
+
+	CPPUNIT_ASSERT_EQUAL((size_t)3, field.getAllFieldObjects().size());
 }
 
 void FieldTest::calibratePosition_noValidPattern_false()
@@ -1064,6 +1089,25 @@ void FieldTest::getAllSoftObstacles_onePuckDisappeared_resultSizeIs0()
 	CPPUNIT_ASSERT_EQUAL((size_t)0, obstacles.size());
 }
 
+void FieldTest::getAllSoftObstacles_oneSmallObstacleWithUnknownColor_resultDiameterIs0p12()
+{
+	DataAnalysis::OdometryMock odometry;
+	DataAnalysis::LidarMock lidar;
+	DataAnalysis::CameraMock camera;
+	Autonomous::RobotMock autonomousRobot;
+	FieldImpl field(odometry, lidar, camera, autonomousRobot);
+	RobotPosition ownPosition(Point(0, 0), 0);
+	odometry.setCurrentPosition(ownPosition);
+	DataAnalysis::LidarObjects lidarObjects(ownPosition.getPosition());
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 0), 0.06));
+	lidar.setAllObjects(lidarObjects);
+
+	field.update();
+	Circle obstacle = field.getAllSoftObstacles().front();
+
+	CPPUNIT_ASSERT_EQUAL(0.12, obstacle.getDiameter());
+}
+
 void FieldTest::getAllHardObstacles_oneGreenObject_resultSizeIs1()
 {
 	DataAnalysis::OdometryMock odometry;
@@ -1270,6 +1314,7 @@ void FieldTest::getNewOriginFromFieldDetection_realWorldExample1_correctNewOrigi
 
 	Compare compare(0.5);
 	CPPUNIT_ASSERT(compare.isFuzzyEqual(RobotPosition(Point(0, 0), Angle()), resultOrigin));
+	CPPUNIT_ASSERT(false);
 }
 
 void FieldTest::getNewOriginFromFieldDetection_realWorldExample2_correctNewOrigin()
@@ -1289,6 +1334,7 @@ void FieldTest::getNewOriginFromFieldDetection_realWorldExample2_correctNewOrigi
 
 	Compare compare(0.5);
 	CPPUNIT_ASSERT(compare.isFuzzyEqual(RobotPosition(Point(0, 0), Angle()), resultOrigin));
+	CPPUNIT_ASSERT(false);
 }
 
 void FieldTest::getNewOriginFromFieldDetection_realWorldExample3_correctNewOrigin()
@@ -1308,4 +1354,5 @@ void FieldTest::getNewOriginFromFieldDetection_realWorldExample3_correctNewOrigi
 
 	Compare compare(0.5);
 	CPPUNIT_ASSERT(compare.isFuzzyEqual(RobotPosition(Point(0, 0), Angle()), resultOrigin));
+	CPPUNIT_ASSERT(false);
 }

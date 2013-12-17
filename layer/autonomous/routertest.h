@@ -86,6 +86,8 @@ namespace Autonomous
 		CPPUNIT_TEST(detectLoopInConsideredObstacles_somewhereInBetweenALoop_false);
 		CPPUNIT_TEST(detectLoopInConsideredObstacles_triedOnceLeftAndRightBesideSameObstacleDirectFollowed_true);
 		CPPUNIT_TEST(detectLoopInConsideredObstacles_triedOnceLeftAndRightBesideSameObstacle_true);
+		CPPUNIT_TEST(getPointsBesideObstacle_obstacleAtStart_resultSizeIs0);
+		CPPUNIT_TEST(getPointsBesideObstacle_obstacleAtEnd_resultSizeIs0);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
@@ -158,6 +160,8 @@ namespace Autonomous
 		void detectLoopInConsideredObstacles_somewhereInBetweenALoop_false();
 		void detectLoopInConsideredObstacles_triedOnceLeftAndRightBesideSameObstacleDirectFollowed_true();
 		void detectLoopInConsideredObstacles_triedOnceLeftAndRightBesideSameObstacle_true();
+		void getPointsBesideObstacle_obstacleAtStart_resultSizeIs0();
+		void getPointsBesideObstacle_obstacleAtEnd_resultSizeIs0();
 
 	private:
 		static bool routeIsInsideField(const Route &route, const Field &field);

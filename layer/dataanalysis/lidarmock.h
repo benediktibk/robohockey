@@ -22,6 +22,7 @@ namespace DataAnalysis
 		virtual bool isPuckCollected() const;
 		virtual Common::Angle getMaximumAngleRight() const;
 		virtual Common::Angle getMaximumAngleLeft() const;
+		virtual bool canBeSeen(const Common::Circle &object) const;
 
 		void setAllObjects(const LidarObjects &objects);
 		void setPuckCollected(bool value);
