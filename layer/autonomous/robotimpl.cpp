@@ -46,6 +46,7 @@ RobotImpl::~RobotImpl()
 
 void RobotImpl::goTo(const list<RobotPosition> &possibleTargets)
 {
+	assert(possibleTargets.size() > 0);
 	clearRoute();
 	changeIntoState(RobotStateDrivingTurningPart);
 	m_possibleTargets = possibleTargets;

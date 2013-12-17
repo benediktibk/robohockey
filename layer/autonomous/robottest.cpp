@@ -561,6 +561,22 @@ void RobotTest::goTo_twoTargetsAndOnlySecondOnePossible_canReachSecondTarget()
 	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(-5, 0), routePoints.back()));
 }
 
+void RobotTest::goTo_validTargets_watchGotCallToRestart()
+{
+	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
+	DataAnalysis::Odometry &odometry = dataAnalyser->getOdometry();
+	odometry.setCurrentPosition(RobotPosition(Point(0, 0), Angle(0)));
+	RobotImpl robot(dataAnalyser, new RouterImpl(0.5), m_watchMock);
+	FieldMock field;
+
+	robot.updateSensorData();
+	m_targets.push_back(RobotPosition(Point(10, 0), 0));
+	robot.goTo(m_targets);
+	robot.updateActuators(field);
+
+	CPPUNIT_ASSERT(m_watchMock->getCallsToGetTimeAndRestart() == 1);
+}
+
 void RobotTest::stuckAtObstacle_tryingToTackleObstacle_true()
 {
 	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
@@ -810,6 +826,21 @@ void RobotTest::turnToTarget_orientationReached_reachedTarget()
 	CPPUNIT_ASSERT(robot.reachedTarget());
 }
 
+void RobotTest::turnToTarget_validPoint_watchGotCallToRestart()
+{
+	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
+	DataAnalysis::Odometry &odometry = dataAnalyser->getOdometry();
+	odometry.setCurrentPosition(RobotPosition(Point(0, 0), Angle(0)));
+	RobotImpl robot(dataAnalyser, new RouterImpl(0.5), m_watchMock);
+	FieldMock field;
+
+	robot.updateSensorData();
+	robot.turnTo(Point(1, 1));
+	robot.updateActuators(field);
+
+	CPPUNIT_ASSERT(m_watchMock->getCallsToGetTimeAndRestart() == 1);
+}
+
 void RobotTest::updateActuators_notTryingToTackleObstacle_engineGotNoCallToStop()
 {
 	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
@@ -957,6 +988,21 @@ void RobotTest::turnAround_turnAroundDone_reachedTarget()
 	robot.updateActuators(field);
 
 	CPPUNIT_ASSERT(robot.reachedTarget());
+}
+
+void RobotTest::turnAround_empty_watchGotCallToRestart()
+{
+	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
+	DataAnalysis::Odometry &odometry = dataAnalyser->getOdometry();
+	odometry.setCurrentPosition(RobotPosition(Point(0, 0), Angle(0)));
+	RobotImpl robot(dataAnalyser, new RouterImpl(0.5), m_watchMock);
+	FieldMock field;
+
+	robot.updateSensorData();
+	robot.turnAround();
+	robot.updateActuators(field);
+
+	CPPUNIT_ASSERT(m_watchMock->getCallsToGetTimeAndRestart() == 1);
 }
 
 void RobotTest::getCurrentPosition_position3And4InOdometry_3And4()
@@ -1607,6 +1653,21 @@ void RobotTest::collectPuckInFront_orientationWrongAtBeginAndOrientationReached_
 	CPPUNIT_ASSERT(engine.getCallsToGoToStraightSlowly() == 1);
 }
 
+void RobotTest::collectPuckInFront_validPuck_watchGotCallToRestart()
+{
+	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
+	DataAnalysis::Odometry &odometry = dataAnalyser->getOdometry();
+	odometry.setCurrentPosition(RobotPosition(Point(0, 0), Angle(0)));
+	RobotImpl robot(dataAnalyser, new RouterImpl(0.5), m_watchMock);
+	FieldMock field;
+
+	robot.updateSensorData();
+	robot.collectPuckInFront(Point(0, 0.4));
+	robot.updateActuators(field);
+
+	CPPUNIT_ASSERT(m_watchMock->getCallsToGetTimeAndRestart() == 1);
+}
+
 void RobotTest::updatePuckPosition_newPositionOfPuck_goToStraightSlowlyCalledTwice()
 {
 	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
@@ -1647,6 +1708,21 @@ void RobotTest::leaveCollectedPuck_drivenFarEnoughBack_reachedTarget()
 	robot.updateActuators(field);
 
 	CPPUNIT_ASSERT(robot.reachedTarget());
+}
+
+void RobotTest::leaveCollectedPuck_empty_watchGotCallToRestart()
+{
+	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
+	DataAnalysis::Odometry &odometry = dataAnalyser->getOdometry();
+	odometry.setCurrentPosition(RobotPosition(Point(0, 0), Angle(0)));
+	RobotImpl robot(dataAnalyser, new RouterImpl(0.5), m_watchMock);
+	FieldMock field;
+
+	robot.updateSensorData();
+	robot.leaveCollectedPuck();
+	robot.updateActuators(field);
+
+	CPPUNIT_ASSERT(m_watchMock->getCallsToGetTimeAndRestart() == 1);
 }
 
 void RobotTest::isRotating_waiting_false()

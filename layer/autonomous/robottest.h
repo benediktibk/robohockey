@@ -44,6 +44,7 @@ namespace Autonomous
 		CPPUNIT_TEST(goTo_finalOrientationNotPossible_canReachTarget);
 		CPPUNIT_TEST(goTo_twoTargetsAndFirstOnePossible_canReachFirstTarget);
 		CPPUNIT_TEST(goTo_twoTargetsAndOnlySecondOnePossible_canReachSecondTarget);
+		CPPUNIT_TEST(goTo_validTargets_watchGotCallToRestart);
 		CPPUNIT_TEST(stuckAtObstacle_tryingToTackleObstacle_true);
 		CPPUNIT_TEST(stuckAtObstacle_notTryingToTackleObstacle_false);
 		CPPUNIT_TEST(stuckAtObstacle_updateCalledTwiceAfterStuckAtObstacle_true);
@@ -60,6 +61,7 @@ namespace Autonomous
 		CPPUNIT_TEST(stuckAtObstacle_empty_engineGotAtLeastOneCallToTryingToTackleObstacle);
 		CPPUNIT_TEST(turnToTarget_validPoint_engineGotAtLeastOneCallToTurnToTarget);
 		CPPUNIT_TEST(turnToTarget_orientationReached_reachedTarget);
+		CPPUNIT_TEST(turnToTarget_validPoint_watchGotCallToRestart);
 		CPPUNIT_TEST(updateActuators_notTryingToTackleObstacle_engineGotNoCallToStop);
 		CPPUNIT_TEST(updateActuators_tryingToTackleObstacle_engineGotAtLeastOneCallToStop);
 		CPPUNIT_TEST(updateActuators_tryingToTackleObstacle_targetNotReached);
@@ -69,6 +71,7 @@ namespace Autonomous
 		CPPUNIT_TEST(updateSensorData_0bstacleDirectInFront_engineGotNoCallToUnlockForwardMovement);
 		CPPUNIT_TEST(turnAround_empty_engineGotAtLeastOneCallToTurnAround);
 		CPPUNIT_TEST(turnAround_turnAroundDone_reachedTarget);
+		CPPUNIT_TEST(turnAround_empty_watchGotCallToRestart);
 		CPPUNIT_TEST(getCurrentPosition_position3And4InOdometry_3And4);
 		CPPUNIT_TEST(reachedTarget_nearlyHitTargetButTookSomeAdditionalWayToStop_false);
 		CPPUNIT_TEST(cantReachTarget_calledDirectAfterConstructor_false);
@@ -103,8 +106,10 @@ namespace Autonomous
 		CPPUNIT_TEST(collectPuckInFront_orientationWrongAtBegin_canReachTarget);
 		CPPUNIT_TEST(collectPuckInFront_orientationWrongAtBegin_engineGotCallToTurnTo);
 		CPPUNIT_TEST(collectPuckInFront_orientationWrongAtBeginAndOrientationReached_engineGotCallToGoToStraightSlowly);
+		CPPUNIT_TEST(collectPuckInFront_validPuck_watchGotCallToRestart);
 		CPPUNIT_TEST(updatePuckPosition_newPositionOfPuck_goToStraightSlowlyCalledTwice);
 		CPPUNIT_TEST(leaveCollectedPuck_drivenFarEnoughBack_reachedTarget);
+		CPPUNIT_TEST(leaveCollectedPuck_empty_watchGotCallToRestart);
 		CPPUNIT_TEST(isRotating_waiting_false);
 		CPPUNIT_TEST(isRotating_turnTo_true);
 		CPPUNIT_TEST(isRotating_turnAround_true);
@@ -139,6 +144,7 @@ namespace Autonomous
 		void goTo_finalOrientationNotPossible_canReachTarget();
 		void goTo_twoTargetsAndFirstOnePossible_canReachFirstTarget();
 		void goTo_twoTargetsAndOnlySecondOnePossible_canReachSecondTarget();
+		void goTo_validTargets_watchGotCallToRestart();
 		void stuckAtObstacle_tryingToTackleObstacle_true();
 		void stuckAtObstacle_notTryingToTackleObstacle_false();
 		void stuckAtObstacle_updateCalledTwiceAfterStuckAtObstacle_true();
@@ -155,6 +161,7 @@ namespace Autonomous
 		void stuckAtObstacle_empty_engineGotAtLeastOneCallToTryingToTackleObstacle();
 		void turnToTarget_validPoint_engineGotAtLeastOneCallToTurnToTarget();
 		void turnToTarget_orientationReached_reachedTarget();
+		void turnToTarget_validPoint_watchGotCallToRestart();
 		void updateActuators_notTryingToTackleObstacle_engineGotNoCallToStop();
 		void updateActuators_tryingToTackleObstacle_engineGotAtLeastOneCallToStop();
 		void updateActuators_tryingToTackleObstacle_targetNotReached();
@@ -164,6 +171,7 @@ namespace Autonomous
 		void updateSensorData_0bstacleDirectInFront_engineGotNoCallToUnlockForwardMovement();
 		void turnAround_empty_engineGotAtLeastOneCallToTurnAround();
 		void turnAround_turnAroundDone_reachedTarget();
+		void turnAround_empty_watchGotCallToRestart();
 		void getCurrentPosition_position3And4InOdometry_3And4();
 		void reachedTarget_nearlyHitTargetButTookSomeAdditionalWayToStop_false();
 		void cantReachTarget_calledDirectAfterConstructor_false();
@@ -198,8 +206,10 @@ namespace Autonomous
 		void collectPuckInFront_orientationWrongAtBegin_canReachTarget();
 		void collectPuckInFront_orientationWrongAtBegin_engineGotCallToTurnTo();
 		void collectPuckInFront_orientationWrongAtBeginAndOrientationReached_engineGotCallToGoToStraightSlowly();
+		void collectPuckInFront_validPuck_watchGotCallToRestart();
 		void updatePuckPosition_newPositionOfPuck_goToStraightSlowlyCalledTwice();
 		void leaveCollectedPuck_drivenFarEnoughBack_reachedTarget();
+		void leaveCollectedPuck_empty_watchGotCallToRestart();
 		void isRotating_waiting_false();
 		void isRotating_turnTo_true();
 		void isRotating_turnAround_true();
