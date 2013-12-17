@@ -7,7 +7,8 @@ using namespace RoboHockey::Common;
 LidarMock::LidarMock() :
 	m_objects(Point()),
 	m_puckCollected(false),
-	m_puckCollectable(false)
+	m_puckCollectable(false),
+	m_canBeSeen(true)
 { }
 
 LidarObjects LidarMock::getAllObjects(const RobotPosition &) const
@@ -43,9 +44,9 @@ Angle LidarMock::getMaximumAngleLeft() const
 	return Angle::getQuarterRotation();
 }
 
-bool LidarMock::canBeSeen(const Circle &) const
+bool LidarMock::canBeSeen(const Circle &, const RobotPosition &) const
 {
-	return true;
+	return m_canBeSeen;
 }
 
 void LidarMock::setAllObjects(const LidarObjects &objects)
@@ -61,4 +62,9 @@ void LidarMock::setPuckCollected(bool value)
 void LidarMock::setPuckCollectable(bool value)
 {
 	m_puckCollectable = value;
+}
+
+void LidarMock::setCanBeSeen(bool value)
+{
+	m_canBeSeen = value;
 }

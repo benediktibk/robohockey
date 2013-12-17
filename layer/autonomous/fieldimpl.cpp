@@ -49,8 +49,8 @@ void FieldImpl::update()
 	else
 		updateWithLidarData(1.0);
 
-    updateAchievedGoals();
-    updateHiddenPucks();
+	updateAchievedGoals();
+	updateHiddenPucks();
 }
 
 const vector<FieldObject> &FieldImpl::getAllFieldObjects() const
@@ -111,15 +111,15 @@ bool FieldImpl::isCalibrated() const
 
 FieldColor FieldImpl::getOwnTeamColor() const
 {
-    return m_teamColor;
+	return m_teamColor;
 }
 
 FieldColor FieldImpl::getEnemyTeamColor() const
 {
-    if (m_teamColor == FieldColorYellow)
-        return FieldColorBlue;
-    else
-        return FieldColorYellow;
+	if (m_teamColor == FieldColorYellow)
+		return FieldColorBlue;
+	else
+		return FieldColorYellow;
 }
 
 void FieldImpl::detectTeamColorWithGoalInFront()
@@ -255,7 +255,7 @@ void FieldImpl::updateWithLidarData(double range)
 	const DataAnalysis::LidarObjects &lidarObjects =  m_lidar->getAllObjects(*m_position);
 	const vector<DataAnalysis::LidarObject> &objectsInRange = lidarObjects.getObjectsWithDistanceBelow(range);
 
-	vector<FieldObject> inVisibleArea = moveAllFieldObjectsInVisibleAreaToTemporaryVector();
+	vector<FieldObject> inVisibleArea = moveAllFieldObjectsInVisibleAreaToTemporaryVector(range);
 
 	for (vector<DataAnalysis::LidarObject>::const_iterator i = objectsInRange.begin(); i != objectsInRange.end(); ++i)
 	{
@@ -369,16 +369,16 @@ void FieldImpl::updateHiddenPucks()
 {
 	Rectangle hiddenArea(Point(3.334, 0), Point(5, 3));
 
-    m_hiddenPucks = 0;
-    if(m_fieldObjects.size() != 0)
-    {
-        for (vector<FieldObject>::const_iterator i = m_fieldObjects.begin(); i != m_fieldObjects.end(); ++i)
-        {
-            const FieldObject &fieldObject = *i;
+	m_hiddenPucks = 0;
+	if(m_fieldObjects.size() != 0)
+	{
+		for (vector<FieldObject>::const_iterator i = m_fieldObjects.begin(); i != m_fieldObjects.end(); ++i)
+		{
+			const FieldObject &fieldObject = *i;
 
-            if (fieldObject.getColor() == getEnemyTeamColor() && hiddenArea.isInside(fieldObject.getCircle().getCenter(), 0.001))
-                m_hiddenPucks++;
-        }
+			if (fieldObject.getColor() == getEnemyTeamColor() && hiddenArea.isInside(fieldObject.getCircle().getCenter(), 0.001))
+				m_hiddenPucks++;
+		}
 	}
 }
 
@@ -513,19 +513,24 @@ vector<FieldObject> FieldImpl::getObjectsWithColor(FieldColor color) const
 	return result;
 }
 
-vector<FieldObject> FieldImpl::moveAllFieldObjectsInVisibleAreaToTemporaryVector()
+vector<FieldObject> FieldImpl::moveAllFieldObjectsInVisibleAreaToTemporaryVector(double range)
 {
 	vector<FieldObject> result;
+	const RobotPosition &ownPosition = m_odometry->getCurrentPosition();
 	size_t i = 0;
+
 	while(i < m_fieldObjects.size())
 	{
 		vector<FieldObject>::iterator it = m_fieldObjects.begin() + i;
-		if (m_lidar->canBeSeen(m_fieldObjects[i].getCircle()))
+		const Circle &circle = m_fieldObjects[i].getCircle();
+
+		if (m_lidar->canBeSeen(circle, ownPosition) && m_position->getPosition().distanceTo(circle.getCenter()) < range)
 		{
 			result.push_back(*it);
 			m_fieldObjects.erase(it);
 			--i;
 		}
+
 		++i;
 	}
 	return result;
@@ -540,7 +545,7 @@ bool FieldImpl::isPointFuzzyInsideField(const Point &point, double epsilon) cons
 }
 
 void FieldImpl::removeAllFieldObjectsOutsideOfField()
-{	
+{
 	size_t i = 0;
 	while(i < m_fieldObjects.size())
 	{

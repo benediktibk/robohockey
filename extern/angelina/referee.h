@@ -97,7 +97,7 @@ namespace Angelina
 		void abValues(double a, double b);
 
 		//! Gibt euch die richtige Teamfarbe.
-		void trueColorOfTeam(TeamColor color);
+		void trueColorOfTeam(Extern::Angelina::TeamColor color);
 
 		//! Roboter muss seine Bewegung sofort stoppen
 		void stopMovement();
