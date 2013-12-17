@@ -22,7 +22,7 @@ RobotImpl::RobotImpl(DataAnalysis::DataAnalyser *dataAnalyser, Router *router, W
 	m_robotWidth(0.38),
 	m_maximumDistanceToCollectPuck(0.75),
 	m_maximumAngleToCollectPuck(10.0/180*M_PI),
-	m_timeout(30),
+	m_timeout(50),
 	m_dataAnalyser(dataAnalyser),
 	m_router(router),
 	m_watch(watch),
