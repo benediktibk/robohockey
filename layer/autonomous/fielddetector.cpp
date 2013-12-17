@@ -34,8 +34,10 @@ bool FieldDetector::tryToDetectField()
 
 		if (numberOfFoundBorderStones > 2)
 		{
-			if (tryToFigureOutNewOrigin(root))
-				result = true;
+				result = tryToFigureOutNewOrigin(root);
+
+				if (result)
+					return true;
 		}
 
 	}
@@ -54,7 +56,7 @@ Point FieldDetector::getNewOrigin()
 	for (vector<RobotPosition>::const_iterator it = m_newOrigins.begin(); it != m_newOrigins.end(); ++it)
 		medianPoint = medianPoint + (*it).getPosition() * 1.0/(double) m_newOrigins.size();
 
-	return medianPoint;
+//	return medianPoint;
 	return m_newOrigin;
 }
 
@@ -67,7 +69,7 @@ double FieldDetector::getRotation()
 	for (vector<RobotPosition>::const_iterator it = m_newOrigins.begin(); it != m_newOrigins.end(); ++it)
 		medianRotation = medianRotation + (*it).getOrientation() * 1.0/(double) m_newOrigins.size();
 
-	return medianRotation.getValueBetweenMinusPiAndPi();
+//	return medianRotation.getValueBetweenMinusPiAndPi();
 	return m_rotation;
 }
 

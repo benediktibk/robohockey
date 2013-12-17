@@ -1029,9 +1029,10 @@ void FieldTest::getNewOriginFromFieldDetection_realWorldExample1_correctNewOrigi
 	dataAnalyser.updateSensorData();
 
 	field.update();
+	RobotPosition resultOrigin = field.getNewOriginFromFieldDetection();
 
 	Compare compare(0.5);
-	CPPUNIT_ASSERT(compare.isFuzzyEqual(RobotPosition(Point(0, 0), Angle()), field.getNewOriginFromFieldDetection()));
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(RobotPosition(Point(0, 0), Angle()), resultOrigin));
 }
 
 void FieldTest::getNewOriginFromFieldDetection_realWorldExample2_correctNewOrigin()
@@ -1046,9 +1047,10 @@ void FieldTest::getNewOriginFromFieldDetection_realWorldExample2_correctNewOrigi
 	dataAnalyser.updateSensorData();
 
 	field.update();
+	RobotPosition resultOrigin = field.getNewOriginFromFieldDetection();
 
 	Compare compare(0.5);
-	CPPUNIT_ASSERT(compare.isFuzzyEqual(RobotPosition(Point(0, 0), Angle()), field.getNewOriginFromFieldDetection()));
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(RobotPosition(Point(0, 0), Angle()), resultOrigin));
 }
 
 void FieldTest::getNewOriginFromFieldDetection_realWorldExample3_correctNewOrigin()
@@ -1063,7 +1065,8 @@ void FieldTest::getNewOriginFromFieldDetection_realWorldExample3_correctNewOrigi
 	dataAnalyser.updateSensorData();
 
 	field.update();
+	RobotPosition resultOrigin = field.getNewOriginFromFieldDetection();
 
 	Compare compare(0.5);
-	CPPUNIT_ASSERT(compare.isFuzzyEqual(RobotPosition(Point(0, 0), Angle()), field.getNewOriginFromFieldDetection()));
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(RobotPosition(Point(0, 0), Angle()), resultOrigin));
 }
