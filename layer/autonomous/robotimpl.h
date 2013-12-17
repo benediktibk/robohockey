@@ -72,6 +72,7 @@ namespace Autonomous
 		bool enableCollisionDetectionWithSonar() const;
 		void changeIntoState(RobotState state);
 		bool isCurrentTargetPuckCollectable() const;
+		bool checkTimeout();
 
 	private:
 		// forbid copies
@@ -82,6 +83,7 @@ namespace Autonomous
 		const double m_robotWidth;
 		const double m_maximumDistanceToCollectPuck;
 		const Common::Angle m_maximumAngleToCollectPuck;
+		const double m_timeout;
 		DataAnalysis::DataAnalyser *m_dataAnalyser;
 		Router *m_router;
 		Common::Watch *m_watch;

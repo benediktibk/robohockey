@@ -22,6 +22,7 @@ RobotImpl::RobotImpl(DataAnalysis::DataAnalyser *dataAnalyser, Router *router, W
 	m_robotWidth(0.38),
 	m_maximumDistanceToCollectPuck(0.75),
 	m_maximumAngleToCollectPuck(10.0/180*M_PI),
+	m_timeout(30),
 	m_dataAnalyser(dataAnalyser),
 	m_router(router),
 	m_watch(watch),
@@ -51,12 +52,14 @@ void RobotImpl::goTo(const list<RobotPosition> &possibleTargets)
 	changeIntoState(RobotStateDrivingTurningPart);
 	m_possibleTargets = possibleTargets;
 	m_currentTarget = m_possibleTargets.front();
+	m_watch->getTimeAndRestart();
 }
 
 void RobotImpl::turnTo(const Point &position)
 {
 	changeIntoState(RobotStateTurnTo);
 	m_currentTarget.setPosition(position);
+	m_watch->getTimeAndRestart();
 }
 
 bool RobotImpl::stuckAtObstacle()
@@ -71,6 +74,9 @@ bool RobotImpl::reachedTarget()
 
 void RobotImpl::updateEngineForDrivingStraightPart(const Field &field)
 {
+	if (checkTimeout())
+		return;
+
 	DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
 	bool routeChanged = updateRoute(field);
 
@@ -104,6 +110,9 @@ void RobotImpl::updateEngineForDrivingStraightPart(const Field &field)
 
 void RobotImpl::updateEngineForDrivingTurningPart(const Field &field)
 {
+	if (checkTimeout())
+		return;
+
 	DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
 	bool routeChanged = updateRoute(field);
 
@@ -134,6 +143,9 @@ void RobotImpl::updateEngineForWaiting()
 
 void RobotImpl::updateEngineForCollectingPuck()
 {
+	if (checkTimeout())
+		return;
+
 	DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
 	const DataAnalysis::Lidar &lidar = m_dataAnalyser->getLidar();
 	Point currentPosition = getCurrentPosition().getPosition();
@@ -177,6 +189,9 @@ void RobotImpl::updateEngineForCollectingPuck()
 
 void RobotImpl::updateEngineForLeavingPuck()
 {
+	if (checkTimeout())
+		return;
+
 	DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
 
 	if (m_stateChanged)
@@ -193,6 +208,9 @@ void RobotImpl::updateEngineForLeavingPuck()
 
 void RobotImpl::updateEngineForTurnAround()
 {
+	if (checkTimeout())
+		return;
+
 	DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
 
 	if (m_stateChanged)
@@ -203,6 +221,9 @@ void RobotImpl::updateEngineForTurnAround()
 
 void RobotImpl::updateEngineForTurnTo()
 {
+	if (checkTimeout())
+		return;
+
 	DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
 
 	if (m_stateChanged)
@@ -305,6 +326,18 @@ bool RobotImpl::isCurrentTargetPuckCollectable() const
 			orientationDifference.getValueBetweenMinusPiAndPi() < m_maximumAngleToCollectPuck.getValueBetweenMinusPiAndPi();
 }
 
+bool RobotImpl::checkTimeout()
+{
+	if (m_watch->getTime() > m_timeout)
+	{
+		stop();
+		m_cantReachTarget = true;
+		return true;
+	}
+	else
+		return false;
+}
+
 void RobotImpl::updateActuators(const Field &field)
 {
 	detectCollisions();
@@ -339,6 +372,7 @@ void RobotImpl::collectPuckInFront(const Point &puckPosition)
 	changeIntoState(RobotStateCollectingPuck);
 	m_currentTarget.setPosition(puckPosition);
 	m_startPosition = getCurrentPosition().getPosition();
+	m_watch->getTimeAndRestart();
 }
 
 void RobotImpl::updatePuckPosition(const Point &puckPosition)
@@ -351,6 +385,7 @@ void RobotImpl::updatePuckPosition(const Point &puckPosition)
 void RobotImpl::leaveCollectedPuck()
 {
 	changeIntoState(RobotStateLeavingPuck);
+	m_watch->getTimeAndRestart();
 }
 
 bool RobotImpl::isMoving() const
@@ -361,6 +396,7 @@ bool RobotImpl::isMoving() const
 void RobotImpl::turnAround()
 {
 	changeIntoState(RobotStateTurnAround);
+	m_watch->getTimeAndRestart();
 }
 
 RobotPosition RobotImpl::getCurrentPosition() const
@@ -518,7 +554,8 @@ bool RobotImpl::isRouteFeasible(const vector<Circle> &obstacles) const
 RobotImpl::RobotImpl(const RobotImpl &) :
 	m_robotWidth(0),
 	m_maximumDistanceToCollectPuck(0),
-	m_maximumAngleToCollectPuck(0)
+	m_maximumAngleToCollectPuck(0),
+	m_timeout(0)
 { }
 
 void RobotImpl::operator=(const RobotImpl &)
