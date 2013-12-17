@@ -51,5 +51,5 @@ void DriveTo::update()
 {
 	//! @todo robot.goTo() should get a list of targets, when it can handle a list of targets.
 	m_targetSet = true;
-	m_robot.goTo(m_target.front());
+	m_robot.goTo(m_target);
 }

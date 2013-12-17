@@ -34,8 +34,10 @@ bool FieldDetector::tryToDetectField()
 
 		if (numberOfFoundBorderStones > 2)
 		{
-			if (tryToFigureOutNewOrigin(root))
-				result = true;
+				result = tryToFigureOutNewOrigin(root);
+
+//				if (result)
+//					return true;
 		}
 
 	}

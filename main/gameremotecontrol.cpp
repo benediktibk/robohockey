@@ -87,7 +87,9 @@ void GameRemoteControl::executeRobotControl()
 			m_model->setTargetPoints(targetsWithoutFirstOne);
 			m_lastTarget = targets.front();
 			Angle finalOrientation(positionAndOrientation.getPosition(), m_lastTarget);
-			robot.goTo(RobotPosition(m_lastTarget, finalOrientation));
+			list<RobotPosition> targets;
+			targets.push_back(RobotPosition(m_lastTarget, finalOrientation));
+			robot.goTo(targets);
 		}
 	}
 	else
