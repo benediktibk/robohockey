@@ -311,7 +311,6 @@ void RobotTest::goTo_firstPointReached_lastArgumentOfTurnToIsTargetPoint()
 
 void RobotTest::goTo_firstPointAndRotationReached_engineGotOneCallToGoToStraight()
 {
-
 	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
 	DataAnalysis::Odometry &odometry = dataAnalyser->getOdometry();
 	DataAnalysis::EngineMock &engine = dataAnalyser->getEngineMock();
@@ -344,6 +343,75 @@ void RobotTest::goTo_firstPointAndRotationReached_engineGotOneCallToGoToStraight
 	Compare compare(0.00001);
 	CPPUNIT_ASSERT(engine.getCallsToGoToStraight() > 0);
 	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(1, 1), engine.getLastTarget()));
+}
+
+void RobotTest::goTo_finalPointReached_engineGotOneCallToTurnTo()
+{
+	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
+	DataAnalysis::Odometry &odometry = dataAnalyser->getOdometry();
+	DataAnalysis::EngineMock &engine = dataAnalyser->getEngineMock();
+	odometry.setCurrentPosition(RobotPosition(Point(0, 0), 0));
+	RobotImpl robot(dataAnalyser, m_routerMock);
+	FieldMock field;
+
+	engine.setReachedTarget(false);
+	robot.updateSensorData();
+	robot.goTo(RobotPosition(Point(1, 1), Angle::getQuarterRotation()));
+	robot.updateActuators(field);
+	engine.setIsGoingStraight(false);
+	engine.setReachedTarget(true);
+	odometry.setCurrentPosition(RobotPosition(Point(0, 0), Angle::getEighthRotation()));
+	robot.updateSensorData();
+	robot.updateActuators(field);
+	engine.setReachedTarget(false);
+	engine.setIsGoingStraight(true);
+	robot.updateSensorData();
+	robot.updateActuators(field);
+	odometry.setCurrentPosition(RobotPosition(Point(1, 1), Angle::getEighthRotation()));
+	engine.setReachedTarget(true);
+	engine.setIsGoingStraight(false);
+	engine.resetCounters();
+	robot.updateSensorData();
+	robot.updateActuators(field);
+
+	CPPUNIT_ASSERT(engine.getCallsToTurnToTarget() > 0);
+}
+
+void RobotTest::goTo_finalOrientationReached_engineGotOneCallToStop()
+{
+	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
+	DataAnalysis::Odometry &odometry = dataAnalyser->getOdometry();
+	DataAnalysis::EngineMock &engine = dataAnalyser->getEngineMock();
+	odometry.setCurrentPosition(RobotPosition(Point(0, 0), 0));
+	RobotImpl robot(dataAnalyser, m_routerMock);
+	FieldMock field;
+
+	engine.setReachedTarget(false);
+	robot.updateSensorData();
+	robot.goTo(RobotPosition(Point(1, 1), Angle::getQuarterRotation()));
+	robot.updateActuators(field);
+	engine.setIsGoingStraight(false);
+	engine.setReachedTarget(true);
+	odometry.setCurrentPosition(RobotPosition(Point(0, 0), Angle::getEighthRotation()));
+	robot.updateSensorData();
+	robot.updateActuators(field);
+	engine.setReachedTarget(false);
+	engine.setIsGoingStraight(true);
+	robot.updateSensorData();
+	robot.updateActuators(field);
+	odometry.setCurrentPosition(RobotPosition(Point(1, 1), Angle::getEighthRotation()));
+	engine.setReachedTarget(true);
+	engine.setIsGoingStraight(false);
+	robot.updateSensorData();
+	robot.updateActuators(field);
+	odometry.setCurrentPosition(RobotPosition(Point(1, 1), Angle::getQuarterRotation()));
+	engine.setReachedTarget(true);
+	engine.setIsGoingStraight(false);
+	engine.resetCounters();
+	robot.updateSensorData();
+	robot.updateActuators(field);
+
+	CPPUNIT_ASSERT(engine.getCallsToStop() > 0);
 }
 
 void RobotTest::stuckAtObstacle_tryingToTackleObstacle_true()
