@@ -293,6 +293,31 @@ void FieldTest::update_oneObjectAndZeroObjectsInGoal_ZeroAchievedGoals()
     CPPUNIT_ASSERT_EQUAL((unsigned int)0, field.getNumberOfAchievedGoals());
 }
 
+void FieldTest::update_threeObjectsAndTwoObjectsHidden_twoHiddenPucks()
+{
+    DataAnalysis::OdometryMock odometry;
+    DataAnalysis::LidarMock lidar;
+    DataAnalysis::CameraMock camera;
+    Autonomous::RobotMock autonomousRobot;
+    FieldImpl field(odometry, lidar, camera, autonomousRobot);
+
+    field.setTrueTeamColor(FieldColorBlue);
+    DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
+    lidarObjects.addObject(DataAnalysis::LidarObject(Point(3.35, 0.1), 0.1));
+    lidarObjects.addObject(DataAnalysis::LidarObject(Point(4, 2.8), 0.1));
+    lidarObjects.addObject(DataAnalysis::LidarObject(Point(0, 1.8), 0.1));
+    lidar.setAllObjects(lidarObjects);
+    DataAnalysis::CameraObjects cameraObjects;
+    cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(3.35, 0.1)));
+    cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(4, 2.8)));
+    cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(0, 1.8)));
+    camera.setAllObjects(cameraObjects);
+
+    field.update();
+
+    CPPUNIT_ASSERT_EQUAL((unsigned int)2, field.getNumberOfHiddenPucks());
+}
+
 void FieldTest::calibratePosition_noValidPattern_false()
 {
 	DataAnalysis::OdometryMock odometry;
