@@ -504,31 +504,6 @@ void FieldTest::update_fourObjectsAndThreeObjectsHidden_threeHiddenPucks()
 	CPPUNIT_ASSERT_EQUAL((unsigned int)3, field.getNumberOfHiddenPucks());
 }
 
-void FieldTest::update_oneObjectInFrontOfLidarOneBehindOneOnLeftSide_threeObjects()
-{
-	DataAnalysis::OdometryMock odometry;
-	DataAnalysis::LidarMock lidar;
-	DataAnalysis::CameraMock camera;
-	Autonomous::RobotMock autonomousRobot;
-	FieldImpl field(odometry, lidar, camera, autonomousRobot);
-
-	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
-	lidarObjects.addObject(DataAnalysis::LidarObject(Point(3, 0), 0.1));
-	lidarObjects.addObject(DataAnalysis::LidarObject(Point(0.5, 5), 0.15));
-
-	lidar.setAllObjects(lidarObjects);
-
-	field.update();
-
-	CPPUNIT_ASSERT_EQUAL((size_t)2, field.getAllFieldObjects().size());
-
-	DataAnalysis::LidarObjects lidarObjects2(Point(0, 0));
-	lidarObjects2.addObject(DataAnalysis::LidarObject(Point(1, 0), 1));
-	lidarObjects2.addObject(DataAnalysis::LidarObject(Point(0.5, 5), 0.15));
-
-	CPPUNIT_ASSERT_EQUAL((size_t)3, field.getAllFieldObjects().size());
-}
-
 void FieldTest::calibratePosition_noValidPattern_false()
 {
 	DataAnalysis::OdometryMock odometry;
