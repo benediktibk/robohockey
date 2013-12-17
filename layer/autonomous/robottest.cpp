@@ -511,6 +511,53 @@ void RobotTest::goTo_finalOrientationNotPossible_canReachTarget()
 	CPPUNIT_ASSERT(!robot.cantReachTarget());
 }
 
+void RobotTest::goTo_twoTargetsAndFirstOnePossible_canReachFirstTarget()
+{
+	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
+	DataAnalysis::Odometry &odometry = dataAnalyser->getOdometry();
+	odometry.setCurrentPosition(RobotPosition(Point(0, 0), Angle(0)));
+	RobotImpl robot(dataAnalyser, new RouterImpl(0.5));
+	FieldMock field;
+	field.setNegativeCoordinatesOutside(false);
+
+	robot.updateSensorData();
+	m_targets.push_back(RobotPosition(Point(10, 0), Angle::getHalfRotation()));
+	m_targets.push_back(RobotPosition(Point(-5, 0), Angle::getHalfRotation()));
+	robot.goTo(m_targets);
+	robot.updateActuators(field);
+
+	CPPUNIT_ASSERT(!robot.cantReachTarget());
+	list<Point> routePoints = robot.getAllRoutePoints();
+	CPPUNIT_ASSERT_EQUAL((size_t)2, routePoints.size());
+	Compare compare(0.0001);
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(10, 0), routePoints.back()));
+}
+
+void RobotTest::goTo_twoTargetsAndOnlySecondOnePossible_canReachSecondTarget()
+{
+	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
+	DataAnalysis::Odometry &odometry = dataAnalyser->getOdometry();
+	odometry.setCurrentPosition(RobotPosition(Point(0, 0), Angle(0)));
+	RobotImpl robot(dataAnalyser, new RouterImpl(0.5));
+	FieldMock field;
+	field.setNegativeCoordinatesOutside(false);
+	vector<Circle> obstacles;
+	obstacles.push_back(Circle(Point(10, 0), 1));
+	field.setSoftObstacles(obstacles);
+
+	robot.updateSensorData();
+	m_targets.push_back(RobotPosition(Point(10, 0), Angle::getHalfRotation()));
+	m_targets.push_back(RobotPosition(Point(-5, 0), Angle::getHalfRotation()));
+	robot.goTo(m_targets);
+	robot.updateActuators(field);
+
+	CPPUNIT_ASSERT(!robot.cantReachTarget());
+	list<Point> routePoints = robot.getAllRoutePoints();
+	CPPUNIT_ASSERT_EQUAL((size_t)2, routePoints.size());
+	Compare compare(0.0001);
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(-5, 0), routePoints.back()));
+}
+
 void RobotTest::stuckAtObstacle_tryingToTackleObstacle_true()
 {
 	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
