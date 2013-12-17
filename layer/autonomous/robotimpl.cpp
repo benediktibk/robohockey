@@ -40,11 +40,12 @@ RobotImpl::~RobotImpl()
 	clearRoute();
 }
 
-void RobotImpl::goTo(const RobotPosition &position)
+void RobotImpl::goTo(const list<RobotPosition> &possibleTargets)
 {
 	clearRoute();
 	changeIntoState(RobotStateDrivingTurningPart);
-	m_currentTarget = position;
+	m_possibleTargets = possibleTargets;
+	m_currentTarget = m_possibleTargets.front();
 }
 
 void RobotImpl::turnTo(const Point &position)
@@ -432,20 +433,11 @@ void RobotImpl::clearRoute()
 	m_currentRoute = 0;
 }
 
-bool RobotImpl::updateRoute(const Field &field)
+bool RobotImpl::updateRouteForTarget(
+		const Field &field, const Common::RobotPosition &target,
+		const vector<Circle> &obstacles, bool ignoreSoftObstacles, bool ignoreFinalOrientation)
 {
 	const RobotPosition robotPosition = getCurrentPosition();
-	vector<Circle> softObstacles = field.getAllSoftObstacles();
-	vector<Circle> hardObstacles = field.getAllHardObstacles();
-	vector<Circle> allObstacles = m_router->filterObstacles(softObstacles, hardObstacles, robotPosition.getPosition());
-
-	if (	(m_ignoringSoftObstacles && isRouteFeasible(softObstacles)) ||
-			(!m_ignoringSoftObstacles && isRouteFeasible(allObstacles)))
-		return false;
-
-	//! If the current route is not feasible anymore we try to create a new one.
-	clearRoute();
-	m_currentRoute = new Route(m_robotWidth);
 	Angle maximumRotation = Angle::getHalfRotation();
 	double minimumStepAfterMaximumRotation = 0.1;
 
@@ -454,28 +446,56 @@ bool RobotImpl::updateRoute(const Field &field)
 
 	m_ignoringSoftObstacles = false;
 	*m_currentRoute = m_router->calculateRoute(
-				robotPosition, m_currentTarget, field, maximumRotation,
-				minimumStepAfterMaximumRotation, m_ignoringSoftObstacles, false);
+				robotPosition, target, field, maximumRotation,
+				minimumStepAfterMaximumRotation, ignoreSoftObstacles, ignoreFinalOrientation);
 
-	if (isRouteFeasible(allObstacles))
+	return isRouteFeasible(obstacles);
+}
+
+bool RobotImpl::updateRoute(const Field &field)
+{
+	const RobotPosition robotPosition = getCurrentPosition();
+	const vector<Circle> softObstacles = field.getAllSoftObstacles();
+	const vector<Circle> hardObstacles = field.getAllHardObstacles();
+	const vector<Circle> allObstacles = m_router->filterObstacles(softObstacles, hardObstacles, robotPosition.getPosition());
+
+	if (	(m_ignoringSoftObstacles && isRouteFeasible(softObstacles)) ||
+			(!m_ignoringSoftObstacles && isRouteFeasible(allObstacles)))
+		return false;
+
+	//! If the current route is not feasible anymore we try to create a new one.
+	clearRoute();
+	m_currentRoute = new Route(m_robotWidth);
+	bool success = false;
+
+	m_ignoringSoftObstacles = false;
+	for (list<RobotPosition>::const_iterator i = m_possibleTargets.begin(); i != m_possibleTargets.end() && !success; ++i)
+	{
+		m_currentTarget = *i;
+		success = updateRouteForTarget(field, m_currentTarget, allObstacles, m_ignoringSoftObstacles, false);
+	}
+
+	if (success)
 		return true;
 
 	m_ignoringSoftObstacles = true;
-	allObstacles = hardObstacles;
-	*m_currentRoute = m_router->calculateRoute(
-				robotPosition, m_currentTarget, field, maximumRotation,
-				minimumStepAfterMaximumRotation, m_ignoringSoftObstacles, false);
+	for (list<RobotPosition>::const_iterator i = m_possibleTargets.begin(); i != m_possibleTargets.end() && !success; ++i)
+	{
+		m_currentTarget = *i;
+		success = updateRouteForTarget(field, m_currentTarget, hardObstacles, m_ignoringSoftObstacles, false);
+	}
 
-	if (isRouteFeasible(allObstacles))
+	if (success)
 		return true;
 
 	m_ignoringSoftObstacles = true;
-	allObstacles = hardObstacles;
-	*m_currentRoute = m_router->calculateRoute(
-				robotPosition, m_currentTarget, field, maximumRotation,
-				minimumStepAfterMaximumRotation, m_ignoringSoftObstacles, true);
+	for (list<RobotPosition>::const_iterator i = m_possibleTargets.begin(); i != m_possibleTargets.end() && !success; ++i)
+	{
+		m_currentTarget = *i;
+		success = updateRouteForTarget(field, m_currentTarget, hardObstacles, m_ignoringSoftObstacles, true);
+	}
 
-	if (!isRouteFeasible(allObstacles))
+	if (!success)
 		clearRoute();
 
 	return true;

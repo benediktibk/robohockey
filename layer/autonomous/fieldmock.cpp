@@ -94,7 +94,15 @@ bool FieldMock::isCalibrated() const
 
 FieldColor FieldMock::getOwnTeamColor() const
 {
-	return m_teamColor;
+    return m_teamColor;
+}
+
+FieldColor FieldMock::getEnemyTeamColor() const
+{
+    if (m_teamColor == FieldColorYellow)
+        return FieldColorBlue;
+    else
+        return FieldColorYellow;
 }
 
 void FieldMock::detectTeamColorWithGoalInFront()

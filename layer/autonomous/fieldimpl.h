@@ -52,6 +52,7 @@ namespace Autonomous
 		virtual bool numberOfPucksChanged() const;
 		virtual bool isCalibrated() const;
 		virtual Common::FieldColor getOwnTeamColor() const;
+        virtual Common::FieldColor getEnemyTeamColor() const;
 		virtual void detectTeamColorWithGoalInFront();
 		virtual std::list<Common::RobotPosition> getTargetsForGoalDetection() const;
 		virtual std::list<Common::RobotPosition> getTargetsForScoringGoals() const;
@@ -69,6 +70,7 @@ namespace Autonomous
 		void updateWithCameraData();
 		void updateObstacles();
         void updateAchievedGoals();
+        void updateHiddenPucks();
 
 		FieldObject& getNextObjectFromPosition(Common::Point position);
 		std::vector<FieldObject>::iterator getNextObjectFromPosition(std::vector<FieldObject> &fieldObjects, Common::Point position);

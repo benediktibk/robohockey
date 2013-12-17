@@ -26,7 +26,7 @@ namespace Autonomous
 	public:
 		virtual ~Robot() { }
 
-		virtual void goTo(const Common::RobotPosition &position) = 0;
+		virtual void goTo(const std::list<Common::RobotPosition> &possibleTargets) = 0;
 		virtual void turnTo(const Common::Point &position) = 0;
 		virtual bool stuckAtObstacle() = 0;
 		virtual bool reachedTarget() = 0;

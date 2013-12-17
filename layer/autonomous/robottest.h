@@ -3,6 +3,8 @@
 
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
+#include <list>
+#include "common/robotposition.h"
 
 namespace RoboHockey
 {
@@ -35,6 +37,8 @@ namespace Autonomous
 		CPPUNIT_TEST(goTo_surroundedBySoftObstacles_canReachTarget);
 		CPPUNIT_TEST(goTo_surroundedByHardObstacles_cantReachTarget);
 		CPPUNIT_TEST(goTo_finalOrientationNotPossible_canReachTarget);
+		CPPUNIT_TEST(goTo_twoTargetsAndFirstOnePossible_canReachFirstTarget);
+		CPPUNIT_TEST(goTo_twoTargetsAndOnlySecondOnePossible_canReachSecondTarget);
 		CPPUNIT_TEST(stuckAtObstacle_tryingToTackleObstacle_true);
 		CPPUNIT_TEST(stuckAtObstacle_notTryingToTackleObstacle_false);
 		CPPUNIT_TEST(stuckAtObstacle_updateCalledTwiceAfterStuckAtObstacle_true);
@@ -128,6 +132,8 @@ namespace Autonomous
 		void goTo_surroundedBySoftObstacles_canReachTarget();
 		void goTo_surroundedByHardObstacles_cantReachTarget();
 		void goTo_finalOrientationNotPossible_canReachTarget();
+		void goTo_twoTargetsAndFirstOnePossible_canReachFirstTarget();
+		void goTo_twoTargetsAndOnlySecondOnePossible_canReachSecondTarget();
 		void stuckAtObstacle_tryingToTackleObstacle_true();
 		void stuckAtObstacle_notTryingToTackleObstacle_false();
 		void stuckAtObstacle_updateCalledTwiceAfterStuckAtObstacle_true();
@@ -198,6 +204,7 @@ namespace Autonomous
 
 	private:
 		RouterMock *m_routerMock;
+		std::list<Common::RobotPosition> m_targets;
 	};
 }
 }

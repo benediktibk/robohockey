@@ -165,6 +165,11 @@ Angle LidarImpl::getMaximumAngleLeft() const
 	return m_maximumAngleLeft;
 }
 
+bool LidarImpl::canBeSeen(const Circle &/*object*/) const
+{
+	return true;
+}
+
 list<pair<int, int> > LidarImpl::findStartAndEndOfObjects(
 		const list<int> &positiveEdges, const list<int> &negativeEdges, int &viewAreaMinimum, int &viewAreaMaximum) const
 {

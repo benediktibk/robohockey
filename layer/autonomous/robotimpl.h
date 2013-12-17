@@ -27,7 +27,7 @@ namespace Autonomous
 		RobotImpl(DataAnalysis::DataAnalyser *dataAnalyser, Router *router);
 		virtual ~RobotImpl();
 
-		virtual void goTo(const Common::RobotPosition &position);
+		virtual void goTo(const std::list<Common::RobotPosition> &possibleTargets);
 		virtual void turnTo(const Common::Point &position);
 		virtual bool stuckAtObstacle();
 		virtual bool reachedTarget();
@@ -50,6 +50,9 @@ namespace Autonomous
 
 	private:
 		void clearRoute();
+		bool updateRouteForTarget(
+				const Field &field, const Common::RobotPosition &target,
+				const std::vector<Common::Circle> &obstacles, bool ignoreSoftObstacles, bool ignoreFinalOrientation);
 		bool updateRoute(const Field &field);
 		bool isRouteFeasible(const std::vector<Common::Circle> &obstacles) const;
 		void updateEngine(const Field &field);
@@ -80,6 +83,7 @@ namespace Autonomous
 		bool m_cantReachTarget;
 		Route *m_currentRoute;
 		Common::RobotPosition m_currentTarget;
+		std::list<Common::RobotPosition> m_possibleTargets;
 		RobotState m_state;
 		bool m_stateChanged;
 		Common::Point m_startPosition;
