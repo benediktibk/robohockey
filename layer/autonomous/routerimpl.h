@@ -29,7 +29,9 @@ namespace Autonomous
 		RouterImpl(double robotWidth);
 
 		virtual Route calculateRoute(
-				const Common::RobotPosition &start, const Common::RobotPosition &end, const Field &field, const Common::Angle &maximumRotation, double minimumStepAfterMaximumRotation) const;
+				const Common::RobotPosition &start, const Common::RobotPosition &end, const Field &field,
+				const Common::Angle &maximumRotation, double minimumStepAfterMaximumRotation,
+				bool ignoreSoftObstacles, bool ignoreFinalOrientation) const;
 		std::vector<Common::Point> getPointsBesideObstacle(const Common::Path &path, const Common::Circle &obstacle) const;
 		std::vector<Common::Circle> filterObstacles(const std::vector<Common::Circle> &softObstacles,
 				const std::vector<Common::Circle> &hardObstacles, const Common::Point &position) const;
@@ -68,7 +70,8 @@ namespace Autonomous
 		std::vector<Route> fixRotationOfFinalStep(
 				const std::vector<RoutingResult> &routes, const Common::Angle &startOrientation,
 				const Common::Angle &finalOrientation, const Common::Angle &maximumRotation,
-				double minimumStepAfterMaximumRotation,	const std::vector<Common::Circle> &obstacles) const;
+				double minimumStepAfterMaximumRotation,	const std::vector<Common::Circle> &obstacles,
+				bool ignoreFinalOrientation) const;
 
 	private:
 		const unsigned int m_maximumSearchDepth;

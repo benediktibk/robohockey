@@ -97,6 +97,9 @@ set(TESTFILES
 	sonar_1.txt
 	sonar_2.txt
 	sonar_3.txt
+	sonar_4.txt
+	sonar_5.txt
+	sonar_6.txt
 	blue_goal.png
 	blue_puck.png
 	nothing.png

@@ -26,7 +26,8 @@ RouterImpl::RouterImpl(double robotWidth) :
 
 Route RouterImpl::calculateRoute(
 		const RobotPosition &start, const RobotPosition &end, const Field &field,
-		const Common::Angle &maximumRotation, double minimumStepAfterMaximumRotation) const
+		const Angle &maximumRotation, double minimumStepAfterMaximumRotation,
+		bool ignoreSoftObstacles, bool ignoreFinalOrientation) const
 {
 	const vector<Circle> softObstacles = field.getAllSoftObstacles();
 	const vector<Circle> hardObstacles = field.getAllHardObstacles();
@@ -40,21 +41,27 @@ Route RouterImpl::calculateRoute(
 
 	Circle endCircle(end.getPosition(), sqrt(2)*m_robotWidth);
 	if (	endCircle.overlapsWith(hardObstacles) ||
-			endCircle.overlapsWith(softObstacles))
+			(endCircle.overlapsWith(softObstacles) && !ignoreSoftObstacles))
 		return Route();
 
 	const Point &startPosition = start.getPosition();
 	const Point &endPosition = end.getPosition();
 	const Angle &startOrientation = start.getOrientation();
 	const Angle &endOrientation = end.getOrientation();
-	const vector<Circle> allObstacles = filterObstacles(softObstacles, hardObstacles, startPosition);
+	vector<Circle> allObstacles;
+
+	if (ignoreSoftObstacles)
+		allObstacles = hardObstacles;
+	else
+		allObstacles = filterObstacles(softObstacles, hardObstacles, startPosition);
+
 	list<RoutingObstacle> consideredObstacles;
 	vector<RoutingResult> routingResults = calculateStartParts(
 				start, endPosition, field, allObstacles, 0, consideredObstacles,
 				maximumRotation, minimumStepAfterMaximumRotation);
 	vector<Route> routes = fixRotationOfFinalStep(
 				routingResults, startOrientation, endOrientation, maximumRotation,
-				minimumStepAfterMaximumRotation, allObstacles);
+				minimumStepAfterMaximumRotation, allObstacles, ignoreFinalOrientation);
 
 	if (routes.size() == 0)
 		return Route();
@@ -380,7 +387,7 @@ vector<RoutingResult> RouterImpl::calculateRoutesToPointsBesideObstacle(
 vector<Route> RouterImpl::fixRotationOfFinalStep(
 		const vector<RoutingResult> &routes, const Angle &startOrientation, const Angle &finalOrientation,
 		const Angle &maximumRotation, double minimumStepAfterMaximumRotation,
-		const std::vector<Circle> &obstacles) const
+		const std::vector<Circle> &obstacles, bool ignoreFinalOrientation) const
 {
 	vector<Route> result;
 	result.reserve(routes.size());
@@ -388,18 +395,22 @@ vector<Route> RouterImpl::fixRotationOfFinalStep(
 	for (vector<RoutingResult>::const_iterator i = routes.begin(); i != routes.end(); ++i)
 	{
 		Route route = i->getRoute();
-		route.fixRotationOfFinalStep(finalOrientation, maximumRotation, minimumStepAfterMaximumRotation);
 
-		if (!route.isValid())
-			continue;
+		if (!ignoreFinalOrientation)
+		{
+			route.fixRotationOfFinalStep(finalOrientation, maximumRotation, minimumStepAfterMaximumRotation);
 
-		if (route.intersectsWith(obstacles))
-			continue;
+			if (!route.isValid())
+				continue;
 
-		Angle maximumBend = route.getMaximumBend(startOrientation, finalOrientation);
-		maximumBend.abs();
-		if (maximumBend.getValueBetweenZeroAndTwoPi() > maximumRotation.getValueBetweenZeroAndTwoPi())
-			continue;
+			if (route.intersectsWith(obstacles))
+				continue;
+
+			Angle maximumBend = route.getMaximumBend(startOrientation, finalOrientation);
+			maximumBend.abs();
+			if (maximumBend.getValueBetweenZeroAndTwoPi() > maximumRotation.getValueBetweenZeroAndTwoPi())
+				continue;
+		}
 
 		result.push_back(route);
 	}

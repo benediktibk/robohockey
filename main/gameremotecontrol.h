@@ -2,6 +2,7 @@
 #define ROBOHOCKEY_MAIN_GAMEREMOTECONTROL_H
 
 #include "main/game.h"
+#include "common/point.h"
 
 namespace RoboHockey
 {
@@ -35,6 +36,7 @@ namespace Main
 		Layer::View::Controller *m_controller;
 		bool m_cantReachTargetOld;
 		bool m_stuckAtObstacleOld;
+		Common::Point m_lastTarget;
 	};
 }
 }
