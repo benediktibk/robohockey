@@ -32,7 +32,7 @@ namespace DataAnalysis
 		//! Be careful, this one will usually be negative (in terms of mathematical positive direction)
 		virtual Common::Angle getMaximumAngleRight() const = 0;
 		virtual Common::Angle getMaximumAngleLeft() const = 0;
-		virtual bool canBeSeen(const Common::Circle &object) const = 0;
+		virtual bool canBeSeen(const Common::Circle &object, const Common::RobotPosition &ownPosition) const = 0;
 	};
 }
 }

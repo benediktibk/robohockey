@@ -41,7 +41,7 @@ namespace DataAnalysis
 		virtual bool isPuckCollected() const;
 		virtual Common::Angle getMaximumAngleRight() const;
 		virtual Common::Angle getMaximumAngleLeft() const;
-		virtual bool canBeSeen(const Common::Circle &object) const;
+		virtual bool canBeSeen(const Common::Circle &object, const Common::RobotPosition &ownPosition) const;
 
 	private:
 		std::list<std::pair<int, int> > findStartAndEndOfObjects(

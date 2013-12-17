@@ -43,7 +43,7 @@ Angle LidarMock::getMaximumAngleLeft() const
 	return Angle::getQuarterRotation();
 }
 
-bool LidarMock::canBeSeen(const Circle &) const
+bool LidarMock::canBeSeen(const Circle &, const RobotPosition &) const
 {
 	return true;
 }

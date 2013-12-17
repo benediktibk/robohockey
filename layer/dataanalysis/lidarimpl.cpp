@@ -165,7 +165,7 @@ Angle LidarImpl::getMaximumAngleLeft() const
 	return m_maximumAngleLeft;
 }
 
-bool LidarImpl::canBeSeen(const Circle &/*object*/) const
+bool LidarImpl::canBeSeen(const Circle &/*object*/, const RobotPosition &/*ownPosition*/) const
 {
 	return true;
 }

@@ -753,3 +753,267 @@ void LidarTest::getMaximumAngleRight_objectAtRightBorder_reducedViewArea()
 
 	CPPUNIT_ASSERT_DOUBLES_EQUAL(-1.545, angle.getValueBetweenMinusPiAndPi(), 0.01);
 }
+
+void LidarTest::canBeSeen_noObjectBetween_true()
+{
+	Hardware::LidarMock hardwareLidar(10);
+	LidarImpl lidar(hardwareLidar);
+	Circle circle(Point(1, 0), 0.5);
+	RobotPosition ownPosition(Point(0, 0), Angle(0));
+
+	lidar.updateSensorData();
+	bool canBeSeen = lidar.canBeSeen(circle, ownPosition);
+
+	CPPUNIT_ASSERT(canBeSeen);
+}
+
+void LidarTest::canBeSeen_atLeftEdgeOfViewArea_true()
+{
+	Hardware::LidarMock hardwareLidar(10);
+	LidarImpl lidar(hardwareLidar);
+	Circle circle(Point(-0.1, 1), 0.5);
+	RobotPosition ownPosition(Point(0, 0), Angle(0));
+
+	lidar.updateSensorData();
+	bool canBeSeen = lidar.canBeSeen(circle, ownPosition);
+
+	CPPUNIT_ASSERT(canBeSeen);
+}
+
+void LidarTest::canBeSeen_atRightEdgeOfViewArea_true()
+{
+	Hardware::LidarMock hardwareLidar(10);
+	LidarImpl lidar(hardwareLidar);
+	Circle circle(Point(-0.1, -1), 0.5);
+	RobotPosition ownPosition(Point(0, 0), Angle(0));
+
+	lidar.updateSensorData();
+	bool canBeSeen = lidar.canBeSeen(circle, ownPosition);
+
+	CPPUNIT_ASSERT(canBeSeen);
+}
+
+void LidarTest::canBeSeen_outsideOfViewArea_false()
+{
+	Hardware::LidarMock hardwareLidar(10);
+	LidarImpl lidar(hardwareLidar);
+	Circle circle(Point(-1, 1), 0.5);
+	RobotPosition ownPosition(Point(0, 0), Angle(0));
+
+	lidar.updateSensorData();
+	bool canBeSeen = lidar.canBeSeen(circle, ownPosition);
+
+	CPPUNIT_ASSERT(!canBeSeen);
+}
+
+void LidarTest::canBeSeen_totallyCoveredByOtherObject_false()
+{
+	Hardware::LidarMock hardwareLidar(10);
+	LidarImpl lidar(hardwareLidar);
+	Circle circle(Point(2, 0), 0.1);
+	RobotPosition ownPosition(Point(0, 0), Angle(0));
+	hardwareLidar.setValueForAngle(175, 0.5);
+	hardwareLidar.setValueForAngle(176, 0.5);
+	hardwareLidar.setValueForAngle(177, 0.5);
+	hardwareLidar.setValueForAngle(178, 0.5);
+	hardwareLidar.setValueForAngle(179, 0.5);
+	hardwareLidar.setValueForAngle(180, 0.5);
+	hardwareLidar.setValueForAngle(181, 0.5);
+	hardwareLidar.setValueForAngle(182, 0.5);
+	hardwareLidar.setValueForAngle(183, 0.5);
+	hardwareLidar.setValueForAngle(184, 0.5);
+	hardwareLidar.setValueForAngle(185, 0.5);
+
+	lidar.updateSensorData();
+	bool canBeSeen = lidar.canBeSeen(circle, ownPosition);
+
+	CPPUNIT_ASSERT(!canBeSeen);
+}
+
+void LidarTest::canBeSeen_fromLeftSideCoveredByOtherObject_true()
+{
+	Hardware::LidarMock hardwareLidar(10);
+	LidarImpl lidar(hardwareLidar);
+	Circle circle(Point(2, 0), 0.1);
+	RobotPosition ownPosition(Point(0, 0), Angle(0));
+	hardwareLidar.setValueForAngle(175, 0.5);
+	hardwareLidar.setValueForAngle(176, 0.5);
+	hardwareLidar.setValueForAngle(177, 0.5);
+	hardwareLidar.setValueForAngle(178, 0.5);
+	hardwareLidar.setValueForAngle(179, 0.5);
+	hardwareLidar.setValueForAngle(180, 0.5);
+	hardwareLidar.setValueForAngle(181, 0.5);
+
+	lidar.updateSensorData();
+	bool canBeSeen = lidar.canBeSeen(circle, ownPosition);
+
+	CPPUNIT_ASSERT(canBeSeen);
+}
+
+void LidarTest::canBeSeen_fromRightSideCoveredByOtherObject_true()
+{
+	Hardware::LidarMock hardwareLidar(10);
+	LidarImpl lidar(hardwareLidar);
+	Circle circle(Point(2, 0), 0.1);
+	RobotPosition ownPosition(Point(0, 0), Angle(0));
+	hardwareLidar.setValueForAngle(179, 0.5);
+	hardwareLidar.setValueForAngle(180, 0.5);
+	hardwareLidar.setValueForAngle(181, 0.5);
+	hardwareLidar.setValueForAngle(182, 0.5);
+	hardwareLidar.setValueForAngle(183, 0.5);
+	hardwareLidar.setValueForAngle(184, 0.5);
+	hardwareLidar.setValueForAngle(185, 0.5);
+
+	lidar.updateSensorData();
+	bool canBeSeen = lidar.canBeSeen(circle, ownPosition);
+
+	CPPUNIT_ASSERT(canBeSeen);
+}
+
+void LidarTest::canBeSeen_partlyCoveredFromBothSides_true()
+{
+	Hardware::LidarMock hardwareLidar(10);
+	LidarImpl lidar(hardwareLidar);
+	Circle circle(Point(2, 0), 0.1);
+	RobotPosition ownPosition(Point(0, 0), Angle(0));
+	hardwareLidar.setValueForAngle(175, 0.5);
+	hardwareLidar.setValueForAngle(176, 0.5);
+	hardwareLidar.setValueForAngle(177, 0.5);
+	hardwareLidar.setValueForAngle(178, 0.5);
+	hardwareLidar.setValueForAngle(179, 0.5);
+	hardwareLidar.setValueForAngle(181, 0.5);
+	hardwareLidar.setValueForAngle(182, 0.5);
+	hardwareLidar.setValueForAngle(183, 0.5);
+	hardwareLidar.setValueForAngle(184, 0.5);
+	hardwareLidar.setValueForAngle(185, 0.5);
+
+	lidar.updateSensorData();
+	bool canBeSeen = lidar.canBeSeen(circle, ownPosition);
+
+	CPPUNIT_ASSERT(canBeSeen);
+}
+
+void LidarTest::canBeSeen_totallyCoveredFromBothSides_false()
+{
+	Hardware::LidarMock hardwareLidar(10);
+	LidarImpl lidar(hardwareLidar);
+	Circle circle(Point(2, 0), 0.1);
+	RobotPosition ownPosition(Point(0, 0), Angle(0));
+	hardwareLidar.setValueForAngle(175, 1);
+	hardwareLidar.setValueForAngle(176, 1);
+	hardwareLidar.setValueForAngle(177, 1);
+	hardwareLidar.setValueForAngle(178, 1);
+	hardwareLidar.setValueForAngle(179, 1);
+	hardwareLidar.setValueForAngle(181, 1);
+	hardwareLidar.setValueForAngle(182, 0.5);
+	hardwareLidar.setValueForAngle(183, 0.5);
+	hardwareLidar.setValueForAngle(184, 0.5);
+	hardwareLidar.setValueForAngle(185, 0.5);
+
+	lidar.updateSensorData();
+	bool canBeSeen = lidar.canBeSeen(circle, ownPosition);
+
+	CPPUNIT_ASSERT(!canBeSeen);
+}
+
+void LidarTest::canBeSeen_inFrontOfObject_true()
+{
+	Hardware::LidarMock hardwareLidar(10);
+	LidarImpl lidar(hardwareLidar);
+	Circle circle(Point(1.9, 0), 0.1);
+	RobotPosition ownPosition(Point(0, 0), Angle(0));
+	hardwareLidar.setValueForAngle(170, 2);
+	hardwareLidar.setValueForAngle(171, 2);
+	hardwareLidar.setValueForAngle(172, 2);
+	hardwareLidar.setValueForAngle(173, 2);
+	hardwareLidar.setValueForAngle(174, 2);
+	hardwareLidar.setValueForAngle(175, 2);
+	hardwareLidar.setValueForAngle(176, 2);
+	hardwareLidar.setValueForAngle(177, 2);
+	hardwareLidar.setValueForAngle(178, 2);
+	hardwareLidar.setValueForAngle(179, 2);
+	hardwareLidar.setValueForAngle(180, 2);
+	hardwareLidar.setValueForAngle(181, 2);
+	hardwareLidar.setValueForAngle(182, 2);
+	hardwareLidar.setValueForAngle(183, 2);
+	hardwareLidar.setValueForAngle(184, 2);
+	hardwareLidar.setValueForAngle(185, 2);
+	hardwareLidar.setValueForAngle(186, 2);
+	hardwareLidar.setValueForAngle(187, 2);
+	hardwareLidar.setValueForAngle(188, 2);
+	hardwareLidar.setValueForAngle(189, 2);
+	hardwareLidar.setValueForAngle(190, 2);
+
+	lidar.updateSensorData();
+	bool canBeSeen = lidar.canBeSeen(circle, ownPosition);
+
+	CPPUNIT_ASSERT(canBeSeen);
+}
+
+void LidarTest::canBeSeen_inFrontOfObjectShiftedAndRotated_true()
+{
+	Hardware::LidarMock hardwareLidar(10);
+	LidarImpl lidar(hardwareLidar);
+	Circle circle(Point(1, 2.9), 0.1);
+	RobotPosition ownPosition(Point(1, 1), Angle::getQuarterRotation());
+	hardwareLidar.setValueForAngle(170, 2);
+	hardwareLidar.setValueForAngle(171, 2);
+	hardwareLidar.setValueForAngle(172, 2);
+	hardwareLidar.setValueForAngle(173, 2);
+	hardwareLidar.setValueForAngle(174, 2);
+	hardwareLidar.setValueForAngle(175, 2);
+	hardwareLidar.setValueForAngle(176, 2);
+	hardwareLidar.setValueForAngle(177, 2);
+	hardwareLidar.setValueForAngle(178, 2);
+	hardwareLidar.setValueForAngle(179, 2);
+	hardwareLidar.setValueForAngle(180, 2);
+	hardwareLidar.setValueForAngle(181, 2);
+	hardwareLidar.setValueForAngle(182, 2);
+	hardwareLidar.setValueForAngle(183, 2);
+	hardwareLidar.setValueForAngle(184, 2);
+	hardwareLidar.setValueForAngle(185, 2);
+	hardwareLidar.setValueForAngle(186, 2);
+	hardwareLidar.setValueForAngle(187, 2);
+	hardwareLidar.setValueForAngle(188, 2);
+	hardwareLidar.setValueForAngle(189, 2);
+	hardwareLidar.setValueForAngle(190, 2);
+
+	lidar.updateSensorData();
+	bool canBeSeen = lidar.canBeSeen(circle, ownPosition);
+
+	CPPUNIT_ASSERT(canBeSeen);
+}
+
+void LidarTest::canBeSeen_behindObjectShiftedAndRotated_false()
+{
+	Hardware::LidarMock hardwareLidar(10);
+	LidarImpl lidar(hardwareLidar);
+	Circle circle(Point(1, 4), 0.1);
+	RobotPosition ownPosition(Point(1, 1), Angle::getQuarterRotation());
+	hardwareLidar.setValueForAngle(170, 2);
+	hardwareLidar.setValueForAngle(171, 2);
+	hardwareLidar.setValueForAngle(172, 2);
+	hardwareLidar.setValueForAngle(173, 2);
+	hardwareLidar.setValueForAngle(174, 2);
+	hardwareLidar.setValueForAngle(175, 2);
+	hardwareLidar.setValueForAngle(176, 2);
+	hardwareLidar.setValueForAngle(177, 2);
+	hardwareLidar.setValueForAngle(178, 2);
+	hardwareLidar.setValueForAngle(179, 2);
+	hardwareLidar.setValueForAngle(180, 2);
+	hardwareLidar.setValueForAngle(181, 2);
+	hardwareLidar.setValueForAngle(182, 2);
+	hardwareLidar.setValueForAngle(183, 2);
+	hardwareLidar.setValueForAngle(184, 2);
+	hardwareLidar.setValueForAngle(185, 2);
+	hardwareLidar.setValueForAngle(186, 2);
+	hardwareLidar.setValueForAngle(187, 2);
+	hardwareLidar.setValueForAngle(188, 2);
+	hardwareLidar.setValueForAngle(189, 2);
+	hardwareLidar.setValueForAngle(190, 2);
+
+	lidar.updateSensorData();
+	bool canBeSeen = lidar.canBeSeen(circle, ownPosition);
+
+	CPPUNIT_ASSERT(!canBeSeen);
+}

@@ -74,6 +74,18 @@ namespace DataAnalysis
 		CPPUNIT_TEST(getMaximumAngleRight_noObjects_minusPiHalf);
 		CPPUNIT_TEST(getMaximumAngleLeft_objectAtLeftBorder_reducedViewArea);
 		CPPUNIT_TEST(getMaximumAngleRight_objectAtRightBorder_reducedViewArea);
+		CPPUNIT_TEST(canBeSeen_noObjectBetween_true);
+		CPPUNIT_TEST(canBeSeen_atLeftEdgeOfViewArea_true);
+		CPPUNIT_TEST(canBeSeen_atRightEdgeOfViewArea_true);
+		CPPUNIT_TEST(canBeSeen_outsideOfViewArea_false);
+		CPPUNIT_TEST(canBeSeen_totallyCoveredByOtherObject_false);
+		CPPUNIT_TEST(canBeSeen_fromLeftSideCoveredByOtherObject_true);
+		CPPUNIT_TEST(canBeSeen_fromRightSideCoveredByOtherObject_true);
+		CPPUNIT_TEST(canBeSeen_partlyCoveredFromBothSides_true);
+		CPPUNIT_TEST(canBeSeen_totallyCoveredFromBothSides_false);
+		CPPUNIT_TEST(canBeSeen_inFrontOfObject_true);
+		CPPUNIT_TEST(canBeSeen_inFrontOfObjectShiftedAndRotated_true);
+		CPPUNIT_TEST(canBeSeen_behindObjectShiftedAndRotated_false);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
@@ -130,6 +142,18 @@ namespace DataAnalysis
 		void getMaximumAngleRight_noObjects_minusPiHalf();
 		void getMaximumAngleLeft_objectAtLeftBorder_reducedViewArea();
 		void getMaximumAngleRight_objectAtRightBorder_reducedViewArea();
+		void canBeSeen_noObjectBetween_true();
+		void canBeSeen_atLeftEdgeOfViewArea_true();
+		void canBeSeen_atRightEdgeOfViewArea_true();
+		void canBeSeen_outsideOfViewArea_false();
+		void canBeSeen_totallyCoveredByOtherObject_false();
+		void canBeSeen_fromLeftSideCoveredByOtherObject_true();
+		void canBeSeen_fromRightSideCoveredByOtherObject_true();
+		void canBeSeen_partlyCoveredFromBothSides_true();
+		void canBeSeen_totallyCoveredFromBothSides_false();
+		void canBeSeen_inFrontOfObject_true();
+		void canBeSeen_inFrontOfObjectShiftedAndRotated_true();
+		void canBeSeen_behindObjectShiftedAndRotated_false();
 
 	private:
 		static const double m_maximumDistance;
