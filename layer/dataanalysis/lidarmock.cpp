@@ -43,6 +43,11 @@ Angle LidarMock::getMaximumAngleLeft() const
 	return Angle::getQuarterRotation();
 }
 
+bool LidarMock::canBeSeen(const Circle &) const
+{
+	return true;
+}
+
 void LidarMock::setAllObjects(const LidarObjects &objects)
 {
 	m_objects = objects;
