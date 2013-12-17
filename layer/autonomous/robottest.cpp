@@ -218,6 +218,11 @@ void RobotTest::goTo_targetPositionReached_reachedTarget()
 	engine.setIsGoingStraight(false);
 	robot.updateSensorData();
 	robot.updateActuators(field);
+	engine.setReachedTarget(true);
+	engine.setIsGoingStraight(false);
+	odometry.setCurrentPosition(RobotPosition(Point(0, 1), Angle::getQuarterRotation()));
+	robot.updateSensorData();
+	robot.updateActuators(field);
 
 	CPPUNIT_ASSERT(robot.reachedTarget());
 }
@@ -407,11 +412,17 @@ void RobotTest::goTo_finalOrientationReached_engineGotOneCallToStop()
 	odometry.setCurrentPosition(RobotPosition(Point(1, 1), Angle::getQuarterRotation()));
 	engine.setReachedTarget(true);
 	engine.setIsGoingStraight(false);
+	robot.updateSensorData();
+	robot.updateActuators(field);
+	odometry.setCurrentPosition(RobotPosition(Point(1, 1), Angle::getQuarterRotation()));
+	engine.setReachedTarget(true);
+	engine.setIsGoingStraight(false);
 	engine.resetCounters();
 	robot.updateSensorData();
 	robot.updateActuators(field);
 
 	CPPUNIT_ASSERT(engine.getCallsToStop() > 0);
+	CPPUNIT_ASSERT(robot.reachedTarget());
 }
 
 void RobotTest::stuckAtObstacle_tryingToTackleObstacle_true()

@@ -79,7 +79,13 @@ void RobotImpl::updateEngineForDrivingStraightPart(const Field &field)
 			m_currentRoute->removeFirstPoint();
 
 			if (m_currentRoute->getPointCount() == 1)
-				changeIntoState(RobotStateWaiting);
+			{
+				const Angle &finalOrientation = m_currentTarget.getOrientation();
+				Point smallStep(1, 0);
+				smallStep.rotate(finalOrientation);
+				engine.turnToTarget(getCurrentPosition().getPosition() + smallStep);
+				changeIntoState(RobotStateDrivingTurningPart);
+			}
 			else
 			{
 				changeIntoState(RobotStateDrivingTurningPart);
@@ -102,8 +108,13 @@ void RobotImpl::updateEngineForDrivingTurningPart(const Field &field)
 			engine.turnToTarget(m_currentRoute->getSecondPoint());
 		else if (engine.reachedTarget())
 		{
-			changeIntoState(RobotStateDrivingStraightPart);
-			engine.goToStraight(m_currentRoute->getSecondPoint());
+			if (m_currentRoute->getPointCount() > 1)
+			{
+				changeIntoState(RobotStateDrivingStraightPart);
+				engine.goToStraight(m_currentRoute->getSecondPoint());
+			}
+			else
+				changeIntoState(RobotStateWaiting);
 		}
 	}
 }
