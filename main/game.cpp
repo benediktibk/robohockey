@@ -28,32 +28,32 @@ Game::Game(int argc, char **argv) :
 	m_loopTimeAverage(0)
 {
 	string playerServer;
-    string AngelinaAdressServer;
-    if(argc == 3)
-    {
-        playerServer = argv[1];
-        AngelinaAdressServer = argv[2];
-    }
-    else if(argc == 2)
+	string AngelinaAdressServer;
+	if(argc == 3)
 	{
-        playerServer = argv[1];
-        AngelinaAdressServer = "localhost";
+		playerServer = argv[1];
+		AngelinaAdressServer = argv[2];
 	}
-    else
-    {
-        cout << "no player server selected, using localhost" << endl;
-        playerServer = "localhost";
-        AngelinaAdressServer = "localhost";
-    }
+	else if(argc == 2)
+	{
+		playerServer = argv[1];
+		AngelinaAdressServer = "localhost";
+	}
+	else
+	{
+		cout << "no player server selected, using localhost" << endl;
+		playerServer = "localhost";
+		AngelinaAdressServer = "localhost";
+	}
 
 	Hardware::Robot *hardwareRobot = new Hardware::RobotImpl(playerServer);
 	DataAnalysis::DataAnalyser *dataAnalyser = new DataAnalysis::DataAnalyserImpl(hardwareRobot);
 	Autonomous::Router *router = new Autonomous::RouterImpl(0.38);
-	m_robot = new Autonomous::RobotImpl(dataAnalyser, router);
+	m_robot = new Autonomous::RobotImpl(dataAnalyser, router, new Common::WatchImpl());
 	m_field = new Autonomous::FieldImpl(
 				dataAnalyser->getOdometry(), dataAnalyser->getLidar(),
 				dataAnalyser->getCamera(), *m_robot);
-    m_referee = new Strategy::Common::RefereeImpl(AngelinaAdressServer);
+	m_referee = new Strategy::Common::RefereeImpl(AngelinaAdressServer);
 
 	connect(m_timer, SIGNAL(timeout()), this, SLOT(execute()));
 
@@ -72,8 +72,8 @@ Game::~Game()
 	m_robot = 0;
 	delete m_referee;
 	m_referee = 0;
-    delete m_timer;
-    m_timer = 0;
+	delete m_timer;
+	m_timer = 0;
 }
 
 void Game::execute()

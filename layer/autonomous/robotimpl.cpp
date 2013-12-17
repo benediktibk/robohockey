@@ -9,6 +9,7 @@
 #include "layer/dataanalysis/lidar.h"
 #include "common/compare.h"
 #include "common/path.h"
+#include "common/watch.h"
 #include <math.h>
 #include <assert.h>
 
@@ -17,12 +18,13 @@ using namespace RoboHockey::Layer::Autonomous;
 using namespace RoboHockey::Layer;
 using namespace std;
 
-RobotImpl::RobotImpl(DataAnalysis::DataAnalyser *dataAnalyser, Router *router) :
+RobotImpl::RobotImpl(DataAnalysis::DataAnalyser *dataAnalyser, Router *router, Watch *watch) :
 	m_robotWidth(0.38),
 	m_maximumDistanceToCollectPuck(0.75),
 	m_maximumAngleToCollectPuck(10.0/180*M_PI),
 	m_dataAnalyser(dataAnalyser),
 	m_router(router),
+	m_watch(watch),
 	m_tryingToTackleObstacle(false),
 	m_cantReachTarget(false),
 	m_currentRoute(0),
@@ -37,6 +39,8 @@ RobotImpl::~RobotImpl()
 	m_dataAnalyser = 0;
 	delete m_router;
 	m_router = 0;
+	delete m_watch;
+	m_watch = 0;
 	clearRoute();
 }
 

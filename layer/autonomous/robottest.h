@@ -8,6 +8,11 @@
 
 namespace RoboHockey
 {
+namespace Common
+{
+	class WatchMock;
+}
+
 namespace Layer
 {
 namespace Autonomous
@@ -204,6 +209,7 @@ namespace Autonomous
 
 	private:
 		RouterMock *m_routerMock;
+		Common::WatchMock *m_watchMock;
 		std::list<Common::RobotPosition> m_targets;
 	};
 }

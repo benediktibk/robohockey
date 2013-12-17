@@ -8,6 +8,11 @@
 
 namespace RoboHockey
 {
+namespace Common
+{
+	class Watch;
+}
+
 namespace Layer
 {
 namespace DataAnalysis
@@ -24,7 +29,7 @@ namespace Autonomous
 			public Robot
 	{
 	public:
-		RobotImpl(DataAnalysis::DataAnalyser *dataAnalyser, Router *router);
+		RobotImpl(DataAnalysis::DataAnalyser *dataAnalyser, Router *router, Common::Watch *watch);
 		virtual ~RobotImpl();
 
 		virtual void goTo(const std::list<Common::RobotPosition> &possibleTargets);
@@ -79,6 +84,7 @@ namespace Autonomous
 		const Common::Angle m_maximumAngleToCollectPuck;
 		DataAnalysis::DataAnalyser *m_dataAnalyser;
 		Router *m_router;
+		Common::Watch *m_watch;
 		bool m_tryingToTackleObstacle;
 		bool m_cantReachTarget;
 		Route *m_currentRoute;
