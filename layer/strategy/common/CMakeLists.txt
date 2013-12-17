@@ -8,6 +8,7 @@ set(LAYER_STRATEGY_COMMON_SRC
 	refereeimpl.cpp
 	driveto.cpp
 	drivepuck.cpp
+	drivepucktoachivegoals.cpp
 )
 
 set(LAYER_STRATEGY_COMMON_TEST_SRC
@@ -15,6 +16,7 @@ set(LAYER_STRATEGY_COMMON_TEST_SRC
 	statemachinetest.cpp
 	refereemock.cpp
 	drivetotest.cpp
+	drivepucktoachivegoalstest.cpp
 )
 
 set(MOC_H

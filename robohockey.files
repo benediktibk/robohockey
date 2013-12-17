@@ -412,3 +412,7 @@ resources/testfiles/sonar_5.txt
 resources/testfiles/sonar_6.txt
 layer/strategy/common/drivepuck.h
 layer/strategy/common/drivepuck.cpp
+layer/strategy/common/drivepucktoachivegoalstest.h
+layer/strategy/common/drivepucktoachivegoals.h
+layer/strategy/common/drivepucktoachivegoalstest.cpp
+layer/strategy/common/drivepucktoachivegoals.cpp

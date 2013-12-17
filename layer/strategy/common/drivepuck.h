@@ -15,12 +15,13 @@ namespace Common
 {
 class DrivePuck
 {
-public:
-	DrivePuck();
+	public:
+		DrivePuck();
+		virtual ~DrivePuck();
 
-	RoboHockey::Common::RobotPosition getTargetPoint();
-	RoboHockey::Common::RobotPosition getPointToCollectPuck();
-};
+		RoboHockey::Common::RobotPosition getTargetPoint();
+		RoboHockey::Common::RobotPosition getPointToCollectPuck();
+	};
 }
 }
 }
