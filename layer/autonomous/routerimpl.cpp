@@ -82,8 +82,9 @@ vector<Point> RouterImpl::getPointsBesideObstacle(const Path &path, const Circle
 	double offsetDistanceLongPoint = 0.51*sqrt(2)*m_robotWidth + obstacle.getDiameter()/2;
 	Angle offsetAngleShortPoint = path.getAngleBetweenStartAndEnd();
 
-	assert(intersectionPoints.getIntersectTypeFrom() != PathIntersectPoints::IntersectTypeFromStart);
-	assert(intersectionPoints.getIntersectTypeFrom() != PathIntersectPoints::IntersectTypeFromEnd);
+	if((intersectionPoints.getIntersectTypeFrom() == PathIntersectPoints::IntersectTypeFromStart) ||
+		(intersectionPoints.getIntersectTypeFrom() == PathIntersectPoints::IntersectTypeFromEnd))
+		return pointsBesideObstacle;
 
 	if(intersectionPoints.getIntersectTypeFrom() != PathIntersectPoints::IntersectTypeNoIntersect)
 	{
@@ -334,7 +335,11 @@ vector<RoutingResult> RouterImpl::calculateRoutesToPointsBesideObstacle(
 	Point startPoint = start.getPosition();
 	Path path(startPoint, end, m_robotWidth);
 	vector<Point> pointsBesideObstacle = getPointsBesideObstacle(path, obstacle);
-	assert(pointsBesideObstacle.size() == 2);
+	vector<RoutingResult> result;
+
+	if(pointsBesideObstacle.size() != 2)
+		return result;
+
 	Line line(startPoint, end);
 	assert(line.isOnePointLeftAndOneRightOfLine(pointsBesideObstacle[0], pointsBesideObstacle[1]));
 	Point leftPoint;
@@ -350,8 +355,6 @@ vector<RoutingResult> RouterImpl::calculateRoutesToPointsBesideObstacle(
 		rightPoint = pointsBesideObstacle.back();
 		leftPoint = pointsBesideObstacle.front();
 	}
-
-	vector<RoutingResult> result;
 
 	if (field.isPointInsideField(rightPoint))
 	{

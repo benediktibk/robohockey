@@ -35,6 +35,7 @@ namespace Autonomous
         CPPUNIT_TEST(update_fourObjectsAndTwoObjectsHidden_twoHiddenPucks);
         CPPUNIT_TEST(update_fourObjectsAndFourObjectsHidden_fourHiddenPucks);
         CPPUNIT_TEST(update_fourObjectsAndThreeObjectsHidden_threeHiddenPucks);
+		CPPUNIT_TEST(update_oneObjectInFrontOfLidarOneBehindOneOnLeftSide_threeObjects);
 		CPPUNIT_TEST(calibratePosition_noValidPattern_false);
 		CPPUNIT_TEST(calibratePosition_validPattern_true);
 		CPPUNIT_TEST(calibratePosition_noValidPattern_noTransformation);
@@ -60,6 +61,7 @@ namespace Autonomous
 		CPPUNIT_TEST(getAllSoftObstacles_oneGreenObstacle_resultSizeIs0);
 		CPPUNIT_TEST(getAllSoftObstacles_oneBigObstacle_resultSizeIs0);
 		CPPUNIT_TEST(getAllSoftObstacles_onePuckDisappeared_resultSizeIs0);
+		CPPUNIT_TEST(getAllSoftObstacles_oneSmallObstacleWithUnknownColor_resultDiameterIs0p12);
 		CPPUNIT_TEST(getAllHardObstacles_oneGreenObject_resultSizeIs1);
 		CPPUNIT_TEST(getAllHardObstacles_oneBigObstacle_resultSizeIs1);
 		CPPUNIT_TEST(getAllHardObstacles_oneSmallObstacleWithUnknownColor_resultSizeIs0);
@@ -99,6 +101,7 @@ namespace Autonomous
         void update_fourObjectsAndTwoObjectsHidden_twoHiddenPucks();
         void update_fourObjectsAndFourObjectsHidden_fourHiddenPucks();
         void update_fourObjectsAndThreeObjectsHidden_threeHiddenPucks();
+		void update_oneObjectInFrontOfLidarOneBehindOneOnLeftSide_threeObjects();
 		void calibratePosition_noValidPattern_false();
 		void calibratePosition_validPattern_true();
 		void calibratePosition_noValidPattern_noTransformation();
@@ -124,6 +127,7 @@ namespace Autonomous
 		void getAllSoftObstacles_oneGreenObstacle_resultSizeIs0();
 		void getAllSoftObstacles_oneBigObstacle_resultSizeIs0();
 		void getAllSoftObstacles_onePuckDisappeared_resultSizeIs0();
+		void getAllSoftObstacles_oneSmallObstacleWithUnknownColor_resultDiameterIs0p12();
 		void getAllHardObstacles_oneGreenObject_resultSizeIs1();
 		void getAllHardObstacles_oneBigObstacle_resultSizeIs1();
 		void getAllHardObstacles_oneSmallObstacleWithUnknownColor_resultSizeIs0();

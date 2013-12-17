@@ -41,14 +41,16 @@ void FieldImpl::update()
 
 	if (!m_robot->isRotating())
 	{
-		updateWithLidarData();
+		updateWithLidarData(6.0);
 		if (!m_robot->isMoving())
 			updateWithCameraData();
 		updateObstacles();
 	}
+	else
+		updateWithLidarData(1.0);
 
-    updateAchievedGoals();
-    updateHiddenPucks();
+	updateAchievedGoals();
+	updateHiddenPucks();
 }
 
 const vector<FieldObject> &FieldImpl::getAllFieldObjects() const
@@ -109,15 +111,15 @@ bool FieldImpl::isCalibrated() const
 
 FieldColor FieldImpl::getOwnTeamColor() const
 {
-    return m_teamColor;
+	return m_teamColor;
 }
 
 FieldColor FieldImpl::getEnemyTeamColor() const
 {
-    if (m_teamColor == FieldColorYellow)
-        return FieldColorBlue;
-    else
-        return FieldColorYellow;
+	if (m_teamColor == FieldColorYellow)
+		return FieldColorBlue;
+	else
+		return FieldColorYellow;
 }
 
 void FieldImpl::detectTeamColorWithGoalInFront()
@@ -248,10 +250,10 @@ void FieldImpl::transformFieldToNewOrigin(const RobotPosition newOrigin)
 	transformCoordinateSystem(newOriginPoint, newOrigin.getOrientation().getValueBetweenMinusPiAndPi());
 }
 
-void FieldImpl::updateWithLidarData()
+void FieldImpl::updateWithLidarData(double range)
 {
 	const DataAnalysis::LidarObjects &lidarObjects =  m_lidar->getAllObjects(*m_position);
-	const vector<DataAnalysis::LidarObject> &objectsInRange = lidarObjects.getObjectsWithDistanceBelow(6);
+	const vector<DataAnalysis::LidarObject> &objectsInRange = lidarObjects.getObjectsWithDistanceBelow(range);
 
 	vector<FieldObject> inVisibleArea = moveAllFieldObjectsInVisibleAreaToTemporaryVector();
 
@@ -340,15 +342,15 @@ void FieldImpl::updateObstacles()
 		if (fieldObject.getColor() == FieldColorGreen || fieldObjectCircle.getDiameter() > 0.2)
 			m_hardObstacles.push_back(fieldObjectCircle);
 		else
-			m_softObstacles.push_back(i->getCircle());
-    }
+			m_softObstacles.push_back(fieldObjectCircle);
+	}
+	for (vector<Circle>::iterator i = m_softObstacles.begin(); i != m_softObstacles.end(); ++i)
+		i->setDiameter(0.12);
 }
 
 void FieldImpl::updateAchievedGoals()
 {
-	Point corner1(4.167, 1);
-	Point corner2(4.583, 2);
-	Rectangle goal(corner1, corner2);
+	Rectangle goal(Point(4.167, 1), Point(4.583, 2));
 
 	m_achievedGoals = 0;
 	if(m_fieldObjects.size() != 0)
@@ -361,29 +363,23 @@ void FieldImpl::updateAchievedGoals()
 				m_achievedGoals++;
 		}
 	}
-	else
-        m_achievedGoals = 0;
 }
 
 void FieldImpl::updateHiddenPucks()
 {
-    Point corner1(3.334, 0);
-    Point corner2(5, 3);
-    Rectangle hiddenArea(corner1, corner2);
+	Rectangle hiddenArea(Point(3.334, 0), Point(5, 3));
 
-    m_hiddenPucks = 0;
-    if(m_fieldObjects.size() != 0)
-    {
-        for (vector<FieldObject>::const_iterator i = m_fieldObjects.begin(); i != m_fieldObjects.end(); ++i)
-        {
-            const FieldObject &fieldObject = *i;
+	m_hiddenPucks = 0;
+	if(m_fieldObjects.size() != 0)
+	{
+		for (vector<FieldObject>::const_iterator i = m_fieldObjects.begin(); i != m_fieldObjects.end(); ++i)
+		{
+			const FieldObject &fieldObject = *i;
 
-            if (fieldObject.getColor() == getEnemyTeamColor() && hiddenArea.isInside(fieldObject.getCircle().getCenter(), 0.001))
-                m_hiddenPucks++;
-        }
-    }
-    else
-        m_hiddenPucks = 0;
+			if (fieldObject.getColor() == getEnemyTeamColor() && hiddenArea.isInside(fieldObject.getCircle().getCenter(), 0.001))
+				m_hiddenPucks++;
+		}
+	}
 }
 
 FieldObject &FieldImpl::getNextObjectFromPosition(Point position)
@@ -520,25 +516,18 @@ vector<FieldObject> FieldImpl::getObjectsWithColor(FieldColor color) const
 vector<FieldObject> FieldImpl::moveAllFieldObjectsInVisibleAreaToTemporaryVector()
 {
 	vector<FieldObject> result;
-	Point robotPosition = m_position->getPosition();
-	Angle robotAngle = m_position->getOrientation();
-
 	size_t i = 0;
 	while(i < m_fieldObjects.size())
 	{
 		vector<FieldObject>::iterator it = m_fieldObjects.begin() + i;
 
-		Point objectPosition = (m_fieldObjects[i].getCircle()).getCenter();
-		Angle angleToXAxis(robotPosition, objectPosition);
-		Angle angleToRobotDirection = angleToXAxis - robotAngle;
-
-		if (Angle(angleToRobotDirection - m_lidar->getMaximumAngleRight()).getValueBetweenMinusPiAndPi() > 0
-				&& Angle(m_lidar->getMaximumAngleLeft() - angleToRobotDirection).getValueBetweenMinusPiAndPi() > 0)
+		if (m_lidar->canBeSeen(m_fieldObjects[i].getCircle(), m_odometry->getCurrentPosition()))
 		{
 			result.push_back(*it);
 			m_fieldObjects.erase(it);
 			--i;
 		}
+
 		++i;
 	}
 	return result;
@@ -553,7 +542,7 @@ bool FieldImpl::isPointFuzzyInsideField(const Point &point, double epsilon) cons
 }
 
 void FieldImpl::removeAllFieldObjectsOutsideOfField()
-{	
+{
 	size_t i = 0;
 	while(i < m_fieldObjects.size())
 	{

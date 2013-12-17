@@ -1048,3 +1048,25 @@ void RouterTest::detectLoopInConsideredObstacles_triedOnceLeftAndRightBesideSame
 
 	CPPUNIT_ASSERT(router.detectLoopInConsideredObstacles(obstacles));
 }
+
+void RouterTest::getPointsBesideObstacle_obstacleAtStart_resultSizeIs0()
+{
+	RouterImpl router(2);
+	Path currentPath(Point(0,0), Point(4,0), 2);
+	Circle obstacle(Point(-1.5,0), 2);
+
+	CPPUNIT_ASSERT_EQUAL((size_t)2, currentPath.getIntersectPoints(obstacle).getIntersectPoints().size());
+	CPPUNIT_ASSERT_EQUAL(PathIntersectPoints::IntersectTypeFromStart, currentPath.getIntersectPoints(obstacle).getIntersectTypeFrom());
+	CPPUNIT_ASSERT_EQUAL((size_t)0, router.getPointsBesideObstacle(currentPath, obstacle).size());
+}
+
+void RouterTest::getPointsBesideObstacle_obstacleAtEnd_resultSizeIs0()
+{
+	RouterImpl router(2);
+	Path currentPath(Point(0,0), Point(4,0), 2);
+	Circle obstacle(Point(5.5,0), 2);
+
+	CPPUNIT_ASSERT_EQUAL((size_t)2, currentPath.getIntersectPoints(obstacle).getIntersectPoints().size());
+	CPPUNIT_ASSERT_EQUAL(PathIntersectPoints::IntersectTypeFromEnd, currentPath.getIntersectPoints(obstacle).getIntersectTypeFrom());
+	CPPUNIT_ASSERT_EQUAL((size_t)0, router.getPointsBesideObstacle(currentPath, obstacle).size());
+}
