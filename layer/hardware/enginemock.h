@@ -16,16 +16,19 @@ namespace Hardware
 		EngineMock();
 
 		virtual void setSpeed(double magnitude, double rotation);
+		virtual bool isMoving();
+		virtual double getSpeed() const;
+
 		unsigned int getCallsToSetSpeed() const;
 		double getLastMagnitude() const;
 		double getLastRotation() const;
-        virtual bool isMoving();
-		virtual double getSpeed() const;
+		void setIsMoving(bool value);
 
 	private:
 		unsigned int m_callsToSetSpeed;
 		double m_lastMagnitude;
 		double m_lastRotation;
+		bool m_isMoving;
 	};
 }
 }

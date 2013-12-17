@@ -6,7 +6,8 @@ using namespace RoboHockey::Layer::Hardware;
 EngineMock::EngineMock() :
 	m_callsToSetSpeed(0),
 	m_lastMagnitude(0),
-	m_lastRotation(0)
+	m_lastRotation(0),
+	m_isMoving(false)
 { }
 
 void EngineMock::setSpeed(double magnitude, double rotation)
@@ -33,9 +34,14 @@ double EngineMock::getLastRotation() const
 	return m_lastRotation;
 }
 
+void EngineMock::setIsMoving(bool value)
+{
+	m_isMoving = value;
+}
+
 bool EngineMock::isMoving()
 {
-	return true;
+	return m_isMoving;
 }
 
 double EngineMock::getSpeed() const
