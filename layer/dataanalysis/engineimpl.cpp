@@ -195,7 +195,7 @@ void EngineImpl::updateSpeedAndRotationForRotating()
 void EngineImpl::turnOnly(const Angle &targetOrientation, const Angle &currentOrientation)
 {
 	Angle orientationDifference = targetOrientation - currentOrientation;
-	double amplification = 0.5;
+    double amplification = 0.2;
 	m_tryingToTackleObstacle = false;
 	setSpeed(0, orientationDifference.getValueBetweenMinusPiAndPi()*amplification);
 }
@@ -218,8 +218,8 @@ void EngineImpl::driveAndTurn(const RobotPosition &currentPosition)
 		return;
 	}
 
-	double orientationAmplification = 1;
-	double distanceAmplification = 0.5;
+    double orientationAmplification = 3;
+    double distanceAmplification = 0.7;
 	double rotationSpeed = orientationAmplification*orthogonalError;
 	double magnitude = distanceAmplification*forwardError;
 
