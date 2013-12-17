@@ -279,7 +279,6 @@ bool RobotImpl::enableCollisionDetectionWithSonar() const
 
 void RobotImpl::changeIntoState(RobotState state)
 {
-	m_currentTarget = RobotPosition();
 	m_cantReachTarget = false;
 	m_tryingToTackleObstacle = false;
 	m_state = state;

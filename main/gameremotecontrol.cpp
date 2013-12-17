@@ -85,7 +85,9 @@ void GameRemoteControl::executeRobotControl()
 		{
 			vector<Point> targetsWithoutFirstOne(targets.begin() + 1, targets.end());
 			m_model->setTargetPoints(targetsWithoutFirstOne);
-			robot.goTo(RobotPosition(targets.front(), 0));
+			const Point &target = targets.front();
+			Angle finalOrientation(positionAndOrientation.getPosition(), target);
+			robot.goTo(RobotPosition(target, finalOrientation));
 		}
 	}
 	else
