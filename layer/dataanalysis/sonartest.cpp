@@ -25,12 +25,12 @@ void SonarTest::isObstacleInFront_nothingInFront_false()
 	CPPUNIT_ASSERT(!sonar.isObstacleDirectInFront(1));
 }
 
-void SonarTest::isObstacleInFront_obstacleIn01meter_true()
+void SonarTest::isObstacleInFront_obstacleIn03meter_true()
 {
 	Hardware::SonarMock hardwareSonar;
 	SonarImpl sonar(hardwareSonar);
-	hardwareSonar.setValue(3, 0.1);
-	hardwareSonar.setValue(4, 0.1);
+	hardwareSonar.setValue(3, 0.3);
+	hardwareSonar.setValue(4, 0.3);
 
 	CPPUNIT_ASSERT(sonar.isObstacleDirectInFront(1));
 }
@@ -51,4 +51,31 @@ void SonarTest::isObstacleInFront_closeEnough_true()
 	hardwareSonar.readSensorDataFromFile("resources/testfiles/sonar_2.txt");
 
 	CPPUNIT_ASSERT(sonar.isObstacleDirectInFront(0.5));
+}
+
+void SonarTest::isObstacleInFront_bothSensorsCovered_false()
+{
+	Hardware::SonarMock hardwareSonar;
+	SonarImpl sonar(hardwareSonar);
+	hardwareSonar.readSensorDataFromFile("resources/testfiles/sonar_4.txt");
+
+	CPPUNIT_ASSERT(!sonar.isObstacleDirectInFront(0.5));
+}
+
+void SonarTest::isObstacleInFront_bothSensorsCoveredSecondVersion_false()
+{
+	Hardware::SonarMock hardwareSonar;
+	SonarImpl sonar(hardwareSonar);
+	hardwareSonar.readSensorDataFromFile("resources/testfiles/sonar_5.txt");
+
+	CPPUNIT_ASSERT(!sonar.isObstacleDirectInFront(0.5));
+}
+
+void SonarTest::isObstacleInFront_bothSensorsCoveredThirdVersion_false()
+{
+	Hardware::SonarMock hardwareSonar;
+	SonarImpl sonar(hardwareSonar);
+	hardwareSonar.readSensorDataFromFile("resources/testfiles/sonar_6.txt");
+
+	CPPUNIT_ASSERT(!sonar.isObstacleDirectInFront(0.5));
 }

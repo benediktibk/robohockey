@@ -18,9 +18,14 @@ bool SonarImpl::isObstacleDirectInFront(double speed)
 	const double timeToStop = 0.2;
 	const double brakingDistance = speed*timeToStop;
 	const double totalDistance = brakingDistance + minimumDistanceToObstacle;
+	const double crapBorderForSonar = 0.2;
 
-	if (meanValue < totalDistance)
-		return true;
+	if (leftFrontValue > crapBorderForSonar && rightFrontValue > crapBorderForSonar)
+		return meanValue < totalDistance;
+	else if (leftFrontValue > crapBorderForSonar)
+		return leftFrontValue < totalDistance;
+	else if (rightFrontValue > crapBorderForSonar)
+		return rightFrontValue < totalDistance;
 	else
 		return false;
 }

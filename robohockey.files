@@ -407,3 +407,6 @@ testCoverage.sh
 resources/testfiles/lidar_detect3.txt
 resources/testfiles/lidar_detect2.txt
 resources/testfiles/lidar_detect1.txt
+resources/testfiles/sonar_4.txt
+resources/testfiles/sonar_5.txt
+resources/testfiles/sonar_6.txt
