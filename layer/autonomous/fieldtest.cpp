@@ -272,6 +272,60 @@ void FieldTest::update_threeObjectsAndThreeObjectsInGoal_threeAchievedGoals()
     CPPUNIT_ASSERT_EQUAL((unsigned int)3, field.getNumberOfAchievedGoals());
 }
 
+void FieldTest::update_fourObjectsAndFourObjectsInGoal_fourAchievedGoals()
+{
+    DataAnalysis::OdometryMock odometry;
+    DataAnalysis::LidarMock lidar;
+    DataAnalysis::CameraMock camera;
+    Autonomous::RobotMock autonomousRobot;
+    FieldImpl field(odometry, lidar, camera, autonomousRobot);
+
+    field.setTrueTeamColor(FieldColorYellow);
+    DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
+    lidarObjects.addObject(DataAnalysis::LidarObject(Point(4.3, 1.7), 0.1));
+    lidarObjects.addObject(DataAnalysis::LidarObject(Point(4.2, 1.5), 0.1));
+    lidarObjects.addObject(DataAnalysis::LidarObject(Point(4.4, 1.8), 0.1));
+    lidarObjects.addObject(DataAnalysis::LidarObject(Point(4.35, 1.6), 0.1));
+    lidar.setAllObjects(lidarObjects);
+    DataAnalysis::CameraObjects cameraObjects;
+    cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(4.3, 1.7)));
+    cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(4.2, 1.5)));
+    cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(4.4, 1.8)));
+    cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(4.35, 1.6)));
+    camera.setAllObjects(cameraObjects);
+
+    field.update();
+
+    CPPUNIT_ASSERT_EQUAL((unsigned int)4, field.getNumberOfAchievedGoals());
+}
+
+void FieldTest::update_fourObjectsAndThreeObjectsInGoal_threeAchievedGoals()
+{
+    DataAnalysis::OdometryMock odometry;
+    DataAnalysis::LidarMock lidar;
+    DataAnalysis::CameraMock camera;
+    Autonomous::RobotMock autonomousRobot;
+    FieldImpl field(odometry, lidar, camera, autonomousRobot);
+
+    field.setTrueTeamColor(FieldColorBlue);
+    DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
+    lidarObjects.addObject(DataAnalysis::LidarObject(Point(4.3, 1.7), 0.1));
+    lidarObjects.addObject(DataAnalysis::LidarObject(Point(4.2, 1.5), 0.1));
+    lidarObjects.addObject(DataAnalysis::LidarObject(Point(4.4, 1.8), 0.1));
+    lidarObjects.addObject(DataAnalysis::LidarObject(Point(2, 1.6), 0.1));
+    lidar.setAllObjects(lidarObjects);
+    DataAnalysis::CameraObjects cameraObjects;
+    cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorBlue, Point(4.3, 1.7)));
+    cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorBlue, Point(4.2, 1.5)));
+    cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorBlue, Point(4.4, 1.8)));
+    cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorBlue, Point(2, 1.6)));
+    camera.setAllObjects(cameraObjects);
+
+    field.update();
+
+    CPPUNIT_ASSERT_EQUAL((unsigned int)3, field.getNumberOfAchievedGoals());
+}
+
 void FieldTest::update_oneObjectAndZeroObjectsInGoal_ZeroAchievedGoals()
 {
     DataAnalysis::OdometryMock odometry;
@@ -366,6 +420,87 @@ void FieldTest::update_threeObjectsAndZeroObjectsHidden_zeroHiddenPucks()
     field.update();
 
     CPPUNIT_ASSERT_EQUAL((unsigned int)0, field.getNumberOfHiddenPucks());
+}
+
+void FieldTest::update_fourObjectsAndTwoObjectsHidden_twoHiddenPucks()
+{
+    DataAnalysis::OdometryMock odometry;
+    DataAnalysis::LidarMock lidar;
+    DataAnalysis::CameraMock camera;
+    Autonomous::RobotMock autonomousRobot;
+    FieldImpl field(odometry, lidar, camera, autonomousRobot);
+
+    field.setTrueTeamColor(FieldColorBlue);
+    DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
+    lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 0), 0.1));
+    lidarObjects.addObject(DataAnalysis::LidarObject(Point(2, 3), 0.1));
+    lidarObjects.addObject(DataAnalysis::LidarObject(Point(3.5, 2), 0.1));
+    lidarObjects.addObject(DataAnalysis::LidarObject(Point(4, 1), 0.1));
+    lidar.setAllObjects(lidarObjects);
+    DataAnalysis::CameraObjects cameraObjects;
+    cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(1, 0)));
+    cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(2, 3)));
+    cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(3.5, 2)));
+    cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(4, 1)));
+    camera.setAllObjects(cameraObjects);
+
+    field.update();
+
+    CPPUNIT_ASSERT_EQUAL((unsigned int)2, field.getNumberOfHiddenPucks());
+}
+
+void FieldTest::update_fourObjectsAndFourObjectsHidden_fourHiddenPucks()
+{
+    DataAnalysis::OdometryMock odometry;
+    DataAnalysis::LidarMock lidar;
+    DataAnalysis::CameraMock camera;
+    Autonomous::RobotMock autonomousRobot;
+    FieldImpl field(odometry, lidar, camera, autonomousRobot);
+
+    field.setTrueTeamColor(FieldColorBlue);
+    DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
+    lidarObjects.addObject(DataAnalysis::LidarObject(Point(3.4, 0), 0.1));
+    lidarObjects.addObject(DataAnalysis::LidarObject(Point(4, 3), 0.1));
+    lidarObjects.addObject(DataAnalysis::LidarObject(Point(3.5, 2), 0.1));
+    lidarObjects.addObject(DataAnalysis::LidarObject(Point(4, 1), 0.1));
+    lidar.setAllObjects(lidarObjects);
+    DataAnalysis::CameraObjects cameraObjects;
+    cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(3.4, 0)));
+    cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(4, 3)));
+    cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(3.5, 2)));
+    cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(4, 1)));
+    camera.setAllObjects(cameraObjects);
+
+    field.update();
+
+    CPPUNIT_ASSERT_EQUAL((unsigned int)4, field.getNumberOfHiddenPucks());
+}
+
+void FieldTest::update_fourObjectsAndThreeObjectsHidden_threeHiddenPucks()
+{
+    DataAnalysis::OdometryMock odometry;
+    DataAnalysis::LidarMock lidar;
+    DataAnalysis::CameraMock camera;
+    Autonomous::RobotMock autonomousRobot;
+    FieldImpl field(odometry, lidar, camera, autonomousRobot);
+
+    field.setTrueTeamColor(FieldColorYellow);
+    DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
+    lidarObjects.addObject(DataAnalysis::LidarObject(Point(3.4, 0), 0.1));
+    lidarObjects.addObject(DataAnalysis::LidarObject(Point(4, 3), 0.1));
+    lidarObjects.addObject(DataAnalysis::LidarObject(Point(3.5, 2), 0.1));
+    lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 1), 0.1));
+    lidar.setAllObjects(lidarObjects);
+    DataAnalysis::CameraObjects cameraObjects;
+    cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorBlue, Point(3.4, 0)));
+    cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorBlue, Point(4, 3)));
+    cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorBlue, Point(3.5, 2)));
+    cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorBlue, Point(1, 1)));
+    camera.setAllObjects(cameraObjects);
+
+    field.update();
+
+    CPPUNIT_ASSERT_EQUAL((unsigned int)3, field.getNumberOfHiddenPucks());
 }
 
 void FieldTest::calibratePosition_noValidPattern_false()
@@ -1008,7 +1143,33 @@ void FieldTest::getAllHardObstacles_oneBigObstacleDisappeared_resultSizeIs0()
 	field.update();
 	vector<Circle> obstacles = field.getAllHardObstacles();
 
-	CPPUNIT_ASSERT_EQUAL((size_t)0, obstacles.size());
+    CPPUNIT_ASSERT_EQUAL((size_t)0, obstacles.size());
+}
+
+void FieldTest::getEnemyTeamColor_OwnTeamColorYellow_blue()
+{
+    DataAnalysis::OdometryMock odometry;
+    DataAnalysis::LidarMock lidar;
+    DataAnalysis::CameraMock camera;
+    Autonomous::RobotMock autonomousRobot;
+    FieldImpl field(odometry, lidar, camera, autonomousRobot);
+
+    field.setTrueTeamColor(FieldColorYellow);
+
+    CPPUNIT_ASSERT_EQUAL(FieldColorBlue, field.getEnemyTeamColor());
+}
+
+void FieldTest::getEnemyTeamColor_OwnTeamColorBlue_yellow()
+{
+    DataAnalysis::OdometryMock odometry;
+    DataAnalysis::LidarMock lidar;
+    DataAnalysis::CameraMock camera;
+    Autonomous::RobotMock autonomousRobot;
+    FieldImpl field(odometry, lidar, camera, autonomousRobot);
+
+    field.setTrueTeamColor(FieldColorBlue);
+
+    CPPUNIT_ASSERT_EQUAL(FieldColorYellow, field.getEnemyTeamColor());
 }
 
 void FieldTest::getTargetsForScoringGoals_always_numberOfPositionsBigger4()
