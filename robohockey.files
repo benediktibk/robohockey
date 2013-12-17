@@ -410,3 +410,5 @@ resources/testfiles/lidar_detect1.txt
 resources/testfiles/sonar_4.txt
 resources/testfiles/sonar_5.txt
 resources/testfiles/sonar_6.txt
+layer/strategy/common/drivepuck.h
+layer/strategy/common/drivepuck.cpp

@@ -7,6 +7,7 @@ set(LAYER_STRATEGY_COMMON_SRC
 	statemachine.cpp
 	refereeimpl.cpp
 	driveto.cpp
+	drivepuck.cpp
 )
 
 set(LAYER_STRATEGY_COMMON_TEST_SRC
