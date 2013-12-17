@@ -416,3 +416,7 @@ layer/strategy/common/drivepucktoachivegoalstest.h
 layer/strategy/common/drivepucktoachivegoals.h
 layer/strategy/common/drivepucktoachivegoalstest.cpp
 layer/strategy/common/drivepucktoachivegoals.cpp
+layer/strategy/common/drivepucktohidepuckstest.h
+layer/strategy/common/drivepucktohidepucks.h
+layer/strategy/common/drivepucktohidepuckstest.cpp
+layer/strategy/common/drivepucktohidepucks.cpp
