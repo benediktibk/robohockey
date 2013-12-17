@@ -46,6 +46,7 @@ namespace Autonomous
 		CPPUNIT_TEST(goTo_twoTargetsAndOnlySecondOnePossible_canReachSecondTarget);
 		CPPUNIT_TEST(goTo_validTargets_watchGotCallToRestart);
 		CPPUNIT_TEST(goTo_minuteWaited_cantReachTarget);
+		CPPUNIT_TEST(goTo_obstacleSuddenlyAppeared_engineGotCallToTurnTowardsNewRoute);
 		CPPUNIT_TEST(stuckAtObstacle_tryingToTackleObstacle_true);
 		CPPUNIT_TEST(stuckAtObstacle_notTryingToTackleObstacle_false);
 		CPPUNIT_TEST(stuckAtObstacle_updateCalledTwiceAfterStuckAtObstacle_true);
@@ -151,6 +152,7 @@ namespace Autonomous
 		void goTo_twoTargetsAndOnlySecondOnePossible_canReachSecondTarget();
 		void goTo_validTargets_watchGotCallToRestart();
 		void goTo_minuteWaited_cantReachTarget();
+		void goTo_obstacleSuddenlyAppeared_engineGotCallToTurnTowardsNewRoute();
 		void stuckAtObstacle_tryingToTackleObstacle_true();
 		void stuckAtObstacle_notTryingToTackleObstacle_false();
 		void stuckAtObstacle_updateCalledTwiceAfterStuckAtObstacle_true();

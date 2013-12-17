@@ -596,6 +596,38 @@ void RobotTest::goTo_minuteWaited_cantReachTarget()
 	CPPUNIT_ASSERT(robot.cantReachTarget());
 }
 
+void RobotTest::goTo_obstacleSuddenlyAppeared_engineGotCallToTurnTowardsNewRoute()
+{
+	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
+	DataAnalysis::Odometry &odometry = dataAnalyser->getOdometry();
+	DataAnalysis::EngineMock &engine = dataAnalyser->getEngineMock();
+	odometry.setCurrentPosition(RobotPosition(Point(0, 0), Angle(0)));
+	RobotImpl robot(dataAnalyser, new RouterImpl(0.5), m_watchMock);
+	FieldMock field;
+	vector<Circle> obstacles;
+	obstacles.push_back(Circle(Point(5, 0), 1));
+
+	robot.updateSensorData();
+	m_targets.push_back(RobotPosition(Point(10, 0), 0));
+	robot.goTo(m_targets);
+	robot.updateActuators(field);
+	robot.updateSensorData();
+	robot.updateActuators(field);
+	field.setHardObstacles(obstacles);
+	engine.resetCounters();
+	robot.updateSensorData();
+	robot.updateActuators(field);
+
+	CPPUNIT_ASSERT(!robot.cantReachTarget());
+	CPPUNIT_ASSERT_EQUAL((unsigned int)1, engine.getCallsToTurnToTarget());
+	CPPUNIT_ASSERT_EQUAL((unsigned int)0, engine.getCallsToGoToStraight());
+	list<Point> routePoints = robot.getAllRoutePoints();
+	CPPUNIT_ASSERT(routePoints.size() >= 3);
+	const Point &nextPoint = *(++routePoints.begin());
+	Compare compare(0.001);
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(nextPoint, engine.getLastTarget()));
+}
+
 void RobotTest::stuckAtObstacle_tryingToTackleObstacle_true()
 {
 	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
