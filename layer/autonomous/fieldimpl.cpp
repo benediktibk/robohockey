@@ -331,15 +331,15 @@ void FieldImpl::updateObstacles()
 		if (fieldObject.getColor() == FieldColorGreen || fieldObjectCircle.getDiameter() > 0.2)
 			m_hardObstacles.push_back(fieldObjectCircle);
 		else
-			m_softObstacles.push_back(i->getCircle());
-    }
+			m_softObstacles.push_back(fieldObjectCircle);
+	}
+	for (vector<Circle>::iterator i = m_softObstacles.begin(); i != m_softObstacles.end(); ++i)
+		i->setDiameter(0.12);
 }
 
 void FieldImpl::updateAchievedGoals()
 {
-	Point corner1(4.167, 1);
-	Point corner2(4.583, 2);
-	Rectangle goal(corner1, corner2);
+	Rectangle goal(Point(4.167, 1), Point(4.583, 2));
 
 	m_achievedGoals = 0;
 	if(m_fieldObjects.size() != 0)
@@ -352,8 +352,6 @@ void FieldImpl::updateAchievedGoals()
 				m_achievedGoals++;
 		}
 	}
-	else
-		m_achievedGoals = 0;
 }
 
 FieldObject &FieldImpl::getNextObjectFromPosition(Point position)
