@@ -40,11 +40,11 @@ RobotImpl::~RobotImpl()
 	clearRoute();
 }
 
-void RobotImpl::goTo(const RobotPosition &position)
+void RobotImpl::goTo(const list<RobotPosition> &possibleTargets)
 {
 	clearRoute();
 	changeIntoState(RobotStateDrivingTurningPart);
-	m_currentTarget = position;
+	m_currentTarget = possibleTargets.front();
 }
 
 void RobotImpl::turnTo(const Point &position)

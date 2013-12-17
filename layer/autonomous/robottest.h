@@ -3,6 +3,8 @@
 
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
+#include <list>
+#include "common/robotposition.h"
 
 namespace RoboHockey
 {
@@ -198,6 +200,7 @@ namespace Autonomous
 
 	private:
 		RouterMock *m_routerMock;
+		std::list<Common::RobotPosition> m_targets;
 	};
 }
 }

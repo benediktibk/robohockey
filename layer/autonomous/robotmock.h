@@ -21,7 +21,7 @@ namespace Autonomous
 	public:
 		RobotMock();
 
-		virtual void goTo(const Common::RobotPosition &position);
+		virtual void goTo(const std::list<Common::RobotPosition> &possibleTargets);
 		virtual bool stuckAtObstacle();
 		virtual bool reachedTarget();
 		virtual void updateActuators(const Field &field);

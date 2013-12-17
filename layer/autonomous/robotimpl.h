@@ -27,7 +27,7 @@ namespace Autonomous
 		RobotImpl(DataAnalysis::DataAnalyser *dataAnalyser, Router *router);
 		virtual ~RobotImpl();
 
-		virtual void goTo(const Common::RobotPosition &position);
+		virtual void goTo(const std::list<Common::RobotPosition> &possibleTargets);
 		virtual void turnTo(const Common::Point &position);
 		virtual bool stuckAtObstacle();
 		virtual bool reachedTarget();

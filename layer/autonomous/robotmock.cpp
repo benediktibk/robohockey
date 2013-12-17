@@ -17,9 +17,9 @@ RobotMock::RobotMock() :
 	m_cantReachTarget(false)
 { }
 
-void RobotMock::goTo(const RobotPosition &position)
+void RobotMock::goTo(const list<RobotPosition> &possibleTargets)
 {
-	m_lastTarget = position;
+	m_lastTarget = possibleTargets.front();
 }
 
 bool RobotMock::stuckAtObstacle()

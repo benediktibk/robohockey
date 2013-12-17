@@ -17,6 +17,7 @@ using namespace RoboHockey::Layer::Autonomous;
 void RobotTest::setUp()
 {
 	m_routerMock = new RouterMock();
+	m_targets.clear();
 }
 
 void RobotTest::tearDown()
@@ -34,7 +35,8 @@ void RobotTest::goTo_positionDifferentToCurrentOne_engineGotAtLeastOneCallToGoTo
 	FieldMock field;
 
 	robot.updateSensorData();
-	robot.goTo(RobotPosition(Point(5, 4), 0));
+	m_targets.push_back(RobotPosition(Point(5, 4), 0));
+	robot.goTo(m_targets);
 	robot.updateActuators(field);
 
 	CPPUNIT_ASSERT(engine.getCallsToGoToStraight() > 0 || engine.getCallsToTurnToTarget() > 0);
@@ -51,7 +53,8 @@ void RobotTest::goTo_orientationToTargetCorrect_engineGotAtLeastOneCallToGoToStr
 
 	engine.setReachedTarget(false);
 	robot.updateSensorData();
-	robot.goTo(RobotPosition(Point(1, 0), 0));
+	m_targets.push_back(RobotPosition(Point(1, 0), 0));
+	robot.goTo(m_targets);
 	robot.updateActuators(field);
 	engine.setReachedTarget(true);
 	robot.updateSensorData();
@@ -73,7 +76,8 @@ void RobotTest::goTo_orientationToTargetCorrect_isNotRotating()
 
 	engine.setReachedTarget(true);
 	robot.updateSensorData();
-	robot.goTo(RobotPosition(Point(1, 0), 0));
+	m_targets.push_back(RobotPosition(Point(1, 0), 0));
+	robot.goTo(m_targets);
 	robot.updateActuators(field);
 	robot.updateSensorData();
 	robot.updateActuators(field);
@@ -91,7 +95,8 @@ void RobotTest::goTo_orientationToTargetCompletelyWrong_engineGotNoCallToGoToStr
 	FieldMock field;
 
 	robot.updateSensorData();
-	robot.goTo(RobotPosition(Point(-1, 0), Angle::getHalfRotation()));
+	m_targets.push_back(RobotPosition(Point(-1, 0), Angle::getHalfRotation()));
+	robot.goTo(m_targets);
 	robot.updateActuators(field);
 
 	CPPUNIT_ASSERT(engine.getCallsToGoToStraight() == 0);
@@ -107,7 +112,8 @@ void RobotTest::goTo_orientationToTargetCompletelyWrong_engineGotAtLeastOneCallT
 	FieldMock field;
 
 	robot.updateSensorData();
-	robot.goTo(RobotPosition(Point(-1, 0), Angle::getHalfRotation()));
+	m_targets.push_back(RobotPosition(Point(-1, 0), Angle::getHalfRotation()));
+	robot.goTo(m_targets);
 	robot.updateActuators(field);
 
 	CPPUNIT_ASSERT(engine.getCallsToTurnToTarget() > 0);
@@ -122,7 +128,8 @@ void RobotTest::goTo_orientationToTargetCompletelyWrong_isRotating()
 	FieldMock field;
 
 	robot.updateSensorData();
-	robot.goTo(RobotPosition(Point(-1, 0), Angle::getHalfRotation()));
+	m_targets.push_back(RobotPosition(Point(-1, 0), Angle::getHalfRotation()));
+	robot.goTo(m_targets);
 	robot.updateActuators(field);
 
 	CPPUNIT_ASSERT(robot.isRotating());
@@ -138,7 +145,8 @@ void RobotTest::goTo_orientationToTargetCorrectAndUpdateCalledTwice_notReachedTa
 	FieldMock field;
 
 	robot.updateSensorData();
-	robot.goTo(RobotPosition(Point(1, 0), Angle::getQuarterRotation()));
+	m_targets.push_back(RobotPosition(Point(1, 0), Angle::getQuarterRotation()));
+	robot.goTo(m_targets);
 	robot.updateActuators(field);
 	robot.updateSensorData();
 	engine.setReachedTarget(false);
@@ -158,7 +166,8 @@ void RobotTest::goTo_orientationReachedAfterSomeTime_notReachedTarget()
 
 	engine.setReachedTarget(false);
 	robot.updateSensorData();
-	robot.goTo(RobotPosition(Point(-1, 0), Angle::getHalfRotation()));
+	m_targets.push_back(RobotPosition(Point(-1, 0), Angle::getHalfRotation()));
+	robot.goTo(m_targets);
 	robot.updateActuators(field);
 	robot.updateSensorData();
 	robot.updateActuators(field);
@@ -181,7 +190,8 @@ void RobotTest::goTo_lookingDownwardButHaveToGoUpAndOrientationReached_engineGot
 
 	engine.setReachedTarget(false);
 	robot.updateSensorData();
-	robot.goTo(RobotPosition(Point(0, 1), Angle::getQuarterRotation()));
+	m_targets.push_back(RobotPosition(Point(0, 1), Angle::getQuarterRotation()));
+	robot.goTo(m_targets);
 	robot.updateActuators(field);
 	robot.updateSensorData();
 	robot.updateActuators(field);
@@ -206,7 +216,8 @@ void RobotTest::goTo_targetPositionReached_reachedTarget()
 
 	engine.setReachedTarget(false);
 	robot.updateSensorData();
-	robot.goTo(RobotPosition(Point(0, 1), Angle::getQuarterRotation()));
+	m_targets.push_back(RobotPosition(Point(0, 1), Angle::getQuarterRotation()));
+	robot.goTo(m_targets);
 	robot.updateActuators(field);
 	robot.updateSensorData();
 	robot.updateActuators(field);
@@ -240,7 +251,8 @@ void RobotTest::goTo_firstPointReached_notReachedTarget()
 	m_routerMock->setChessMode(true);
 	engine.setReachedTarget(false);
 	robot.updateSensorData();
-	robot.goTo(RobotPosition(Point(1, 1), Angle::getEighthRotation()));
+	m_targets.push_back(RobotPosition(Point(1, 1), Angle::getEighthRotation()));
+	robot.goTo(m_targets);
 	robot.updateActuators(field);
 	engine.setReachedTarget(true);
 	engine.setIsGoingStraight(false);
@@ -268,7 +280,8 @@ void RobotTest::goTo_firstPointReached_engineGotOneCallToTurnTo()
 	m_routerMock->setChessMode(true);
 	engine.setReachedTarget(false);
 	robot.updateSensorData();
-	robot.goTo(RobotPosition(Point(1, 1), Angle::getEighthRotation()));
+	m_targets.push_back(RobotPosition(Point(1, 1), Angle::getEighthRotation()));
+	robot.goTo(m_targets);
 	robot.updateActuators(field);
 	engine.setReachedTarget(true);
 	engine.setIsGoingStraight(false);
@@ -297,7 +310,8 @@ void RobotTest::goTo_firstPointReached_lastArgumentOfTurnToIsTargetPoint()
 	m_routerMock->setChessMode(true);
 	engine.setReachedTarget(false);
 	robot.updateSensorData();
-	robot.goTo(RobotPosition(Point(1, 1), Angle::getEighthRotation()));
+	m_targets.push_back(RobotPosition(Point(1, 1), Angle::getEighthRotation()));
+	robot.goTo(m_targets);
 	robot.updateActuators(field);
 	engine.setReachedTarget(true);
 	engine.setIsGoingStraight(false);
@@ -327,7 +341,8 @@ void RobotTest::goTo_firstPointAndRotationReached_engineGotOneCallToGoToStraight
 	m_routerMock->setChessMode(true);
 	engine.setReachedTarget(false);
 	robot.updateSensorData();
-	robot.goTo(RobotPosition(Point(1, 1), Angle::getEighthRotation()));
+	m_targets.push_back(RobotPosition(Point(1, 1), Angle::getEighthRotation()));
+	robot.goTo(m_targets);
 	robot.updateActuators(field);
 	engine.setReachedTarget(true);
 	engine.setIsGoingStraight(false);
@@ -362,7 +377,8 @@ void RobotTest::goTo_finalPointReached_engineGotOneCallToTurnTo()
 
 	engine.setReachedTarget(false);
 	robot.updateSensorData();
-	robot.goTo(RobotPosition(Point(1, 1), Angle::getQuarterRotation()));
+	m_targets.push_back(RobotPosition(Point(1, 1), Angle::getQuarterRotation()));
+	robot.goTo(m_targets);
 	robot.updateActuators(field);
 	engine.setIsGoingStraight(false);
 	engine.setReachedTarget(true);
@@ -394,7 +410,8 @@ void RobotTest::goTo_finalOrientationReached_engineGotOneCallToStop()
 
 	engine.setReachedTarget(false);
 	robot.updateSensorData();
-	robot.goTo(RobotPosition(Point(1, 1), Angle::getQuarterRotation()));
+	m_targets.push_back(RobotPosition(Point(1, 1), Angle::getQuarterRotation()));
+	robot.goTo(m_targets);
 	robot.updateActuators(field);
 	engine.setIsGoingStraight(false);
 	engine.setReachedTarget(true);
@@ -442,7 +459,8 @@ void RobotTest::goTo_surroundedBySoftObstacles_canReachTarget()
 	field.setSoftObstacles(obstacles);
 
 	robot.updateSensorData();
-	robot.goTo(RobotPosition(Point(10, 10), Angle(0)));
+	m_targets.push_back(RobotPosition(Point(10, 10), Angle(0)));
+	robot.goTo(m_targets);
 	robot.updateActuators(field);
 
 	CPPUNIT_ASSERT(!robot.cantReachTarget());
@@ -464,7 +482,8 @@ void RobotTest::goTo_surroundedByHardObstacles_cantReachTarget()
 	field.setHardObstacles(obstacles);
 
 	robot.updateSensorData();
-	robot.goTo(RobotPosition(Point(10, 10), Angle(0)));
+	m_targets.push_back(RobotPosition(Point(10, 10), Angle(0)));
+	robot.goTo(m_targets);
 	robot.updateActuators(field);
 
 	CPPUNIT_ASSERT(robot.cantReachTarget());
@@ -485,7 +504,8 @@ void RobotTest::goTo_finalOrientationNotPossible_canReachTarget()
 	field.setHardObstacles(obstacles);
 
 	robot.updateSensorData();
-	robot.goTo(RobotPosition(Point(10, 0), Angle::getHalfRotation()));
+	m_targets.push_back(RobotPosition(Point(10, 0), Angle::getHalfRotation()));
+	robot.goTo(m_targets);
 	robot.updateActuators(field);
 
 	CPPUNIT_ASSERT(!robot.cantReachTarget());
@@ -544,7 +564,8 @@ void RobotTest::stuckAtObstacle_newTargetSet_false()
 	robot.updateActuators(field);
 	engine.setTryingToTackleObstacle(false);
 	robot.updateSensorData();
-	robot.goTo(RobotPosition(Point(5, 1), 0));
+	m_targets.push_back(RobotPosition(Point(5, 1), 0));
+	robot.goTo(m_targets);
 	robot.updateActuators(field);
 
 	CPPUNIT_ASSERT(!robot.stuckAtObstacle());
@@ -632,7 +653,8 @@ void RobotTest::reachedTarget_engineSaysNotReached_false()
 	engine.setReachedTarget(false);
 
 	robot.updateSensorData();
-	robot.goTo(RobotPosition(Point(4, 5), 0));
+	m_targets.push_back(RobotPosition(Point(4, 5), 0));
+	robot.goTo(m_targets);
 	robot.updateActuators(field);
 
 	CPPUNIT_ASSERT(!robot.reachedTarget());
@@ -745,7 +767,8 @@ void RobotTest::updateActuators_notTryingToTackleObstacle_engineGotNoCallToStop(
 	engine.setTryingToTackleObstacle(false);
 	engine.setReachedTarget(false);
 	RobotImpl robot(dataAnalyser, m_routerMock);
-	robot.goTo(RobotPosition(Point(10, 0), 0));
+	m_targets.push_back(RobotPosition(Point(10, 0), 0));
+	robot.goTo(m_targets);
 	FieldMock field;
 
 	robot.updateSensorData();
@@ -760,7 +783,8 @@ void RobotTest::updateActuators_tryingToTackleObstacle_engineGotAtLeastOneCallTo
 	DataAnalysis::EngineMock &engine = dataAnalyser->getEngineMock();
 	engine.setTryingToTackleObstacle(true);
 	RobotImpl robot(dataAnalyser, m_routerMock);
-	robot.goTo(RobotPosition(Point(10, 0), 0));
+	m_targets.push_back(RobotPosition(Point(10, 0), 0));
+	robot.goTo(m_targets);
 	FieldMock field;
 
 	robot.updateSensorData();
@@ -777,7 +801,8 @@ void RobotTest::updateActuators_tryingToTackleObstacle_targetNotReached()
 	DataAnalysis::EngineMock &engine = dataAnalyser->getEngineMock();
 	engine.setTryingToTackleObstacle(true);
 	RobotImpl robot(dataAnalyser, m_routerMock);
-	robot.goTo(RobotPosition(Point(10, 0), 0));
+	m_targets.push_back(RobotPosition(Point(10, 0), 0));
+	robot.goTo(m_targets);
 	FieldMock field;
 
 	robot.updateSensorData();
@@ -826,7 +851,8 @@ void RobotTest::updateSensorData_obstacleDirectInFront_engineGotAtLeastOneCallTo
 	FieldMock field;
 
 	robot.updateSensorData();
-	robot.goTo(RobotPosition(Point(1, 0), 0));
+	m_targets.push_back(RobotPosition(Point(1, 0), 0));
+	robot.goTo(m_targets);
 	robot.updateActuators(field);
 
 	CPPUNIT_ASSERT(engine.getCallsToLockForwardMovement() > 0);
@@ -842,7 +868,8 @@ void RobotTest::updateSensorData_0bstacleDirectInFront_engineGotNoCallToUnlockFo
 	sonar.setIsObstacleDirectInFront(true);
 
 	robot.updateSensorData();
-	robot.goTo(RobotPosition(Point(1, 0), 0));
+	m_targets.push_back(RobotPosition(Point(1, 0), 0));
+	robot.goTo(m_targets);
 	robot.updateActuators(field);
 
 	CPPUNIT_ASSERT(engine.getCallsToUnlockForwardMovement() == 0);
@@ -910,7 +937,8 @@ void RobotTest::reachedTarget_nearlyHitTargetButTookSomeAdditionalWayToStop_fals
 	odometry.setCurrentPosition(RobotPosition(Point(0, 0), 0));
 	sonar.setIsObstacleDirectInFront(false);
 	robot.updateSensorData();
-	robot.goTo(RobotPosition(Point(10, 0), 0));
+	m_targets.push_back(RobotPosition(Point(10, 0), 0));
+	robot.goTo(m_targets);
 	robot.updateActuators(field);
 	odometry.setCurrentPosition(RobotPosition(Point(5, 0), 0));
 	sonar.setIsObstacleDirectInFront(true);
@@ -947,7 +975,8 @@ void RobotTest::cantReachTarget_drivingTowardsTheTarget_false()
 	FieldMock field;
 
 	robot.updateSensorData();
-	robot.goTo(RobotPosition(Point(10, 0), 0));
+	m_targets.push_back(RobotPosition(Point(10, 0), 0));
+	robot.goTo(m_targets);
 	robot.updateActuators(field);
 
 	CPPUNIT_ASSERT(!robot.cantReachTarget());
@@ -962,7 +991,8 @@ void RobotTest::cantReachTarget_currentTargetSuddenlyNotPossible_true()
 	FieldMock field;
 
 	robot.updateSensorData();
-	robot.goTo(RobotPosition(Point(10, 0), 0));
+	m_targets.push_back(RobotPosition(Point(10, 0), 0));
+	robot.goTo(m_targets);
 	robot.updateActuators(field);
 	vector<Circle> obstacles;
 	obstacles.push_back(Circle(Point(10, 0), 2));
@@ -985,7 +1015,8 @@ void RobotTest::cantReachTarget_notPossibleAnymoreDuringDriving_true()
 	field.setHardObstacles(obstacles);
 
 	robot.updateSensorData();
-	robot.goTo(RobotPosition(Point(10, 0), 0));
+	m_targets.push_back(RobotPosition(Point(10, 0), 0));
+	robot.goTo(m_targets);
 	robot.updateActuators(field);
 
 	CPPUNIT_ASSERT(robot.cantReachTarget());
@@ -1001,10 +1032,13 @@ void RobotTest::cantReachTarget_onlyLastTargetNotPossibleToReach_false()
 	field.setSoftObstacles(obstacles);
 
 	robot.updateSensorData();
-	robot.goTo(RobotPosition(Point(10, 0), 0));
+	m_targets.push_back(RobotPosition(Point(10, 0), 0));
+	robot.goTo(m_targets);
 	robot.updateActuators(field);
 	robot.updateSensorData();
-	robot.goTo(RobotPosition(Point(-10, 0), 0));
+	m_targets.clear();
+	m_targets.push_back(RobotPosition(Point(-10, 0), 0));
+	robot.goTo(m_targets);
 	robot.updateActuators(field);
 
 	CPPUNIT_ASSERT(!robot.cantReachTarget());
@@ -1020,7 +1054,8 @@ void RobotTest::cantReachTarget_updateTwiceCalled_true()
 	field.setHardObstacles(obstacles);
 
 	robot.updateSensorData();
-	robot.goTo(RobotPosition(Point(10, 0), 0));
+	m_targets.push_back(RobotPosition(Point(10, 0), 0));
+	robot.goTo(m_targets);
 	robot.updateActuators(field);
 	robot.updateSensorData();
 	robot.updateActuators(field);
@@ -1037,9 +1072,15 @@ void RobotTest::cantReachTarget_newTargetSet_false()
 	obstacles.push_back(Circle(Point(10, 0), 2));
 	field.setSoftObstacles(obstacles);
 
-	robot.goTo(RobotPosition(Point(10, 0), 0));
+	robot.updateSensorData();
+	m_targets.push_back(RobotPosition(Point(10, 0), 0));
+	robot.goTo(m_targets);
 	robot.updateActuators(field);
-	robot.goTo(RobotPosition(Point(-10, 0), 0));
+	robot.updateSensorData();
+	m_targets.clear();
+	m_targets.push_back(RobotPosition(Point(-10, 0), 0));
+	robot.goTo(m_targets);
+	robot.updateActuators(field);
 
 	CPPUNIT_ASSERT(!robot.cantReachTarget());
 }
@@ -1055,7 +1096,8 @@ void RobotTest::cantReachTarget_collectPuckInFrontCalled_false()
 	field.setSoftObstacles(obstacles);
 
 	robot.updateSensorData();
-	robot.goTo(RobotPosition(Point(10, 0), 0));
+	m_targets.push_back(RobotPosition(Point(10, 0), 0));
+	robot.goTo(m_targets);
 	robot.updateActuators(field);
 	lidar.setPuckCollectable(true);
 	robot.updateSensorData();
@@ -1075,7 +1117,8 @@ void RobotTest::cantReachTarget_turnAroundCalled_false()
 	field.setSoftObstacles(obstacles);
 
 	robot.updateSensorData();
-	robot.goTo(RobotPosition(Point(10, 0), 0));
+	m_targets.push_back(RobotPosition(Point(10, 0), 0));
+	robot.goTo(m_targets);
 	robot.updateActuators(field);
 	robot.updateSensorData();
 	robot.turnAround();
@@ -1094,7 +1137,8 @@ void RobotTest::cantReachTarget_turnToCalled_false()
 	field.setSoftObstacles(obstacles);
 
 	robot.updateSensorData();
-	robot.goTo(RobotPosition(Point(10, 0), 0));
+	m_targets.push_back(RobotPosition(Point(10, 0), 0));
+	robot.goTo(m_targets);
 	robot.updateActuators(field);
 	robot.updateSensorData();
 	robot.turnTo(Point(-10, 0));
@@ -1113,7 +1157,8 @@ void RobotTest::cantReachTarget_leavePuckCalled_false()
 	field.setSoftObstacles(obstacles);
 
 	robot.updateSensorData();
-	robot.goTo(RobotPosition(Point(10, 0), 0));
+	m_targets.push_back(RobotPosition(Point(10, 0), 0));
+	robot.goTo(m_targets);
 	robot.updateActuators(field);
 	robot.updateSensorData();
 	robot.leaveCollectedPuck();
@@ -1130,7 +1175,8 @@ void RobotTest::cantReachTarget_stuckAtObstacle_true()
 	FieldMock field;
 
 	robot.updateSensorData();
-	robot.goTo(RobotPosition(Point(10, 0), 0));
+	m_targets.push_back(RobotPosition(Point(10, 0), 0));
+	robot.goTo(m_targets);
 	robot.updateActuators(field);
 	engine.setTryingToTackleObstacle(true);
 	robot.updateSensorData();
