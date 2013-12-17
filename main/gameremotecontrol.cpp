@@ -85,9 +85,9 @@ void GameRemoteControl::executeRobotControl()
 		{
 			vector<Point> targetsWithoutFirstOne(targets.begin() + 1, targets.end());
 			m_model->setTargetPoints(targetsWithoutFirstOne);
-			const Point &target = targets.front();
-			Angle finalOrientation(positionAndOrientation.getPosition(), target);
-			robot.goTo(RobotPosition(target, finalOrientation));
+			m_lastTarget = targets.front();
+			Angle finalOrientation(positionAndOrientation.getPosition(), m_lastTarget);
+			robot.goTo(RobotPosition(m_lastTarget, finalOrientation));
 		}
 	}
 	else
@@ -128,10 +128,11 @@ void GameRemoteControl::executeRobotControl()
 			m_model->setCalibratePosition(false);
 		}
 	}
+
 	m_model->setData(
 				field.getAllFieldObjects(), robot.getAllRoutePoints(), robot.stuckAtObstacle(),
 				robot.reachedTarget(), robot.getCurrentPosition(),
-				robot.getCurrentTarget(), robot.isMoving(), robot.cantReachTarget(),
+				m_lastTarget, robot.isMoving(), robot.cantReachTarget(),
 				robot.isPuckCollected(), robot.isPuckCollectable(), closestPuckValid,
 				closestPuckPosition, robot.isRotating());
 }
