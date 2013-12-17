@@ -255,7 +255,7 @@ void FieldImpl::updateWithLidarData(double range)
 	const DataAnalysis::LidarObjects &lidarObjects =  m_lidar->getAllObjects(*m_position);
 	const vector<DataAnalysis::LidarObject> &objectsInRange = lidarObjects.getObjectsWithDistanceBelow(range);
 
-	vector<FieldObject> inVisibleArea = moveAllFieldObjectsInVisibleAreaToTemporaryVector();
+	vector<FieldObject> inVisibleArea = moveAllFieldObjectsInVisibleAreaToTemporaryVector(range);
 
 	for (vector<DataAnalysis::LidarObject>::const_iterator i = objectsInRange.begin(); i != objectsInRange.end(); ++i)
 	{
@@ -513,7 +513,7 @@ vector<FieldObject> FieldImpl::getObjectsWithColor(FieldColor color) const
 	return result;
 }
 
-vector<FieldObject> FieldImpl::moveAllFieldObjectsInVisibleAreaToTemporaryVector()
+vector<FieldObject> FieldImpl::moveAllFieldObjectsInVisibleAreaToTemporaryVector(double range)
 {
 	vector<FieldObject> result;
 	const RobotPosition &ownPosition = m_odometry->getCurrentPosition();
@@ -524,7 +524,7 @@ vector<FieldObject> FieldImpl::moveAllFieldObjectsInVisibleAreaToTemporaryVector
 		vector<FieldObject>::iterator it = m_fieldObjects.begin() + i;
 		const Circle &circle = m_fieldObjects[i].getCircle();
 
-		if (m_lidar->canBeSeen(circle, ownPosition))
+		if (m_lidar->canBeSeen(circle, ownPosition) && m_position->getPosition().distanceTo(circle.getCenter()) < range)
 		{
 			result.push_back(*it);
 			m_fieldObjects.erase(it);
