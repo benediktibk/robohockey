@@ -1089,6 +1089,25 @@ void FieldTest::getAllSoftObstacles_onePuckDisappeared_resultSizeIs0()
 	CPPUNIT_ASSERT_EQUAL((size_t)0, obstacles.size());
 }
 
+void FieldTest::getAllSoftObstacles_oneSmallObstacleWithUnknownColor_resultDiameterIs0p12()
+{
+	DataAnalysis::OdometryMock odometry;
+	DataAnalysis::LidarMock lidar;
+	DataAnalysis::CameraMock camera;
+	Autonomous::RobotMock autonomousRobot;
+	FieldImpl field(odometry, lidar, camera, autonomousRobot);
+	RobotPosition ownPosition(Point(0, 0), 0);
+	odometry.setCurrentPosition(ownPosition);
+	DataAnalysis::LidarObjects lidarObjects(ownPosition.getPosition());
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 0), 0.06));
+	lidar.setAllObjects(lidarObjects);
+
+	field.update();
+	Circle obstacle = field.getAllSoftObstacles().front();
+
+	CPPUNIT_ASSERT_EQUAL(0.12, obstacle.getDiameter());
+}
+
 void FieldTest::getAllHardObstacles_oneGreenObject_resultSizeIs1()
 {
 	DataAnalysis::OdometryMock odometry;
