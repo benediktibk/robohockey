@@ -79,13 +79,15 @@ namespace DataAnalysis
 		CPPUNIT_TEST(canBeSeen_atRightEdgeOfViewArea_true);
 		CPPUNIT_TEST(canBeSeen_outsideOfViewArea_false);
 		CPPUNIT_TEST(canBeSeen_totallyCoveredByOtherObject_false);
-		CPPUNIT_TEST(canBeSeen_fromLeftSideCoveredByOtherObject_true);
 		CPPUNIT_TEST(canBeSeen_fromRightSideCoveredByOtherObject_true);
+		CPPUNIT_TEST(canBeSeen_fromLeftSideCoveredByOtherObject_true);
 		CPPUNIT_TEST(canBeSeen_partlyCoveredFromBothSides_true);
 		CPPUNIT_TEST(canBeSeen_totallyCoveredFromBothSides_false);
 		CPPUNIT_TEST(canBeSeen_inFrontOfObject_true);
 		CPPUNIT_TEST(canBeSeen_inFrontOfObjectShiftedAndRotated_true);
 		CPPUNIT_TEST(canBeSeen_behindObjectShiftedAndRotated_false);
+		CPPUNIT_TEST(canBeSeen_tooBigObject_true);
+		CPPUNIT_TEST(canBeSeen_objectWithRadius0_true);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
@@ -147,13 +149,15 @@ namespace DataAnalysis
 		void canBeSeen_atRightEdgeOfViewArea_true();
 		void canBeSeen_outsideOfViewArea_false();
 		void canBeSeen_totallyCoveredByOtherObject_false();
-		void canBeSeen_fromLeftSideCoveredByOtherObject_true();
 		void canBeSeen_fromRightSideCoveredByOtherObject_true();
+		void canBeSeen_fromLeftSideCoveredByOtherObject_true();
 		void canBeSeen_partlyCoveredFromBothSides_true();
 		void canBeSeen_totallyCoveredFromBothSides_false();
 		void canBeSeen_inFrontOfObject_true();
 		void canBeSeen_inFrontOfObjectShiftedAndRotated_true();
 		void canBeSeen_behindObjectShiftedAndRotated_false();
+		void canBeSeen_tooBigObject_true();
+		void canBeSeen_objectWithRadius0_true();
 
 	private:
 		static const double m_maximumDistance;

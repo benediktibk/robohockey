@@ -49,6 +49,10 @@ namespace DataAnalysis
 				int &viewAreaMinimum, int &viewAreaMaximum) const;
 		Common::DiscreteFunction* readInData() const;
 		Common::Angle calculateOrientationFromSensorNumber(unsigned int value) const;
+		unsigned int calculateSensorNumberFromOrientation(const Common::Angle &angle) const;
+		double calculateDistanceToObject(
+				const Common::Circle &circle, unsigned int sensorNumber, double distanceToCenter,
+				const Common::Angle &angleToCenterOfCircle) const;
 		double calculateMinimumDistanceToObstacle(const Common::Angle &angle, double speed) const;
 		void clearInternalObjects();
 		std::list<LidarInternalObject*> getObjectsCloserThan(double distance) const;
