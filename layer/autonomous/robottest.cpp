@@ -2,6 +2,7 @@
 #include "layer/autonomous/robotimpl.h"
 #include "layer/autonomous/fieldmock.h"
 #include "layer/autonomous/routermock.h"
+#include "layer/autonomous/routerimpl.h"
 #include "layer/dataanalysis/dataanalysermock.h"
 #include "layer/dataanalysis/dataanalyserimpl.h"
 #include "layer/hardware/robotmock.h"
@@ -423,6 +424,71 @@ void RobotTest::goTo_finalOrientationReached_engineGotOneCallToStop()
 
 	CPPUNIT_ASSERT(engine.getCallsToStop() > 0);
 	CPPUNIT_ASSERT(robot.reachedTarget());
+}
+
+void RobotTest::goTo_surroundedBySoftObstacles_canReachTarget()
+{
+	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
+	DataAnalysis::Odometry &odometry = dataAnalyser->getOdometry();
+	RobotImpl robot(dataAnalyser, new RouterImpl(0.5));
+	FieldMock field;
+	odometry.setCurrentPosition(RobotPosition(Point(0.5, 0.5), 0));
+	field.setNegativeCoordinatesOutside(true);
+	vector<Circle> obstacles;
+	obstacles.push_back(Circle(Point(0.5, 2), 1));
+	obstacles.push_back(Circle(Point(1.5, 2), 1));
+	obstacles.push_back(Circle(Point(2, 1.5), 1));
+	obstacles.push_back(Circle(Point(2, 0.5), 1));
+	field.setSoftObstacles(obstacles);
+
+	robot.updateSensorData();
+	robot.goTo(RobotPosition(Point(10, 10), Angle(0)));
+	robot.updateActuators(field);
+
+	CPPUNIT_ASSERT(!robot.cantReachTarget());
+}
+
+void RobotTest::goTo_surroundedByHardObstacles_cantReachTarget()
+{
+	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
+	DataAnalysis::Odometry &odometry = dataAnalyser->getOdometry();
+	RobotImpl robot(dataAnalyser, new RouterImpl(0.5));
+	FieldMock field;
+	odometry.setCurrentPosition(RobotPosition(Point(0.5, 0.5), 0));
+	field.setNegativeCoordinatesOutside(true);
+	vector<Circle> obstacles;
+	obstacles.push_back(Circle(Point(0.5, 2), 1));
+	obstacles.push_back(Circle(Point(1.5, 2), 1));
+	obstacles.push_back(Circle(Point(2, 1.5), 1));
+	obstacles.push_back(Circle(Point(2, 0.5), 1));
+	field.setHardObstacles(obstacles);
+
+	robot.updateSensorData();
+	robot.goTo(RobotPosition(Point(10, 10), Angle(0)));
+	robot.updateActuators(field);
+
+	CPPUNIT_ASSERT(robot.cantReachTarget());
+}
+
+void RobotTest::goTo_finalOrientationNotPossible_canReachTarget()
+{
+	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
+	DataAnalysis::Odometry &odometry = dataAnalyser->getOdometry();
+	odometry.setCurrentPosition(RobotPosition(Point(0, 0), Angle(0)));
+	RobotImpl robot(dataAnalyser, new RouterImpl(0.5));
+	FieldMock field;
+	field.setNegativeCoordinatesOutside(false);
+	vector<Circle> obstacles;
+	obstacles.push_back(Circle(Point(10, 0.8), 1));
+	obstacles.push_back(Circle(Point(10, -0.8), 1));
+	obstacles.push_back(Circle(Point(10.8, 0), 1));
+	field.setHardObstacles(obstacles);
+
+	robot.updateSensorData();
+	robot.goTo(RobotPosition(Point(10, 0), Angle::getHalfRotation()));
+	robot.updateActuators(field);
+
+	CPPUNIT_ASSERT(!robot.cantReachTarget());
 }
 
 void RobotTest::stuckAtObstacle_tryingToTackleObstacle_true()
