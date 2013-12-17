@@ -516,12 +516,15 @@ vector<FieldObject> FieldImpl::getObjectsWithColor(FieldColor color) const
 vector<FieldObject> FieldImpl::moveAllFieldObjectsInVisibleAreaToTemporaryVector()
 {
 	vector<FieldObject> result;
+	const RobotPosition &ownPosition = m_odometry->getCurrentPosition();
 	size_t i = 0;
+
 	while(i < m_fieldObjects.size())
 	{
 		vector<FieldObject>::iterator it = m_fieldObjects.begin() + i;
+		const Circle &circle = m_fieldObjects[i].getCircle();
 
-		if (m_lidar->canBeSeen(m_fieldObjects[i].getCircle(), m_odometry->getCurrentPosition()))
+		if (m_lidar->canBeSeen(circle, ownPosition))
 		{
 			result.push_back(*it);
 			m_fieldObjects.erase(it);

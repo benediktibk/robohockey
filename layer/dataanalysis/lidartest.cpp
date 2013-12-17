@@ -1185,3 +1185,33 @@ void LidarTest::canBeSeen_objectLessThanFourMetersAway_true()
 
 	CPPUNIT_ASSERT(canBeSeen);
 }
+
+void LidarTest::canBeSeen_objectRightAndLookingLeft_false()
+{
+	Hardware::LidarMock hardwareLidar(10);
+	LidarImpl lidar(hardwareLidar);
+	Circle circle(Point(1, 0), 0.1);
+	RobotPosition ownPosition(Point(0, 0), Angle::getHalfRotation());
+	hardwareLidar.setValueForAngle(0, 3);
+	hardwareLidar.setValueForAngle(360, 3);
+
+	lidar.updateSensorData();
+	bool canBeSeen = lidar.canBeSeen(circle, ownPosition);
+
+	CPPUNIT_ASSERT(!canBeSeen);
+}
+
+void LidarTest::canBeSeen_objectRightLowerAndLookingLeft_false()
+{
+	Hardware::LidarMock hardwareLidar(10);
+	LidarImpl lidar(hardwareLidar);
+	Circle circle(Point(1, -1), 0.1);
+	RobotPosition ownPosition(Point(0, 0), Angle::getHalfRotation());
+	hardwareLidar.setValueForAngle(0, 3);
+	hardwareLidar.setValueForAngle(360, 3);
+
+	lidar.updateSensorData();
+	bool canBeSeen = lidar.canBeSeen(circle, ownPosition);
+
+	CPPUNIT_ASSERT(!canBeSeen);
+}
