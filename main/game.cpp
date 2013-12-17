@@ -60,7 +60,6 @@ Game::Game(int argc, char **argv) :
 	m_watch->getTimeAndRestart();
 	m_timer->start(0);
 	m_referee->reportReady();
-	m_referee->tellTeamColor(FieldColorBlue);
 }
 
 Game::~Game()
