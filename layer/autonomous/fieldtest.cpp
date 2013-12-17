@@ -1270,6 +1270,7 @@ void FieldTest::getNewOriginFromFieldDetection_realWorldExample1_correctNewOrigi
 
 	Compare compare(0.5);
 	CPPUNIT_ASSERT(compare.isFuzzyEqual(RobotPosition(Point(0, 0), Angle()), resultOrigin));
+	CPPUNIT_ASSERT(false);
 }
 
 void FieldTest::getNewOriginFromFieldDetection_realWorldExample2_correctNewOrigin()
@@ -1289,6 +1290,7 @@ void FieldTest::getNewOriginFromFieldDetection_realWorldExample2_correctNewOrigi
 
 	Compare compare(0.5);
 	CPPUNIT_ASSERT(compare.isFuzzyEqual(RobotPosition(Point(0, 0), Angle()), resultOrigin));
+	CPPUNIT_ASSERT(false);
 }
 
 void FieldTest::getNewOriginFromFieldDetection_realWorldExample3_correctNewOrigin()
@@ -1308,4 +1310,5 @@ void FieldTest::getNewOriginFromFieldDetection_realWorldExample3_correctNewOrigi
 
 	Compare compare(0.5);
 	CPPUNIT_ASSERT(compare.isFuzzyEqual(RobotPosition(Point(0, 0), Angle()), resultOrigin));
+	CPPUNIT_ASSERT(false);
 }
