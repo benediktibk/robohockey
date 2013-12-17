@@ -5,7 +5,7 @@
 #include "layer/autonomous/routingobstacle.h"
 #include "common/compare.h"
 #include "common/path.h"
-#include "common/watch.h"
+#include "common/watchimpl.h"
 #include "common/angle.h"
 #include "common/robotposition.h"
 #include "common/line.h"
@@ -363,7 +363,7 @@ void RouterTest::calculateRoute_severalObjectsAndOneOnTheWay_calculationIsNotToo
 	RobotPosition start(Point(1, 2), 0);
 	RobotPosition end(Point(3, 2), 0);
 
-	Watch watch;
+	WatchImpl watch;
 	Route route = router.calculateRoute(start, end, field, Angle::getHalfRotation(), 0.1, false, false);
 	double time = watch.getTimeAndRestart();
 

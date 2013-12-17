@@ -10,7 +10,7 @@ namespace RoboHockey
 {
 namespace Common
 {
-	class Watch;
+	class WatchImpl;
 }
 
 namespace Layer
@@ -58,7 +58,7 @@ namespace Main
 		Layer::Autonomous::Robot *m_robot;
 		Layer::Autonomous::Field *m_field;
 		Layer::Strategy::Common::Referee *m_referee;
-		Common::Watch *m_watch;
+		Common::WatchImpl *m_watch;
 		QTimer *m_timer;
 		const double m_loopTimeMaximum;
 		const double m_loopTimeWeight;

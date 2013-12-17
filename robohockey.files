@@ -153,8 +153,8 @@ layer/autonomous/robotmock.h
 layer/autonomous/field.h
 layer/autonomous/fieldimpl.h
 layer/autonomous/fieldimpl.cpp
-common/watch.h
-common/watch.cpp
+common/watchimpl.h
+common/watchimpl.cpp
 common/watchtest.h
 common/watchtest.cpp
 common/robotposition.h
@@ -425,3 +425,6 @@ layer/strategy/common/drivepucktohidepuckstest.h
 layer/strategy/common/drivepucktohidepucks.h
 layer/strategy/common/drivepucktohidepuckstest.cpp
 layer/strategy/common/drivepucktohidepucks.cpp
+common/watch.h
+common/watchmock.h
+common/watchmock.cpp

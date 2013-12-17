@@ -1,5 +1,5 @@
 #include "main/game.h"
-#include "common/watch.h"
+#include "common/watchimpl.h"
 #include "layer/dataanalysis/dataanalyserimpl.h"
 #include "layer/hardware/robotimpl.h"
 #include "layer/autonomous/robotimpl.h"
@@ -21,7 +21,7 @@ Game::Game(int argc, char **argv) :
 	m_robot(0),
 	m_field(0),
 	m_referee(0),
-	m_watch(new Common::Watch()),
+	m_watch(new Common::WatchImpl()),
 	m_timer(new QTimer()),
 	m_loopTimeMaximum(0.2),
 	m_loopTimeWeight(0.1),
@@ -78,7 +78,7 @@ Game::~Game()
 
 void Game::execute()
 {
-	Watch watch;
+	WatchImpl watch;
 
 	/*!
 	 * Unfortunately disabling the engine is very slow, this seems
