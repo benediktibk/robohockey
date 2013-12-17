@@ -1,6 +1,8 @@
 #ifndef ROBOHOCKEY_LAYER_STRATEGY_COMMON_DRIVEPUCK_H
 #define ROBOHOCKEY_LAYER_STRATEGY_COMMON_DRIVEPUCK_H
 
+#include <vector>
+
 namespace RoboHockey
 {
 namespace Common
@@ -13,16 +15,15 @@ namespace Strategy
 {
 namespace Common
 {
-class DrivePuck
-{
-	public:
-		DrivePuck();
-		virtual ~DrivePuck();
+	class DrivePuck
+	{
+		public:
+			virtual ~DrivePuck() { }
 
-		RoboHockey::Common::RobotPosition getTargetPoint();
-		RoboHockey::Common::RobotPosition getPointToCollectPuck();
-	};
-}
+			virtual std::vector<RoboHockey::Common::RobotPosition> getTargetPoint() = 0;
+			virtual std::vector<RoboHockey::Common::RobotPosition> getPointToCollectPuck() = 0;
+		};
+	}
 }
 }
 }

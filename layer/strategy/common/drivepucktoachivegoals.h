@@ -11,20 +11,20 @@ namespace Strategy
 {
 namespace Common
 {
-	class DrivePuckToHidePucks :
+	class DrivePuckToAchiveGoals :
 			public DrivePuck
 	{
 	public:
-		DrivePuckToHidePucks();
+		DrivePuckToAchiveGoals();
 
-		RoboHockey::Common::RobotPosition getTargetPoint();
-		RoboHockey::Common::RobotPosition getPointToCollectPuck();
+		std::vector<RoboHockey::Common::RobotPosition> getTargetPoint();
+		std::vector<RoboHockey::Common::RobotPosition> getPointToCollectPuck();
 	};
 }
 }
 }
 }
 
-#endif // ROBOHOCKEY_LAYER_STRATEGY_DRIVEPUCKTOACHIVEGOALS_H
+#endif
 
 

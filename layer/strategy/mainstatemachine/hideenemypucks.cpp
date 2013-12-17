@@ -4,6 +4,7 @@
 #include "layer/autonomous/field.h"
 #include "layer/strategy/drivepuckstatemachine/initialstate.h"
 #include "layer/strategy/mainstatemachine/pause.h"
+#include "layer/strategy/common/drivepucktohidepucks.h"
 
 using namespace RoboHockey::Layer::Strategy::Common;
 using namespace RoboHockey::Layer::Strategy::MainStateMachine;
@@ -12,7 +13,8 @@ using namespace RoboHockey::Layer::Autonomous;
 HideEnemyPucks::HideEnemyPucks(Autonomous::Robot &robot, Autonomous::Field &field, Referee &referee):
     State(robot, field, referee)
 {
-	State *initialState = new DrivePuckStateMachine::InitialState(robot, field, referee);
+	DrivePuck *drivePuck = new DrivePuckToHidePucks();
+	State *initialState = new DrivePuckStateMachine::InitialState(robot, field, referee, drivePuck);
 	m_drivePuckStateMachine = new StateMachine(initialState, robot, field, referee);
 }
 
