@@ -27,7 +27,8 @@ RobotImpl::RobotImpl(DataAnalysis::DataAnalyser *dataAnalyser, Router *router) :
 	m_cantReachTarget(false),
 	m_currentRoute(0),
 	m_state(RobotStateWaiting),
-	m_stateChanged(false)
+	m_stateChanged(false),
+	m_ignoringSoftObstacles(false)
 { }
 
 RobotImpl::~RobotImpl()
@@ -438,7 +439,8 @@ bool RobotImpl::updateRoute(const Field &field)
 	vector<Circle> hardObstacles = field.getAllHardObstacles();
 	vector<Circle> allObstacles = m_router->filterObstacles(softObstacles, hardObstacles, robotPosition.getPosition());
 
-	if (isRouteFeasible(allObstacles))
+	if (	(m_ignoringSoftObstacles && isRouteFeasible(softObstacles)) ||
+			(!m_ignoringSoftObstacles && isRouteFeasible(allObstacles)))
 		return false;
 
 	//! If the current route is not feasible anymore we try to create a new one.
@@ -450,8 +452,28 @@ bool RobotImpl::updateRoute(const Field &field)
 	if (isPuckCollected())
 		maximumRotation = Angle::getQuarterRotation();
 
+	m_ignoringSoftObstacles = false;
 	*m_currentRoute = m_router->calculateRoute(
-				robotPosition, m_currentTarget, field, maximumRotation, minimumStepAfterMaximumRotation);
+				robotPosition, m_currentTarget, field, maximumRotation,
+				minimumStepAfterMaximumRotation, m_ignoringSoftObstacles, false);
+
+	if (isRouteFeasible(allObstacles))
+		return true;
+
+	m_ignoringSoftObstacles = true;
+	allObstacles = hardObstacles;
+	*m_currentRoute = m_router->calculateRoute(
+				robotPosition, m_currentTarget, field, maximumRotation,
+				minimumStepAfterMaximumRotation, m_ignoringSoftObstacles, false);
+
+	if (isRouteFeasible(allObstacles))
+		return true;
+
+	m_ignoringSoftObstacles = true;
+	allObstacles = hardObstacles;
+	*m_currentRoute = m_router->calculateRoute(
+				robotPosition, m_currentTarget, field, maximumRotation,
+				minimumStepAfterMaximumRotation, m_ignoringSoftObstacles, true);
 
 	if (!isRouteFeasible(allObstacles))
 		clearRoute();

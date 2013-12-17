@@ -479,9 +479,9 @@ void RobotTest::goTo_finalOrientationNotPossible_canReachTarget()
 	FieldMock field;
 	field.setNegativeCoordinatesOutside(false);
 	vector<Circle> obstacles;
-	obstacles.push_back(Circle(Point(10, 0.8), 1));
-	obstacles.push_back(Circle(Point(10, -0.8), 1));
-	obstacles.push_back(Circle(Point(10.8, 0), 1));
+	obstacles.push_back(Circle(Point(10, 1), 1));
+	obstacles.push_back(Circle(Point(10, -1), 1));
+	obstacles.push_back(Circle(Point(11, 0), 1));
 	field.setHardObstacles(obstacles);
 
 	robot.updateSensorData();
@@ -966,7 +966,7 @@ void RobotTest::cantReachTarget_currentTargetSuddenlyNotPossible_true()
 	robot.updateActuators(field);
 	vector<Circle> obstacles;
 	obstacles.push_back(Circle(Point(10, 0), 2));
-	field.setSoftObstacles(obstacles);
+	field.setHardObstacles(obstacles);
 	robot.updateSensorData();
 	robot.updateActuators(field);
 
@@ -982,7 +982,7 @@ void RobotTest::cantReachTarget_notPossibleAnymoreDuringDriving_true()
 	FieldMock field;
 	vector<Circle> obstacles;
 	obstacles.push_back(Circle(Point(10, 0), 2));
-	field.setSoftObstacles(obstacles);
+	field.setHardObstacles(obstacles);
 
 	robot.updateSensorData();
 	robot.goTo(RobotPosition(Point(10, 0), 0));
@@ -1017,7 +1017,7 @@ void RobotTest::cantReachTarget_updateTwiceCalled_true()
 	FieldMock field;
 	vector<Circle> obstacles;
 	obstacles.push_back(Circle(Point(10, 0), 2));
-	field.setSoftObstacles(obstacles);
+	field.setHardObstacles(obstacles);
 
 	robot.updateSensorData();
 	robot.goTo(RobotPosition(Point(10, 0), 0));

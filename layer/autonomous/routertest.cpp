@@ -24,7 +24,7 @@ void RouterTest::calculateRoute_emptyField_validRoute()
 	RobotPosition start(Point(1, 1), Angle::getQuarterRotation());
 	RobotPosition end(Point(1, 2), Angle::getQuarterRotation());
 
-	Route route = router.calculateRoute(start, end, field, Angle::getHalfRotation(), 0.1);
+	Route route = router.calculateRoute(start, end, field, Angle::getHalfRotation(), 0.1, false, false);
 
 	CPPUNIT_ASSERT(route.isValid());
 }
@@ -36,7 +36,7 @@ void RouterTest::calculateRoute_emptyField_routeHasTwoPoints()
 	RobotPosition start(Point(1, 1), Angle::getQuarterRotation());
 	RobotPosition end(Point(1, 2), Angle::getQuarterRotation());
 
-	Route route = router.calculateRoute(start, end, field, Angle::getHalfRotation(), 0.1);
+	Route route = router.calculateRoute(start, end, field, Angle::getHalfRotation(), 0.1, false, false);
 
 	CPPUNIT_ASSERT_EQUAL((size_t)2, route.getPointCount());
 }
@@ -48,7 +48,7 @@ void RouterTest::calculateRoute_emptyField_routeHasSameWidthAsRobot()
 	RobotPosition start(Point(1, 1), Angle::getQuarterRotation());
 	RobotPosition end(Point(1, 2), Angle::getQuarterRotation());
 
-	Route route = router.calculateRoute(start, end, field, Angle::getHalfRotation(), 0.1);
+	Route route = router.calculateRoute(start, end, field, Angle::getHalfRotation(), 0.1, false, false);
 
 	CPPUNIT_ASSERT_DOUBLES_EQUAL(0.5, route.getWidth(), 0.00001);
 }
@@ -63,7 +63,7 @@ void RouterTest::calculateRoute_obstacleAtStartOfRoute_invalidRoute()
 	RobotPosition start(Point(1, 1), Angle::getQuarterRotation());
 	RobotPosition end(Point(1, 10), Angle::getQuarterRotation());
 
-	Route route = router.calculateRoute(start, end, field, Angle::getHalfRotation(), 0.1);
+	Route route = router.calculateRoute(start, end, field, Angle::getHalfRotation(), 0.1, false, false);
 
 	CPPUNIT_ASSERT(!route.isValid());
 }
@@ -78,7 +78,7 @@ void RouterTest::calculateRoute_softObstacleAtEndOfRoute_invalidRoute()
 	RobotPosition start(Point(1, 1), Angle::getQuarterRotation());
 	RobotPosition end(Point(1, 10), Angle::getQuarterRotation());
 
-	Route route = router.calculateRoute(start, end, field, Angle::getHalfRotation(), 0.1);
+	Route route = router.calculateRoute(start, end, field, Angle::getHalfRotation(), 0.1, false, false);
 
 	CPPUNIT_ASSERT(!route.isValid());
 }
@@ -93,7 +93,7 @@ void RouterTest::calculateRoute_oneObstacleBetween_validRoute()
 	RobotPosition start(Point(1, 1), Angle::getQuarterRotation());
 	RobotPosition end(Point(1, 10), Angle::getQuarterRotation());
 
-	Route route = router.calculateRoute(start, end, field, Angle::getHalfRotation(), 0.1);
+	Route route = router.calculateRoute(start, end, field, Angle::getHalfRotation(), 0.1, false, false);
 
 	CPPUNIT_ASSERT(route.isValid());
 }
@@ -108,7 +108,7 @@ void RouterTest::calculateRoute_oneObstacleBetween_routeIsNotTooLong()
 	RobotPosition start(Point(1, 1), Angle::getQuarterRotation());
 	RobotPosition end(Point(1, 10), Angle::getQuarterRotation());
 
-	Route route = router.calculateRoute(start, end, field, Angle::getHalfRotation(), 0.1);
+	Route route = router.calculateRoute(start, end, field, Angle::getHalfRotation(), 0.1, false, false);
 
 	double routeLength = route.getLength();
 	CPPUNIT_ASSERT(routeLength < 9.5);
@@ -124,7 +124,7 @@ void RouterTest::calculateRoute_oneObstacleBetween_routeIsNotIntersectingWithObs
 	RobotPosition start(Point(1, 1), Angle::getQuarterRotation());
 	RobotPosition end(Point(1, 10), Angle::getQuarterRotation());
 
-	Route route = router.calculateRoute(start, end, field, Angle::getHalfRotation(), 0.1);
+	Route route = router.calculateRoute(start, end, field, Angle::getHalfRotation(), 0.1, false, false);
 
 	CPPUNIT_ASSERT(!route.intersectsWith(obstacles));
 }
@@ -139,7 +139,7 @@ void RouterTest::calculateRoute_oneBigObstacleCloseToStart_validRoute()
 	RobotPosition start(Point(0, 0), 0);
 	RobotPosition end(Point(5, 0), 0);
 
-	Route route = router.calculateRoute(start, end, field, Angle::getHalfRotation(), 0.1);
+	Route route = router.calculateRoute(start, end, field, Angle::getHalfRotation(), 0.1, false, false);
 
 	CPPUNIT_ASSERT(route.isValid());
 }
@@ -154,7 +154,7 @@ void RouterTest::calculateRoute_oneBigObstacleCloseToStart_routeIsNotTooLong()
 	RobotPosition start(Point(0, 0), 0);
 	RobotPosition end(Point(5, 0), 0);
 
-	Route route = router.calculateRoute(start, end, field, Angle::getHalfRotation(), 0.1);
+	Route route = router.calculateRoute(start, end, field, Angle::getHalfRotation(), 0.1, false, false);
 
 	double routeLength = route.getLength();
 	CPPUNIT_ASSERT(routeLength < 6.5);
@@ -170,7 +170,7 @@ void RouterTest::calculateRoute_oneBigObstacleCloseToStart_routeIsNotIntersectin
 	RobotPosition start(Point(0, 0), 0);
 	RobotPosition end(Point(5, 0), 0);
 
-	Route route = router.calculateRoute(start, end, field, Angle::getHalfRotation(), 0.1);
+	Route route = router.calculateRoute(start, end, field, Angle::getHalfRotation(), 0.1, false, false);
 
 	CPPUNIT_ASSERT(!route.intersectsWith(obstacles));
 }
@@ -185,7 +185,7 @@ void RouterTest::calculateRoute_oneBigObstacleCloseToEnd_validRoute()
 	RobotPosition start(Point(0, 0), 0);
 	RobotPosition end(Point(5.5, 0), 0);
 
-	Route route = router.calculateRoute(start, end, field, Angle::getHalfRotation(), 0.1);
+	Route route = router.calculateRoute(start, end, field, Angle::getHalfRotation(), 0.1, false, false);
 
 	CPPUNIT_ASSERT(route.isValid());
 }
@@ -200,7 +200,7 @@ void RouterTest::calculateRoute_oneBigObstacleCloseToEnd_routeIsNotTooLong()
 	RobotPosition start(Point(0, 0), 0);
 	RobotPosition end(Point(5.5, 0), 0);
 
-	Route route = router.calculateRoute(start, end, field, Angle::getHalfRotation(), 0.1);
+	Route route = router.calculateRoute(start, end, field, Angle::getHalfRotation(), 0.1, false, false);
 
 	double routeLength = route.getLength();
 	CPPUNIT_ASSERT(routeLength < 6.5);
@@ -216,7 +216,7 @@ void RouterTest::calculateRoute_oneBigObstacleCloseToEnd_routeIsNotIntersectingW
 	RobotPosition start(Point(0, 0), 0);
 	RobotPosition end(Point(5.5, 0), 0);
 
-	Route route = router.calculateRoute(start, end, field, Angle::getHalfRotation(), 0.1);
+	Route route = router.calculateRoute(start, end, field, Angle::getHalfRotation(), 0.1, false, false);
 
 	CPPUNIT_ASSERT(!route.intersectsWith(obstacles));
 }
@@ -231,7 +231,7 @@ void RouterTest::calculateRoute_oneBigObstacleOnRightSideOfDirectPath_reasonable
 	RobotPosition start(Point(0, 0), 0);
 	RobotPosition end(Point(5, 0), 0);
 
-	Route route = router.calculateRoute(start, end, field, Angle::getHalfRotation(), 0.1);
+	Route route = router.calculateRoute(start, end, field, Angle::getHalfRotation(), 0.1, false, false);
 
 	CPPUNIT_ASSERT(route.isValid());
 	CPPUNIT_ASSERT(!route.intersectsWith(obstacles));
@@ -249,7 +249,7 @@ void RouterTest::calculateRoute_oneBigObstacleOnLeftSideOfDirectPath_reasonableR
 	RobotPosition start(Point(0, 0), 0);
 	RobotPosition end(Point(5, 0), 0);
 
-	Route route = router.calculateRoute(start, end, field, Angle::getHalfRotation(), 0.1);
+	Route route = router.calculateRoute(start, end, field, Angle::getHalfRotation(), 0.1, false, false);
 
 	CPPUNIT_ASSERT(route.isValid());
 	CPPUNIT_ASSERT(!route.intersectsWith(obstacles));
@@ -269,7 +269,7 @@ void RouterTest::calculateRoute_obstacleOnWayToPointBesideObstacle_reasonableRou
 	RobotPosition start(Point(0, 0), 0);
 	RobotPosition end(Point(5, 0), 0);
 
-	Route route = router.calculateRoute(start, end, field, Angle::getHalfRotation(), 0.1);
+	Route route = router.calculateRoute(start, end, field, Angle::getHalfRotation(), 0.1, false, false);
 
 	CPPUNIT_ASSERT(route.isValid());
 	CPPUNIT_ASSERT(!route.intersectsWith(obstacles));
@@ -289,7 +289,7 @@ void RouterTest::calculateRoute_obstacleOnWayToTargetFromPointBesideObstacle_rea
 	RobotPosition start(Point(0, 0), 0);
 	RobotPosition end(Point(10, 0), 0);
 
-	Route route = router.calculateRoute(start, end, field, Angle::getHalfRotation(), 0.1);
+	Route route = router.calculateRoute(start, end, field, Angle::getHalfRotation(), 0.1, false, false);
 
 	CPPUNIT_ASSERT(route.isValid());
 	CPPUNIT_ASSERT(!route.intersectsWith(obstacles));
@@ -311,7 +311,7 @@ void RouterTest::calculateRoute_obstacleOnWayToAndFromPointBesideObstacle_reason
 	RobotPosition start(Point(0, 0), 0);
 	RobotPosition end(Point(10, 0), 0);
 
-	Route route = router.calculateRoute(start, end, field, Angle::getHalfRotation(), 0.1);
+	Route route = router.calculateRoute(start, end, field, Angle::getHalfRotation(), 0.1, false, false);
 
 	CPPUNIT_ASSERT(route.isValid());
 	CPPUNIT_ASSERT(!route.intersectsWith(obstacles));
@@ -330,7 +330,7 @@ void RouterTest::calculateRoute_goingBetweenTwoObstacles_directRoute()
 	RobotPosition start(Point(0, 0), 0);
 	RobotPosition end(Point(2, 0), 0);
 
-	Route route = router.calculateRoute(start, end, field, Angle::getHalfRotation(), 0.1);
+	Route route = router.calculateRoute(start, end, field, Angle::getHalfRotation(), 0.1, false, false);
 
 	CPPUNIT_ASSERT(route.isValid());
 	CPPUNIT_ASSERT(!route.intersectsWith(obstacles));
@@ -364,7 +364,7 @@ void RouterTest::calculateRoute_severalObjectsAndOneOnTheWay_calculationIsNotToo
 	RobotPosition end(Point(3, 2), 0);
 
 	Watch watch;
-	Route route = router.calculateRoute(start, end, field, Angle::getHalfRotation(), 0.1);
+	Route route = router.calculateRoute(start, end, field, Angle::getHalfRotation(), 0.1, false, false);
 	double time = watch.getTimeAndRestart();
 
 	CPPUNIT_ASSERT(route.isValid());
@@ -383,7 +383,7 @@ void RouterTest::calculateRoute_shortWayOutsideField_noPointOfRouteIsOutside()
 	RobotPosition start(Point(0, 0), 0);
 	RobotPosition end(Point(10, 0), 0);
 
-	Route route = router.calculateRoute(start, end, field, Angle::getHalfRotation(), 0.1);
+	Route route = router.calculateRoute(start, end, field, Angle::getHalfRotation(), 0.1, false, false);
 
 	CPPUNIT_ASSERT(route.isValid());
 	CPPUNIT_ASSERT(!route.intersectsWith(obstacles));
@@ -402,7 +402,7 @@ void RouterTest::calculateRoute_onlyPossiblePointBesideIsBlockedByAnotherObstacl
 	RobotPosition start(Point(0, 0), 0);
 	RobotPosition end(Point(10, 0), 0);
 
-	Route route = router.calculateRoute(start, end, field, Angle::getHalfRotation(), 0.1);
+	Route route = router.calculateRoute(start, end, field, Angle::getHalfRotation(), 0.1, false, false);
 
 	CPPUNIT_ASSERT(route.isValid());
 	CPPUNIT_ASSERT(!route.intersectsWith(obstacles));
@@ -421,7 +421,7 @@ void RouterTest::calculateRoute_softObstacleAtOwnPosition_validRoute()
 	RobotPosition start(Point(0, 0), 0);
 	RobotPosition end(Point(10, 0), 0);
 
-	Route route = router.calculateRoute(start, end, field, Angle::getHalfRotation(), 0.1);
+	Route route = router.calculateRoute(start, end, field, Angle::getHalfRotation(), 0.1, false, false);
 
 	CPPUNIT_ASSERT(route.isValid());
 }
@@ -437,7 +437,7 @@ void RouterTest::calculateRoute_hardObstacleAtOwnPosition_invalidRoute()
 	RobotPosition start(Point(0, 0), 0);
 	RobotPosition end(Point(10, 0), 0);
 
-	Route route = router.calculateRoute(start, end, field, Angle::getHalfRotation(), 0.1);
+	Route route = router.calculateRoute(start, end, field, Angle::getHalfRotation(), 0.1, false, false);
 
 	CPPUNIT_ASSERT(!route.isValid());
 }
@@ -450,7 +450,7 @@ void RouterTest::calculateRoute_completeTurnAtStartNecessaryAndMaximumRotation_r
 	RouterImpl router(0.5);
 	FieldMock field;
 
-	Route route = router.calculateRoute(start, end, field, maximumRotation, 0.1);
+	Route route = router.calculateRoute(start, end, field, maximumRotation, 0.1, false, false);
 
 	Compare compare(0.001);
 	CPPUNIT_ASSERT(route.isValid());
@@ -468,7 +468,7 @@ void RouterTest::calculateRoute_completeTurnAtEndNecessaryAndMaximumRotation_rea
 	RouterImpl router(0.5);
 	FieldMock field;
 
-	Route route = router.calculateRoute(start, end, field, maximumRotation, 0.1);
+	Route route = router.calculateRoute(start, end, field, maximumRotation, 0.1, false, false);
 
 	Compare compare(0.001);
 	CPPUNIT_ASSERT(route.isValid());
@@ -493,7 +493,7 @@ void RouterTest::calculateRoute_sharpBendBetweenNecessary_reasonableRoute()
 	obstacles.push_back(Circle(Point(2, 3), 1));
 	field.setHardObstacles(obstacles);
 
-	Route route = router.calculateRoute(start, end, field, maximumRotation, 0.1);
+	Route route = router.calculateRoute(start, end, field, maximumRotation, 0.1, false, false);
 
 	Compare compare(0.001);
 	CPPUNIT_ASSERT(route.isValid());
@@ -516,7 +516,7 @@ void RouterTest::calculateRoute_endRotationNotPossibleBecauseOfObstacles_invalid
 	obstacles.push_back(Circle(Point(11, 0), 1));
 	field.setHardObstacles(obstacles);
 
-	Route route = router.calculateRoute(start, end, field, maximumRotation, 0.5);
+	Route route = router.calculateRoute(start, end, field, maximumRotation, 0.5, false, false);
 
 	CPPUNIT_ASSERT(!route.isValid());
 }
@@ -533,7 +533,7 @@ void RouterTest::calculateRoute_twoSmallObstaclesVeryClose_validRoute()
 	obstacles.push_back(Circle(Point(0.4, 0), 0.1));
 	field.setHardObstacles(obstacles);
 
-	Route route = router.calculateRoute(start, end, field, maximumRotation, 0.1);
+	Route route = router.calculateRoute(start, end, field, maximumRotation, 0.1, false, false);
 
 	CPPUNIT_ASSERT(route.isValid());
 }
@@ -547,9 +547,60 @@ void RouterTest::calculateRoute_targetOutsideOfTheField_invalidRoute()
 	FieldMock field;
 	field.setNegativeCoordinatesOutside(true);
 
-	Route route = router.calculateRoute(start, end, field, maximumRotation, 0.1);
+	Route route = router.calculateRoute(start, end, field, maximumRotation, 0.1, false, false);
 
 	CPPUNIT_ASSERT(!route.isValid());
+}
+
+void RouterTest::calculateRoute_softObstacleOnTheWayAndIgnoreSoftObstacles_directConnection()
+{
+	RobotPosition start(Point(0, 0), Angle(0));
+	RobotPosition end(Point(10, 0), Angle(0));
+	Angle maximumRotation = Angle::getQuarterRotation();
+	RouterImpl router(0.38);
+	FieldMock field;
+	vector<Circle> obstacles;
+	obstacles.push_back(Circle(Point(5, 0), 1));
+	field.setSoftObstacles(obstacles);
+
+	Route route = router.calculateRoute(start, end, field, maximumRotation, 0.1, true, false);
+
+	CPPUNIT_ASSERT(route.isValid());
+	double routeLength = route.getLength();
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(10, routeLength, 0.001);
+}
+
+void RouterTest::calculateRoute_hardObstacleOnTheWayAndIgnoreSoftObstacles_reasonableRouteBesideTheObstacle()
+{
+	RobotPosition start(Point(0, 0), Angle(0));
+	RobotPosition end(Point(10, 0), Angle(0));
+	Angle maximumRotation = Angle::getQuarterRotation();
+	RouterImpl router(0.38);
+	FieldMock field;
+	vector<Circle> obstacles;
+	obstacles.push_back(Circle(Point(5, 0), 1));
+	field.setHardObstacles(obstacles);
+
+	Route route = router.calculateRoute(start, end, field, maximumRotation, 0.1, true, false);
+
+	CPPUNIT_ASSERT(route.isValid());
+	double routeLength = route.getLength();
+	CPPUNIT_ASSERT(routeLength > 10.05);
+}
+
+void RouterTest::calculateRoute_completeTurnAtEndAndIgnoreFinalOrientation_directConnection()
+{
+	RobotPosition start(Point(0, 0), Angle(0));
+	RobotPosition end(Point(10, 0), Angle::getHalfRotation());
+	Angle maximumRotation = Angle::getQuarterRotation();
+	RouterImpl router(0.38);
+	FieldMock field;
+
+	Route route = router.calculateRoute(start, end, field, maximumRotation, 0.1, false, true);
+
+	CPPUNIT_ASSERT(route.isValid());
+	double routeLength = route.getLength();
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(10, routeLength, 0.001);
 }
 
 void RouterTest::getPointsBesideObstacle_intersectFromLeftAndCircleCenterNotOnPath_shortPointIsCorrect()
