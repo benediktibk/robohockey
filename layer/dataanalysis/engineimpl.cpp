@@ -56,6 +56,8 @@ void EngineImpl::goToStraightSlowlyBack(const Point &position)
 
 void EngineImpl::updateSpeedAndRotation()
 {
+	m_engine.setEnabled(!m_forwardMovementLocked);
+
 	if (!m_startedMovement)
 	{
 		if (isMoving() && m_engineState != EngineStateStopped)

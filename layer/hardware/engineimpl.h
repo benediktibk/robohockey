@@ -26,6 +26,7 @@ namespace Hardware
 		virtual void setSpeed(double magnitude, double rotation);
 		virtual bool isMoving();
 		virtual double getSpeed() const;
+		virtual void setEnabled(bool value);
 
 	private:
 		// forbid copies

@@ -53,6 +53,10 @@ namespace DataAnalysis
 		CPPUNIT_TEST(goToStraightSlowlyBack_TargetPassedAfterSomeTime_lastMagnitudeIs0);
 		CPPUNIT_TEST(goToStraightSlowlyBack_forwardMovementLocked_lastMagnitudeIsSmallerThanZero);
 		CPPUNIT_TEST(goToStraightSlowlyBack_forwardMovementLocked_notTryingToTackleObstacle);
+		CPPUNIT_TEST(updateSpeedAndRotation_forwardMovementLocked_motorIsDisabled);
+		CPPUNIT_TEST(updateSpeedAndRotation_forwardMovementUnlocked_motorIsEnabled);
+		CPPUNIT_TEST(updateSpeedAndRotation_forwardMovementLockedAndCalledTwice_motorIsDisabled);
+		CPPUNIT_TEST(updateSpeedAndRotation_forwardMovementUnlockedAndCalledTwice_motorIsEnabled);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
@@ -95,6 +99,10 @@ namespace DataAnalysis
 		void goToStraightSlowlyBack_TargetPassedAfterSomeTime_lastMagnitudeIs0();
 		void goToStraightSlowlyBack_forwardMovementLocked_lastMagnitudeIsSmallerThanZero();
 		void goToStraightSlowlyBack_forwardMovementLocked_notTryingToTackleObstacle();
+		void updateSpeedAndRotation_forwardMovementLocked_motorIsDisabled();
+		void updateSpeedAndRotation_forwardMovementUnlocked_motorIsEnabled();
+		void updateSpeedAndRotation_forwardMovementLockedAndCalledTwice_motorIsDisabled();
+		void updateSpeedAndRotation_forwardMovementUnlockedAndCalledTwice_motorIsEnabled();
 	};
 }
 }
