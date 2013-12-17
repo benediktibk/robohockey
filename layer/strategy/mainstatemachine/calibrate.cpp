@@ -13,7 +13,6 @@ Calibrate::Calibrate(Robot &robot, Field &field, Referee &referee) :
 {
 	State *initialState = new FieldDetectionStateMachine::InitialState(robot, field, referee);
 	m_fieldDetectionStateMachine = new StateMachine(initialState, robot, field, referee);
-
 }
 
 Calibrate::~Calibrate()

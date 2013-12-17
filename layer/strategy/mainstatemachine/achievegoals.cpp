@@ -3,6 +3,7 @@
 #include "layer/autonomous/field.h"
 #include "layer/strategy/mainstatemachine/pause.h"
 #include "layer/strategy/mainstatemachine/hideenemypucks.h"
+#include "layer/strategy/drivepuckstatemachine/initialstate.h"
 
 using namespace RoboHockey::Layer::Strategy::Common;
 using namespace RoboHockey::Layer::Strategy::MainStateMachine;
@@ -10,7 +11,16 @@ using namespace RoboHockey::Layer::Autonomous;
 
 AchieveGoals::AchieveGoals(Robot &robot, Field &field, Referee &referee) :
     State(robot, field, referee)
-{ }
+{
+	State *initialState = new DrivePuckStateMachine::InitialState(robot, field, referee);
+	m_drivePuckStateMachine = new StateMachine(initialState, robot, field, referee);
+}
+
+AchieveGoals::~AchieveGoals()
+{
+	delete m_drivePuckStateMachine;
+	m_drivePuckStateMachine = 0;
+}
 
 State* AchieveGoals::nextState()
 {
@@ -23,4 +33,6 @@ State* AchieveGoals::nextState()
 }
 
 void AchieveGoals::update()
-{ }
+{
+	m_drivePuckStateMachine->update();
+}
