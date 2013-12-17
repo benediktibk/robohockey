@@ -88,6 +88,8 @@ namespace DataAnalysis
 		CPPUNIT_TEST(canBeSeen_behindObjectShiftedAndRotated_false);
 		CPPUNIT_TEST(canBeSeen_tooBigObject_true);
 		CPPUNIT_TEST(canBeSeen_objectWithRadius0_true);
+		CPPUNIT_TEST(canBeSeen_obstacleRightLowerInFront_true);
+		CPPUNIT_TEST(canBeSeen_obstacleRightLowerBehind_false);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
@@ -158,6 +160,8 @@ namespace DataAnalysis
 		void canBeSeen_behindObjectShiftedAndRotated_false();
 		void canBeSeen_tooBigObject_true();
 		void canBeSeen_objectWithRadius0_true();
+		void canBeSeen_obstacleRightLowerInFront_true();
+		void canBeSeen_obstacleRightLowerBehind_false();
 
 	private:
 		static const double m_maximumDistance;
