@@ -41,11 +41,13 @@ void FieldImpl::update()
 
 	if (!m_robot->isRotating())
 	{
-		updateWithLidarData();
+		updateWithLidarData(6.0);
 		if (!m_robot->isMoving())
 			updateWithCameraData();
 		updateObstacles();
 	}
+	else
+		updateWithLidarData(1.0);
 
     updateAchievedGoals();
     updateHiddenPucks();
@@ -248,10 +250,10 @@ void FieldImpl::transformFieldToNewOrigin(const RobotPosition newOrigin)
 	transformCoordinateSystem(newOriginPoint, newOrigin.getOrientation().getValueBetweenMinusPiAndPi());
 }
 
-void FieldImpl::updateWithLidarData()
+void FieldImpl::updateWithLidarData(double range)
 {
 	const DataAnalysis::LidarObjects &lidarObjects =  m_lidar->getAllObjects(*m_position);
-	const vector<DataAnalysis::LidarObject> &objectsInRange = lidarObjects.getObjectsWithDistanceBelow(6);
+	const vector<DataAnalysis::LidarObject> &objectsInRange = lidarObjects.getObjectsWithDistanceBelow(range);
 
 	vector<FieldObject> inVisibleArea = moveAllFieldObjectsInVisibleAreaToTemporaryVector();
 

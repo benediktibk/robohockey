@@ -65,7 +65,7 @@ namespace Autonomous
 		virtual void transformFieldToNewOrigin(const Common::RobotPosition newOrigin);
 
 	private:
-		void updateWithLidarData();
+		void updateWithLidarData(double range);
 		void updateWithOdometryData();
 		void updateWithCameraData();
 		void updateObstacles();
