@@ -50,9 +50,9 @@ set(LIBRARIES
 )
 
 set(LIBRARIES_TEST
+	layerstrategymainstatemachinetest
 	layerstrategyfielddetectionstatemachinetest
 	layerstrategydrivepuckstatemachinetest
-	layerstrategymainstatemachinetest
 	layerstrategycommontest
 	layerviewtest
 	layerautonomoustest

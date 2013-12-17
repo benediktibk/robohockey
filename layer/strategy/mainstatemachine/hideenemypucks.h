@@ -2,7 +2,7 @@
 #define ROBOHOCKEY_LAYER_STRATEGY_MAINSTATEMACHINE_HIDEENEMYPUCKS_H
 
 #include "layer/strategy/common/state.h"
-#include "layer/strategy/mainstatemachine/pause.h"
+#include "layer/strategy/common/statemachine.h"
 
 namespace RoboHockey
 {
@@ -17,10 +17,13 @@ class HideEnemyPucks :
 	{
 	public:
 		HideEnemyPucks(Autonomous::Robot &robot, Autonomous::Field &field, Common::Referee &referee);
+		virtual ~HideEnemyPucks();
 
 		virtual State* nextState();
 		virtual void update();
 
+	private:
+		Common::StateMachine *m_drivePuckStateMachine;
 	};
 }
 }
