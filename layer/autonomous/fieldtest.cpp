@@ -244,7 +244,53 @@ void FieldTest::update_threeObjectsAndTwoObjectsInGoal_twoAchievedGoals()
 
     field.update();
 
-	CPPUNIT_ASSERT_EQUAL((unsigned int)2, field.getNumberOfAchievedGoals());
+    CPPUNIT_ASSERT_EQUAL((unsigned int)2, field.getNumberOfAchievedGoals());
+}
+
+void FieldTest::update_threeObjectsAndThreeObjectsInGoal_threeAchievedGoals()
+{
+    DataAnalysis::OdometryMock odometry;
+    DataAnalysis::LidarMock lidar;
+    DataAnalysis::CameraMock camera;
+    Autonomous::RobotMock autonomousRobot;
+    FieldImpl field(odometry, lidar, camera, autonomousRobot);
+
+    field.setTrueTeamColor(FieldColorYellow);
+    DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
+    lidarObjects.addObject(DataAnalysis::LidarObject(Point(4.3, 1.7), 0.1));
+    lidarObjects.addObject(DataAnalysis::LidarObject(Point(4.2, 1.5), 0.1));
+    lidarObjects.addObject(DataAnalysis::LidarObject(Point(4.4, 1.8), 0.1));
+    lidar.setAllObjects(lidarObjects);
+    DataAnalysis::CameraObjects cameraObjects;
+    cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(4.3, 1.7)));
+    cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(4.2, 1.5)));
+    cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(4.4, 1.8)));
+    camera.setAllObjects(cameraObjects);
+
+    field.update();
+
+    CPPUNIT_ASSERT_EQUAL((unsigned int)3, field.getNumberOfAchievedGoals());
+}
+
+void FieldTest::update_oneObjectAndZeroObjectsInGoal_ZeroAchievedGoals()
+{
+    DataAnalysis::OdometryMock odometry;
+    DataAnalysis::LidarMock lidar;
+    DataAnalysis::CameraMock camera;
+    Autonomous::RobotMock autonomousRobot;
+    FieldImpl field(odometry, lidar, camera, autonomousRobot);
+
+    field.setTrueTeamColor(FieldColorYellow);
+    DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
+    lidarObjects.addObject(DataAnalysis::LidarObject(Point(0.1, 4.3), 0.1));
+    lidar.setAllObjects(lidarObjects);
+    DataAnalysis::CameraObjects cameraObjects;
+    cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(0.1, 4.3)));
+    camera.setAllObjects(cameraObjects);
+
+    field.update();
+
+    CPPUNIT_ASSERT_EQUAL((unsigned int)0, field.getNumberOfAchievedGoals());
 }
 
 void FieldTest::calibratePosition_noValidPattern_false()

@@ -25,6 +25,8 @@ namespace Autonomous
 		CPPUNIT_TEST(update_twoObjectsFromLidarAndOneFromCameraNoColorAnymoreDuringSecondCall_stillCorrectColor);
 		CPPUNIT_TEST(update_oneObjectOutAndOneObjectInsideOfCalibratedField_correctObjectAddedToField);
 		CPPUNIT_TEST(update_threeObjectsAndTwoObjectsInGoal_twoAchievedGoals);
+        CPPUNIT_TEST(update_threeObjectsAndThreeObjectsInGoal_threeAchievedGoals);
+        CPPUNIT_TEST(update_oneObjectAndZeroObjectsInGoal_ZeroAchievedGoals);
 		CPPUNIT_TEST(calibratePosition_noValidPattern_false);
 		CPPUNIT_TEST(calibratePosition_validPattern_true);
 		CPPUNIT_TEST(calibratePosition_noValidPattern_noTransformation);
@@ -77,6 +79,8 @@ namespace Autonomous
 		void update_twoObjectsFromLidarAndOneFromCameraNoColorAnymoreDuringSecondCall_stillCorrectColor();
 		void update_oneObjectOutAndOneObjectInsideOfCalibratedField_correctObjectAddedToField();
         void update_threeObjectsAndTwoObjectsInGoal_twoAchievedGoals();
+        void update_threeObjectsAndThreeObjectsInGoal_threeAchievedGoals();
+        void update_oneObjectAndZeroObjectsInGoal_ZeroAchievedGoals();
 		void calibratePosition_noValidPattern_false();
 		void calibratePosition_validPattern_true();
 		void calibratePosition_noValidPattern_noTransformation();
