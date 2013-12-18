@@ -98,6 +98,16 @@ namespace DataAnalysis
 		CPPUNIT_TEST(canBeSeen_objectRightLowerAndLookingLeft_false);
 		CPPUNIT_TEST(canBeSeen_objectDirectBehindOtherObstacle_true);
 		CPPUNIT_TEST(canBeSeen_robotNotInOriginObjectVisible_true);
+		CPPUNIT_TEST(canBeSeen_lookingRightAndShiftedAndObjectOnRightSideVisible_true);
+		CPPUNIT_TEST(canBeSeen_lookingRightAndShiftedAndObjectOnRightSideNotVisible_false);
+		CPPUNIT_TEST(canBeSeen_lookingRightAndShiftedAndObjectOnLeftSideVisible_true);
+		CPPUNIT_TEST(canBeSeen_lookingRightAndShiftedAndObjectOnLeftSideNotVisible_false);
+		CPPUNIT_TEST(canBeSeen_lookingLeftAndShiftedAndObjectOnRightSideVisible_true);
+		CPPUNIT_TEST(canBeSeen_lookingLeftAndShiftedAndObjectOnRightSideNotVisible_false);
+		CPPUNIT_TEST(canBeSeen_lookingLeftAndShiftedAndObjectOnLeftSideVisible_true);
+		CPPUNIT_TEST(canBeSeen_lookingLeftAndShiftedAndObjectOnLeftSideNotVisible_false);
+		CPPUNIT_TEST(canBeSeen_lookingRightShiftedAndObstacleBehind_false);
+		CPPUNIT_TEST(canBeSeen_lookingLeftShiftedAndObstacleBehind_false);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
@@ -178,6 +188,16 @@ namespace DataAnalysis
 		void canBeSeen_objectRightLowerAndLookingLeft_false();
 		void canBeSeen_objectDirectBehindOtherObstacle_true();
 		void canBeSeen_robotNotInOriginObjectVisible_true();
+		void canBeSeen_lookingRightAndShiftedAndObjectOnRightSideVisible_true();
+		void canBeSeen_lookingRightAndShiftedAndObjectOnRightSideNotVisible_false();
+		void canBeSeen_lookingRightAndShiftedAndObjectOnLeftSideVisible_true();
+		void canBeSeen_lookingRightAndShiftedAndObjectOnLeftSideNotVisible_false();
+		void canBeSeen_lookingLeftAndShiftedAndObjectOnRightSideVisible_true();
+		void canBeSeen_lookingLeftAndShiftedAndObjectOnRightSideNotVisible_false();
+		void canBeSeen_lookingLeftAndShiftedAndObjectOnLeftSideVisible_true();
+		void canBeSeen_lookingLeftAndShiftedAndObjectOnLeftSideNotVisible_false();
+		void canBeSeen_lookingRightShiftedAndObstacleBehind_false();
+		void canBeSeen_lookingLeftShiftedAndObstacleBehind_false();
 
 	private:
 		static const double m_maximumDistance;
