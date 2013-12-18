@@ -1271,3 +1271,25 @@ void LidarTest::canBeSeen_objectDirectBehindOtherObstacle_true()
 
 	CPPUNIT_ASSERT(canBeSeen);
 }
+
+void LidarTest::canBeSeen_robotNotInOriginObjectVisible_true()
+{
+	Hardware::LidarMock hardwareLidar(10);
+	LidarImpl lidar(hardwareLidar);
+	Circle circle(Point(2.18, 3.51), 0.07);
+	RobotPosition ownPosition(Point(1, 2), Angle(0));
+	hardwareLidar.setValueForAngle(0, 3);
+	hardwareLidar.setValueForAngle(360, 3);
+
+	hardwareLidar.setValueForAngle(282, 1.88);
+	hardwareLidar.setValueForAngle(283, 1.88);
+	hardwareLidar.setValueForAngle(284, 1.88);
+	hardwareLidar.setValueForAngle(285, 1.88);
+	hardwareLidar.setValueForAngle(286, 1.88);
+
+	lidar.updateSensorData();
+
+	bool canBeSeen = lidar.canBeSeen(circle, ownPosition);
+
+	CPPUNIT_ASSERT(canBeSeen);
+}
