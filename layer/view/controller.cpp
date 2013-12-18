@@ -73,20 +73,26 @@ Controller::Controller(Model &model) :
 
 Controller::~Controller()
 {
+	for (vector<QGraphicsEllipseItem*>::iterator i = m_targetPositions.begin(); i != m_targetPositions.end(); ++i)
+	{
+		m_scene->removeItem(*i);
+		delete *i;
+	}
+	m_targetPositions.clear();
+
+	for (vector<QGraphicsLineItem*>::iterator i = m_routePositions.begin(); i != m_routePositions.end(); ++i)
+	{
+		m_scene->removeItem(*i);
+		delete *i;
+	}
+	m_routePositions.clear();
+
 	delete m_ui;
 	m_ui = 0;
 	delete m_graph;
 	m_graph = 0;
 	delete m_scene;
 	m_scene = 0;
-
-	 for (vector<QGraphicsEllipseItem*>::iterator i = m_targetPositions.begin(); i != m_targetPositions.end(); ++i)
-		delete *i;
-	 m_targetPositions.clear();
-
-     for (vector<QGraphicsLineItem*>::iterator i = m_routePositions.begin(); i != m_routePositions.end(); ++i)
-        delete *i;
-     m_routePositions.clear();
 }
 
 void Controller::closeEvent(QCloseEvent*)
@@ -244,12 +250,12 @@ void Controller::puckColorChanged()
 void Controller::updateTargets()
 {
 	vector<Point> target = m_model.getAllTargetPoints();
-    size_t size_target = target.size();
+	size_t size_target = target.size();
 
 	while (size_target < m_targetPositions.size())
 	{
 		m_scene->removeItem(m_targetPositions.back());
-        delete m_targetPositions.back();
+		delete m_targetPositions.back();
 		m_targetPositions.pop_back();
 	}
 
@@ -276,31 +282,31 @@ void Controller::updateTargets()
 void Controller::updateObjects()
 {
 	vector<FieldObject> object = m_model.getAllFieldObjects();
-    list<Point> listToDraw = m_model.getAllRoutePoints();
-    size_t size_list = listToDraw.size();
+	list<Point> listToDraw = m_model.getAllRoutePoints();
+	size_t size_list = listToDraw.size();
 	size_t size_object = object.size();
 
-    while (size_list <= m_routePositions.size() && size_list > 0)
-    {
-        m_scene->removeItem(m_routePositions.back());
-        delete m_routePositions.back();
-        m_routePositions.pop_back();
-    }
+	while (size_list <= m_routePositions.size() && size_list > 0)
+	{
+		m_scene->removeItem(m_routePositions.back());
+		delete m_routePositions.back();
+		m_routePositions.pop_back();
+	}
 
 
-    while (size_object < m_objectPositions.size())
+	while (size_object < m_objectPositions.size())
 	{
 		m_scene->removeItem(m_objectPositions.back());
-        delete m_objectPositions.back();
+		delete m_objectPositions.back();
 		m_objectPositions.pop_back();
 	}
 
-    while(size_list > m_routePositions.size() +1 && size_list > 1)
-    {
-        QGraphicsLineItem* itemList = new QGraphicsLineItem();
-        m_routePositions.push_back(itemList);
-        m_scene->addItem(itemList);
-    }
+	while(size_list > m_routePositions.size() +1 && size_list > 1)
+	{
+		QGraphicsLineItem* itemList = new QGraphicsLineItem();
+		m_routePositions.push_back(itemList);
+		m_scene->addItem(itemList);
+	}
 
 
 	while(size_object > m_objectPositions.size())
@@ -333,30 +339,30 @@ void Controller::updateObjects()
 			currentItem.setBrush(Qt::white);
 	}
 
-    if(m_routePositions.size() > 0)
-    {
-        std::list<Point>::iterator customEnd = listToDraw.end();
-        --customEnd;
-        size_t routePositionIndex = 0;
-        for (std::list<Point>::iterator i = listToDraw.begin(); i != customEnd; ++i, ++routePositionIndex)
-        {
-            QGraphicsLineItem &currentItemLine = *(m_routePositions[routePositionIndex]);
-            Point start = *i;
-            std::list<Point>::iterator k = i;
-            ++k;
-            Point end = *(k);
-            double route_x = start.getX() * m_pixelPerMeter;
-            double route_y = -1 * start.getY() * m_pixelPerMeter;
-            double route_x2 = end.getX() * m_pixelPerMeter;
-            double route_y2 = -1 * end.getY() * m_pixelPerMeter;
-            currentItemLine.setLine(route_x, route_y, route_x2, route_y2);
-            QPen pen;
-            pen.setColor(Qt::green);
-            pen.setWidthF(0.36 * m_pixelPerMeter);
-            currentItemLine.setPen(pen);
-            currentItemLine.setZValue(-1);
-        }
-    }
+	if(m_routePositions.size() > 0)
+	{
+		std::list<Point>::iterator customEnd = listToDraw.end();
+		--customEnd;
+		size_t routePositionIndex = 0;
+		for (std::list<Point>::iterator i = listToDraw.begin(); i != customEnd; ++i, ++routePositionIndex)
+		{
+			QGraphicsLineItem &currentItemLine = *(m_routePositions[routePositionIndex]);
+			Point start = *i;
+			std::list<Point>::iterator k = i;
+			++k;
+			Point end = *(k);
+			double route_x = start.getX() * m_pixelPerMeter;
+			double route_y = -1 * start.getY() * m_pixelPerMeter;
+			double route_x2 = end.getX() * m_pixelPerMeter;
+			double route_y2 = -1 * end.getY() * m_pixelPerMeter;
+			currentItemLine.setLine(route_x, route_y, route_x2, route_y2);
+			QPen pen;
+			pen.setColor(Qt::green);
+			pen.setWidthF(0.36 * m_pixelPerMeter);
+			currentItemLine.setPen(pen);
+			currentItemLine.setZValue(-1);
+		}
+	}
 
 	const RobotPosition &robotPosition = m_model.getCurrentPosition();
 	const Point &position = robotPosition.getPosition();
