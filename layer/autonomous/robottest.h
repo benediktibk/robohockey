@@ -115,6 +115,7 @@ namespace Autonomous
 		CPPUNIT_TEST(collectPuckInFront_orientationWrongAtBeginAndOrientationReached_engineGotCallToGoToStraightSlowly);
 		CPPUNIT_TEST(collectPuckInFront_validPuck_watchGotCallToRestart);
 		CPPUNIT_TEST(collectPuckInFront_minuteWaited_cantReachTarget);
+		CPPUNIT_TEST(collectPuckInFront_sonarDetectsCollision_notStuckAtObstacle);
 		CPPUNIT_TEST(updatePuckPosition_newPositionOfPuck_goToStraightSlowlyCalledTwice);
 		CPPUNIT_TEST(leaveCollectedPuck_drivenFarEnoughBack_reachedTarget);
 		CPPUNIT_TEST(leaveCollectedPuck_empty_watchGotCallToRestart);
@@ -224,6 +225,7 @@ namespace Autonomous
 		void collectPuckInFront_orientationWrongAtBeginAndOrientationReached_engineGotCallToGoToStraightSlowly();
 		void collectPuckInFront_validPuck_watchGotCallToRestart();
 		void collectPuckInFront_minuteWaited_cantReachTarget();
+		void collectPuckInFront_sonarDetectsCollision_notStuckAtObstacle();
 		void updatePuckPosition_newPositionOfPuck_goToStraightSlowlyCalledTwice();
 		void leaveCollectedPuck_drivenFarEnoughBack_reachedTarget();
 		void leaveCollectedPuck_empty_watchGotCallToRestart();

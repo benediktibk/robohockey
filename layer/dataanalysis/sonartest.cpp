@@ -79,3 +79,23 @@ void SonarTest::isObstacleInFront_bothSensorsCoveredThirdVersion_false()
 
 	CPPUNIT_ASSERT(!sonar.isObstacleDirectInFront(0.5));
 }
+
+void SonarTest::isObstacleInFront_onlyLeftValueTooClose_false()
+{
+	Hardware::SonarMock hardwareSonar;
+	SonarImpl sonar(hardwareSonar);
+	hardwareSonar.setValue(3, 0.5);
+	hardwareSonar.setValue(4, 1);
+
+	CPPUNIT_ASSERT(!sonar.isObstacleDirectInFront(1));
+}
+
+void SonarTest::isObstacleInFront_onlyRightValueTooClose_false()
+{
+	Hardware::SonarMock hardwareSonar;
+	SonarImpl sonar(hardwareSonar);
+	hardwareSonar.setValue(3, 1);
+	hardwareSonar.setValue(4, 0.5);
+
+	CPPUNIT_ASSERT(!sonar.isObstacleDirectInFront(1));
+}

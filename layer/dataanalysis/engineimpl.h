@@ -71,7 +71,6 @@ namespace DataAnalysis
 		Hardware::Odometry &m_odometry;
 		Common::Point m_target;
 		Common::Point m_startPosition;
-		bool m_rotationReached;
 		EngineState m_engineState;
 		Common::Angle m_startOrientation;
 		bool m_oneHalfTurnDone;

@@ -172,12 +172,12 @@ bool LidarImpl::canBeSeen(const Circle &object, const RobotPosition &ownPosition
 	Point center = originalCenter - ownPosition.getPosition();
 	center.rotate(ownPosition.getOrientation()*(-1));
 	Circle movedObject(center, object.getDiameter());
-	double distanceToObject = object.getDistanceTo(Point(0, 0));
+	double distanceToObject = object.getDistanceTo(ownPoint);
 
 	if (distanceToObject > m_maximumDistance)
 		return false;
 
-	double distanceToCenter = ownPoint.distanceTo(center);
+	double distanceToCenter = ownPoint.distanceTo(originalCenter);
 	double radius = movedObject.getDiameter()/2;
 
 	if (distanceToCenter < radius)
@@ -317,7 +317,7 @@ double LidarImpl::calculateMinimumDistanceToObstacle(const Angle &angle, double 
 	const double axisLength = 0.38 + additionalSpaceBesideAxis;
 	const double axisLengthTwice = axisLength*2;
 	const double timeToStop = 0.2;
-	const double minimumDistanceToObstacle = 0.4 + axisLength + speed*timeToStop;
+	const double minimumDistanceToObstacle = 0.3 + axisLength + speed*timeToStop;
 	const double axisLengthWithAngle = axisLengthTwice*cos(anglePositive);
 	const double axisLengthWithAngleSquare = axisLengthWithAngle*axisLengthWithAngle;
 	const double minimumWithAngle = minimumDistanceToObstacle*sin(anglePositive);

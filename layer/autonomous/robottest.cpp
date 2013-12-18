@@ -1870,6 +1870,30 @@ void RobotTest::collectPuckInFront_minuteWaited_cantReachTarget()
 	CPPUNIT_ASSERT(robot.cantReachTarget());
 }
 
+void RobotTest::collectPuckInFront_sonarDetectsCollision_notStuckAtObstacle()
+{
+	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
+	DataAnalysis::Odometry &odometry = dataAnalyser->getOdometry();
+	DataAnalysis::SonarMock &sonar = dataAnalyser->getSonarMock();
+	DataAnalysis::LidarMock &lidar = dataAnalyser->getLidarMock();
+	odometry.setCurrentPosition(RobotPosition(Point(0, 0), Angle(0)));
+	RobotImpl robot(dataAnalyser, new RouterImpl(0.5), m_watchMock);
+	FieldMock field;
+
+	lidar.setPuckCollectable(true);
+	robot.updateSensorData();
+	robot.collectPuckInFront(Point(0.4, 0));
+	robot.updateActuators(field);
+	robot.updateSensorData();
+	robot.updateActuators(field);
+	sonar.setIsObstacleDirectInFront(true);
+	robot.updateSensorData();
+	robot.updateActuators(field);
+
+	CPPUNIT_ASSERT(!robot.stuckAtObstacle());
+	CPPUNIT_ASSERT(!robot.cantReachTarget());
+}
+
 void RobotTest::updatePuckPosition_newPositionOfPuck_goToStraightSlowlyCalledTwice()
 {
 	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();

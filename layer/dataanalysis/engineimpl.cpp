@@ -15,7 +15,6 @@ using namespace std;
 EngineImpl::EngineImpl(Hardware::Engine &engine, Hardware::Odometry &odometry) :
 	m_engine(engine),
 	m_odometry(odometry),
-	m_rotationReached(false),
 	m_engineState(EngineStateStopped),
 	m_forwardMovementLocked(false),
 	m_tryingToTackleObstacle(false),
@@ -209,7 +208,7 @@ void EngineImpl::updateSpeedAndRotationForRotating()
 void EngineImpl::turnOnly(const Angle &targetOrientation, const Angle &currentOrientation)
 {
 	Angle orientationDifference = targetOrientation - currentOrientation;
-	double amplification = 0.5;
+	double amplification = 0.7;
 	m_tryingToTackleObstacle = false;
 	setSpeed(0, orientationDifference.getValueBetweenMinusPiAndPi()*amplification);
 }
@@ -277,9 +276,11 @@ void EngineImpl::switchIntoState(EngineState state)
 {
 	RobotPosition currentRobotPosition = m_odometry.getCurrentPosition();
 	m_startPosition = currentRobotPosition.getPosition();
-	m_rotationReached = false;
 	m_tryingToTackleObstacle = false;
 	m_oneHalfTurnDone = false;
+
+	if (m_engineState != state)
+		m_startedMovement = false;
+
 	m_engineState = state;
-	m_startedMovement = false;
 }
