@@ -29,6 +29,7 @@ namespace DataAnalysis
 		CPPUNIT_TEST(turnToTarget_differentToStartOrientation_lastMagnitudeIsZero);
 		CPPUNIT_TEST(turnToTarget_targetLeft_lastRotationIsGreaterZero);
 		CPPUNIT_TEST(turnToTarget_targetRight_lastRotationIsSmallerZero);
+		CPPUNIT_TEST(turnToTarget_twiceCalled_hardwareEngineGotNoCallToSlowDown);
 		CPPUNIT_TEST(lockForwardMovement_tryingToDriveForward_lastMagnitudeIsZero);
 		CPPUNIT_TEST(unlockForwardMovement_tryingToDriveForward_lastMagnitudeIsNotZero);
 		CPPUNIT_TEST(unlockForwardMovement_tryingToDriveForward_notTryingToTackleObstacle);
@@ -47,6 +48,7 @@ namespace DataAnalysis
 		CPPUNIT_TEST(goToStraight_rotationDoneAndLittleBitLeftOfDirectConnection_lastRotationIsSmallerThanZero);
 		CPPUNIT_TEST(goToStraight_rotationDoneAndLittleBitRightOfDirectConnection_lastRotationIsGreaterThanZero);
 		CPPUNIT_TEST(goToStraightSlowly_currentPositionDifferentToTarget_atLeastOneCallToSetSpeed);
+		CPPUNIT_TEST(goToStraightSlowly_twiceCalled_hardwareEngineGotNoCallToSlowDown);
 		CPPUNIT_TEST(goToStraightThrough_currentPositionDifferentToTarget_atLeastOneCallToSetSpeed);
 		CPPUNIT_TEST(goToStraightThrough_TargetAlmostReachedAfterSomeTime_lastMagnitudeIs0p5);
 		CPPUNIT_TEST(goToStraightSlowlyBack_currentPositionDifferentToTarget_atLeastOneCallToSetSpeed);
@@ -76,6 +78,7 @@ namespace DataAnalysis
 		void turnToTarget_differentToStartOrientation_lastMagnitudeIsZero();
 		void turnToTarget_targetLeft_lastRotationIsGreaterZero();
 		void turnToTarget_targetRight_lastRotationIsSmallerZero();
+		void turnToTarget_twiceCalled_hardwareEngineGotNoCallToSlowDown();
 		void lockForwardMovement_tryingToDriveForward_lastMagnitudeIsZero();
 		void unlockForwardMovement_tryingToDriveForward_lastMagnitudeIsNotZero();
 		void unlockForwardMovement_tryingToDriveForward_notTryingToTackleObstacle();
@@ -94,6 +97,7 @@ namespace DataAnalysis
 		void goToStraight_rotationDoneAndLittleBitLeftOfDirectConnection_lastRotationIsSmallerThanZero();
 		void goToStraight_rotationDoneAndLittleBitRightOfDirectConnection_lastRotationIsGreaterThanZero();
 		void goToStraightSlowly_currentPositionDifferentToTarget_atLeastOneCallToSetSpeed();
+		void goToStraightSlowly_twiceCalled_hardwareEngineGotNoCallToSlowDown();
 		void goToStraightThrough_currentPositionDifferentToTarget_atLeastOneCallToSetSpeed();
 		void goToStraightThrough_TargetAlmostReachedAfterSomeTime_lastMagnitudeIs0p5();
 		void goToStraightSlowlyBack_currentPositionDifferentToTarget_atLeastOneCallToSetSpeed();

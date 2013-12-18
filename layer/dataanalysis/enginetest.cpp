@@ -220,6 +220,25 @@ void EngineTest::turnToTarget_targetRight_lastRotationIsSmallerZero()
 	CPPUNIT_ASSERT(hardwareEngine.getLastRotation() < -0.1);
 }
 
+void EngineTest::turnToTarget_twiceCalled_hardwareEngineGotNoCallToSlowDown()
+{
+	Hardware::EngineMock hardwareEngine;
+	Hardware::OdometryMock hardwareOdometry;
+	EngineImpl engine(hardwareEngine, hardwareOdometry);
+	hardwareOdometry.setCurrentPosition(RobotPosition(Point(0, 0), 0));
+
+	hardwareEngine.setIsMoving(false);
+	engine.updateSensorData();
+	engine.turnToTarget(Point(0, -1));
+	engine.updateSpeedAndRotation();
+	hardwareEngine.setIsMoving(true);
+	engine.updateSensorData();
+	engine.turnToTarget(Point(0, 1));
+	engine.updateSpeedAndRotation();
+
+	CPPUNIT_ASSERT(hardwareEngine.getLastRotation() != 0);
+}
+
 void EngineTest::lockForwardMovement_tryingToDriveForward_lastMagnitudeIsZero()
 {
 	Hardware::EngineMock hardwareEngine;
@@ -510,6 +529,25 @@ void EngineTest::goToStraightSlowly_currentPositionDifferentToTarget_atLeastOneC
 	engine.updateSpeedAndRotation();
 
 	CPPUNIT_ASSERT(hardwareEngine.getCallsToSetSpeed() > 0);
+}
+
+void EngineTest::goToStraightSlowly_twiceCalled_hardwareEngineGotNoCallToSlowDown()
+{
+	Hardware::EngineMock hardwareEngine;
+	Hardware::OdometryMock hardwareOdometry;
+	EngineImpl engine(hardwareEngine, hardwareOdometry);
+	hardwareOdometry.setCurrentPosition(RobotPosition(Point(0, 0), Angle(0)));
+
+	hardwareEngine.setIsMoving(false);
+	engine.updateSensorData();
+	engine.goToStraightSlowly(Point(1, 0));
+	engine.updateSpeedAndRotation();
+	hardwareEngine.setIsMoving(true);
+	engine.updateSensorData();
+	engine.goToStraightSlowly(Point(2, 0));
+	engine.updateSpeedAndRotation();
+
+	CPPUNIT_ASSERT(hardwareEngine.getLastMagnitude() > 0);
 }
 
 void EngineTest::goToStraightThrough_currentPositionDifferentToTarget_atLeastOneCallToSetSpeed()
