@@ -253,7 +253,144 @@ std::list<RobotPosition> FieldImpl::getTargetsForHidingEnemyPucks() const
 
 std::list<RobotPosition> FieldImpl::getTargetsForCollectingOnePuck() const
 {
-	return list<RobotPosition>();
+	list<RobotPosition> targetsToCollect;
+	list<RobotPosition> listToArrange;
+	Rectangle rectangle1(Point(0, 0), Point(3.7, 3));
+	Rectangle rectangle2(Point(3.7, 2), Point(4.16, 3));
+	Rectangle rectangle3(Point(3.7, 1), Point(4.16, 2));
+	Rectangle rectangle4(Point(3.7, 0), Point(4.16, 1));
+	Rectangle rectangle5(Point(4.16, 2), Point(4.59, 3));
+	Rectangle rectangle6(Point(4.16, 0), Point(4.59, 1));
+	Rectangle rectangle7(Point(4.59, 2), Point(5, 3));
+	Rectangle rectangle8(Point(4.59, 1), Point(5, 2));
+	Rectangle rectangle9(Point(4.59,0), Point(5, 1));
+	double distanceFromRobotToPuck = 0.40;
+
+	if(m_fieldObjects.size() != 0)
+	{
+		for (vector<FieldObject>::const_iterator i = m_fieldObjects.begin(); i != m_fieldObjects.end(); ++i)
+		{
+			const FieldObject &fieldObject = *i;
+
+			if (fieldObject.getColor() == m_teamColor)
+			{
+				Angle angle0;
+				if (rectangle1.isInside(fieldObject.getCircle().getCenter(), 0.01))
+				{
+					Angle angleif1(fieldObject.getCircle().getCenter(), Point(4.375, 1.5));
+					angle0 = angleif1;
+				}
+				else if(rectangle2.isInside(fieldObject.getCircle().getCenter(), 0.01))
+				{
+					Angle angleif2(fieldObject.getCircle().getCenter(), Point(4.16, 2));
+					angle0 = angleif2;
+				}
+				else if(rectangle3.isInside(fieldObject.getCircle().getCenter(), 0.01))
+				{
+					Angle angleif3(0);
+					angle0 = angleif3;
+				}
+				else if(rectangle4.isInside(fieldObject.getCircle().getCenter(), 0.01))
+				{
+					Angle angleif4(fieldObject.getCircle().getCenter(), Point(4.16, 1));
+					angle0 = angleif4;
+				}
+				else if(rectangle5.isInside(fieldObject.getCircle().getCenter(), 0.01))
+				{
+					Angle angleif5(Angle::convertFromDegreeToRadiant(270));
+					angle0 = angleif5;
+				}
+				else if(rectangle6.isInside(fieldObject.getCircle().getCenter(), 0.01))
+				{
+					Angle angleif6(Angle::convertFromDegreeToRadiant(90));
+					angle0 = angleif6;
+				}
+				else if(rectangle7.isInside(fieldObject.getCircle().getCenter(), 0.01))
+				{
+					Angle angleif7(fieldObject.getCircle().getCenter(), Point(4.59, 2));
+					angle0 = angleif7;
+				}
+				else if(rectangle8.isInside(fieldObject.getCircle().getCenter(), 0.01))
+				{
+					Angle angleif8(Angle::convertFromDegreeToRadiant(180));
+					angle0 = angleif8;
+				}
+				else if(rectangle9.isInside(fieldObject.getCircle().getCenter(), 0.01))
+				{
+					Angle angleif9(fieldObject.getCircle().getCenter(), Point(4.59, 1));
+					angle0 = angleif9;
+				}
+				else
+				{
+					Angle angleelse(fieldObject.getCircle().getCenter(), Point(4.375, 1.5));
+					angle0 = angleelse;
+				}
+
+				Angle angle1 = angle0 - Angle::convertFromDegreeToRadiant(10);
+				Angle angle2 = angle0 + Angle::convertFromDegreeToRadiant(10);
+				Angle angle3 = angle0 - Angle::convertFromDegreeToRadiant(20);
+				Angle angle4 = angle0 + Angle::convertFromDegreeToRadiant(20);
+				Angle angle5 = angle0 - Angle::convertFromDegreeToRadiant(45);
+				Angle angle6 = angle0 + Angle::convertFromDegreeToRadiant(45);
+				Angle angle7 = angle0 - Angle::convertFromDegreeToRadiant(135);
+				Angle angle8 = angle0 + Angle::convertFromDegreeToRadiant(135);
+				Angle angle9 = angle0 - Angle::convertFromDegreeToRadiant(180);
+
+				Point point0(distanceFromRobotToPuck, 0);
+				point0.rotate(Angle::convertFromDegreeToRadiant(180) + angle0);
+				point0 = point0 + fieldObject.getCircle().getCenter();
+
+				Point point1(distanceFromRobotToPuck, 0);
+				point1.rotate(Angle::convertFromDegreeToRadiant(180) + angle1);
+				point1 = point1 + fieldObject.getCircle().getCenter();
+
+				Point point2(distanceFromRobotToPuck, 0);
+				point2.rotate(Angle::convertFromDegreeToRadiant(180) + angle2);
+				point2 = point2 + fieldObject.getCircle().getCenter();
+
+				Point point3(distanceFromRobotToPuck, 0);
+				point3.rotate(Angle::convertFromDegreeToRadiant(180) + angle3);
+				point3 = point3 + fieldObject.getCircle().getCenter();
+
+				Point point4(distanceFromRobotToPuck, 0);
+				point4.rotate(Angle::convertFromDegreeToRadiant(180) + angle4);
+				point4 = point4 + fieldObject.getCircle().getCenter();
+
+				Point point5(distanceFromRobotToPuck, 0);
+				point5.rotate(Angle::convertFromDegreeToRadiant(180) + angle5);
+				point5 = point5 + fieldObject.getCircle().getCenter();
+
+				Point point6(distanceFromRobotToPuck, 0);
+				point6.rotate(Angle::convertFromDegreeToRadiant(180) + angle6);
+				point6 = point6 + fieldObject.getCircle().getCenter();
+
+				Point point7(distanceFromRobotToPuck, 0);
+				point7.rotate(Angle::convertFromDegreeToRadiant(180) + angle7);
+				point7 = point7 + fieldObject.getCircle().getCenter();
+
+				Point point8(distanceFromRobotToPuck, 0);
+				point8.rotate(Angle::convertFromDegreeToRadiant(180) + angle8);
+				point8 = point8 + fieldObject.getCircle().getCenter();
+
+				Point point9(distanceFromRobotToPuck, 0);
+				point9.rotate(Angle::convertFromDegreeToRadiant(180) + angle9);
+				point9 = point9 + fieldObject.getCircle().getCenter();
+
+				listToArrange.push_back(RobotPosition( point0, angle0));
+				listToArrange.push_back(RobotPosition( point1, angle1));
+				listToArrange.push_back(RobotPosition( point2, angle2));
+				listToArrange.push_back(RobotPosition( point3, angle3));
+				listToArrange.push_back(RobotPosition( point4, angle4));
+				listToArrange.push_back(RobotPosition( point5, angle5));
+				listToArrange.push_back(RobotPosition( point6, angle6));
+				listToArrange.push_back(RobotPosition( point7, angle7));
+				listToArrange.push_back(RobotPosition( point8, angle8));
+				listToArrange.push_back(RobotPosition( point9, angle9));
+			}
+
+		}
+	}
+	return targetsToCollect;
 }
 
 void FieldImpl::setTrueTeamColor(FieldColor trueTeamColor)
