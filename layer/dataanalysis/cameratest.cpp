@@ -262,3 +262,11 @@ void CameraTest::getAllCameraObjects_realWorldExampleData_timeIsBelow100ms()
 
 	CPPUNIT_ASSERT(time < 0.1);
 }
+
+void CameraTest::getProbabilityForCollectedBluePuck_bluePuckCollectedLeft_resultIsOver80Percent()
+{
+	Hardware::CameraMock hardwareCamera("blue_puck_collected_left");
+	CameraImpl camera(hardwareCamera);
+
+	CPPUNIT_ASSERT(camera.getProbabilityForCollectedBluePuck() > 0.8);
+}

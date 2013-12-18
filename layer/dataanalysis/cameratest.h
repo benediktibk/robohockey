@@ -44,6 +44,7 @@ namespace DataAnalysis
 		CPPUNIT_TEST(getAllCameraObjects_yellowPuckTwiceAndRobotAt1And1AndHalfPi_cameraObjectPositonOfRightObjectIs1p0And1p6);
 		CPPUNIT_TEST(getAllCameraObjects_camera2211_cameraObjectCountIs2);
 		CPPUNIT_TEST(getAllCameraObjects_realWorldExampleData_timeIsBelow100ms);
+		//CPPUNIT_TEST(getProbabilityForCollectedBluePuck_bluePuckCollectedLeft_resultIsOver80Percent);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
@@ -77,6 +78,7 @@ namespace DataAnalysis
 		void getAllCameraObjects_yellowPuckTwiceAndRobotAt1And1AndHalfPi_cameraObjectPositonOfRightObjectIs1p0And1p6();
 		void getAllCameraObjects_camera2211_cameraObjectCountIs2();
 		void getAllCameraObjects_realWorldExampleData_timeIsBelow100ms();
+		void getProbabilityForCollectedBluePuck_bluePuckCollectedLeft_resultIsOver80Percent();
 
 	};
 }
