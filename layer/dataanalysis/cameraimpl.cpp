@@ -55,8 +55,8 @@ double CameraImpl::getProbabilityForCollectedYellowPuck()
 	assert(m_camera.isValid());
 	Mat puck;
 	filterFrameAndConvertToHLS();
-	inRange(m_filteredFrame, Scalar(18, 20, 50), Scalar(28, 255, 255), puck);
-	Rect range(154, 230, 15, 10);
+	inRange(m_filteredFrame, Scalar(20, 20, 50), Scalar(32, 255, 255), puck);
+	Rect range(155, 235, 13, 5);
 	puck = puck(range);
 	return (static_cast<double>(countNonZero(puck))/static_cast<double>(range.area()));
 }
@@ -67,7 +67,7 @@ double CameraImpl::getProbabilityForCollectedBluePuck()
 	Mat puck;
 	filterFrameAndConvertToHLS();
 	inRange(m_filteredFrame, Scalar(95, 20, 40), Scalar(107, 255, 255), puck);
-	Rect range(154, 230, 15, 10);
+	Rect range(155, 235, 13, 5);
 	puck = puck(range);
 	return (static_cast<double>(countNonZero(puck))/static_cast<double>(range.area()));
 }

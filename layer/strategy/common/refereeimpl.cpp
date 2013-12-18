@@ -74,7 +74,6 @@ void RefereeImpl::reportGoal()
 
 void RefereeImpl::tellEgoPos(const Point &position)
 {
-	//! @todo transform into coordinate system of angelina (dependend on team color!)
 	if(m_trueColorOfTeam == FieldColorYellow)
 		m_referee->tellEgoPos(5 - position.getX(), position.getY());
 	else if (m_trueColorOfTeam == FieldColorBlue)
