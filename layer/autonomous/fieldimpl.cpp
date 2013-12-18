@@ -47,7 +47,7 @@ void FieldImpl::update()
 		updateObstacles();
 	}
 	else
-		updateWithLidarData(1.0);
+		updateWithLidarData(0.3);
 
 	updateAchievedGoals();
 	updateHiddenPucks();
@@ -524,6 +524,8 @@ vector<FieldObject> FieldImpl::moveAllFieldObjectsInVisibleAreaToTemporaryVector
 	vector<FieldObject> result;
 	const RobotPosition &ownPosition = m_odometry->getCurrentPosition();
 	size_t i = 0;
+
+	cout << "Number of FieldObjects: " << m_fieldObjects.size() << endl;
 
 	while(i < m_fieldObjects.size())
 	{
