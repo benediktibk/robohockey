@@ -20,14 +20,12 @@ namespace Autonomous
 		CPPUNIT_TEST(calculateRoute_emptyField_validRoute);
 		CPPUNIT_TEST(calculateRoute_emptyField_routeHasTwoPoints);
 		CPPUNIT_TEST(calculateRoute_emptyField_routeHasSameWidthAsRobot);
-		CPPUNIT_TEST(calculateRoute_obstacleAtStartOfRoute_invalidRoute);
 		CPPUNIT_TEST(calculateRoute_softObstacleAtEndOfRoute_invalidRoute);
 		CPPUNIT_TEST(calculateRoute_oneObstacleBetween_validRoute);
 		CPPUNIT_TEST(calculateRoute_oneObstacleBetween_routeIsNotTooLong);
 		CPPUNIT_TEST(calculateRoute_oneObstacleBetween_routeIsNotIntersectingWithObstacles);
 		CPPUNIT_TEST(calculateRoute_oneBigObstacleCloseToStart_validRoute);
 		CPPUNIT_TEST(calculateRoute_oneBigObstacleCloseToStart_routeIsNotTooLong);
-		CPPUNIT_TEST(calculateRoute_oneBigObstacleCloseToStart_routeIsNotIntersectingWithObstacles);
 		CPPUNIT_TEST(calculateRoute_oneBigObstacleCloseToEnd_validRoute);
 		CPPUNIT_TEST(calculateRoute_oneBigObstacleCloseToEnd_routeIsNotTooLong);
 		CPPUNIT_TEST(calculateRoute_oneBigObstacleCloseToEnd_routeIsNotIntersectingWithObstacles);
@@ -41,7 +39,6 @@ namespace Autonomous
 		CPPUNIT_TEST(calculateRoute_shortWayOutsideField_noPointOfRouteIsOutside);
 		CPPUNIT_TEST(calculateRoute_onlyPossiblePointBesideIsBlockedByAnotherObstacle_reasonableRoute);
 		CPPUNIT_TEST(calculateRoute_softObstacleAtOwnPosition_validRoute);
-		CPPUNIT_TEST(calculateRoute_hardObstacleAtOwnPosition_invalidRoute);
 		CPPUNIT_TEST(calculateRoute_completeTurnAtStartNecessaryAndMaximumRotation_reasonableRoute);
 		CPPUNIT_TEST(calculateRoute_completeTurnAtEndNecessaryAndMaximumRotation_reasonableRoute);
 		CPPUNIT_TEST(calculateRoute_sharpBendBetweenNecessary_reasonableRoute);
@@ -96,14 +93,12 @@ namespace Autonomous
 		void calculateRoute_emptyField_validRoute();
 		void calculateRoute_emptyField_routeHasTwoPoints();
 		void calculateRoute_emptyField_routeHasSameWidthAsRobot();
-		void calculateRoute_obstacleAtStartOfRoute_invalidRoute();
 		void calculateRoute_softObstacleAtEndOfRoute_invalidRoute();
 		void calculateRoute_oneObstacleBetween_validRoute();
 		void calculateRoute_oneObstacleBetween_routeIsNotTooLong();
 		void calculateRoute_oneObstacleBetween_routeIsNotIntersectingWithObstacles();
 		void calculateRoute_oneBigObstacleCloseToStart_validRoute();
 		void calculateRoute_oneBigObstacleCloseToStart_routeIsNotTooLong();
-		void calculateRoute_oneBigObstacleCloseToStart_routeIsNotIntersectingWithObstacles();
 		void calculateRoute_oneBigObstacleCloseToEnd_validRoute();
 		void calculateRoute_oneBigObstacleCloseToEnd_routeIsNotTooLong();
 		void calculateRoute_oneBigObstacleCloseToEnd_routeIsNotIntersectingWithObstacles();
@@ -117,7 +112,6 @@ namespace Autonomous
 		void calculateRoute_shortWayOutsideField_noPointOfRouteIsOutside();
 		void calculateRoute_onlyPossiblePointBesideIsBlockedByAnotherObstacle_reasonableRoute();
 		void calculateRoute_softObstacleAtOwnPosition_validRoute();
-		void calculateRoute_hardObstacleAtOwnPosition_invalidRoute();
 		void calculateRoute_completeTurnAtStartNecessaryAndMaximumRotation_reasonableRoute();
 		void calculateRoute_completeTurnAtEndNecessaryAndMaximumRotation_reasonableRoute();
 		void calculateRoute_sharpBendBetweenNecessary_reasonableRoute();

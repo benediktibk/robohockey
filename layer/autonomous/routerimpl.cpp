@@ -35,10 +35,6 @@ Route RouterImpl::calculateRoute(
 	if (!field.isPointInsideField(end.getPosition()))
 		return Route();
 
-	Circle startCircle(start.getPosition(), sqrt(2)*m_robotWidth);
-	if (startCircle.overlapsWith(hardObstacles))
-		return Route();
-
 	Circle endCircle(end.getPosition(), sqrt(2)*m_robotWidth);
 	if (	endCircle.overlapsWith(hardObstacles) ||
 			(endCircle.overlapsWith(softObstacles) && !ignoreSoftObstacles))
@@ -131,8 +127,25 @@ vector<Circle> RouterImpl::filterObstacles(
 {
 	vector<Circle> allObstacles;
 	allObstacles.reserve(hardObstacles.size() + softObstacles.size());
-	allObstacles.insert(allObstacles.end(), hardObstacles.begin(), hardObstacles.end());
 	Circle startCircle(position, sqrt(2)*m_robotWidth);
+
+	for (vector<Circle>::const_iterator i = hardObstacles.begin(); i != hardObstacles.end(); ++i)
+	{
+		Circle obstacle = *i;
+		const Point &center = obstacle.getCenter();
+
+		if (startCircle.isInside(center))
+			continue;
+
+		if (startCircle.overlapsWith(obstacle))
+		{
+			double distanceToCenter = startCircle.getDistanceTo(center);
+			double diameter = distanceToCenter*2*0.99;
+			obstacle.setDiameter(diameter);
+		}
+
+		allObstacles.push_back(obstacle);
+	}
 
 	for (vector<Circle>::const_iterator i = softObstacles.begin(); i != softObstacles.end(); ++i)
 	{
