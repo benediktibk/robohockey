@@ -689,6 +689,42 @@ void RobotTest::goTo_hardObstacleAtStart_engineGotCallToGoToStraight()
 	CPPUNIT_ASSERT_EQUAL((unsigned int)1, engine.getCallsToGoToStraight());
 }
 
+void RobotTest::goTo_hardObstacleMovedALittleBitIntoTheRoute_engineGotNoAdditionalCalls()
+{
+	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
+	DataAnalysis::Odometry &odometry = dataAnalyser->getOdometry();
+	DataAnalysis::EngineMock &engine = dataAnalyser->getEngineMock();
+	odometry.setCurrentPosition(RobotPosition(Point(0, 1), Angle::getQuarterRotation()));
+	RobotImpl robot(dataAnalyser, new RouterImpl(0.5), m_watchMock);
+	FieldMock field;
+	vector<Circle> obstacles;
+	obstacles.push_back(Circle(Point(5, 1), 3));
+	field.setHardObstacles(obstacles);
+	field.setNegativeCoordinatesOutside(true);
+
+	robot.updateSensorData();
+	m_targets.push_back(RobotPosition(Point(10, 1), 0));
+	robot.goTo(m_targets);
+	robot.updateActuators(field);
+	engine.setReachedTarget(true);
+	engine.setIsGoingStraight(false);
+	robot.updateSensorData();
+	robot.updateActuators(field);
+	engine.setReachedTarget(false);
+	engine.setIsGoingStraight(true);
+	robot.updateSensorData();
+	robot.updateActuators(field);
+	engine.resetCounters();
+	obstacles.push_back(Circle(Point(5, 1.1), 3));
+	field.setHardObstacles(obstacles);
+	robot.updateSensorData();
+	robot.updateActuators(field);
+
+	CPPUNIT_ASSERT(!robot.cantReachTarget());
+	CPPUNIT_ASSERT_EQUAL((unsigned int)0, engine.getCallsToTurnToTarget());
+	CPPUNIT_ASSERT_EQUAL((unsigned int)0, engine.getCallsToGoToStraight());
+}
+
 void RobotTest::stuckAtObstacle_tryingToTackleObstacle_true()
 {
 	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
