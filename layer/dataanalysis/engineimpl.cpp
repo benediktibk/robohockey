@@ -208,7 +208,7 @@ void EngineImpl::updateSpeedAndRotationForRotating()
 void EngineImpl::turnOnly(const Angle &targetOrientation, const Angle &currentOrientation)
 {
 	Angle orientationDifference = targetOrientation - currentOrientation;
-	double amplification = 0.5;
+	double amplification = 0.7;
 	m_tryingToTackleObstacle = false;
 	setSpeed(0, orientationDifference.getValueBetweenMinusPiAndPi()*amplification);
 }
