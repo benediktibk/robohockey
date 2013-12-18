@@ -73,6 +73,7 @@ namespace Autonomous
 		void changeIntoState(RobotState state);
 		bool isCurrentTargetPuckCollectable() const;
 		bool checkTimeout();
+		void shrinkObstacles(std::vector<Common::Circle> &obstacles) const;
 
 	private:
 		// forbid copies

@@ -1166,6 +1166,29 @@ void FieldTest::getAllHardObstacles_oneBigObstacleDisappeared_resultSizeIs0()
 	CPPUNIT_ASSERT_EQUAL((size_t)0, obstacles.size());
 }
 
+void FieldTest::getAllHardObstacles_fairlyBigObject_diameterIs08()
+{
+	DataAnalysis::OdometryMock odometry;
+	DataAnalysis::LidarMock lidar;
+	DataAnalysis::CameraMock camera;
+	Autonomous::RobotMock autonomousRobot;
+	FieldImpl field(odometry, lidar, camera, autonomousRobot);
+	RobotPosition ownPosition(Point(0, 0), 0);
+	odometry.setCurrentPosition(ownPosition);
+	DataAnalysis::LidarObjects lidarObjects(ownPosition.getPosition());
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 0), 0.14));
+	lidar.setAllObjects(lidarObjects);
+
+	field.update();
+	vector<Circle> obstacles = field.getAllHardObstacles();
+
+	CPPUNIT_ASSERT_EQUAL((size_t)1, obstacles.size());
+	const Circle &object = obstacles.front();
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(0.8, object.getDiameter(), 0.001);
+	Compare compare(0.00001);
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(1, 0), object.getCenter()));
+}
+
 void FieldTest::getEnemyTeamColor_OwnTeamColorYellow_blue()
 {
 	DataAnalysis::OdometryMock odometry;

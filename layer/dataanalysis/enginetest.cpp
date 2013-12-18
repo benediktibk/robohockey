@@ -597,7 +597,7 @@ void EngineTest::goToStraightSlowlyBack_forwardMovementLocked_notTryingToTackleO
 	CPPUNIT_ASSERT(!engine.tryingToTackleObstacle());
 }
 
-void EngineTest::updateSpeedAndRotation_forwardMovementLocked_motorIsDisabled()
+void EngineTest::updateSpeedAndRotation_forwardMovementLockedButNotTryingToTackleObstacle_motorIsEnabled()
 {
 	Hardware::EngineMock hardwareEngine;
 	Hardware::OdometryMock hardwareOdometry;
@@ -609,7 +609,7 @@ void EngineTest::updateSpeedAndRotation_forwardMovementLocked_motorIsDisabled()
 	engine.updateSpeedAndRotation();
 
 	CPPUNIT_ASSERT_EQUAL((unsigned int)1, hardwareEngine.getCallsToSetEnabled());
-	CPPUNIT_ASSERT(!hardwareEngine.getEnabled());
+	CPPUNIT_ASSERT(hardwareEngine.getEnabled());
 }
 
 void EngineTest::updateSpeedAndRotation_forwardMovementUnlocked_motorIsEnabled()
@@ -627,7 +627,7 @@ void EngineTest::updateSpeedAndRotation_forwardMovementUnlocked_motorIsEnabled()
 	CPPUNIT_ASSERT(hardwareEngine.getEnabled());
 }
 
-void EngineTest::updateSpeedAndRotation_forwardMovementLockedAndCalledTwice_motorIsDisabled()
+void EngineTest::updateSpeedAndRotation_forwardMovementLockedAndCalledTwiceAndNotTryingToTackleObstacle_motorIsEnabled()
 {
 	Hardware::EngineMock hardwareEngine;
 	Hardware::OdometryMock hardwareOdometry;
@@ -641,7 +641,7 @@ void EngineTest::updateSpeedAndRotation_forwardMovementLockedAndCalledTwice_moto
 	engine.updateSpeedAndRotation();
 
 	CPPUNIT_ASSERT_EQUAL((unsigned int)2, hardwareEngine.getCallsToSetEnabled());
-	CPPUNIT_ASSERT(!hardwareEngine.getEnabled());
+	CPPUNIT_ASSERT(hardwareEngine.getEnabled());
 }
 
 void EngineTest::updateSpeedAndRotation_forwardMovementUnlockedAndCalledTwice_motorIsEnabled()
@@ -659,4 +659,20 @@ void EngineTest::updateSpeedAndRotation_forwardMovementUnlockedAndCalledTwice_mo
 
 	CPPUNIT_ASSERT_EQUAL((unsigned int)2, hardwareEngine.getCallsToSetEnabled());
 	CPPUNIT_ASSERT(hardwareEngine.getEnabled());
+}
+
+void EngineTest::updateSpeedAndRotation_tryingToTackleObstacle_motorIsDisabled()
+{
+	Hardware::EngineMock hardwareEngine;
+	Hardware::OdometryMock hardwareOdometry;
+	EngineImpl engine(hardwareEngine, hardwareOdometry);
+	hardwareOdometry.setCurrentPosition(RobotPosition(Point(0, 0), 0));
+
+	engine.updateSensorData();
+	engine.lockForwardMovement();
+	engine.goToStraight(Point(1, 0));
+	engine.updateSpeedAndRotation();
+
+	CPPUNIT_ASSERT_EQUAL((unsigned int)1, hardwareEngine.getCallsToSetEnabled());
+	CPPUNIT_ASSERT(!hardwareEngine.getEnabled());
 }
