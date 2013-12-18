@@ -317,7 +317,7 @@ double LidarImpl::calculateMinimumDistanceToObstacle(const Angle &angle, double 
 	const double axisLength = 0.38 + additionalSpaceBesideAxis;
 	const double axisLengthTwice = axisLength*2;
 	const double timeToStop = 0.2;
-	const double minimumDistanceToObstacle = 0.4 + axisLength + speed*timeToStop;
+	const double minimumDistanceToObstacle = 0.3 + axisLength + speed*timeToStop;
 	const double axisLengthWithAngle = axisLengthTwice*cos(anglePositive);
 	const double axisLengthWithAngleSquare = axisLengthWithAngle*axisLengthWithAngle;
 	const double minimumWithAngle = minimumDistanceToObstacle*sin(anglePositive);

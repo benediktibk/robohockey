@@ -52,6 +52,7 @@ namespace DataAnalysis
 		CPPUNIT_TEST(isObstacleInFront_robotVeryCloseAheadAtTheSide_true);
 		CPPUNIT_TEST(isObstacleInFront_robotFarDistance_false);
 		CPPUNIT_TEST(isObstacleInFront_robotAtTheSide_false);
+		CPPUNIT_TEST(isObstacleInFront_realWorldExample_false);
 		CPPUNIT_TEST(isPuckCollected_noPuckInCloseDistance_false);
 		CPPUNIT_TEST(isPuckCollected_closeEnough_true);
 		CPPUNIT_TEST(isPuckCollected_directInTheMiddle_true);
@@ -130,6 +131,7 @@ namespace DataAnalysis
 		void isObstacleInFront_robotVeryCloseAheadAtTheSide_true();
 		void isObstacleInFront_robotFarDistance_false();
 		void isObstacleInFront_robotAtTheSide_false();
+		void isObstacleInFront_realWorldExample_false();
 		void isPuckCollected_noPuckInCloseDistance_false();
 		void isPuckCollected_closeEnough_true();
 		void isPuckCollected_directInTheMiddle_true();

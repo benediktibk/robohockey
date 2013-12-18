@@ -522,6 +522,16 @@ void LidarTest::isObstacleInFront_robotAtTheSide_false()
 	CPPUNIT_ASSERT(!lidar.isObstacleInFront(0.5));
 }
 
+void LidarTest::isObstacleInFront_realWorldExample_false()
+{
+	Hardware::LidarMock hardwareLidar;
+	hardwareLidar.readSensorDataFromFile("resources/testfiles/lidar_39.txt");
+	LidarImpl lidar(hardwareLidar);
+	lidar.updateSensorData();
+
+	CPPUNIT_ASSERT(!lidar.isObstacleInFront(0));
+}
+
 void LidarTest::isPuckCollected_noPuckInCloseDistance_false()
 {
 	Hardware::LidarMock hardwareLidar;
