@@ -567,8 +567,6 @@ vector<FieldObject> FieldImpl::moveAllFieldObjectsInVisibleAreaToTemporaryVector
 	const RobotPosition &ownPosition = m_odometry->getCurrentPosition();
 	size_t i = 0;
 
-	cout << "Number of FieldObjects: " << m_fieldObjects.size() << endl;
-
 	while(i < m_fieldObjects.size())
 	{
 		vector<FieldObject>::iterator it = m_fieldObjects.begin() + i;
