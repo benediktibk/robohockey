@@ -48,6 +48,7 @@ namespace Autonomous
 		CPPUNIT_TEST(goTo_minuteWaited_cantReachTarget);
 		CPPUNIT_TEST(goTo_obstacleSuddenlyAppearedDuringDriving_engineGotCallToTurnTowardsNewRoute);
 		CPPUNIT_TEST(goTo_obstacleSuddenlyAppearedDuringTurning_engineGotCallToTurnTowardsNewRoute);
+		CPPUNIT_TEST(goTo_hardObstacleAtStart_engineGotCallToGoToStraight);
 		CPPUNIT_TEST(stuckAtObstacle_tryingToTackleObstacle_true);
 		CPPUNIT_TEST(stuckAtObstacle_notTryingToTackleObstacle_false);
 		CPPUNIT_TEST(stuckAtObstacle_updateCalledTwiceAfterStuckAtObstacle_true);
@@ -155,6 +156,7 @@ namespace Autonomous
 		void goTo_minuteWaited_cantReachTarget();
 		void goTo_obstacleSuddenlyAppearedDuringDriving_engineGotCallToTurnTowardsNewRoute();
 		void goTo_obstacleSuddenlyAppearedDuringTurning_engineGotCallToTurnTowardsNewRoute();
+		void goTo_hardObstacleAtStart_engineGotCallToGoToStraight();
 		void stuckAtObstacle_tryingToTackleObstacle_true();
 		void stuckAtObstacle_notTryingToTackleObstacle_false();
 		void stuckAtObstacle_updateCalledTwiceAfterStuckAtObstacle_true();
