@@ -172,7 +172,7 @@ bool LidarImpl::canBeSeen(const Circle &object, const RobotPosition &ownPosition
 	Point center = originalCenter - ownPosition.getPosition();
 	center.rotate(ownPosition.getOrientation()*(-1));
 	Circle movedObject(center, object.getDiameter());
-	double distanceToObject = object.getDistanceTo(Point(0, 0));
+	double distanceToObject = object.getDistanceTo(ownPoint);
 
 	if (distanceToObject > m_maximumDistance)
 		return false;
