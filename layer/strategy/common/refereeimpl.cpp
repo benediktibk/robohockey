@@ -29,6 +29,7 @@ RefereeImpl::RefereeImpl(const std::string &AngelinaAdressServer):
 	connect(m_referee, SIGNAL(connected()),this, SLOT(slotConnected()));
 	connect(m_referee, SIGNAL(connectFailed()),this, SLOT(slotConnectFailed()));
 	m_referee->connectToServer(QString(AngelinaAdressServer.c_str()), 10000);
+	m_referee->setVerbose(false);
 }
 
 RefereeImpl::~RefereeImpl()
