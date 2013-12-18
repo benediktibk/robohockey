@@ -22,6 +22,8 @@ namespace DataAnalysis
 		CPPUNIT_TEST(isObstacleInFront_bothSensorsCovered_false);
 		CPPUNIT_TEST(isObstacleInFront_bothSensorsCoveredSecondVersion_false);
 		CPPUNIT_TEST(isObstacleInFront_bothSensorsCoveredThirdVersion_false);
+		CPPUNIT_TEST(isObstacleInFront_onlyLeftValueTooClose_false);
+		CPPUNIT_TEST(isObstacleInFront_onlyRightValueTooClose_false);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
@@ -33,6 +35,8 @@ namespace DataAnalysis
 		void isObstacleInFront_bothSensorsCovered_false();
 		void isObstacleInFront_bothSensorsCoveredSecondVersion_false();
 		void isObstacleInFront_bothSensorsCoveredThirdVersion_false();
+		void isObstacleInFront_onlyLeftValueTooClose_false();
+		void isObstacleInFront_onlyRightValueTooClose_false();
 	};
 }
 }
