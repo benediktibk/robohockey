@@ -339,7 +339,7 @@ void FieldImpl::updateObstacles()
 		const FieldObject &fieldObject = *i;
 		Circle circle = fieldObject.getCircle();
 
-		if (circle.getDiameter() > 0.17)
+		if (circle.getDiameter() > 0.13)
 		{
 			circle.setDiameter(0.8);
 			m_hardObstacles.push_back(circle);

@@ -93,6 +93,7 @@ set(TESTFILES
 	lidar_35.txt
 	lidar_36.txt
 	lidar_37.txt
+	lidar_38.txt
 	lidar_wall.txt
 	sonar_1.txt
 	sonar_2.txt

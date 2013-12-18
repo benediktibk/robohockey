@@ -263,10 +263,50 @@ void CameraTest::getAllCameraObjects_realWorldExampleData_timeIsBelow100ms()
 	CPPUNIT_ASSERT(time < 0.1);
 }
 
-void CameraTest::getProbabilityForCollectedBluePuck_bluePuckCollectedLeft_resultIsOver80Percent()
+void CameraTest::getProbabilityForCollectedYellowPuck_bluePuckCollectedLeft_resultIsNear0()
 {
 	Hardware::CameraMock hardwareCamera("blue_puck_collected_left");
 	CameraImpl camera(hardwareCamera);
 
-	CPPUNIT_ASSERT(camera.getProbabilityForCollectedBluePuck() > 0.8);
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(0, camera.getProbabilityForCollectedYellowPuck(), 0.05);
+}
+
+void CameraTest::getProbabilityForCollectedYellowPuck_yellowPuckCollectedLeft_resultIsOver80Percent()
+{
+	Hardware::CameraMock hardwareCamera("yellow_puck_collected_left");
+	CameraImpl camera(hardwareCamera);
+
+	CPPUNIT_ASSERT(camera.getProbabilityForCollectedYellowPuck() > 0.8);
+}
+
+void CameraTest::getProbabilityForCollectedYellowPuck_bluePuckCollectedRight_resultIsNear0()
+{
+	Hardware::CameraMock hardwareCamera("blue_puck_collected_right");
+	CameraImpl camera(hardwareCamera);
+
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(0, camera.getProbabilityForCollectedYellowPuck(), 0.05);
+}
+
+void CameraTest::getProbabilityForCollectedYellowPuck_yellowPuckCollectedRight_resultIsOver80Percent()
+{
+	Hardware::CameraMock hardwareCamera("yellow_puck_collected_right");
+	CameraImpl camera(hardwareCamera);
+
+	CPPUNIT_ASSERT(camera.getProbabilityForCollectedYellowPuck() > 0.8);
+}
+
+void CameraTest::getProbabilityForCollectedYellowPuck_bluePuckCollectedInYellowGoal_resultIsNear0()
+{
+	Hardware::CameraMock hardwareCamera("blue_puck_collected_in_yellow_goal");
+	CameraImpl camera(hardwareCamera);
+
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(0, camera.getProbabilityForCollectedYellowPuck(), 0.05);
+}
+
+void CameraTest::getProbabilityForCollectedYellowPuck_yellowPuckCollectedInBlueGoal_resultIsOver80Percent()
+{
+	Hardware::CameraMock hardwareCamera("yellow_puck_collected_in_blue_goal");
+	CameraImpl camera(hardwareCamera);
+
+	CPPUNIT_ASSERT(camera.getProbabilityForCollectedYellowPuck() > 0.8);
 }

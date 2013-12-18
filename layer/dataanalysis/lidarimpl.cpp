@@ -313,7 +313,7 @@ double LidarImpl::calculateDistanceToObject(
 double LidarImpl::calculateMinimumDistanceToObstacle(const Angle &angle, double speed) const
 {
 	const double anglePositive = fabs(angle.getValueBetweenMinusPiAndPi());
-	const double additionalSpaceBesideAxis = 0.1;
+	const double additionalSpaceBesideAxis = 0.05;
 	const double axisLength = 0.38 + additionalSpaceBesideAxis;
 	const double axisLengthTwice = axisLength*2;
 	const double timeToStop = 0.2;
