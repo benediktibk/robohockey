@@ -109,6 +109,11 @@ Angle Angle::getThreeQuarterRotation()
 	return Angle(1.5*M_PI);
 }
 
+Angle Angle::convertFromDegreeToRadiant(double angle)
+{
+	return Angle(angle/180*M_PI);
+}
+
 void Angle::fixRange()
 {
 	while (m_value <= M_PI)

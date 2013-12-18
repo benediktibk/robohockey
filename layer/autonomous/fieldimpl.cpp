@@ -206,7 +206,49 @@ std::list<RobotPosition> FieldImpl::getTargetsForSearchingPucks() const
 
 std::list<RobotPosition> FieldImpl::getTargetsForHidingEnemyPucks() const
 {
-	return list<RobotPosition>();
+	list<RobotPosition> targets;
+
+	targets.push_back(RobotPosition( Point(4.7, 2.33), Angle::convertFromDegreeToRadiant(0)));
+	targets.push_back(RobotPosition( Point(4.7, 0.67), Angle::convertFromDegreeToRadiant(0)));
+	targets.push_back(RobotPosition( Point(4.7, 2.67), Angle::convertFromDegreeToRadiant(0)));
+	targets.push_back(RobotPosition( Point(4.7, 0.33), Angle::convertFromDegreeToRadiant(0)));
+
+	targets.push_back(RobotPosition( Point(4.4, 2.33), Angle::convertFromDegreeToRadiant(0)));
+	targets.push_back(RobotPosition( Point(4.4, 0.67), Angle::convertFromDegreeToRadiant(0)));
+	targets.push_back(RobotPosition( Point(4.4, 2.67), Angle::convertFromDegreeToRadiant(0)));
+	targets.push_back(RobotPosition( Point(4.4, 0.33), Angle::convertFromDegreeToRadiant(0)));
+
+	targets.push_back(RobotPosition( Point(4.2, 0.67), Angle::convertFromDegreeToRadiant(50)));
+	targets.push_back(RobotPosition( Point(4.2, 2.67), Angle::convertFromDegreeToRadiant(70)));
+	targets.push_back(RobotPosition( Point(4.2, 0.33), Angle::convertFromDegreeToRadiant(60)));
+	targets.push_back(RobotPosition( Point(4.2, 2.33), Angle::convertFromDegreeToRadiant(330)));
+
+	targets.push_back(RobotPosition( Point(4.0, 0.50), Angle::convertFromDegreeToRadiant(0)));
+	targets.push_back(RobotPosition( Point(4.0, 0.70), Angle::convertFromDegreeToRadiant(270)));
+	targets.push_back(RobotPosition( Point(4.0, 2.50), Angle::convertFromDegreeToRadiant(0)));
+	targets.push_back(RobotPosition( Point(4.0, 2.67), Angle::convertFromDegreeToRadiant(50)));
+
+	targets.push_back(RobotPosition( Point(3.7, 0.33), Angle::convertFromDegreeToRadiant(70)));
+	targets.push_back(RobotPosition( Point(3.7, 0.67), Angle::convertFromDegreeToRadiant(90)));
+	targets.push_back(RobotPosition( Point(3.7, 2.67), Angle::convertFromDegreeToRadiant(100)));
+	targets.push_back(RobotPosition( Point(3.7, 0.33), Angle::convertFromDegreeToRadiant(110)));
+
+	targets.push_back(RobotPosition( Point(3.4, 2.33), Angle::convertFromDegreeToRadiant(0)));
+	targets.push_back(RobotPosition( Point(3.4, 0.67), Angle::convertFromDegreeToRadiant(120)));
+	targets.push_back(RobotPosition( Point(3.4, 2.67), Angle::convertFromDegreeToRadiant(160)));
+	targets.push_back(RobotPosition( Point(3.4, 0.33), Angle::convertFromDegreeToRadiant(200)));
+
+	targets.push_back(RobotPosition( Point(3.4, 0.40), Angle::convertFromDegreeToRadiant(220)));
+	targets.push_back(RobotPosition( Point(3.4, 0.80), Angle::convertFromDegreeToRadiant(240)));
+	targets.push_back(RobotPosition( Point(3.4, 1.20), Angle::convertFromDegreeToRadiant(260)));
+	targets.push_back(RobotPosition( Point(3.4, 1.60), Angle::convertFromDegreeToRadiant(280)));
+
+	targets.push_back(RobotPosition( Point(3.4, 2.00), Angle::convertFromDegreeToRadiant(300)));
+	targets.push_back(RobotPosition( Point(3.4, 2.40), Angle::convertFromDegreeToRadiant(320)));
+	targets.push_back(RobotPosition( Point(3.4, 2.67), Angle::convertFromDegreeToRadiant(340)));
+	targets.push_back(RobotPosition( Point(4.7, 1.50), Angle::convertFromDegreeToRadiant(90)));
+
+	return targets;
 }
 
 std::list<RobotPosition> FieldImpl::getTargetsForCollectingOnePuck() const
