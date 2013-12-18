@@ -280,6 +280,9 @@ void EngineImpl::switchIntoState(EngineState state)
 	m_rotationReached = false;
 	m_tryingToTackleObstacle = false;
 	m_oneHalfTurnDone = false;
+
+	if (m_engineState != state)
+		m_startedMovement = false;
+
 	m_engineState = state;
-	m_startedMovement = false;
 }
