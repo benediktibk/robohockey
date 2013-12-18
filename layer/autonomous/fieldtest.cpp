@@ -1176,7 +1176,7 @@ void FieldTest::getAllHardObstacles_fairlyBigObject_diameterIs08()
 	RobotPosition ownPosition(Point(0, 0), 0);
 	odometry.setCurrentPosition(ownPosition);
 	DataAnalysis::LidarObjects lidarObjects(ownPosition.getPosition());
-	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 0), 0.2));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 0), 0.14));
 	lidar.setAllObjects(lidarObjects);
 
 	field.update();
