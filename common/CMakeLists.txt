@@ -4,7 +4,6 @@ set(COMMON_SRC
 	discretefunction.cpp
 	rectangle.cpp
 	circle.cpp
-	watch.cpp
 	robotposition.cpp
 	angle.cpp
 	path.cpp
@@ -12,6 +11,7 @@ set(COMMON_SRC
 	pathintersectpoints.cpp
 	console.cpp
 	quadraticequation.cpp
+	watchimpl.cpp
 )
 
 set(COMMON_TEST_SRC
@@ -28,6 +28,7 @@ set(COMMON_TEST_SRC
 	pathintersectpointstest.cpp
 	quadraticequationtest.cpp
 	signumtest.cpp
+	watchmock.cpp
 )
 
 add_library(common ${COMMON_SRC})

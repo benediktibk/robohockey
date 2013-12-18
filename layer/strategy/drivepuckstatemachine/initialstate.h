@@ -9,13 +9,17 @@ namespace Layer
 {
 namespace Strategy
 {
+namespace Common
+{
+	class DrivePuck;
+}
 namespace DrivePuckStateMachine
 {
     class InitialState :
 			public Common::State
 	{
 	public:
-		InitialState(Autonomous::Robot &robot, Autonomous::Field &field, Common::Referee &referee);
+		InitialState(Autonomous::Robot &robot, Autonomous::Field &field, Common::Referee &referee, RoboHockey::Layer::Strategy::Common::DrivePuck *drivePuck);
 
 		virtual State* nextState();
 		virtual void update();

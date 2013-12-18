@@ -20,6 +20,8 @@ namespace DataAnalysis
 		CPPUNIT_TEST(goToStraight_startOrientationCompletelyWrong_lastMagnitudeIsNotZero);
 		CPPUNIT_TEST(goToStraight_startOrientationCorrect_lastMagnitudeIsNotZero);
 		CPPUNIT_TEST(goToStraight_orientationReachedAfterSomeTime_lastMagnitudeIsNotZero);
+		CPPUNIT_TEST(goToStraight_stillMoving_lastSpeedsAreZero);
+		CPPUNIT_TEST(goToStraight_movingFinishedFromPreviousMovement_lastSpeedIsNotZero);
 		CPPUNIT_TEST(stop_movingSomewhere_lastMagnitudeIsZero);
 		CPPUNIT_TEST(stop_movingSomewhere_lastRotationIsZero);
 		CPPUNIT_TEST(turnAround_empty_lastMagnitudeIsZero);
@@ -51,6 +53,11 @@ namespace DataAnalysis
 		CPPUNIT_TEST(goToStraightSlowlyBack_TargetPassedAfterSomeTime_lastMagnitudeIs0);
 		CPPUNIT_TEST(goToStraightSlowlyBack_forwardMovementLocked_lastMagnitudeIsSmallerThanZero);
 		CPPUNIT_TEST(goToStraightSlowlyBack_forwardMovementLocked_notTryingToTackleObstacle);
+		CPPUNIT_TEST(updateSpeedAndRotation_forwardMovementLockedButNotTryingToTackleObstacle_motorIsEnabled);
+		CPPUNIT_TEST(updateSpeedAndRotation_forwardMovementUnlocked_motorIsEnabled);
+		CPPUNIT_TEST(updateSpeedAndRotation_forwardMovementLockedAndCalledTwiceAndNotTryingToTackleObstacle_motorIsEnabled);
+		CPPUNIT_TEST(updateSpeedAndRotation_forwardMovementUnlockedAndCalledTwice_motorIsEnabled);
+		CPPUNIT_TEST(updateSpeedAndRotation_tryingToTackleObstacle_motorIsDisabled);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
@@ -60,6 +67,8 @@ namespace DataAnalysis
 		void goToStraight_startOrientationCompletelyWrong_lastMagnitudeIsNotZero();
 		void goToStraight_startOrientationCorrect_lastMagnitudeIsNotZero();
 		void goToStraight_orientationReachedAfterSomeTime_lastMagnitudeIsNotZero();
+		void goToStraight_stillMoving_lastSpeedsAreZero();
+		void goToStraight_movingFinishedFromPreviousMovement_lastSpeedIsNotZero();
 		void stop_movingSomewhere_lastMagnitudeIsZero();
 		void stop_movingSomewhere_lastRotationIsZero();
 		void turnAround_empty_lastMagnitudeIsZero();
@@ -91,6 +100,11 @@ namespace DataAnalysis
 		void goToStraightSlowlyBack_TargetPassedAfterSomeTime_lastMagnitudeIs0();
 		void goToStraightSlowlyBack_forwardMovementLocked_lastMagnitudeIsSmallerThanZero();
 		void goToStraightSlowlyBack_forwardMovementLocked_notTryingToTackleObstacle();
+		void updateSpeedAndRotation_forwardMovementLockedButNotTryingToTackleObstacle_motorIsEnabled();
+		void updateSpeedAndRotation_forwardMovementUnlocked_motorIsEnabled();
+		void updateSpeedAndRotation_forwardMovementLockedAndCalledTwiceAndNotTryingToTackleObstacle_motorIsEnabled();
+		void updateSpeedAndRotation_forwardMovementUnlockedAndCalledTwice_motorIsEnabled();
+		void updateSpeedAndRotation_tryingToTackleObstacle_motorIsDisabled();
 	};
 }
 }

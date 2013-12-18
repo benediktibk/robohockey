@@ -56,6 +56,18 @@ void EngineImpl::goToStraightSlowlyBack(const Point &position)
 
 void EngineImpl::updateSpeedAndRotation()
 {
+	if (!m_startedMovement)
+	{
+		if (isMoving() && m_engineState != EngineStateStopped)
+		{
+			updateSpeedAndRotationForStopped();
+			m_engine.setEnabled(true);
+			return;
+		}
+		else
+			m_startedMovement = true;
+	}
+
 	switch(m_engineState)
 	{
 	case EngineStateStopped:
@@ -74,6 +86,8 @@ void EngineImpl::updateSpeedAndRotation()
 		updateSpeedAndRotationForRotating();
 		break;
 	}
+
+	m_engine.setEnabled(!m_tryingToTackleObstacle);
 }
 
 void EngineImpl::stop()
@@ -267,4 +281,5 @@ void EngineImpl::switchIntoState(EngineState state)
 	m_tryingToTackleObstacle = false;
 	m_oneHalfTurnDone = false;
 	m_engineState = state;
+	m_startedMovement = false;
 }

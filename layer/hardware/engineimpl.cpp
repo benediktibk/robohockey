@@ -12,27 +12,20 @@ EngineImpl::EngineImpl(PlayerCc::PlayerClient *playerClient) :
 	m_orientation(m_engine->GetYaw()),
 	m_enabled(false)
 {
-	m_engine->SetMotorEnable(false);
+	m_engine->SetMotorEnable(true);
 	setSpeed(0, 0);
 }
 
 EngineImpl::~EngineImpl()
 {
 	setSpeed(0, 0);
+	setEnabled(false);
 	delete m_engine;
 	m_engine = 0;
 }
 
 void EngineImpl::setSpeed(double magnitude, double rotation)
 {
-	bool enableMotor = false;
-	if (magnitude != 0 || rotation != 0)
-		enableMotor = true;
-
-	if (enableMotor != m_enabled)
-		m_engine->SetMotorEnable(enableMotor);
-
-	m_enabled = enableMotor;
 	m_engine->SetSpeed(magnitude, rotation);
 }
 
@@ -47,7 +40,7 @@ bool EngineImpl::isMoving()
 	m_orientation = m_engine->GetYaw();
 
 	if(m_orientation_equal && m_posX_equal && m_posY_equal)
-		return m_enabled;
+		return false;
 	else
 		return true;
 }
@@ -55,6 +48,13 @@ bool EngineImpl::isMoving()
 double EngineImpl::getSpeed() const
 {
 	return m_engine->GetXSpeed();
+}
+
+void EngineImpl::setEnabled(bool value)
+{
+	if (m_enabled != value)
+		m_engine->SetMotorEnable(value);
+	m_enabled = value;
 }
 
 EngineImpl::EngineImpl(const EngineImpl &)

@@ -51,6 +51,7 @@ namespace DataAnalysis
 		CPPUNIT_TEST(isObstacleInFront_robotVeryCloseAtTheSide_true);
 		CPPUNIT_TEST(isObstacleInFront_robotVeryCloseAheadAtTheSide_true);
 		CPPUNIT_TEST(isObstacleInFront_robotFarDistance_false);
+		CPPUNIT_TEST(isObstacleInFront_robotAtTheSide_false);
 		CPPUNIT_TEST(isPuckCollected_noPuckInCloseDistance_false);
 		CPPUNIT_TEST(isPuckCollected_closeEnough_true);
 		CPPUNIT_TEST(isPuckCollected_directInTheMiddle_true);
@@ -74,6 +75,28 @@ namespace DataAnalysis
 		CPPUNIT_TEST(getMaximumAngleRight_noObjects_minusPiHalf);
 		CPPUNIT_TEST(getMaximumAngleLeft_objectAtLeftBorder_reducedViewArea);
 		CPPUNIT_TEST(getMaximumAngleRight_objectAtRightBorder_reducedViewArea);
+		CPPUNIT_TEST(canBeSeen_noObjectBetween_true);
+		CPPUNIT_TEST(canBeSeen_atLeftEdgeOfViewArea_true);
+		CPPUNIT_TEST(canBeSeen_atRightEdgeOfViewArea_true);
+		CPPUNIT_TEST(canBeSeen_outsideOfViewArea_false);
+		CPPUNIT_TEST(canBeSeen_totallyCoveredByOtherObject_false);
+		CPPUNIT_TEST(canBeSeen_fromRightSideCoveredByOtherObject_true);
+		CPPUNIT_TEST(canBeSeen_fromLeftSideCoveredByOtherObject_true);
+		CPPUNIT_TEST(canBeSeen_partlyCoveredFromBothSides_true);
+		CPPUNIT_TEST(canBeSeen_totallyCoveredFromBothSides_false);
+		CPPUNIT_TEST(canBeSeen_inFrontOfObject_true);
+		CPPUNIT_TEST(canBeSeen_inFrontOfObjectShiftedAndRotated_true);
+		CPPUNIT_TEST(canBeSeen_behindObjectShiftedAndRotated_false);
+		CPPUNIT_TEST(canBeSeen_tooBigObject_true);
+		CPPUNIT_TEST(canBeSeen_objectWithRadius0_true);
+		CPPUNIT_TEST(canBeSeen_obstacleRightLowerInFront_true);
+		CPPUNIT_TEST(canBeSeen_obstacleRightLowerBehind_false);
+		CPPUNIT_TEST(canBeSeen_objectMoreThanFourMetersAway_false);
+		CPPUNIT_TEST(canBeSeen_objectLessThanFourMetersAway_true);
+		CPPUNIT_TEST(canBeSeen_objectRightAndLookingLeft_false);
+		CPPUNIT_TEST(canBeSeen_objectRightLowerAndLookingLeft_false);
+		CPPUNIT_TEST(canBeSeen_objectDirectBehindOtherObstacle_true);
+		CPPUNIT_TEST(canBeSeen_robotNotInOriginObjectVisible_true);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
@@ -107,6 +130,7 @@ namespace DataAnalysis
 		void isObstacleInFront_robotVeryCloseAtTheSide_true();
 		void isObstacleInFront_robotVeryCloseAheadAtTheSide_true();
 		void isObstacleInFront_robotFarDistance_false();
+		void isObstacleInFront_robotAtTheSide_false();
 		void isPuckCollected_noPuckInCloseDistance_false();
 		void isPuckCollected_closeEnough_true();
 		void isPuckCollected_directInTheMiddle_true();
@@ -130,6 +154,28 @@ namespace DataAnalysis
 		void getMaximumAngleRight_noObjects_minusPiHalf();
 		void getMaximumAngleLeft_objectAtLeftBorder_reducedViewArea();
 		void getMaximumAngleRight_objectAtRightBorder_reducedViewArea();
+		void canBeSeen_noObjectBetween_true();
+		void canBeSeen_atLeftEdgeOfViewArea_true();
+		void canBeSeen_atRightEdgeOfViewArea_true();
+		void canBeSeen_outsideOfViewArea_false();
+		void canBeSeen_totallyCoveredByOtherObject_false();
+		void canBeSeen_fromRightSideCoveredByOtherObject_true();
+		void canBeSeen_fromLeftSideCoveredByOtherObject_true();
+		void canBeSeen_partlyCoveredFromBothSides_true();
+		void canBeSeen_totallyCoveredFromBothSides_false();
+		void canBeSeen_inFrontOfObject_true();
+		void canBeSeen_inFrontOfObjectShiftedAndRotated_true();
+		void canBeSeen_behindObjectShiftedAndRotated_false();
+		void canBeSeen_tooBigObject_true();
+		void canBeSeen_objectWithRadius0_true();
+		void canBeSeen_obstacleRightLowerInFront_true();
+		void canBeSeen_obstacleRightLowerBehind_false();
+		void canBeSeen_objectMoreThanFourMetersAway_false();
+		void canBeSeen_objectLessThanFourMetersAway_true();
+		void canBeSeen_objectRightAndLookingLeft_false();
+		void canBeSeen_objectRightLowerAndLookingLeft_false();
+		void canBeSeen_objectDirectBehindOtherObstacle_true();
+		void canBeSeen_robotNotInOriginObjectVisible_true();
 
 	private:
 		static const double m_maximumDistance;

@@ -80,6 +80,7 @@ namespace DataAnalysis
 		SpeedTresholder *m_speedTresholder;
 		double m_desiredSpeed;
 		bool m_isMoving;
+		bool m_startedMovement;
 	};
 }
 }

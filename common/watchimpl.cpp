@@ -1,14 +1,14 @@
-#include "watch.h"
+#include "common/watchimpl.h"
 #include <sys/time.h>
 #include <assert.h>
 
 using namespace RoboHockey::Common;
 
-Watch::Watch() :
+WatchImpl::WatchImpl() :
 	m_lastTime(getCurrentAbsoluteTime())
 { }
 
-double Watch::getTimeAndRestart()
+double WatchImpl::getTimeAndRestart()
 {
 	double totalTime = getCurrentAbsoluteTime();
 	double timeDifference = totalTime - m_lastTime;
@@ -16,7 +16,14 @@ double Watch::getTimeAndRestart()
 	return timeDifference;
 }
 
-double Watch::getCurrentAbsoluteTime() const
+double WatchImpl::getTime() const
+{
+	double totalTime = getCurrentAbsoluteTime();
+	double timeDifference = totalTime - m_lastTime;
+	return timeDifference;
+}
+
+double WatchImpl::getCurrentAbsoluteTime() const
 {
 	timeval timeStructure;
 	int errorCode = gettimeofday(&timeStructure, 0);

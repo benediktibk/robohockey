@@ -83,7 +83,7 @@ namespace Autonomous
 		std::vector<Common::Point> *getPointsOfObjectsWithDiameterAndColor(double diameter, Common::FieldColor color);
 		std::vector<FieldObject> getObjectsWithColor(Common::FieldColor color) const;
 
-		virtual std::vector<FieldObject> moveAllFieldObjectsInVisibleAreaToTemporaryVector();
+		std::vector<FieldObject> moveAllFieldObjectsInVisibleAreaToTemporaryVector(double range);
 		bool isPointFuzzyInsideField(const Common::Point &point, double epsilon) const;
 		void removeAllFieldObjectsOutsideOfField();
 

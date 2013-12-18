@@ -7,10 +7,6 @@
 
 namespace RoboHockey
 {
-namespace Common
-{
-	class RobotPosition;
-}
 namespace Layer
 {
 namespace Strategy

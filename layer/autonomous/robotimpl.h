@@ -8,6 +8,11 @@
 
 namespace RoboHockey
 {
+namespace Common
+{
+	class Watch;
+}
+
 namespace Layer
 {
 namespace DataAnalysis
@@ -24,7 +29,7 @@ namespace Autonomous
 			public Robot
 	{
 	public:
-		RobotImpl(DataAnalysis::DataAnalyser *dataAnalyser, Router *router);
+		RobotImpl(DataAnalysis::DataAnalyser *dataAnalyser, Router *router, Common::Watch *watch);
 		virtual ~RobotImpl();
 
 		virtual void goTo(const std::list<Common::RobotPosition> &possibleTargets);
@@ -67,6 +72,8 @@ namespace Autonomous
 		bool enableCollisionDetectionWithSonar() const;
 		void changeIntoState(RobotState state);
 		bool isCurrentTargetPuckCollectable() const;
+		bool checkTimeout();
+		void shrinkObstacles(std::vector<Common::Circle> &obstacles) const;
 
 	private:
 		// forbid copies
@@ -77,8 +84,10 @@ namespace Autonomous
 		const double m_robotWidth;
 		const double m_maximumDistanceToCollectPuck;
 		const Common::Angle m_maximumAngleToCollectPuck;
+		const double m_timeout;
 		DataAnalysis::DataAnalyser *m_dataAnalyser;
 		Router *m_router;
+		Common::Watch *m_watch;
 		bool m_tryingToTackleObstacle;
 		bool m_cantReachTarget;
 		Route *m_currentRoute;
