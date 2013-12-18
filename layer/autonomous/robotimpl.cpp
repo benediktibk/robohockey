@@ -86,7 +86,10 @@ void RobotImpl::updateEngineForDrivingStraightPart(const Field &field)
 	else
 	{
 		if (routeChanged)
+		{
 			changeIntoState(RobotStateDrivingTurningPart);
+			engine.turnToTarget(m_currentRoute->getSecondPoint());
+		}
 		else if (engine.reachedTarget())
 		{
 			m_currentRoute->removeFirstPoint();
