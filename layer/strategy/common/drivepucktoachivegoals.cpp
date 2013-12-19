@@ -23,3 +23,8 @@ FieldColor DrivePuckToAchiveGoals::getColorOfTargetPucks()
 	return FieldColorUnknown;
 }
 
+unsigned int DrivePuckToAchiveGoals::getNumberOfKnownPucksNotInTarget()
+{
+	return 0;
+}
+

@@ -24,6 +24,7 @@ namespace Common
 			virtual std::vector<RoboHockey::Common::RobotPosition> getTargetPoint() = 0;
 			virtual std::vector<RoboHockey::Common::RobotPosition> getPointToCollectPuck() = 0;
 			virtual RoboHockey::Common::FieldColor getColorOfTargetPucks() = 0;
+			virtual unsigned int getNumberOfKnownPucksNotInTarget() = 0;
 		};
 	}
 }

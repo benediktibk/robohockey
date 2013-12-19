@@ -23,3 +23,8 @@ FieldColor DrivePuckToHidePucks::getColorOfTargetPucks()
 	return FieldColorUnknown;
 }
 
+unsigned int DrivePuckToHidePucks::getNumberOfKnownPucksNotInTarget()
+{
+	return 0;
+}
+
