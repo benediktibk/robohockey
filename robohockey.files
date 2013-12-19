@@ -437,3 +437,7 @@ layer/strategy/drivepuckstatemachine/findpuckstatetest.h
 layer/strategy/drivepuckstatemachine/findpuckstate.h
 layer/strategy/drivepuckstatemachine/findpuckstatetest.cpp
 layer/strategy/drivepuckstatemachine/findpuckstate.cpp
+layer/strategy/drivepuckstatemachine/collectpuckstate.h
+layer/strategy/drivepuckstatemachine/collectpuckstate.cpp
+layer/strategy/drivepuckstatemachine/collectpuckstatetest.h
+layer/strategy/drivepuckstatemachine/collectpuckstatetest.cpp
