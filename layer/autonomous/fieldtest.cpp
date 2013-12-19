@@ -585,10 +585,12 @@ void FieldTest::update_movingAndLidarDataChanges_fieldObjectCountDoesntChange()
 	Autonomous::RobotMock autonomousRobot;
 	FieldImpl field(odometry, lidar, camera, autonomousRobot);
 
+	odometry.setCurrentPosition(RobotPosition(Point(0, 0), Angle(0)));
 	hardwareLidarMock.readSensorDataFromFile("resources/testfiles/lidar_moving_1_previous.txt");
 	lidar.updateSensorData();
 	field.update();
 	size_t oldObjectCount = field.getAllFieldObjects().size();
+	odometry.setCurrentPosition(RobotPosition(Point(0.04691, 0), Angle(0)));
 	hardwareLidarMock.readSensorDataFromFile("resources/testfiles/lidar_moving_1_current.txt");
 	lidar.updateSensorData();
 	field.update();
