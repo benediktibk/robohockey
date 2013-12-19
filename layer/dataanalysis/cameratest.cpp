@@ -288,7 +288,7 @@ void CameraTest::getProbabilityForCollectedYellowPuck_yellowPuckCollectedLeftSec
 
 	double result = camera.getProbabilityForCollectedYellowPuck();
 
-	CPPUNIT_ASSERT(result > 0.8);
+	CPPUNIT_ASSERT(result > 0.65);
 }
 
 void CameraTest::getProbabilityForCollectedYellowPuck_bluePuckCollectedRight_resultIsNear0()
@@ -315,12 +315,12 @@ void CameraTest::getProbabilityForCollectedYellowPuck_yellowPuckCollectedRightSe
 	CPPUNIT_ASSERT(camera.getProbabilityForCollectedYellowPuck() > 0.8);
 }
 
-void CameraTest::getProbabilityForCollectedYellowPuck_bluePuckCollectedInYellowGoal_resultIsNear0()
+void CameraTest::getProbabilityForCollectedYellowPuck_bluePuckCollectedInYellowGoal_resultIsUnder10Percent()
 {
 	Hardware::CameraMock hardwareCamera("blue_puck_collected_in_yellow_goal");
 	CameraImpl camera(hardwareCamera);
 
-	CPPUNIT_ASSERT_DOUBLES_EQUAL(0, camera.getProbabilityForCollectedYellowPuck(), 0.05);
+	CPPUNIT_ASSERT(camera.getProbabilityForCollectedYellowPuck() < 0.1);
 }
 
 void CameraTest::getProbabilityForCollectedYellowPuck_yellowPuckCollectedInBlueGoal_resultIsOver80Percent()
