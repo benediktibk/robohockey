@@ -181,29 +181,99 @@ std::list<RobotPosition> FieldImpl::getTargetsForFinalPosition() const
 {
 	list<RobotPosition> targetList;
 
+	targetList.push_back(RobotPosition( Point(3.5, 1.5), 0));
+	targetList.push_back(RobotPosition( Point(3.5, 1.6), 0));
+	targetList.push_back(RobotPosition( Point(3.5, 1.4), 0));
+	targetList.push_back(RobotPosition( Point(3.5, 1.3), 0));
+	targetList.push_back(RobotPosition( Point(3.5, 1.7), 0));
+	targetList.push_back(RobotPosition( Point(3.5, 1.8), 0));
+	targetList.push_back(RobotPosition( Point(3.5, 1.2), 0));
+	targetList.push_back(RobotPosition( Point(3.5, 1.9), 0));
+	targetList.push_back(RobotPosition( Point(3.5, 1.1), 0));
+	targetList.push_back(RobotPosition( Point(3.5, 2.0), 0));
+	targetList.push_back(RobotPosition( Point(3.5, 1), 0));
+	targetList.push_back(RobotPosition( Point(3.5, 0.8), 0));
+	targetList.push_back(RobotPosition( Point(3.5, 2.2), 0));
+	targetList.push_back(RobotPosition( Point(3.5, 2.4), 0));
+	targetList.push_back(RobotPosition( Point(3.5, 0.6), 0));
+	targetList.push_back(RobotPosition( Point(3.5, 2.5), 0));
+	targetList.push_back(RobotPosition( Point(3.5, 0.5), 0));
+
 
 	return targetList;
 }
 
 std::list<RobotPosition> FieldImpl::getTargetsForSearchingPucks() const
 {
-	vector<RobotPosition> targetVector;
-	list<RobotPosition> targetList(10);
+	vector<RobotPosition> targetVector2;
+	list<RobotPosition> targetList;
+	list<RobotPosition> targetList2(10);
+	RandomDecision decider(0.5);
+	Rectangle sectorOfField(Point(0, 0), Point(5, 3));
+	double distanceFromRobotToObject = 0.50;
+	Angle angle0(0);
 
-	targetVector.push_back(RobotPosition( Point(1.4, 0.6), Angle()));
-	targetVector.push_back(RobotPosition( Point(1.4, 2.4), Angle()));
-	targetVector.push_back(RobotPosition( Point(2.0, 1.0), Angle()));
-	targetVector.push_back(RobotPosition( Point(2.0, 2.0), Angle()));
-	targetVector.push_back(RobotPosition( Point(2.5, 2.2), Angle::getQuarterRotation() * 3));
-	targetVector.push_back(RobotPosition( Point(2.5, 2.2), Angle()));
-	targetVector.push_back(RobotPosition( Point(2.5, 0.8), Angle()));
-	targetVector.push_back(RobotPosition( Point(2.5, 0.8), Angle::getQuarterRotation()));
-	targetVector.push_back(RobotPosition( Point(3.0, 1.5), Angle::getEighthRotation() + Angle::getQuarterRotation()));
-	targetVector.push_back(RobotPosition( Point(3.0, 1.5), Angle::getHalfRotation() + Angle::getQuarterRotation()));
+	if (m_fieldObjects.size() != 0)
+	{
+		for (vector<FieldObject>::const_iterator i = m_fieldObjects.begin(); i != m_fieldObjects.end(); ++i)
+		{
+			const FieldObject &fieldObject = *i;
+			if(fieldObject.getColor() == FieldColorUnknown && sectorOfField.isInside(fieldObject.getCircle().getCenter(), 0.01))
+			{
+				list<RobotPosition> listToArrange(4);
+				vector<RobotPosition> targetVector;
+				Angle angle1 = angle0 + Angle::convertFromDegreeToRadiant(90);
+				Angle angle2 = angle0 + Angle::convertFromDegreeToRadiant(180);
+				Angle angle3 = angle0 + Angle::convertFromDegreeToRadiant(270);
 
-	random_shuffle(targetVector.begin(), targetVector.end());
+				Point point0(distanceFromRobotToObject, 0);
+				point0.rotate(Angle::convertFromDegreeToRadiant(180) + angle0);
+				point0 = point0 + fieldObject.getCircle().getCenter();
 
-	copy(targetVector.begin(), targetVector.end(), targetList.begin());
+				Point point1(distanceFromRobotToObject, 0);
+				point1.rotate(Angle::convertFromDegreeToRadiant(180) + angle1);
+				point1 = point1 + fieldObject.getCircle().getCenter();
+
+				Point point2(distanceFromRobotToObject, 0);
+				point2.rotate(Angle::convertFromDegreeToRadiant(180) + angle2);
+				point2 = point2 + fieldObject.getCircle().getCenter();
+
+				Point point3(distanceFromRobotToObject, 0);
+				point3.rotate(Angle::convertFromDegreeToRadiant(180) + angle3);
+				point3 = point3 + fieldObject.getCircle().getCenter();
+
+				targetVector.push_back(RobotPosition(point0, angle0));
+				targetVector.push_back(RobotPosition(point1, angle1));
+				targetVector.push_back(RobotPosition(point2, angle2));
+				targetVector.push_back(RobotPosition(point3, angle3));
+
+				random_shuffle(targetVector.begin(), targetVector.end());
+
+				copy(targetVector.begin(), targetVector.end(), listToArrange.begin());
+
+				if(decider.decide())
+					targetList.splice(targetList.begin(), listToArrange);
+				else
+					targetList.splice((targetList.end()), listToArrange);
+			}
+		}
+	}
+
+	targetVector2.push_back(RobotPosition( Point(1.4, 0.6), Angle()));
+	targetVector2.push_back(RobotPosition( Point(1.4, 2.4), Angle()));
+	targetVector2.push_back(RobotPosition( Point(2.0, 1.0), Angle()));
+	targetVector2.push_back(RobotPosition( Point(2.0, 2.0), Angle()));
+	targetVector2.push_back(RobotPosition( Point(2.5, 2.2), Angle::getQuarterRotation() * 3));
+	targetVector2.push_back(RobotPosition( Point(2.5, 2.2), Angle()));
+	targetVector2.push_back(RobotPosition( Point(2.5, 0.8), Angle()));
+	targetVector2.push_back(RobotPosition( Point(2.5, 0.7), Angle::getQuarterRotation()));
+	targetVector2.push_back(RobotPosition( Point(3.0, 1.5), Angle::getEighthRotation() + Angle::getQuarterRotation()));
+	targetVector2.push_back(RobotPosition( Point(3.0, 1.5), Angle::getHalfRotation() + Angle::getQuarterRotation()));
+
+	random_shuffle(targetVector2.begin(), targetVector2.end());
+
+	copy(targetVector2.begin(), targetVector2.end(), targetList2.begin());
+	targetList.splice((targetList.end()), targetList2);
 
 	return targetList;
 }
@@ -236,20 +306,6 @@ std::list<RobotPosition> FieldImpl::getTargetsForHidingEnemyPucks() const
 	targets.push_back(RobotPosition( Point(3.7, 0.67), Angle::convertFromDegreeToRadiant(90)));
 	targets.push_back(RobotPosition( Point(3.7, 2.67), Angle::convertFromDegreeToRadiant(100)));
 	targets.push_back(RobotPosition( Point(3.7, 0.33), Angle::convertFromDegreeToRadiant(110)));
-
-	targets.push_back(RobotPosition( Point(3.4, 2.33), Angle::convertFromDegreeToRadiant(0)));
-	targets.push_back(RobotPosition( Point(3.4, 0.67), Angle::convertFromDegreeToRadiant(120)));
-	targets.push_back(RobotPosition( Point(3.4, 2.67), Angle::convertFromDegreeToRadiant(160)));
-	targets.push_back(RobotPosition( Point(3.4, 0.33), Angle::convertFromDegreeToRadiant(200)));
-
-	targets.push_back(RobotPosition( Point(3.4, 0.40), Angle::convertFromDegreeToRadiant(220)));
-	targets.push_back(RobotPosition( Point(3.4, 0.80), Angle::convertFromDegreeToRadiant(240)));
-	targets.push_back(RobotPosition( Point(3.4, 1.20), Angle::convertFromDegreeToRadiant(260)));
-	targets.push_back(RobotPosition( Point(3.4, 1.60), Angle::convertFromDegreeToRadiant(280)));
-
-	targets.push_back(RobotPosition( Point(3.4, 2.00), Angle::convertFromDegreeToRadiant(300)));
-	targets.push_back(RobotPosition( Point(3.4, 2.40), Angle::convertFromDegreeToRadiant(320)));
-	targets.push_back(RobotPosition( Point(3.4, 2.67), Angle::convertFromDegreeToRadiant(340)));
 	targets.push_back(RobotPosition( Point(4.7, 1.50), Angle::convertFromDegreeToRadiant(90)));
 
 	return targets;
@@ -260,18 +316,18 @@ std::list<RobotPosition> FieldImpl::getTargetsForCollectingOnePuck() const
 	RandomDecision decider(0.5);
 	list<RobotPosition> targetsToCollect;
 	list<RobotPosition> listToArrange;
-	Rectangle rectangle1(Point(0, 0), Point(3.7, 3));
-	Rectangle rectangle2(Point(3.7, 2), Point(4.16, 3));
-	Rectangle rectangle3(Point(3.7, 1), Point(4.16, 2));
-	Rectangle rectangle4(Point(3.7, 0), Point(4.16, 1));
-	Rectangle rectangle5(Point(4.16, 2), Point(4.59, 3));
-	Rectangle rectangle6(Point(4.16, 0), Point(4.59, 1));
-	Rectangle rectangle7(Point(4.59, 2), Point(5, 3));
-	Rectangle rectangle8(Point(4.59, 1), Point(5, 2));
-	Rectangle rectangle9(Point(4.59,0), Point(5, 1));
-	Rectangle rectangle10(Point(4.16,1), Point(4.59, 2));
-	Rectangle rectangle11(Point(0, 0), Point(5,3));
-	double distanceFromRobotToPuck = 0.40;
+	Rectangle ownFieldSector(Point(0, 0), Point(3.7, 3));
+	Rectangle sectorAboveUpperLeftHandCornerOfGoal(Point(3.7, 2), Point(4.16, 3));
+	Rectangle sectorInFrontOfGoal(Point(3.7, 1), Point(4.16, 2));
+	Rectangle sectorBelowLowerLeftHandCornerOfGoal(Point(3.7, 0), Point(4.16, 1));
+	Rectangle sectorAboveGoal(Point(4.16, 2), Point(4.59, 3));
+	Rectangle sectorBelowGoal(Point(4.16, 0), Point(4.59, 1));
+	Rectangle sectorAboveUpperRightHandCornerOfGoal(Point(4.59, 2), Point(5, 3));
+	Rectangle sectorBehindGoal(Point(4.59, 1), Point(5, 2));
+	Rectangle sectorBelowLowerRightHandCornerOfGoal(Point(4.59,0), Point(5, 1));
+	Rectangle sectorOfGoal(Point(4.16,1), Point(4.59, 2));
+	Rectangle sectorOfField(Point(0, 0), Point(5,3));
+	double distanceFromRobotToPuck = 0.50;
 
 	if(m_fieldObjects.size() != 0)
 	{
@@ -280,51 +336,51 @@ std::list<RobotPosition> FieldImpl::getTargetsForCollectingOnePuck() const
 			const FieldObject &fieldObject = *i;
 
 			if (fieldObject.getColor() == m_teamColor && m_teamColor != FieldColorUnknown
-					&& rectangle10.isInside(fieldObject.getCircle().getCenter(), 0.01) == false
-					&& rectangle11.isInside(fieldObject.getCircle().getCenter(), 0.01))
+					&& sectorOfGoal.isInside(fieldObject.getCircle().getCenter(), 0.01) == false
+					&& sectorOfField.isInside(fieldObject.getCircle().getCenter(), 0.01))
 			{
 				Angle angle0;
-				if (rectangle1.isInside(fieldObject.getCircle().getCenter(), 0.01))
+				if (ownFieldSector.isInside(fieldObject.getCircle().getCenter(), 0.01))
 				{
 					Angle angleif1(fieldObject.getCircle().getCenter(), Point(4.375, 1.5));
 					angle0 = angleif1;
 				}
-				else if(rectangle2.isInside(fieldObject.getCircle().getCenter(), 0.01))
+				else if(sectorAboveUpperLeftHandCornerOfGoal.isInside(fieldObject.getCircle().getCenter(), 0.01))
 				{
 					Angle angleif2(fieldObject.getCircle().getCenter(), Point(4.16, 2));
 					angle0 = angleif2;
 				}
-				else if(rectangle3.isInside(fieldObject.getCircle().getCenter(), 0.01))
+				else if(sectorInFrontOfGoal.isInside(fieldObject.getCircle().getCenter(), 0.01))
 				{
 					Angle angleif3(0);
 					angle0 = angleif3;
 				}
-				else if(rectangle4.isInside(fieldObject.getCircle().getCenter(), 0.01))
+				else if(sectorBelowLowerLeftHandCornerOfGoal.isInside(fieldObject.getCircle().getCenter(), 0.01))
 				{
 					Angle angleif4(fieldObject.getCircle().getCenter(), Point(4.16, 1));
 					angle0 = angleif4;
 				}
-				else if(rectangle5.isInside(fieldObject.getCircle().getCenter(), 0.01))
+				else if(sectorAboveGoal.isInside(fieldObject.getCircle().getCenter(), 0.01))
 				{
 					Angle angleif5(Angle::convertFromDegreeToRadiant(270));
 					angle0 = angleif5;
 				}
-				else if(rectangle6.isInside(fieldObject.getCircle().getCenter(), 0.01))
+				else if(sectorBelowGoal.isInside(fieldObject.getCircle().getCenter(), 0.01))
 				{
 					Angle angleif6(Angle::convertFromDegreeToRadiant(90));
 					angle0 = angleif6;
 				}
-				else if(rectangle7.isInside(fieldObject.getCircle().getCenter(), 0.01))
+				else if(sectorAboveUpperRightHandCornerOfGoal.isInside(fieldObject.getCircle().getCenter(), 0.01))
 				{
 					Angle angleif7(fieldObject.getCircle().getCenter(), Point(4.59, 2));
 					angle0 = angleif7;
 				}
-				else if(rectangle8.isInside(fieldObject.getCircle().getCenter(), 0.01))
+				else if(sectorBehindGoal.isInside(fieldObject.getCircle().getCenter(), 0.01))
 				{
 					Angle angleif8(Angle::convertFromDegreeToRadiant(180));
 					angle0 = angleif8;
 				}
-				else if(rectangle9.isInside(fieldObject.getCircle().getCenter(), 0.01))
+				else if(sectorBelowLowerRightHandCornerOfGoal.isInside(fieldObject.getCircle().getCenter(), 0.01))
 				{
 					Angle angleif9(fieldObject.getCircle().getCenter(), Point(4.59, 1));
 					angle0 = angleif9;

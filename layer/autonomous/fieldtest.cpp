@@ -839,6 +839,28 @@ void FieldTest::update_tenPucksWithTeamColorInRectangle9_100ElementsInList()
 	CPPUNIT_ASSERT_EQUAL((size_t)100, testlist.size());
 }
 
+void FieldTest::getTargetsForFinalPosition_callFunction_17ElementsInList()
+{
+	DataAnalysis::OdometryMock odometry;
+	DataAnalysis::LidarMock lidar;
+	DataAnalysis::CameraMock camera;
+	Autonomous::RobotMock autonomousRobot;
+	FieldImpl field(odometry, lidar, camera, autonomousRobot);
+	list<RobotPosition> testlist;
+
+	field.setTrueTeamColor(FieldColorYellow);
+	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(4.59, 0), 0.1));
+	lidar.setAllObjects(lidarObjects);
+	DataAnalysis::CameraObjects cameraObjects;
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(4.59, 0)));
+	camera.setAllObjects(cameraObjects);
+
+	field.update();
+	testlist = field.getTargetsForFinalPosition();
+	CPPUNIT_ASSERT_EQUAL((size_t)17, testlist.size());
+}
+
 void FieldTest::update_objectsInFieldRobotOn00_correctlyUpdated()
 {
 	DataAnalysis::OdometryMock odometry;
@@ -1653,6 +1675,28 @@ void FieldTest::getTargetsForSearchingPucks_always_numberOfPositionsBigger5()
 	FieldImpl field(odometry, lidar, camera, autonomousRobot);
 
 	CPPUNIT_ASSERT((size_t) 5 < field.getTargetsForSearchingPucks().size());
+}
+
+void FieldTest::getTargetsForSearchingPucks_twoObjectsWithUnknownColor_numberOfPositions18()
+{
+	DataAnalysis::OdometryMock odometry;
+	DataAnalysis::LidarMock lidar;
+	DataAnalysis::CameraMock camera;
+	Autonomous::RobotMock autonomousRobot;
+	FieldImpl field(odometry, lidar, camera, autonomousRobot);
+
+	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(4, 1.5), 0.1));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(2, 1.5), 0.1));
+	lidar.setAllObjects(lidarObjects);
+	DataAnalysis::CameraObjects cameraObjects;
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorUnknown, Point(4, 1.5)));
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorUnknown, Point(2, 1.5)));
+	camera.setAllObjects(cameraObjects);
+
+	field.update();
+
+	CPPUNIT_ASSERT_EQUAL((size_t)18, field.getTargetsForSearchingPucks().size());
 }
 
 void FieldTest::detectTeamColorWithGoalInFront_yellowMuchBiggerBlue_teamYellow()

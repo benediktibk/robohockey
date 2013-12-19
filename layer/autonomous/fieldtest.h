@@ -46,6 +46,7 @@ namespace Autonomous
 		CPPUNIT_TEST(update_eightPucksWithTeamColorInRectangle7_80ElementsInList);
 		CPPUNIT_TEST(update_ninePucksWithTeamColorInRectangle8_90ElementsInList);
 		CPPUNIT_TEST(update_tenPucksWithTeamColorInRectangle9_100ElementsInList);
+		CPPUNIT_TEST(getTargetsForFinalPosition_callFunction_17ElementsInList);
 		CPPUNIT_TEST(update_objectsInFieldRobotOn00_correctlyUpdated);
 		CPPUNIT_TEST(update_objectsInFieldRobotOn1And2_correctlyUpdated);
 		CPPUNIT_TEST(calibratePosition_noValidPattern_false);
@@ -84,6 +85,7 @@ namespace Autonomous
 		CPPUNIT_TEST(getTargetsForScoringGoals_always_numberOfPositionsBigger4);
 		CPPUNIT_TEST(getTargetsForFinalPosition_always_numberOfPositionsBigger1);
 		CPPUNIT_TEST(getTargetsForSearchingPucks_always_numberOfPositionsBigger5);
+		CPPUNIT_TEST(getTargetsForSearchingPucks_twoObjectsWithUnknownColor_numberOfPositions18);
 		CPPUNIT_TEST(detectTeamColorWithGoalInFront_yellowMuchBiggerBlue_teamYellow);
 		CPPUNIT_TEST(detectTeamColorWithGoalInFront_yellowMuchSmallerBlue_teamBlue);
 		CPPUNIT_TEST(detectTeamColorWithGoalInFront_yellowAndBlueFuzzyEqual_teamUnknown);
@@ -128,6 +130,7 @@ namespace Autonomous
 		void update_eightPucksWithTeamColorInRectangle7_80ElementsInList();
 		void update_ninePucksWithTeamColorInRectangle8_90ElementsInList();
 		void update_tenPucksWithTeamColorInRectangle9_100ElementsInList();
+		void getTargetsForFinalPosition_callFunction_17ElementsInList();
 		void update_objectsInFieldRobotOn00_correctlyUpdated();
 		void update_objectsInFieldRobotOn1And2_correctlyUpdated();
 		void calibratePosition_noValidPattern_false();
@@ -166,6 +169,7 @@ namespace Autonomous
 		void getTargetsForScoringGoals_always_numberOfPositionsBigger4();
 		void getTargetsForFinalPosition_always_numberOfPositionsBigger1();
 		void getTargetsForSearchingPucks_always_numberOfPositionsBigger5();
+		void getTargetsForSearchingPucks_twoObjectsWithUnknownColor_numberOfPositions18();
 		void detectTeamColorWithGoalInFront_yellowMuchBiggerBlue_teamYellow();
 		void detectTeamColorWithGoalInFront_yellowMuchSmallerBlue_teamBlue();
 		void detectTeamColorWithGoalInFront_yellowAndBlueFuzzyEqual_teamUnknown();
