@@ -591,7 +591,7 @@ void FieldTest::update_movingAndLidarDataChanges_fieldObjectCountDoesntChange()
 	field.update();
 	vector<FieldObject> oldObjects = field.getAllFieldObjects();
 	size_t oldObjectCount = oldObjects.size();
-	odometry.setCurrentPosition(RobotPosition(Point(0.04691, 0), Angle(0)));
+	odometry.setCurrentPosition(RobotPosition(Point(0.03, 0), Angle(0)));
 	hardwareLidarMock.readSensorDataFromFile("resources/testfiles/lidar_moving_1_current.txt");
 	lidar.updateSensorData();
 	field.update();
