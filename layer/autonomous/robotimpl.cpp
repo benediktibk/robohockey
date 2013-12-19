@@ -31,7 +31,8 @@ RobotImpl::RobotImpl(DataAnalysis::DataAnalyser *dataAnalyser, Router *router, W
 	m_currentRoute(0),
 	m_state(RobotStateWaiting),
 	m_stateChanged(false),
-	m_ignoringSoftObstacles(false)
+	m_ignoringSoftObstacles(false),
+	m_carryingPuck(false)
 { }
 
 RobotImpl::~RobotImpl()
@@ -52,6 +53,7 @@ void RobotImpl::goTo(const list<RobotPosition> &possibleTargets)
 	changeIntoState(RobotStateDrivingTurningPart);
 	m_possibleTargets = possibleTargets;
 	m_currentTarget = m_possibleTargets.front();
+	m_carryingPuck = isPuckCollected();
 	m_watch->getTimeAndRestart();
 }
 
@@ -495,7 +497,7 @@ bool RobotImpl::updateRouteForTarget(
 	Angle maximumRotation = Angle::getHalfRotation();
 	double minimumStepAfterMaximumRotation = 0.1;
 
-	if (isPuckCollected())
+	if (m_carryingPuck)
 		maximumRotation = Angle::getQuarterRotation();
 
 	m_ignoringSoftObstacles = false;

@@ -99,6 +99,7 @@ namespace Autonomous
 		bool m_puckPositionChanged;
 		bool m_rotationReached;
 		bool m_ignoringSoftObstacles;
+		bool m_carryingPuck;
 	};
 }
 }

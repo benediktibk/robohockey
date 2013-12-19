@@ -725,6 +725,32 @@ void RobotTest::goTo_hardObstacleMovedALittleBitIntoTheRoute_engineGotNoAddition
 	CPPUNIT_ASSERT_EQUAL((unsigned int)0, engine.getCallsToGoToStraight());
 }
 
+void RobotTest::goTo_puckCollectedButLostInBetween_newRouteStillConsideringThePuck()
+{
+	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
+	DataAnalysis::Odometry &odometry = dataAnalyser->getOdometry();
+	DataAnalysis::LidarMock &lidar = dataAnalyser->getLidarMock();
+	odometry.setCurrentPosition(RobotPosition(Point(0, 0), 0));
+	RobotImpl robot(dataAnalyser, new RouterImpl(0.5), m_watchMock);
+	FieldMock field;
+	m_targets.push_back(RobotPosition(Point(5, 0), Angle::getHalfRotation()));
+	m_targets.push_back(RobotPosition(Point(-5, 0), Angle(0)));
+	vector<Circle> obstacles;
+	obstacles.push_back(Circle(Point(5, 0), 1));
+
+	lidar.setPuckCollected(true);
+	robot.updateSensorData();
+	robot.goTo(m_targets);
+	robot.updateActuators(field);
+	lidar.setPuckCollected(false);
+	field.setHardObstacles(obstacles);
+	robot.updateSensorData();
+	robot.updateActuators(field);
+
+	list<Point> routePoints = robot.getAllRoutePoints();
+	CPPUNIT_ASSERT(routePoints.size() > 2);
+}
+
 void RobotTest::stuckAtObstacle_tryingToTackleObstacle_true()
 {
 	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
