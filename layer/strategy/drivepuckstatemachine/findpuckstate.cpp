@@ -23,4 +23,7 @@ State* FindPuckState::nextState()
 }
 
 void FindPuckState::update()
-{ }
+{
+	if(m_field.getObjectsWithColorOrderdByDistance(m_field.getOwnTeamColor(), m_robot.getCurrentPosition()).size() != 0)
+		m_foundPuck = true;
+}
