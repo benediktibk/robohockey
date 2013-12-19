@@ -10,21 +10,7 @@ using namespace RoboHockey::Layer::Strategy::DrivePuckStateMachine;
 using namespace RoboHockey::Layer::Autonomous;
 
 FindPuckState::FindPuckState(Robot &robot, Field &field, Referee &referee, DrivePuck *drivePuck) :
-	State(robot, field, referee),
-	m_drivePuck(drivePuck),
-	m_foundPuck(false)
+	DriveTo(robot, field, referee, field.getTargetsForSearchingPucks(),
+			new CollectPuckState(robot, field, referee, drivePuck),
+			new FindPuckState(robot, field, referee, drivePuck))
 { }
-
-State* FindPuckState::nextState()
-{
-	if(m_foundPuck)
-		return new CollectPuckState(m_robot, m_field, m_referee, m_drivePuck);
-	else
-		return 0;
-}
-
-void FindPuckState::update()
-{
-	//if(m_field.getObjectsWithColorOrderdByDistance(m_field.getOwnTeamColor(), m_robot.getCurrentPosition()).size() != 0)
-		//m_foundPuck = true;
-}
