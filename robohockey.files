@@ -452,7 +452,7 @@ common/discretefunction.h
 common/randomdecisiontest.cpp
 common/randomdecisiontest.h
 common/randomdecision.h
-layer/strategy/drivepuckstatemachine/checkpuckcolorstatetest.h
-layer/strategy/drivepuckstatemachine/checkpuckcolorstate.h
-layer/strategy/drivepuckstatemachine/checkpuckcolorstatetest.cpp
-layer/strategy/drivepuckstatemachine/checkpuckcolorstate.cpp
+layer/strategy/drivepuckstatemachine/drivetocollectpuckstatetest.h
+layer/strategy/drivepuckstatemachine/drivetocollectpuckstate.h
+layer/strategy/drivepuckstatemachine/drivetocollectpuckstatetest.cpp
+layer/strategy/drivepuckstatemachine/drivetocollectpuckstate.cpp
