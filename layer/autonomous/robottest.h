@@ -51,6 +51,7 @@ namespace Autonomous
 		CPPUNIT_TEST(goTo_hardObstacleAtStart_engineGotCallToGoToStraight);
 		CPPUNIT_TEST(goTo_hardObstacleMovedALittleBitIntoTheRoute_engineGotNoAdditionalCalls);
 		CPPUNIT_TEST(goTo_puckCollectedButLostInBetween_newRouteStillConsideringThePuck);
+		CPPUNIT_TEST(goTo_positionInsideObstacle_cantReachTarget);
 		CPPUNIT_TEST(stuckAtObstacle_tryingToTackleObstacle_true);
 		CPPUNIT_TEST(stuckAtObstacle_notTryingToTackleObstacle_false);
 		CPPUNIT_TEST(stuckAtObstacle_updateCalledTwiceAfterStuckAtObstacle_true);
@@ -162,6 +163,7 @@ namespace Autonomous
 		void goTo_hardObstacleAtStart_engineGotCallToGoToStraight();
 		void goTo_hardObstacleMovedALittleBitIntoTheRoute_engineGotNoAdditionalCalls();
 		void goTo_puckCollectedButLostInBetween_newRouteStillConsideringThePuck();
+		void goTo_positionInsideObstacle_cantReachTarget();
 		void stuckAtObstacle_tryingToTackleObstacle_true();
 		void stuckAtObstacle_notTryingToTackleObstacle_false();
 		void stuckAtObstacle_updateCalledTwiceAfterStuckAtObstacle_true();
