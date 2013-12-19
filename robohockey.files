@@ -447,3 +447,8 @@ layer/strategy/drivepuckstatemachine/drivetopositionstatetest.cpp
 layer/strategy/drivepuckstatemachine/drivetopositionstate.cpp
 layer/strategy/common/statemachinetest.cpp
 layer/strategy/common/state.cpp
+common/randomdecision.cpp
+common/discretefunction.h
+common/randomdecisiontest.cpp
+common/randomdecisiontest.h
+common/randomdecision.h

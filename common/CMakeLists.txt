@@ -12,6 +12,7 @@ set(COMMON_SRC
 	console.cpp
 	quadraticequation.cpp
 	watchimpl.cpp
+	randomdecision.cpp
 )
 
 set(COMMON_TEST_SRC
@@ -29,6 +30,7 @@ set(COMMON_TEST_SRC
 	quadraticequationtest.cpp
 	signumtest.cpp
 	watchmock.cpp
+	randomdecisiontest.cpp
 )
 
 add_library(common ${COMMON_SRC})
