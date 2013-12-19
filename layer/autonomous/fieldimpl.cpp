@@ -8,6 +8,7 @@
 #include "layer/dataanalysis/odometry.h"
 #include "common/compare.h"
 #include "common/robotposition.h"
+#include "common/randomdecision.h"
 #include <math.h>
 #include <algorithm>
 
@@ -253,6 +254,7 @@ std::list<RobotPosition> FieldImpl::getTargetsForHidingEnemyPucks() const
 
 std::list<RobotPosition> FieldImpl::getTargetsForCollectingOnePuck() const
 {
+	RandomDecision decider(0.5);
 	list<RobotPosition> targetsToCollect;
 	list<RobotPosition> listToArrange;
 	Rectangle rectangle1(Point(0, 0), Point(3.7, 3));
@@ -386,6 +388,12 @@ std::list<RobotPosition> FieldImpl::getTargetsForCollectingOnePuck() const
 				listToArrange.push_back(RobotPosition( point7, angle7));
 				listToArrange.push_back(RobotPosition( point8, angle8));
 				listToArrange.push_back(RobotPosition( point9, angle9));
+
+				if(decider.decide())
+					targetsToCollect.splice(targetsToCollect.begin(), listToArrange);
+				else
+					targetsToCollect.splice((targetsToCollect.end()), listToArrange);
+
 			}
 
 		}
