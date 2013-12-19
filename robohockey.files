@@ -433,3 +433,7 @@ resources/testfiles/lidar_39.txt
 resources/testfiles/yellow_puck_collected_in_blue_goal_2.png
 resources/testfiles/yellow_puck_collected_right_2.png
 resources/testfiles/yellow_puck_collected_left_2.png
+layer/strategy/drivepuckstatemachine/findpuckstatetest.h
+layer/strategy/drivepuckstatemachine/findpuckstate.h
+layer/strategy/drivepuckstatemachine/findpuckstatetest.cpp
+layer/strategy/drivepuckstatemachine/findpuckstate.cpp

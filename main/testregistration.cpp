@@ -53,6 +53,7 @@
 #include "layer/strategy/drivepuckstatemachine/initialstatetest.h"
 #include "layer/strategy/common/drivepucktoachivegoalstest.h"
 #include "layer/strategy/common/drivepucktohidepuckstest.h"
+#include "layer/strategy/drivepuckstatemachine/findpuckstatetest.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Common::CompareTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Common::WatchTest);
@@ -109,5 +110,6 @@ CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Strategy::FieldDetectionState
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Strategy::FieldDetectionStateMachine::TurnAngleTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Strategy::FieldDetectionStateMachine::CalibrationFinishedTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Strategy::DrivePuckStateMachine::InitialStateTest);
+CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Strategy::DrivePuckStateMachine::FindPuckStateTest);
 
 
