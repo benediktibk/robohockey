@@ -1,5 +1,6 @@
 #include "layer/strategy/drivepuckstatemachine//findpuckstate.h"
 #include "layer/strategy/common/referee.h"
+#include "layer/autonomous/robot.h"
 
 using namespace RoboHockey::Layer::Strategy::Common;
 using namespace RoboHockey::Layer::Strategy::DrivePuckStateMachine;
@@ -19,4 +20,4 @@ State* FindPuckState::nextState()
 }
 
 void FindPuckState::update()
-{}
+{ }

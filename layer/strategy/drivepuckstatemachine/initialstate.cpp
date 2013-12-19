@@ -13,10 +13,7 @@ InitialState::InitialState(Robot &robot, Field &field, Referee &referee, DrivePu
 
 State* InitialState::nextState()
 {
-    if(m_referee.detectionStart())
-		return new FindPuckState(m_robot, m_field, m_referee, m_drivePuck);
-    else
-        return 0;
+	return new FindPuckState(m_robot, m_field, m_referee, m_drivePuck);
 }
 
 void InitialState::update()
