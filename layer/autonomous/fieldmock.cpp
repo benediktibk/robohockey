@@ -34,6 +34,11 @@ vector<FieldObject> FieldMock::getObjectsWithColorOrderdByDistance(FieldColor, c
 	return vector<FieldObject>();
 }
 
+unsigned int FieldMock::getNumberOfObjectsWithColor(FieldColor) const
+{
+	return 0;
+}
+
 bool FieldMock::calibratePosition()
 {
 	return m_calibrated;

@@ -28,6 +28,7 @@ namespace Autonomous
 		virtual const std::vector<Common::Circle>& getAllSoftObstacles() const = 0;
 		virtual const std::vector<Common::Circle>& getAllHardObstacles() const = 0;
 		virtual std::vector<FieldObject> getObjectsWithColorOrderdByDistance(Common::FieldColor color, const Common::Point &position) const = 0;
+		virtual unsigned int getNumberOfObjectsWithColor(Common::FieldColor color) const = 0;
 
 		virtual bool calibratePosition() = 0;
 		virtual bool isPointInsideField(const Common::Point &point) const = 0;

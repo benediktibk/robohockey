@@ -594,6 +594,22 @@ void RouterTest::calculateRoute_hardObstacleIntersectingWithStartPosition_reason
 	CPPUNIT_ASSERT(routeLength < 11);
 }
 
+void RouterTest::calculateRoute_targetInsideSoftObstacle_invalidRoute()
+{
+	RobotPosition start(Point(0, 0), Angle(0));
+	RobotPosition end(Point(10, 0), Angle(0));
+	Angle maximumRotation = Angle::getHalfRotation();
+	RouterImpl router(0.5);
+	FieldMock field;
+	vector<Circle> obstacles;
+	obstacles.push_back(Circle(Point(10, 0), 2));
+	field.setSoftObstacles(obstacles);
+
+	Route route = router.calculateRoute(start, end, field, maximumRotation, 0.1, true, false);
+
+	CPPUNIT_ASSERT(!route.isValid());
+}
+
 void RouterTest::getPointsBesideObstacle_intersectFromLeftAndCircleCenterNotOnPath_shortPointIsCorrect()
 {
 	RouterImpl router(2);

@@ -1431,3 +1431,89 @@ void FieldTest::getNewOriginFromFieldDetection_realWorldExample3_correctNewOrigi
 //	CPPUNIT_ASSERT(compare.isFuzzyEqual(RobotPosition(Point(0, 0), Angle()), resultOrigin));
 	CPPUNIT_ASSERT(true);
 }
+
+void FieldTest::getNumberOfObjectsWithColor_noColoredObject_0()
+{
+	DataAnalysis::OdometryMock odometry;
+	DataAnalysis::LidarMock lidar;
+	DataAnalysis::CameraMock camera;
+	Autonomous::RobotMock autonomousRobot;
+	FieldImpl field(odometry, lidar, camera, autonomousRobot);
+
+	field.setTrueTeamColor(FieldColorYellow);
+	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 2), 0.1));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(4.2, 1.5), 0.1));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(4.4, 1.8), 0.1));
+	lidar.setAllObjects(lidarObjects);
+
+	field.update();
+
+	CPPUNIT_ASSERT_EQUAL((unsigned int)0, field.getNumberOfObjectsWithColor(FieldColorBlue));
+	CPPUNIT_ASSERT_EQUAL((unsigned int)0, field.getNumberOfObjectsWithColor(FieldColorYellow));
+	CPPUNIT_ASSERT_EQUAL((unsigned int)0, field.getNumberOfObjectsWithColor(FieldColorGreen));
+	CPPUNIT_ASSERT_EQUAL((unsigned int)3, field.getNumberOfObjectsWithColor(FieldColorUnknown));
+}
+
+void FieldTest::getNumberOfObjectsWithColor_3YellowAnd2GreenAnd1UnknownObject_correctValues()
+{
+	DataAnalysis::OdometryMock odometry;
+	DataAnalysis::LidarMock lidar;
+	DataAnalysis::CameraMock camera;
+	Autonomous::RobotMock autonomousRobot;
+	FieldImpl field(odometry, lidar, camera, autonomousRobot);
+
+	field.setTrueTeamColor(FieldColorYellow);
+	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 2), 0.1));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(4.2, 1.5), 0.1));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(4.4, 1.8), 0.1));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(2, 1.8), 0.1));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(3, 1.8), 0.1));
+	lidar.setAllObjects(lidarObjects);
+	DataAnalysis::CameraObjects cameraObjects;
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(1, 2)));
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(4.2, 1.5)));
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(4.4, 1.8)));
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorGreen, Point(2, 1.8)));
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorGreen, Point(3, 1.8)));
+	camera.setAllObjects(cameraObjects);
+
+
+	field.update();
+
+	CPPUNIT_ASSERT_EQUAL((unsigned int)0, field.getNumberOfObjectsWithColor(FieldColorBlue));
+	CPPUNIT_ASSERT_EQUAL((unsigned int)3, field.getNumberOfObjectsWithColor(FieldColorYellow));
+	CPPUNIT_ASSERT_EQUAL((unsigned int)2, field.getNumberOfObjectsWithColor(FieldColorGreen));
+	CPPUNIT_ASSERT_EQUAL((unsigned int)0, field.getNumberOfObjectsWithColor(FieldColorUnknown));
+}
+
+void FieldTest::getNumberOfObjectsWithColor_2BlueObjects_2()
+{
+	DataAnalysis::OdometryMock odometry;
+	DataAnalysis::LidarMock lidar;
+	DataAnalysis::CameraMock camera;
+	Autonomous::RobotMock autonomousRobot;
+	FieldImpl field(odometry, lidar, camera, autonomousRobot);
+
+	field.setTrueTeamColor(FieldColorYellow);
+	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 2), 0.1));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(4.2, 1.5), 0.1));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(4.4, 1.8), 0.1));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(2, 1.8), 0.1));
+	lidar.setAllObjects(lidarObjects);
+	DataAnalysis::CameraObjects cameraObjects;
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorBlue, Point(1, 2)));
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorBlue, Point(4.2, 1.5)));
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(4.4, 1.8)));
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorGreen, Point(2, 1.8)));
+	camera.setAllObjects(cameraObjects);
+
+	field.update();
+
+	CPPUNIT_ASSERT_EQUAL((unsigned int)2, field.getNumberOfObjectsWithColor(FieldColorBlue));
+	CPPUNIT_ASSERT_EQUAL((unsigned int)1, field.getNumberOfObjectsWithColor(FieldColorYellow));
+	CPPUNIT_ASSERT_EQUAL((unsigned int)1, field.getNumberOfObjectsWithColor(FieldColorGreen));
+	CPPUNIT_ASSERT_EQUAL((unsigned int)0, field.getNumberOfObjectsWithColor(FieldColorUnknown));
+}

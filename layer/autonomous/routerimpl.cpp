@@ -37,7 +37,7 @@ Route RouterImpl::calculateRoute(
 
 	Circle endCircle(end.getPosition(), sqrt(2)*m_robotWidth);
 	if (	endCircle.overlapsWith(hardObstacles) ||
-			(endCircle.overlapsWith(softObstacles) && !ignoreSoftObstacles))
+			endCircle.overlapsWith(softObstacles))
 		return Route();
 
 	const Point &startPosition = start.getPosition();
