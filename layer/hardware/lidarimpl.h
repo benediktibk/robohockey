@@ -22,6 +22,7 @@ namespace Hardware
 		~LidarImpl();
 
 		virtual double getDistance(unsigned int angle);
+		virtual void writeDataToFile(const std::string &fileName);
 
 	private:
 		// forbid copies

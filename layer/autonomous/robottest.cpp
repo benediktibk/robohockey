@@ -751,6 +751,50 @@ void RobotTest::goTo_puckCollectedButLostInBetween_newRouteStillConsideringThePu
 	CPPUNIT_ASSERT(routePoints.size() > 2);
 }
 
+void RobotTest::goTo_positionInsideHardObstacle_cantReachTarget()
+{
+	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
+	DataAnalysis::Odometry &odometry = dataAnalyser->getOdometry();
+	DataAnalysis::EngineMock &engine = dataAnalyser->getEngineMock();
+	odometry.setCurrentPosition(RobotPosition(Point(0, 0), Angle(0)));
+	RobotImpl robot(dataAnalyser, new RouterImpl(0.5), m_watchMock);
+	FieldMock field;
+	m_targets.push_back(RobotPosition(Point(5, 5), Angle(0)));
+	vector<Circle> obstacles;
+	obstacles.push_back(Circle(Point(5, 5), 1));
+
+	field.setHardObstacles(obstacles);
+	robot.updateSensorData();
+	robot.goTo(m_targets);
+	robot.updateActuators(field);
+
+	CPPUNIT_ASSERT(engine.getCallsToGoToStraight() == 0);
+	CPPUNIT_ASSERT(engine.getCallsToTurnToTarget() == 0);
+	CPPUNIT_ASSERT(robot.cantReachTarget());
+}
+
+void RobotTest::goTo_positionInsideSoftObstacle_cantReachTarget()
+{
+	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
+	DataAnalysis::Odometry &odometry = dataAnalyser->getOdometry();
+	DataAnalysis::EngineMock &engine = dataAnalyser->getEngineMock();
+	odometry.setCurrentPosition(RobotPosition(Point(0, 0), Angle(0)));
+	RobotImpl robot(dataAnalyser, new RouterImpl(0.5), m_watchMock);
+	FieldMock field;
+	m_targets.push_back(RobotPosition(Point(5, 5), Angle(0)));
+	vector<Circle> obstacles;
+	obstacles.push_back(Circle(Point(5, 5), 1));
+
+	field.setSoftObstacles(obstacles);
+	robot.updateSensorData();
+	robot.goTo(m_targets);
+	robot.updateActuators(field);
+
+	CPPUNIT_ASSERT(engine.getCallsToGoToStraight() == 0);
+	CPPUNIT_ASSERT(engine.getCallsToTurnToTarget() == 0);
+	CPPUNIT_ASSERT(robot.cantReachTarget());
+}
+
 void RobotTest::stuckAtObstacle_tryingToTackleObstacle_true()
 {
 	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();

@@ -30,6 +30,9 @@ double LidarMock::getDistance(unsigned int angle)
 		return value->second;
 }
 
+void LidarMock::writeDataToFile(const string &)
+{ }
+
 void LidarMock::setValueForAngle(unsigned int angle, double value)
 {
 	m_valueForAngle[angle] = value;

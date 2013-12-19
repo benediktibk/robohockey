@@ -30,7 +30,6 @@ int main(int argc, char **argv)
 	Camera &camera = robot.getCamera();
 	Odometry &odometry = robot.getOdometry();
 	fstream fileSonar("sonar.txt", ios_base::out | ios_base::trunc);
-	fstream fileLidar("lidar.txt", ios_base::out | ios_base::trunc);
 	fstream fileOdometry("odometry.txt", ios_base::out | ios_base::trunc);
 
 	cout << "updating the current sensor data" << endl;
@@ -41,8 +40,7 @@ int main(int argc, char **argv)
 		fileSonar << i << ": " << sonar.getDistanceForSensor(i) << endl;
 
 	cout << "writing data for the lidar to lidar.txt" << endl;
-	for (unsigned int i = lidar.getMinimumSensorNumber(); i <= lidar.getMaximumSensorNumber(); ++i)
-		fileLidar << i << ": " << lidar.getDistance(i) << endl;
+	lidar.writeDataToFile("lidar.txt");
 
 	cout << "writing data for the odometry to odometry.txt" << endl;
 	RobotPosition currentPosition = odometry.getCurrentPosition();
