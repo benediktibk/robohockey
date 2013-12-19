@@ -505,6 +505,340 @@ void FieldTest::update_fourObjectsAndThreeObjectsHidden_threeHiddenPucks()
 	CPPUNIT_ASSERT_EQUAL((unsigned int)3, field.getNumberOfHiddenPucks());
 }
 
+void FieldTest::update_threePucksWithTeamColor_30ElementsInList()
+{
+	DataAnalysis::OdometryMock odometry;
+	DataAnalysis::LidarMock lidar;
+	DataAnalysis::CameraMock camera;
+	Autonomous::RobotMock autonomousRobot;
+	FieldImpl field(odometry, lidar, camera, autonomousRobot);
+	list<RobotPosition> testlist;
+
+	field.setTrueTeamColor(FieldColorYellow);
+	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(3.4, 0), 0.1));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(4, 3), 0.1));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(3.5, 2), 0.1));
+	lidar.setAllObjects(lidarObjects);
+	DataAnalysis::CameraObjects cameraObjects;
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(3.4, 0)));
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(4, 3)));
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(3.5, 2)));
+	camera.setAllObjects(cameraObjects);
+
+	field.update();
+	testlist = field.getTargetsForCollectingOnePuck();
+	CPPUNIT_ASSERT_EQUAL((size_t)30, testlist.size());
+}
+
+void FieldTest::update_fourPucksWithTeamColorInRectangle1_40ElementsInList()
+{
+	DataAnalysis::OdometryMock odometry;
+	DataAnalysis::LidarMock lidar;
+	DataAnalysis::CameraMock camera;
+	Autonomous::RobotMock autonomousRobot;
+	FieldImpl field(odometry, lidar, camera, autonomousRobot);
+	list<RobotPosition> testlist;
+
+	field.setTrueTeamColor(FieldColorYellow);
+	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(0, 0), 0.1));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 1), 0.1));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(2, 3), 0.1));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(3.7,3), 0.1));
+	lidar.setAllObjects(lidarObjects);
+	DataAnalysis::CameraObjects cameraObjects;
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(0, 0)));
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(1, 1)));
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(2, 3)));
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(3.7, 3)));
+	camera.setAllObjects(cameraObjects);
+
+	field.update();
+	testlist = field.getTargetsForCollectingOnePuck();
+	CPPUNIT_ASSERT_EQUAL((size_t)40, testlist.size());
+}
+
+void FieldTest::update_twoPucksWithTeamColorInRectangle2_20ElementsInList()
+{
+	DataAnalysis::OdometryMock odometry;
+	DataAnalysis::LidarMock lidar;
+	DataAnalysis::CameraMock camera;
+	Autonomous::RobotMock autonomousRobot;
+	FieldImpl field(odometry, lidar, camera, autonomousRobot);
+	list<RobotPosition> testlist;
+
+	field.setTrueTeamColor(FieldColorYellow);
+	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(3.7, 2), 0.1));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(4.14, 2.8), 0.1));
+	lidar.setAllObjects(lidarObjects);
+	DataAnalysis::CameraObjects cameraObjects;
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(3.7, 2)));
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(4.14, 2.8)));
+	camera.setAllObjects(cameraObjects);
+
+	field.update();
+	testlist = field.getTargetsForCollectingOnePuck();
+	CPPUNIT_ASSERT_EQUAL((size_t)20, testlist.size());
+}
+
+void FieldTest::update_onePuckWithTeamColorInRectangle3_10ElementsInList()
+{
+	DataAnalysis::OdometryMock odometry;
+	DataAnalysis::LidarMock lidar;
+	DataAnalysis::CameraMock camera;
+	Autonomous::RobotMock autonomousRobot;
+	FieldImpl field(odometry, lidar, camera, autonomousRobot);
+	list<RobotPosition> testlist;
+
+	field.setTrueTeamColor(FieldColorYellow);
+	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(4, 1.5), 0.1));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(5, 3.02), 0.1));
+	lidar.setAllObjects(lidarObjects);
+	DataAnalysis::CameraObjects cameraObjects;
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(4, 1.5)));
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(5, 3.02)));
+	camera.setAllObjects(cameraObjects);
+
+	field.update();
+	testlist = field.getTargetsForCollectingOnePuck();
+	CPPUNIT_ASSERT_EQUAL((size_t)10, testlist.size());
+}
+
+void FieldTest::update_zeroPucksWithTeamColor_0ElementsInList()
+{
+	DataAnalysis::OdometryMock odometry;
+	DataAnalysis::LidarMock lidar;
+	DataAnalysis::CameraMock camera;
+	Autonomous::RobotMock autonomousRobot;
+	FieldImpl field(odometry, lidar, camera, autonomousRobot);
+	list<RobotPosition> testlist;
+
+	field.setTrueTeamColor(FieldColorYellow);
+	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
+	lidar.setAllObjects(lidarObjects);
+	DataAnalysis::CameraObjects cameraObjects;
+	camera.setAllObjects(cameraObjects);
+
+	field.update();
+	testlist = field.getTargetsForCollectingOnePuck();
+	CPPUNIT_ASSERT_EQUAL((size_t)0, testlist.size());
+}
+
+void FieldTest::update_fivePucksWithTeamColorInRectangle4_50ElementsInList()
+{
+	DataAnalysis::OdometryMock odometry;
+	DataAnalysis::LidarMock lidar;
+	DataAnalysis::CameraMock camera;
+	Autonomous::RobotMock autonomousRobot;
+	FieldImpl field(odometry, lidar, camera, autonomousRobot);
+	list<RobotPosition> testlist;
+
+	field.setTrueTeamColor(FieldColorYellow);
+	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(3.7, 0), 0.1));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(4.14, 1), 0.1));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(4.16, 0.5), 0.1));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(4, 0.6), 0.1));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(3.8, 0.3), 0.1));
+	lidar.setAllObjects(lidarObjects);
+	DataAnalysis::CameraObjects cameraObjects;
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(3.7, 0)));
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(4.14, 1)));
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(4.16, 0.5)));
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(4, 0.6)));
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(3.8, 0.3)));
+	camera.setAllObjects(cameraObjects);
+
+	field.update();
+	testlist = field.getTargetsForCollectingOnePuck();
+	CPPUNIT_ASSERT_EQUAL((size_t)50, testlist.size());
+}
+
+void FieldTest::update_sixPucksWithTeamColorInRectangle5_60ElementsInList()
+{
+	DataAnalysis::OdometryMock odometry;
+	DataAnalysis::LidarMock lidar;
+	DataAnalysis::CameraMock camera;
+	Autonomous::RobotMock autonomousRobot;
+	FieldImpl field(odometry, lidar, camera, autonomousRobot);
+	list<RobotPosition> testlist;
+
+	field.setTrueTeamColor(FieldColorYellow);
+	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(4.16, 2.02), 0.1));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(4.3, 2.2), 0.1));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(4.16, 3), 0.1));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(4.59, 2.5), 0.1));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(4.3, 2.02), 0.1));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(4.5, 2.8), 0.1));
+	lidar.setAllObjects(lidarObjects);
+	DataAnalysis::CameraObjects cameraObjects;
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(4.16, 2.02)));
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(4.3, 2.2)));
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(4.16, 3)));
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(4.59, 2.5)));
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(4.3, 2.02)));
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(4.5, 2.8)));
+	camera.setAllObjects(cameraObjects);
+
+	field.update();
+	testlist = field.getTargetsForCollectingOnePuck();
+	CPPUNIT_ASSERT_EQUAL((size_t)60, testlist.size());
+}
+
+void FieldTest::update_sevenPucksWithTeamColorInRectangle6_70ElementsInList()
+{
+	DataAnalysis::OdometryMock odometry;
+	DataAnalysis::LidarMock lidar;
+	DataAnalysis::CameraMock camera;
+	Autonomous::RobotMock autonomousRobot;
+	FieldImpl field(odometry, lidar, camera, autonomousRobot);
+	list<RobotPosition> testlist;
+
+	field.setTrueTeamColor(FieldColorYellow);
+	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(4.16, 0), 0.1));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(4.3, 0.2), 0.1));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(4.14, 1), 0.1));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(4.59, 0.5), 0.1));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(4.3, 0.02), 0.1));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(4.5, 0.8), 0.1));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(4.5, 0.9), 0.1));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(4.5, 1.8), 0.1));
+	lidar.setAllObjects(lidarObjects);
+	DataAnalysis::CameraObjects cameraObjects;
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(4.16, 0)));
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(4.3, 0.2)));
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(4.14, 1)));
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(4.59, 0.5)));
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(4.3, 0.02)));
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(4.5, 0.8)));
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(4.5, 0.9)));
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(4.5, 1.8)));
+	camera.setAllObjects(cameraObjects);
+
+	field.update();
+	testlist = field.getTargetsForCollectingOnePuck();
+	CPPUNIT_ASSERT_EQUAL((size_t)70, testlist.size());
+}
+
+void FieldTest::update_eightPucksWithTeamColorInRectangle7_80ElementsInList()
+{
+	DataAnalysis::OdometryMock odometry;
+	DataAnalysis::LidarMock lidar;
+	DataAnalysis::CameraMock camera;
+	Autonomous::RobotMock autonomousRobot;
+	FieldImpl field(odometry, lidar, camera, autonomousRobot);
+	list<RobotPosition> testlist;
+
+	field.setTrueTeamColor(FieldColorYellow);
+	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(4.59, 2.02), 0.1));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(5, 3), 0.1));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(4.6, 2.1), 0.1));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(4.7, 2.5), 0.1));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(4.8, 2), 0.1));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(4.8, 2.3), 0.1));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(4.9, 2.9), 0.1));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(4.59, 2.5), 0.1));
+	lidar.setAllObjects(lidarObjects);
+	DataAnalysis::CameraObjects cameraObjects;
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(4.59, 2.02)));
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(5, 3)));
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(4.6, 2.1)));
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(4.7, 2.5)));
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(4.8, 2)));
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(4.8, 2.3)));
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(4.9, 2.9)));
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(4.59, 2.5)));
+	camera.setAllObjects(cameraObjects);
+
+	field.update();
+	testlist = field.getTargetsForCollectingOnePuck();
+	CPPUNIT_ASSERT_EQUAL((size_t)80, testlist.size());
+}
+
+void FieldTest::update_ninePucksWithTeamColorInRectangle8_90ElementsInList()
+{
+	DataAnalysis::OdometryMock odometry;
+	DataAnalysis::LidarMock lidar;
+	DataAnalysis::CameraMock camera;
+	Autonomous::RobotMock autonomousRobot;
+	FieldImpl field(odometry, lidar, camera, autonomousRobot);
+	list<RobotPosition> testlist;
+
+	field.setTrueTeamColor(FieldColorYellow);
+	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(4.61, 1.02), 0.1));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(5, 2), 0.1));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(4.61, 1.1), 0.1));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(4.7, 1.5), 0.1));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(4.8, 1.2), 0.1));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(5, 1), 0.1));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(4.9, 1.9), 0.1));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(4.61, 1.5), 0.1));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(4.61, 1.6), 0.1));
+	lidar.setAllObjects(lidarObjects);
+	DataAnalysis::CameraObjects cameraObjects;
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(4.61, 1.02)));
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(5, 2)));
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(4.61, 1.1)));
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(4.7, 1.5)));
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(4.8, 1.2)));
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(5, 1)));
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(4.9, 1.9)));
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(4.61, 1.5)));
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(4.61, 1.6)));
+	camera.setAllObjects(cameraObjects);
+
+	field.update();
+	testlist = field.getTargetsForCollectingOnePuck();
+	CPPUNIT_ASSERT_EQUAL((size_t)90, testlist.size());
+}
+
+void FieldTest::update_tenPucksWithTeamColorInRectangle9_100ElementsInList()
+{
+	DataAnalysis::OdometryMock odometry;
+	DataAnalysis::LidarMock lidar;
+	DataAnalysis::CameraMock camera;
+	Autonomous::RobotMock autonomousRobot;
+	FieldImpl field(odometry, lidar, camera, autonomousRobot);
+	list<RobotPosition> testlist;
+
+	field.setTrueTeamColor(FieldColorYellow);
+	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(4.59, 0), 0.1));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(5, 0), 0.1));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(4.61, 1), 0.1));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(5, 1), 0.1));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(4.8, 0.2), 0.1));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(4.7, 1), 0.1));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(4.9, 0.9), 0.1));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(4.61, 0.5), 0.1));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(4.61, 0.6), 0.1));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(4.9, 0.6), 0.1));
+	lidar.setAllObjects(lidarObjects);
+	DataAnalysis::CameraObjects cameraObjects;
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(4.59, 0)));
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(5, 0)));
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(4.61, 1)));
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(5, 1)));
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(4.8, 0.2)));
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(4.7, 1)));
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(4.9, 0.9)));
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(4.61, 0.5)));
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(4.61, 0.6)));
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(4.9, 0.6)));
+	camera.setAllObjects(cameraObjects);
+
+	field.update();
+	testlist = field.getTargetsForCollectingOnePuck();
+	CPPUNIT_ASSERT_EQUAL((size_t)100, testlist.size());
+}
+
 void FieldTest::update_objectsInFieldRobotOn00_correctlyUpdated()
 {
 	DataAnalysis::OdometryMock odometry;

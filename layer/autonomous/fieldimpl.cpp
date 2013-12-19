@@ -175,9 +175,7 @@ std::list<RobotPosition> FieldImpl::getTargetsForScoringGoals() const
 std::list<RobotPosition> FieldImpl::getTargetsForFinalPosition() const
 {
 	list<RobotPosition> targetList;
-	//! @todo maybe we should make these points dependend on the fieldobjects.
-	targetList.push_back(RobotPosition( Point(4, 0.5), Angle::getQuarterRotation() + Angle::getEighthRotation() ));
-	targetList.push_back(RobotPosition( Point(4, 2.5), Angle::getHalfRotation() + Angle::getEighthRotation() ));
+
 
 	return targetList;
 }
@@ -266,6 +264,8 @@ std::list<RobotPosition> FieldImpl::getTargetsForCollectingOnePuck() const
 	Rectangle rectangle7(Point(4.59, 2), Point(5, 3));
 	Rectangle rectangle8(Point(4.59, 1), Point(5, 2));
 	Rectangle rectangle9(Point(4.59,0), Point(5, 1));
+	Rectangle rectangle10(Point(4.16,1), Point(4.59, 2));
+	Rectangle rectangle11(Point(0, 0), Point(5,3));
 	double distanceFromRobotToPuck = 0.40;
 
 	if(m_fieldObjects.size() != 0)
@@ -274,7 +274,9 @@ std::list<RobotPosition> FieldImpl::getTargetsForCollectingOnePuck() const
 		{
 			const FieldObject &fieldObject = *i;
 
-			if (fieldObject.getColor() == m_teamColor)
+			if (fieldObject.getColor() == m_teamColor && m_teamColor != FieldColorUnknown
+					&& rectangle10.isInside(fieldObject.getCircle().getCenter(), 0.01) == false
+					&& rectangle11.isInside(fieldObject.getCircle().getCenter(), 0.01))
 			{
 				Angle angle0;
 				if (rectangle1.isInside(fieldObject.getCircle().getCenter(), 0.01))
@@ -321,11 +323,6 @@ std::list<RobotPosition> FieldImpl::getTargetsForCollectingOnePuck() const
 				{
 					Angle angleif9(fieldObject.getCircle().getCenter(), Point(4.59, 1));
 					angle0 = angleif9;
-				}
-				else
-				{
-					Angle angleelse(fieldObject.getCircle().getCenter(), Point(4.375, 1.5));
-					angle0 = angleelse;
 				}
 
 				Angle angle1 = angle0 - Angle::convertFromDegreeToRadiant(10);
@@ -393,9 +390,7 @@ std::list<RobotPosition> FieldImpl::getTargetsForCollectingOnePuck() const
 					targetsToCollect.splice(targetsToCollect.begin(), listToArrange);
 				else
 					targetsToCollect.splice((targetsToCollect.end()), listToArrange);
-
 			}
-
 		}
 	}
 	return targetsToCollect;
