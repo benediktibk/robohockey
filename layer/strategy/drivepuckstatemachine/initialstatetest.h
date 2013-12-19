@@ -16,7 +16,7 @@ namespace DrivePuckStateMachine
 			public CPPUNIT_NS::TestFixture
 	{
 		CPPUNIT_TEST_SUITE(InitialStateTest);
-//!@todo		CPPUNIT_TEST(nextState_always_findPuckState);
+		CPPUNIT_TEST(nextState_always_findPuckState);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:

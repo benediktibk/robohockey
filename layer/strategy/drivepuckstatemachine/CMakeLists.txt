@@ -7,7 +7,7 @@ set(LAYER_STRATEGY_DRIVEPUCKSTATEMACHINE_SRC
 )
 
 set(LAYER_STRATEGY_DRIVEPUCKSTATEMACHINE_TEST_SRC
-	initialstate.cpp
+	initialstatetest.cpp
 	findpuckstatetest.cpp
 	collectpuckstatetest.cpp
 	drivetopositionstatetest.cpp

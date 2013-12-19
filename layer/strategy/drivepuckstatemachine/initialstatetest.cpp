@@ -6,6 +6,7 @@
 #include "layer/strategy/common/refereemock.h"
 #include "layer/autonomous/robotmock.h"
 #include "layer/autonomous/fieldmock.h"
+#include "layer/strategy/common/drivepucktoachivegoals.h"
 
 using namespace RoboHockey::Layer::Strategy::Common;
 using namespace RoboHockey::Layer::Strategy::DrivePuckStateMachine;
@@ -16,7 +17,7 @@ void InitialStateTest::nextState_always_findPuckState()
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	DrivePuck *drivePuck;
+	DrivePuck *drivePuck = new DrivePuckToAchiveGoals();
 	InitialState initialState(robot, field, referee, drivePuck);
 	State *state;
 	state = initialState.nextState();
