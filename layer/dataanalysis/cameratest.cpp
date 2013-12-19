@@ -335,12 +335,12 @@ void CameraTest::getProbabilityForCollectedYellowPuck_yellowPuckCollectedInBlueG
 	CPPUNIT_ASSERT(camera.getProbabilityForCollectedYellowPuck() > 0.8);
 }
 
-void CameraTest::getProbabilityForCollectedBluePuck_bluePuckCollectedLeft_resultIsOver80Percent()
+void CameraTest::getProbabilityForCollectedBluePuck_bluePuckCollectedLeft_resultIsOver59Percent()
 {
 	Hardware::CameraMock hardwareCamera("blue_puck_collected_left");
 	CameraImpl camera(hardwareCamera);
 
-	CPPUNIT_ASSERT(camera.getProbabilityForCollectedBluePuck() > 0.8);
+	CPPUNIT_ASSERT(camera.getProbabilityForCollectedBluePuck() > 0.59);
 }
 
 void CameraTest::getProbabilityForCollectedBluePuck_yellowPuckCollectedLeft_resultIsNear0()
