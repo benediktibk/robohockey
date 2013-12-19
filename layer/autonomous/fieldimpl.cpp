@@ -77,6 +77,11 @@ vector<FieldObject> FieldImpl::getObjectsWithColorOrderdByDistance(FieldColor co
 	return result;
 }
 
+unsigned int FieldImpl::getNumberOfObjectsWithColor(FieldColor color) const
+{
+	return (size_t) getObjectsWithColor(color).size();
+}
+
 bool FieldImpl::calibratePosition()
 {
 	RobotPosition newOrigin = getNewOriginFromFieldDetection();
