@@ -11,7 +11,7 @@ using namespace RoboHockey::Layer::Strategy::MainStateMachine;
 using namespace RoboHockey::Layer::Autonomous;
 
 HideEnemyPucks::HideEnemyPucks(Autonomous::Robot &robot, Autonomous::Field &field, Referee &referee):
-    State(robot, field, referee)
+	State(robot, field, referee, false)
 {
 	DrivePuck *drivePuck = new DrivePuckToHidePucks();
 	State *initialState = new DrivePuckStateMachine::InitialState(robot, field, referee, drivePuck);
@@ -26,17 +26,17 @@ HideEnemyPucks::~HideEnemyPucks()
 
 State* HideEnemyPucks::nextState()
 {
-    if(m_referee.gameOver() || m_referee.stopMovement())
-        return new Pause(m_robot, m_field, m_referee);
-    else if(m_field.getNumberOfAchievedGoals() < 3)
-        return new AchieveGoals(m_robot, m_field, m_referee);
-    else if(m_field.getNumberOfHiddenPucks() >= 3)
-        return new DriveToFinalPosition(m_robot, m_field, m_referee);
-    else
-        return 0;
+	if(m_referee.gameOver() || m_referee.stopMovement())
+		return new Pause(m_robot, m_field, m_referee);
+	else if(m_field.getNumberOfAchievedGoals() < 3)
+		return new AchieveGoals(m_robot, m_field, m_referee);
+	else if(m_field.getNumberOfHiddenPucks() >= 3)
+		return new DriveToFinalPosition(m_robot, m_field, m_referee);
+	else
+		return 0;
 }
 
-void HideEnemyPucks::update()
+void HideEnemyPucks::updateInternal()
 {
 	m_drivePuckStateMachine->update();
 }

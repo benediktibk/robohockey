@@ -22,11 +22,12 @@ namespace FieldDetectionStateMachine
 		TurnAngle(Autonomous::Robot &robot, Autonomous::Field &field, Common::Referee &referee, RoboHockey::Common::Angle angle);
 
 		virtual State* nextState();
-		virtual void update();
+
+	protected:
+		virtual void updateInternal();
 
 	private:
 		RoboHockey::Common::Angle &m_angle;
-		bool m_targetSet;
 
 	};
 }

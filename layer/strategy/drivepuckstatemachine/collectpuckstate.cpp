@@ -7,7 +7,7 @@ using namespace RoboHockey::Layer::Strategy::DrivePuckStateMachine;
 using namespace RoboHockey::Layer::Autonomous;
 
 CollectPuckState::CollectPuckState(Robot &robot, Field &field, Referee &referee, DrivePuck *drivePuck) :
-	State(robot, field, referee),
+	State(robot, field, referee, false),
 	m_drivePuck(drivePuck),
 	m_puckCollected(false)
 { }
@@ -20,5 +20,5 @@ State* CollectPuckState::nextState()
 		return 0;
 }
 
-void CollectPuckState::update()
+void CollectPuckState::updateInternal()
 {}

@@ -7,15 +7,13 @@ using namespace RoboHockey::Layer::Strategy::Common;
 using namespace RoboHockey::Layer::Strategy::FieldDetectionStateMachine;
 
 CalibrationFinished::CalibrationFinished(Autonomous::Robot &robot, Autonomous::Field &field, Common::Referee &referee) :
-	State(robot, field, referee)
-{
-
-}
+	State(robot, field, referee, false)
+{ }
 
 State* CalibrationFinished::nextState()
 {
 	return 0;
 }
 
-void CalibrationFinished::update()
+void CalibrationFinished::updateInternal()
 { }

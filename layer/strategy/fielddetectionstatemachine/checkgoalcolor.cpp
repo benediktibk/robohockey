@@ -12,7 +12,7 @@ using namespace RoboHockey::Layer::Strategy::FieldDetectionStateMachine;
 using namespace RoboHockey::Layer::Autonomous;
 
 CheckGoalColor::CheckGoalColor(Robot &robot, Field &field, Referee &referee) :
-	State(robot, field, referee),
+	State(robot, field, referee, false),
 	m_teamColorSend(false),
 	m_gotResponse(false)
 { }
@@ -33,7 +33,7 @@ State* CheckGoalColor::nextState()
 	return 0;
 }
 
-void CheckGoalColor::update()
+void CheckGoalColor::updateInternal()
 {
 	if (!m_teamColorSend)
 	{

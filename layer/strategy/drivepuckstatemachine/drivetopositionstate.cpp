@@ -7,7 +7,7 @@ using namespace RoboHockey::Layer::Strategy::DrivePuckStateMachine;
 using namespace RoboHockey::Layer::Autonomous;
 
 DriveToPositionState::DriveToPositionState(Robot &robot, Field &field, Referee &referee, DrivePuck *drivePuck) :
-	State(robot, field, referee),
+	State(robot, field, referee, true),
 	m_drivePuck(drivePuck),
 	m_puckAtPosition(false)
 { }
@@ -20,5 +20,5 @@ State* DriveToPositionState::nextState()
 		return 0;
 }
 
-void DriveToPositionState::update()
+void DriveToPositionState::updateInternal()
 {}

@@ -458,3 +458,5 @@ layer/strategy/drivepuckstatemachine/drivetocollectpuckstatetest.cpp
 layer/strategy/drivepuckstatemachine/drivetocollectpuckstate.cpp
 resources/testfiles/lidar_moving_1_previous.txt
 resources/testfiles/lidar_moving_1_current.txt
+layer/strategy/common/statetest.h
+layer/strategy/common/statetest.cpp

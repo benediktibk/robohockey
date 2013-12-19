@@ -11,15 +11,16 @@ namespace Strategy
 {
 namespace FieldDetectionStateMachine
 {
-    class InitialState :
+	class InitialState :
 			public Common::State
 	{
 	public:
 		InitialState(Autonomous::Robot &robot, Autonomous::Field &field, Common::Referee &referee);
 
 		virtual State* nextState();
-		virtual void update();
 
+	protected:
+		virtual void updateInternal();
 	};
 }
 }

@@ -9,7 +9,7 @@ using namespace RoboHockey::Layer::Strategy::MainStateMachine;
 using namespace RoboHockey::Layer::Autonomous;
 
 Calibrate::Calibrate(Robot &robot, Field &field, Referee &referee) :
-	State(robot, field, referee)
+	State(robot, field, referee, false)
 {
 	State *initialState = new FieldDetectionStateMachine::InitialState(robot, field, referee);
 	m_fieldDetectionStateMachine = new StateMachine(initialState, robot, field, referee);
@@ -34,7 +34,7 @@ State* Calibrate::nextState()
 	return 0;
 }
 
-void Calibrate::update()
+void Calibrate::updateInternal()
 {
 	m_fieldDetectionStateMachine->update();
 }

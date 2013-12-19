@@ -7,7 +7,7 @@ using namespace RoboHockey::Layer::Strategy::FieldDetectionStateMachine;
 using namespace RoboHockey::Layer::Autonomous;
 
 InitialState::InitialState(Robot &robot, Field &field, Referee &referee) :
-    State(robot, field, referee)
+	State(robot, field, referee, false)
 { }
 
 State* InitialState::nextState()
@@ -15,5 +15,5 @@ State* InitialState::nextState()
 	return new DetectField(m_robot, m_field, m_referee);
 }
 
-void InitialState::update()
+void InitialState::updateInternal()
 {}

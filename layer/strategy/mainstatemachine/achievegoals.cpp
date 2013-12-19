@@ -11,7 +11,7 @@ using namespace RoboHockey::Layer::Strategy::MainStateMachine;
 using namespace RoboHockey::Layer::Autonomous;
 
 AchieveGoals::AchieveGoals(Robot &robot, Field &field, Referee &referee) :
-    State(robot, field, referee)
+	State(robot, field, referee, false)
 {
 	DrivePuck *drivePuck = new DrivePuckToAchiveGoals();
 	State *initialState = new DrivePuckStateMachine::InitialState(robot, field, referee, drivePuck);
@@ -26,15 +26,15 @@ AchieveGoals::~AchieveGoals()
 
 State* AchieveGoals::nextState()
 {
-    if(m_referee.stopMovement() || m_referee.gameOver())
-        return new Pause(m_robot, m_field, m_referee);
-    else if(m_field.getNumberOfAchievedGoals() < 3)
-        return 0;
-    else
-        return new HideEnemyPucks(m_robot, m_field, m_referee);
+	if(m_referee.stopMovement() || m_referee.gameOver())
+		return new Pause(m_robot, m_field, m_referee);
+	else if(m_field.getNumberOfAchievedGoals() < 3)
+		return 0;
+	else
+		return new HideEnemyPucks(m_robot, m_field, m_referee);
 }
 
-void AchieveGoals::update()
+void AchieveGoals::updateInternal()
 {
 	m_drivePuckStateMachine->update();
 }

@@ -18,8 +18,9 @@ namespace FieldDetectionStateMachine
 		CalibrationFinished(Autonomous::Robot &robot, Autonomous::Field &field, Common::Referee &referee);
 
 		virtual State* nextState();
-		virtual void update();
 
+	protected:
+		virtual void updateInternal();
 	};
 }
 }

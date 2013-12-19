@@ -16,13 +16,16 @@ namespace Common
 	{
 	public:
 		StateMock(Autonomous::Robot &robot, Autonomous::Field &field, Referee &referee);
+		StateMock(Autonomous::Robot &robot, Autonomous::Field &field, Referee &referee, bool callUpdateOnlyOnce);
 
 		virtual State* nextState();
-		virtual void update();
 
 		unsigned int getCallsToNextState() const;
 		unsigned int getCallsToUpdate() const;
 		void setNextState(State *state);
+
+	protected:
+		virtual void updateInternal();
 
 	private:
 		unsigned int m_callsToNextState;

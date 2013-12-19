@@ -8,7 +8,7 @@ using namespace RoboHockey::Layer::Strategy::DrivePuckStateMachine;
 using namespace RoboHockey::Layer::Autonomous;
 
 InitialState::InitialState(Robot &robot, Field &field, Referee &referee, DrivePuck *drivePuck) :
-	State(robot, field, referee),
+	State(robot, field, referee, false),
 	m_drivePuck(drivePuck)
 { }
 
@@ -20,5 +20,5 @@ State* InitialState::nextState()
 		return new FindPuckState(m_robot, m_field, m_referee, m_drivePuck);
 }
 
-void InitialState::update()
+void InitialState::updateInternal()
 {}

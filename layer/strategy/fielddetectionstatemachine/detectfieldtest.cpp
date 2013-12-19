@@ -28,7 +28,7 @@ void DetectFieldTest::nextState_notCalibrated3Tries_turnAngle()
 	State *state;
 	state = detectFieldState.nextState();
 	TurnAngle *stateCasted = dynamic_cast<TurnAngle*>(state);
-	CPPUNIT_ASSERT(stateCasted != 0);	
+	CPPUNIT_ASSERT(stateCasted != 0);
 }
 
 void DetectFieldTest::nextState_notCalibrated1Try_NULL()

@@ -3,9 +3,16 @@
 using namespace RoboHockey::Layer::Strategy::Common;
 using namespace RoboHockey::Layer::Autonomous;
 
-StateMock::StateMock(Autonomous::Robot &robot, Autonomous::Field &field, Referee &referee) :
-    State(robot, field, referee),
-    m_callsToNextState(0),
+StateMock::StateMock(Robot &robot, Field &field, Referee &referee) :
+	State(robot, field, referee, false),
+	m_callsToNextState(0),
+	m_callsToUpdate(0),
+	m_nextState(0)
+{ }
+
+StateMock::StateMock(Robot &robot, Field &field, Referee &referee, bool callUpdateOnlyOnce) :
+	State(robot, field, referee, callUpdateOnlyOnce),
+	m_callsToNextState(0),
 	m_callsToUpdate(0),
 	m_nextState(0)
 { }
@@ -16,7 +23,7 @@ State *StateMock::nextState()
 	return m_nextState;
 }
 
-void StateMock::update()
+void StateMock::updateInternal()
 {
 	++m_callsToUpdate;
 }

@@ -12,19 +12,21 @@ namespace Strategy
 {
 namespace MainStateMachine
 {
-    class Calibrate :
+	class Calibrate :
 			public Common::State
-    {
-    public:
+	{
+	public:
 		Calibrate(Autonomous::Robot &robot, Autonomous::Field &field, Common::Referee &referee);
 		virtual ~Calibrate();
 
-        virtual State* nextState();
-        virtual void update();
+		virtual State* nextState();
 
-    private:
+	protected:
+		virtual void updateInternal();
+
+	private:
 		Common::StateMachine *m_fieldDetectionStateMachine;
-    };
+	};
 }
 }
 }

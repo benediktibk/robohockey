@@ -20,7 +20,9 @@ class HideEnemyPucks :
 		virtual ~HideEnemyPucks();
 
 		virtual State* nextState();
-		virtual void update();
+
+	protected:
+		virtual void updateInternal();
 
 	private:
 		Common::StateMachine *m_drivePuckStateMachine;

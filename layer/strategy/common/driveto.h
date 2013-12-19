@@ -22,13 +22,14 @@ namespace Common
 				State *stateAfterTargetReached, State *stateAfterTargetUnreachable);
 
 		virtual State* nextState();
-		virtual void update();
+
+	protected:
+		virtual void updateInternal();
 
 	private:
 		std::list<RoboHockey::Common::RobotPosition> m_target;
 		State *m_stateAfterTargetReached;
 		State *m_stateAfterTargetUnreachable;
-		bool m_targetSet;
 	};
 }
 }

@@ -8,7 +8,7 @@ namespace Layer
 namespace Autonomous
 {
 	class Robot;
-    class Field;
+	class Field;
 }
 
 namespace Strategy
@@ -16,19 +16,27 @@ namespace Strategy
 namespace Common
 {
 	class Referee;
-    class State
+
+	class State
 	{
 	public:
-		State(Autonomous::Robot &robot, Autonomous::Field &field, Referee &referee);
+		State(Autonomous::Robot &robot, Autonomous::Field &field, Referee &referee, bool callUpdateOnlyOnce);
 		virtual ~State();
 
 		virtual State* nextState() = 0;
-		virtual void update() = 0;
+		void update();
+
+	protected:
+		virtual void updateInternal() = 0;
 
 	protected:
 		Autonomous::Robot &m_robot;
-        Autonomous::Field &m_field;
+		Autonomous::Field &m_field;
 		Referee &m_referee;
+
+	private:
+		bool m_callUpdateOnlyOnce;
+		bool m_updateAlreadyCalled;
 	};
 }
 }

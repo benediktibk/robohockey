@@ -18,7 +18,9 @@ namespace FieldDetectionStateMachine
 		DetectField(Autonomous::Robot &robot, Autonomous::Field &field, Common::Referee &referee);
 
 		virtual State* nextState();
-		virtual void update();
+
+	protected:
+		virtual void updateInternal();
 
 	private:
 		bool m_successful;

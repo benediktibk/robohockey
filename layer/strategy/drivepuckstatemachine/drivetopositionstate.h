@@ -19,7 +19,9 @@ namespace DrivePuckStateMachine
 		DriveToPositionState(Autonomous::Robot &robot, Autonomous::Field &field, Common::Referee &referee, RoboHockey::Layer::Strategy::Common::DrivePuck *drivePuck);
 
 		virtual State* nextState();
-		virtual void update();
+
+	protected:
+		virtual void updateInternal();
 
 	private:
 		Common::DrivePuck *m_drivePuck;

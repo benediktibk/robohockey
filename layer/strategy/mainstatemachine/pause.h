@@ -12,14 +12,17 @@ namespace Strategy
 {
 namespace MainStateMachine
 {
-    class Pause :
+	class Pause :
 			public Common::State
-    {
-    public:
+	{
+	public:
 		Pause(Autonomous::Robot &robot, Autonomous::Field &field, Common::Referee &referee);
-        virtual State* nextState();
-        virtual void update();
-    };
+
+		virtual State* nextState();
+
+	protected:
+		virtual void updateInternal();
+	};
 }
 }
 }

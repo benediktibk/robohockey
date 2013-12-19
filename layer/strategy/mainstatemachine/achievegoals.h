@@ -12,19 +12,21 @@ namespace Strategy
 {
 namespace MainStateMachine
 {
-    class AchieveGoals :
+	class AchieveGoals :
 			public Common::State
-    {
-    public:
+	{
+	public:
 		AchieveGoals(Autonomous::Robot &robot, Autonomous::Field &field, Common::Referee &referee);
 		virtual ~AchieveGoals();
 
-        virtual State* nextState();
-        virtual void update();
+		virtual State* nextState();
+
+	protected:
+		virtual void updateInternal();
 
 	private:
 		Common::StateMachine *m_drivePuckStateMachine;
-    };
+	};
 }
 }
 }

@@ -13,15 +13,16 @@ namespace Strategy
 namespace MainStateMachine
 {
 class DriveToFinalPosition:
-        public Common::State
-    {
-    public:
+		public Common::State
+	{
+	public:
 		DriveToFinalPosition(Autonomous::Robot &robot, Autonomous::Field &field, Common::Referee &referee);
 
-        virtual State* nextState();
-        virtual void update();
+		virtual State* nextState();
 
-    };
+	protected:
+		virtual void updateInternal();
+	};
 }
 }
 }

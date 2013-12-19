@@ -3,11 +3,21 @@
 using namespace RoboHockey::Layer::Strategy::Common;
 using namespace RoboHockey::Layer::Autonomous;
 
-State::State(Robot &robot, Field &field, Referee &referee) :
-    m_robot(robot),
-    m_field(field),
-    m_referee(referee)
+State::State(Robot &robot, Field &field, Referee &referee, bool callUpdateOnlyOnce) :
+	m_robot(robot),
+	m_field(field),
+	m_referee(referee),
+	m_callUpdateOnlyOnce(callUpdateOnlyOnce),
+	m_updateAlreadyCalled(false)
 { }
 
 State::~State()
 { }
+
+void State::update()
+{
+	if (!(m_updateAlreadyCalled && m_callUpdateOnlyOnce))
+		updateInternal();
+
+	m_updateAlreadyCalled = true;
+}

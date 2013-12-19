@@ -13,7 +13,7 @@ using namespace RoboHockey::Layer::Strategy::FieldDetectionStateMachine;
 using namespace RoboHockey::Layer::Autonomous;
 
 DetectField::DetectField(Robot &robot, Field &field, Referee &referee) :
-	State(robot, field, referee),
+	State(robot, field, referee, false),
 	m_successful(false),
 	m_numberOfTries(0)
 { }
@@ -33,7 +33,7 @@ State* DetectField::nextState()
 	}
 }
 
-void DetectField::update()
+void DetectField::updateInternal()
 {
 	m_successful = m_field.calibratePosition();
 	m_numberOfTries++;
