@@ -4,6 +4,7 @@
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
 #include <string>
+#include "layer/dataanalysis/lidarobject.h"
 #include "common/angle.h"
 
 namespace RoboHockey
@@ -43,6 +44,7 @@ namespace DataAnalysis
 		CPPUNIT_TEST(getAllObjects_twoObjectsWithADistanceOfOneMeter_objectCountIs2);
 		CPPUNIT_TEST(getAllObjects_twoBorderStonesInFrontOfWall_objectCountIs2);
 		CPPUNIT_TEST(getAllObjects_puckInFrontOfOtherRobot_puckIsDetetected);
+		CPPUNIT_TEST(getAllObjects_twoDataSetsWhereTheRobotDroveForward_sameObjectCount);
 		CPPUNIT_TEST(isObstacleInFront_noObstacleInFront_false);
 		CPPUNIT_TEST(isObstacleInFront_puckCollected_false);
 		CPPUNIT_TEST(isObstacleInFront_obstacleOnLeftSide_true);
@@ -133,6 +135,7 @@ namespace DataAnalysis
 		void getAllObjects_twoObjectsWithADistanceOfOneMeter_objectCountIs2();
 		void getAllObjects_twoBorderStonesInFrontOfWall_objectCountIs2();
 		void getAllObjects_puckInFrontOfOtherRobot_puckIsDetetected();
+		void getAllObjects_twoDataSetsWhereTheRobotDroveForward_sameObjectCount();
 		void isObstacleInFront_noObstacleInFront_false();
 		void isObstacleInFront_puckCollected_false();
 		void isObstacleInFront_obstacleOnLeftSide_true();
@@ -198,6 +201,9 @@ namespace DataAnalysis
 		void canBeSeen_lookingLeftAndShiftedAndObjectOnLeftSideNotVisible_false();
 		void canBeSeen_lookingRightShiftedAndObstacleBehind_false();
 		void canBeSeen_lookingLeftShiftedAndObstacleBehind_false();
+
+	private:
+		static std::vector<LidarObject> getDifferentObjects(const std::vector<LidarObject> &one, const std::vector<LidarObject> &two);
 
 	private:
 		static const double m_maximumDistance;

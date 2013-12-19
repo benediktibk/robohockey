@@ -49,6 +49,7 @@ namespace Autonomous
 		CPPUNIT_TEST(getTargetsForFinalPosition_callFunction_17ElementsInList);
 		CPPUNIT_TEST(update_objectsInFieldRobotOn00_correctlyUpdated);
 		CPPUNIT_TEST(update_objectsInFieldRobotOn1And2_correctlyUpdated);
+		CPPUNIT_TEST(update_movingAndLidarDataChanges_fieldObjectCountDoesntChange);
 		CPPUNIT_TEST(calibratePosition_noValidPattern_false);
 		CPPUNIT_TEST(calibratePosition_validPattern_true);
 		CPPUNIT_TEST(calibratePosition_noValidPattern_noTransformation);
@@ -133,6 +134,7 @@ namespace Autonomous
 		void getTargetsForFinalPosition_callFunction_17ElementsInList();
 		void update_objectsInFieldRobotOn00_correctlyUpdated();
 		void update_objectsInFieldRobotOn1And2_correctlyUpdated();
+		void update_movingAndLidarDataChanges_fieldObjectCountDoesntChange();
 		void calibratePosition_noValidPattern_false();
 		void calibratePosition_validPattern_true();
 		void calibratePosition_noValidPattern_noTransformation();

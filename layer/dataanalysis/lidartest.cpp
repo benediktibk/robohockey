@@ -429,6 +429,26 @@ void LidarTest::getAllObjects_puckInFrontOfOtherRobot_puckIsDetetected()
 	CPPUNIT_ASSERT_EQUAL((size_t)1, objectsInForeground.size());
 }
 
+void LidarTest::getAllObjects_twoDataSetsWhereTheRobotDroveForward_sameObjectCount()
+{
+	Hardware::LidarMock hardwareLidar;
+	LidarImpl lidar(hardwareLidar);
+	RobotPosition ownPosition(Point(0, 0), 0);
+
+	hardwareLidar.readSensorDataFromFile("resources/testfiles/lidar_moving_1_previous.txt");
+	lidar.updateSensorData();
+	LidarObjects objectsPrevious = lidar.getAllObjects(ownPosition);
+	hardwareLidar.readSensorDataFromFile("resources/testfiles/lidar_moving_1_current.txt");
+	lidar.updateSensorData();
+	LidarObjects objectsCurrent = lidar.getAllObjects(ownPosition);
+
+	vector<LidarObject> objectsPreviousVector = objectsPrevious.getObjectsWithDistanceBelow(8);
+	vector<LidarObject> objectsCurrentVector = objectsCurrent.getObjectsWithDistanceBelow(8);
+	vector<LidarObject> differences = getDifferentObjects(objectsPreviousVector, objectsCurrentVector);
+	CPPUNIT_ASSERT_EQUAL(objectsPrevious.getObjectCount(), objectsCurrent.getObjectCount());
+	CPPUNIT_ASSERT_EQUAL((size_t)0, differences.size());
+}
+
 void LidarTest::isObstacleInFront_noObstacleInFront_false()
 {
 	Hardware::LidarMock hardwareLidar;
@@ -1548,4 +1568,37 @@ void LidarTest::canBeSeen_lookingLeftShiftedAndObstacleBehind_false()
 	bool canBeSeen = lidar.canBeSeen(circle, ownPosition);
 
 	CPPUNIT_ASSERT(!canBeSeen);
+}
+
+vector<LidarObject> LidarTest::getDifferentObjects(
+		const vector<LidarObject> &one, const vector<LidarObject> &two)
+{
+	Compare compare(0.2);
+	vector<LidarObject> result;
+	vector<LidarObject> twoReduced = two;
+
+	for (vector<LidarObject>::const_iterator i = one.begin(); i != one.end(); ++i)
+	{
+		const LidarObject &oneObject = *i;
+		const Point &oneObjectPosition = oneObject.getCenter();
+		bool found = false;
+
+		for (vector<LidarObject>::iterator j = twoReduced.begin(); j != twoReduced.end() && !found; ++j)
+		{
+			const LidarObject &twoObject = *j;
+			const Point &twoObjectPosition = twoObject.getCenter();
+
+			if (compare.isFuzzyEqual(oneObjectPosition, twoObjectPosition))
+			{
+				twoReduced.erase(j);
+				found = true;
+			}
+		}
+
+		if (!found)
+			result.push_back(oneObject);
+	}
+
+	result.insert(result.end(), twoReduced.begin(), twoReduced.end());
+	return result;
 }
