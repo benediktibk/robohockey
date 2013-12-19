@@ -1,13 +1,13 @@
 #include "layer/strategy/drivepuckstatemachine//findpuckstate.h"
 #include "layer/strategy/common/referee.h"
-#include "layer/strategy/common/drivepuck.h"
 
 using namespace RoboHockey::Layer::Strategy::Common;
 using namespace RoboHockey::Layer::Strategy::DrivePuckStateMachine;
 using namespace RoboHockey::Layer::Autonomous;
 
-FindPuckState::FindPuckState(Robot &robot, Field &field, Referee &referee, DrivePuck */*drivePuck*/) :
-	State(robot, field, referee)
+FindPuckState::FindPuckState(Robot &robot, Field &field, Referee &referee, DrivePuck *drivePuck) :
+	State(robot, field, referee),
+	m_drivePuck(drivePuck)
 { }
 
 State* FindPuckState::nextState()

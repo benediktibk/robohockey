@@ -2,6 +2,7 @@
 #define ROBOHOCKEY_LAYER_STRATEGY_DRIVEPUCKSTATEMACHINE_FINDPUCKSTATE_H
 
 #include "layer/strategy/common/state.h"
+#include "layer/strategy/common/drivepuck.h"
 
 namespace RoboHockey
 {
@@ -9,10 +10,6 @@ namespace Layer
 {
 namespace Strategy
 {
-namespace Common
-{
-	class DrivePuck;
-}
 namespace DrivePuckStateMachine
 {
 	class FindPuckState :
@@ -24,6 +21,8 @@ namespace DrivePuckStateMachine
 		virtual State* nextState();
 		virtual void update();
 
+	private:
+		Common::DrivePuck *m_drivePuck;
 };
 }
 }
