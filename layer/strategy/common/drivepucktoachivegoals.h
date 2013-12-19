@@ -17,8 +17,9 @@ namespace Common
 	public:
 		DrivePuckToAchiveGoals();
 
-		std::vector<RoboHockey::Common::RobotPosition> getTargetPoint();
-		std::vector<RoboHockey::Common::RobotPosition> getPointToCollectPuck();
+		virtual std::vector<RoboHockey::Common::RobotPosition> getTargetPoint();
+		virtual std::vector<RoboHockey::Common::RobotPosition> getPointToCollectPuck();
+		virtual RoboHockey::Common::FieldColor getColorOfTargetPucks();
 	};
 }
 }

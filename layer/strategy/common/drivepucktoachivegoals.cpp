@@ -18,3 +18,8 @@ vector<RobotPosition> DrivePuckToAchiveGoals::getPointToCollectPuck()
 	return vector<RobotPosition>();
 }
 
+FieldColor DrivePuckToAchiveGoals::getColorOfTargetPucks()
+{
+	return FieldColorUnknown;
+}
+
