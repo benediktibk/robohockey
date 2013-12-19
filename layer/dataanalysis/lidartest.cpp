@@ -1482,7 +1482,7 @@ void LidarTest::canBeSeen_lookingLeftAndShiftedAndObjectOnRightSideNotVisible_fa
 	CPPUNIT_ASSERT(!canBeSeen);
 }
 
-void LidarTest::canBeSeen_lookingLeftAndShiftedAndObjectOnLeftSideVisible_true()
+void LidarTest::canBeSeen_lookingLeftAndShiftedAndObjectOnLeftSideVisible_false()
 {
 	Hardware::LidarMock hardwareLidar(10);
 	LidarImpl lidar(hardwareLidar);
@@ -1507,7 +1507,7 @@ void LidarTest::canBeSeen_lookingLeftAndShiftedAndObjectOnLeftSideVisible_true()
 
 	bool canBeSeen = lidar.canBeSeen(circle, ownPosition);
 
-	CPPUNIT_ASSERT(canBeSeen);
+	CPPUNIT_ASSERT(!canBeSeen);
 }
 
 void LidarTest::canBeSeen_lookingLeftAndShiftedAndObjectOnLeftSideNotVisible_false()
@@ -1535,7 +1535,7 @@ void LidarTest::canBeSeen_lookingLeftAndShiftedAndObjectOnLeftSideNotVisible_fal
 
 	bool canBeSeen = lidar.canBeSeen(circle, ownPosition);
 
-	CPPUNIT_ASSERT(canBeSeen);
+	CPPUNIT_ASSERT(!canBeSeen);
 }
 
 void LidarTest::canBeSeen_lookingRightShiftedAndObstacleBehind_false()

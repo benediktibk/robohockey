@@ -984,6 +984,25 @@ void FieldTest::update_movingAndlidatDataChangesSecondVersion_fieldObjectCountDo
 	CPPUNIT_ASSERT_EQUAL(oldObjectCount, newObjectCount);
 }
 
+void FieldTest::update_lidarReturnsObjectWhichCantBeSeenActually_noFieldObjects()
+{
+	DataAnalysis::OdometryMock odometry;
+	DataAnalysis::LidarMock lidar;
+	DataAnalysis::CameraMock camera;
+	Autonomous::RobotMock autonomousRobot;
+	DataAnalysis::LidarObjects objects(Point(0, 0));
+	objects.addObject(DataAnalysis::LidarObject(Point(1, 1), 1));
+	FieldImpl field(odometry, lidar, camera, autonomousRobot);
+
+	lidar.setCanBeSeen(false);
+	lidar.setAllObjects(objects);
+	field.update();
+	field.update();
+
+	vector<FieldObject> fieldObjects = field.getAllFieldObjects();
+	CPPUNIT_ASSERT_EQUAL((size_t)0, fieldObjects.size());
+}
+
 void FieldTest::calibratePosition_noValidPattern_false()
 {
 	DataAnalysis::OdometryMock odometry;

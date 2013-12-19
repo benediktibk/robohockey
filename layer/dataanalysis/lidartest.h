@@ -106,7 +106,7 @@ namespace DataAnalysis
 		CPPUNIT_TEST(canBeSeen_lookingRightAndShiftedAndObjectOnLeftSideNotVisible_false);
 		CPPUNIT_TEST(canBeSeen_lookingLeftAndShiftedAndObjectOnRightSideVisible_true);
 		CPPUNIT_TEST(canBeSeen_lookingLeftAndShiftedAndObjectOnRightSideNotVisible_false);
-		CPPUNIT_TEST(canBeSeen_lookingLeftAndShiftedAndObjectOnLeftSideVisible_true);
+		CPPUNIT_TEST(canBeSeen_lookingLeftAndShiftedAndObjectOnLeftSideVisible_false);
 		CPPUNIT_TEST(canBeSeen_lookingLeftAndShiftedAndObjectOnLeftSideNotVisible_false);
 		CPPUNIT_TEST(canBeSeen_lookingRightShiftedAndObstacleBehind_false);
 		CPPUNIT_TEST(canBeSeen_lookingLeftShiftedAndObstacleBehind_false);
@@ -197,7 +197,7 @@ namespace DataAnalysis
 		void canBeSeen_lookingRightAndShiftedAndObjectOnLeftSideNotVisible_false();
 		void canBeSeen_lookingLeftAndShiftedAndObjectOnRightSideVisible_true();
 		void canBeSeen_lookingLeftAndShiftedAndObjectOnRightSideNotVisible_false();
-		void canBeSeen_lookingLeftAndShiftedAndObjectOnLeftSideVisible_true();
+		void canBeSeen_lookingLeftAndShiftedAndObjectOnLeftSideVisible_false();
 		void canBeSeen_lookingLeftAndShiftedAndObjectOnLeftSideNotVisible_false();
 		void canBeSeen_lookingRightShiftedAndObstacleBehind_false();
 		void canBeSeen_lookingLeftShiftedAndObstacleBehind_false();

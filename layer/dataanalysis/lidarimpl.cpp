@@ -191,8 +191,8 @@ bool LidarImpl::canBeSeen(const Circle &object, const RobotPosition &ownPosition
 	Angle orientationOfObject(Point(0, 0), center);
 	Angle leftEdge = orientationOfObject + viewAngleHalf;
 	Angle rightEdge = orientationOfObject - viewAngleHalf;
-	Angle maximumViewAngleLeft = getMaximumAngleLeft();
-	Angle maximumViewAngleRight = getMaximumAngleRight();
+	Angle maximumViewAngleLeft = getMaximumAngleLeft() - Angle::convertFromDegreeToRadiant(5);
+	Angle maximumViewAngleRight = getMaximumAngleRight() + Angle::convertFromDegreeToRadiant(5);
 
 	if (leftEdge.getValueBetweenMinusPiAndPi() > maximumViewAngleLeft.getValueBetweenMinusPiAndPi())
 		leftEdge = maximumViewAngleLeft;

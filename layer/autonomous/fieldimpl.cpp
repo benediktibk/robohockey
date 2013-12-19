@@ -516,8 +516,11 @@ void FieldImpl::updateWithLidarData(double range)
 			}
 		}
 
-		FieldObject object(*i, FieldColorUnknown);
-		m_fieldObjects.push_back(object);
+		if (m_lidar->canBeSeen(*i, *m_position))
+		{
+			FieldObject object(*i, FieldColorUnknown);
+			m_fieldObjects.push_back(object);
+		}
 	}
 
 	for (vector<FieldObject>::const_iterator i = inVisibleArea.begin(); i != inVisibleArea.end(); ++i)
