@@ -958,6 +958,32 @@ void FieldTest::update_movingAndLidarDataChanges_fieldObjectCountDoesntChange()
 	CPPUNIT_ASSERT_EQUAL(oldObjectCount, newObjectCount);
 }
 
+void FieldTest::update_movingAndlidatDataChangesSecondVersion_fieldObjectCountDoesntChange()
+{
+	DataAnalysis::OdometryMock odometry;
+	Hardware::LidarMock hardwareLidarMock(6);
+	DataAnalysis::LidarImpl lidar(hardwareLidarMock);
+	DataAnalysis::CameraMock camera;
+	Autonomous::RobotMock autonomousRobot;
+	FieldImpl field(odometry, lidar, camera, autonomousRobot);
+
+	odometry.setCurrentPosition(RobotPosition(Point(0, 0), Angle(0)));
+	hardwareLidarMock.readSensorDataFromFile("resources/testfiles/lidar_moving_2_previous.txt");
+	lidar.updateSensorData();
+	field.update();
+	vector<FieldObject> oldObjects = field.getAllFieldObjects();
+	size_t oldObjectCount = oldObjects.size();
+	odometry.setCurrentPosition(RobotPosition(Point(0.0481614, 0), Angle(0)));
+	hardwareLidarMock.readSensorDataFromFile("resources/testfiles/lidar_moving_2_current.txt");
+	lidar.updateSensorData();
+	field.update();
+	vector<FieldObject> newObjects = field.getAllFieldObjects();
+	size_t newObjectCount = newObjects.size();
+
+	CPPUNIT_ASSERT(oldObjectCount > 0);
+	CPPUNIT_ASSERT_EQUAL(oldObjectCount, newObjectCount);
+}
+
 void FieldTest::calibratePosition_noValidPattern_false()
 {
 	DataAnalysis::OdometryMock odometry;

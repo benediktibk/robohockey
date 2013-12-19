@@ -98,6 +98,8 @@ set(TESTFILES
 	lidar_wall.txt
 	lidar_moving_1_previous.txt
 	lidar_moving_1_current.txt
+	lidar_moving_2_previous.txt
+	lidar_moving_2_current.txt
 	sonar_1.txt
 	sonar_2.txt
 	sonar_3.txt
