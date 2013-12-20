@@ -84,6 +84,7 @@ void HideEnemyPucksTest::nextState_achievedGoals2_AchieveGoals()
     referee.setStopMovement(false);
     field.setAchievedGoals(2);
     field.setEnemyHiddenPucks(3);
+	robot.setReachedTarget(true);
     State *state;
     state = hideEnemyPucks.nextState();
     AchieveGoals *stateCasted = dynamic_cast<AchieveGoals*>(state);
