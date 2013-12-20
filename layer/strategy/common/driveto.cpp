@@ -18,7 +18,6 @@ DriveTo::DriveTo(Autonomous::Robot &robot, Autonomous::Field &field, Common::Ref
 	m_stateAfterTargetUnreachable(stateAfterTargetUnreachable)
 {
 	assert(m_stateAfterTargetReached != 0);
-	assert(m_stateAfterTargetUnreachable != 0);
 }
 
 State* DriveTo::nextState()

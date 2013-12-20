@@ -12,8 +12,10 @@ using namespace RoboHockey::Layer::Autonomous;
 FindPuckState::FindPuckState(Robot &robot, Field &field, Referee &referee, DrivePuck *drivePuck) :
 	DriveTo(robot, field, referee, field.getTargetsForSearchingPucks(),
 			new CollectPuckState(robot, field, referee, drivePuck),
-			new FindPuckState(robot, field, referee, drivePuck))
-{ }
+			0)
+{
+	//! @todo Should handle a "can't reach Target".
+}
 
 std::string FindPuckState::getName()
 {

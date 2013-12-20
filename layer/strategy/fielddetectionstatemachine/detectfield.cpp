@@ -57,5 +57,6 @@ void DetectField::updateInternal()
 	if ((size_t) 4 <= m_calibrationResults.size())
 	{
 		m_field.transformFieldToNewOrigin(m_calibrationResults.front());
+		m_successful = true;
 	}
 }
