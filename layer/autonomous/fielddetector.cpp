@@ -11,7 +11,8 @@ using namespace RoboHockey::Layer::Autonomous;
 
 FieldDetector::FieldDetector(const Point &currentPosition, vector<Point> &pointsOfObjects):
 	m_currentPosition(currentPosition),
-	m_points(pointsOfObjects)
+	m_points(pointsOfObjects),
+	m_maxBorderstonesArranged(2)
 { }
 
 bool FieldDetector::tryToDetectField()
@@ -30,11 +31,11 @@ bool FieldDetector::tryToDetectField()
 		root.searchNeighbourBorderStones(currentPoints);
 
 		//! Add One, as root is a BorderStone, too
-		int numberOfFoundBorderStones = 1 + root.getNumberOfChildrenRecursive();
+		unsigned int numberOfFoundBorderStones = 1 + root.getNumberOfChildrenRecursive();
 
-		if (numberOfFoundBorderStones > 2)
+		if (numberOfFoundBorderStones > m_maxBorderstonesArranged)
 		{
-				result = tryToFigureOutNewOrigin(root);
+				result = tryToFigureOutNewOrigin(root) || result;
 
 //				if (result)
 //					return true;
@@ -56,7 +57,7 @@ Point FieldDetector::getNewOrigin()
 	for (vector<RobotPosition>::const_iterator it = m_newOrigins.begin(); it != m_newOrigins.end(); ++it)
 		medianPoint = medianPoint + (*it).getPosition() * 1.0/(double) m_newOrigins.size();
 
-	return medianPoint;
+//	return medianPoint;
 	return m_newOrigin;
 }
 
@@ -69,7 +70,7 @@ double FieldDetector::getRotation()
 	for (vector<RobotPosition>::const_iterator it = m_newOrigins.begin(); it != m_newOrigins.end(); ++it)
 		medianRotation = medianRotation + (*it).getOrientation() * 1.0/(double) m_newOrigins.size();
 
-	return medianRotation.getValueBetweenMinusPiAndPi();
+//	return medianRotation.getValueBetweenMinusPiAndPi();
 	return m_rotation;
 }
 
@@ -179,16 +180,17 @@ bool FieldDetector::tryToFigureOutNewOrigin(BorderStone &root)
 		possibleNewOrigin = cornerTwo;
 
 	Point pointOfRoot(root.getX(), root.getY());
+	double rotation = 0.0;
 
 	if (!(pointOfRoot == possibleNewOrigin))
 	{
 		Angle angle(possibleNewOrigin, pointOfRoot);
-		m_rotation = -1.0 * angle.getValueBetweenMinusPiAndPi();
+		rotation = -1.0 * angle.getValueBetweenMinusPiAndPi();
 	} else
 	{
 		Point onePointFound(root.getAllChildren().front().getX(), root.getAllChildren().front().getY());
 		Angle angle(possibleNewOrigin, onePointFound);
-		m_rotation = -1.0 * angle.getValueBetweenMinusPiAndPi();
+		rotation = -1.0 * angle.getValueBetweenMinusPiAndPi();
 	}
 
 	Point currentPositionInNewCoordinates = m_currentPosition - possibleNewOrigin;
@@ -201,9 +203,10 @@ bool FieldDetector::tryToFigureOutNewOrigin(BorderStone &root)
 		possibleNewOrigin = possibleNewOrigin + oppositeOrigin;
 	}
 
+	m_rotation = rotation;
 	m_newOrigin = possibleNewOrigin;
-
 	m_newOrigins.push_back( RobotPosition( m_newOrigin, m_rotation) );
+	m_maxBorderstonesArranged = root.getNumberOfChildrenRecursive() + 1;
 
 	return true;
 }
