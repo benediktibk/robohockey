@@ -25,7 +25,7 @@ State* DetectField::nextState()
 	if (!m_successful && m_numberOfTries < 3)
 		return 0;
 	else if (!m_successful || ((size_t) 4 > m_calibrationResults.size()))
-		return new TurnAngle(m_robot, m_field, m_referee, Angle::getEighthRotation(), m_calibrationResults);
+		return new TurnAngle(m_robot, m_field, m_referee, Angle::getQuarterRotation(), m_calibrationResults);
 	else if (m_field.isCalibrated())
 		//! @todo use different state if DriveTo can't reach target!
 	{
