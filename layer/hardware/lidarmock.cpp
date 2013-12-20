@@ -15,7 +15,7 @@ LidarMock::LidarMock(double defaultDistance) :
 	m_defaultDistance(defaultDistance)
 { }
 
-double LidarMock::getDistance(unsigned int angle)
+double LidarMock::getDistance(int angle)
 {
 	assert(angle >= getMinimumSensorNumber());
 	assert(angle <= getMaximumSensorNumber());

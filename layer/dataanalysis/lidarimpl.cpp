@@ -167,52 +167,9 @@ Angle LidarImpl::getMaximumAngleLeft() const
 
 bool LidarImpl::canBeSeen(const Circle &object, const RobotPosition &ownPosition) const
 {
-	const Point &originalCenter = object.getCenter();
-	const Point &ownPoint = ownPosition.getPosition();
-	Point center = originalCenter - ownPosition.getPosition();
-	center.rotate(ownPosition.getOrientation()*(-1));
-	Circle movedObject(center, object.getDiameter());
-	double distanceToObject = object.getDistanceTo(ownPoint);
-
-	if (distanceToObject > m_maximumDistance)
-		return false;
-
-	double distanceToCenter = ownPoint.distanceTo(originalCenter);
-	double radius = movedObject.getDiameter()/2;
-
-	if (distanceToCenter < radius)
-		return true;
-
-	Compare radiusCompare(0.001);
-	if (radiusCompare.isFuzzyEqual(radius, 0))
-		return true;
-
-	Angle viewAngleHalf = asin(radius/distanceToCenter);
-	Angle orientationOfObject(Point(0, 0), center);
-	Angle leftEdge = orientationOfObject + viewAngleHalf;
-	Angle rightEdge = orientationOfObject - viewAngleHalf;
-	Angle maximumViewAngleLeft = getMaximumAngleLeft() - Angle::convertFromDegreeToRadiant(5);
-	Angle maximumViewAngleRight = getMaximumAngleRight() + Angle::convertFromDegreeToRadiant(5);
-
-	if (leftEdge.getValueBetweenMinusPiAndPi() > maximumViewAngleLeft.getValueBetweenMinusPiAndPi())
-		leftEdge = maximumViewAngleLeft;
-	if (rightEdge.getValueBetweenMinusPiAndPi() < maximumViewAngleRight.getValueBetweenMinusPiAndPi())
-		rightEdge = maximumViewAngleRight;
-
-	unsigned int leftEdgeSensorNumber = calculateSensorNumberFromOrientation(leftEdge);
-	unsigned int rightEdgeSensorNumber = calculateSensorNumberFromOrientation(rightEdge);
-	Compare compare(0.07);
-
-	for (unsigned int i = rightEdgeSensorNumber; i <= leftEdgeSensorNumber; ++i)
-	{
-		double distanceToObject = calculateDistanceToObject(movedObject, i, distanceToCenter, orientationOfObject);
-		double distanceFromSensor = m_rawData->getValue(i);
-
-		if (compare.isFuzzySmaller(distanceToObject, distanceFromSensor))
-			return true;
-	}
-
-	return false;
+	Compare compare(0.05);
+	double seenPercentage = canBeSeenPercentage(object, ownPosition);
+	return compare.isFuzzyEqual(1, seenPercentage);
 }
 
 list<pair<int, int> > LidarImpl::findStartAndEndOfObjects(
@@ -280,17 +237,11 @@ Angle LidarImpl::calculateOrientationFromSensorNumber(unsigned int value) const
 	return Angle(value*k + d);
 }
 
-unsigned int LidarImpl::calculateSensorNumberFromOrientation(const Angle &angle) const
+int LidarImpl::calculateSensorNumberFromOrientation(const Angle &angle) const
 {
 	double k = M_PI/(static_cast<double>(m_maximumSensorNumber) - m_minimumSensorNumber);
 	double d = (-1)*M_PI/2;
 	int sensorNumber = (angle.getValueBetweenMinusPiAndPi() - d)/k;
-
-	if (sensorNumber < 0)
-		sensorNumber = 0;
-	else if (sensorNumber > 360)
-		sensorNumber = 360;
-
 	return sensorNumber;
 }
 
@@ -304,7 +255,14 @@ double LidarImpl::calculateDistanceToObject(
 	if (compare.isFuzzyEqual(radius, 0) || compare.isFuzzyEqual(viewAngle.getValueBetweenMinusPiAndPi(), 0))
 		return distanceToCenter - radius;
 
-	Angle gamma = asin(distanceToCenter/radius*sin(viewAngle.getValueBetweenMinusPiAndPi()));
+	double argument = distanceToCenter/radius*sin(viewAngle.getValueBetweenMinusPiAndPi());
+	Angle gamma;
+
+	if (argument >= -1)
+		gamma = asin(argument);
+	else
+		gamma = Angle::getQuarterRotation();
+
 	Angle angleInCircle = Angle::getHalfRotation() - viewAngle - gamma;
 	double distanceToEdgeOfCircle = radius*sin(angleInCircle.getValueBetweenMinusPiAndPi())/sin(viewAngle.getValueBetweenMinusPiAndPi());
 	return distanceToEdgeOfCircle;
@@ -343,6 +301,58 @@ list<LidarInternalObject*> LidarImpl::getObjectsCloserThan(double distance) cons
 			result.push_back(object);
 	}
 
+	return result;
+}
+
+double LidarImpl::canBeSeenPercentage(const Circle &object, const RobotPosition &ownPosition) const
+{
+	const Point &originalCenter = object.getCenter();
+	const Point &ownPoint = ownPosition.getPosition();
+	Point center = originalCenter - ownPosition.getPosition();
+	center.rotate(ownPosition.getOrientation()*(-1));
+	Circle movedObject(center, object.getDiameter());
+	double distanceToObject = object.getDistanceTo(ownPoint);
+
+	if (distanceToObject > m_maximumDistance)
+		return false;
+
+	double distanceToCenter = ownPoint.distanceTo(originalCenter);
+	double radius = movedObject.getDiameter()/2;
+
+	if (distanceToCenter < radius)
+		return true;
+
+	Compare radiusCompare(0.001);
+	if (radiusCompare.isFuzzyEqual(radius, 0))
+		return true;
+
+	Angle viewAngleHalf = asin(radius/distanceToCenter);
+	Angle orientationOfObject(Point(0, 0), center);
+	Angle leftEdge = orientationOfObject + viewAngleHalf;
+	Angle rightEdge = orientationOfObject - viewAngleHalf;
+	int leftEdgeSensorNumber = calculateSensorNumberFromOrientation(leftEdge);
+	int rightEdgeSensorNumber = calculateSensorNumberFromOrientation(rightEdge);
+	int maximumLeftEdgeSensorNumber = calculateSensorNumberFromOrientation(getMaximumAngleLeft());
+	int maximumRightEdgeSensorNumber = calculateSensorNumberFromOrientation(getMaximumAngleRight());
+	unsigned int totalSensorCount = leftEdgeSensorNumber - rightEdgeSensorNumber + 1;
+	unsigned int sensorCount = 0;
+	Compare compare(0.07);
+
+	leftEdgeSensorNumber = min(leftEdgeSensorNumber, maximumLeftEdgeSensorNumber);
+	rightEdgeSensorNumber = max(rightEdgeSensorNumber, maximumRightEdgeSensorNumber);
+
+	for (int i = rightEdgeSensorNumber; i <= leftEdgeSensorNumber; ++i)
+	{
+		double distanceToObject = calculateDistanceToObject(movedObject, i, distanceToCenter, orientationOfObject);
+		double distanceFromSensor = m_rawData->getValue(i);
+
+		if (compare.isFuzzySmaller(distanceToObject, distanceFromSensor))
+			++sensorCount;
+	}
+
+	double result = static_cast<double>(sensorCount)/static_cast<double>(totalSensorCount);
+	assert(result >= 0);
+	assert(result <= 1);
 	return result;
 }
 
