@@ -19,6 +19,7 @@ set(LAYER_STRATEGY_COMMON_TEST_SRC
 	drivepucktoachivegoalstest.cpp
 	drivepucktohidepuckstest.cpp
 	statetest.cpp
+	drivepuckmock.cpp
 )
 
 set(MOC_H

@@ -13,12 +13,12 @@ DrivePuckMock::DrivePuckMock() :
 
 std::list<RoboHockey::Common::RobotPosition> DrivePuckMock::getTargetPositions()
 {
-	return list<RobotPosition>;
+	return list<RobotPosition>();
 }
 
 std::list<RobotPosition> DrivePuckMock::getPositionsToCollectPuck()
 {
-	return list<RobotPosition>;
+	return list<RobotPosition>();
 }
 
 FieldColor DrivePuckMock::getColorOfTargetPucks()
