@@ -16,7 +16,7 @@ void RoboHockey::Layer::Autonomous::BorderStoneTest::getNumberOfChildrenRecursiv
 
 	borderstone.searchNeighbourBorderStones(possibleChildren);
 
-	CPPUNIT_ASSERT_EQUAL(0, borderstone.getNumberOfChildrenRecursive());
+	CPPUNIT_ASSERT_EQUAL((unsigned int) 0, borderstone.getNumberOfChildrenRecursive());
 }
 
 void BorderStoneTest::getNumberOfChildrenRecursive_twoChildren_is2()
@@ -32,7 +32,7 @@ void BorderStoneTest::getNumberOfChildrenRecursive_twoChildren_is2()
 
 	borderstone.searchNeighbourBorderStones(possibleChildren);
 
-	CPPUNIT_ASSERT_EQUAL(2, borderstone.getNumberOfChildrenRecursive());
+	CPPUNIT_ASSERT_EQUAL((unsigned int) 2, borderstone.getNumberOfChildrenRecursive());
 }
 
 void BorderStoneTest::getDistanceToFather_root_isRoot()

@@ -33,6 +33,7 @@ namespace Autonomous
 		Common::Point m_newOrigin;
 		double m_rotation;
 		std::vector<Common::RobotPosition> m_newOrigins;
+		unsigned int m_maxBorderstonesArranged;
 	};
 }
 }
