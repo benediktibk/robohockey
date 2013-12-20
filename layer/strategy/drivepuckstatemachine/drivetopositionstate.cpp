@@ -1,6 +1,7 @@
 #include "layer/strategy/drivepuckstatemachine/drivetopositionstate.h"
 #include "layer/strategy/drivepuckstatemachine/leavepuckstate.h"
-#include "layer/strategy/common/referee.h"
+#include "layer/strategy/drivepuckstatemachine/drivetocollectpuckstate.h"
+#include "layer/strategy/common/driveto.h"
 #include "layer/autonomous/robot.h"
 
 using namespace RoboHockey::Layer::Strategy::Common;
@@ -12,18 +13,14 @@ DriveToPositionState::DriveToPositionState(Robot &robot, Field &field, Referee &
 	m_drivePuck(drivePuck)
 { }
 
-DriveToPositionState::~DriveToPositionState()
+State *DriveToPositionState::nextState()
 {
-	delete m_drivePuck;
-	m_drivePuck = 0;
-}
-
-State* DriveToPositionState::nextState()
-{
-	if(m_robot.reachedTarget() || m_robot.cantReachTarget())
-		return new LeavePuckState(m_robot, m_field, m_referee, m_drivePuck);
+	if(m_robot.isPuckCollected())
+		return new DriveTo(m_robot, m_field, m_referee, m_drivePuck->getTargetPositions(),
+						   new LeavePuckState(m_robot, m_field, m_referee, m_drivePuck),
+						   new LeavePuckState(m_robot, m_field, m_referee, m_drivePuck));
 	else
-		return 0;
+		return new DriveToCollectPuckState(m_robot, m_field, m_referee, m_drivePuck);
 }
 
 std::string DriveToPositionState::getName()
@@ -32,4 +29,4 @@ std::string DriveToPositionState::getName()
 }
 
 void DriveToPositionState::updateInternal()
-{}
+{ }
