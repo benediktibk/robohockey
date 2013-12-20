@@ -16,7 +16,7 @@ list<RobotPosition> DrivePuckToHidePucks::getTargetPositions()
 
 list<RobotPosition> DrivePuckToHidePucks::getPositionsToCollectPuck()
 {
-	return m_field.getTargetsForCollectingOnePuck(m_field.getEnemyTeamColor());
+	return m_field.getTargetsForCollectingOnePuck(getColorOfTargetPucks());
 }
 
 FieldColor DrivePuckToHidePucks::getColorOfTargetPucks()
@@ -26,6 +26,6 @@ FieldColor DrivePuckToHidePucks::getColorOfTargetPucks()
 
 unsigned int DrivePuckToHidePucks::getNumberOfKnownPucksNotInTarget()
 {
-	return 0;
+	return m_field.getNumberOfObjectsWithColor(getColorOfTargetPucks()) - m_field.getNumberOfHiddenPucks();
 }
 

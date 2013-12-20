@@ -6,7 +6,9 @@ using namespace RoboHockey::Common;
 using namespace RoboHockey::Layer::Autonomous;
 
 FieldMock::FieldMock() :
+	m_achievedGoals(0),
 	m_negativeCoordinatesOutside(false),
+	m_hiddenPucks(0),
 	m_calibrated(false),
 	m_teamColor(FieldColorUnknown)
 { }
@@ -36,7 +38,7 @@ vector<FieldObject> FieldMock::getObjectsWithColorOrderdByDistance(FieldColor, c
 
 unsigned int FieldMock::getNumberOfObjectsWithColor(FieldColor) const
 {
-	return 0;
+	return m_objects.size();
 }
 
 bool FieldMock::calibratePosition()

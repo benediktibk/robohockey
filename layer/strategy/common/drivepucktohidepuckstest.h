@@ -17,10 +17,14 @@ namespace Common
 	{
 		CPPUNIT_TEST_SUITE(DrivePuckToHidePucksTest);
 		CPPUNIT_TEST(getColorOfTargetPucks_ownColorIsYellow_resultIsBlue);
+		CPPUNIT_TEST(getNumberOfKnownPucksNotInTarget_oneKnownPuck_resultIs1);
+		CPPUNIT_TEST(getNumberOfKnownPucksNotInTarget_threePucksOnePuckHidden_resultIs2);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
 		void getColorOfTargetPucks_ownColorIsYellow_resultIsBlue();
+		void getNumberOfKnownPucksNotInTarget_oneKnownPuck_resultIs1();
+		void getNumberOfKnownPucksNotInTarget_threePucksOnePuckHidden_resultIs2();
 
 	};
 }
