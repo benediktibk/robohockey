@@ -20,6 +20,7 @@ namespace FieldDetectionStateMachine
 		CPPUNIT_TEST(nextState_notCalibrated1Try_NULL);
 		CPPUNIT_TEST(nextState_calibrated_driveTo);
 		CPPUNIT_TEST(nextState_calibratedOnSecondTry_driveTo);
+		CPPUNIT_TEST(nextState_calibrationSuccessfulButTooFewCalibrationResults_turnAngle);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
@@ -28,6 +29,7 @@ namespace FieldDetectionStateMachine
 		void nextState_notCalibrated1Try_NULL();
 		void nextState_calibrated_driveTo();
 		void nextState_calibratedOnSecondTry_driveTo();
+		void nextState_calibrationSuccessfulButTooFewCalibrationResults_turnAngle();
 
 	};
 }
