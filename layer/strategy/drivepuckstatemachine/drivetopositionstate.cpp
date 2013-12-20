@@ -1,5 +1,5 @@
 #include "layer/strategy/drivepuckstatemachine/drivetopositionstate.h"
-#include "layer/strategy/drivepuckstatemachine/findpuckstate.h"
+#include "layer/strategy/drivepuckstatemachine/leavepuckstate.h"
 #include "layer/strategy/common/referee.h"
 #include "layer/autonomous/robot.h"
 
@@ -14,8 +14,8 @@ DriveToPositionState::DriveToPositionState(Robot &robot, Field &field, Referee &
 
 State* DriveToPositionState::nextState()
 {
-	if(m_robot.reachedTarget())
-		return new FindPuckState(m_robot, m_field, m_referee, m_drivePuck);
+	if(m_robot.reachedTarget() || m_robot.cantReachTarget())
+		return new LeavePuckState(m_robot, m_field, m_referee, m_drivePuck);
 	else
 		return 0;
 }

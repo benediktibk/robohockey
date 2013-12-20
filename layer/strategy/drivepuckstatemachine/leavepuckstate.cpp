@@ -1,6 +1,7 @@
 #include "layer/strategy/drivepuckstatemachine/leavepuckstate.h"
-#include "layer/strategy/drivepuckstatemachine/drivetopositionstate.h"
+#include "layer/strategy/drivepuckstatemachine/initialstate.h"
 #include "layer/strategy/drivepuckstatemachine/drivetocollectpuckstate.h"
+#include "layer/strategy/drivepuckstatemachine/findpuckstate.h"
 #include "common/robotposition.h"
 #include "layer/strategy/common/referee.h"
 #include "layer/autonomous/robot.h"
@@ -17,14 +18,18 @@ LeavePuckState::LeavePuckState(Robot &robot, Field &field, Referee &referee, Dri
 
 State* LeavePuckState::nextState()
 {
-	if(m_robot.isPuckCollected())
-		return new DriveToPositionState(m_robot, m_field, m_referee, m_drivePuck);
-	else if(m_robot.cantReachTarget())
+	if(m_robot.cantReachTarget())
+		return new InitialState(m_robot, m_field, m_referee, m_drivePuck);
+	else if(m_robot.reachedTarget() && m_drivePuck->getNumberOfKnownPucksNotInTarget() == 0)
+		return new FindPuckState(m_robot, m_field, m_referee, m_drivePuck);
+	else if(m_robot.reachedTarget() && m_drivePuck->getNumberOfKnownPucksNotInTarget() != 0)
 		return new DriveToCollectPuckState(m_robot, m_field, m_referee, m_drivePuck);
 	else
 		return 0;
+
 }
 
 void LeavePuckState::updateInternal()
 {
+	m_robot.leaveCollectedPuck();
 }
