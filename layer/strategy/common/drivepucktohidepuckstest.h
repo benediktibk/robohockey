@@ -16,8 +16,11 @@ namespace Common
 			public CPPUNIT_NS::TestFixture
 	{
 		CPPUNIT_TEST_SUITE(DrivePuckToHidePucksTest);
+		CPPUNIT_TEST(getColorOfTargetPucks_ownColorIsYellow_resultIsBlue);
 		CPPUNIT_TEST_SUITE_END();
+
 	private:
+		void getColorOfTargetPucks_ownColorIsYellow_resultIsBlue();
 
 	};
 }

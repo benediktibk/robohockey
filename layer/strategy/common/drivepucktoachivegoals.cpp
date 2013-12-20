@@ -22,7 +22,7 @@ list<RobotPosition> DrivePuckToAchiveGoals::getPositionsToCollectPuck()
 
 FieldColor DrivePuckToAchiveGoals::getColorOfTargetPucks()
 {
-	return FieldColorUnknown;
+	return m_field.getOwnTeamColor();
 }
 
 unsigned int DrivePuckToAchiveGoals::getNumberOfKnownPucksNotInTarget()
