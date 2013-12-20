@@ -11,7 +11,7 @@ DrivePuckToHidePucks::DrivePuckToHidePucks(Autonomous::Field &field) :
 
 list<RobotPosition> DrivePuckToHidePucks::getTargetPositions()
 {
-	return list<RobotPosition>();
+	return m_field.getTargetsForHidingEnemyPucks();
 }
 
 list<RobotPosition> DrivePuckToHidePucks::getPositionsToCollectPuck()

@@ -12,7 +12,7 @@ DrivePuckToAchiveGoals::DrivePuckToAchiveGoals(Field &field) :
 
 list<RobotPosition> DrivePuckToAchiveGoals::getTargetPositions()
 {
-	return list<RobotPosition>();
+	return m_field.getTargetsForScoringGoals();
 }
 
 list<RobotPosition> DrivePuckToAchiveGoals::getPositionsToCollectPuck()
