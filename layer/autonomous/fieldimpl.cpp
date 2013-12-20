@@ -662,11 +662,10 @@ vector<FieldObject>::iterator FieldImpl::getNextObjectFromPosition(std::vector<F
 
 bool FieldImpl::tryToMergeLidarAndFieldObject(FieldObject &fieldObject, const DataAnalysis::LidarObject &lidarObject)
 {
-	Compare positionCompare(0.15);
 	Point newCenter;
 	double diameter = 0.0;
 
-	if ( positionCompare.isFuzzyEqual( fieldObject.getCircle().getCenter(), lidarObject.getCenter() ) )
+	if (couldBeTheSameObject(fieldObject, lidarObject))
 	{
 		newCenter  = ( fieldObject.getCircle().getCenter() + lidarObject.getCenter() ) * 0.5;
 		diameter = fieldObject.getCircle().getDiameter();
@@ -677,7 +676,14 @@ bool FieldImpl::tryToMergeLidarAndFieldObject(FieldObject &fieldObject, const Da
 		m_fieldObjects.push_back(FieldObject( Circle(newCenter, diameter), fieldObject.getColor()));
 		return true;
 	}
+
 	return false;
+}
+
+bool FieldImpl::couldBeTheSameObject(const FieldObject &fieldObject, const DataAnalysis::LidarObject &lidarObject) const
+{
+	Compare positionCompare(0.15);
+	return positionCompare.isFuzzyEqual(fieldObject.getCircle().getCenter(), lidarObject.getCenter());
 }
 
 void FieldImpl::transformCoordinateSystem(Point &newOrigin, double rotation)
