@@ -53,9 +53,14 @@ void DetectFieldTest::nextState_calibrated_driveTo()
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	DetectField detectFieldState(robot, field, referee, vector<RobotPosition>());
+	vector<RobotPosition> calibratedData;
+	calibratedData.push_back(RobotPosition(Point(), Angle()));
+	calibratedData.push_back(RobotPosition(Point(), Angle()));
+	calibratedData.push_back(RobotPosition(Point(), Angle()));
 
-	field.setCalibrationReturn(true);
+	DetectField detectFieldState(robot, field, referee, calibratedData);
+
+	field.setCalibrationReturnPosition(RobotPosition(Point(1,2), Angle::getEighthRotation()));
 	detectFieldState.update();
 
 	State *state;
@@ -69,9 +74,13 @@ void DetectFieldTest::nextState_calibratedOnSecondTry_driveTo()
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	DetectField detectFieldState(robot, field, referee, vector<RobotPosition>());
+	vector<RobotPosition> calibratedData;
+	calibratedData.push_back(RobotPosition(Point(), Angle()));
+	calibratedData.push_back(RobotPosition(Point(), Angle()));
+	calibratedData.push_back(RobotPosition(Point(), Angle()));
 
-	field.setCalibrationReturn(false);
+	DetectField detectFieldState(robot, field, referee, calibratedData);
+
 	detectFieldState.update();
 
 	State *state;
@@ -79,7 +88,7 @@ void DetectFieldTest::nextState_calibratedOnSecondTry_driveTo()
 	DriveTo *stateCasted = dynamic_cast<DriveTo*>(state);
 	CPPUNIT_ASSERT(stateCasted == 0);
 
-	field.setCalibrationReturn(true);
+	field.setCalibrationReturnPosition(RobotPosition(Point(1,2), Angle::getEighthRotation()));
 	detectFieldState.update();
 
 	state = detectFieldState.nextState();
