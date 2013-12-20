@@ -47,9 +47,11 @@ namespace Autonomous
 		virtual bool isPuckCollectable() const;
 		virtual bool isCollectingPuck() const;
 		virtual bool isRotating() const;
+
 		void setIsMoving(bool value);
 		void setIsRotating(bool value);
 		void setCantReachedTarget(bool value);
+		void setPuckCollected(bool value);
 
 	private:
 		Common::RobotPosition m_lastTarget;
@@ -61,6 +63,7 @@ namespace Autonomous
 		bool m_isMoving;
 		bool m_isRotating;
 		bool m_cantReachTarget;
+		bool m_puckCollected;
 	};
 }
 }

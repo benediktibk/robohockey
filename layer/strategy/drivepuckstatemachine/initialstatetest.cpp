@@ -1,6 +1,7 @@
 #include "layer/strategy/drivepuckstatemachine/initialstatetest.h"
 #include "layer/strategy/drivepuckstatemachine/initialstate.h"
 #include "layer/strategy/drivepuckstatemachine/findpuckstate.h"
+#include "layer/strategy/drivepuckstatemachine/leavepuckstate.h"
 #include "layer/strategy/common/statemachine.h"
 #include "layer/strategy/common/statemock.h"
 #include "layer/strategy/common/refereemock.h"
@@ -12,4 +13,18 @@ using namespace RoboHockey::Layer::Strategy::Common;
 using namespace RoboHockey::Layer::Strategy::DrivePuckStateMachine;
 using namespace RoboHockey::Layer::Autonomous;
 
+
+void InitialStateTest::nextState_puckCollected_nextStateIsLeavePuck()
+{
+	RobotMock robot;
+	FieldMock field;
+	RefereeMock referee;
+	DrivePuck *drivePuck = new DrivePuckToAchiveGoals(field);
+	robot.setPuckCollected(true);
+	InitialState initialState(robot, field, referee, drivePuck);
+	State *state;
+	state = initialState.nextState();
+	LeavePuckState *stateCasted = dynamic_cast<LeavePuckState*>(state);
+	CPPUNIT_ASSERT(stateCasted != 0);
+}
 

@@ -14,7 +14,8 @@ RobotMock::RobotMock() :
 	m_callsToStop(0),
 	m_isMoving(false),
 	m_isRotating(false),
-	m_cantReachTarget(false)
+	m_cantReachTarget(false),
+	m_puckCollected(false)
 { }
 
 void RobotMock::goTo(const list<RobotPosition> &possibleTargets)
@@ -120,7 +121,7 @@ bool RobotMock::cantReachTarget() const
 
 bool RobotMock::isPuckCollected() const
 {
-	return false;
+	return m_puckCollected;
 }
 
 bool RobotMock::isPuckCollectable() const
@@ -151,4 +152,9 @@ void RobotMock::setIsRotating(bool value)
 void RobotMock::setCantReachedTarget(bool value)
 {
 	m_cantReachTarget = value;
+}
+
+void RobotMock::setPuckCollected(bool value)
+{
+	m_puckCollected = value;
 }
