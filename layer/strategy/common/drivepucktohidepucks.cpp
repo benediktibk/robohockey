@@ -16,7 +16,7 @@ list<RobotPosition> DrivePuckToHidePucks::getTargetPositions()
 
 list<RobotPosition> DrivePuckToHidePucks::getPositionsToCollectPuck()
 {
-	return list<RobotPosition>();
+	return m_field.getTargetsForCollectingOnePuck(m_field.getEnemyTeamColor());
 }
 
 FieldColor DrivePuckToHidePucks::getColorOfTargetPucks()
