@@ -8,17 +8,18 @@
 #include "layer/autonomous/robotmock.h"
 #include "layer/autonomous/fieldmock.h"
 
+using namespace std;
 using namespace RoboHockey::Layer::Strategy::Common;
 using namespace RoboHockey::Layer::Strategy::FieldDetectionStateMachine;
 using namespace RoboHockey::Layer::Autonomous;
-
+using namespace RoboHockey::Common;
 
 void DetectFieldTest::nextState_notCalibrated3Tries_turnAngle()
 {
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	DetectField detectFieldState(robot, field, referee);
+	DetectField detectFieldState(robot, field, referee, vector<RobotPosition>());
 
 	field.setCalibrationReturn(false);
 	detectFieldState.update();
@@ -36,7 +37,7 @@ void DetectFieldTest::nextState_notCalibrated1Try_NULL()
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	DetectField detectFieldState(robot, field, referee);
+	DetectField detectFieldState(robot, field, referee, vector<RobotPosition>());
 
 	field.setCalibrationReturn(false);
 	detectFieldState.update();
@@ -52,7 +53,7 @@ void DetectFieldTest::nextState_calibrated_driveTo()
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	DetectField detectFieldState(robot, field, referee);
+	DetectField detectFieldState(robot, field, referee, vector<RobotPosition>());
 
 	field.setCalibrationReturn(true);
 	detectFieldState.update();
@@ -68,7 +69,7 @@ void DetectFieldTest::nextState_calibratedOnSecondTry_driveTo()
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	DetectField detectFieldState(robot, field, referee);
+	DetectField detectFieldState(robot, field, referee, vector<RobotPosition>());
 
 	field.setCalibrationReturn(false);
 	detectFieldState.update();
