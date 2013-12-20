@@ -15,10 +15,10 @@ namespace Hardware
 		virtual ~Lidar();
 
 		//! angle means actually the sensor number, therefore the real angle is angle/2
-		virtual double getDistance(unsigned int angle) = 0;
+		virtual double getDistance(int angle) = 0;
 		virtual void writeDataToFile(const std::string &fileName) = 0;
-		unsigned int getMinimumSensorNumber() const;
-		unsigned int getMaximumSensorNumber() const;
+		int getMinimumSensorNumber() const;
+		int getMaximumSensorNumber() const;
 	};
 }
 }

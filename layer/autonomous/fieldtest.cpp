@@ -995,6 +995,7 @@ void FieldTest::update_lidarReturnsObjectWhichCantBeSeenActually_noFieldObjects(
 	FieldImpl field(odometry, lidar, camera, autonomousRobot);
 
 	lidar.setCanBeSeen(false);
+	lidar.setCanBeSeenPartly(false);
 	lidar.setAllObjects(objects);
 	field.update();
 	field.update();

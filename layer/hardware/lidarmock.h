@@ -18,7 +18,7 @@ namespace Hardware
 		LidarMock();
 		LidarMock(double defaultDistance);
 
-		virtual double getDistance(unsigned int angle);
+		virtual double getDistance(int angle);
 		virtual void writeDataToFile(const std::string &fileName);
 		unsigned int getCallsToGetDistance() const;
 		void setValueForAngle(unsigned int angle, double value);
