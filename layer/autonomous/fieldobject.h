@@ -25,6 +25,8 @@ namespace Autonomous
 		void seen();
 		void shouldBeSeen();
 		void notSeen();
+		bool isDefinitelyExisting() const;
+		bool isDefinitelyNotExisting() const;
 
 	private:
 		Common::Circle m_circle;

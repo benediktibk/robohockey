@@ -63,3 +63,13 @@ void FieldObject::notSeen()
 	++m_notSeen;
 	m_seen = 0;
 }
+
+bool FieldObject::isDefinitelyExisting() const
+{
+	return getShouldBeSeen() >= 2 && getSeen() >= 2;
+}
+
+bool FieldObject::isDefinitelyNotExisting() const
+{
+	return getNotSeen() >= 2;
+}

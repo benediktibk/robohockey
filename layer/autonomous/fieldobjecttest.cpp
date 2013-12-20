@@ -145,3 +145,71 @@ void FieldObjectTest::shouldBeSeen_twiceCalled_shouldBeSeenIs2()
 
 	CPPUNIT_ASSERT_EQUAL((unsigned int)2, object.getShouldBeSeen());
 }
+
+void FieldObjectTest::isDefinitelyExisting_shouldBeSeenOnlyOnceAndSeen_false()
+{
+	Circle circle(Point(4, 3), 2);
+	FieldObject object(circle, FieldColorGreen);
+
+	object.shouldBeSeen();
+	object.seen();
+
+	CPPUNIT_ASSERT(!object.isDefinitelyExisting());
+}
+
+void FieldObjectTest::isDefinitelyExisting_shouldBeSeenAndSeenVeryOften_true()
+{
+	Circle circle(Point(4, 3), 2);
+	FieldObject object(circle, FieldColorGreen);
+
+	object.shouldBeSeen();
+	object.seen();
+	object.shouldBeSeen();
+	object.seen();
+	object.shouldBeSeen();
+	object.seen();
+	object.shouldBeSeen();
+	object.seen();
+
+	CPPUNIT_ASSERT(object.isDefinitelyExisting());
+}
+
+void FieldObjectTest::isDefinitelyNotExisting_notSeenOnce_false()
+{
+	Circle circle(Point(4, 3), 2);
+	FieldObject object(circle, FieldColorGreen);
+
+	object.shouldBeSeen();
+	object.notSeen();
+
+	CPPUNIT_ASSERT(!object.isDefinitelyNotExisting());
+}
+
+void FieldObjectTest::isDefinitelyNotExisting_notSeenOnceAndThenSeenAgain_false()
+{
+	Circle circle(Point(4, 3), 2);
+	FieldObject object(circle, FieldColorGreen);
+
+	object.shouldBeSeen();
+	object.notSeen();
+
+	CPPUNIT_ASSERT(!object.isDefinitelyNotExisting());
+	CPPUNIT_ASSERT(!object.isDefinitelyExisting());
+}
+
+void FieldObjectTest::isDefinitelyNotExisting_notSeenVeryOften_true()
+{
+	Circle circle(Point(4, 3), 2);
+	FieldObject object(circle, FieldColorGreen);
+
+	object.shouldBeSeen();
+	object.notSeen();
+	object.shouldBeSeen();
+	object.notSeen();
+	object.shouldBeSeen();
+	object.notSeen();
+	object.shouldBeSeen();
+	object.notSeen();
+
+	CPPUNIT_ASSERT(object.isDefinitelyNotExisting());
+}
