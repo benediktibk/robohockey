@@ -17,8 +17,8 @@ namespace Common
 	public:
 		DrivePuckToHidePucks();
 
-		virtual std::vector<RoboHockey::Common::RobotPosition> getTargetPoint();
-		virtual std::vector<RoboHockey::Common::RobotPosition> getPointToCollectPuck();
+		virtual std::list<RoboHockey::Common::RobotPosition> getTargetPositions();
+		virtual std::list<RoboHockey::Common::RobotPosition> getPositionsToCollectPuck();
 		virtual RoboHockey::Common::FieldColor getColorOfTargetPucks();
 		virtual unsigned int getNumberOfKnownPucksNotInTarget();
 	};

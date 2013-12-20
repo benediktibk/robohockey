@@ -8,14 +8,14 @@ using namespace std;
 DrivePuckToHidePucks::DrivePuckToHidePucks()
 { }
 
-vector<RobotPosition> DrivePuckToHidePucks::getTargetPoint()
+list<RobotPosition> DrivePuckToHidePucks::getTargetPositions()
 {
-	return vector<RobotPosition>();
+	return list<RobotPosition>();
 }
 
-vector<RobotPosition> DrivePuckToHidePucks::getPointToCollectPuck()
+list<RobotPosition> DrivePuckToHidePucks::getPositionsToCollectPuck()
 {
-	return vector<RobotPosition>();
+	return list<RobotPosition>();
 }
 
 FieldColor DrivePuckToHidePucks::getColorOfTargetPucks()

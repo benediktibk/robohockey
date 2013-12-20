@@ -8,14 +8,14 @@ using namespace std;
 DrivePuckToAchiveGoals::DrivePuckToAchiveGoals()
 { }
 
-vector<RobotPosition> DrivePuckToAchiveGoals::getTargetPoint()
+list<RobotPosition> DrivePuckToAchiveGoals::getTargetPositions()
 {
-	return vector<RobotPosition>();
+	return list<RobotPosition>();
 }
 
-vector<RobotPosition> DrivePuckToAchiveGoals::getPointToCollectPuck()
+list<RobotPosition> DrivePuckToAchiveGoals::getPositionsToCollectPuck()
 {
-	return vector<RobotPosition>();
+	return list<RobotPosition>();
 }
 
 FieldColor DrivePuckToAchiveGoals::getColorOfTargetPucks()
