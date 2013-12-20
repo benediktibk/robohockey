@@ -3,28 +3,30 @@
 
 using namespace RoboHockey::Layer::Strategy::Common;
 using namespace RoboHockey::Common;
+using namespace RoboHockey::Layer::Autonomous;
 using namespace std;
 
-DrivePuckToAchiveGoals::DrivePuckToAchiveGoals()
+DrivePuckToAchiveGoals::DrivePuckToAchiveGoals(Field &field) :
+	m_field(field)
 { }
 
-vector<RobotPosition> DrivePuckToAchiveGoals::getTargetPoint()
+list<RobotPosition> DrivePuckToAchiveGoals::getTargetPositions()
 {
-	return vector<RobotPosition>();
+	return m_field.getTargetsForScoringGoals();
 }
 
-vector<RobotPosition> DrivePuckToAchiveGoals::getPointToCollectPuck()
+list<RobotPosition> DrivePuckToAchiveGoals::getPositionsToCollectPuck()
 {
-	return vector<RobotPosition>();
+	return m_field.getTargetsForCollectingOnePuck(getColorOfTargetPucks());
 }
 
 FieldColor DrivePuckToAchiveGoals::getColorOfTargetPucks()
 {
-	return FieldColorUnknown;
+	return m_field.getOwnTeamColor();
 }
 
 unsigned int DrivePuckToAchiveGoals::getNumberOfKnownPucksNotInTarget()
 {
-	return 0;
+	return m_field.getNumberOfObjectsWithColor(getColorOfTargetPucks()) - m_field.getNumberOfAchievedGoals();
 }
 

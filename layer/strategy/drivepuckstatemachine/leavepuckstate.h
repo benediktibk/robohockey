@@ -1,5 +1,5 @@
-#ifndef ROBOHOCKEY_LAYER_STRATEGY_DRIVEPUCKSTATEMACHINE_DRIVETOPOSITIONSTATE_H
-#define ROBOHOCKEY_LAYER_STRATEGY_DRIVEPUCKSTATEMACHINE_DRIVETOPOSITIONSTATE_H
+#ifndef ROBOHOCKEY_LAYER_STRATEGY_DRIVEPUCKSTATEMACHINE_LEAVEPUCKSTATE_H
+#define ROBOHOCKEY_LAYER_STRATEGY_DRIVEPUCKSTATEMACHINE_LEAVEPUCKSTATE_H
 
 #include "layer/strategy/common/state.h"
 #include "layer/strategy/common/drivepuck.h"
@@ -12,11 +12,11 @@ namespace Strategy
 {
 namespace DrivePuckStateMachine
 {
-	class DriveToPositionState :
+	class LeavePuckState :
 			public Common::State
 	{
 	public:
-		DriveToPositionState(Autonomous::Robot &robot, Autonomous::Field &field, Common::Referee &referee, RoboHockey::Layer::Strategy::Common::DrivePuck *drivePuck);
+		LeavePuckState(Autonomous::Robot &robot, Autonomous::Field &field, Common::Referee &referee, RoboHockey::Layer::Strategy::Common::DrivePuck *drivePuck);
 
 		virtual State* nextState();
 

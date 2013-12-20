@@ -5,26 +5,27 @@ using namespace RoboHockey::Layer::Strategy::Common;
 using namespace RoboHockey::Common;
 using namespace std;
 
-DrivePuckToHidePucks::DrivePuckToHidePucks()
+DrivePuckToHidePucks::DrivePuckToHidePucks(Autonomous::Field &field) :
+	m_field(field)
 { }
 
-vector<RobotPosition> DrivePuckToHidePucks::getTargetPoint()
+list<RobotPosition> DrivePuckToHidePucks::getTargetPositions()
 {
-	return vector<RobotPosition>();
+	return m_field.getTargetsForHidingEnemyPucks();
 }
 
-vector<RobotPosition> DrivePuckToHidePucks::getPointToCollectPuck()
+list<RobotPosition> DrivePuckToHidePucks::getPositionsToCollectPuck()
 {
-	return vector<RobotPosition>();
+	return m_field.getTargetsForCollectingOnePuck(getColorOfTargetPucks());
 }
 
 FieldColor DrivePuckToHidePucks::getColorOfTargetPucks()
 {
-	return FieldColorUnknown;
+	return m_field.getEnemyTeamColor();
 }
 
 unsigned int DrivePuckToHidePucks::getNumberOfKnownPucksNotInTarget()
 {
-	return 0;
+	return m_field.getNumberOfObjectsWithColor(getColorOfTargetPucks()) - m_field.getNumberOfHiddenPucks();
 }
 

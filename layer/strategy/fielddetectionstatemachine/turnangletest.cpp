@@ -7,7 +7,9 @@
 #include "layer/autonomous/robotmock.h"
 #include "layer/autonomous/fieldmock.h"
 #include "common/angle.h"
+#include <vector>
 
+using namespace std;
 using namespace RoboHockey::Common;
 using namespace RoboHockey::Layer::Strategy::Common;
 using namespace RoboHockey::Layer::Strategy::FieldDetectionStateMachine;
@@ -19,7 +21,7 @@ void TurnAngleTest::nextState_targetReached_detectField()
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	TurnAngle turnAngleState(robot, field, referee, Angle::getThreeQuarterRotation());
+	TurnAngle turnAngleState(robot, field, referee, Angle::getThreeQuarterRotation(), vector<RobotPosition>());
 
 	turnAngleState.update();
 	robot.setReachedTarget(true);
@@ -35,7 +37,7 @@ void TurnAngleTest::nextState_targetNotReached_NULL()
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	TurnAngle turnAngleState(robot, field, referee, Angle::getThreeQuarterRotation());
+	TurnAngle turnAngleState(robot, field, referee, Angle::getThreeQuarterRotation(), vector<RobotPosition>());
 
 	turnAngleState.update();
 	robot.setReachedTarget(false);
