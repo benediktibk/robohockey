@@ -86,6 +86,7 @@ namespace Autonomous
 		std::vector<FieldObject> getObjectsWithColor(Common::FieldColor color) const;
 
 		std::vector<FieldObject> moveAllFieldObjectsInVisibleAreaToTemporaryVector(double range);
+		std::vector<FieldObject> getAllPartlyVisibleObjects() const;
 		bool isPointFuzzyInsideField(const Common::Point &point, double epsilon) const;
 		void removeAllFieldObjectsOutsideOfField();
 

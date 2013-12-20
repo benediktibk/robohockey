@@ -499,6 +499,7 @@ void FieldImpl::updateWithLidarData(double range)
 	const vector<DataAnalysis::LidarObject> &objectsInRange = lidarObjects.getObjectsWithDistanceBelow(range);
 
 	vector<FieldObject> inVisibleArea = moveAllFieldObjectsInVisibleAreaToTemporaryVector(range);
+	vector<FieldObject> partlyVisibleObjects = getAllPartlyVisibleObjects();
 
 	for (vector<DataAnalysis::LidarObject>::const_iterator i = objectsInRange.begin(); i != objectsInRange.end(); ++i)
 	{
@@ -518,7 +519,13 @@ void FieldImpl::updateWithLidarData(double range)
 			}
 		}
 
-		if (m_lidar->canBeSeenPartly(lidarObject, *m_position))
+		bool couldBeAPartlyVisibleObject = false;
+
+		for (vector<FieldObject>::const_iterator i = partlyVisibleObjects.begin(); i != partlyVisibleObjects.end() && !couldBeAPartlyVisibleObject; ++i)
+			if (couldBeTheSameObject(*i, lidarObject))
+				couldBeAPartlyVisibleObject = true;
+
+		if (!couldBeAPartlyVisibleObject && m_lidar->canBeSeenPartly(lidarObject, *m_position))
 		{
 			FieldObject object(lidarObject, FieldColorUnknown);
 			m_fieldObjects.push_back(object);
@@ -793,6 +800,20 @@ vector<FieldObject> FieldImpl::moveAllFieldObjectsInVisibleAreaToTemporaryVector
 
 		++i;
 	}
+	return result;
+}
+
+vector<FieldObject> FieldImpl::getAllPartlyVisibleObjects() const
+{
+	vector<FieldObject> result;
+
+	for (vector<FieldObject>::const_iterator i = m_fieldObjects.begin(); i != m_fieldObjects.end(); ++i)
+	{
+		const FieldObject &object = *i;
+		if (m_lidar->canBeSeenPartly(object.getCircle(), *m_position))
+			result.push_back(object);
+	}
+
 	return result;
 }
 
