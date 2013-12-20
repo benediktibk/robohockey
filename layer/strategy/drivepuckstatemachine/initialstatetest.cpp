@@ -2,6 +2,7 @@
 #include "layer/strategy/drivepuckstatemachine/initialstate.h"
 #include "layer/strategy/drivepuckstatemachine/findpuckstate.h"
 #include "layer/strategy/drivepuckstatemachine/leavepuckstate.h"
+#include "layer/strategy/drivepuckstatemachine/drivetocollectpuckstate.h"
 #include "layer/strategy/common/statemachine.h"
 #include "layer/strategy/common/statemock.h"
 #include "layer/strategy/common/refereemock.h"
@@ -25,6 +26,19 @@ void InitialStateTest::nextState_puckCollected_nextStateIsLeavePuck()
 	State *state;
 	state = initialState.nextState();
 	LeavePuckState *stateCasted = dynamic_cast<LeavePuckState*>(state);
+	CPPUNIT_ASSERT(stateCasted != 0);
+}
+
+void InitialStateTest::nextState_numberOfKnownPucksIs0_nextStateIsFindPuck()
+{
+	RobotMock robot;
+	FieldMock field;
+	RefereeMock referee;
+	DrivePuck *drivePuck = new DrivePuckToAchiveGoals(field);
+	InitialState initialState(robot, field, referee, drivePuck);
+	State *state;
+	state = initialState.nextState();
+	FindPuckState *stateCasted = dynamic_cast<FindPuckState*>(state);
 	CPPUNIT_ASSERT(stateCasted != 0);
 }
 
