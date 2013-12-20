@@ -27,11 +27,13 @@ void InitialStateTest::nextState_puckCollected_nextStateIsLeavePuck()
 	State *state;
 	state = initialState.nextState();
 	LeavePuckState *stateCasted = dynamic_cast<LeavePuckState*>(state);
+
 	CPPUNIT_ASSERT(stateCasted != 0);
 }
 
 void InitialStateTest::nextState_numberOfKnownPucksIs0_nextStateIsFindPuck()
 {
+	CPPUNIT_ASSERT(false);
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
@@ -40,6 +42,22 @@ void InitialStateTest::nextState_numberOfKnownPucksIs0_nextStateIsFindPuck()
 	State *state;
 	state = initialState.nextState();
 	FindPuckState *stateCasted = dynamic_cast<FindPuckState*>(state);
+
+	CPPUNIT_ASSERT(stateCasted != 0);
+}
+
+void InitialStateTest::nextState_numberOfKnownPucksIs2_nextStateIsDriveToCollectPuck()
+{
+	RobotMock robot;
+	FieldMock field;
+	RefereeMock referee;
+	DrivePuckMock *drivePuck = new DrivePuckMock();
+	drivePuck->setNumberOfKnownPucksNotInTarget(2);
+	InitialState initialState(robot, field, referee, drivePuck);
+	State *state;
+	state = initialState.nextState();
+	DriveToCollectPuckState *stateCasted = dynamic_cast<DriveToCollectPuckState*>(state);
+
 	CPPUNIT_ASSERT(stateCasted != 0);
 }
 
