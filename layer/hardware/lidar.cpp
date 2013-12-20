@@ -5,12 +5,12 @@ using namespace RoboHockey::Layer::Hardware;
 Lidar::~Lidar()
 { }
 
-unsigned int Lidar::getMinimumSensorNumber() const
+int Lidar::getMinimumSensorNumber() const
 {
 	return 0;
 }
 
-unsigned int Lidar::getMaximumSensorNumber() const
+int Lidar::getMaximumSensorNumber() const
 {
 	return 360;
 }

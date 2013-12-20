@@ -20,6 +20,7 @@ class HideEnemyPucks :
 		virtual ~HideEnemyPucks();
 
 		virtual State* nextState();
+		virtual std::string getName();
 
 	protected:
 		virtual void updateInternal();

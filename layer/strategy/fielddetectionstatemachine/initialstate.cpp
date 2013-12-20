@@ -15,5 +15,10 @@ State* InitialState::nextState()
 	return new DetectField(m_robot, m_field, m_referee, std::vector<RoboHockey::Common::RobotPosition>());
 }
 
+std::string InitialState::getName()
+{
+	return "InitialState";
+}
+
 void InitialState::updateInternal()
 {}

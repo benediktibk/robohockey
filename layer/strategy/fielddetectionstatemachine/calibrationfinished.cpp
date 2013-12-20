@@ -15,5 +15,10 @@ State* CalibrationFinished::nextState()
 	return 0;
 }
 
+std::string CalibrationFinished::getName()
+{
+	return "CalibrationFinished";
+}
+
 void CalibrationFinished::updateInternal()
 { }

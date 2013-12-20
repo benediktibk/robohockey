@@ -807,7 +807,7 @@ void LidarTest::canBeSeen_noObjectBetween_true()
 	CPPUNIT_ASSERT(canBeSeen);
 }
 
-void LidarTest::canBeSeen_atLeftEdgeOfViewArea_true()
+void LidarTest::canBeSeen_atLeftEdgeOfViewArea_false()
 {
 	Hardware::LidarMock hardwareLidar(10);
 	LidarImpl lidar(hardwareLidar);
@@ -817,10 +817,10 @@ void LidarTest::canBeSeen_atLeftEdgeOfViewArea_true()
 	lidar.updateSensorData();
 	bool canBeSeen = lidar.canBeSeen(circle, ownPosition);
 
-	CPPUNIT_ASSERT(canBeSeen);
+	CPPUNIT_ASSERT(!canBeSeen);
 }
 
-void LidarTest::canBeSeen_atRightEdgeOfViewArea_true()
+void LidarTest::canBeSeen_atRightEdgeOfViewArea_false()
 {
 	Hardware::LidarMock hardwareLidar(10);
 	LidarImpl lidar(hardwareLidar);
@@ -830,7 +830,7 @@ void LidarTest::canBeSeen_atRightEdgeOfViewArea_true()
 	lidar.updateSensorData();
 	bool canBeSeen = lidar.canBeSeen(circle, ownPosition);
 
-	CPPUNIT_ASSERT(canBeSeen);
+	CPPUNIT_ASSERT(!canBeSeen);
 }
 
 void LidarTest::canBeSeen_outsideOfViewArea_false()
@@ -872,11 +872,11 @@ void LidarTest::canBeSeen_totallyCoveredByOtherObject_false()
 	CPPUNIT_ASSERT(!canBeSeen);
 }
 
-void LidarTest::canBeSeen_fromRightSideCoveredByOtherObject_true()
+void LidarTest::canBeSeen_fromRightSideCoveredByOtherObject_false()
 {
 	Hardware::LidarMock hardwareLidar(10);
 	LidarImpl lidar(hardwareLidar);
-	Circle circle(Point(2, 0), 0.1);
+	Circle circle(Point(2, 0), 0.2);
 	RobotPosition ownPosition(Point(0, 0), Angle(0));
 	hardwareLidar.setValueForAngle(0, 3);
 	hardwareLidar.setValueForAngle(175, 0.5);
@@ -891,14 +891,14 @@ void LidarTest::canBeSeen_fromRightSideCoveredByOtherObject_true()
 	lidar.updateSensorData();
 	bool canBeSeen = lidar.canBeSeen(circle, ownPosition);
 
-	CPPUNIT_ASSERT(canBeSeen);
+	CPPUNIT_ASSERT(!canBeSeen);
 }
 
-void LidarTest::canBeSeen_fromLeftSideCoveredByOtherObject_true()
+void LidarTest::canBeSeen_fromLeftSideCoveredByOtherObject_false()
 {
 	Hardware::LidarMock hardwareLidar(10);
 	LidarImpl lidar(hardwareLidar);
-	Circle circle(Point(2, 0), 0.1);
+	Circle circle(Point(2, 0), 0.2);
 	RobotPosition ownPosition(Point(0, 0), Angle(0));
 	hardwareLidar.setValueForAngle(0, 3);
 	hardwareLidar.setValueForAngle(179, 0.5);
@@ -913,10 +913,10 @@ void LidarTest::canBeSeen_fromLeftSideCoveredByOtherObject_true()
 	lidar.updateSensorData();
 	bool canBeSeen = lidar.canBeSeen(circle, ownPosition);
 
-	CPPUNIT_ASSERT(canBeSeen);
+	CPPUNIT_ASSERT(!canBeSeen);
 }
 
-void LidarTest::canBeSeen_partlyCoveredFromBothSides_true()
+void LidarTest::canBeSeen_partlyCoveredFromBothSides_false()
 {
 	Hardware::LidarMock hardwareLidar(10);
 	LidarImpl lidar(hardwareLidar);
@@ -938,7 +938,7 @@ void LidarTest::canBeSeen_partlyCoveredFromBothSides_true()
 	lidar.updateSensorData();
 	bool canBeSeen = lidar.canBeSeen(circle, ownPosition);
 
-	CPPUNIT_ASSERT(canBeSeen);
+	CPPUNIT_ASSERT(!canBeSeen);
 }
 
 void LidarTest::canBeSeen_totallyCoveredFromBothSides_false()
@@ -971,7 +971,7 @@ void LidarTest::canBeSeen_inFrontOfObject_true()
 {
 	Hardware::LidarMock hardwareLidar(10);
 	LidarImpl lidar(hardwareLidar);
-	Circle circle(Point(1.9, 0), 0.1);
+	Circle circle(Point(1.8, 0), 0.1);
 	RobotPosition ownPosition(Point(0, 0), Angle(0));
 	hardwareLidar.setValueForAngle(0, 3);
 	hardwareLidar.setValueForAngle(170, 2);
@@ -1256,7 +1256,7 @@ void LidarTest::canBeSeen_objectRightLowerAndLookingLeft_false()
 	CPPUNIT_ASSERT(!canBeSeen);
 }
 
-void LidarTest::canBeSeen_objectDirectBehindOtherObstacle_true()
+void LidarTest::canBeSeen_objectDirectBehindOtherObstacle_false()
 {
 	Hardware::LidarMock hardwareLidar(10);
 	LidarImpl lidar(hardwareLidar);
@@ -1289,7 +1289,7 @@ void LidarTest::canBeSeen_objectDirectBehindOtherObstacle_true()
 	lidar.updateSensorData();
 	bool canBeSeen = lidar.canBeSeen(circle, ownPosition);
 
-	CPPUNIT_ASSERT(canBeSeen);
+	CPPUNIT_ASSERT(!canBeSeen);
 }
 
 void LidarTest::canBeSeen_robotNotInOriginObjectVisible_true()

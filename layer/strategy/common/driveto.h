@@ -22,6 +22,7 @@ namespace Common
 				State *stateAfterTargetReached, State *stateAfterTargetUnreachable);
 
 		virtual State* nextState();
+		virtual std::string getName();
 
 	protected:
 		virtual void updateInternal();

@@ -17,7 +17,7 @@ LidarImpl::~LidarImpl()
 	m_laser = 0;
 }
 
-double LidarImpl::getDistance(unsigned int angle)
+double LidarImpl::getDistance(int angle)
 {
 	assert(angle >= getMinimumSensorNumber());
 	assert(angle <= getMaximumSensorNumber());
@@ -28,7 +28,7 @@ void LidarImpl::writeDataToFile(const string &fileName)
 {
 	fstream file(fileName.c_str(), ios_base::out | ios_base::trunc);
 
-	for (unsigned int i = getMinimumSensorNumber(); i <= getMaximumSensorNumber(); ++i)
+	for (int i = getMinimumSensorNumber(); i <= getMaximumSensorNumber(); ++i)
 		file << i << ": " << getDistance(i) << endl;
 
 	file.close();

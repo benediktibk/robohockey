@@ -20,6 +20,7 @@ namespace DrivePuckStateMachine
 		virtual ~CollectPuckState();
 
 		virtual State* nextState();
+		virtual std::string getName();
 
 	protected:
 		virtual void updateInternal();

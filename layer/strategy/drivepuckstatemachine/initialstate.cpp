@@ -30,5 +30,10 @@ State* InitialState::nextState()
 		return new FindPuckState(m_robot, m_field, m_referee, m_drivePuck);
 }
 
+std::string InitialState::getName()
+{
+	return "InitialState";
+}
+
 void InitialState::updateInternal()
 {}

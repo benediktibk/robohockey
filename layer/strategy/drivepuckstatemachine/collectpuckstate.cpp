@@ -24,11 +24,16 @@ CollectPuckState::~CollectPuckState()
 State* CollectPuckState::nextState()
 {
 	if(m_robot.isPuckCollected())
-		return new DriveToPositionState(m_robot, m_field, m_referee, m_drivePuck);
+			return new DriveToPositionState(m_robot, m_field, m_referee, m_drivePuck);
 	else if(m_robot.cantReachTarget())
 		return new DriveToCollectPuckState(m_robot, m_field, m_referee, m_drivePuck);
 	else
 		return 0;
+}
+
+std::string CollectPuckState::getName()
+{
+	return "CollectPuck";
 }
 
 void CollectPuckState::updateInternal()

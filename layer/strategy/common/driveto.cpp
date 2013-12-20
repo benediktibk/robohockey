@@ -47,6 +47,11 @@ State* DriveTo::nextState()
 	return 0;
 }
 
+std::string DriveTo::getName()
+{
+	return "DriveTo";
+}
+
 void DriveTo::updateInternal()
 {
 	m_robot.goTo(m_target);

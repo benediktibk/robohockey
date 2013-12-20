@@ -28,6 +28,11 @@ State *DriveToFinalPosition::nextState()
 		return 0;
 }
 
+std::string DriveToFinalPosition::getName()
+{
+	return "DriveToFinalPosition";
+}
+
 void DriveToFinalPosition::updateInternal()
 {
 }

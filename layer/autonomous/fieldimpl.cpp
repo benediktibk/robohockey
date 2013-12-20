@@ -499,26 +499,35 @@ void FieldImpl::updateWithLidarData(double range)
 	const vector<DataAnalysis::LidarObject> &objectsInRange = lidarObjects.getObjectsWithDistanceBelow(range);
 
 	vector<FieldObject> inVisibleArea = moveAllFieldObjectsInVisibleAreaToTemporaryVector(range);
+	vector<FieldObject> partlyVisibleObjects = getAllPartlyVisibleObjects();
 
 	for (vector<DataAnalysis::LidarObject>::const_iterator i = objectsInRange.begin(); i != objectsInRange.end(); ++i)
 	{
-		if (!isPointFuzzyInsideField((*i).getCenter(), 0.5))
+		const DataAnalysis::LidarObject &lidarObject = *i;
+
+		if (!isPointFuzzyInsideField(lidarObject.getCenter(), 0.5))
 			continue;
 
 		if (inVisibleArea.size() != 0)
 		{
 			vector<FieldObject>::iterator currentObject = getNextObjectFromPosition(inVisibleArea, (*i).getCenter());
 
-			if (tryToMergeLidarAndFieldObject(*currentObject, *i))
+			if (tryToMergeLidarAndFieldObject(*currentObject, lidarObject))
 			{
 				inVisibleArea.erase(currentObject);
 				continue;
 			}
 		}
 
-		if (m_lidar->canBeSeen(*i, *m_position))
+		bool couldBeAPartlyVisibleObject = false;
+
+		for (vector<FieldObject>::const_iterator i = partlyVisibleObjects.begin(); i != partlyVisibleObjects.end() && !couldBeAPartlyVisibleObject; ++i)
+			if (couldBeTheSameObject(*i, lidarObject))
+				couldBeAPartlyVisibleObject = true;
+
+		if (!couldBeAPartlyVisibleObject && m_lidar->canBeSeenPartly(lidarObject, *m_position))
 		{
-			FieldObject object(*i, FieldColorUnknown);
+			FieldObject object(lidarObject, FieldColorUnknown);
 			m_fieldObjects.push_back(object);
 		}
 	}
@@ -660,11 +669,10 @@ vector<FieldObject>::iterator FieldImpl::getNextObjectFromPosition(std::vector<F
 
 bool FieldImpl::tryToMergeLidarAndFieldObject(FieldObject &fieldObject, const DataAnalysis::LidarObject &lidarObject)
 {
-	Compare positionCompare(0.15);
 	Point newCenter;
 	double diameter = 0.0;
 
-	if ( positionCompare.isFuzzyEqual( fieldObject.getCircle().getCenter(), lidarObject.getCenter() ) )
+	if (couldBeTheSameObject(fieldObject, lidarObject))
 	{
 		newCenter  = ( fieldObject.getCircle().getCenter() + lidarObject.getCenter() ) * 0.5;
 		diameter = fieldObject.getCircle().getDiameter();
@@ -675,7 +683,14 @@ bool FieldImpl::tryToMergeLidarAndFieldObject(FieldObject &fieldObject, const Da
 		m_fieldObjects.push_back(FieldObject( Circle(newCenter, diameter), fieldObject.getColor()));
 		return true;
 	}
+
 	return false;
+}
+
+bool FieldImpl::couldBeTheSameObject(const FieldObject &fieldObject, const DataAnalysis::LidarObject &lidarObject) const
+{
+	Compare positionCompare(0.15);
+	return positionCompare.isFuzzyEqual(fieldObject.getCircle().getCenter(), lidarObject.getCenter());
 }
 
 void FieldImpl::transformCoordinateSystem(Point &newOrigin, double rotation)
@@ -785,6 +800,20 @@ vector<FieldObject> FieldImpl::moveAllFieldObjectsInVisibleAreaToTemporaryVector
 
 		++i;
 	}
+	return result;
+}
+
+vector<FieldObject> FieldImpl::getAllPartlyVisibleObjects() const
+{
+	vector<FieldObject> result;
+
+	for (vector<FieldObject>::const_iterator i = m_fieldObjects.begin(); i != m_fieldObjects.end(); ++i)
+	{
+		const FieldObject &object = *i;
+		if (m_lidar->canBeSeenPartly(object.getCircle(), *m_position))
+			result.push_back(object);
+	}
+
 	return result;
 }
 

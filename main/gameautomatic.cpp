@@ -37,5 +37,6 @@ bool GameAutomatic::keepRunning() const
 void GameAutomatic::executeRobotControl()
 {
 	m_stateMachine->update();
+	cout << "Current State: " << m_stateMachine->getNameOfCurrentState() << endl;
 }
 

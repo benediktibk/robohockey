@@ -38,3 +38,8 @@ const State &StateMachine::getCurrentState() const
 {
 	return *m_currentState;
 }
+
+std::string StateMachine::getNameOfCurrentState() const
+{
+	return m_currentState->getName();
+}

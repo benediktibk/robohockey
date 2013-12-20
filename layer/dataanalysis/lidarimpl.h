@@ -42,6 +42,7 @@ namespace DataAnalysis
 		virtual Common::Angle getMaximumAngleRight() const;
 		virtual Common::Angle getMaximumAngleLeft() const;
 		virtual bool canBeSeen(const Common::Circle &object, const Common::RobotPosition &ownPosition) const;
+		virtual bool canBeSeenPartly(const Common::Circle &object, const Common::RobotPosition &ownPosition) const;
 
 	private:
 		std::list<std::pair<int, int> > findStartAndEndOfObjects(
@@ -49,13 +50,14 @@ namespace DataAnalysis
 				int &viewAreaMinimum, int &viewAreaMaximum) const;
 		Common::DiscreteFunction* readInData() const;
 		Common::Angle calculateOrientationFromSensorNumber(unsigned int value) const;
-		unsigned int calculateSensorNumberFromOrientation(const Common::Angle &angle) const;
+		int calculateSensorNumberFromOrientation(const Common::Angle &angle) const;
 		double calculateDistanceToObject(
 				const Common::Circle &circle, unsigned int sensorNumber, double distanceToCenter,
 				const Common::Angle &angleToCenterOfCircle) const;
 		double calculateMinimumDistanceToObstacle(const Common::Angle &angle, double speed) const;
 		void clearInternalObjects();
 		std::list<LidarInternalObject*> getObjectsCloserThan(double distance) const;
+		double canBeSeenPercentage(const Common::Circle &object, const Common::RobotPosition &ownPosition) const;
 
 	private:
 		static std::list<int> replaceFollowingEdgesWithBiggestMagnitudePosition(const std::list<int> &edges, const Common::DiscreteFunction &edgeFunction);
