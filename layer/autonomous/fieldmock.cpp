@@ -77,7 +77,7 @@ void FieldMock::setCalibrationReturn(bool value)
 	m_calibrated = value;
 }
 
-void FieldMock::setCalibrationReturnPosition(RobotPosition &newOrigin)
+void FieldMock::setCalibrationReturnPosition(RobotPosition newOrigin)
 {
 	m_newOrigin = newOrigin;
 }

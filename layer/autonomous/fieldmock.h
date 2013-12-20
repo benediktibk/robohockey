@@ -49,7 +49,7 @@ namespace Autonomous
 		void setHardObstacles(const std::vector<Common::Circle> &obstacles);
 		void setNegativeCoordinatesOutside(bool value);
 		void setCalibrationReturn(bool value);
-		void setCalibrationReturnPosition(Common::RobotPosition &newOrigin);
+		void setCalibrationReturnPosition(Common::RobotPosition newOrigin);
 
 	private:
 		std::vector<FieldObject> m_objects;
