@@ -502,23 +502,25 @@ void FieldImpl::updateWithLidarData(double range)
 
 	for (vector<DataAnalysis::LidarObject>::const_iterator i = objectsInRange.begin(); i != objectsInRange.end(); ++i)
 	{
-		if (!isPointFuzzyInsideField((*i).getCenter(), 0.5))
+		const DataAnalysis::LidarObject &lidarObject = *i;
+
+		if (!isPointFuzzyInsideField(lidarObject.getCenter(), 0.5))
 			continue;
 
 		if (inVisibleArea.size() != 0)
 		{
 			vector<FieldObject>::iterator currentObject = getNextObjectFromPosition(inVisibleArea, (*i).getCenter());
 
-			if (tryToMergeLidarAndFieldObject(*currentObject, *i))
+			if (tryToMergeLidarAndFieldObject(*currentObject, lidarObject))
 			{
 				inVisibleArea.erase(currentObject);
 				continue;
 			}
 		}
 
-		if (m_lidar->canBeSeenPartly(*i, *m_position))
+		if (m_lidar->canBeSeenPartly(lidarObject, *m_position))
 		{
-			FieldObject object(*i, FieldColorUnknown);
+			FieldObject object(lidarObject, FieldColorUnknown);
 			m_fieldObjects.push_back(object);
 		}
 	}
