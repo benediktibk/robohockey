@@ -466,3 +466,5 @@ layer/strategy/drivepuckstatemachine/leavepuckstatetest.h
 layer/strategy/drivepuckstatemachine/leavepuckstate.h
 layer/strategy/drivepuckstatemachine/leavepuckstatetest.cpp
 layer/strategy/drivepuckstatemachine/leavepuckstate.cpp
+layer/strategy/common/drivepuckmock.h
+layer/strategy/common/drivepuckmock.cpp
