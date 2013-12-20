@@ -15,6 +15,12 @@ CollectPuckState::CollectPuckState(Robot &robot, Field &field, Referee &referee,
 	m_drivePuck(drivePuck)
 { }
 
+CollectPuckState::~CollectPuckState()
+{
+	delete m_drivePuck;
+	m_drivePuck = 0;
+}
+
 State* CollectPuckState::nextState()
 {
 	if(m_robot.isPuckCollected())

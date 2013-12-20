@@ -17,6 +17,7 @@ namespace DrivePuckStateMachine
 	{
 	public:
 		DriveToPositionState(Autonomous::Robot &robot, Autonomous::Field &field, Common::Referee &referee, RoboHockey::Layer::Strategy::Common::DrivePuck *drivePuck);
+		virtual ~DriveToPositionState();
 
 		virtual State* nextState();
 

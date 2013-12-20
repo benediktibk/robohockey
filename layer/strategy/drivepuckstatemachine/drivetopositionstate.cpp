@@ -12,6 +12,12 @@ DriveToPositionState::DriveToPositionState(Robot &robot, Field &field, Referee &
 	m_drivePuck(drivePuck)
 { }
 
+DriveToPositionState::~DriveToPositionState()
+{
+	delete m_drivePuck;
+	m_drivePuck = 0;
+}
+
 State* DriveToPositionState::nextState()
 {
 	if(m_robot.reachedTarget() || m_robot.cantReachTarget())
