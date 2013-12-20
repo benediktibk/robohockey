@@ -172,6 +172,12 @@ bool LidarImpl::canBeSeen(const Circle &object, const RobotPosition &ownPosition
 	return compare.isFuzzyEqual(1, seenPercentage);
 }
 
+bool LidarImpl::canBeSeenPartly(const Circle &object, const RobotPosition &ownPosition) const
+{
+	double seenPercentage = canBeSeenPercentage(object, ownPosition);
+	return seenPercentage > 0;
+}
+
 list<pair<int, int> > LidarImpl::findStartAndEndOfObjects(
 		const list<int> &positiveEdges, const list<int> &negativeEdges, int &viewAreaMinimum, int &viewAreaMaximum) const
 {

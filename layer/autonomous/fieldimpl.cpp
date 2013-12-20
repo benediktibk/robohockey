@@ -516,7 +516,7 @@ void FieldImpl::updateWithLidarData(double range)
 			}
 		}
 
-		if (m_lidar->canBeSeen(*i, *m_position))
+		if (m_lidar->canBeSeenPartly(*i, *m_position))
 		{
 			FieldObject object(*i, FieldColorUnknown);
 			m_fieldObjects.push_back(object);

@@ -8,7 +8,8 @@ LidarMock::LidarMock() :
 	m_objects(Point()),
 	m_puckCollected(false),
 	m_puckCollectable(false),
-	m_canBeSeen(true)
+	m_canBeSeen(true),
+	m_canBeSeenPartly(true)
 { }
 
 LidarObjects LidarMock::getAllObjects(const RobotPosition &) const
@@ -49,6 +50,11 @@ bool LidarMock::canBeSeen(const Circle &, const RobotPosition &) const
 	return m_canBeSeen;
 }
 
+bool LidarMock::canBeSeenPartly(const Circle &, const RobotPosition &) const
+{
+	return m_canBeSeenPartly;
+}
+
 void LidarMock::setAllObjects(const LidarObjects &objects)
 {
 	m_objects = objects;
@@ -67,4 +73,9 @@ void LidarMock::setPuckCollectable(bool value)
 void LidarMock::setCanBeSeen(bool value)
 {
 	m_canBeSeen = value;
+}
+
+void LidarMock::setCanBeSeenPartly(bool value)
+{
+	m_canBeSeenPartly = value;
 }

@@ -42,6 +42,7 @@ namespace DataAnalysis
 		virtual Common::Angle getMaximumAngleRight() const;
 		virtual Common::Angle getMaximumAngleLeft() const;
 		virtual bool canBeSeen(const Common::Circle &object, const Common::RobotPosition &ownPosition) const;
+		virtual bool canBeSeenPartly(const Common::Circle &object, const Common::RobotPosition &ownPosition) const;
 
 	private:
 		std::list<std::pair<int, int> > findStartAndEndOfObjects(
