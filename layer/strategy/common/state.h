@@ -1,6 +1,8 @@
 #ifndef ROBOHOCKEY_LAYER_STRATEGY_COMMON_STATE_H
 #define ROBOHOCKEY_LAYER_STRATEGY_COMMON_STATE_H
 
+#include <string>
+
 namespace RoboHockey
 {
 namespace Layer
@@ -25,6 +27,7 @@ namespace Common
 
 		virtual State* nextState() = 0;
 		void update();
+		virtual std::string getName() const = 0;
 
 	protected:
 		virtual void updateInternal() = 0;

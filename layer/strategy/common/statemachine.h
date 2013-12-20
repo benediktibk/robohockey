@@ -1,6 +1,8 @@
 #ifndef ROBOHOCKEY_LAYER_STRATEGY_COMMON_STATEMACHINE_H
 #define ROBOHOCKEY_LAYER_STRATEGY_COMMON_STATEMACHINE_H
 
+#include <string>
+
 namespace RoboHockey
 {
 namespace Layer
@@ -26,6 +28,7 @@ namespace Common
 
 		void update();
 		const State& getCurrentState() const;
+		std::string getNameOfCurrentState() const;
 
 	private:
 		State *m_currentState;

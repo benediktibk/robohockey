@@ -19,6 +19,7 @@ namespace Common
 		StateMock(Autonomous::Robot &robot, Autonomous::Field &field, Referee &referee, bool callUpdateOnlyOnce);
 
 		virtual State* nextState();
+		virtual std::string getName() const;
 
 		unsigned int getCallsToNextState() const;
 		unsigned int getCallsToUpdate() const;
