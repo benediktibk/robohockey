@@ -462,3 +462,7 @@ layer/strategy/common/statetest.h
 layer/strategy/common/statetest.cpp
 resources/testfiles/lidar_moving_2_previous.txt
 resources/testfiles/lidar_moving_2_current.txt
+layer/strategy/drivepuckstatemachine/leavepuckstatetest.h
+layer/strategy/drivepuckstatemachine/leavepuckstate.h
+layer/strategy/drivepuckstatemachine/leavepuckstatetest.cpp
+layer/strategy/drivepuckstatemachine/leavepuckstate.cpp
