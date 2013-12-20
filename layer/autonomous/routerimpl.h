@@ -38,25 +38,25 @@ namespace Autonomous
 		bool detectLoopInConsideredObstacles(const std::list<RoutingObstacle> &obstacles) const;
 
 	private:
-		std::vector<RoutingResult> calculateStartParts(
-				const Common::RobotPosition &start, const Common::Point &end, const Field &field,
+		std::vector<RoutingResult> calculateStartParts(const Common::RobotPosition &start, const Common::Point &end, const Field &field,
 				const std::vector<Common::Circle> &obstacles, unsigned int searchDepth,
 				const std::list<RoutingObstacle> &consideredObstacles, const Common::Angle &maximumRotation,
-				double minimumStepAfterMaximumRotation) const;
+				double minimumStepAfterMaximumRotation, bool startInsideField) const;
 		std::vector<RoutingResult> calculateStartPartsWithFreeEnd(
 				const Common::RobotPosition &start, const Common::Point &end, const Field &field,
 				const std::vector<Common::Circle> &obstacles, unsigned int searchDepth,
-				const std::list<RoutingObstacle> &consideredObstacles, const Common::Angle &maximumRotation, double minimumStepAfterMaximumRotation) const;
+				const std::list<RoutingObstacle> &consideredObstacles, const Common::Angle &maximumRotation,
+				double minimumStepAfterMaximumRotation, bool startInsideField) const;
 		std::vector<RoutingResult> calculateStartPartsWithCoveredEnd(
 				const Common::RobotPosition &start, const Common::Point &end, const Field &field,
 				const std::vector<Common::Circle> &obstacles, unsigned int searchDepth,
 				const std::list<RoutingObstacle> &consideredObstacles, const Common::Angle &maximumRotation,
-				double minimumStepAfterMaximumRotation) const;
+				double minimumStepAfterMaximumRotation, bool startInsideField) const;
 		std::vector<RoutingResult> calculateStartPartsWithFreeDirectPath(
 				const Common::RobotPosition &start, const Common::Point &end, const Field &field,
 				const std::vector<Common::Circle> &obstacles, unsigned int searchDepth,
 				const std::list<RoutingObstacle> &consideredObstacles,
-				const Common::Angle &maximumRotation, double minimumStepAfterMaximumRotation) const;
+				const Common::Angle &maximumRotation, double minimumStepAfterMaximumRotation, bool startInsideField) const;
 		std::vector<RoutingResult> calculateEndParts(
 				const std::vector<RoutingResult> &startRoutes, const Common::Point &end, const Field &field,
 				const std::vector<Common::Circle> &obstacles, unsigned int searchDepth, const Common::Angle &maximumRotation, double minimumStepAfterMaximumRotation) const;
@@ -66,7 +66,7 @@ namespace Autonomous
 				const Common::Circle &obstacle, const Common::RobotPosition &start, const Common::Point &end,
 				const Field &field, const std::vector<Common::Circle> &obstacles,
 				unsigned int searchDepth, const std::list<RoutingObstacle> &consideredObstacles,
-				const Common::Angle &maximumRotation, double minimumStepAfterMaximumRotation) const;
+				const Common::Angle &maximumRotation, double minimumStepAfterMaximumRotation, bool startIsInsideField) const;
 		std::vector<Route> fixRotationOfFinalStep(
 				const std::vector<RoutingResult> &routes, const Common::Angle &startOrientation,
 				const Common::Angle &finalOrientation, const Common::Angle &maximumRotation,
