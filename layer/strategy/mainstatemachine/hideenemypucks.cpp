@@ -13,7 +13,7 @@ using namespace RoboHockey::Layer::Autonomous;
 HideEnemyPucks::HideEnemyPucks(Autonomous::Robot &robot, Autonomous::Field &field, Referee &referee):
 	State(robot, field, referee, false)
 {
-	DrivePuck *drivePuck = new DrivePuckToHidePucks();
+	DrivePuck *drivePuck = new DrivePuckToHidePucks(m_field);
 	State *initialState = new DrivePuckStateMachine::InitialState(robot, field, referee, drivePuck);
 	m_drivePuckStateMachine = new StateMachine(initialState, robot, field, referee);
 }

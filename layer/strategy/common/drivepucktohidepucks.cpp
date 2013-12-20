@@ -5,7 +5,8 @@ using namespace RoboHockey::Layer::Strategy::Common;
 using namespace RoboHockey::Common;
 using namespace std;
 
-DrivePuckToHidePucks::DrivePuckToHidePucks()
+DrivePuckToHidePucks::DrivePuckToHidePucks(Autonomous::Field &field) :
+	m_field(field)
 { }
 
 list<RobotPosition> DrivePuckToHidePucks::getTargetPositions()

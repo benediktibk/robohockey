@@ -3,9 +3,11 @@
 
 using namespace RoboHockey::Layer::Strategy::Common;
 using namespace RoboHockey::Common;
+using namespace RoboHockey::Layer::Autonomous;
 using namespace std;
 
-DrivePuckToAchiveGoals::DrivePuckToAchiveGoals()
+DrivePuckToAchiveGoals::DrivePuckToAchiveGoals(Field &field) :
+	m_field(field)
 { }
 
 list<RobotPosition> DrivePuckToAchiveGoals::getTargetPositions()
