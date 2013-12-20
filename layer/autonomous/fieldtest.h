@@ -50,7 +50,8 @@ namespace Autonomous
 		CPPUNIT_TEST(update_objectsInFieldRobotOn00_correctlyUpdated);
 		CPPUNIT_TEST(update_objectsInFieldRobotOn1And2_correctlyUpdated);
 		CPPUNIT_TEST(update_movingAndLidarDataChanges_fieldObjectCountDoesntChange);
-		CPPUNIT_TEST(update_movingAndlidatDataChangesSecondVersion_fieldObjectCountDoesntChange);
+		CPPUNIT_TEST(update_movingAndLidatDataChangesSecondVersion_fieldObjectCountDoesntChange);
+		CPPUNIT_TEST(update_movingAndLidarDataChangesThirdVersion_fieldObjectCountDoesntChange);
 		CPPUNIT_TEST(update_lidarReturnsObjectWhichCantBeSeenActually_noFieldObjects);
 		CPPUNIT_TEST(calibratePosition_noValidPattern_false);
 		CPPUNIT_TEST(calibratePosition_validPattern_true);
@@ -137,7 +138,8 @@ namespace Autonomous
 		void update_objectsInFieldRobotOn00_correctlyUpdated();
 		void update_objectsInFieldRobotOn1And2_correctlyUpdated();
 		void update_movingAndLidarDataChanges_fieldObjectCountDoesntChange();
-		void update_movingAndlidatDataChangesSecondVersion_fieldObjectCountDoesntChange();
+		void update_movingAndLidatDataChangesSecondVersion_fieldObjectCountDoesntChange();
+		void update_movingAndLidarDataChangesThirdVersion_fieldObjectCountDoesntChange();
 		void update_lidarReturnsObjectWhichCantBeSeenActually_noFieldObjects();
 		void calibratePosition_noValidPattern_false();
 		void calibratePosition_validPattern_true();
