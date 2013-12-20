@@ -23,6 +23,11 @@ State* Pause::nextState()
 		return 0;
 }
 
+std::string Pause::getName() const
+{
+	return "Pause";
+}
+
 void Pause::updateInternal()
 { }
 

@@ -34,6 +34,11 @@ State* Calibrate::nextState()
 	return 0;
 }
 
+std::string Calibrate::getName() const
+{
+	return "Calibrate: " + m_fieldDetectionStateMachine->getNameOfCurrentState();
+}
+
 void Calibrate::updateInternal()
 {
 	m_fieldDetectionStateMachine->update();

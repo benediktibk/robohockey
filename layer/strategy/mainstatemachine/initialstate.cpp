@@ -18,5 +18,10 @@ State* InitialState::nextState()
 		return 0;
 }
 
+std::string InitialState::getName() const
+{
+	return "InitialState";
+}
+
 void InitialState::updateInternal()
 {}

@@ -36,6 +36,11 @@ State* HideEnemyPucks::nextState()
 		return 0;
 }
 
+std::string HideEnemyPucks::getName() const
+{
+	return "HideEnemyPucks: " + m_drivePuckStateMachine->getNameOfCurrentState();
+}
+
 void HideEnemyPucks::updateInternal()
 {
 	m_drivePuckStateMachine->update();
