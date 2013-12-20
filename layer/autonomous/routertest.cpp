@@ -610,6 +610,37 @@ void RouterTest::calculateRoute_targetInsideSoftObstacle_invalidRoute()
 	CPPUNIT_ASSERT(!route.isValid());
 }
 
+void RouterTest::calculateRoute_startIsOutsideTheField_validRoute()
+{
+	RobotPosition start(Point(0, -1), Angle::getThreeQuarterRotation());
+	RobotPosition end(Point(0, 5), Angle::getQuarterRotation());
+	Angle maximumRotation = Angle::getQuarterRotation();
+	RouterImpl router(0.5);
+	FieldMock field;
+	field.setNegativeCoordinatesOutside(true);
+
+	Route route = router.calculateRoute(start, end, field, maximumRotation, 0.1, false, false);
+
+	CPPUNIT_ASSERT(route.isValid());
+}
+
+void RouterTest::calculateRoute_startIsOutsideTheFieldAndAnObstacleOnTheWay_validRoute()
+{
+	RobotPosition start(Point(0, -10), Angle::getQuarterRotation());
+	RobotPosition end(Point(0, 10), Angle::getQuarterRotation());
+	Angle maximumRotation = Angle::getQuarterRotation();
+	RouterImpl router(0.5);
+	FieldMock field;
+	vector<Circle> obstacles;
+	obstacles.push_back(Circle(Point(0, -5), 1));
+	field.setHardObstacles(obstacles);
+	field.setNegativeCoordinatesOutside(true);
+
+	Route route = router.calculateRoute(start, end, field, maximumRotation, 0.1, false, false);
+
+	CPPUNIT_ASSERT(route.isValid());
+}
+
 void RouterTest::getPointsBesideObstacle_intersectFromLeftAndCircleCenterNotOnPath_shortPointIsCorrect()
 {
 	RouterImpl router(2);

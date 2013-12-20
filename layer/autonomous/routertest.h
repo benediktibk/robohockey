@@ -51,6 +51,8 @@ namespace Autonomous
 		CPPUNIT_TEST(calculateRoute_hardObstacleInsideStartPosition_directConnection);
 		CPPUNIT_TEST(calculateRoute_hardObstacleIntersectingWithStartPosition_reasonableRoute);
 		CPPUNIT_TEST(calculateRoute_targetInsideSoftObstacle_invalidRoute);
+		CPPUNIT_TEST(calculateRoute_startIsOutsideTheField_validRoute);
+		CPPUNIT_TEST(calculateRoute_startIsOutsideTheFieldAndAnObstacleOnTheWay_validRoute);
 		CPPUNIT_TEST(getPointsBesideObstacle_intersectFromLeftAndCircleCenterNotOnPath_shortPointIsCorrect);
 		CPPUNIT_TEST(getPointsBesideObstacle_intersectFromLeftAndCircleCenterNotOnPath_longPointIsCorrect);
 		CPPUNIT_TEST(getPointsBesideObstacle_intersectFromRightAndCircleCenterNotOnPath_shortPointIsCorrect);
@@ -125,6 +127,8 @@ namespace Autonomous
 		void calculateRoute_hardObstacleInsideStartPosition_directConnection();
 		void calculateRoute_hardObstacleIntersectingWithStartPosition_reasonableRoute();
 		void calculateRoute_targetInsideSoftObstacle_invalidRoute();
+		void calculateRoute_startIsOutsideTheField_validRoute();
+		void calculateRoute_startIsOutsideTheFieldAndAnObstacleOnTheWay_validRoute();
 		void getPointsBesideObstacle_intersectFromLeftAndCircleCenterNotOnPath_shortPointIsCorrect();
 		void getPointsBesideObstacle_intersectFromLeftAndCircleCenterNotOnPath_longPointIsCorrect();
 		void getPointsBesideObstacle_intersectFromRightAndCircleCenterNotOnPath_shortPointIsCorrect();
