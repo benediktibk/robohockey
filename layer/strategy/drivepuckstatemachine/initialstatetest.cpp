@@ -33,7 +33,6 @@ void InitialStateTest::nextState_puckCollected_nextStateIsLeavePuck()
 
 void InitialStateTest::nextState_numberOfKnownPucksIs0_nextStateIsFindPuck()
 {
-	CPPUNIT_ASSERT(false);
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
