@@ -61,7 +61,6 @@ void FieldObject::shouldBeSeen()
 void FieldObject::notSeen()
 {
 	++m_notSeen;
-	m_seen = 0;
 }
 
 bool FieldObject::isDefinitelyExisting() const

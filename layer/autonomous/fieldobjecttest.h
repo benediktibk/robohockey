@@ -26,7 +26,7 @@ namespace Autonomous
 		CPPUNIT_TEST(seen_previouslyNotSeenCalled_notSeenIs0);
 		CPPUNIT_TEST(notSeen_empty_notSeenIs1);
 		CPPUNIT_TEST(notSeen_twiceCalled_notSeenIs2);
-		CPPUNIT_TEST(notSeen_previouslySeenCalled_seenIs0);
+		CPPUNIT_TEST(notSeen_previouslySeenCalled_seenIs1);
 		CPPUNIT_TEST(shouldBeSeen_twiceCalled_shouldBeSeenIs2);
 		CPPUNIT_TEST(isDefinitelyExisting_shouldBeSeenOnlyOnceAndSeen_false);
 		CPPUNIT_TEST(isDefinitelyExisting_shouldBeSeenAndSeenVeryOften_true);
@@ -48,7 +48,7 @@ namespace Autonomous
 		void seen_previouslyNotSeenCalled_notSeenIs0();
 		void notSeen_empty_notSeenIs1();
 		void notSeen_twiceCalled_notSeenIs2();
-		void notSeen_previouslySeenCalled_seenIs0();
+		void notSeen_previouslySeenCalled_seenIs1();
 		void shouldBeSeen_twiceCalled_shouldBeSeenIs2();
 		void isDefinitelyExisting_shouldBeSeenOnlyOnceAndSeen_false();
 		void isDefinitelyExisting_shouldBeSeenAndSeenVeryOften_true();
