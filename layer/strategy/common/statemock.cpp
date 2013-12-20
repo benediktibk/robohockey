@@ -23,7 +23,7 @@ State *StateMock::nextState()
 	return m_nextState;
 }
 
-std::string StateMock::getName() const
+std::string StateMock::getName()
 {
 	return "StateMock";
 }

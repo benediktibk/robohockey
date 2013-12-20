@@ -33,6 +33,11 @@ State* CheckGoalColor::nextState()
 	return 0;
 }
 
+std::string CheckGoalColor::getName()
+{
+	return "CheckGoalColor";
+}
+
 void CheckGoalColor::updateInternal()
 {
 	if (!m_teamColorSend)

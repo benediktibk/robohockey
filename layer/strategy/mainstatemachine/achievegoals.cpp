@@ -34,7 +34,7 @@ State* AchieveGoals::nextState()
 		return new HideEnemyPucks(m_robot, m_field, m_referee);
 }
 
-std::string AchieveGoals::getName() const
+std::string AchieveGoals::getName()
 {
 	return "AchiveGoals: " + m_drivePuckStateMachine->getNameOfCurrentState();
 }

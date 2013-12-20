@@ -36,7 +36,7 @@ State* HideEnemyPucks::nextState()
 		return 0;
 }
 
-std::string HideEnemyPucks::getName() const
+std::string HideEnemyPucks::getName()
 {
 	return "HideEnemyPucks: " + m_drivePuckStateMachine->getNameOfCurrentState();
 }

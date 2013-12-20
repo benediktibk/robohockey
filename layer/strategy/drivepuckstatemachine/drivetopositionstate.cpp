@@ -20,5 +20,10 @@ State* DriveToPositionState::nextState()
 		return 0;
 }
 
+std::string DriveToPositionState::getName()
+{
+	return "DriveToPosition";
+}
+
 void DriveToPositionState::updateInternal()
 {}

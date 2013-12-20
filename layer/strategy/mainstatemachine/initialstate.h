@@ -18,7 +18,7 @@ namespace MainStateMachine
 		InitialState(Autonomous::Robot &robot, Autonomous::Field &field, Common::Referee &referee);
 
 		virtual State* nextState();
-		virtual std::string getName() const;
+		virtual std::string getName();
 
 	protected:
 		virtual void updateInternal();

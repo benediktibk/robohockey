@@ -23,7 +23,7 @@ State* Pause::nextState()
 		return 0;
 }
 
-std::string Pause::getName() const
+std::string Pause::getName()
 {
 	return "Pause";
 }

@@ -28,5 +28,10 @@ State* DriveToCollectPuckState::nextState()
 						   new InitialState(m_robot, m_field, m_referee, m_drivePuck));
 }
 
+std::string DriveToCollectPuckState::getName()
+{
+	return "DriveToCollectPuck";
+}
+
 void DriveToCollectPuckState::updateInternal()
 { }

@@ -37,6 +37,11 @@ State* DetectField::nextState()
 		return 0;
 }
 
+string DetectField::getName()
+{
+	return "DetectField";
+}
+
 void DetectField::updateInternal()
 {
 	RobotPosition result = m_field.getNewOriginFromFieldDetection();

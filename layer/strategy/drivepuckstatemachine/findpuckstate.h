@@ -18,6 +18,7 @@ namespace DrivePuckStateMachine
 	public:
 		FindPuckState(Autonomous::Robot &robot, Autonomous::Field &field, Common::Referee &referee, RoboHockey::Layer::Strategy::Common::DrivePuck *drivePuck);
 
+		virtual std::string getName();
 	private:
 };
 }

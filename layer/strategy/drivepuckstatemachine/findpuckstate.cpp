@@ -14,3 +14,8 @@ FindPuckState::FindPuckState(Robot &robot, Field &field, Referee &referee, Drive
 			new CollectPuckState(robot, field, referee, drivePuck),
 			new FindPuckState(robot, field, referee, drivePuck))
 { }
+
+std::string FindPuckState::getName()
+{
+	return "FindPuck";
+}

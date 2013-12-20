@@ -25,6 +25,7 @@ namespace FieldDetectionStateMachine
 				  std::vector<RoboHockey::Common::RobotPosition> calibratedPositions);
 
 		virtual State* nextState();
+		virtual std::string getName();
 
 	protected:
 		virtual void updateInternal();

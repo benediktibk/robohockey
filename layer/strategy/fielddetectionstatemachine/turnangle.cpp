@@ -26,6 +26,11 @@ State* TurnAngle::nextState()
 		return 0;
 }
 
+std::string TurnAngle::getName()
+{
+	return "TurnAngle";
+}
+
 void TurnAngle::updateInternal()
 {
 	Point target(1, 0);

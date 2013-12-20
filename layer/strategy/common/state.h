@@ -27,7 +27,7 @@ namespace Common
 
 		virtual State* nextState() = 0;
 		void update();
-		virtual std::string getName() const = 0;
+		virtual std::string getName() = 0;
 
 	protected:
 		virtual void updateInternal() = 0;

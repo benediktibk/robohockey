@@ -29,6 +29,11 @@ State* LeavePuckState::nextState()
 
 }
 
+std::string LeavePuckState::getName()
+{
+	return "LeavePuck";
+}
+
 void LeavePuckState::updateInternal()
 {
 	m_robot.leaveCollectedPuck();

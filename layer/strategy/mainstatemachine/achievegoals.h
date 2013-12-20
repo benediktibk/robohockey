@@ -20,7 +20,7 @@ namespace MainStateMachine
 		virtual ~AchieveGoals();
 
 		virtual State* nextState();
-		virtual std::string getName() const;
+		virtual std::string getName();
 
 	protected:
 		virtual void updateInternal();
