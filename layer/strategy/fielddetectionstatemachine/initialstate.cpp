@@ -12,7 +12,7 @@ InitialState::InitialState(Robot &robot, Field &field, Referee &referee) :
 
 State* InitialState::nextState()
 {
-	return new DetectField(m_robot, m_field, m_referee);
+	return new DetectField(m_robot, m_field, m_referee, std::vector<RoboHockey::Common::RobotPosition>());
 }
 
 void InitialState::updateInternal()

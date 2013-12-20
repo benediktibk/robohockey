@@ -79,6 +79,11 @@ void FieldMock::setCalibrationReturn(bool value)
 	m_calibrated = value;
 }
 
+void FieldMock::setCalibrationReturnPosition(RobotPosition newOrigin)
+{
+	m_newOrigin = newOrigin;
+}
+
 void FieldMock::setTrueTeamColor(FieldColor teamColor)
 {
 	m_teamColor = teamColor;
@@ -86,7 +91,7 @@ void FieldMock::setTrueTeamColor(FieldColor teamColor)
 
 RobotPosition FieldMock::getNewOriginFromFieldDetection()
 {
-	return RobotPosition();
+	return m_newOrigin;
 }
 
 void FieldMock::transformFieldToNewOrigin(const RobotPosition /*newOrigin*/)

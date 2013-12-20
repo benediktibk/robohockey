@@ -1,7 +1,9 @@
 #ifndef ROBOHOCKEY_LAYER_STRATEGY_FIELDDETECTIONSTATEMACHINE_DETECTFIELD_H
 #define ROBOHOCKEY_LAYER_STRATEGY_FIELDDETECTIONSTATEMACHINE_DETECTFIELD_H
 
+#include "common/robotposition.h"
 #include "layer/strategy/common/state.h"
+#include <vector>
 
 namespace RoboHockey
 {
@@ -15,7 +17,8 @@ namespace FieldDetectionStateMachine
 			public Common::State
 	{
 	public:
-		DetectField(Autonomous::Robot &robot, Autonomous::Field &field, Common::Referee &referee);
+		DetectField(Autonomous::Robot &robot, Autonomous::Field &field, Common::Referee &referee,
+					std::vector<RoboHockey::Common::RobotPosition> previousCalibrationResults);
 
 		virtual State* nextState();
 
@@ -25,6 +28,7 @@ namespace FieldDetectionStateMachine
 	private:
 		bool m_successful;
 		unsigned int m_numberOfTries;
+		std::vector<RoboHockey::Common::RobotPosition> m_calibrationResults;
 
 	};
 }

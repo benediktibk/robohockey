@@ -8,17 +8,18 @@
 #include "layer/autonomous/robotmock.h"
 #include "layer/autonomous/fieldmock.h"
 
+using namespace std;
 using namespace RoboHockey::Layer::Strategy::Common;
 using namespace RoboHockey::Layer::Strategy::FieldDetectionStateMachine;
 using namespace RoboHockey::Layer::Autonomous;
-
+using namespace RoboHockey::Common;
 
 void DetectFieldTest::nextState_notCalibrated3Tries_turnAngle()
 {
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	DetectField detectFieldState(robot, field, referee);
+	DetectField detectFieldState(robot, field, referee, vector<RobotPosition>());
 
 	field.setCalibrationReturn(false);
 	detectFieldState.update();
@@ -36,7 +37,7 @@ void DetectFieldTest::nextState_notCalibrated1Try_NULL()
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	DetectField detectFieldState(robot, field, referee);
+	DetectField detectFieldState(robot, field, referee, vector<RobotPosition>());
 
 	field.setCalibrationReturn(false);
 	detectFieldState.update();
@@ -52,9 +53,14 @@ void DetectFieldTest::nextState_calibrated_driveTo()
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	DetectField detectFieldState(robot, field, referee);
+	vector<RobotPosition> calibratedData;
+	calibratedData.push_back(RobotPosition(Point(), Angle()));
+	calibratedData.push_back(RobotPosition(Point(), Angle()));
+	calibratedData.push_back(RobotPosition(Point(), Angle()));
 
-	field.setCalibrationReturn(true);
+	DetectField detectFieldState(robot, field, referee, calibratedData);
+
+	field.setCalibrationReturnPosition(RobotPosition(Point(1,2), Angle::getEighthRotation()));
 	detectFieldState.update();
 
 	State *state;
@@ -68,9 +74,13 @@ void DetectFieldTest::nextState_calibratedOnSecondTry_driveTo()
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	DetectField detectFieldState(robot, field, referee);
+	vector<RobotPosition> calibratedData;
+	calibratedData.push_back(RobotPosition(Point(), Angle()));
+	calibratedData.push_back(RobotPosition(Point(), Angle()));
+	calibratedData.push_back(RobotPosition(Point(), Angle()));
 
-	field.setCalibrationReturn(false);
+	DetectField detectFieldState(robot, field, referee, calibratedData);
+
 	detectFieldState.update();
 
 	State *state;
@@ -78,11 +88,37 @@ void DetectFieldTest::nextState_calibratedOnSecondTry_driveTo()
 	DriveTo *stateCasted = dynamic_cast<DriveTo*>(state);
 	CPPUNIT_ASSERT(stateCasted == 0);
 
-	field.setCalibrationReturn(true);
+	field.setCalibrationReturnPosition(RobotPosition(Point(1,2), Angle::getEighthRotation()));
 	detectFieldState.update();
 
 	state = detectFieldState.nextState();
 	stateCasted = dynamic_cast<DriveTo*>(state);
 	CPPUNIT_ASSERT(stateCasted != 0);
 
+}
+
+void DetectFieldTest::nextState_calibrationSuccessfulButTooFewCalibrationResults_turnAngle()
+{
+	RobotMock robot;
+	FieldMock field;
+	RefereeMock referee;
+	vector<RobotPosition> calibratedData;
+	calibratedData.push_back(RobotPosition(Point(), Angle()));
+	calibratedData.push_back(RobotPosition(Point(), Angle()));
+
+	DetectField detectFieldState(robot, field, referee, calibratedData);
+
+	detectFieldState.update();
+
+	State *state;
+	state = detectFieldState.nextState();
+	DriveTo *stateCasted = dynamic_cast<DriveTo*>(state);
+	CPPUNIT_ASSERT(stateCasted == 0);
+
+	field.setCalibrationReturnPosition(RobotPosition(Point(1,2), Angle::getEighthRotation()));
+	detectFieldState.update();
+
+	state = detectFieldState.nextState();
+	stateCasted = dynamic_cast<DriveTo*>(state);
+	CPPUNIT_ASSERT(stateCasted == 0);
 }

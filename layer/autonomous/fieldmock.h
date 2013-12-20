@@ -2,6 +2,7 @@
 #define ROBOHOCKEY_LAYER_AUTONOMOUS_FIELDMOCK_H
 
 #include "layer/autonomous/field.h"
+#include "common/robotposition.h"
 
 namespace RoboHockey
 {
@@ -48,6 +49,7 @@ namespace Autonomous
 		void setHardObstacles(const std::vector<Common::Circle> &obstacles);
 		void setNegativeCoordinatesOutside(bool value);
 		void setCalibrationReturn(bool value);
+		void setCalibrationReturnPosition(Common::RobotPosition newOrigin);
 
 	private:
 		std::vector<FieldObject> m_objects;
@@ -58,6 +60,7 @@ namespace Autonomous
 		unsigned int m_hiddenPucks;
 		bool m_calibrated;
 		Common::FieldColor m_teamColor;
+		Common::RobotPosition m_newOrigin;
 	};
 }
 }
