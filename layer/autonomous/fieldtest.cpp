@@ -527,7 +527,7 @@ void FieldTest::update_threePucksWithTeamColor_30ElementsInList()
 	camera.setAllObjects(cameraObjects);
 
 	field.update();
-	testlist = field.getTargetsForCollectingOnePuck();
+	testlist = field.getTargetsForCollectingOnePuck(FieldColorYellow);
 	CPPUNIT_ASSERT_EQUAL((size_t)30, testlist.size());
 }
 
@@ -555,7 +555,7 @@ void FieldTest::update_fourPucksWithTeamColorInRectangle1_40ElementsInList()
 	camera.setAllObjects(cameraObjects);
 
 	field.update();
-	testlist = field.getTargetsForCollectingOnePuck();
+	testlist = field.getTargetsForCollectingOnePuck(FieldColorYellow);
 	CPPUNIT_ASSERT_EQUAL((size_t)40, testlist.size());
 }
 
@@ -579,7 +579,7 @@ void FieldTest::update_twoPucksWithTeamColorInRectangle2_20ElementsInList()
 	camera.setAllObjects(cameraObjects);
 
 	field.update();
-	testlist = field.getTargetsForCollectingOnePuck();
+	testlist = field.getTargetsForCollectingOnePuck(FieldColorYellow);
 	CPPUNIT_ASSERT_EQUAL((size_t)20, testlist.size());
 }
 
@@ -603,7 +603,7 @@ void FieldTest::update_onePuckWithTeamColorInRectangle3_10ElementsInList()
 	camera.setAllObjects(cameraObjects);
 
 	field.update();
-	testlist = field.getTargetsForCollectingOnePuck();
+	testlist = field.getTargetsForCollectingOnePuck(FieldColorYellow);
 	CPPUNIT_ASSERT_EQUAL((size_t)10, testlist.size());
 }
 
@@ -623,7 +623,7 @@ void FieldTest::update_zeroPucksWithTeamColor_0ElementsInList()
 	camera.setAllObjects(cameraObjects);
 
 	field.update();
-	testlist = field.getTargetsForCollectingOnePuck();
+	testlist = field.getTargetsForCollectingOnePuck(FieldColorYellow);
 	CPPUNIT_ASSERT_EQUAL((size_t)0, testlist.size());
 }
 
@@ -653,7 +653,7 @@ void FieldTest::update_fivePucksWithTeamColorInRectangle4_50ElementsInList()
 	camera.setAllObjects(cameraObjects);
 
 	field.update();
-	testlist = field.getTargetsForCollectingOnePuck();
+	testlist = field.getTargetsForCollectingOnePuck(FieldColorYellow);
 	CPPUNIT_ASSERT_EQUAL((size_t)50, testlist.size());
 }
 
@@ -685,7 +685,7 @@ void FieldTest::update_sixPucksWithTeamColorInRectangle5_60ElementsInList()
 	camera.setAllObjects(cameraObjects);
 
 	field.update();
-	testlist = field.getTargetsForCollectingOnePuck();
+	testlist = field.getTargetsForCollectingOnePuck(FieldColorYellow);
 	CPPUNIT_ASSERT_EQUAL((size_t)60, testlist.size());
 }
 
@@ -721,7 +721,7 @@ void FieldTest::update_sevenPucksWithTeamColorInRectangle6_70ElementsInList()
 	camera.setAllObjects(cameraObjects);
 
 	field.update();
-	testlist = field.getTargetsForCollectingOnePuck();
+	testlist = field.getTargetsForCollectingOnePuck(FieldColorYellow);
 	CPPUNIT_ASSERT_EQUAL((size_t)70, testlist.size());
 }
 
@@ -757,7 +757,7 @@ void FieldTest::update_eightPucksWithTeamColorInRectangle7_80ElementsInList()
 	camera.setAllObjects(cameraObjects);
 
 	field.update();
-	testlist = field.getTargetsForCollectingOnePuck();
+	testlist = field.getTargetsForCollectingOnePuck(FieldColorYellow);
 	CPPUNIT_ASSERT_EQUAL((size_t)80, testlist.size());
 }
 
@@ -795,7 +795,7 @@ void FieldTest::update_ninePucksWithTeamColorInRectangle8_90ElementsInList()
 	camera.setAllObjects(cameraObjects);
 
 	field.update();
-	testlist = field.getTargetsForCollectingOnePuck();
+	testlist = field.getTargetsForCollectingOnePuck(FieldColorYellow);
 	CPPUNIT_ASSERT_EQUAL((size_t)90, testlist.size());
 }
 
@@ -835,7 +835,7 @@ void FieldTest::update_tenPucksWithTeamColorInRectangle9_100ElementsInList()
 	camera.setAllObjects(cameraObjects);
 
 	field.update();
-	testlist = field.getTargetsForCollectingOnePuck();
+	testlist = field.getTargetsForCollectingOnePuck(FieldColorYellow);
 	CPPUNIT_ASSERT_EQUAL((size_t)100, testlist.size());
 }
 

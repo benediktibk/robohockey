@@ -311,7 +311,7 @@ std::list<RobotPosition> FieldImpl::getTargetsForHidingEnemyPucks() const
 	return targets;
 }
 
-std::list<RobotPosition> FieldImpl::getTargetsForCollectingOnePuck() const
+std::list<RobotPosition> FieldImpl::getTargetsForCollectingOnePuck(FieldColor puckColor) const
 {
 	RandomDecision decider(0.5);
 	list<RobotPosition> targetsToCollect;
@@ -335,7 +335,7 @@ std::list<RobotPosition> FieldImpl::getTargetsForCollectingOnePuck() const
 		{
 			const FieldObject &fieldObject = *i;
 
-			if (fieldObject.getColor() == m_teamColor && m_teamColor != FieldColorUnknown
+			if (fieldObject.getColor() == puckColor && puckColor != FieldColorUnknown
 					&& sectorOfGoal.isInside(fieldObject.getCircle().getCenter(), 0.01) == false
 					&& sectorOfField.isInside(fieldObject.getCircle().getCenter(), 0.01))
 			{

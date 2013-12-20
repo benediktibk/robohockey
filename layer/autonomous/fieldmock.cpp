@@ -148,7 +148,7 @@ std::list<RobotPosition> FieldMock::getTargetsForHidingEnemyPucks() const
 	return list<RobotPosition>();
 }
 
-std::list<RobotPosition> FieldMock::getTargetsForCollectingOnePuck() const
+std::list<RobotPosition> FieldMock::getTargetsForCollectingOnePuck(FieldColor) const
 {
 	return list<RobotPosition>();
 }

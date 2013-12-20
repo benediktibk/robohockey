@@ -23,7 +23,7 @@ State* DriveToCollectPuckState::nextState()
 	else if(!m_robot.cantReachTarget() && m_robot.isPuckCollectable())
 		return new CollectPuckState(m_robot, m_field, m_referee, m_drivePuck);
 	else
-		return new DriveTo(m_robot, m_field, m_referee, m_field.getTargetsForCollectingOnePuck(),
+		return new DriveTo(m_robot, m_field, m_referee, m_field.getTargetsForCollectingOnePuck(m_field.getOwnTeamColor()),
 						   new DriveToCollectPuckState(m_robot, m_field, m_referee, m_drivePuck),
 						   new InitialState(m_robot, m_field, m_referee, m_drivePuck));
 }
