@@ -14,7 +14,6 @@ using namespace RoboHockey::Layer::Strategy::Common;
 using namespace RoboHockey::Layer::Strategy::DrivePuckStateMachine;
 using namespace RoboHockey::Layer::Autonomous;
 
-
 void InitialStateTest::nextState_puckCollected_nextStateIsLeavePuck()
 {
 	RobotMock robot;
