@@ -33,6 +33,7 @@ namespace Autonomous
 		CPPUNIT_TEST(isDefinitelyNotExisting_notSeenOnce_false);
 		CPPUNIT_TEST(isDefinitelyNotExisting_notSeenOnceAndThenSeenAgain_false);
 		CPPUNIT_TEST(isDefinitelyNotExisting_notSeenVeryOften_true);
+		CPPUNIT_TEST(isDefinitelyNotExisting_shouldBeSeenVeryOftenButSeenOnlyOnce_true);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
@@ -55,6 +56,7 @@ namespace Autonomous
 		void isDefinitelyNotExisting_notSeenOnce_false();
 		void isDefinitelyNotExisting_notSeenOnceAndThenSeenAgain_false();
 		void isDefinitelyNotExisting_notSeenVeryOften_true();
+		void isDefinitelyNotExisting_shouldBeSeenVeryOftenButSeenOnlyOnce_true();
 	};
 }
 }

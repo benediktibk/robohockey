@@ -70,5 +70,5 @@ bool FieldObject::isDefinitelyExisting() const
 
 bool FieldObject::isDefinitelyNotExisting() const
 {
-	return getNotSeen() >= 2;
+	return getNotSeen() >= 2 || (getShouldBeSeen() >= 2 && getSeen() < 2);
 }
