@@ -33,7 +33,7 @@ bool FieldDetector::tryToDetectField()
 		//! Add One, as root is a BorderStone, too
 		unsigned int numberOfFoundBorderStones = 1 + root.getNumberOfChildrenRecursive();
 
-		if (numberOfFoundBorderStones > m_maxBorderstonesArranged)
+		if (numberOfFoundBorderStones > 2)
 		{
 				result = tryToFigureOutNewOrigin(root) || result;
 
@@ -203,10 +203,14 @@ bool FieldDetector::tryToFigureOutNewOrigin(BorderStone &root)
 		possibleNewOrigin = possibleNewOrigin + oppositeOrigin;
 	}
 
-	m_rotation = rotation;
-	m_newOrigin = possibleNewOrigin;
-	m_newOrigins.push_back( RobotPosition( m_newOrigin, m_rotation) );
-	m_maxBorderstonesArranged = root.getNumberOfChildrenRecursive() + 1;
+	m_newOrigins.push_back( RobotPosition( possibleNewOrigin, rotation) );
+
+	if (root.getNumberOfChildrenRecursive() + 1 > m_maxBorderstonesArranged)
+	{
+		m_rotation = rotation;
+		m_newOrigin = possibleNewOrigin;
+		m_maxBorderstonesArranged = root.getNumberOfChildrenRecursive() + 1;
+	}
 
 	return true;
 }
