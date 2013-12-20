@@ -16,6 +16,12 @@ DriveToCollectPuckState::DriveToCollectPuckState(Robot &robot, Field &field, Ref
 	m_drivePuck(drivePuck)
 { }
 
+DriveToCollectPuckState::~DriveToCollectPuckState()
+{
+	delete m_drivePuck;
+	m_drivePuck = 0;
+}
+
 State* DriveToCollectPuckState::nextState()
 {
 	if(m_drivePuck->getNumberOfKnownPucksNotInTarget() == 0)
