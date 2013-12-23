@@ -17,7 +17,7 @@ CalibrationFinished::CalibrationFinished(Autonomous::Robot &robot, Autonomous::F
 State* CalibrationFinished::nextState()
 {
 
-	if (m_reachedTargets <= 3)
+	if (m_reachedTargets >= 3)
 		return 0;
 
 	std::list<RobotPosition> targetList;
