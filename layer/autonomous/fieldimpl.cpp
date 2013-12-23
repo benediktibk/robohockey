@@ -496,9 +496,9 @@ void FieldImpl::transformFieldToNewOrigin(const RobotPosition newOrigin)
 std::vector<RobotPosition> FieldImpl::getTargetsForWaitingPhase() const
 {
 	std::vector<RobotPosition> targetVector;
-	targetVector.push_back(RobotPosition(Point(10.0/6.0, 2.25), Angle()));
-	targetVector.push_back(RobotPosition(Point(10.0/6.0, 0.75), Angle()));
-	targetVector.push_back(RobotPosition(Point(10.0/6.0, 1.50), Angle()));
+	targetVector.push_back(RobotPosition(Point(10.0/9.0, 2.25), Angle()));
+	targetVector.push_back(RobotPosition(Point(10.0/9.0, 0.75), Angle()));
+	targetVector.push_back(RobotPosition(Point(10.0/9.0, 1.50), Angle()));
 
 	return targetVector;
 }
