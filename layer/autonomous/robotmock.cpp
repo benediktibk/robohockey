@@ -104,7 +104,7 @@ void RobotMock::turnAround()
 
 void RobotMock::turnTo(const Point &position)
 {
-	m_lastTarget = position;
+	m_lastTurnToTarget = position;
 }
 
 RobotPosition RobotMock::getCurrentPosition() const
@@ -165,4 +165,9 @@ void RobotMock::setPuckCollected(bool value)
 void RobotMock::setPuckCollectable(bool value)
 {
 	m_puckCollectable = value;
+}
+
+const Point &RobotMock::getLastTurnToTarget() const
+{
+	return m_lastTurnToTarget;
 }
