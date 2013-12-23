@@ -102,8 +102,10 @@ bool RobotMock::isMoving() const
 void RobotMock::turnAround()
 { }
 
-void RobotMock::turnTo(const Point &)
-{ }
+void RobotMock::turnTo(const Point &position)
+{
+	m_lastTarget = position;
+}
 
 RobotPosition RobotMock::getCurrentPosition() const
 {
