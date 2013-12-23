@@ -16,12 +16,6 @@ LeavePuckState::LeavePuckState(Robot &robot, Field &field, Referee &referee, Dri
 	m_drivePuck(drivePuck)
 { }
 
-LeavePuckState::~LeavePuckState()
-{
-	delete m_drivePuck;
-	m_drivePuck = 0;
-}
-
 State* LeavePuckState::nextState()
 {
 	if(m_robot.cantReachTarget())
