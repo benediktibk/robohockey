@@ -14,12 +14,6 @@ InitialState::InitialState(Robot &robot, Field &field, Referee &referee, DrivePu
 	m_drivePuck(drivePuck)
 { }
 
-InitialState::~InitialState()
-{
-	delete m_drivePuck;
-	m_drivePuck = 0;
-}
-
 State* InitialState::nextState()
 {
 	if(m_robot.isPuckCollected())
