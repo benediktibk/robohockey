@@ -101,7 +101,12 @@ void FieldMock::transformFieldToNewOrigin(const RobotPosition /*newOrigin*/)
 
 std::vector<RobotPosition> FieldMock::getTargetsForWaitingPhase() const
 {
-	return std::vector<RobotPosition>();
+	std::vector<RobotPosition> targets;
+	targets.push_back(RobotPosition());
+	targets.push_back(RobotPosition());
+	targets.push_back(RobotPosition());
+
+	return targets;
 }
 
 bool FieldMock::isCalibrated() const
