@@ -11,12 +11,12 @@ using namespace RoboHockey::Layer::Strategy::Common;
 using namespace RoboHockey::Layer::Strategy::FieldDetectionStateMachine;
 
 
-void CalibrationFinishedTest::nextState_always_NULL()
+void CalibrationFinishedTest::nextState_3TargetsReached_NULL()
 {
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	CalibrationFinished calibrationFinishedState(robot, field, referee, 0);
+	CalibrationFinished calibrationFinishedState(robot, field, referee, 3);
 
 	calibrationFinishedState.update();
 
