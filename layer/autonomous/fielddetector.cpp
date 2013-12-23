@@ -196,7 +196,7 @@ bool FieldDetector::tryToFigureOutNewOrigin(BorderStone &root)
 	}
 
 	Point currentPositionInNewCoordinates = m_currentPosition - possibleNewOrigin;
-	currentPositionInNewCoordinates.rotate(m_rotation);
+	currentPositionInNewCoordinates.rotate(rotation);
 
 	if (currentPositionInNewCoordinates.getY() < 0)
 	{
