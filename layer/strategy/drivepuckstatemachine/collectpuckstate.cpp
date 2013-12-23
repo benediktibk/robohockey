@@ -1,5 +1,5 @@
 #include "layer/strategy/drivepuckstatemachine/collectpuckstate.h"
-#include "layer/strategy/drivepuckstatemachine/drivetopositionstate.h"
+#include "layer/strategy/drivepuckstatemachine/drivepucktopositionstate.h"
 #include "layer/strategy/drivepuckstatemachine/drivetocollectpuckstate.h"
 #include "common/robotposition.h"
 #include "layer/strategy/common/referee.h"
@@ -19,7 +19,7 @@ CollectPuckState::CollectPuckState(Robot &robot, Field &field, Referee &referee,
 State* CollectPuckState::nextState()
 {
 	if(m_robot.isPuckCollected())
-		return new DriveToPositionState(m_robot, m_field, m_referee, m_drivePuck);
+		return new DrivePuckToPositionState(m_robot, m_field, m_referee, m_drivePuck);
 	else if(m_robot.cantReachTarget() || m_isPuckNotCollectable)
 		return new DriveToCollectPuckState(m_robot, m_field, m_referee, m_drivePuck);
 	else

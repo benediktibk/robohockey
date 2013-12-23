@@ -1,7 +1,7 @@
 #include "layer/strategy/drivepuckstatemachine/collectpuckstatetest.h"
 #include "layer/strategy/drivepuckstatemachine/collectpuckstate.h"
 #include "layer/strategy/drivepuckstatemachine/drivetocollectpuckstate.h"
-#include "layer/strategy/drivepuckstatemachine/drivetopositionstate.h"
+#include "layer/strategy/drivepuckstatemachine/drivepucktopositionstate.h"
 #include "layer/strategy/common/statemachine.h"
 #include "layer/strategy/common/statemock.h"
 #include "layer/strategy/common/refereemock.h"
@@ -23,7 +23,7 @@ void CollectPuckStateTest::nextState_puckCollected_nextStateIsDriveToPositionSta
 	CollectPuckState collectPuckState(robot, field, referee, drivePuck);
 	State *state;
 	state = collectPuckState.nextState();
-	DriveToPositionState *stateCasted = dynamic_cast<DriveToPositionState*>(state);
+	DrivePuckToPositionState *stateCasted = dynamic_cast<DrivePuckToPositionState*>(state);
 
 	CPPUNIT_ASSERT(stateCasted != 0);
 }
