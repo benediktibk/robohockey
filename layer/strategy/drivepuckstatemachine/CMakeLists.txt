@@ -2,7 +2,7 @@ set(LAYER_STRATEGY_DRIVEPUCKSTATEMACHINE_SRC
 	initialstate.cpp
 	findpuckstate.cpp
 	collectpuckstate.cpp
-	drivetopositionstate.cpp
+	drivepucktopositionstate.cpp
 	drivetocollectpuckstate.cpp
 	leavepuckstate.cpp
 )
@@ -11,7 +11,7 @@ set(LAYER_STRATEGY_DRIVEPUCKSTATEMACHINE_TEST_SRC
 	initialstatetest.cpp
 	findpuckstatetest.cpp
 	collectpuckstatetest.cpp
-	drivetopositionstatetest.cpp
+	drivepucktopositionstatetest.cpp
 	drivetocollectpuckstatetest.cpp
 	leavepuckstatetest.cpp
 )

@@ -1,5 +1,5 @@
-#include "layer/strategy/drivepuckstatemachine/drivetopositionstatetest.h"
-#include "layer/strategy/drivepuckstatemachine/drivetopositionstate.h"
+#include "layer/strategy/drivepuckstatemachine/drivepucktopositionstatetest.h"
+#include "layer/strategy/drivepuckstatemachine/drivepucktopositionstate.h"
 #include "layer/strategy/drivepuckstatemachine/leavepuckstate.h"
 #include "layer/strategy/drivepuckstatemachine/drivetocollectpuckstate.h"
 #include "layer/strategy/common/statemachine.h"
@@ -14,7 +14,7 @@ using namespace RoboHockey::Layer::Strategy::DrivePuckStateMachine;
 using namespace RoboHockey::Layer::Autonomous;
 
 
-void DriveToPositionStateTest::nextState_reachedTarget_nextStateIsLeavePuckState()
+void DrivePuckToPositionStateTest::nextState_reachedTarget_nextStateIsLeavePuckState()
 {
 	RobotMock robot;
 	FieldMock field;
@@ -22,7 +22,7 @@ void DriveToPositionStateTest::nextState_reachedTarget_nextStateIsLeavePuckState
 	DrivePuckMock *drivePuck = new DrivePuckMock();
 	robot.setReachedTarget(true);
 	robot.setPuckCollected(true);
-	DriveToPositionState driveToPositionState(robot, field, referee, drivePuck);
+	DrivePuckToPositionState driveToPositionState(robot, field, referee, drivePuck);
 	State *driveToState;
 	driveToState = driveToPositionState.nextState();
 	State *state;
@@ -32,7 +32,7 @@ void DriveToPositionStateTest::nextState_reachedTarget_nextStateIsLeavePuckState
 	CPPUNIT_ASSERT(stateCasted != 0);
 }
 
-void DriveToPositionStateTest::nextState_cantReachTarget_nextStateIsLeavePuckState()
+void DrivePuckToPositionStateTest::nextState_cantReachTarget_nextStateIsLeavePuckState()
 {
 	RobotMock robot;
 	FieldMock field;
@@ -40,7 +40,7 @@ void DriveToPositionStateTest::nextState_cantReachTarget_nextStateIsLeavePuckSta
 	DrivePuckMock *drivePuck = new DrivePuckMock();
 	robot.setCantReachedTarget(true);
 	robot.setPuckCollected(true);
-	DriveToPositionState driveToPositionState(robot, field, referee, drivePuck);
+	DrivePuckToPositionState driveToPositionState(robot, field, referee, drivePuck);
 	State *driveToState;
 	driveToState = driveToPositionState.nextState();
 	State *state;
@@ -50,14 +50,14 @@ void DriveToPositionStateTest::nextState_cantReachTarget_nextStateIsLeavePuckSta
 	CPPUNIT_ASSERT(stateCasted != 0);
 }
 
-void DriveToPositionStateTest::nextState_canReachTarget_nextStateIs0()
+void DrivePuckToPositionStateTest::nextState_canReachTarget_nextStateIs0()
 {
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
 	DrivePuckMock *drivePuck = new DrivePuckMock();
 	robot.setPuckCollected(true);
-	DriveToPositionState driveToPositionState(robot, field, referee, drivePuck);
+	DrivePuckToPositionState driveToPositionState(robot, field, referee, drivePuck);
 	State *driveToState;
 	driveToState = driveToPositionState.nextState();
 	State *state;
@@ -66,14 +66,14 @@ void DriveToPositionStateTest::nextState_canReachTarget_nextStateIs0()
 	CPPUNIT_ASSERT(state == 0);
 }
 
-void DriveToPositionStateTest::nextState_puckIsNotCollected_nextStateIsDriveToCollectPuck()
+void DrivePuckToPositionStateTest::nextState_puckIsNotCollected_nextStateIsDriveToCollectPuck()
 {
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
 	DrivePuckMock *drivePuck = new DrivePuckMock();
 	drivePuck->setNumberOfKnownPucksNotInTarget(2);
-	DriveToPositionState driveToPositionState(robot, field, referee, drivePuck);
+	DrivePuckToPositionState driveToPositionState(robot, field, referee, drivePuck);
 	State *state;
 	state = driveToPositionState.nextState();
 	DriveToCollectPuckState *stateCasted = dynamic_cast<DriveToCollectPuckState*>(state);

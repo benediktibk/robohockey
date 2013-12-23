@@ -441,10 +441,10 @@ layer/strategy/drivepuckstatemachine/collectpuckstate.h
 layer/strategy/drivepuckstatemachine/collectpuckstate.cpp
 layer/strategy/drivepuckstatemachine/collectpuckstatetest.h
 layer/strategy/drivepuckstatemachine/collectpuckstatetest.cpp
-layer/strategy/drivepuckstatemachine/drivetopositionstatetest.h
-layer/strategy/drivepuckstatemachine/drivetopositionstate.h
-layer/strategy/drivepuckstatemachine/drivetopositionstatetest.cpp
-layer/strategy/drivepuckstatemachine/drivetopositionstate.cpp
+layer/strategy/drivepuckstatemachine/drivepucktopositionstatetest.h
+layer/strategy/drivepuckstatemachine/drivepucktopositionstate.h
+layer/strategy/drivepuckstatemachine/drivepucktopositionstatetest.cpp
+layer/strategy/drivepuckstatemachine/drivepucktopositionstate.cpp
 layer/strategy/common/statemachinetest.cpp
 layer/strategy/common/state.cpp
 common/randomdecision.cpp
