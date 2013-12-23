@@ -64,6 +64,7 @@ namespace Autonomous
 		virtual void setTrueTeamColor(Common::FieldColor trueTeamColor);
 		virtual Common::RobotPosition getNewOriginFromFieldDetection();
 		virtual void transformFieldToNewOrigin(const Common::RobotPosition newOrigin);
+		virtual std::vector<Common::RobotPosition> getTargetsForWaitingPhase() const;
 
 	private:
 		void updateWithLidarData(double range);

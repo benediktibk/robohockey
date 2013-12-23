@@ -493,6 +493,16 @@ void FieldImpl::transformFieldToNewOrigin(const RobotPosition newOrigin)
 	transformCoordinateSystem(newOriginPoint, newOrigin.getOrientation().getValueBetweenMinusPiAndPi());
 }
 
+std::vector<RobotPosition> FieldImpl::getTargetsForWaitingPhase() const
+{
+	std::vector<RobotPosition> targetVector;
+	targetVector.push_back(RobotPosition(Point(10.0/6.0, 2.25), Angle()));
+	targetVector.push_back(RobotPosition(Point(10.0/6.0, 0.75), Angle()));
+	targetVector.push_back(RobotPosition(Point(10.0/6.0, 1.50), Angle()));
+
+	return targetVector;
+}
+
 void FieldImpl::updateWithLidarData(double range)
 {
 	const DataAnalysis::LidarObjects &lidarObjects =  m_lidar->getAllObjects(*m_position);
