@@ -20,11 +20,9 @@ State* DriveToCollectPuckState::nextState()
 {
 	if(m_drivePuck->getNumberOfKnownPucksNotInTarget() == 0)
 		return new FindPuckState(m_robot, m_field, m_referee, m_drivePuck);
-	else if(m_robot.reachedTarget() && m_robot.isPuckCollectable())
-		return new CollectPuckState(m_robot, m_field, m_referee, m_drivePuck);
 	else
 		return new DriveTo(m_robot, m_field, m_referee, m_drivePuck->getPositionsToCollectPuck(),
-						   new DriveToCollectPuckState(m_robot, m_field, m_referee, m_drivePuck),
+						   new CollectPuckState(m_robot, m_field, m_referee, m_drivePuck),
 						   new InitialState(m_robot, m_field, m_referee, m_drivePuck));
 }
 

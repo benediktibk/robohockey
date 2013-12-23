@@ -26,6 +26,7 @@ namespace DrivePuckStateMachine
 
 	private:
 		Common::DrivePuck *m_drivePuck;
+		bool m_isPuckNotCollectable;
 };
 }
 }
