@@ -130,6 +130,7 @@ set(TESTFILES
 	yellow_puck_collected_left_2.png
 	yellow_puck_collected_right_2.png
 	yellow_puck_collected_in_blue_goal_2.png
+	yellow_puck_collected_in_blue_goal.png
 	blue_puck_collected_left.png
 	blue_puck_collected_right.png
 	blue_puck_collected_in_yellow_goal.png
