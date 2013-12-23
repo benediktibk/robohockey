@@ -32,6 +32,7 @@ namespace Main
 
 	private:
 		Layer::Strategy::Common::StateMachine *m_stateMachine;
+		std::string m_oldString;
 	};
 }
 }

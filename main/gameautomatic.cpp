@@ -13,7 +13,8 @@ using namespace RoboHockey::Layer::Strategy::MainStateMachine;
 
 GameAutomatic::GameAutomatic(int argc, char **argv) :
 	Game(argc, argv),
-	m_stateMachine(0)
+	m_stateMachine(0),
+	m_oldString("")
 {
 	InitialState *initialState = new InitialState(getRobot(), getField(), getReferee());
 	m_stateMachine = new StateMachine(initialState, getRobot(), getField(), getReferee());
@@ -37,6 +38,10 @@ bool GameAutomatic::keepRunning() const
 void GameAutomatic::executeRobotControl()
 {
 	m_stateMachine->update();
-	cout << "Current State: " << m_stateMachine->getNameOfCurrentState() << endl;
+	if(m_oldString != m_stateMachine->getNameOfCurrentState())
+	{
+		m_oldString = m_stateMachine->getNameOfCurrentState();
+		cout << "Current State: " << m_stateMachine->getNameOfCurrentState() << endl;
+	}
 }
 
