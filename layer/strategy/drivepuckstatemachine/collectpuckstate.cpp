@@ -32,5 +32,7 @@ std::string CollectPuckState::getName()
 
 void CollectPuckState::updateInternal()
 {
-	m_robot.collectPuckInFront(m_drivePuck->getPositionsToCollectPuck().front().getPosition());
+	m_robot.collectPuckInFront(m_field.getObjectsWithColorOrderdByDistance(
+								   m_drivePuck->getColorOfTargetPucks(),
+								   m_robot.getCurrentPosition().getPosition()).front().getCircle().getCenter());
 }
