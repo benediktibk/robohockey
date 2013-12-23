@@ -1,6 +1,7 @@
 #include "layer/autonomous/fielddetector.h"
 #include "layer/autonomous/borderstone.h"
 #include "common/angle.h"
+#include "common/rectangle.h"
 #include <iostream>
 #include <math.h>
 #include <assert.h>
@@ -78,6 +79,7 @@ double FieldDetector::getRotation()
 
 bool FieldDetector::tryToFigureOutNewOrigin(BorderStone &root)
 {
+	Rectangle fieldGround(Point(0,0), Point(5,3));
 	BorderStoneDistances &distancesChecker = m_distanceChecker;
 	BorderStoneFieldDistance firstDistance;
 	BorderStoneFieldDistance secondDistance;
@@ -201,8 +203,16 @@ bool FieldDetector::tryToFigureOutNewOrigin(BorderStone &root)
 	if (currentPositionInNewCoordinates.getY() < 0)
 	{
 		Point oppositeOrigin = Point(0,-1* distancesChecker.getStandardFieldDistance(BorderStoneFieldDistanceD));
-		oppositeOrigin.rotate(Angle( -1* m_rotation));
+		oppositeOrigin.rotate(Angle( -1* rotation));
 		possibleNewOrigin = possibleNewOrigin + oppositeOrigin;
+	}
+
+	currentPositionInNewCoordinates = m_currentPosition - possibleNewOrigin;
+	currentPositionInNewCoordinates.rotate(rotation);
+
+	if (!fieldGround.isInside(currentPositionInNewCoordinates, Compare(0.1)))
+	{
+		return false;
 	}
 
 	m_newOrigins.push_back( RobotPosition( possibleNewOrigin, rotation) );
