@@ -66,5 +66,22 @@ void TurnAngleTest::update_quarterRotation_robotGetsCorrectTarget()
 	CPPUNIT_ASSERT(compare.isFuzzyEqual(Angle::getQuarterRotation(), resultAngle));
 }
 
+void TurnAngleTest::update_halfRotation_robotGetsCorrectTarget()
+{
+	Compare compare(0.01);
+
+	RobotMock robot;
+	FieldMock field;
+	RefereeMock referee;
+	TurnAngle turnAngleState(robot, field, referee, Angle::getHalfRotation(), vector<RobotPosition>());
+
+	turnAngleState.update();
+
+	Point resultPoint(robot.getLastTurnToTarget());
+	Angle resultAngle(robot.getCurrentPosition().getPosition(), resultPoint);
+
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(Angle::getHalfRotation(), resultAngle));
+}
+
 
 
