@@ -7,6 +7,7 @@
 #include "layer/autonomous/robotmock.h"
 #include "layer/autonomous/fieldmock.h"
 #include "common/angle.h"
+#include "common/compare.h"
 #include <vector>
 
 using namespace std;
@@ -46,6 +47,23 @@ void TurnAngleTest::nextState_targetNotReached_NULL()
 	state = turnAngleState.nextState();
 	DetectField *stateCasted = dynamic_cast<DetectField*>(state);
 	CPPUNIT_ASSERT(stateCasted == 0);
+}
+
+void TurnAngleTest::update_quarterRotation_robotGetsCorrectTarget()
+{
+	Compare compare(0.01);
+
+	RobotMock robot;
+	FieldMock field;
+	RefereeMock referee;
+	TurnAngle turnAngleState(robot, field, referee, Angle::getQuarterRotation(), vector<RobotPosition>());
+
+	turnAngleState.update();
+
+	Point resultPoint(robot.getLastTurnToTarget());
+	Angle resultAngle(robot.getCurrentPosition().getPosition(), resultPoint);
+
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(Angle::getQuarterRotation(), resultAngle));
 }
 
 
