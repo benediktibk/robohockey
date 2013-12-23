@@ -15,7 +15,7 @@ using namespace RoboHockey::Layer::Strategy::DrivePuckStateMachine;
 using namespace RoboHockey::Layer::Autonomous;
 
 
-void DriveToColllectPuckStateTest::nextState_numberOfKnownPucksIs0_nextStateIsFindPuckState()
+void DriveToCollectPuckStateTest::nextState_numberOfKnownPucksIs0_nextStateIsFindPuckState()
 {
 	RobotMock robot;
 	FieldMock field;
@@ -29,7 +29,7 @@ void DriveToColllectPuckStateTest::nextState_numberOfKnownPucksIs0_nextStateIsFi
 	CPPUNIT_ASSERT(stateCasted != 0);
 }
 
-void DriveToColllectPuckStateTest::nextState_reachedTarget_nextStateIsCollectPuckState()
+void DriveToCollectPuckStateTest::nextState_reachedTarget_nextStateIsCollectPuckState()
 {
 	RobotMock robot;
 	FieldMock field;
@@ -47,7 +47,7 @@ void DriveToColllectPuckStateTest::nextState_reachedTarget_nextStateIsCollectPuc
 	CPPUNIT_ASSERT(stateCasted != 0);
 }
 
-void DriveToColllectPuckStateTest::nextState_canReachTarget_nextStateIs0()
+void DriveToCollectPuckStateTest::nextState_canReachTarget_nextStateIs0()
 {
 	RobotMock robot;
 	FieldMock field;
@@ -63,7 +63,7 @@ void DriveToColllectPuckStateTest::nextState_canReachTarget_nextStateIs0()
 	CPPUNIT_ASSERT(state == 0);
 }
 
-void DriveToColllectPuckStateTest::nextState_cantReachTarget_nextStateIsInitialState()
+void DriveToCollectPuckStateTest::nextState_cantReachTarget_nextStateIsInitialState()
 {
 	RobotMock robot;
 	FieldMock field;

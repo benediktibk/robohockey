@@ -12,10 +12,10 @@ namespace Strategy
 {
 namespace DrivePuckStateMachine
 {
-	class DriveToColllectPuckStateTest :
+	class DriveToCollectPuckStateTest :
 			public CPPUNIT_NS::TestFixture
 	{
-		CPPUNIT_TEST_SUITE(DriveToColllectPuckStateTest);
+		CPPUNIT_TEST_SUITE(DriveToCollectPuckStateTest);
 		CPPUNIT_TEST(nextState_numberOfKnownPucksIs0_nextStateIsFindPuckState);
 		CPPUNIT_TEST(nextState_reachedTarget_nextStateIsCollectPuckState);
 		CPPUNIT_TEST(nextState_canReachTarget_nextStateIs0);

@@ -121,7 +121,7 @@ CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Strategy::DrivePuckStateMachi
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Strategy::DrivePuckStateMachine::FindPuckStateTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Strategy::DrivePuckStateMachine::CollectPuckStateTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Strategy::DrivePuckStateMachine::DrivePuckToPositionStateTest);
-CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Strategy::DrivePuckStateMachine::DriveToColllectPuckStateTest);
+CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Strategy::DrivePuckStateMachine::DriveToCollectPuckStateTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Strategy::DrivePuckStateMachine::LeavePuckStateTest);
 
 
