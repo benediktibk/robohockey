@@ -17,16 +17,14 @@ namespace DrivePuckStateMachine
 	{
 		CPPUNIT_TEST_SUITE(DriveToColllectPuckStateTest);
 		CPPUNIT_TEST(nextState_numberOfKnownPucksIs0_nextStateIsFindPuckState);
-		CPPUNIT_TEST(nextState_reachedTargetAndPuckIsCollectable_nextStateIsCollectPuckState);
-		CPPUNIT_TEST(nextState_reachedTargetPuckIsNotCollectable_nextStateIsDriveToCollectPuckState);
+		CPPUNIT_TEST(nextState_reachedTarget_nextStateIsCollectPuckState);
 		CPPUNIT_TEST(nextState_canReachTarget_nextStateIs0);
 		CPPUNIT_TEST(nextState_cantReachTarget_nextStateIsInitialState);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
 		void nextState_numberOfKnownPucksIs0_nextStateIsFindPuckState();
-		void nextState_reachedTargetAndPuckIsCollectable_nextStateIsCollectPuckState();
-		void nextState_reachedTargetPuckIsNotCollectable_nextStateIsDriveToCollectPuckState();
+		void nextState_reachedTarget_nextStateIsCollectPuckState();
 		void nextState_canReachTarget_nextStateIs0();
 		void nextState_cantReachTarget_nextStateIsInitialState();
 

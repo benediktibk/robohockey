@@ -29,24 +29,7 @@ void DriveToColllectPuckStateTest::nextState_numberOfKnownPucksIs0_nextStateIsFi
 	CPPUNIT_ASSERT(stateCasted != 0);
 }
 
-void DriveToColllectPuckStateTest::nextState_reachedTargetAndPuckIsCollectable_nextStateIsCollectPuckState()
-{
-	RobotMock robot;
-	FieldMock field;
-	RefereeMock referee;
-	DrivePuckMock *drivePuck = new DrivePuckMock();
-	drivePuck->setNumberOfKnownPucksNotInTarget(2);
-	robot.setReachedTarget(true);
-	robot.setPuckCollectable(true);
-	DriveToCollectPuckState driveToCollectPuckState(robot, field, referee, drivePuck);
-	State *state;
-	state = driveToCollectPuckState.nextState();
-	CollectPuckState *stateCasted = dynamic_cast<CollectPuckState*>(state);
-
-	CPPUNIT_ASSERT(stateCasted != 0);
-}
-
-void DriveToColllectPuckStateTest::nextState_reachedTargetPuckIsNotCollectable_nextStateIsDriveToCollectPuckState()
+void DriveToColllectPuckStateTest::nextState_reachedTarget_nextStateIsCollectPuckState()
 {
 	RobotMock robot;
 	FieldMock field;
@@ -59,7 +42,7 @@ void DriveToColllectPuckStateTest::nextState_reachedTargetPuckIsNotCollectable_n
 	driveToState = driveToCollectPuckState.nextState();
 	State *state;
 	state = driveToState->nextState();
-	DriveToCollectPuckState *stateCasted = dynamic_cast<DriveToCollectPuckState*>(state);
+	CollectPuckState *stateCasted = dynamic_cast<CollectPuckState*>(state);
 
 	CPPUNIT_ASSERT(stateCasted != 0);
 }

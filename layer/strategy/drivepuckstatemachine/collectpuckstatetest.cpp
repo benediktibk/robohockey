@@ -13,7 +13,7 @@ using namespace RoboHockey::Layer::Strategy::Common;
 using namespace RoboHockey::Layer::Strategy::DrivePuckStateMachine;
 using namespace RoboHockey::Layer::Autonomous;
 
-void CollectPuckStateTest::nextState_puckCollected_nextStateIsDriveToPosition()
+void CollectPuckStateTest::nextState_puckCollected_nextStateIsDriveToPositionState()
 {
 	RobotMock robot;
 	FieldMock field;
@@ -28,7 +28,7 @@ void CollectPuckStateTest::nextState_puckCollected_nextStateIsDriveToPosition()
 	CPPUNIT_ASSERT(stateCasted != 0);
 }
 
-void CollectPuckStateTest::nextState_cantReachTarget_nextStatedIsDriveToCollectPuck()
+void CollectPuckStateTest::nextState_cantReachTarget_nextStatedIsDriveToCollectPuckState()
 {
 	RobotMock robot;
 	FieldMock field;
@@ -48,11 +48,27 @@ void CollectPuckStateTest::nextState_canReachTarget_nextStatedIs0()
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
+	robot.setPuckCollectable(true);
+	DrivePuckMock *drivePuck = new DrivePuckMock();
+	CollectPuckState collectPuckState(robot, field, referee, drivePuck);
+	State *state;
+	collectPuckState.update();
+	state = collectPuckState.nextState();
+
+	CPPUNIT_ASSERT(state == 0);
+}
+
+void CollectPuckStateTest::nextState_puckIsNotCollectable_nextStateIsDriveToCollectPuckState()
+{
+	RobotMock robot;
+	FieldMock field;
+	RefereeMock referee;
 	DrivePuckMock *drivePuck = new DrivePuckMock();
 	CollectPuckState collectPuckState(robot, field, referee, drivePuck);
 	State *state;
 	state = collectPuckState.nextState();
+	DriveToCollectPuckState *stateCasted = dynamic_cast<DriveToCollectPuckState*>(state);
 
-	CPPUNIT_ASSERT(state == 0);
+	CPPUNIT_ASSERT(stateCasted != 0);
 }
 
