@@ -15,13 +15,17 @@ namespace FieldDetectionStateMachine
 			public Common::State
 	{
 	public:
-		CalibrationFinished(Autonomous::Robot &robot, Autonomous::Field &field, Common::Referee &referee);
+		CalibrationFinished(Autonomous::Robot &robot, Autonomous::Field &field, Common::Referee &referee, unsigned int reachedTargets);
 
 		virtual State* nextState();
 		virtual std::string getName();
 
 	protected:
 		virtual void updateInternal();
+
+	private:
+		unsigned int m_reachedTargets;
+
 	};
 }
 }

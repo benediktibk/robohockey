@@ -16,7 +16,7 @@ void CalibrationFinishedTest::nextState_always_NULL()
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	CalibrationFinished calibrationFinishedState(robot, field, referee);
+	CalibrationFinished calibrationFinishedState(robot, field, referee, 0);
 
 	calibrationFinishedState.update();
 
