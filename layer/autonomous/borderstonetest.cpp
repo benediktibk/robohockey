@@ -7,10 +7,10 @@ using namespace RoboHockey::Layer::Autonomous;
 
 void RoboHockey::Layer::Autonomous::BorderStoneTest::getNumberOfChildrenRecursive_noChildren_is0()
 {
-	BorderStoneDistances distances;
+	BorderStoneDistances distances(0.07);
 	Point father;
 	Point position;
-	BorderStone borderstone(father, BorderStoneFieldDistanceRoot, distances, position);
+	BorderStone borderstone(father, BorderStoneFieldDistanceRoot, distances, position, 0.05);
 
 	vector<Point*> possibleChildren;
 
@@ -21,10 +21,10 @@ void RoboHockey::Layer::Autonomous::BorderStoneTest::getNumberOfChildrenRecursiv
 
 void BorderStoneTest::getNumberOfChildrenRecursive_twoChildren_is2()
 {
-	BorderStoneDistances distances;
+	BorderStoneDistances distances(0.07);
 	Point father;
 	Point position;
-	BorderStone borderstone(father, BorderStoneFieldDistanceRoot, distances, position);
+	BorderStone borderstone(father, BorderStoneFieldDistanceRoot, distances, position, 0.05);
 
 	vector<Point*> possibleChildren;
 	possibleChildren.push_back(new Point(0,distances.getStandardFieldDistance(BorderStoneFieldDistanceA)));
@@ -37,30 +37,30 @@ void BorderStoneTest::getNumberOfChildrenRecursive_twoChildren_is2()
 
 void BorderStoneTest::getDistanceToFather_root_isRoot()
 {
-	BorderStoneDistances distances;
+	BorderStoneDistances distances(0.07);
 	Point father;
 	Point position;
-	BorderStone borderstone(father, BorderStoneFieldDistanceRoot, distances, position);
+	BorderStone borderstone(father, BorderStoneFieldDistanceRoot, distances, position, 0.05);
 
 	CPPUNIT_ASSERT_EQUAL(BorderStoneFieldDistanceRoot, borderstone.getDistanceToFather());
 }
 
 void BorderStoneTest::getDistanceToFather_distanceB_isDistanceB()
 {
-	BorderStoneDistances distances;
+	BorderStoneDistances distances(0.07);
 	Point father;
 	Point position;
-	BorderStone borderstone(father, BorderStoneFieldDistanceB, distances, position);
+	BorderStone borderstone(father, BorderStoneFieldDistanceB, distances, position, 0.05);
 
 	CPPUNIT_ASSERT_EQUAL(BorderStoneFieldDistanceB, borderstone.getDistanceToFather());
 }
 
 void BorderStoneTest::getAllChildren_noValidChildren_isEmpty()
 {
-	BorderStoneDistances distances;
+	BorderStoneDistances distances(0.07);
 	Point father;
 	Point position;
-	BorderStone borderstone(father, BorderStoneFieldDistanceRoot, distances, position);
+	BorderStone borderstone(father, BorderStoneFieldDistanceRoot, distances, position, 0.05);
 
 	vector<Point*> possibleChildren;
 	possibleChildren.push_back(new Point(0,1.53));
@@ -73,10 +73,10 @@ void BorderStoneTest::getAllChildren_noValidChildren_isEmpty()
 
 void BorderStoneTest::getAllChildren_2validChildren_has2Entries()
 {
-	BorderStoneDistances distances;
+	BorderStoneDistances distances(0.07);
 	Point father;
 	Point position;
-	BorderStone borderstone(father, BorderStoneFieldDistanceRoot, distances, position);
+	BorderStone borderstone(father, BorderStoneFieldDistanceRoot, distances, position, 0.05);
 
 	vector<Point*> possibleChildren;
 	possibleChildren.push_back(new Point(0,distances.getStandardFieldDistance(BorderStoneFieldDistanceA)));
@@ -89,10 +89,10 @@ void BorderStoneTest::getAllChildren_2validChildren_has2Entries()
 
 void BorderStoneTest::getAllChildren_2validChildren_correctChildren()
 {
-	BorderStoneDistances distances;
+	BorderStoneDistances distances(0.07);
 	Point father;
 	Point position;
-	BorderStone borderstone(father, BorderStoneFieldDistanceRoot, distances, position);
+	BorderStone borderstone(father, BorderStoneFieldDistanceRoot, distances, position, 0.05);
 
 	vector<Point*> possibleChildren;
 	possibleChildren.push_back(new Point(0,distances.getStandardFieldDistance(BorderStoneFieldDistanceA)));

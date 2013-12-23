@@ -22,7 +22,7 @@ namespace Autonomous
 	class BorderStoneDistances
 	{
 	public:
-		BorderStoneDistances();
+		BorderStoneDistances(double epsilon);
 
 		double getStandardFieldDistance(BorderStoneFieldDistance distanceType) const;
 		bool isDistanceStandardDistance(double distance) const;

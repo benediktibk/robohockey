@@ -12,7 +12,9 @@ using namespace RoboHockey::Layer::Autonomous;
 FieldDetector::FieldDetector(const Point &currentPosition, vector<Point> &pointsOfObjects):
 	m_currentPosition(currentPosition),
 	m_points(pointsOfObjects),
-	m_maxBorderstonesArranged(2)
+	m_distanceChecker(0.05),
+	m_maxBorderstonesArranged(2),
+	m_epsilonBorderStone(0.07)
 { }
 
 bool FieldDetector::tryToDetectField()
@@ -27,7 +29,7 @@ bool FieldDetector::tryToDetectField()
 			if(i != iter)
 				currentPoints.push_back(&(*iter));
 
-		BorderStone root(*i, BorderStoneFieldDistanceRoot, m_distanceChecker, *i);
+		BorderStone root(*i, BorderStoneFieldDistanceRoot, m_distanceChecker, *i, m_epsilonBorderStone);
 		root.searchNeighbourBorderStones(currentPoints);
 
 		//! Add One, as root is a BorderStone, too
@@ -76,7 +78,7 @@ double FieldDetector::getRotation()
 
 bool FieldDetector::tryToFigureOutNewOrigin(BorderStone &root)
 {
-	BorderStoneDistances distancesChecker;
+	BorderStoneDistances &distancesChecker = m_distanceChecker;
 	BorderStoneFieldDistance firstDistance;
 	BorderStoneFieldDistance secondDistance;
 

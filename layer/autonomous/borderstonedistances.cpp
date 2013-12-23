@@ -4,8 +4,8 @@
 using namespace RoboHockey::Common;
 using namespace RoboHockey::Layer::Autonomous;
 
-BorderStoneDistances::BorderStoneDistances():
-	m_compare(0.02)
+BorderStoneDistances::BorderStoneDistances(double epsilon):
+	m_compare(epsilon)
 { }
 
 double BorderStoneDistances::getStandardFieldDistance(BorderStoneFieldDistance distanceType) const
