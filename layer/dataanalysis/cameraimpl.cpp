@@ -36,6 +36,7 @@ double CameraImpl::getProbabilityForYellowGoal()
 	inRange(m_filteredFrame, Scalar(20, 100, 50), Scalar(30, 200, 255), goal);
 	Rect range(103, 180, 114, 60);
 	goal = goal(range);
+
 	return (static_cast<double>(countNonZero(goal))/static_cast<double>(range.area()));
 }
 
@@ -47,6 +48,7 @@ double CameraImpl::getProbabilityForBlueGoal()
 	inRange(m_filteredFrame, Scalar(95, 20, 50), Scalar(107, 255, 255), goal);
 	Rect range(103, 180, 114, 60);
 	goal = goal(range);
+
 	return (static_cast<double>(countNonZero(goal))/static_cast<double>(range.area()));
 }
 
@@ -58,6 +60,7 @@ double CameraImpl::getProbabilityForCollectedYellowPuck()
 	inRange(m_filteredFrame, Scalar(20, 20, 50), Scalar(32, 255, 255), puck);
 	Rect range(155, 235, 13, 5);
 	puck = puck(range);
+
 	return (static_cast<double>(countNonZero(puck))/static_cast<double>(range.area()));
 }
 
@@ -69,7 +72,7 @@ double CameraImpl::getProbabilityForCollectedBluePuck()
 	inRange(m_filteredFrame, Scalar(95, 20, 40), Scalar(110, 255, 255), puck);
 	Rect range(155, 235, 13, 5);
 	puck = puck(range);
-	imwrite("test.png", puck);
+
 	return (static_cast<double>(countNonZero(puck))/static_cast<double>(range.area()));
 }
 
