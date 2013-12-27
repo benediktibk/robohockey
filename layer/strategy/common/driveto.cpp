@@ -12,7 +12,7 @@ using namespace RoboHockey::Layer::Autonomous;
 DriveTo::DriveTo(Autonomous::Robot &robot, Autonomous::Field &field, Common::Referee &referee,
 				 std::list<RobotPosition> targetList,
 				 State *stateAfterTargetReached, State *stateAfterTargetUnreachable) :
-	State(robot,field, referee, true),
+	State(robot, field, referee, true),
 	m_target(targetList),
 	m_stateAfterTargetReached(stateAfterTargetReached),
 	m_stateAfterTargetUnreachable(stateAfterTargetUnreachable)

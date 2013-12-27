@@ -60,6 +60,7 @@
 #include "layer/strategy/drivepuckstatemachine/drivepucktopositionstatetest.h"
 #include "layer/strategy/drivepuckstatemachine/drivetocollectpuckstatetest.h"
 #include "layer/strategy/drivepuckstatemachine/leavepuckstatetest.h"
+#include "layer/strategy/common/waitstatetest.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Common::CompareTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Common::WatchTest);
@@ -106,6 +107,7 @@ CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Strategy::Common::DriveToTest
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Strategy::Common::DrivePuckToAchiveGoalsTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Strategy::Common::DrivePuckToHidePucksTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Strategy::Common::StateTest);
+CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Strategy::Common::WaitStateTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Strategy::MainStateMachine::InitialStateTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Strategy::MainStateMachine::CalibrateTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Strategy::MainStateMachine::AchieveGoalsTest);

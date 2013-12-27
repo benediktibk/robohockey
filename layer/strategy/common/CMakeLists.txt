@@ -9,6 +9,7 @@ set(LAYER_STRATEGY_COMMON_SRC
 	driveto.cpp
 	drivepucktoachivegoals.cpp
 	drivepucktohidepucks.cpp
+	waitstate.cpp
 )
 
 set(LAYER_STRATEGY_COMMON_TEST_SRC
@@ -20,6 +21,7 @@ set(LAYER_STRATEGY_COMMON_TEST_SRC
 	drivepucktohidepuckstest.cpp
 	statetest.cpp
 	drivepuckmock.cpp
+	waitstatetest.cpp
 )
 
 set(MOC_H
