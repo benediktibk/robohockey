@@ -25,7 +25,6 @@ namespace FieldDetectionStateMachine
 
 	private:
 		unsigned int m_reachedTargets;
-		unsigned int m_updateCounter;
 
 	};
 }
