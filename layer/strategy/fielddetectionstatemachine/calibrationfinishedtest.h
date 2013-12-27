@@ -17,13 +17,13 @@ namespace FieldDetectionStateMachine
 	{
 		CPPUNIT_TEST_SUITE(CalibrationFinishedTest);
 		CPPUNIT_TEST(nextState_3TargetsReached_NULL);
-		CPPUNIT_TEST(nextState_0TargetsReached_DriveTo);
-		CPPUNIT_TEST(nextState_1TargetsReached_DriveTo);
+		CPPUNIT_TEST(nextState_0TargetsReached_WaitState);
+		CPPUNIT_TEST(nextState_1TargetsReached_WaitState);
 		CPPUNIT_TEST_SUITE_END();
 	private:
 		void nextState_3TargetsReached_NULL();
-		void nextState_0TargetsReached_DriveTo();
-		void nextState_1TargetsReached_DriveTo();
+		void nextState_0TargetsReached_WaitState();
+		void nextState_1TargetsReached_WaitState();
 	};
 }
 }

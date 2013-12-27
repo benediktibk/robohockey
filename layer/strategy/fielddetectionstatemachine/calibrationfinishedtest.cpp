@@ -4,6 +4,7 @@
 #include "layer/strategy/common/statemock.h"
 #include "layer/strategy/common/refereemock.h"
 #include "layer/strategy/common/driveto.h"
+#include "layer/strategy/common/waitstate.h"
 #include "layer/autonomous/robotmock.h"
 #include "layer/autonomous/fieldmock.h"
 
@@ -26,7 +27,7 @@ void CalibrationFinishedTest::nextState_3TargetsReached_NULL()
 	CPPUNIT_ASSERT(state == 0);
 }
 
-void CalibrationFinishedTest::nextState_0TargetsReached_DriveTo()
+void CalibrationFinishedTest::nextState_0TargetsReached_WaitState()
 {
 	RobotMock robot;
 	FieldMock field;
@@ -34,24 +35,15 @@ void CalibrationFinishedTest::nextState_0TargetsReached_DriveTo()
 	CalibrationFinished calibrationFinishedState(robot, field, referee, 0);
 
 	calibrationFinishedState.update();
-	calibrationFinishedState.update();
-	calibrationFinishedState.update();
-	calibrationFinishedState.update();
-	calibrationFinishedState.update();
-	calibrationFinishedState.update();
-	calibrationFinishedState.update();
-	calibrationFinishedState.update();
-	calibrationFinishedState.update();
-	calibrationFinishedState.update();
 
 	State *state;
 	state = calibrationFinishedState.nextState();
-	DriveTo *stateCasted = dynamic_cast<DriveTo*>(state);
+	WaitState *stateCasted = dynamic_cast<WaitState*>(state);
 
 	CPPUNIT_ASSERT(stateCasted != 0);
 }
 
-void CalibrationFinishedTest::nextState_1TargetsReached_DriveTo()
+void CalibrationFinishedTest::nextState_1TargetsReached_WaitState()
 {
 	RobotMock robot;
 	FieldMock field;
@@ -59,19 +51,10 @@ void CalibrationFinishedTest::nextState_1TargetsReached_DriveTo()
 	CalibrationFinished calibrationFinishedState(robot, field, referee, 1);
 
 	calibrationFinishedState.update();
-	calibrationFinishedState.update();
-	calibrationFinishedState.update();
-	calibrationFinishedState.update();
-	calibrationFinishedState.update();
-	calibrationFinishedState.update();
-	calibrationFinishedState.update();
-	calibrationFinishedState.update();
-	calibrationFinishedState.update();
-	calibrationFinishedState.update();
 
 	State *state;
 	state = calibrationFinishedState.nextState();
-	DriveTo *stateCasted = dynamic_cast<DriveTo*>(state);
+	WaitState *stateCasted = dynamic_cast<WaitState*>(state);
 
 	CPPUNIT_ASSERT(stateCasted != 0);
 }
