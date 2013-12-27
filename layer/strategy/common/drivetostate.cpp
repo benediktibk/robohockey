@@ -1,4 +1,4 @@
-#include "layer/strategy/common/driveto.h"
+#include "layer/strategy/common/drivetostate.h"
 #include "layer/strategy/common/referee.h"
 #include "layer/autonomous/robot.h"
 #include "common/angle.h"
@@ -9,7 +9,7 @@ using namespace RoboHockey::Common;
 using namespace RoboHockey::Layer::Strategy::Common;
 using namespace RoboHockey::Layer::Autonomous;
 
-DriveTo::DriveTo(Autonomous::Robot &robot, Autonomous::Field &field, Common::Referee &referee,
+DriveToState::DriveToState(Autonomous::Robot &robot, Autonomous::Field &field, Common::Referee &referee,
 				 std::list<RobotPosition> targetList,
 				 State *stateAfterTargetReached, State *stateAfterTargetUnreachable) :
 	State(robot, field, referee, true),
@@ -20,7 +20,7 @@ DriveTo::DriveTo(Autonomous::Robot &robot, Autonomous::Field &field, Common::Ref
 	assert(m_stateAfterTargetReached != 0);
 }
 
-State* DriveTo::nextState()
+State* DriveToState::nextState()
 {
 	if (m_robot.stuckAtObstacle() || m_robot.cantReachTarget())
 	{
@@ -46,12 +46,12 @@ State* DriveTo::nextState()
 	return 0;
 }
 
-std::string DriveTo::getName()
+std::string DriveToState::getName()
 {
 	return "DriveTo";
 }
 
-void DriveTo::updateInternal()
+void DriveToState::updateInternal()
 {
 	m_robot.goTo(m_target);
 }

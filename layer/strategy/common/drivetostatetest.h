@@ -1,5 +1,5 @@
-#ifndef ROBOHOCKEY_LAYER_STRATEGY_COMMON_DRIVETOTEST_H
-#define ROBOHOCKEY_LAYER_STRATEGY_COMMON_DRIVETOTEST_H
+#ifndef ROBOHOCKEY_LAYER_STRATEGY_COMMON_DRIVETOSTATETEST_H
+#define ROBOHOCKEY_LAYER_STRATEGY_COMMON_DRIVETOSTATETEST_H
 
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
@@ -12,10 +12,10 @@ namespace Strategy
 {
 namespace Common
 {
-class DriveToTest :
+class DriveToStateTest :
 		public CPPUNIT_NS::TestFixture
 	{
-		CPPUNIT_TEST_SUITE(DriveToTest);
+		CPPUNIT_TEST_SUITE(DriveToStateTest);
 		CPPUNIT_TEST(nextState_didntReachedTarget_NULL);
 		CPPUNIT_TEST(nextState_reachedTarget_stateAfterReachedTarget);
 		CPPUNIT_TEST(nextState_cantReachTarget_stateAfterCantReachTarget);

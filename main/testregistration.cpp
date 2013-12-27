@@ -39,7 +39,7 @@
 #include "layer/autonomous/routingresulttest.h"
 #include "layer/view/modeltest.h"
 #include "layer/strategy/common/statemachinetest.h"
-#include "layer/strategy/common/drivetotest.h"
+#include "layer/strategy/common/drivetostatetest.h"
 #include "layer/strategy/common/drivepucktoachivegoalstest.h"
 #include "layer/strategy/common/drivepucktohidepuckstest.h"
 #include "layer/strategy/common/statetest.h"
@@ -103,7 +103,7 @@ CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Autonomous::RoutingObstacleTe
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Autonomous::RoutingResultTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::View::ModelTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Strategy::Common::StateMachineTest);
-CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Strategy::Common::DriveToTest);
+CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Strategy::Common::DriveToStateTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Strategy::Common::DrivePuckToAchiveGoalsTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Strategy::Common::DrivePuckToHidePucksTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Strategy::Common::StateTest);

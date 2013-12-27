@@ -1,5 +1,5 @@
-#include "layer/strategy/common/drivetotest.h"
-#include "layer/strategy/common/driveto.h"
+#include "layer/strategy/common/drivetostatetest.h"
+#include "layer/strategy/common/drivetostate.h"
 #include "layer/strategy/common/statemachine.h"
 #include "layer/strategy/common/statemock.h"
 #include "layer/strategy/common/refereemock.h"
@@ -12,7 +12,7 @@ using namespace RoboHockey::Common;
 using namespace RoboHockey::Layer::Strategy::Common;
 using namespace RoboHockey::Layer::Autonomous;
 
-void DriveToTest::nextState_didntReachedTarget_NULL()
+void DriveToStateTest::nextState_didntReachedTarget_NULL()
 {
 	RobotMock robot;
 	FieldMock field;
@@ -21,7 +21,7 @@ void DriveToTest::nextState_didntReachedTarget_NULL()
 	State *stateAfterTargetUnreachable = new StateMock(robot, field, referee);
 	std::list<RobotPosition> targetList;
 	targetList.push_back(RobotPosition());
-	DriveTo driveToState(robot, field, referee, targetList, stateAfterTargetReached, stateAfterTargetUnreachable);
+	DriveToState driveToState(robot, field, referee, targetList, stateAfterTargetReached, stateAfterTargetUnreachable);
 
 	driveToState.update();
 	robot.setReachedTarget(false);
@@ -32,7 +32,7 @@ void DriveToTest::nextState_didntReachedTarget_NULL()
 	CPPUNIT_ASSERT(state == 0);
 }
 
-void DriveToTest::nextState_reachedTarget_stateAfterReachedTarget()
+void DriveToStateTest::nextState_reachedTarget_stateAfterReachedTarget()
 {
 	RobotMock robot;
 	FieldMock field;
@@ -41,7 +41,7 @@ void DriveToTest::nextState_reachedTarget_stateAfterReachedTarget()
 	State *stateAfterTargetUnreachable = new StateMock(robot, field, referee);
 	std::list<RobotPosition> targetList;
 	targetList.push_back(RobotPosition());
-	DriveTo driveToState(robot, field, referee, targetList, stateAfterTargetReached, stateAfterTargetUnreachable);
+	DriveToState driveToState(robot, field, referee, targetList, stateAfterTargetReached, stateAfterTargetUnreachable);
 
 	driveToState.update();
 	robot.setReachedTarget(true);
@@ -52,7 +52,7 @@ void DriveToTest::nextState_reachedTarget_stateAfterReachedTarget()
 	CPPUNIT_ASSERT(state == stateAfterTargetReached);
 }
 
-void DriveToTest::nextState_cantReachTarget_stateAfterCantReachTarget()
+void DriveToStateTest::nextState_cantReachTarget_stateAfterCantReachTarget()
 {
 	RobotMock robot;
 	FieldMock field;
@@ -61,7 +61,7 @@ void DriveToTest::nextState_cantReachTarget_stateAfterCantReachTarget()
 	State *stateAfterTargetUnreachable = new StateMock(robot, field, referee);
 	std::list<RobotPosition> targetList;
 	targetList.push_back(RobotPosition());
-	DriveTo driveToState(robot, field, referee, targetList, stateAfterTargetReached, stateAfterTargetUnreachable);
+	DriveToState driveToState(robot, field, referee, targetList, stateAfterTargetReached, stateAfterTargetUnreachable);
 
 	driveToState.update();
 	robot.setReachedTarget(true);
@@ -73,7 +73,7 @@ void DriveToTest::nextState_cantReachTarget_stateAfterCantReachTarget()
 	CPPUNIT_ASSERT(state == stateAfterTargetUnreachable);
 }
 
-void DriveToTest::nextState_stuckAtObstacle_stateAfterCantReachTarget()
+void DriveToStateTest::nextState_stuckAtObstacle_stateAfterCantReachTarget()
 {
 	RobotMock robot;
 	FieldMock field;
@@ -82,7 +82,7 @@ void DriveToTest::nextState_stuckAtObstacle_stateAfterCantReachTarget()
 	State *stateAfterTargetUnreachable = new StateMock(robot, field, referee);
 	std::list<RobotPosition> targetList;
 	targetList.push_back(RobotPosition());
-	DriveTo driveToState(robot, field, referee, targetList, stateAfterTargetReached, stateAfterTargetUnreachable);
+	DriveToState driveToState(robot, field, referee, targetList, stateAfterTargetReached, stateAfterTargetUnreachable);
 
 	driveToState.update();
 	robot.setReachedTarget(true);

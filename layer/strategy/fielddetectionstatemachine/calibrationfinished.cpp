@@ -1,6 +1,6 @@
 #include "layer/strategy/fielddetectionstatemachine/calibrationfinished.h"
 #include "layer/strategy/common/referee.h"
-#include "layer/strategy/common/driveto.h"
+#include "layer/strategy/common/drivetostate.h"
 #include "layer/autonomous/robot.h"
 #include "layer/autonomous/field.h"
 #include "common/robotposition.h"
@@ -24,7 +24,7 @@ State* CalibrationFinished::nextState()
 	targetList.push_back(m_field.getTargetsForWaitingPhase()[m_reachedTargets]);
 
 	return new WaitState(m_robot, m_field, m_referee,
-					new DriveTo(m_robot, m_field, m_referee, targetList,
+					new DriveToState(m_robot, m_field, m_referee, targetList,
 					   new CalibrationFinished(m_robot, m_field, m_referee, m_reachedTargets +1),
 					   new CalibrationFinished(m_robot, m_field, m_referee, m_reachedTargets +1)),
 					10);

@@ -2,7 +2,7 @@
 #include "layer/strategy/drivepuckstatemachine/collectpuckstate.h"
 #include "layer/strategy/drivepuckstatemachine/findpuckstate.h"
 #include "layer/strategy/drivepuckstatemachine/initialstate.h"
-#include "layer/strategy/common/driveto.h"
+#include "layer/strategy/common/drivetostate.h"
 #include "layer/strategy/common/referee.h"
 #include "layer/autonomous/robot.h"
 #include "layer/autonomous/field.h"
@@ -21,7 +21,7 @@ State* DriveToCollectPuckState::nextState()
 	if(m_drivePuck->getNumberOfKnownPucksNotInTarget() == 0)
 		return new FindPuckState(m_robot, m_field, m_referee, m_drivePuck);
 	else
-		return new DriveTo(m_robot, m_field, m_referee, m_drivePuck->getPositionsToCollectPuck(),
+		return new DriveToState(m_robot, m_field, m_referee, m_drivePuck->getPositionsToCollectPuck(),
 						   new CollectPuckState(m_robot, m_field, m_referee, m_drivePuck),
 						   new InitialState(m_robot, m_field, m_referee, m_drivePuck));
 }

@@ -380,10 +380,10 @@ layer/strategy/fielddetectionstatemachine/turnangletest.h
 layer/strategy/fielddetectionstatemachine/turnangle.h
 layer/strategy/fielddetectionstatemachine/turnangletest.cpp
 layer/strategy/fielddetectionstatemachine/turnangle.cpp
-layer/strategy/common/drivetotest.h
-layer/strategy/common/driveto.h
-layer/strategy/common/drivetotest.cpp
-layer/strategy/common/driveto.cpp
+layer/strategy/common/drivetostatetest.h
+layer/strategy/common/drivetostate.h
+layer/strategy/common/drivetostatetest.cpp
+layer/strategy/common/drivetostate.cpp
 layer/strategy/fielddetectionstatemachine/calibrationfinishedtest.h
 layer/strategy/fielddetectionstatemachine/calibrationfinished.h
 layer/strategy/fielddetectionstatemachine/calibrationfinishedtest.cpp

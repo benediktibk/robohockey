@@ -1,7 +1,7 @@
 #include "layer/strategy/drivepuckstatemachine/drivepucktopositionstate.h"
 #include "layer/strategy/drivepuckstatemachine/leavepuckstate.h"
 #include "layer/strategy/drivepuckstatemachine/drivetocollectpuckstate.h"
-#include "layer/strategy/common/driveto.h"
+#include "layer/strategy/common/drivetostate.h"
 #include "layer/autonomous/robot.h"
 
 using namespace RoboHockey::Layer::Strategy::Common;
@@ -16,7 +16,7 @@ DrivePuckToPositionState::DrivePuckToPositionState(Robot &robot, Field &field, R
 State *DrivePuckToPositionState::nextState()
 {
 	if(m_robot.isPuckCollected())
-		return new DriveTo(m_robot, m_field, m_referee, m_drivePuck->getTargetPositions(),
+		return new DriveToState(m_robot, m_field, m_referee, m_drivePuck->getTargetPositions(),
 						   new LeavePuckState(m_robot, m_field, m_referee, m_drivePuck),
 						   new LeavePuckState(m_robot, m_field, m_referee, m_drivePuck));
 	else

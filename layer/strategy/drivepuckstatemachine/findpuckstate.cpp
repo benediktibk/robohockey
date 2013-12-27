@@ -1,6 +1,6 @@
 #include "layer/strategy/drivepuckstatemachine/findpuckstate.h"
 #include "layer/strategy/drivepuckstatemachine/drivetocollectpuckstate.h"
-#include "layer/strategy/common/driveto.h"
+#include "layer/strategy/common/drivetostate.h"
 #include "layer/strategy/common/referee.h"
 #include "layer/autonomous/robot.h"
 #include "layer/autonomous/field.h"
@@ -16,7 +16,7 @@ FindPuckState::FindPuckState(Robot &robot, Field &field, Referee &referee, Drive
 
 State *FindPuckState::nextState()
 {
-	return new DriveTo(m_robot, m_field, m_referee, m_field.getTargetsForSearchingPucks(),
+	return new DriveToState(m_robot, m_field, m_referee, m_field.getTargetsForSearchingPucks(),
 					   new DriveToCollectPuckState(m_robot, m_field, m_referee, m_drivePuck),
 					   new FindPuckState(m_robot, m_field, m_referee, m_drivePuck));
 }
