@@ -21,6 +21,7 @@ class HideEnemyPucksTest:
         CPPUNIT_TEST(nextState_stopMovement_Pause);
         CPPUNIT_TEST(nextState_gameOver_Pause);
         CPPUNIT_TEST(nextState_achievedGoals2_AchieveGoals);
+		CPPUNIT_TEST(nextState_nextState_hideEnemyPucks);
         CPPUNIT_TEST_SUITE_END();
 
     private:
@@ -29,6 +30,7 @@ class HideEnemyPucksTest:
         void nextState_gameOver_Pause();
         void nextState_allEnemyPucksHidden_DriveToFinalPosition();
         void nextState_achievedGoals2_AchieveGoals();
+		void nextState_nextState_hideEnemyPucks();
     };
 }
 }

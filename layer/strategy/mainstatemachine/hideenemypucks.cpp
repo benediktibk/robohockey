@@ -31,7 +31,7 @@ State* HideEnemyPucks::nextState()
 		return new Pause(m_robot, m_field, m_referee);
 	else if(m_field.getNumberOfAchievedGoals() < 3 && m_robot.reachedTarget())
 		return new AchieveGoals(m_robot, m_field, m_referee);
-	else if(m_field.getNumberOfHiddenPucks() >= 3)
+	else if(m_field.getNumberOfHiddenPucks() >= 3 && m_field.getNumberOfAchievedGoals() >=3 && m_robot.reachedTarget())
 		return new DriveToFinalPosition(m_robot, m_field, m_referee);
 	else
 		return 0;
