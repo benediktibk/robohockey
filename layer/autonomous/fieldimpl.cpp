@@ -147,7 +147,7 @@ bool FieldImpl::numberOfPucksChanged() const
 	return m_numberOfPucksChanged;
 }
 
-std::list<RobotPosition> FieldImpl::getTargetsForGoalDetection() const
+list<RobotPosition> FieldImpl::getTargetsForGoalDetection() const
 {
 	list<RobotPosition> targetList;
 	targetList.push_back(RobotPosition(Point(5.0/6.0 + 0.34,1.5), Angle::getHalfRotation()));
@@ -155,7 +155,7 @@ std::list<RobotPosition> FieldImpl::getTargetsForGoalDetection() const
 	return targetList;
 }
 
-std::list<RobotPosition> FieldImpl::getTargetsForScoringGoals() const
+list<RobotPosition> FieldImpl::getTargetsForScoringGoals() const
 {
 	list<RobotPosition> targetList;
 
@@ -177,7 +177,7 @@ std::list<RobotPosition> FieldImpl::getTargetsForScoringGoals() const
 	return targetList;
 }
 
-std::list<RobotPosition> FieldImpl::getTargetsForFinalPosition() const
+list<RobotPosition> FieldImpl::getTargetsForFinalPosition() const
 {
 	list<RobotPosition> targetList;
 
@@ -203,7 +203,7 @@ std::list<RobotPosition> FieldImpl::getTargetsForFinalPosition() const
 	return targetList;
 }
 
-std::list<RobotPosition> FieldImpl::getTargetsForSearchingPucks() const
+list<RobotPosition> FieldImpl::getTargetsForSearchingPucks() const
 {
 	vector<RobotPosition> targetVector2;
 	list<RobotPosition> targetList;
@@ -278,7 +278,7 @@ std::list<RobotPosition> FieldImpl::getTargetsForSearchingPucks() const
 	return targetList;
 }
 
-std::list<RobotPosition> FieldImpl::getTargetsForHidingEnemyPucks() const
+list<RobotPosition> FieldImpl::getTargetsForHidingEnemyPucks() const
 {
 	list<RobotPosition> targets;
 
@@ -311,7 +311,7 @@ std::list<RobotPosition> FieldImpl::getTargetsForHidingEnemyPucks() const
 	return targets;
 }
 
-std::list<RobotPosition> FieldImpl::getTargetsForCollectingOnePuck(FieldColor puckColor) const
+list<RobotPosition> FieldImpl::getTargetsForCollectingOnePuck(FieldColor puckColor) const
 {
 	RandomDecision decider(0.5);
 	list<RobotPosition> targetsToCollect;
@@ -493,9 +493,9 @@ void FieldImpl::transformFieldToNewOrigin(const RobotPosition newOrigin)
 	transformCoordinateSystem(newOriginPoint, newOrigin.getOrientation().getValueBetweenMinusPiAndPi());
 }
 
-std::vector<RobotPosition> FieldImpl::getTargetsForWaitingPhase() const
+vector<RobotPosition> FieldImpl::getTargetsForWaitingPhase() const
 {
-	std::vector<RobotPosition> targetVector;
+	vector<RobotPosition> targetVector;
 	targetVector.push_back(RobotPosition(Point(10.0/9.0, 2.25), Angle()));
 	targetVector.push_back(RobotPosition(Point(10.0/9.0, 0.75), Angle()));
 	targetVector.push_back(RobotPosition(Point(10.0/9.0, 1.50), Angle()));
@@ -767,7 +767,7 @@ void FieldImpl::rotateCoordinateSystem(double alpha)
 	m_fieldObjects = newSystem;
 }
 
-std::vector<Point> *FieldImpl::getPointsOfObjectsWithDiameterAndColor(double diameter, FieldColor color)
+vector<Point> *FieldImpl::getPointsOfObjectsWithDiameterAndColor(double diameter, FieldColor color)
 {
 	vector<Point> *resultObjects = new vector<Point>;
 
