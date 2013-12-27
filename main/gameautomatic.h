@@ -7,6 +7,11 @@ namespace RoboHockey
 {
 namespace Layer
 {
+namespace View
+{
+	class Model;
+	class Controller;
+}
 namespace Strategy
 {
 namespace Common
@@ -33,6 +38,8 @@ namespace Main
 	private:
 		Layer::Strategy::Common::StateMachine *m_stateMachine;
 		std::string m_oldString;
+		Layer::View::Model *m_model;
+		Layer::View::Controller *m_controller;
 	};
 }
 }
