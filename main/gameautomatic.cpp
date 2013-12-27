@@ -28,6 +28,7 @@ GameAutomatic::GameAutomatic(int argc, char **argv) :
 
 	cout << "starting the robot" << endl;
 	cout << "program can be closed with 'q'" << endl;
+	m_controller->show();
 }
 
 GameAutomatic::~GameAutomatic()
