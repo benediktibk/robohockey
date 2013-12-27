@@ -34,6 +34,15 @@ void CalibrationFinishedTest::nextState_0TargetsReached_DriveTo()
 	CalibrationFinished calibrationFinishedState(robot, field, referee, 0);
 
 	calibrationFinishedState.update();
+	calibrationFinishedState.update();
+	calibrationFinishedState.update();
+	calibrationFinishedState.update();
+	calibrationFinishedState.update();
+	calibrationFinishedState.update();
+	calibrationFinishedState.update();
+	calibrationFinishedState.update();
+	calibrationFinishedState.update();
+	calibrationFinishedState.update();
 
 	State *state;
 	state = calibrationFinishedState.nextState();
@@ -49,6 +58,15 @@ void CalibrationFinishedTest::nextState_1TargetsReached_DriveTo()
 	RefereeMock referee;
 	CalibrationFinished calibrationFinishedState(robot, field, referee, 1);
 
+	calibrationFinishedState.update();
+	calibrationFinishedState.update();
+	calibrationFinishedState.update();
+	calibrationFinishedState.update();
+	calibrationFinishedState.update();
+	calibrationFinishedState.update();
+	calibrationFinishedState.update();
+	calibrationFinishedState.update();
+	calibrationFinishedState.update();
 	calibrationFinishedState.update();
 
 	State *state;
