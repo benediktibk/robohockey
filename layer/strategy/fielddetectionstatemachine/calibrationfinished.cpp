@@ -26,8 +26,7 @@ State* CalibrationFinished::nextState()
 	return new WaitState(m_robot, m_field, m_referee,
 					new DriveToState(m_robot, m_field, m_referee, targetList,
 					   new CalibrationFinished(m_robot, m_field, m_referee, m_reachedTargets +1),
-					   new CalibrationFinished(m_robot, m_field, m_referee, m_reachedTargets +1)),
-					10);
+					   new CalibrationFinished(m_robot, m_field, m_referee, m_reachedTargets +1)), 10);
 }
 
 std::string CalibrationFinished::getName()

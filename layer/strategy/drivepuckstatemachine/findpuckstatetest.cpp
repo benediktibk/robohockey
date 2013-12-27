@@ -22,8 +22,20 @@ void FindPuckStateTest::nextState_targetReached_nextStateIsDriveToCollectPuck()
 	FindPuckState findPuckState(robot, field, referee, drivePuck);
 	State *driveToState;
 	driveToState = findPuckState.nextState();
+	State *waitState;
+	waitState = driveToState->nextState();
+	waitState->update();
+	waitState->update();
+	waitState->update();
+	waitState->update();
+	waitState->update();
+	waitState->update();
+	waitState->update();
+	waitState->update();
+	waitState->update();
+	waitState->update();
 	State *state;
-	state = driveToState->nextState();
+	state = waitState->nextState();
 	DriveToCollectPuckState *stateCasted = dynamic_cast<DriveToCollectPuckState*>(state);
 
 	CPPUNIT_ASSERT(stateCasted != 0);
