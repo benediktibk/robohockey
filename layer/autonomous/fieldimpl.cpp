@@ -501,6 +501,9 @@ void FieldImpl::updateWithLidarData(double range)
 	vector<FieldObject> inVisibleArea = moveAllFieldObjectsInVisibleAreaToTemporaryVector(range);
 	vector<FieldObject> partlyVisibleObjects = getAllPartlyVisibleObjects();
 
+	for (vector<FieldObject>::iterator i = inVisibleArea.begin(); i != inVisibleArea.end(); ++i)
+		i->shouldBeSeen();
+
 	for (vector<DataAnalysis::LidarObject>::const_iterator i = objectsInRange.begin(); i != objectsInRange.end(); ++i)
 	{
 		const DataAnalysis::LidarObject &lidarObject = *i;
@@ -680,7 +683,10 @@ bool FieldImpl::tryToMergeLidarAndFieldObject(FieldObject &fieldObject, const Da
 		if (fieldObject.getColor() == FieldColorUnknown)
 			diameter = 0.5 * (fieldObject.getCircle().getDiameter() + lidarObject.getDiameter());
 
-		m_fieldObjects.push_back(FieldObject( Circle(newCenter, diameter), fieldObject.getColor()));
+		fieldObject.seen();
+		m_fieldObjects.push_back(FieldObject(
+						Circle(newCenter, diameter), fieldObject.getColor(),
+						fieldObject.getSeen(), fieldObject.getShouldBeSeen(), fieldObject.getNotSeen()));
 		return true;
 	}
 

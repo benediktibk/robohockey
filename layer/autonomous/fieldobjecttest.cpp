@@ -45,6 +45,27 @@ void FieldObjectTest::constructor_validArguments_shouldBeSeenIs0()
 	CPPUNIT_ASSERT_EQUAL((unsigned int)0, object.getShouldBeSeen());
 }
 
+void FieldObjectTest::constructor_seenIs1_seenIs1()
+{
+	FieldObject object(Circle(Point(1, 2), 3), FieldColorUnknown, 1, 3, 2);
+
+	CPPUNIT_ASSERT_EQUAL((unsigned int)1, object.getSeen());
+}
+
+void FieldObjectTest::constructor_notSeenIs2_notSeenIs2()
+{
+	FieldObject object(Circle(Point(1, 2), 3), FieldColorUnknown, 1, 3, 2);
+
+	CPPUNIT_ASSERT_EQUAL((unsigned int)2, object.getNotSeen());
+}
+
+void FieldObjectTest::constructor_shouldBeSeenIs3_shouldBeSeenIs3()
+{
+	FieldObject object(Circle(Point(1, 2), 3), FieldColorUnknown, 1, 3, 2);
+
+	CPPUNIT_ASSERT_EQUAL((unsigned int)3, object.getShouldBeSeen());
+}
+
 void FieldObjectTest::setColor_blueColor_IsBlueColor()
 {
 	Circle circle(Point(2,3), 5);

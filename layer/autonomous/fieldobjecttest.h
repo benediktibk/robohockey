@@ -19,6 +19,9 @@ namespace Autonomous
 		CPPUNIT_TEST(constructor_validArguments_seenIs0);
 		CPPUNIT_TEST(constructor_validArguments_notSeenIs0);
 		CPPUNIT_TEST(constructor_validArguments_shouldBeSeenIs0);
+		CPPUNIT_TEST(constructor_seenIs1_seenIs1);
+		CPPUNIT_TEST(constructor_notSeenIs2_notSeenIs2);
+		CPPUNIT_TEST(constructor_shouldBeSeenIs3_shouldBeSeenIs3);
 		CPPUNIT_TEST(setColor_blueColor_IsBlueColor);
 		CPPUNIT_TEST(setCircle_validCircle_getCircleReturnsSameCircle);
 		CPPUNIT_TEST(seen_empty_seenIs1);
@@ -42,6 +45,9 @@ namespace Autonomous
 		void constructor_validArguments_seenIs0();
 		void constructor_validArguments_notSeenIs0();
 		void constructor_validArguments_shouldBeSeenIs0();
+		void constructor_seenIs1_seenIs1();
+		void constructor_notSeenIs2_notSeenIs2();
+		void constructor_shouldBeSeenIs3_shouldBeSeenIs3();
 		void setColor_blueColor_IsBlueColor();
 		void setCircle_validCircle_getCircleReturnsSameCircle();
 		void seen_empty_seenIs1();

@@ -14,6 +14,7 @@ namespace Autonomous
 	{
 	public:
 		FieldObject(const Common::Circle &circle, Common::FieldColor color);
+		FieldObject(const Common::Circle &circle, Common::FieldColor color, unsigned int seen, unsigned int shouldBeSeen, unsigned int notSeen);
 
 		const Common::Circle &getCircle() const;
 		Common::FieldColor getColor() const;

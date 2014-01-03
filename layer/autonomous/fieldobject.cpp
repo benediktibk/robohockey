@@ -12,6 +12,16 @@ FieldObject::FieldObject(const Circle &circle, FieldColor color) :
 	m_notSeen(0)
 { }
 
+FieldObject::FieldObject(
+		const Circle &circle, FieldColor color,
+		unsigned int seen, unsigned int shouldBeSeen, unsigned int notSeen) :
+	m_circle(circle),
+	m_color(color),
+	m_seen(seen),
+	m_shouldBeSeen(shouldBeSeen),
+	m_notSeen(notSeen)
+{ }
+
 const Circle &FieldObject::getCircle() const
 {
 	return m_circle;
