@@ -342,7 +342,7 @@ double LidarImpl::canBeSeenPercentage(const Circle &object, const RobotPosition 
 	int maximumRightEdgeSensorNumber = calculateSensorNumberFromOrientation(getMaximumAngleRight());
 	unsigned int totalSensorCount = leftEdgeSensorNumber - rightEdgeSensorNumber + 1;
 	unsigned int sensorCount = 0;
-	Compare compare(0.07);
+	Compare compare(max(0.07, radius*2));
 
 	leftEdgeSensorNumber = min(leftEdgeSensorNumber, maximumLeftEdgeSensorNumber);
 	rightEdgeSensorNumber = max(rightEdgeSensorNumber, maximumRightEdgeSensorNumber);
