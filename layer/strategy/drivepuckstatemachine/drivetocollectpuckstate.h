@@ -17,7 +17,6 @@ namespace DrivePuckStateMachine
 	{
 	public:
 		DriveToCollectPuckState(Autonomous::Robot &robot, Autonomous::Field &field, Common::Referee &referee, RoboHockey::Layer::Strategy::Common::DrivePuck *drivePuck);
-		virtual ~DriveToCollectPuckState();
 
 		virtual State* nextState();
 		virtual std::string getName();

@@ -15,10 +15,11 @@ namespace Autonomous
 			public Common::Point
 	{
 	public:
-		BorderStone(Common::Point &father, BorderStoneFieldDistance distanceToFather, BorderStoneDistances &distances, Common::Point &point);
+		BorderStone(Common::Point &father, BorderStoneFieldDistance distanceToFather,
+					BorderStoneDistances &distances, Common::Point &point, double epsilon);
 		virtual void searchNeighbourBorderStones(std::vector<Point*> &candidates);
 		virtual std::vector<BorderStone> &getAllChildren();
-		virtual int getNumberOfChildrenRecursive();
+		virtual unsigned int getNumberOfChildrenRecursive();
 		virtual BorderStoneFieldDistance getDistanceToFather();
 
 	private:
@@ -26,6 +27,7 @@ namespace Autonomous
 		BorderStoneDistances m_distances;
 		Common::Point m_father;
 		BorderStoneFieldDistance m_distanceToFather;
+		double m_epsilon;
 
 	};
 }

@@ -1,6 +1,7 @@
 #include "layer/autonomous/fielddetector.h"
 #include "layer/autonomous/borderstone.h"
 #include "common/angle.h"
+#include "common/rectangle.h"
 #include <iostream>
 #include <math.h>
 #include <assert.h>
@@ -11,7 +12,10 @@ using namespace RoboHockey::Layer::Autonomous;
 
 FieldDetector::FieldDetector(const Point &currentPosition, vector<Point> &pointsOfObjects):
 	m_currentPosition(currentPosition),
-	m_points(pointsOfObjects)
+	m_points(pointsOfObjects),
+	m_distanceChecker(0.05),
+	m_maxBorderstonesArranged(2),
+	m_epsilonBorderStone(0.07)
 { }
 
 bool FieldDetector::tryToDetectField()
@@ -26,15 +30,15 @@ bool FieldDetector::tryToDetectField()
 			if(i != iter)
 				currentPoints.push_back(&(*iter));
 
-		BorderStone root(*i, BorderStoneFieldDistanceRoot, m_distanceChecker, *i);
+		BorderStone root(*i, BorderStoneFieldDistanceRoot, m_distanceChecker, *i, m_epsilonBorderStone);
 		root.searchNeighbourBorderStones(currentPoints);
 
 		//! Add One, as root is a BorderStone, too
-		int numberOfFoundBorderStones = 1 + root.getNumberOfChildrenRecursive();
+		unsigned int numberOfFoundBorderStones = 1 + root.getNumberOfChildrenRecursive();
 
 		if (numberOfFoundBorderStones > 2)
 		{
-				result = tryToFigureOutNewOrigin(root);
+				result = tryToFigureOutNewOrigin(root) || result;
 
 //				if (result)
 //					return true;
@@ -56,7 +60,7 @@ Point FieldDetector::getNewOrigin()
 	for (vector<RobotPosition>::const_iterator it = m_newOrigins.begin(); it != m_newOrigins.end(); ++it)
 		medianPoint = medianPoint + (*it).getPosition() * 1.0/(double) m_newOrigins.size();
 
-	return medianPoint;
+//	return medianPoint;
 	return m_newOrigin;
 }
 
@@ -69,13 +73,14 @@ double FieldDetector::getRotation()
 	for (vector<RobotPosition>::const_iterator it = m_newOrigins.begin(); it != m_newOrigins.end(); ++it)
 		medianRotation = medianRotation + (*it).getOrientation() * 1.0/(double) m_newOrigins.size();
 
-	return medianRotation.getValueBetweenMinusPiAndPi();
+//	return medianRotation.getValueBetweenMinusPiAndPi();
 	return m_rotation;
 }
 
 bool FieldDetector::tryToFigureOutNewOrigin(BorderStone &root)
 {
-	BorderStoneDistances distancesChecker;
+	Rectangle fieldGround(Point(0,0), Point(5,3));
+	BorderStoneDistances &distancesChecker = m_distanceChecker;
 	BorderStoneFieldDistance firstDistance;
 	BorderStoneFieldDistance secondDistance;
 
@@ -179,31 +184,45 @@ bool FieldDetector::tryToFigureOutNewOrigin(BorderStone &root)
 		possibleNewOrigin = cornerTwo;
 
 	Point pointOfRoot(root.getX(), root.getY());
+	double rotation = 0.0;
 
 	if (!(pointOfRoot == possibleNewOrigin))
 	{
 		Angle angle(possibleNewOrigin, pointOfRoot);
-		m_rotation = -1.0 * angle.getValueBetweenMinusPiAndPi();
+		rotation = -1.0 * angle.getValueBetweenMinusPiAndPi();
 	} else
 	{
 		Point onePointFound(root.getAllChildren().front().getX(), root.getAllChildren().front().getY());
 		Angle angle(possibleNewOrigin, onePointFound);
-		m_rotation = -1.0 * angle.getValueBetweenMinusPiAndPi();
+		rotation = -1.0 * angle.getValueBetweenMinusPiAndPi();
 	}
 
 	Point currentPositionInNewCoordinates = m_currentPosition - possibleNewOrigin;
-	currentPositionInNewCoordinates.rotate(m_rotation);
+	currentPositionInNewCoordinates.rotate(rotation);
 
 	if (currentPositionInNewCoordinates.getY() < 0)
 	{
 		Point oppositeOrigin = Point(0,-1* distancesChecker.getStandardFieldDistance(BorderStoneFieldDistanceD));
-		oppositeOrigin.rotate(Angle( -1* m_rotation));
+		oppositeOrigin.rotate(Angle( -1* rotation));
 		possibleNewOrigin = possibleNewOrigin + oppositeOrigin;
 	}
 
-	m_newOrigin = possibleNewOrigin;
+	currentPositionInNewCoordinates = m_currentPosition - possibleNewOrigin;
+	currentPositionInNewCoordinates.rotate(rotation);
 
-	m_newOrigins.push_back( RobotPosition( m_newOrigin, m_rotation) );
+	if (!fieldGround.isInside(currentPositionInNewCoordinates, Compare(0.1)))
+	{
+		return false;
+	}
+
+	m_newOrigins.push_back( RobotPosition( possibleNewOrigin, rotation) );
+
+	if (root.getNumberOfChildrenRecursive() + 1 > m_maxBorderstonesArranged)
+	{
+		m_rotation = rotation;
+		m_newOrigin = possibleNewOrigin;
+		m_maxBorderstonesArranged = root.getNumberOfChildrenRecursive() + 1;
+	}
 
 	return true;
 }

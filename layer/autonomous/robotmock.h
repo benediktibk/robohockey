@@ -52,6 +52,8 @@ namespace Autonomous
 		void setIsRotating(bool value);
 		void setCantReachedTarget(bool value);
 		void setPuckCollected(bool value);
+		void setPuckCollectable(bool value);
+		const Common::Point &getLastTurnToTarget() const;
 
 	private:
 		Common::RobotPosition m_lastTarget;
@@ -64,6 +66,8 @@ namespace Autonomous
 		bool m_isRotating;
 		bool m_cantReachTarget;
 		bool m_puckCollected;
+		bool m_puckCollectable;
+		Common::Point m_lastTurnToTarget;
 	};
 }
 }

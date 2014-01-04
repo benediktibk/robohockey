@@ -87,6 +87,25 @@ void FieldDetectorTest::tryToDetectField_7validPoints_true()
 	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(1,1-(1.25+0.416)), fieldDetector.getNewOrigin()));
 }
 
+void FieldDetectorTest::tryToDetectField_7validPointsOpposite_true()
+{
+	Compare compare(0.01);
+	vector<Point> testPoints;
+	testPoints.push_back(Point(-2,-0.666));
+	testPoints.push_back(Point(-2,-0.25));
+	testPoints.push_back(Point(-2,1));
+	testPoints.push_back(Point(-2,1.833));
+	testPoints.push_back(Point(-2,2.666));
+	testPoints.push_back(Point(-2,3.916));
+	testPoints.push_back(Point(-2,4.333));
+
+	FieldDetector fieldDetector(Point(), testPoints);
+	bool result = fieldDetector.tryToDetectField();
+
+	CPPUNIT_ASSERT(result);
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(1,1-(1.25+0.416)), fieldDetector.getNewOrigin()));
+}
+
 void FieldDetectorTest::tryToDetectField_3pointsFar_correctNewOrigin()
 {
 	Compare compare(0.01);

@@ -4,7 +4,7 @@
 #include "layer/strategy/common/statemachine.h"
 #include "layer/strategy/common/statemock.h"
 #include "layer/strategy/common/refereemock.h"
-#include "layer/strategy/common/driveto.h"
+#include "layer/strategy/common/drivetostate.h"
 #include "layer/autonomous/robotmock.h"
 #include "layer/autonomous/fieldmock.h"
 
@@ -65,7 +65,7 @@ void DetectFieldTest::nextState_calibrated_driveTo()
 
 	State *state;
 	state = detectFieldState.nextState();
-	DriveTo *stateCasted = dynamic_cast<DriveTo*>(state);
+	DriveToState *stateCasted = dynamic_cast<DriveToState*>(state);
 	CPPUNIT_ASSERT(stateCasted != 0);
 }
 
@@ -85,14 +85,14 @@ void DetectFieldTest::nextState_calibratedOnSecondTry_driveTo()
 
 	State *state;
 	state = detectFieldState.nextState();
-	DriveTo *stateCasted = dynamic_cast<DriveTo*>(state);
+	DriveToState *stateCasted = dynamic_cast<DriveToState*>(state);
 	CPPUNIT_ASSERT(stateCasted == 0);
 
 	field.setCalibrationReturnPosition(RobotPosition(Point(1,2), Angle::getEighthRotation()));
 	detectFieldState.update();
 
 	state = detectFieldState.nextState();
-	stateCasted = dynamic_cast<DriveTo*>(state);
+	stateCasted = dynamic_cast<DriveToState*>(state);
 	CPPUNIT_ASSERT(stateCasted != 0);
 
 }
@@ -112,13 +112,13 @@ void DetectFieldTest::nextState_calibrationSuccessfulButTooFewCalibrationResults
 
 	State *state;
 	state = detectFieldState.nextState();
-	DriveTo *stateCasted = dynamic_cast<DriveTo*>(state);
+	DriveToState *stateCasted = dynamic_cast<DriveToState*>(state);
 	CPPUNIT_ASSERT(stateCasted == 0);
 
 	field.setCalibrationReturnPosition(RobotPosition(Point(1,2), Angle::getEighthRotation()));
 	detectFieldState.update();
 
 	state = detectFieldState.nextState();
-	stateCasted = dynamic_cast<DriveTo*>(state);
+	stateCasted = dynamic_cast<DriveToState*>(state);
 	CPPUNIT_ASSERT(stateCasted == 0);
 }

@@ -6,20 +6,22 @@ set(LAYER_STRATEGY_COMMON_SRC
 	state.cpp
 	statemachine.cpp
 	refereeimpl.cpp
-	driveto.cpp
+	drivetostate.cpp
 	drivepucktoachivegoals.cpp
 	drivepucktohidepucks.cpp
+	waitstate.cpp
 )
 
 set(LAYER_STRATEGY_COMMON_TEST_SRC
 	statemock.cpp
 	statemachinetest.cpp
 	refereemock.cpp
-	drivetotest.cpp
+	drivetostatetest.cpp
 	drivepucktoachivegoalstest.cpp
 	drivepucktohidepuckstest.cpp
 	statetest.cpp
 	drivepuckmock.cpp
+	waitstatetest.cpp
 )
 
 set(MOC_H

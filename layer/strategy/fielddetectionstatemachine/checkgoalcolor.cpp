@@ -1,6 +1,6 @@
 #include "layer/strategy/fielddetectionstatemachine/checkgoalcolor.h"
 #include "layer/strategy/common/referee.h"
-#include "layer/strategy/common/driveto.h"
+#include "layer/strategy/common/drivetostate.h"
 #include "layer/strategy/fielddetectionstatemachine/calibrationfinished.h"
 #include "layer/autonomous/field.h"
 #include "layer/autonomous/robot.h"
@@ -21,15 +21,8 @@ State* CheckGoalColor::nextState()
 {
 	//! @todo Replace Target Point with target point from field.
 	if (m_teamColorSend && m_gotResponse)
-	{
-		std::list<RobotPosition> targetList;
-		targetList.push_back(RobotPosition(Point(5.0/6.0, 1.5), Angle()));
+		return new CalibrationFinished(m_robot, m_field, m_referee, 0);
 
-		return new DriveTo(m_robot, m_field, m_referee,
-						   targetList,
-						   new CalibrationFinished(m_robot, m_field, m_referee),
-						   new CalibrationFinished(m_robot, m_field, m_referee));
-	}
 	return 0;
 }
 

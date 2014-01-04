@@ -31,7 +31,7 @@ namespace FieldDetectionStateMachine
 		virtual void updateInternal();
 
 	private:
-		RoboHockey::Common::Angle &m_angle;
+		RoboHockey::Common::Angle m_angle;
 		std::vector<RoboHockey::Common::RobotPosition> m_calibratedPositions;
 
 	};

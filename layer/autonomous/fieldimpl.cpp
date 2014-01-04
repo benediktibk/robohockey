@@ -207,7 +207,7 @@ list<RobotPosition> FieldImpl::getTargetsForSearchingPucks() const
 	list<RobotPosition> targetList;
 	list<RobotPosition> targetList2(10);
 	RandomDecision decider(0.5);
-	Rectangle sectorOfField(Point(0, 0), Point(5, 3));
+	Rectangle neutralSector(Point(5.0/3.0, 0.1), Point(10.0/3.0, 2.9));
 	double distanceFromRobotToObject = 0.50;
 	Angle angle0(0);
 
@@ -216,7 +216,7 @@ list<RobotPosition> FieldImpl::getTargetsForSearchingPucks() const
 		for (vector<FieldObject>::const_iterator i = m_fieldObjects.begin(); i != m_fieldObjects.end(); ++i)
 		{
 			const FieldObject &fieldObject = *i;
-			if(fieldObject.getColor() == FieldColorUnknown && sectorOfField.isInside(fieldObject.getCircle().getCenter(), 0.01))
+			if(fieldObject.getColor() == FieldColorUnknown && neutralSector.isInside(fieldObject.getCircle().getCenter(), 0.01))
 			{
 				list<RobotPosition> listToArrange(4);
 				vector<RobotPosition> targetVector;
@@ -489,6 +489,16 @@ void FieldImpl::transformFieldToNewOrigin(const RobotPosition newOrigin)
 {
 	Point newOriginPoint = newOrigin.getPosition();
 	transformCoordinateSystem(newOriginPoint, newOrigin.getOrientation().getValueBetweenMinusPiAndPi());
+}
+
+vector<RobotPosition> FieldImpl::getTargetsForWaitingPhase() const
+{
+	vector<RobotPosition> targetVector;
+	targetVector.push_back(RobotPosition(Point(10.0/9.0, 2.25), Angle()));
+	targetVector.push_back(RobotPosition(Point(10.0/9.0, 0.75), Angle()));
+	targetVector.push_back(RobotPosition(Point(10.0/9.0, 1.50), Angle()));
+
+	return targetVector;
 }
 
 void FieldImpl::updateWithLidarData(double range)

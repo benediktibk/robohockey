@@ -1,5 +1,5 @@
-#ifndef ROBOHOCKEY_LAYER_STRATEGY_COMMON_DRIVETO_H
-#define ROBOHOCKEY_LAYER_STRATEGY_COMMON_DRIVETO_H
+#ifndef ROBOHOCKEY_LAYER_STRATEGY_COMMON_DRIVETOSTATE_H
+#define ROBOHOCKEY_LAYER_STRATEGY_COMMON_DRIVETOSTATE_H
 
 #include "layer/strategy/common/state.h"
 #include "common/robotposition.h"
@@ -13,11 +13,11 @@ namespace Strategy
 {
 namespace Common
 {
-	class DriveTo :
+	class DriveToState :
 			public State
 	{
 	public:
-		DriveTo(Autonomous::Robot &robot, Autonomous::Field &field, Common::Referee &referee,
+		DriveToState(Autonomous::Robot &robot, Autonomous::Field &field, Common::Referee &referee,
 				std::list<RoboHockey::Common::RobotPosition> targetList,
 				State *stateAfterTargetReached, State *stateAfterTargetUnreachable);
 

@@ -42,6 +42,7 @@ namespace Autonomous
 		virtual void setTrueTeamColor(Common::FieldColor);
 		virtual Common::RobotPosition getNewOriginFromFieldDetection();
 		virtual void transformFieldToNewOrigin(const Common::RobotPosition newOrigin);
+		virtual std::vector<Common::RobotPosition> getTargetsForWaitingPhase() const;
 
 		void setFieldObjects(const std::vector<FieldObject> &objects);
 		void setSoftObstacles(const std::vector<Common::Circle> &obstacles);

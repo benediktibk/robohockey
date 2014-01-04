@@ -33,7 +33,8 @@ std::string TurnAngle::getName()
 
 void TurnAngle::updateInternal()
 {
-	Point target = m_robot.getCurrentPosition().getPosition() + Point(1,0);
+	Point target(1,0);
 	target.rotate(m_robot.getCurrentPosition().getOrientation() + m_angle);
+	target = target + m_robot.getCurrentPosition().getPosition();
 	m_robot.turnTo(target);
 }

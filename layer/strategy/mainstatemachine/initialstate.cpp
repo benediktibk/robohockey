@@ -20,7 +20,7 @@ State* InitialState::nextState()
 
 std::string InitialState::getName()
 {
-	return "InitialState";
+	return "Initial";
 }
 
 void InitialState::updateInternal()

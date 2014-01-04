@@ -16,8 +16,15 @@ namespace DrivePuckStateMachine
 			public CPPUNIT_NS::TestFixture
 	{
 		CPPUNIT_TEST_SUITE(LeavePuckStateTest);
+		CPPUNIT_TEST(nextState_cantReachTarget_nextStateIsInitialState);
+		CPPUNIT_TEST(nextState_reachedTargetAndNumberOfKnownPucksIs0_nextStateIsFindPuckState);
+		CPPUNIT_TEST(nextState_reachedTargetAndNumberOfKnownPucksIsNot0_nextStateIsDriveToCollectPuckState);
 		CPPUNIT_TEST_SUITE_END();
+
 	private:
+		void nextState_cantReachTarget_nextStateIsInitialState();
+		void nextState_reachedTargetAndNumberOfKnownPucksIs0_nextStateIsFindPuckState();
+		void nextState_reachedTargetAndNumberOfKnownPucksIsNot0_nextStateIsDriveToCollectPuckState();
 	
 };
 }

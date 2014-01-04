@@ -1985,11 +1985,11 @@ void FieldTest::getTargetsForSearchingPucks_twoObjectsWithUnknownColor_numberOfP
 	FieldImpl field(odometry, lidar, camera, autonomousRobot);
 
 	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
-	lidarObjects.addObject(DataAnalysis::LidarObject(Point(4, 1.5), 0.1));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(3, 0.4), 0.1));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(2, 1.5), 0.1));
 	lidar.setAllObjects(lidarObjects);
 	DataAnalysis::CameraObjects cameraObjects;
-	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorUnknown, Point(4, 1.5)));
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorUnknown, Point(3, 0.4)));
 	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorUnknown, Point(2, 1.5)));
 	camera.setAllObjects(cameraObjects);
 

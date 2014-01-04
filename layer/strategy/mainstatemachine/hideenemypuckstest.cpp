@@ -68,6 +68,7 @@ void HideEnemyPucksTest::nextState_allEnemyPucksHidden_DriveToFinalPosition()
     referee.setStopMovement(false);
     field.setAchievedGoals(3);
     field.setEnemyHiddenPucks(3);
+	robot.setReachedTarget(true);
     State *state;
     state = hideEnemyPucks.nextState();
     DriveToFinalPosition *stateCasted = dynamic_cast<DriveToFinalPosition*>(state);
@@ -88,6 +89,22 @@ void HideEnemyPucksTest::nextState_achievedGoals2_AchieveGoals()
     State *state;
     state = hideEnemyPucks.nextState();
     AchieveGoals *stateCasted = dynamic_cast<AchieveGoals*>(state);
-    CPPUNIT_ASSERT(stateCasted != 0);
+	CPPUNIT_ASSERT(stateCasted != 0);
+}
+
+void HideEnemyPucksTest::nextState_nextState_hideEnemyPucks()
+{
+	RobotMock robot;
+	FieldMock field;
+	RefereeMock referee;
+	HideEnemyPucks hideEnemyPucks(robot, field, referee);
+	referee.setGameOver(false);
+	referee.setStopMovement(false);
+	field.setAchievedGoals(2);
+	field.setEnemyHiddenPucks(2);
+	robot.setReachedTarget(false);
+	State *state;
+	state = hideEnemyPucks.nextState();
+	CPPUNIT_ASSERT(state == 0);
 }
 

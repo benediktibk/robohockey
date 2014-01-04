@@ -18,13 +18,13 @@ class CheckGoalColorTest :
 		CPPUNIT_TEST_SUITE(CheckGoalColorTest);
 		CPPUNIT_TEST(nextState_successfulColorCheckNoResponse_NULL);
 		CPPUNIT_TEST(nextState_unsuccessfulColorCheck_NULL);
-		CPPUNIT_TEST(nextState_successfulColorCheckGotResponse_driveTo);
+		CPPUNIT_TEST(nextState_successfulColorCheckGotResponse_calibrationFinished);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
 		void nextState_successfulColorCheckNoResponse_NULL();
 		void nextState_unsuccessfulColorCheck_NULL();
-		void nextState_successfulColorCheckGotResponse_driveTo();
+		void nextState_successfulColorCheckGotResponse_calibrationFinished();
 	};
 }
 }
