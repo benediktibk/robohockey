@@ -1053,7 +1053,31 @@ void FieldTest::update_lidarObjectSeenOnlyOnce_noFieldObjectsAndObstacles()
 	CPPUNIT_ASSERT_EQUAL((size_t)0, hardObstacles.size());
 }
 
-void FieldTest::update_lidarObjectSeenTwice_oneFieldObjectAndObstacle()
+void FieldTest::update_lidarObjectSeenThreeTimes_oneFieldObjectAndObstacle()
+{
+	DataAnalysis::OdometryMock odometry;
+	DataAnalysis::LidarMock lidar;
+	DataAnalysis::CameraMock camera;
+	Autonomous::RobotMock autonomousRobot;
+	DataAnalysis::LidarObjects objects(Point(0, 0));
+	objects.addObject(DataAnalysis::LidarObject(Point(2, 0), 0.1));
+	FieldImpl field(odometry, lidar, camera, autonomousRobot);
+
+	lidar.setCanBeSeen(true);
+	lidar.setCanBeSeenPartly(true);
+	lidar.setAllObjects(objects);
+	field.update();
+	field.update();
+	field.update();
+
+	vector<FieldObject> fieldObjects = field.getAllFieldObjects();
+	vector<Circle> softObstacles = field.getAllSoftObstacles();
+	vector<Circle> hardObstacles = field.getAllHardObstacles();
+	CPPUNIT_ASSERT_EQUAL((size_t)1, fieldObjects.size());
+	CPPUNIT_ASSERT_EQUAL((size_t)1, softObstacles.size() + hardObstacles.size());
+}
+
+void FieldTest::update_lidarObjectSeenOnlyOnce_noFieldObjects()
 {
 	DataAnalysis::OdometryMock odometry;
 	DataAnalysis::LidarMock lidar;
@@ -1069,10 +1093,94 @@ void FieldTest::update_lidarObjectSeenTwice_oneFieldObjectAndObstacle()
 	field.update();
 
 	vector<FieldObject> fieldObjects = field.getAllFieldObjects();
+	CPPUNIT_ASSERT_EQUAL((size_t)0, fieldObjects.size());
+}
+
+void FieldTest::update_lidarObjectSeenOnlyOnce_noObstacles()
+{
+	DataAnalysis::OdometryMock odometry;
+	DataAnalysis::LidarMock lidar;
+	DataAnalysis::CameraMock camera;
+	Autonomous::RobotMock autonomousRobot;
+	DataAnalysis::LidarObjects objects(Point(0, 0));
+	objects.addObject(DataAnalysis::LidarObject(Point(2, 0), 0.1));
+	FieldImpl field(odometry, lidar, camera, autonomousRobot);
+
+	lidar.setCanBeSeen(true);
+	lidar.setCanBeSeenPartly(true);
+	lidar.setAllObjects(objects);
+	field.update();
+
 	vector<Circle> softObstacles = field.getAllSoftObstacles();
 	vector<Circle> hardObstacles = field.getAllHardObstacles();
+	CPPUNIT_ASSERT_EQUAL((size_t)0, softObstacles.size() + hardObstacles.size());
+}
+
+void FieldTest::update_lidarObjectSeenTwice_oneFieldObject()
+{
+	DataAnalysis::OdometryMock odometry;
+	DataAnalysis::LidarMock lidar;
+	DataAnalysis::CameraMock camera;
+	Autonomous::RobotMock autonomousRobot;
+	DataAnalysis::LidarObjects objects(Point(0, 0));
+	objects.addObject(DataAnalysis::LidarObject(Point(2, 0), 0.1));
+	FieldImpl field(odometry, lidar, camera, autonomousRobot);
+
+	lidar.setCanBeSeen(true);
+	lidar.setCanBeSeenPartly(true);
+	lidar.setAllObjects(objects);
+	field.update();
+	field.update();
+
+	vector<FieldObject> fieldObjects = field.getAllFieldObjects();
 	CPPUNIT_ASSERT_EQUAL((size_t)1, fieldObjects.size());
-	CPPUNIT_ASSERT_EQUAL((size_t)1, softObstacles.size() + hardObstacles.size());
+}
+
+void FieldTest::update_lidarObjectNotSeenOnce_oneFieldObject()
+{
+	DataAnalysis::OdometryMock odometry;
+	DataAnalysis::LidarMock lidar;
+	DataAnalysis::CameraMock camera;
+	Autonomous::RobotMock autonomousRobot;
+	DataAnalysis::LidarObjects objects(Point(0, 0));
+	objects.addObject(DataAnalysis::LidarObject(Point(2, 0), 0.1));
+	FieldImpl field(odometry, lidar, camera, autonomousRobot);
+
+	lidar.setCanBeSeen(true);
+	lidar.setCanBeSeenPartly(true);
+	lidar.setAllObjects(objects);
+	field.update();
+	field.update();
+	objects.clear();
+	lidar.setAllObjects(objects);
+	field.update();
+
+	vector<FieldObject> fieldObjects = field.getAllFieldObjects();
+	CPPUNIT_ASSERT_EQUAL((size_t)1, fieldObjects.size());
+}
+
+void FieldTest::update_lidarObjectNotSeenTwice_noFieldObjects()
+{
+	DataAnalysis::OdometryMock odometry;
+	DataAnalysis::LidarMock lidar;
+	DataAnalysis::CameraMock camera;
+	Autonomous::RobotMock autonomousRobot;
+	DataAnalysis::LidarObjects objects(Point(0, 0));
+	objects.addObject(DataAnalysis::LidarObject(Point(2, 0), 0.1));
+	FieldImpl field(odometry, lidar, camera, autonomousRobot);
+
+	lidar.setCanBeSeen(true);
+	lidar.setCanBeSeenPartly(true);
+	lidar.setAllObjects(objects);
+	field.update();
+	field.update();
+	objects.clear();
+	lidar.setAllObjects(objects);
+	field.update();
+	field.update();
+
+	vector<FieldObject> fieldObjects = field.getAllFieldObjects();
+	CPPUNIT_ASSERT_EQUAL((size_t)0, fieldObjects.size());
 }
 
 void FieldTest::calibratePosition_noValidPattern_false()

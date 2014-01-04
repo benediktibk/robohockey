@@ -54,7 +54,12 @@ namespace Autonomous
 		CPPUNIT_TEST(update_movingAndLidarDataChangesThirdVersion_fieldObjectCountDoesntChange);
 		CPPUNIT_TEST(update_lidarReturnsObjectWhichCantBeSeenActually_noFieldObjects);
 		CPPUNIT_TEST(update_lidarObjectSeenOnlyOnce_noFieldObjectsAndObstacles);
-		CPPUNIT_TEST(update_lidarObjectSeenTwice_oneFieldObjectAndObstacle);
+		CPPUNIT_TEST(update_lidarObjectSeenThreeTimes_oneFieldObjectAndObstacle);
+		CPPUNIT_TEST(update_lidarObjectSeenOnlyOnce_noFieldObjects);
+		CPPUNIT_TEST(update_lidarObjectSeenOnlyOnce_noObstacles);
+		CPPUNIT_TEST(update_lidarObjectSeenTwice_oneFieldObject);
+		CPPUNIT_TEST(update_lidarObjectNotSeenOnce_oneFieldObject);
+		CPPUNIT_TEST(update_lidarObjectNotSeenTwice_noFieldObjects);
 		CPPUNIT_TEST(calibratePosition_noValidPattern_false);
 		CPPUNIT_TEST(calibratePosition_validPattern_true);
 		CPPUNIT_TEST(calibratePosition_noValidPattern_noTransformation);
@@ -144,7 +149,12 @@ namespace Autonomous
 		void update_movingAndLidarDataChangesThirdVersion_fieldObjectCountDoesntChange();
 		void update_lidarReturnsObjectWhichCantBeSeenActually_noFieldObjects();
 		void update_lidarObjectSeenOnlyOnce_noFieldObjectsAndObstacles();
-		void update_lidarObjectSeenTwice_oneFieldObjectAndObstacle();
+		void update_lidarObjectSeenThreeTimes_oneFieldObjectAndObstacle();
+		void update_lidarObjectSeenOnlyOnce_noFieldObjects();
+		void update_lidarObjectSeenOnlyOnce_noObstacles();
+		void update_lidarObjectSeenTwice_oneFieldObject();
+		void update_lidarObjectNotSeenOnce_oneFieldObject();
+		void update_lidarObjectNotSeenTwice_noFieldObjects();
 		void calibratePosition_noValidPattern_false();
 		void calibratePosition_validPattern_true();
 		void calibratePosition_noValidPattern_noTransformation();
