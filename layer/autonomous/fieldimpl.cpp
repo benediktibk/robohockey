@@ -43,13 +43,16 @@ void FieldImpl::update()
 		updateWithLidarData(6.0);
 		if (!m_robot->isMoving())
 			updateWithCameraData();
-		updateObstacles();
 	}
 	else
 		updateWithLidarData(0.3);
 
 	removeNotExistingFieldObjects();
 	updateDefiniteFieldObjects();
+
+	if (!m_robot->isRotating())
+		updateObstacles();
+
 	updateAchievedGoals();
 	updateHiddenPucks();
 }

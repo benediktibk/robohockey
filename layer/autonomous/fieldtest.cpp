@@ -1451,10 +1451,12 @@ void FieldTest::calibratePosition_validPattern_objectsOutsideFieldAreDeleted()
 	lidar.setCanBeSeenPartly(true);
 	field.update();
 	field.update();
-	CPPUNIT_ASSERT_EQUAL((size_t) 5, field.getAllFieldObjects().size());
+	vector<FieldObject> fieldObjects = field.getAllFieldObjects();
+	CPPUNIT_ASSERT_EQUAL((size_t) 5, fieldObjects.size());
 
 	field.calibratePosition();
-	CPPUNIT_ASSERT_EQUAL((size_t) 4, field.getAllFieldObjects().size());
+	fieldObjects = field.getAllFieldObjects();
+	CPPUNIT_ASSERT_EQUAL((size_t) 4, fieldObjects.size());
 }
 
 void FieldTest::getObjectsWithColorOrderedByDistance_oneObjectWithCorrectColorAndOneWithNoColor_resultSizeIsCorrect()
