@@ -1583,6 +1583,18 @@ void LidarTest::canBeSeen_lookingLeftShiftedAndObstacleBehind_false()
 	CPPUNIT_ASSERT(!canBeSeen);
 }
 
+void LidarTest::canBeSeen_enemyRobotInFront_true()
+{
+	Hardware::LidarMock hardwareLidar;
+	LidarImpl lidar(hardwareLidar);
+	RobotPosition ownPosition(Point(0, 0), 0);
+	hardwareLidar.readSensorDataFromFile("resources/testfiles/lidar_40.txt");
+	Circle circle(Point(1.1667, 0.0816), 0.2149);
+
+	lidar.updateSensorData();
+	CPPUNIT_ASSERT(lidar.canBeSeen(circle, ownPosition));
+}
+
 vector<LidarObject> LidarTest::getDifferentObjects(
 		const vector<LidarObject> &one, const vector<LidarObject> &two)
 {
