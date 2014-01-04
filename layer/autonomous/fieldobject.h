@@ -29,12 +29,15 @@ namespace Autonomous
 		bool isDefinitelyExisting() const;
 		bool isDefinitelyNotExisting() const;
 
+		void operator=(const FieldObject &object);
+
 	private:
 		Common::Circle m_circle;
 		Common::FieldColor m_color;
 		unsigned int m_seen;
 		unsigned int m_shouldBeSeen;
 		unsigned int m_notSeen;
+		const unsigned int m_seenTreshold;
 	};
 }
 }
