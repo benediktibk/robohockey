@@ -1345,10 +1345,10 @@ void FieldTest::calibratePosition_validPattern_transformed()
 	field.update();
 	field.update();
 	field.calibratePosition();
+	field.update();
 
 	vector<FieldObject> fieldObjects = field.getAllFieldObjects();
 	vector<DataAnalysis::LidarObject> lidarObjectsVector = lidarObjects.getObjectsWithDistanceBelow(10);
-
 	CPPUNIT_ASSERT(fieldObjects.size() > 0);
 	CPPUNIT_ASSERT(!compare.isFuzzyEqual(fieldObjects.front().getCircle(), lidarObjectsVector.front()));
 }
@@ -1372,6 +1372,7 @@ void FieldTest::calibratePosition_validPattern_correctNumberOfFieldObjects()
 	field.update();
 	field.update();
 	field.calibratePosition();
+	field.update();
 
 	vector<FieldObject> fieldObjects = field.getAllFieldObjects();
 	vector<DataAnalysis::LidarObject> lidarObjectsVector = lidarObjects.getObjectsWithDistanceBelow(10);
@@ -1399,6 +1400,7 @@ void FieldTest::calibratePosition_validPattern_correctTransformation()
 	field.update();
 	field.update();
 	field.calibratePosition();
+	field.update();
 
 	bool result = true;
 	vector<FieldObject> fieldObjects = field.getAllFieldObjects();
@@ -1425,6 +1427,7 @@ void FieldTest::calibratePosition_realWorldExample_positionIsCorrect()
 	field.update();
 	field.update();
 	field.calibratePosition();
+	field.update();
 
 	Compare compare(0.5);
 	RobotPosition position = odometry.getCurrentPosition();
@@ -1455,6 +1458,11 @@ void FieldTest::calibratePosition_validPattern_objectsOutsideFieldAreDeleted()
 	CPPUNIT_ASSERT_EQUAL((size_t) 5, fieldObjects.size());
 
 	field.calibratePosition();
+	lidar.setCanBeSeen(false);
+	lidar.setCanBeSeenPartly(false);
+	lidarObjects.clear();
+	lidar.setAllObjects(lidarObjects);
+	field.update();
 	fieldObjects = field.getAllFieldObjects();
 	CPPUNIT_ASSERT_EQUAL((size_t) 4, fieldObjects.size());
 }

@@ -79,9 +79,9 @@ namespace Autonomous
 		bool tryToMergeLidarAndFieldObject(FieldObject &fieldObject, const DataAnalysis::LidarObject &lidarObject);
 		bool couldBeTheSameObject(const FieldObject &fieldObject, const DataAnalysis::LidarObject &lidarObject) const;
 
-		void transformCoordinateSystem(Common::Point &newOrigin, double rotation);
-		void moveCoordinateSystem(Common::Point &newOrigin);
-		void rotateCoordinateSystem(double alpha);
+		void transformCoordinateSystem(const Common::Point &newOrigin, const Common::Angle &rotation);
+		void moveCoordinateSystem(const Common::Point &newOrigin);
+		void rotateCoordinateSystem(const Common::Angle &rotation);
 
 		std::vector<Common::Point> *getPointsOfObjectsWithDiameterAndColor(double diameter, Common::FieldColor color);
 		std::vector<FieldObject> getObjectsWithColor(Common::FieldColor color) const;

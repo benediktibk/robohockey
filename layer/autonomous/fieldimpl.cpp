@@ -729,7 +729,7 @@ bool FieldImpl::couldBeTheSameObject(const FieldObject &fieldObject, const DataA
 	return positionCompare.isFuzzyEqual(fieldObject.getCircle().getCenter(), lidarObject.getCenter());
 }
 
-void FieldImpl::transformCoordinateSystem(Point &newOrigin, double rotation)
+void FieldImpl::transformCoordinateSystem(const Point &newOrigin, const Angle &rotation)
 {
 	moveCoordinateSystem(newOrigin);
 	rotateCoordinateSystem(rotation);
@@ -738,18 +738,18 @@ void FieldImpl::transformCoordinateSystem(Point &newOrigin, double rotation)
 	removeAllFieldObjectsOutsideOfField();
 }
 
-void FieldImpl::moveCoordinateSystem(Point &newOrigin)
+void FieldImpl::moveCoordinateSystem(const Point &newOrigin)
 {
 	vector<FieldObject> newSystem;
 
-	for (vector<FieldObject>::iterator i = m_fieldObjects.begin(); i != m_fieldObjects.end(); ++i)
+	for (vector<FieldObject>::const_iterator i = m_fieldObjects.begin(); i != m_fieldObjects.end(); ++i)
 	{
-		Point currentCenter = ((*i).getCircle()).getCenter();
-		double currentDiameter = ((*i).getCircle()).getDiameter();
-		Point newCenter = currentCenter - newOrigin;
-		FieldColor color = (*i).getColor();
+		FieldObject newObject = *i;
+		Circle circle = newObject.getCircle();
+		circle.setCenter(circle.getCenter() - newOrigin);
+		newObject.setCircle(circle);
 
-		newSystem.push_back(FieldObject(Circle(newCenter, currentDiameter), color));
+		newSystem.push_back(newObject);
 	}
 
 	Point newCenter =  m_position->getPosition() - newOrigin;
@@ -762,26 +762,26 @@ void FieldImpl::moveCoordinateSystem(Point &newOrigin)
 	m_fieldObjects = newSystem;
 }
 
-void FieldImpl::rotateCoordinateSystem(double alpha)
+void FieldImpl::rotateCoordinateSystem(const Angle &rotation)
 {
 	vector<FieldObject> newSystem;
 
 	for (vector<FieldObject>::iterator i = m_fieldObjects.begin(); i != m_fieldObjects.end(); ++i)
 	{
-		Point currentCenter = ((*i).getCircle()).getCenter();
-		double currentDiameter = ((*i).getCircle()).getDiameter();
-		FieldColor color = (*i).getColor();
-
-		currentCenter.rotate(Angle(alpha));
-
-		newSystem.push_back(FieldObject(Circle(currentCenter, currentDiameter), color));
+		FieldObject newObject = *i;
+		Circle circle = newObject.getCircle();
+		Point center = circle.getCenter();
+		center.rotate(rotation);
+		circle.setCenter(center);
+		newObject.setCircle(circle);
+		newSystem.push_back(newObject);
 	}
 
 	Point ownPosition = m_position->getPosition();
 	Angle ownOrientation = m_position->getOrientation();
 
-	ownPosition.rotate(Angle(alpha));
-	ownOrientation = ownOrientation + Angle(alpha);
+	ownPosition.rotate(rotation);
+	ownOrientation = ownOrientation + rotation;
 
 	m_position->setPosition(ownPosition);
 	m_position->setOrientation(ownOrientation);
@@ -793,7 +793,7 @@ void FieldImpl::rotateCoordinateSystem(double alpha)
 	m_fieldObjects = newSystem;
 }
 
-std::vector<Point> *FieldImpl::getPointsOfObjectsWithDiameterAndColor(double diameter, FieldColor color)
+vector<Point> *FieldImpl::getPointsOfObjectsWithDiameterAndColor(double diameter, FieldColor color)
 {
 	vector<Point> *resultObjects = new vector<Point>;
 
