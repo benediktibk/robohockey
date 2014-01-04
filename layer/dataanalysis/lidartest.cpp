@@ -449,6 +449,19 @@ void LidarTest::getAllObjects_twoDataSetsWhereTheRobotDroveForward_sameObjectCou
 	CPPUNIT_ASSERT_EQUAL((size_t)0, differences.size());
 }
 
+void LidarTest::getAllObjects_enemyRobotInFront_objectCountIs1()
+{
+	Hardware::LidarMock hardwareLidar;
+	LidarImpl lidar(hardwareLidar);
+	RobotPosition ownPosition(Point(0, 0), 0);
+	hardwareLidar.readSensorDataFromFile("resources/testfiles/lidar_40.txt");
+
+	lidar.updateSensorData();
+	LidarObjects objects = lidar.getAllObjects(ownPosition);
+
+	CPPUNIT_ASSERT_EQUAL((size_t)1, objects.getObjectCount());
+}
+
 void LidarTest::isObstacleInFront_noObstacleInFront_false()
 {
 	Hardware::LidarMock hardwareLidar;
