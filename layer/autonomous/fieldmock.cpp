@@ -106,15 +106,15 @@ bool FieldMock::isCalibrated() const
 
 FieldColor FieldMock::getOwnTeamColor() const
 {
-    return m_teamColor;
+	return m_teamColor;
 }
 
 FieldColor FieldMock::getEnemyTeamColor() const
 {
-    if (m_teamColor == FieldColorYellow)
-        return FieldColorBlue;
-    else
-        return FieldColorYellow;
+	if (m_teamColor == FieldColorYellow)
+		return FieldColorBlue;
+	else
+		return FieldColorYellow;
 }
 
 void FieldMock::detectTeamColorWithGoalInFront()
@@ -125,37 +125,32 @@ unsigned int FieldMock::getNumberOfHiddenPucks()
 	return m_hiddenPucks;
 }
 
-bool FieldMock::numberOfPucksChanged() const
-{
-	return false;
-}
-
-std::list<RobotPosition> FieldMock::getTargetsForGoalDetection() const
+list<RobotPosition> FieldMock::getTargetsForGoalDetection() const
 {
 	return list<RobotPosition>();
 }
 
-std::list<RobotPosition> FieldMock::getTargetsForScoringGoals() const
+list<RobotPosition> FieldMock::getTargetsForScoringGoals() const
 {
 	return list<RobotPosition>();
 }
 
-std::list<RobotPosition> FieldMock::getTargetsForFinalPosition() const
+list<RobotPosition> FieldMock::getTargetsForFinalPosition() const
 {
 	return list<RobotPosition>();
 }
 
-std::list<RobotPosition> FieldMock::getTargetsForSearchingPucks() const
+list<RobotPosition> FieldMock::getTargetsForSearchingPucks() const
 {
 	return list<RobotPosition>();
 }
 
-std::list<RobotPosition> FieldMock::getTargetsForHidingEnemyPucks() const
+list<RobotPosition> FieldMock::getTargetsForHidingEnemyPucks() const
 {
 	return list<RobotPosition>();
 }
 
-std::list<RobotPosition> FieldMock::getTargetsForCollectingOnePuck(FieldColor) const
+list<RobotPosition> FieldMock::getTargetsForCollectingOnePuck(FieldColor) const
 {
 	return list<RobotPosition>();
 }

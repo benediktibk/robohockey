@@ -75,10 +75,6 @@ namespace Autonomous
 		CPPUNIT_TEST(isPointInsideField_pointIsInside_true);
 		CPPUNIT_TEST(isPointInsideField_pointIsOutside_false);
 		CPPUNIT_TEST(isPointInsideField_pointIsUnderField_false);
-		CPPUNIT_TEST(numberOfPucksChanged_emptyField_false);
-		CPPUNIT_TEST(numberOfPucksChanged_onePuckAdded_true);
-		CPPUNIT_TEST(numberOfPucksChanged_onePuckRemoved_true);
-		CPPUNIT_TEST(numberOfPucksChanged_onePuckAddedOnePuckRemoved_true);
 		CPPUNIT_TEST(getTargetsForGoalDetection_correctPosition);
 		CPPUNIT_TEST(getAllSoftObstacles_oneBluePuck_resultSizeIs1);
 		CPPUNIT_TEST(getAllSoftObstacles_oneSmallObstacleWithUnknownColor_resultSizeIs1);
@@ -170,10 +166,6 @@ namespace Autonomous
 		void isPointInsideField_pointIsInside_true();
 		void isPointInsideField_pointIsOutside_false();
 		void isPointInsideField_pointIsUnderField_false();
-		void numberOfPucksChanged_emptyField_false();
-		void numberOfPucksChanged_onePuckAdded_true();
-		void numberOfPucksChanged_onePuckRemoved_true();
-		void numberOfPucksChanged_onePuckAddedOnePuckRemoved_true();
 		void getTargetsForGoalDetection_correctPosition();
 		void getAllSoftObstacles_oneBluePuck_resultSizeIs1();
 		void getAllSoftObstacles_oneSmallObstacleWithUnknownColor_resultSizeIs1();

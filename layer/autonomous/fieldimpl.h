@@ -50,7 +50,6 @@ namespace Autonomous
 		virtual unsigned int getNumberOfAchievedGoals();
 		virtual unsigned int getNumberOfHiddenPucks();
 		virtual bool isPointInsideField(const Common::Point &point) const;
-		virtual bool numberOfPucksChanged() const;
 		virtual bool isCalibrated() const;
 		virtual Common::FieldColor getOwnTeamColor() const;
 		virtual Common::FieldColor getEnemyTeamColor() const;
@@ -104,7 +103,6 @@ namespace Autonomous
 		std::vector<Common::Circle> m_softObstacles;
 		std::vector<Common::Circle> m_hardObstacles;
 		FieldState m_fieldState;
-		bool m_numberOfPucksChanged;
 		unsigned int m_achievedGoals;
 		unsigned int m_hiddenPucks;
 		Common::FieldColor m_teamColor;

@@ -23,7 +23,6 @@ FieldImpl::FieldImpl(DataAnalysis::Odometry &odometry, const DataAnalysis::Lidar
 	m_robot(&autonomousRobot),
 	m_position(new Common::RobotPosition(m_odometry->getCurrentPosition())),
 	m_fieldState(FieldStateUnknownPosition),
-	m_numberOfPucksChanged(false),
 	m_teamColor(FieldColorUnknown)
 { }
 
@@ -37,7 +36,6 @@ FieldImpl::~FieldImpl()
 
 void FieldImpl::update()
 {
-	m_numberOfPucksChanged = false;
 	updateWithOdometryData();
 
 	if (!m_robot->isRotating())
@@ -144,12 +142,7 @@ void FieldImpl::detectTeamColorWithGoalInFront()
 		m_teamColor = FieldColorYellow;
 }
 
-bool FieldImpl::numberOfPucksChanged() const
-{
-	return m_numberOfPucksChanged;
-}
-
-std::list<RobotPosition> FieldImpl::getTargetsForGoalDetection() const
+list<RobotPosition> FieldImpl::getTargetsForGoalDetection() const
 {
 	list<RobotPosition> targetList;
 	targetList.push_back(RobotPosition(Point(5.0/6.0 + 0.34,1.5), Angle::getHalfRotation()));
@@ -157,7 +150,7 @@ std::list<RobotPosition> FieldImpl::getTargetsForGoalDetection() const
 	return targetList;
 }
 
-std::list<RobotPosition> FieldImpl::getTargetsForScoringGoals() const
+list<RobotPosition> FieldImpl::getTargetsForScoringGoals() const
 {
 	list<RobotPosition> targetList;
 
@@ -179,7 +172,7 @@ std::list<RobotPosition> FieldImpl::getTargetsForScoringGoals() const
 	return targetList;
 }
 
-std::list<RobotPosition> FieldImpl::getTargetsForFinalPosition() const
+list<RobotPosition> FieldImpl::getTargetsForFinalPosition() const
 {
 	list<RobotPosition> targetList;
 
@@ -205,7 +198,7 @@ std::list<RobotPosition> FieldImpl::getTargetsForFinalPosition() const
 	return targetList;
 }
 
-std::list<RobotPosition> FieldImpl::getTargetsForSearchingPucks() const
+list<RobotPosition> FieldImpl::getTargetsForSearchingPucks() const
 {
 	vector<RobotPosition> targetVector2;
 	list<RobotPosition> targetList;
@@ -280,7 +273,7 @@ std::list<RobotPosition> FieldImpl::getTargetsForSearchingPucks() const
 	return targetList;
 }
 
-std::list<RobotPosition> FieldImpl::getTargetsForHidingEnemyPucks() const
+list<RobotPosition> FieldImpl::getTargetsForHidingEnemyPucks() const
 {
 	list<RobotPosition> targets;
 
@@ -313,7 +306,7 @@ std::list<RobotPosition> FieldImpl::getTargetsForHidingEnemyPucks() const
 	return targets;
 }
 
-std::list<RobotPosition> FieldImpl::getTargetsForCollectingOnePuck(FieldColor puckColor) const
+list<RobotPosition> FieldImpl::getTargetsForCollectingOnePuck(FieldColor puckColor) const
 {
 	RandomDecision decider(0.5);
 	list<RobotPosition> targetsToCollect;
@@ -546,11 +539,7 @@ void FieldImpl::updateWithLidarData(double range)
 	for (vector<FieldObject>::iterator i = inVisibleArea.begin(); i != inVisibleArea.end(); ++i)
 	{
 		FieldObject &fieldObject = *i;
-
 		fieldObject.notSeen();
-
-		if (fieldObject.getColor() != FieldColorUnknown)
-			m_numberOfPucksChanged = true;
 	}
 
 	m_fieldObjects.insert(m_fieldObjects.end(), inVisibleArea.begin(), inVisibleArea.end());
@@ -580,9 +569,6 @@ void FieldImpl::updateWithCameraData()
 			continue;
 
 		{
-			if (nextFieldObject.getColor() != currentObject.getColor())
-				m_numberOfPucksChanged = true;
-
 			nextFieldObject.setColor(currentObject.getColor());
 			Circle circle = nextFieldObject.getCircle();
 
