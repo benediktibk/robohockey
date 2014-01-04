@@ -474,3 +474,4 @@ layer/strategy/common/waitstatetest.h
 layer/strategy/common/waitstate.h
 layer/strategy/common/waitstatetest.cpp
 layer/strategy/common/waitstate.cpp
+resources/testfiles/lidar_40.txt

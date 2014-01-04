@@ -52,6 +52,8 @@ namespace Autonomous
 		CPPUNIT_TEST(update_movingAndLidarDataChanges_fieldObjectCountDoesntChange);
 		CPPUNIT_TEST(update_movingAndLidatDataChangesSecondVersion_fieldObjectCountDoesntChange);
 		CPPUNIT_TEST(update_movingAndLidarDataChangesThirdVersion_fieldObjectCountDoesntChange);
+		CPPUNIT_TEST(update_enemyRobotInFront_oneFieldObject);
+		CPPUNIT_TEST(update_enemyRobotInFront_oneHardObstacle);
 		CPPUNIT_TEST(update_lidarReturnsObjectWhichCantBeSeenActually_noFieldObjects);
 		CPPUNIT_TEST(update_lidarObjectSeenOnlyOnce_noFieldObjectsAndObstacles);
 		CPPUNIT_TEST(update_lidarObjectSeenThreeTimes_oneFieldObjectAndObstacle);
@@ -143,6 +145,8 @@ namespace Autonomous
 		void update_movingAndLidarDataChanges_fieldObjectCountDoesntChange();
 		void update_movingAndLidatDataChangesSecondVersion_fieldObjectCountDoesntChange();
 		void update_movingAndLidarDataChangesThirdVersion_fieldObjectCountDoesntChange();
+		void update_enemyRobotInFront_oneFieldObject();
+		void update_enemyRobotInFront_oneHardObstacle();
 		void update_lidarReturnsObjectWhichCantBeSeenActually_noFieldObjects();
 		void update_lidarObjectSeenOnlyOnce_noFieldObjectsAndObstacles();
 		void update_lidarObjectSeenThreeTimes_oneFieldObjectAndObstacle();

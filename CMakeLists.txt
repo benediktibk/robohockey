@@ -95,6 +95,7 @@ set(TESTFILES
 	lidar_37.txt
 	lidar_38.txt
 	lidar_39.txt
+	lidar_40.txt
 	lidar_wall.txt
 	lidar_moving_1_previous.txt
 	lidar_moving_1_current.txt

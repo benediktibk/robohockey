@@ -1084,6 +1084,44 @@ void FieldTest::update_movingAndLidarDataChangesThirdVersion_fieldObjectCountDoe
 	CPPUNIT_ASSERT_EQUAL((size_t)8, newObjectCount);
 }
 
+void FieldTest::update_enemyRobotInFront_oneFieldObject()
+{
+	DataAnalysis::OdometryMock odometry;
+	Hardware::LidarMock hardwareLidarMock(6);
+	DataAnalysis::LidarImpl lidar(hardwareLidarMock);
+	DataAnalysis::CameraMock camera;
+	Autonomous::RobotMock autonomousRobot;
+	FieldImpl field(odometry, lidar, camera, autonomousRobot);
+	odometry.setCurrentPosition(RobotPosition(Point(0, 0), Angle(0)));
+	hardwareLidarMock.readSensorDataFromFile("resources/testfiles/lidar_40.txt");
+
+	lidar.updateSensorData();
+	field.update();
+	field.update();
+
+	vector<FieldObject> fieldObjects = field.getAllFieldObjects();
+	CPPUNIT_ASSERT_EQUAL((size_t)1, fieldObjects.size());
+}
+
+void FieldTest::update_enemyRobotInFront_oneHardObstacle()
+{
+	DataAnalysis::OdometryMock odometry;
+	Hardware::LidarMock hardwareLidarMock(6);
+	DataAnalysis::LidarImpl lidar(hardwareLidarMock);
+	DataAnalysis::CameraMock camera;
+	Autonomous::RobotMock autonomousRobot;
+	FieldImpl field(odometry, lidar, camera, autonomousRobot);
+	odometry.setCurrentPosition(RobotPosition(Point(0, 0), Angle(0)));
+	hardwareLidarMock.readSensorDataFromFile("resources/testfiles/lidar_40.txt");
+
+	lidar.updateSensorData();
+	field.update();
+	field.update();
+
+	vector<Circle> hardObstacles = field.getAllHardObstacles();
+	CPPUNIT_ASSERT_EQUAL((size_t)1, hardObstacles.size());
+}
+
 void FieldTest::update_lidarReturnsObjectWhichCantBeSeenActually_noFieldObjects()
 {
 	DataAnalysis::OdometryMock odometry;
