@@ -828,25 +828,28 @@ vector<FieldObject> FieldImpl::getObjectsWithColor(FieldColor color) const
 
 vector<FieldObject> FieldImpl::moveAllFieldObjectsInVisibleAreaToTemporaryVector(double range)
 {
-	vector<FieldObject> result;
+	vector<FieldObject> visibleObjects;
+	vector<FieldObject> invisibleObjects;
+	invisibleObjects.reserve(m_fieldObjects.size());
+	visibleObjects.reserve(m_fieldObjects.size());
 	const RobotPosition &ownPosition = m_odometry->getCurrentPosition();
-	size_t i = 0;
+	const Point &positionOnly = ownPosition.getPosition();
 
-	while(i < m_fieldObjects.size())
+	for (vector<FieldObject>::const_iterator i = m_fieldObjects.begin(); i != m_fieldObjects.end(); ++i)
 	{
-		vector<FieldObject>::iterator it = m_fieldObjects.begin() + i;
-		const Circle &circle = m_fieldObjects[i].getCircle();
+		const FieldObject &fieldObject = *i;
+		const Circle &circle = fieldObject.getCircle();
+		bool canBeSeen = m_lidar->canBeSeen(circle, ownPosition);
+		double distance = positionOnly.distanceTo(circle.getCenter());
 
-		if (m_lidar->canBeSeen(circle, ownPosition) && m_position->getPosition().distanceTo(circle.getCenter()) < range)
-		{
-			result.push_back(*it);
-			m_fieldObjects.erase(it);
-			--i;
-		}
-
-		++i;
+		if (canBeSeen && distance < range)
+			visibleObjects.push_back(fieldObject);
+		else
+			invisibleObjects.push_back(fieldObject);
 	}
-	return result;
+
+	m_fieldObjects = invisibleObjects;
+	return visibleObjects;
 }
 
 vector<FieldObject> FieldImpl::getAllPartlyVisibleObjects() const
