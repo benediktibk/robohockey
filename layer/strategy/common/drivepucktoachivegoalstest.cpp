@@ -22,7 +22,7 @@ void DrivePuckToAchiveGoalsTest::getNumberOfKnownPucksNotInTarget_oneKnownPuck_r
 {
 	FieldMock field;
 	vector<FieldObject> objects;
-	objects.push_back(FieldObject(Circle(Point(1,1), 0.2), FieldColorUnknown));
+	objects.push_back(FieldObject(Circle(Point(1,1), 0.2), FieldColorUnknown, 2));
 	field.setFieldObjects(objects);
 	DrivePuckToAchiveGoals drivePuck(field);
 
@@ -33,9 +33,9 @@ void DrivePuckToAchiveGoalsTest::getNumberOfKnownPucksNotInTarget_threePucksOneI
 {
 	FieldMock field;
 	vector<FieldObject> objects;
-	objects.push_back(FieldObject(Circle(Point(1,1), 0.2), FieldColorUnknown));
-	objects.push_back(FieldObject(Circle(Point(1,2), 0.2), FieldColorUnknown));
-	objects.push_back(FieldObject(Circle(Point(2,1), 0.2), FieldColorUnknown));
+	objects.push_back(FieldObject(Circle(Point(1,1), 0.2), FieldColorUnknown, 2));
+	objects.push_back(FieldObject(Circle(Point(1,2), 0.2), FieldColorUnknown, 2));
+	objects.push_back(FieldObject(Circle(Point(2,1), 0.2), FieldColorUnknown, 2));
 	field.setFieldObjects(objects);
 	field.setAchievedGoals(1);
 	DrivePuckToAchiveGoals drivePuck(field);

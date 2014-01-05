@@ -17,6 +17,7 @@ using namespace RoboHockey::Common;
 using namespace RoboHockey::Layer::Autonomous;
 
 FieldImpl::FieldImpl(DataAnalysis::Odometry &odometry, const DataAnalysis::Lidar &lidar, DataAnalysis::Camera &camera, Robot &autonomousRobot):
+	m_seenTresholdForFieldObjects(2),
 	m_odometry(&odometry),
 	m_lidar(&lidar),
 	m_camera(&camera),
@@ -542,7 +543,7 @@ void FieldImpl::updateWithLidarData(double range)
 
 		if (!couldBeAPartlyVisibleObject)
 		{
-			FieldObject object(lidarObject, FieldColorUnknown);
+			FieldObject object(lidarObject, FieldColorUnknown, m_seenTresholdForFieldObjects);
 			object.shouldBeSeen();
 			object.seen();
 			newObjects.push_back(object);
@@ -723,7 +724,7 @@ bool FieldImpl::tryToMergeLidarAndFieldObject(FieldObject &fieldObject, const Da
 			diameter = 0.5 * (fieldObject.getCircle().getDiameter() + lidarObject.getDiameter());
 
 		FieldObject mergedFieldObject(
-					Circle(newCenter, diameter), fieldObject.getColor(),
+					Circle(newCenter, diameter), fieldObject.getColor(), m_seenTresholdForFieldObjects,
 					fieldObject.getSeen(), fieldObject.getShouldBeSeen(), fieldObject.getNotSeen());
 
 		fieldObject = mergedFieldObject;

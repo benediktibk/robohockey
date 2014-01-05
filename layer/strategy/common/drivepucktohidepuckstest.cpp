@@ -22,7 +22,7 @@ void DrivePuckToHidePucksTest::getNumberOfKnownPucksNotInTarget_oneKnownPuck_res
 {
 	FieldMock field;
 	vector<FieldObject> objects;
-	objects.push_back(FieldObject(Circle(Point(1,1), 0.2), FieldColorUnknown));
+	objects.push_back(FieldObject(Circle(Point(1,1), 0.2), FieldColorUnknown, 2));
 	field.setFieldObjects(objects);
 	DrivePuckToHidePucks drivePuck(field);
 
@@ -33,9 +33,9 @@ void DrivePuckToHidePucksTest::getNumberOfKnownPucksNotInTarget_threePucksOnePuc
 {
 	FieldMock field;
 	vector<FieldObject> objects;
-	objects.push_back(FieldObject(Circle(Point(1,1), 0.2), FieldColorUnknown));
-	objects.push_back(FieldObject(Circle(Point(1,2), 0.2), FieldColorUnknown));
-	objects.push_back(FieldObject(Circle(Point(2,1), 0.2), FieldColorUnknown));
+	objects.push_back(FieldObject(Circle(Point(1,1), 0.2), FieldColorUnknown, 2));
+	objects.push_back(FieldObject(Circle(Point(1,2), 0.2), FieldColorUnknown, 2));
+	objects.push_back(FieldObject(Circle(Point(2,1), 0.2), FieldColorUnknown, 2));
 	field.setFieldObjects(objects);
 	field.setEnemyHiddenPucks(1);
 	DrivePuckToHidePucks drivePuck(field);

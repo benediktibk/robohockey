@@ -93,6 +93,7 @@ namespace Autonomous
 		void removeAllFieldObjectsOutsideOfField();
 
 	private:
+		const unsigned int m_seenTresholdForFieldObjects;
 		DataAnalysis::Odometry *m_odometry;
 		const DataAnalysis::Lidar *m_lidar;
 		DataAnalysis::Camera *m_camera;

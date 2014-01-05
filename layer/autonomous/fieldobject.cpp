@@ -4,24 +4,24 @@ using namespace RoboHockey::Layer::Autonomous;
 using namespace RoboHockey::Common;
 
 
-FieldObject::FieldObject(const Circle &circle, FieldColor color) :
+FieldObject::FieldObject(const Circle &circle, FieldColor color, unsigned int seenTreshold) :
 	m_circle(circle),
 	m_color(color),
 	m_seen(0),
 	m_shouldBeSeen(0),
 	m_notSeen(0),
-	m_seenTreshold(2)
+	m_seenTreshold(seenTreshold)
 { }
 
 FieldObject::FieldObject(
-		const Circle &circle, FieldColor color,
+		const Circle &circle, FieldColor color, unsigned int seenTreshold,
 		unsigned int seen, unsigned int shouldBeSeen, unsigned int notSeen) :
 	m_circle(circle),
 	m_color(color),
 	m_seen(seen),
 	m_shouldBeSeen(shouldBeSeen),
 	m_notSeen(notSeen),
-	m_seenTreshold(2)
+	m_seenTreshold(seenTreshold)
 { }
 
 const Circle &FieldObject::getCircle() const
@@ -83,13 +83,4 @@ bool FieldObject::isDefinitelyExisting() const
 bool FieldObject::isDefinitelyNotExisting() const
 {
 	return getNotSeen() >= m_seenTreshold || (getShouldBeSeen() >= m_seenTreshold && getSeen() < m_seenTreshold);
-}
-
-void FieldObject::operator=(const FieldObject &object)
-{
-	m_circle = object.getCircle();
-	m_color = object.getColor();
-	m_seen = object.getSeen();
-	m_shouldBeSeen = object.getShouldBeSeen();
-	m_notSeen = object.getNotSeen();
 }
