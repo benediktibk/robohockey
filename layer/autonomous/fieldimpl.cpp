@@ -23,7 +23,6 @@ FieldImpl::FieldImpl(DataAnalysis::Odometry &odometry, const DataAnalysis::Lidar
 	m_robot(&autonomousRobot),
 	m_position(new Common::RobotPosition(m_odometry->getCurrentPosition())),
 	m_fieldState(FieldStateUnknownPosition),
-	m_numberOfPucksChanged(false),
 	m_teamColor(FieldColorUnknown)
 { }
 
@@ -37,7 +36,6 @@ FieldImpl::~FieldImpl()
 
 void FieldImpl::update()
 {
-	m_numberOfPucksChanged = false;
 	updateWithOdometryData();
 
 	if (!m_robot->isRotating())
@@ -45,10 +43,15 @@ void FieldImpl::update()
 		updateWithLidarData(6.0);
 		if (!m_robot->isMoving())
 			updateWithCameraData();
-		updateObstacles();
 	}
 	else
 		updateWithLidarData(0.3);
+
+	removeNotExistingFieldObjects();
+	updateDefiniteFieldObjects();
+
+	if (!m_robot->isRotating())
+		updateObstacles();
 
 	updateAchievedGoals();
 	updateHiddenPucks();
@@ -56,7 +59,7 @@ void FieldImpl::update()
 
 const vector<FieldObject> &FieldImpl::getAllFieldObjects() const
 {
-	return m_fieldObjects;
+	return m_definiteFieldObjects;
 }
 
 const vector<Circle> &FieldImpl::getAllSoftObstacles() const
@@ -140,11 +143,6 @@ void FieldImpl::detectTeamColorWithGoalInFront()
 		m_teamColor = FieldColorBlue;
 	else if (compare.isStrictFuzzyGreater(yellowGoal, blueGoal))
 		m_teamColor = FieldColorYellow;
-}
-
-bool FieldImpl::numberOfPucksChanged() const
-{
-	return m_numberOfPucksChanged;
 }
 
 list<RobotPosition> FieldImpl::getTargetsForGoalDetection() const
@@ -510,6 +508,10 @@ void FieldImpl::updateWithLidarData(double range)
 
 	vector<FieldObject> inVisibleArea = moveAllFieldObjectsInVisibleAreaToTemporaryVector(range);
 	vector<FieldObject> partlyVisibleObjects = getAllPartlyVisibleObjects();
+	vector<FieldObject> newObjects;
+
+	for (vector<FieldObject>::iterator i = inVisibleArea.begin(); i != inVisibleArea.end(); ++i)
+		i->shouldBeSeen();
 
 	for (vector<DataAnalysis::LidarObject>::const_iterator i = objectsInRange.begin(); i != objectsInRange.end(); ++i)
 	{
@@ -518,12 +520,15 @@ void FieldImpl::updateWithLidarData(double range)
 		if (!isPointFuzzyInsideField(lidarObject.getCenter(), 0.5))
 			continue;
 
-		if (inVisibleArea.size() != 0)
+		if (inVisibleArea.size() > 0)
 		{
-			vector<FieldObject>::iterator currentObject = getNextObjectFromPosition(inVisibleArea, (*i).getCenter());
+			vector<FieldObject>::iterator currentObject = getNextObjectFromPosition(inVisibleArea, lidarObject.getCenter());
+			FieldObject &nextFieldObject = *currentObject;
 
-			if (tryToMergeLidarAndFieldObject(*currentObject, lidarObject))
+			if (tryToMergeLidarAndFieldObject(nextFieldObject, lidarObject))
 			{
+				nextFieldObject.seen();
+				newObjects.push_back(nextFieldObject);
 				inVisibleArea.erase(currentObject);
 				continue;
 			}
@@ -535,21 +540,23 @@ void FieldImpl::updateWithLidarData(double range)
 			if (couldBeTheSameObject(*i, lidarObject))
 				couldBeAPartlyVisibleObject = true;
 
-		if (!couldBeAPartlyVisibleObject && m_lidar->canBeSeenPartly(lidarObject, *m_position))
+		if (!couldBeAPartlyVisibleObject)
 		{
 			FieldObject object(lidarObject, FieldColorUnknown);
-			m_fieldObjects.push_back(object);
+			object.shouldBeSeen();
+			object.seen();
+			newObjects.push_back(object);
 		}
 	}
 
-	for (vector<FieldObject>::const_iterator i = inVisibleArea.begin(); i != inVisibleArea.end(); ++i)
+	for (vector<FieldObject>::iterator i = inVisibleArea.begin(); i != inVisibleArea.end(); ++i)
 	{
-		if ((*i).getColor() != FieldColorUnknown)
-		{
-			m_numberOfPucksChanged = true;
-			break;
-		}
+		FieldObject &fieldObject = *i;
+		fieldObject.notSeen();
 	}
+
+	m_fieldObjects.insert(m_fieldObjects.end(), inVisibleArea.begin(), inVisibleArea.end());
+	m_fieldObjects.insert(m_fieldObjects.end(), newObjects.begin(), newObjects.end());
 }
 
 void FieldImpl::updateWithOdometryData()
@@ -568,27 +575,56 @@ void FieldImpl::updateWithCameraData()
 	{
 		const DataAnalysis::CameraObject &currentObject = allCameraObjects[i];
 
-		FieldObject* nextFieldObject = &getNextObjectFromPosition(currentObject.getPosition());
+		vector<FieldObject>::iterator nextFieldObjectIterator = getNextObjectFromPosition(currentObject.getPosition());
+		FieldObject &nextFieldObject = *nextFieldObjectIterator;
 
-		if (currentObject.getPosition().distanceTo(nextFieldObject->getCircle().getCenter()) < 0.07)
+		if (currentObject.getPosition().distanceTo(nextFieldObject.getCircle().getCenter()) > 0.07)
+			continue;
+
 		{
-			if (nextFieldObject->getColor() != currentObject.getColor())
-				m_numberOfPucksChanged = true;
-
-			nextFieldObject->setColor(currentObject.getColor());
-			Circle circle = nextFieldObject->getCircle();
+			nextFieldObject.setColor(currentObject.getColor());
+			Circle circle = nextFieldObject.getCircle();
 
 			if (currentObject.getColor() == FieldColorBlue || currentObject.getColor() == FieldColorYellow)
 			{
 				circle.setDiameter(0.12);
-				nextFieldObject->setCircle(circle);
+				nextFieldObject.setCircle(circle);
 			}
 			else if (currentObject.getColor() == FieldColorGreen)
 			{
 				circle.setDiameter(0.06);
-				nextFieldObject->setCircle(circle);
+				nextFieldObject.setCircle(circle);
 			}
 		}
+	}
+}
+
+void FieldImpl::removeNotExistingFieldObjects()
+{
+	vector<FieldObject> newFieldObjects;
+	newFieldObjects.reserve(m_fieldObjects.size());
+
+	for (vector<FieldObject>::const_iterator i = m_fieldObjects.begin(); i != m_fieldObjects.end(); ++i)
+	{
+		const FieldObject &object = *i;
+
+		if (!object.isDefinitelyNotExisting())
+			newFieldObjects.push_back(object);
+	}
+
+	m_fieldObjects = newFieldObjects;
+}
+
+void FieldImpl::updateDefiniteFieldObjects()
+{
+	m_definiteFieldObjects.clear();
+
+	for (vector<FieldObject>::const_iterator i = m_fieldObjects.begin(); i != m_fieldObjects.end(); ++i)
+	{
+		const FieldObject &object = *i;
+
+		if (object.isDefinitelyExisting())
+			m_definiteFieldObjects.push_back(object);
 	}
 }
 
@@ -599,7 +635,7 @@ void FieldImpl::updateObstacles()
 	m_softObstacles.reserve(m_fieldObjects.size());
 	m_hardObstacles.reserve(m_fieldObjects.size());
 
-	for (vector<FieldObject>::const_iterator i = m_fieldObjects.begin(); i != m_fieldObjects.end(); ++i)
+	for (vector<FieldObject>::const_iterator i = m_definiteFieldObjects.begin(); i != m_definiteFieldObjects.end(); ++i)
 	{
 		const FieldObject &fieldObject = *i;
 		Circle circle = fieldObject.getCircle();
@@ -624,15 +660,12 @@ void FieldImpl::updateAchievedGoals()
 	Rectangle goal(Point(4.167, 1), Point(4.583, 2));
 
 	m_achievedGoals = 0;
-	if(m_fieldObjects.size() != 0)
+	for (vector<FieldObject>::const_iterator i = m_definiteFieldObjects.begin(); i != m_definiteFieldObjects.end(); ++i)
 	{
-		for (vector<FieldObject>::const_iterator i = m_fieldObjects.begin(); i != m_fieldObjects.end(); ++i)
-		{
-			const FieldObject &fieldObject = *i;
+		const FieldObject &fieldObject = *i;
 
-			if (fieldObject.getColor() == m_teamColor && goal.isInside(fieldObject.getCircle().getCenter(), 0.001))
-				m_achievedGoals++;
-		}
+		if (fieldObject.getColor() == m_teamColor && goal.isInside(fieldObject.getCircle().getCenter(), 0.001))
+			m_achievedGoals++;
 	}
 }
 
@@ -641,39 +674,38 @@ void FieldImpl::updateHiddenPucks()
 	Rectangle hiddenArea(Point(3.334, 0), Point(5, 3));
 
 	m_hiddenPucks = 0;
-	if(m_fieldObjects.size() != 0)
+	for (vector<FieldObject>::const_iterator i = m_definiteFieldObjects.begin(); i != m_definiteFieldObjects.end(); ++i)
 	{
-		for (vector<FieldObject>::const_iterator i = m_fieldObjects.begin(); i != m_fieldObjects.end(); ++i)
-		{
-			const FieldObject &fieldObject = *i;
+		const FieldObject &fieldObject = *i;
 
-			if (fieldObject.getColor() == getEnemyTeamColor() && hiddenArea.isInside(fieldObject.getCircle().getCenter(), 0.001))
-				m_hiddenPucks++;
-		}
+		if (fieldObject.getColor() == getEnemyTeamColor() && hiddenArea.isInside(fieldObject.getCircle().getCenter(), 0.001))
+			m_hiddenPucks++;
 	}
 }
 
-FieldObject &FieldImpl::getNextObjectFromPosition(Point position)
+vector<FieldObject>::iterator FieldImpl::getNextObjectFromPosition(Point position)
 {
+	assert(m_fieldObjects.size() > 0);
 	vector<FieldObject>::iterator result = m_fieldObjects.begin();
 
 	for (vector<FieldObject>::iterator i = m_fieldObjects.begin(); i != m_fieldObjects.end(); ++i)
-	{
-		if ( position.distanceTo((*i).getCircle().getCenter()) < position.distanceTo((*result).getCircle().getCenter()))
+		if (position.distanceTo((*i).getCircle().getCenter()) < position.distanceTo((*result).getCircle().getCenter()))
 			result = i;
-	}
-	return *result;
+
+	return result;
 }
 
-vector<FieldObject>::iterator FieldImpl::getNextObjectFromPosition(std::vector<FieldObject> &fieldObjects, Point position)
+vector<FieldObject>::iterator FieldImpl::getNextObjectFromPosition(vector<FieldObject> &fieldObjects, Point position)
 {
+	assert(fieldObjects.size() > 0);
 	vector<FieldObject>::iterator result = fieldObjects.begin();
 
 	for (vector<FieldObject>::iterator i = fieldObjects.begin(); i != fieldObjects.end(); ++i)
 	{
-		if ( position.distanceTo((*i).getCircle().getCenter()) < position.distanceTo((*result).getCircle().getCenter()))
+		if (position.distanceTo((*i).getCircle().getCenter()) < position.distanceTo((*result).getCircle().getCenter()))
 			result = i;
 	}
+
 	return result;
 }
 
@@ -690,7 +722,11 @@ bool FieldImpl::tryToMergeLidarAndFieldObject(FieldObject &fieldObject, const Da
 		if (fieldObject.getColor() == FieldColorUnknown)
 			diameter = 0.5 * (fieldObject.getCircle().getDiameter() + lidarObject.getDiameter());
 
-		m_fieldObjects.push_back(FieldObject( Circle(newCenter, diameter), fieldObject.getColor()));
+		FieldObject mergedFieldObject(
+					Circle(newCenter, diameter), fieldObject.getColor(),
+					fieldObject.getSeen(), fieldObject.getShouldBeSeen(), fieldObject.getNotSeen());
+
+		fieldObject = mergedFieldObject;
 		return true;
 	}
 
@@ -703,7 +739,7 @@ bool FieldImpl::couldBeTheSameObject(const FieldObject &fieldObject, const DataA
 	return positionCompare.isFuzzyEqual(fieldObject.getCircle().getCenter(), lidarObject.getCenter());
 }
 
-void FieldImpl::transformCoordinateSystem(Point &newOrigin, double rotation)
+void FieldImpl::transformCoordinateSystem(const Point &newOrigin, const Angle &rotation)
 {
 	moveCoordinateSystem(newOrigin);
 	rotateCoordinateSystem(rotation);
@@ -712,18 +748,18 @@ void FieldImpl::transformCoordinateSystem(Point &newOrigin, double rotation)
 	removeAllFieldObjectsOutsideOfField();
 }
 
-void FieldImpl::moveCoordinateSystem(Point &newOrigin)
+void FieldImpl::moveCoordinateSystem(const Point &newOrigin)
 {
 	vector<FieldObject> newSystem;
 
-	for (vector<FieldObject>::iterator i = m_fieldObjects.begin(); i != m_fieldObjects.end(); ++i)
+	for (vector<FieldObject>::const_iterator i = m_fieldObjects.begin(); i != m_fieldObjects.end(); ++i)
 	{
-		Point currentCenter = ((*i).getCircle()).getCenter();
-		double currentDiameter = ((*i).getCircle()).getDiameter();
-		Point newCenter = currentCenter - newOrigin;
-		FieldColor color = (*i).getColor();
+		FieldObject newObject = *i;
+		Circle circle = newObject.getCircle();
+		circle.setCenter(circle.getCenter() - newOrigin);
+		newObject.setCircle(circle);
 
-		newSystem.push_back(FieldObject(Circle(newCenter, currentDiameter), color));
+		newSystem.push_back(newObject);
 	}
 
 	Point newCenter =  m_position->getPosition() - newOrigin;
@@ -736,26 +772,26 @@ void FieldImpl::moveCoordinateSystem(Point &newOrigin)
 	m_fieldObjects = newSystem;
 }
 
-void FieldImpl::rotateCoordinateSystem(double alpha)
+void FieldImpl::rotateCoordinateSystem(const Angle &rotation)
 {
 	vector<FieldObject> newSystem;
 
 	for (vector<FieldObject>::iterator i = m_fieldObjects.begin(); i != m_fieldObjects.end(); ++i)
 	{
-		Point currentCenter = ((*i).getCircle()).getCenter();
-		double currentDiameter = ((*i).getCircle()).getDiameter();
-		FieldColor color = (*i).getColor();
-
-		currentCenter.rotate(Angle(alpha));
-
-		newSystem.push_back(FieldObject(Circle(currentCenter, currentDiameter), color));
+		FieldObject newObject = *i;
+		Circle circle = newObject.getCircle();
+		Point center = circle.getCenter();
+		center.rotate(rotation);
+		circle.setCenter(center);
+		newObject.setCircle(circle);
+		newSystem.push_back(newObject);
 	}
 
 	Point ownPosition = m_position->getPosition();
 	Angle ownOrientation = m_position->getOrientation();
 
-	ownPosition.rotate(Angle(alpha));
-	ownOrientation = ownOrientation + Angle(alpha);
+	ownPosition.rotate(rotation);
+	ownOrientation = ownOrientation + rotation;
 
 	m_position->setPosition(ownPosition);
 	m_position->setOrientation(ownOrientation);
@@ -792,25 +828,28 @@ vector<FieldObject> FieldImpl::getObjectsWithColor(FieldColor color) const
 
 vector<FieldObject> FieldImpl::moveAllFieldObjectsInVisibleAreaToTemporaryVector(double range)
 {
-	vector<FieldObject> result;
+	vector<FieldObject> visibleObjects;
+	vector<FieldObject> invisibleObjects;
+	invisibleObjects.reserve(m_fieldObjects.size());
+	visibleObjects.reserve(m_fieldObjects.size());
 	const RobotPosition &ownPosition = m_odometry->getCurrentPosition();
-	size_t i = 0;
+	const Point &positionOnly = ownPosition.getPosition();
 
-	while(i < m_fieldObjects.size())
+	for (vector<FieldObject>::const_iterator i = m_fieldObjects.begin(); i != m_fieldObjects.end(); ++i)
 	{
-		vector<FieldObject>::iterator it = m_fieldObjects.begin() + i;
-		const Circle &circle = m_fieldObjects[i].getCircle();
+		const FieldObject &fieldObject = *i;
+		const Circle &circle = fieldObject.getCircle();
+		bool canBeSeen = m_lidar->canBeSeen(circle, ownPosition);
+		double distance = positionOnly.distanceTo(circle.getCenter());
 
-		if (m_lidar->canBeSeen(circle, ownPosition) && m_position->getPosition().distanceTo(circle.getCenter()) < range)
-		{
-			result.push_back(*it);
-			m_fieldObjects.erase(it);
-			--i;
-		}
-
-		++i;
+		if (canBeSeen && distance < range)
+			visibleObjects.push_back(fieldObject);
+		else
+			invisibleObjects.push_back(fieldObject);
 	}
-	return result;
+
+	m_fieldObjects = invisibleObjects;
+	return visibleObjects;
 }
 
 vector<FieldObject> FieldImpl::getAllPartlyVisibleObjects() const

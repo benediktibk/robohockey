@@ -50,7 +50,6 @@ namespace Autonomous
 		virtual unsigned int getNumberOfAchievedGoals();
 		virtual unsigned int getNumberOfHiddenPucks();
 		virtual bool isPointInsideField(const Common::Point &point) const;
-		virtual bool numberOfPucksChanged() const;
 		virtual bool isCalibrated() const;
 		virtual Common::FieldColor getOwnTeamColor() const;
 		virtual Common::FieldColor getEnemyTeamColor() const;
@@ -70,18 +69,20 @@ namespace Autonomous
 		void updateWithLidarData(double range);
 		void updateWithOdometryData();
 		void updateWithCameraData();
+		void removeNotExistingFieldObjects();
+		void updateDefiniteFieldObjects();
 		void updateObstacles();
 		void updateAchievedGoals();
 		void updateHiddenPucks();
 
-		FieldObject& getNextObjectFromPosition(Common::Point position);
+		std::vector<FieldObject>::iterator getNextObjectFromPosition(Common::Point position);
 		std::vector<FieldObject>::iterator getNextObjectFromPosition(std::vector<FieldObject> &fieldObjects, Common::Point position);
 		bool tryToMergeLidarAndFieldObject(FieldObject &fieldObject, const DataAnalysis::LidarObject &lidarObject);
 		bool couldBeTheSameObject(const FieldObject &fieldObject, const DataAnalysis::LidarObject &lidarObject) const;
 
-		void transformCoordinateSystem(Common::Point &newOrigin, double rotation);
-		void moveCoordinateSystem(Common::Point &newOrigin);
-		void rotateCoordinateSystem(double alpha);
+		void transformCoordinateSystem(const Common::Point &newOrigin, const Common::Angle &rotation);
+		void moveCoordinateSystem(const Common::Point &newOrigin);
+		void rotateCoordinateSystem(const Common::Angle &rotation);
 
 		std::vector<Common::Point> *getPointsOfObjectsWithDiameterAndColor(double diameter, Common::FieldColor color);
 		std::vector<FieldObject> getObjectsWithColor(Common::FieldColor color) const;
@@ -99,10 +100,10 @@ namespace Autonomous
 
 		Common::RobotPosition *m_position;
 		std::vector<FieldObject> m_fieldObjects;
+		std::vector<FieldObject> m_definiteFieldObjects;
 		std::vector<Common::Circle> m_softObstacles;
 		std::vector<Common::Circle> m_hardObstacles;
 		FieldState m_fieldState;
-		bool m_numberOfPucksChanged;
 		unsigned int m_achievedGoals;
 		unsigned int m_hiddenPucks;
 		Common::FieldColor m_teamColor;

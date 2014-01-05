@@ -40,6 +40,9 @@ void FieldTest::update_oneObjectFromLidarInView_oneObject()
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 0), 0.1));
 	lidar.setAllObjects(lidarObjects);
 
+	lidar.setCanBeSeen(true);
+	lidar.setCanBeSeenPartly(true);
+	field.update();
 	field.update();
 
 	vector<FieldObject> fieldObjects = field.getAllFieldObjects();
@@ -114,10 +117,14 @@ void FieldTest::update_objectFromLidarNotInViewAnymoreThroughRotation_oneFieldOb
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, -1), 0.1));
 	lidar.setAllObjects(lidarObjects);
 
+	lidar.setCanBeSeen(true);
+	lidar.setCanBeSeenPartly(true);
+	field.update();
 	field.update();
 	lidar.setAllObjects(DataAnalysis::LidarObjects(Point()));
 	odometry.setCurrentPosition(RobotPosition(Point(0, 0), Angle::getHalfRotation()));
 	lidar.setCanBeSeen(false);
+	lidar.setCanBeSeenPartly(false);
 	field.update();
 
 	vector<FieldObject> fieldObjects = field.getAllFieldObjects();
@@ -135,10 +142,13 @@ void FieldTest::update_oneObjectFromLidarAndNoObjectFromCamera_noColor()
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 0), 0.1));
 	lidar.setAllObjects(lidarObjects);
 
+	lidar.setCanBeSeen(true);
+	lidar.setCanBeSeenPartly(true);
+	field.update();
 	field.update();
 
 	vector<FieldObject> fieldObjects = field.getAllFieldObjects();
-
+	CPPUNIT_ASSERT(fieldObjects.size() > 0);
 	CPPUNIT_ASSERT_EQUAL(FieldColorUnknown, fieldObjects.front().getColor());
 }
 
@@ -149,19 +159,20 @@ void FieldTest::update_twoObjectsFromLidarAndOneFromCamera_correctColor()
 	DataAnalysis::CameraMock camera;
 	Autonomous::RobotMock autonomousRobot;
 	FieldImpl field(odometry, lidar, camera, autonomousRobot);
-
 	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 0), 0.1));
 	lidar.setAllObjects(lidarObjects);
-
 	DataAnalysis::CameraObjects cameraObjects;
 	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(1,0)));
 	camera.setAllObjects(cameraObjects);
 
+	lidar.setCanBeSeen(true);
+	lidar.setCanBeSeenPartly(true);
+	field.update();
 	field.update();
 
 	vector<FieldObject> fieldObjects = field.getAllFieldObjects();
-
+	CPPUNIT_ASSERT(fieldObjects.size() > 0);
 	CPPUNIT_ASSERT_EQUAL(FieldColorYellow, fieldObjects.front().getColor());
 }
 
@@ -172,23 +183,21 @@ void FieldTest::update_twoObjectsFromLidarAndOneFromCameraNoColorAnymoreDuringSe
 	DataAnalysis::CameraMock camera;
 	Autonomous::RobotMock autonomousRobot;
 	FieldImpl field(odometry, lidar, camera, autonomousRobot);
-
 	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 0), 0.1));
 	lidar.setAllObjects(lidarObjects);
-
 	DataAnalysis::CameraObjects cameraObjects;
 	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(1,0)));
 	camera.setAllObjects(cameraObjects);
 
+	lidar.setCanBeSeen(true);
+	lidar.setCanBeSeenPartly(true);
 	field.update();
-
 	camera.setAllObjects(DataAnalysis::CameraObjects());
-
 	field.update();
 
 	vector<FieldObject> fieldObjects = field.getAllFieldObjects();
-
+	CPPUNIT_ASSERT(fieldObjects.size() > 0);
 	CPPUNIT_ASSERT_EQUAL(FieldColorYellow, fieldObjects.front().getColor());
 }
 
@@ -207,6 +216,9 @@ void FieldTest::update_oneObjectOutAndOneObjectInsideOfCalibratedField_correctOb
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 3.916), 0.06));
 	lidar.setAllObjects(lidarObjects);
 
+	lidar.setCanBeSeen(true);
+	lidar.setCanBeSeenPartly(true);
+	field.update();
 	field.update();
 
 	CPPUNIT_ASSERT_EQUAL((size_t) 4, field.getAllFieldObjects().size());
@@ -218,6 +230,7 @@ void FieldTest::update_oneObjectOutAndOneObjectInsideOfCalibratedField_correctOb
 	lidarObjectsAfterCalibration.addObject(DataAnalysis::LidarObject(Point(-2, 2.6), 0.06));
 	lidar.setAllObjects(lidarObjectsAfterCalibration);
 
+	field.update();
 	field.update();
 
 	CPPUNIT_ASSERT_EQUAL((size_t) 1, field.getAllFieldObjects().size());
@@ -231,7 +244,6 @@ void FieldTest::update_threeObjectsAndTwoObjectsInGoal_twoAchievedGoals()
 	DataAnalysis::CameraMock camera;
 	Autonomous::RobotMock autonomousRobot;
 	FieldImpl field(odometry, lidar, camera, autonomousRobot);
-
 	field.setTrueTeamColor(FieldColorYellow);
 	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 2), 0.1));
@@ -244,6 +256,9 @@ void FieldTest::update_threeObjectsAndTwoObjectsInGoal_twoAchievedGoals()
 	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(4.4, 1.8)));
 	camera.setAllObjects(cameraObjects);
 
+	lidar.setCanBeSeen(true);
+	lidar.setCanBeSeenPartly(true);
+	field.update();
 	field.update();
 
 	CPPUNIT_ASSERT_EQUAL((unsigned int)2, field.getNumberOfAchievedGoals());
@@ -256,7 +271,6 @@ void FieldTest::update_threeObjectsAndThreeObjectsInGoal_threeAchievedGoals()
 	DataAnalysis::CameraMock camera;
 	Autonomous::RobotMock autonomousRobot;
 	FieldImpl field(odometry, lidar, camera, autonomousRobot);
-
 	field.setTrueTeamColor(FieldColorYellow);
 	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(4.3, 1.7), 0.1));
@@ -269,6 +283,9 @@ void FieldTest::update_threeObjectsAndThreeObjectsInGoal_threeAchievedGoals()
 	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(4.4, 1.8)));
 	camera.setAllObjects(cameraObjects);
 
+	lidar.setCanBeSeen(true);
+	lidar.setCanBeSeenPartly(true);
+	field.update();
 	field.update();
 
 	CPPUNIT_ASSERT_EQUAL((unsigned int)3, field.getNumberOfAchievedGoals());
@@ -281,7 +298,6 @@ void FieldTest::update_fourObjectsAndFourObjectsInGoal_fourAchievedGoals()
 	DataAnalysis::CameraMock camera;
 	Autonomous::RobotMock autonomousRobot;
 	FieldImpl field(odometry, lidar, camera, autonomousRobot);
-
 	field.setTrueTeamColor(FieldColorYellow);
 	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(4.3, 1.7), 0.1));
@@ -296,6 +312,9 @@ void FieldTest::update_fourObjectsAndFourObjectsInGoal_fourAchievedGoals()
 	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(4.35, 1.6)));
 	camera.setAllObjects(cameraObjects);
 
+	lidar.setCanBeSeen(true);
+	lidar.setCanBeSeenPartly(true);
+	field.update();
 	field.update();
 
 	CPPUNIT_ASSERT_EQUAL((unsigned int)4, field.getNumberOfAchievedGoals());
@@ -308,7 +327,6 @@ void FieldTest::update_fourObjectsAndThreeObjectsInGoal_threeAchievedGoals()
 	DataAnalysis::CameraMock camera;
 	Autonomous::RobotMock autonomousRobot;
 	FieldImpl field(odometry, lidar, camera, autonomousRobot);
-
 	field.setTrueTeamColor(FieldColorBlue);
 	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(4.3, 1.7), 0.1));
@@ -323,6 +341,9 @@ void FieldTest::update_fourObjectsAndThreeObjectsInGoal_threeAchievedGoals()
 	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorBlue, Point(2, 1.6)));
 	camera.setAllObjects(cameraObjects);
 
+	lidar.setCanBeSeen(true);
+	lidar.setCanBeSeenPartly(true);
+	field.update();
 	field.update();
 
 	CPPUNIT_ASSERT_EQUAL((unsigned int)3, field.getNumberOfAchievedGoals());
@@ -335,7 +356,6 @@ void FieldTest::update_oneObjectAndZeroObjectsInGoal_ZeroAchievedGoals()
 	DataAnalysis::CameraMock camera;
 	Autonomous::RobotMock autonomousRobot;
 	FieldImpl field(odometry, lidar, camera, autonomousRobot);
-
 	field.setTrueTeamColor(FieldColorYellow);
 	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(0.1, 4.3), 0.1));
@@ -344,6 +364,9 @@ void FieldTest::update_oneObjectAndZeroObjectsInGoal_ZeroAchievedGoals()
 	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(0.1, 4.3)));
 	camera.setAllObjects(cameraObjects);
 
+	lidar.setCanBeSeen(true);
+	lidar.setCanBeSeenPartly(true);
+	field.update();
 	field.update();
 
 	CPPUNIT_ASSERT_EQUAL((unsigned int)0, field.getNumberOfAchievedGoals());
@@ -356,7 +379,6 @@ void FieldTest::update_threeObjectsAndTwoObjectsHidden_twoHiddenPucks()
 	DataAnalysis::CameraMock camera;
 	Autonomous::RobotMock autonomousRobot;
 	FieldImpl field(odometry, lidar, camera, autonomousRobot);
-
 	field.setTrueTeamColor(FieldColorBlue);
 	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(3.35, 0.1), 0.1));
@@ -369,6 +391,9 @@ void FieldTest::update_threeObjectsAndTwoObjectsHidden_twoHiddenPucks()
 	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(0, 1.8)));
 	camera.setAllObjects(cameraObjects);
 
+	lidar.setCanBeSeen(true);
+	lidar.setCanBeSeenPartly(true);
+	field.update();
 	field.update();
 
 	CPPUNIT_ASSERT_EQUAL((unsigned int)2, field.getNumberOfHiddenPucks());
@@ -381,7 +406,6 @@ void FieldTest::update_threeObjectsAndThreeObjectsHidden_threeHiddenPucks()
 	DataAnalysis::CameraMock camera;
 	Autonomous::RobotMock autonomousRobot;
 	FieldImpl field(odometry, lidar, camera, autonomousRobot);
-
 	field.setTrueTeamColor(FieldColorBlue);
 	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(3.34, 0), 0.1));
@@ -394,6 +418,9 @@ void FieldTest::update_threeObjectsAndThreeObjectsHidden_threeHiddenPucks()
 	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(4, 2)));
 	camera.setAllObjects(cameraObjects);
 
+	lidar.setCanBeSeen(true);
+	lidar.setCanBeSeenPartly(true);
+	field.update();
 	field.update();
 
 	CPPUNIT_ASSERT_EQUAL((unsigned int)3, field.getNumberOfHiddenPucks());
@@ -406,7 +433,6 @@ void FieldTest::update_threeObjectsAndZeroObjectsHidden_zeroHiddenPucks()
 	DataAnalysis::CameraMock camera;
 	Autonomous::RobotMock autonomousRobot;
 	FieldImpl field(odometry, lidar, camera, autonomousRobot);
-
 	field.setTrueTeamColor(FieldColorBlue);
 	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 0), 0.1));
@@ -419,6 +445,9 @@ void FieldTest::update_threeObjectsAndZeroObjectsHidden_zeroHiddenPucks()
 	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(3, 2)));
 	camera.setAllObjects(cameraObjects);
 
+	lidar.setCanBeSeen(true);
+	lidar.setCanBeSeenPartly(true);
+	field.update();
 	field.update();
 
 	CPPUNIT_ASSERT_EQUAL((unsigned int)0, field.getNumberOfHiddenPucks());
@@ -431,7 +460,6 @@ void FieldTest::update_fourObjectsAndTwoObjectsHidden_twoHiddenPucks()
 	DataAnalysis::CameraMock camera;
 	Autonomous::RobotMock autonomousRobot;
 	FieldImpl field(odometry, lidar, camera, autonomousRobot);
-
 	field.setTrueTeamColor(FieldColorBlue);
 	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 0), 0.1));
@@ -446,6 +474,9 @@ void FieldTest::update_fourObjectsAndTwoObjectsHidden_twoHiddenPucks()
 	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(4, 1)));
 	camera.setAllObjects(cameraObjects);
 
+	lidar.setCanBeSeen(true);
+	lidar.setCanBeSeenPartly(true);
+	field.update();
 	field.update();
 
 	CPPUNIT_ASSERT_EQUAL((unsigned int)2, field.getNumberOfHiddenPucks());
@@ -458,7 +489,6 @@ void FieldTest::update_fourObjectsAndFourObjectsHidden_fourHiddenPucks()
 	DataAnalysis::CameraMock camera;
 	Autonomous::RobotMock autonomousRobot;
 	FieldImpl field(odometry, lidar, camera, autonomousRobot);
-
 	field.setTrueTeamColor(FieldColorBlue);
 	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(3.4, 0), 0.1));
@@ -473,6 +503,9 @@ void FieldTest::update_fourObjectsAndFourObjectsHidden_fourHiddenPucks()
 	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(4, 1)));
 	camera.setAllObjects(cameraObjects);
 
+	lidar.setCanBeSeen(true);
+	lidar.setCanBeSeenPartly(true);
+	field.update();
 	field.update();
 
 	CPPUNIT_ASSERT_EQUAL((unsigned int)4, field.getNumberOfHiddenPucks());
@@ -485,7 +518,6 @@ void FieldTest::update_fourObjectsAndThreeObjectsHidden_threeHiddenPucks()
 	DataAnalysis::CameraMock camera;
 	Autonomous::RobotMock autonomousRobot;
 	FieldImpl field(odometry, lidar, camera, autonomousRobot);
-
 	field.setTrueTeamColor(FieldColorYellow);
 	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(3.4, 0), 0.1));
@@ -500,6 +532,9 @@ void FieldTest::update_fourObjectsAndThreeObjectsHidden_threeHiddenPucks()
 	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorBlue, Point(1, 1)));
 	camera.setAllObjects(cameraObjects);
 
+	lidar.setCanBeSeen(true);
+	lidar.setCanBeSeenPartly(true);
+	field.update();
 	field.update();
 
 	CPPUNIT_ASSERT_EQUAL((unsigned int)3, field.getNumberOfHiddenPucks());
@@ -513,7 +548,6 @@ void FieldTest::update_threePucksWithTeamColor_30ElementsInList()
 	Autonomous::RobotMock autonomousRobot;
 	FieldImpl field(odometry, lidar, camera, autonomousRobot);
 	list<RobotPosition> testlist;
-
 	field.setTrueTeamColor(FieldColorYellow);
 	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(3.4, 0), 0.1));
@@ -526,7 +560,11 @@ void FieldTest::update_threePucksWithTeamColor_30ElementsInList()
 	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(3.5, 2)));
 	camera.setAllObjects(cameraObjects);
 
+	lidar.setCanBeSeen(true);
+	lidar.setCanBeSeenPartly(true);
 	field.update();
+	field.update();
+
 	testlist = field.getTargetsForCollectingOnePuck(FieldColorYellow);
 	CPPUNIT_ASSERT_EQUAL((size_t)30, testlist.size());
 }
@@ -539,7 +577,6 @@ void FieldTest::update_fourPucksWithTeamColorInRectangle1_40ElementsInList()
 	Autonomous::RobotMock autonomousRobot;
 	FieldImpl field(odometry, lidar, camera, autonomousRobot);
 	list<RobotPosition> testlist;
-
 	field.setTrueTeamColor(FieldColorYellow);
 	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(0, 0), 0.1));
@@ -554,7 +591,11 @@ void FieldTest::update_fourPucksWithTeamColorInRectangle1_40ElementsInList()
 	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(3.7, 3)));
 	camera.setAllObjects(cameraObjects);
 
+	lidar.setCanBeSeen(true);
+	lidar.setCanBeSeenPartly(true);
 	field.update();
+	field.update();
+
 	testlist = field.getTargetsForCollectingOnePuck(FieldColorYellow);
 	CPPUNIT_ASSERT_EQUAL((size_t)40, testlist.size());
 }
@@ -567,7 +608,6 @@ void FieldTest::update_twoPucksWithTeamColorInRectangle2_20ElementsInList()
 	Autonomous::RobotMock autonomousRobot;
 	FieldImpl field(odometry, lidar, camera, autonomousRobot);
 	list<RobotPosition> testlist;
-
 	field.setTrueTeamColor(FieldColorYellow);
 	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(3.7, 2), 0.1));
@@ -578,7 +618,11 @@ void FieldTest::update_twoPucksWithTeamColorInRectangle2_20ElementsInList()
 	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(4.14, 2.8)));
 	camera.setAllObjects(cameraObjects);
 
+	lidar.setCanBeSeen(true);
+	lidar.setCanBeSeenPartly(true);
 	field.update();
+	field.update();
+
 	testlist = field.getTargetsForCollectingOnePuck(FieldColorYellow);
 	CPPUNIT_ASSERT_EQUAL((size_t)20, testlist.size());
 }
@@ -591,7 +635,6 @@ void FieldTest::update_onePuckWithTeamColorInRectangle3_10ElementsInList()
 	Autonomous::RobotMock autonomousRobot;
 	FieldImpl field(odometry, lidar, camera, autonomousRobot);
 	list<RobotPosition> testlist;
-
 	field.setTrueTeamColor(FieldColorYellow);
 	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(4, 1.5), 0.1));
@@ -602,7 +645,11 @@ void FieldTest::update_onePuckWithTeamColorInRectangle3_10ElementsInList()
 	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(5, 3.02)));
 	camera.setAllObjects(cameraObjects);
 
+	lidar.setCanBeSeen(true);
+	lidar.setCanBeSeenPartly(true);
 	field.update();
+	field.update();
+
 	testlist = field.getTargetsForCollectingOnePuck(FieldColorYellow);
 	CPPUNIT_ASSERT_EQUAL((size_t)10, testlist.size());
 }
@@ -615,14 +662,17 @@ void FieldTest::update_zeroPucksWithTeamColor_0ElementsInList()
 	Autonomous::RobotMock autonomousRobot;
 	FieldImpl field(odometry, lidar, camera, autonomousRobot);
 	list<RobotPosition> testlist;
-
 	field.setTrueTeamColor(FieldColorYellow);
 	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
 	lidar.setAllObjects(lidarObjects);
 	DataAnalysis::CameraObjects cameraObjects;
 	camera.setAllObjects(cameraObjects);
 
+	lidar.setCanBeSeen(true);
+	lidar.setCanBeSeenPartly(true);
 	field.update();
+	field.update();
+
 	testlist = field.getTargetsForCollectingOnePuck(FieldColorYellow);
 	CPPUNIT_ASSERT_EQUAL((size_t)0, testlist.size());
 }
@@ -635,7 +685,6 @@ void FieldTest::update_fivePucksWithTeamColorInRectangle4_50ElementsInList()
 	Autonomous::RobotMock autonomousRobot;
 	FieldImpl field(odometry, lidar, camera, autonomousRobot);
 	list<RobotPosition> testlist;
-
 	field.setTrueTeamColor(FieldColorYellow);
 	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(3.7, 0), 0.1));
@@ -652,7 +701,11 @@ void FieldTest::update_fivePucksWithTeamColorInRectangle4_50ElementsInList()
 	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(3.8, 0.3)));
 	camera.setAllObjects(cameraObjects);
 
+	lidar.setCanBeSeen(true);
+	lidar.setCanBeSeenPartly(true);
 	field.update();
+	field.update();
+
 	testlist = field.getTargetsForCollectingOnePuck(FieldColorYellow);
 	CPPUNIT_ASSERT_EQUAL((size_t)50, testlist.size());
 }
@@ -665,7 +718,6 @@ void FieldTest::update_sixPucksWithTeamColorInRectangle5_60ElementsInList()
 	Autonomous::RobotMock autonomousRobot;
 	FieldImpl field(odometry, lidar, camera, autonomousRobot);
 	list<RobotPosition> testlist;
-
 	field.setTrueTeamColor(FieldColorYellow);
 	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(4.16, 2.02), 0.1));
@@ -684,7 +736,11 @@ void FieldTest::update_sixPucksWithTeamColorInRectangle5_60ElementsInList()
 	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(4.5, 2.8)));
 	camera.setAllObjects(cameraObjects);
 
+	lidar.setCanBeSeen(true);
+	lidar.setCanBeSeenPartly(true);
 	field.update();
+	field.update();
+
 	testlist = field.getTargetsForCollectingOnePuck(FieldColorYellow);
 	CPPUNIT_ASSERT_EQUAL((size_t)60, testlist.size());
 }
@@ -697,7 +753,6 @@ void FieldTest::update_sevenPucksWithTeamColorInRectangle6_70ElementsInList()
 	Autonomous::RobotMock autonomousRobot;
 	FieldImpl field(odometry, lidar, camera, autonomousRobot);
 	list<RobotPosition> testlist;
-
 	field.setTrueTeamColor(FieldColorYellow);
 	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(4.16, 0), 0.1));
@@ -720,7 +775,11 @@ void FieldTest::update_sevenPucksWithTeamColorInRectangle6_70ElementsInList()
 	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(4.5, 1.8)));
 	camera.setAllObjects(cameraObjects);
 
+	lidar.setCanBeSeen(true);
+	lidar.setCanBeSeenPartly(true);
 	field.update();
+	field.update();
+
 	testlist = field.getTargetsForCollectingOnePuck(FieldColorYellow);
 	CPPUNIT_ASSERT_EQUAL((size_t)70, testlist.size());
 }
@@ -733,7 +792,6 @@ void FieldTest::update_eightPucksWithTeamColorInRectangle7_80ElementsInList()
 	Autonomous::RobotMock autonomousRobot;
 	FieldImpl field(odometry, lidar, camera, autonomousRobot);
 	list<RobotPosition> testlist;
-
 	field.setTrueTeamColor(FieldColorYellow);
 	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(4.59, 2.02), 0.1));
@@ -756,7 +814,11 @@ void FieldTest::update_eightPucksWithTeamColorInRectangle7_80ElementsInList()
 	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(4.59, 2.5)));
 	camera.setAllObjects(cameraObjects);
 
+	lidar.setCanBeSeen(true);
+	lidar.setCanBeSeenPartly(true);
 	field.update();
+	field.update();
+
 	testlist = field.getTargetsForCollectingOnePuck(FieldColorYellow);
 	CPPUNIT_ASSERT_EQUAL((size_t)80, testlist.size());
 }
@@ -769,7 +831,6 @@ void FieldTest::update_ninePucksWithTeamColorInRectangle8_90ElementsInList()
 	Autonomous::RobotMock autonomousRobot;
 	FieldImpl field(odometry, lidar, camera, autonomousRobot);
 	list<RobotPosition> testlist;
-
 	field.setTrueTeamColor(FieldColorYellow);
 	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(4.61, 1.02), 0.1));
@@ -794,7 +855,11 @@ void FieldTest::update_ninePucksWithTeamColorInRectangle8_90ElementsInList()
 	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(4.61, 1.6)));
 	camera.setAllObjects(cameraObjects);
 
+	lidar.setCanBeSeen(true);
+	lidar.setCanBeSeenPartly(true);
 	field.update();
+	field.update();
+
 	testlist = field.getTargetsForCollectingOnePuck(FieldColorYellow);
 	CPPUNIT_ASSERT_EQUAL((size_t)90, testlist.size());
 }
@@ -807,7 +872,6 @@ void FieldTest::update_tenPucksWithTeamColorInRectangle9_100ElementsInList()
 	Autonomous::RobotMock autonomousRobot;
 	FieldImpl field(odometry, lidar, camera, autonomousRobot);
 	list<RobotPosition> testlist;
-
 	field.setTrueTeamColor(FieldColorYellow);
 	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(4.59, 0), 0.1));
@@ -834,7 +898,11 @@ void FieldTest::update_tenPucksWithTeamColorInRectangle9_100ElementsInList()
 	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(4.9, 0.6)));
 	camera.setAllObjects(cameraObjects);
 
+	lidar.setCanBeSeen(true);
+	lidar.setCanBeSeenPartly(true);
 	field.update();
+	field.update();
+
 	testlist = field.getTargetsForCollectingOnePuck(FieldColorYellow);
 	CPPUNIT_ASSERT_EQUAL((size_t)100, testlist.size());
 }
@@ -847,7 +915,6 @@ void FieldTest::getTargetsForFinalPosition_callFunction_17ElementsInList()
 	Autonomous::RobotMock autonomousRobot;
 	FieldImpl field(odometry, lidar, camera, autonomousRobot);
 	list<RobotPosition> testlist;
-
 	field.setTrueTeamColor(FieldColorYellow);
 	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(4.59, 0), 0.1));
@@ -856,7 +923,11 @@ void FieldTest::getTargetsForFinalPosition_callFunction_17ElementsInList()
 	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(4.59, 0)));
 	camera.setAllObjects(cameraObjects);
 
+	lidar.setCanBeSeen(true);
+	lidar.setCanBeSeenPartly(true);
 	field.update();
+	field.update();
+
 	testlist = field.getTargetsForFinalPosition();
 	CPPUNIT_ASSERT_EQUAL((size_t)17, testlist.size());
 }
@@ -869,10 +940,8 @@ void FieldTest::update_objectsInFieldRobotOn00_correctlyUpdated()
 	DataAnalysis::CameraMock camera;
 	Autonomous::RobotMock autonomousRobot;
 	FieldImpl field(odometry, lidar, camera, autonomousRobot);
-
 	hardwareLidarMock.setValueForAngle(0, 5);
 	hardwareLidarMock.setValueForAngle(360, 5);
-
 	hardwareLidarMock.setValueForAngle(282, 1.88);
 	hardwareLidarMock.setValueForAngle(283, 1.88);
 	hardwareLidarMock.setValueForAngle(284, 1.88);
@@ -881,12 +950,13 @@ void FieldTest::update_objectsInFieldRobotOn00_correctlyUpdated()
 
 	lidar.updateSensorData();
 	field.update();
-	CPPUNIT_ASSERT_EQUAL((size_t)1, field.getAllFieldObjects().size());
+	CPPUNIT_ASSERT_EQUAL((size_t)0, field.getAllFieldObjects().size());
 
 	lidar.updateSensorData();
 	field.update();
 	CPPUNIT_ASSERT_EQUAL((size_t)1, field.getAllFieldObjects().size());
 
+	lidar.updateSensorData();
 	field.update();
 	CPPUNIT_ASSERT_EQUAL((size_t)1, field.getAllFieldObjects().size());
 
@@ -918,12 +988,13 @@ void FieldTest::update_objectsInFieldRobotOn1And2_correctlyUpdated()
 
 	lidar.updateSensorData();
 	field.update();
-	CPPUNIT_ASSERT_EQUAL((size_t)1, field.getAllFieldObjects().size());
+	CPPUNIT_ASSERT_EQUAL((size_t)0, field.getAllFieldObjects().size());
 
 	lidar.updateSensorData();
 	field.update();
 	CPPUNIT_ASSERT_EQUAL((size_t)1, field.getAllFieldObjects().size());
 
+	lidar.updateSensorData();
 	field.update();
 	CPPUNIT_ASSERT_EQUAL((size_t)1, field.getAllFieldObjects().size());
 
@@ -945,20 +1016,21 @@ void FieldTest::update_movingAndLidarDataChanges_fieldObjectCountDoesntChange()
 	hardwareLidarMock.readSensorDataFromFile("resources/testfiles/lidar_moving_1_previous.txt");
 	lidar.updateSensorData();
 	field.update();
+	field.update();
 	vector<FieldObject> oldObjects = field.getAllFieldObjects();
 	size_t oldObjectCount = oldObjects.size();
 	odometry.setCurrentPosition(RobotPosition(Point(0.03, 0), Angle(0)));
 	hardwareLidarMock.readSensorDataFromFile("resources/testfiles/lidar_moving_1_current.txt");
 	lidar.updateSensorData();
 	field.update();
+
 	vector<FieldObject> newObjects = field.getAllFieldObjects();
 	size_t newObjectCount = newObjects.size();
-
 	CPPUNIT_ASSERT(oldObjectCount > 0);
 	CPPUNIT_ASSERT_EQUAL(oldObjectCount, newObjectCount);
 }
 
-void FieldTest::update_movingAndlidatDataChangesSecondVersion_fieldObjectCountDoesntChange()
+void FieldTest::update_movingAndLidatDataChangesSecondVersion_fieldObjectCountDoesntChange()
 {
 	DataAnalysis::OdometryMock odometry;
 	Hardware::LidarMock hardwareLidarMock(6);
@@ -970,6 +1042,7 @@ void FieldTest::update_movingAndlidatDataChangesSecondVersion_fieldObjectCountDo
 	odometry.setCurrentPosition(RobotPosition(Point(0, 0), Angle(0)));
 	hardwareLidarMock.readSensorDataFromFile("resources/testfiles/lidar_moving_2_previous.txt");
 	lidar.updateSensorData();
+	field.update();
 	field.update();
 	vector<FieldObject> oldObjects = field.getAllFieldObjects();
 	size_t oldObjectCount = oldObjects.size();
@@ -984,6 +1057,71 @@ void FieldTest::update_movingAndlidatDataChangesSecondVersion_fieldObjectCountDo
 	CPPUNIT_ASSERT_EQUAL(oldObjectCount, newObjectCount);
 }
 
+void FieldTest::update_movingAndLidarDataChangesThirdVersion_fieldObjectCountDoesntChange()
+{
+	DataAnalysis::OdometryMock odometry;
+	Hardware::LidarMock hardwareLidarMock(6);
+	DataAnalysis::LidarImpl lidar(hardwareLidarMock);
+	DataAnalysis::CameraMock camera;
+	Autonomous::RobotMock autonomousRobot;
+	FieldImpl field(odometry, lidar, camera, autonomousRobot);
+
+	odometry.setCurrentPosition(RobotPosition(Point(0, 0), Angle(0)));
+	hardwareLidarMock.readSensorDataFromFile("resources/testfiles/lidar_moving_3_previous.txt");
+	lidar.updateSensorData();
+	field.update();
+	field.update();
+	vector<FieldObject> oldObjects = field.getAllFieldObjects();
+	size_t oldObjectCount = oldObjects.size();
+	odometry.setCurrentPosition(RobotPosition(Point(0.0474765, 0), Angle(0)));
+	hardwareLidarMock.readSensorDataFromFile("resources/testfiles/lidar_moving_3_current.txt");
+	lidar.updateSensorData();
+	field.update();
+	vector<FieldObject> newObjects = field.getAllFieldObjects();
+	size_t newObjectCount = newObjects.size();
+
+	CPPUNIT_ASSERT_EQUAL((size_t)8, oldObjectCount);
+	CPPUNIT_ASSERT_EQUAL((size_t)8, newObjectCount);
+}
+
+void FieldTest::update_enemyRobotInFront_oneFieldObject()
+{
+	DataAnalysis::OdometryMock odometry;
+	Hardware::LidarMock hardwareLidarMock(6);
+	DataAnalysis::LidarImpl lidar(hardwareLidarMock);
+	DataAnalysis::CameraMock camera;
+	Autonomous::RobotMock autonomousRobot;
+	FieldImpl field(odometry, lidar, camera, autonomousRobot);
+	odometry.setCurrentPosition(RobotPosition(Point(0, 0), Angle(0)));
+	hardwareLidarMock.readSensorDataFromFile("resources/testfiles/lidar_40.txt");
+
+	lidar.updateSensorData();
+	field.update();
+	field.update();
+
+	vector<FieldObject> fieldObjects = field.getAllFieldObjects();
+	CPPUNIT_ASSERT_EQUAL((size_t)1, fieldObjects.size());
+}
+
+void FieldTest::update_enemyRobotInFront_oneHardObstacle()
+{
+	DataAnalysis::OdometryMock odometry;
+	Hardware::LidarMock hardwareLidarMock(6);
+	DataAnalysis::LidarImpl lidar(hardwareLidarMock);
+	DataAnalysis::CameraMock camera;
+	Autonomous::RobotMock autonomousRobot;
+	FieldImpl field(odometry, lidar, camera, autonomousRobot);
+	odometry.setCurrentPosition(RobotPosition(Point(0, 0), Angle(0)));
+	hardwareLidarMock.readSensorDataFromFile("resources/testfiles/lidar_40.txt");
+
+	lidar.updateSensorData();
+	field.update();
+	field.update();
+
+	vector<Circle> hardObstacles = field.getAllHardObstacles();
+	CPPUNIT_ASSERT_EQUAL((size_t)1, hardObstacles.size());
+}
+
 void FieldTest::update_lidarReturnsObjectWhichCantBeSeenActually_noFieldObjects()
 {
 	DataAnalysis::OdometryMock odometry;
@@ -996,6 +1134,159 @@ void FieldTest::update_lidarReturnsObjectWhichCantBeSeenActually_noFieldObjects(
 
 	lidar.setCanBeSeen(false);
 	lidar.setCanBeSeenPartly(false);
+	lidar.setAllObjects(objects);
+	field.update();
+	field.update();
+
+	vector<FieldObject> fieldObjects = field.getAllFieldObjects();
+	CPPUNIT_ASSERT_EQUAL((size_t)0, fieldObjects.size());
+}
+
+void FieldTest::update_lidarObjectSeenOnlyOnce_noFieldObjectsAndObstacles()
+{
+	DataAnalysis::OdometryMock odometry;
+	DataAnalysis::LidarMock lidar;
+	DataAnalysis::CameraMock camera;
+	Autonomous::RobotMock autonomousRobot;
+	DataAnalysis::LidarObjects objects(Point(0, 0));
+	objects.addObject(DataAnalysis::LidarObject(Point(2, 0), 0.1));
+	FieldImpl field(odometry, lidar, camera, autonomousRobot);
+
+	lidar.setCanBeSeen(true);
+	lidar.setCanBeSeenPartly(true);
+	lidar.setAllObjects(objects);
+	field.update();
+
+	vector<FieldObject> fieldObjects = field.getAllFieldObjects();
+	vector<Circle> softObstacles = field.getAllSoftObstacles();
+	vector<Circle> hardObstacles = field.getAllHardObstacles();
+	CPPUNIT_ASSERT_EQUAL((size_t)0, fieldObjects.size());
+	CPPUNIT_ASSERT_EQUAL((size_t)0, softObstacles.size());
+	CPPUNIT_ASSERT_EQUAL((size_t)0, hardObstacles.size());
+}
+
+void FieldTest::update_lidarObjectSeenThreeTimes_oneFieldObjectAndObstacle()
+{
+	DataAnalysis::OdometryMock odometry;
+	DataAnalysis::LidarMock lidar;
+	DataAnalysis::CameraMock camera;
+	Autonomous::RobotMock autonomousRobot;
+	DataAnalysis::LidarObjects objects(Point(0, 0));
+	objects.addObject(DataAnalysis::LidarObject(Point(2, 0), 0.1));
+	FieldImpl field(odometry, lidar, camera, autonomousRobot);
+
+	lidar.setCanBeSeen(true);
+	lidar.setCanBeSeenPartly(true);
+	lidar.setAllObjects(objects);
+	field.update();
+	field.update();
+	field.update();
+
+	vector<FieldObject> fieldObjects = field.getAllFieldObjects();
+	vector<Circle> softObstacles = field.getAllSoftObstacles();
+	vector<Circle> hardObstacles = field.getAllHardObstacles();
+	CPPUNIT_ASSERT_EQUAL((size_t)1, fieldObjects.size());
+	CPPUNIT_ASSERT_EQUAL((size_t)1, softObstacles.size() + hardObstacles.size());
+}
+
+void FieldTest::update_lidarObjectSeenOnlyOnce_noFieldObjects()
+{
+	DataAnalysis::OdometryMock odometry;
+	DataAnalysis::LidarMock lidar;
+	DataAnalysis::CameraMock camera;
+	Autonomous::RobotMock autonomousRobot;
+	DataAnalysis::LidarObjects objects(Point(0, 0));
+	objects.addObject(DataAnalysis::LidarObject(Point(2, 0), 0.1));
+	FieldImpl field(odometry, lidar, camera, autonomousRobot);
+
+	lidar.setCanBeSeen(true);
+	lidar.setCanBeSeenPartly(true);
+	lidar.setAllObjects(objects);
+	field.update();
+
+	vector<FieldObject> fieldObjects = field.getAllFieldObjects();
+	CPPUNIT_ASSERT_EQUAL((size_t)0, fieldObjects.size());
+}
+
+void FieldTest::update_lidarObjectSeenOnlyOnce_noObstacles()
+{
+	DataAnalysis::OdometryMock odometry;
+	DataAnalysis::LidarMock lidar;
+	DataAnalysis::CameraMock camera;
+	Autonomous::RobotMock autonomousRobot;
+	DataAnalysis::LidarObjects objects(Point(0, 0));
+	objects.addObject(DataAnalysis::LidarObject(Point(2, 0), 0.1));
+	FieldImpl field(odometry, lidar, camera, autonomousRobot);
+
+	lidar.setCanBeSeen(true);
+	lidar.setCanBeSeenPartly(true);
+	lidar.setAllObjects(objects);
+	field.update();
+
+	vector<Circle> softObstacles = field.getAllSoftObstacles();
+	vector<Circle> hardObstacles = field.getAllHardObstacles();
+	CPPUNIT_ASSERT_EQUAL((size_t)0, softObstacles.size() + hardObstacles.size());
+}
+
+void FieldTest::update_lidarObjectSeenTwice_oneFieldObject()
+{
+	DataAnalysis::OdometryMock odometry;
+	DataAnalysis::LidarMock lidar;
+	DataAnalysis::CameraMock camera;
+	Autonomous::RobotMock autonomousRobot;
+	DataAnalysis::LidarObjects objects(Point(0, 0));
+	objects.addObject(DataAnalysis::LidarObject(Point(2, 0), 0.1));
+	FieldImpl field(odometry, lidar, camera, autonomousRobot);
+
+	lidar.setCanBeSeen(true);
+	lidar.setCanBeSeenPartly(true);
+	lidar.setAllObjects(objects);
+	field.update();
+	field.update();
+
+	vector<FieldObject> fieldObjects = field.getAllFieldObjects();
+	CPPUNIT_ASSERT_EQUAL((size_t)1, fieldObjects.size());
+}
+
+void FieldTest::update_lidarObjectNotSeenOnce_oneFieldObject()
+{
+	DataAnalysis::OdometryMock odometry;
+	DataAnalysis::LidarMock lidar;
+	DataAnalysis::CameraMock camera;
+	Autonomous::RobotMock autonomousRobot;
+	DataAnalysis::LidarObjects objects(Point(0, 0));
+	objects.addObject(DataAnalysis::LidarObject(Point(2, 0), 0.1));
+	FieldImpl field(odometry, lidar, camera, autonomousRobot);
+
+	lidar.setCanBeSeen(true);
+	lidar.setCanBeSeenPartly(true);
+	lidar.setAllObjects(objects);
+	field.update();
+	field.update();
+	objects.clear();
+	lidar.setAllObjects(objects);
+	field.update();
+
+	vector<FieldObject> fieldObjects = field.getAllFieldObjects();
+	CPPUNIT_ASSERT_EQUAL((size_t)1, fieldObjects.size());
+}
+
+void FieldTest::update_lidarObjectNotSeenTwice_noFieldObjects()
+{
+	DataAnalysis::OdometryMock odometry;
+	DataAnalysis::LidarMock lidar;
+	DataAnalysis::CameraMock camera;
+	Autonomous::RobotMock autonomousRobot;
+	DataAnalysis::LidarObjects objects(Point(0, 0));
+	objects.addObject(DataAnalysis::LidarObject(Point(2, 0), 0.1));
+	FieldImpl field(odometry, lidar, camera, autonomousRobot);
+
+	lidar.setCanBeSeen(true);
+	lidar.setCanBeSeenPartly(true);
+	lidar.setAllObjects(objects);
+	field.update();
+	field.update();
+	objects.clear();
 	lidar.setAllObjects(objects);
 	field.update();
 	field.update();
@@ -1052,7 +1343,6 @@ void FieldTest::calibratePosition_noValidPattern_noTransformation()
 	DataAnalysis::CameraMock camera;
 	Autonomous::RobotMock autonomousRobot;
 	FieldImpl field(odometry, lidar, camera, autonomousRobot);
-
 	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 0), 0.1));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(3.4, 3), 0.1));
@@ -1060,12 +1350,16 @@ void FieldTest::calibratePosition_noValidPattern_noTransformation()
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(4.5, -1), 0.1));
 	lidar.setAllObjects(lidarObjects);
 
+	lidar.setCanBeSeen(true);
+	lidar.setCanBeSeenPartly(true);
+	field.update();
 	field.update();
 	field.calibratePosition();
 
 	vector<FieldObject> fieldObjects = field.getAllFieldObjects();
 	vector<DataAnalysis::LidarObject> lidarObjectsVector = lidarObjects.getObjectsWithDistanceBelow(10);
 
+	CPPUNIT_ASSERT(fieldObjects.size() > 0);
 	CPPUNIT_ASSERT(compare.isFuzzyEqual(fieldObjects.front().getCircle(), lidarObjectsVector.front()));
 }
 
@@ -1077,7 +1371,6 @@ void FieldTest::calibratePosition_validPattern_transformed()
 	DataAnalysis::CameraMock camera;
 	Autonomous::RobotMock autonomousRobot;
 	FieldImpl field(odometry, lidar, camera, autonomousRobot);
-
 	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 1), 0.06));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 1.833), 0.06));
@@ -1085,12 +1378,16 @@ void FieldTest::calibratePosition_validPattern_transformed()
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 3.916), 0.06));
 	lidar.setAllObjects(lidarObjects);
 
+	lidar.setCanBeSeen(true);
+	lidar.setCanBeSeenPartly(true);
+	field.update();
 	field.update();
 	field.calibratePosition();
+	field.update();
 
 	vector<FieldObject> fieldObjects = field.getAllFieldObjects();
 	vector<DataAnalysis::LidarObject> lidarObjectsVector = lidarObjects.getObjectsWithDistanceBelow(10);
-
+	CPPUNIT_ASSERT(fieldObjects.size() > 0);
 	CPPUNIT_ASSERT(!compare.isFuzzyEqual(fieldObjects.front().getCircle(), lidarObjectsVector.front()));
 }
 
@@ -1101,7 +1398,6 @@ void FieldTest::calibratePosition_validPattern_correctNumberOfFieldObjects()
 	DataAnalysis::CameraMock camera;
 	Autonomous::RobotMock autonomousRobot;
 	FieldImpl field(odometry, lidar, camera, autonomousRobot);
-
 	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 1), 0.06));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 1.833), 0.06));
@@ -1109,8 +1405,12 @@ void FieldTest::calibratePosition_validPattern_correctNumberOfFieldObjects()
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 3.916), 0.06));
 	lidar.setAllObjects(lidarObjects);
 
+	lidar.setCanBeSeen(true);
+	lidar.setCanBeSeenPartly(true);
+	field.update();
 	field.update();
 	field.calibratePosition();
+	field.update();
 
 	vector<FieldObject> fieldObjects = field.getAllFieldObjects();
 	vector<DataAnalysis::LidarObject> lidarObjectsVector = lidarObjects.getObjectsWithDistanceBelow(10);
@@ -1126,7 +1426,6 @@ void FieldTest::calibratePosition_validPattern_correctTransformation()
 	DataAnalysis::CameraMock camera;
 	Autonomous::RobotMock autonomousRobot;
 	FieldImpl field(odometry, lidar, camera, autonomousRobot);
-
 	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 1), 0.06));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 1.833), 0.06));
@@ -1134,8 +1433,12 @@ void FieldTest::calibratePosition_validPattern_correctTransformation()
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 3.916), 0.06));
 	lidar.setAllObjects(lidarObjects);
 
+	lidar.setCanBeSeen(true);
+	lidar.setCanBeSeenPartly(true);
+	field.update();
 	field.update();
 	field.calibratePosition();
+	field.update();
 
 	bool result = true;
 	vector<FieldObject> fieldObjects = field.getAllFieldObjects();
@@ -1159,9 +1462,10 @@ void FieldTest::calibratePosition_realWorldExample_positionIsCorrect()
 	lidar.readSensorDataFromFile("resources/testfiles/lidar_35.txt");
 
 	dataAnalyser.updateSensorData();
-
+	field.update();
 	field.update();
 	field.calibratePosition();
+	field.update();
 
 	Compare compare(0.5);
 	RobotPosition position = odometry.getCurrentPosition();
@@ -1176,7 +1480,6 @@ void FieldTest::calibratePosition_validPattern_objectsOutsideFieldAreDeleted()
 	DataAnalysis::CameraMock camera;
 	Autonomous::RobotMock autonomousRobot;
 	FieldImpl field(odometry, lidar, camera, autonomousRobot);
-
 	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 1), 0.06));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 1.833), 0.06));
@@ -1185,11 +1488,21 @@ void FieldTest::calibratePosition_validPattern_objectsOutsideFieldAreDeleted()
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(5.7, 1.3), 0.06));
 	lidar.setAllObjects(lidarObjects);
 
+	lidar.setCanBeSeen(true);
+	lidar.setCanBeSeenPartly(true);
 	field.update();
-	CPPUNIT_ASSERT_EQUAL((size_t) 5, field.getAllFieldObjects().size());
+	field.update();
+	vector<FieldObject> fieldObjects = field.getAllFieldObjects();
+	CPPUNIT_ASSERT_EQUAL((size_t) 5, fieldObjects.size());
 
 	field.calibratePosition();
-	CPPUNIT_ASSERT_EQUAL((size_t) 4, field.getAllFieldObjects().size());
+	lidar.setCanBeSeen(false);
+	lidar.setCanBeSeenPartly(false);
+	lidarObjects.clear();
+	lidar.setAllObjects(lidarObjects);
+	field.update();
+	fieldObjects = field.getAllFieldObjects();
+	CPPUNIT_ASSERT_EQUAL((size_t) 4, fieldObjects.size());
 }
 
 void FieldTest::getObjectsWithColorOrderedByDistance_oneObjectWithCorrectColorAndOneWithNoColor_resultSizeIsCorrect()
@@ -1206,6 +1519,9 @@ void FieldTest::getObjectsWithColorOrderedByDistance_oneObjectWithCorrectColorAn
 	DataAnalysis::CameraObjects cameraObjects;
 	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(1, 0)));
 	camera.setAllObjects(cameraObjects);
+	lidar.setCanBeSeen(true);
+	lidar.setCanBeSeenPartly(true);
+	field.update();
 	field.update();
 
 	vector<FieldObject> fieldObjects = field.getObjectsWithColorOrderdByDistance(FieldColorYellow, Point(0, 0));
@@ -1229,6 +1545,9 @@ void FieldTest::getObjectsWithColorOrderedByDistance_twoObjectsWithCorrectColorI
 	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(1, 0)));
 	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(2, -1)));
 	camera.setAllObjects(cameraObjects);
+	lidar.setCanBeSeen(true);
+	lidar.setCanBeSeenPartly(true);
+	field.update();
 	field.update();
 
 	vector<FieldObject> fieldObjects = field.getObjectsWithColorOrderdByDistance(FieldColorYellow, ownPosition);
@@ -1257,6 +1576,9 @@ void FieldTest::getObjectsWithColorOrderedByDistance_twoObjectsWithCorrectColorI
 	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(2, -1)));
 	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(1, 0)));
 	camera.setAllObjects(cameraObjects);
+	lidar.setCanBeSeen(true);
+	lidar.setCanBeSeenPartly(true);
+	field.update();
 	field.update();
 
 	vector<FieldObject> fieldObjects = field.getObjectsWithColorOrderdByDistance(FieldColorYellow, ownPosition);
@@ -1277,9 +1599,12 @@ void FieldTest::isPointInsideField_notCalibrated_true()
 	Autonomous::RobotMock autonomousRobot;
 	FieldImpl field(odometry, lidar, camera, autonomousRobot);
 
+	lidar.setCanBeSeen(true);
+	lidar.setCanBeSeenPartly(true);
+	field.update();
 	field.update();
 
-	CPPUNIT_ASSERT(field.isPointInsideField(Point(-1,-3)));
+	CPPUNIT_ASSERT(field.isPointInsideField(Point(-1, -3)));
 }
 
 void FieldTest::isPointInsideField_pointIsInside_true()
@@ -1289,7 +1614,6 @@ void FieldTest::isPointInsideField_pointIsInside_true()
 	DataAnalysis::CameraMock camera;
 	Autonomous::RobotMock autonomousRobot;
 	FieldImpl field(odometry, lidar, camera, autonomousRobot);
-
 	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 1), 0.06));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 1.833), 0.06));
@@ -1297,6 +1621,9 @@ void FieldTest::isPointInsideField_pointIsInside_true()
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 3.916), 0.06));
 	lidar.setAllObjects(lidarObjects);
 
+	lidar.setCanBeSeen(true);
+	lidar.setCanBeSeenPartly(true);
+	field.update();
 	field.update();
 	field.calibratePosition();
 
@@ -1310,7 +1637,6 @@ void FieldTest::isPointInsideField_pointIsOutside_false()
 	DataAnalysis::CameraMock camera;
 	Autonomous::RobotMock autonomousRobot;
 	FieldImpl field(odometry, lidar, camera, autonomousRobot);
-
 	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 1), 0.06));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 1.833), 0.06));
@@ -1318,6 +1644,9 @@ void FieldTest::isPointInsideField_pointIsOutside_false()
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 3.916), 0.06));
 	lidar.setAllObjects(lidarObjects);
 
+	lidar.setCanBeSeen(true);
+	lidar.setCanBeSeenPartly(true);
+	field.update();
 	field.update();
 	field.calibratePosition();
 
@@ -1331,7 +1660,6 @@ void FieldTest::isPointInsideField_pointIsUnderField_false()
 	DataAnalysis::CameraMock camera;
 	Autonomous::RobotMock autonomousRobot;
 	FieldImpl field(odometry, lidar, camera, autonomousRobot);
-
 	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 1), 0.06));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 1.833), 0.06));
@@ -1339,110 +1667,13 @@ void FieldTest::isPointInsideField_pointIsUnderField_false()
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 3.916), 0.06));
 	lidar.setAllObjects(lidarObjects);
 
+	lidar.setCanBeSeen(true);
+	lidar.setCanBeSeenPartly(true);
+	field.update();
 	field.update();
 	field.calibratePosition();
 
 	CPPUNIT_ASSERT(!field.isPointInsideField(Point(-1,-3)));
-}
-
-void FieldTest::numberOfPucksChanged_emptyField_false()
-{
-	DataAnalysis::OdometryMock odometry;
-	DataAnalysis::LidarMock lidar;
-	DataAnalysis::CameraMock camera;
-	Autonomous::RobotMock autonomousRobot;
-	FieldImpl field(odometry, lidar, camera, autonomousRobot);
-
-	field.update();
-
-	CPPUNIT_ASSERT(!field.numberOfPucksChanged());
-}
-
-void FieldTest::numberOfPucksChanged_onePuckAdded_true()
-{
-	DataAnalysis::OdometryMock odometry;
-	DataAnalysis::LidarMock lidar;
-	DataAnalysis::CameraMock camera;
-	Autonomous::RobotMock autonomousRobot;
-	FieldImpl field(odometry, lidar, camera, autonomousRobot);
-	Point ownPosition(0, 0);
-
-	DataAnalysis::LidarObjects lidarObjects(ownPosition);
-	lidarObjects.addObject(DataAnalysis::LidarObject(Point(2, -1), 0.12));
-	lidar.setAllObjects(lidarObjects);
-
-	DataAnalysis::CameraObjects cameraObjects;
-	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(2, -1)));
-	camera.setAllObjects(cameraObjects);
-
-	field.update();
-	CPPUNIT_ASSERT(field.numberOfPucksChanged());
-
-	field.update();
-	CPPUNIT_ASSERT(!field.numberOfPucksChanged());
-}
-
-void FieldTest::numberOfPucksChanged_onePuckRemoved_true()
-{
-	DataAnalysis::OdometryMock odometry;
-	DataAnalysis::LidarMock lidar;
-	DataAnalysis::CameraMock camera;
-	Autonomous::RobotMock autonomousRobot;
-	FieldImpl field(odometry, lidar, camera, autonomousRobot);
-	Point ownPosition(0, 0);
-
-	DataAnalysis::LidarObjects lidarObjects(ownPosition);
-	lidarObjects.addObject(DataAnalysis::LidarObject(Point(2, -1), 0.12));
-	lidar.setAllObjects(lidarObjects);
-
-	DataAnalysis::CameraObjects cameraObjects;
-	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(2, -1)));
-	camera.setAllObjects(cameraObjects);
-
-	field.update();
-	CPPUNIT_ASSERT(field.numberOfPucksChanged());
-
-	field.update();
-	CPPUNIT_ASSERT(!field.numberOfPucksChanged());
-
-	lidar.setAllObjects(DataAnalysis::LidarObjects(Point::zero()));
-	field.update();
-	CPPUNIT_ASSERT(field.numberOfPucksChanged());
-}
-
-void FieldTest::numberOfPucksChanged_onePuckAddedOnePuckRemoved_true()
-{
-	DataAnalysis::OdometryMock odometry;
-	DataAnalysis::LidarMock lidar;
-	DataAnalysis::CameraMock camera;
-	Autonomous::RobotMock autonomousRobot;
-	FieldImpl field(odometry, lidar, camera, autonomousRobot);
-	Point ownPosition(0, 0);
-
-	DataAnalysis::LidarObjects lidarObjects(ownPosition);
-	lidarObjects.addObject(DataAnalysis::LidarObject(Point(2, -1), 0.12));
-	lidar.setAllObjects(lidarObjects);
-
-	DataAnalysis::CameraObjects cameraObjects;
-	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(2, -1)));
-	camera.setAllObjects(cameraObjects);
-
-	field.update();
-	CPPUNIT_ASSERT(field.numberOfPucksChanged());
-
-	field.update();
-	CPPUNIT_ASSERT(!field.numberOfPucksChanged());
-
-	DataAnalysis::LidarObjects lidarObjectsSecondRun(ownPosition);
-	lidarObjectsSecondRun.addObject(DataAnalysis::LidarObject(Point(-3, 2), 0.12));
-	lidar.setAllObjects(lidarObjectsSecondRun);
-
-	DataAnalysis::CameraObjects cameraObjectsSecondRun;
-	cameraObjectsSecondRun.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(-3, 2)));
-	camera.setAllObjects(cameraObjectsSecondRun);
-
-	field.update();
-	CPPUNIT_ASSERT(field.numberOfPucksChanged());
 }
 
 void FieldTest::getTargetsForGoalDetection_correctPosition()
@@ -1472,6 +1703,9 @@ void FieldTest::getAllSoftObstacles_oneBluePuck_resultSizeIs1()
 	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorBlue, Point(1, 0)));
 	camera.setAllObjects(cameraObjects);
 
+	lidar.setCanBeSeen(true);
+	lidar.setCanBeSeenPartly(true);
+	field.update();
 	field.update();
 	vector<Circle> obstacles = field.getAllSoftObstacles();
 
@@ -1491,6 +1725,9 @@ void FieldTest::getAllSoftObstacles_oneSmallObstacleWithUnknownColor_resultSizeI
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 0), 0.06));
 	lidar.setAllObjects(lidarObjects);
 
+	lidar.setCanBeSeen(true);
+	lidar.setCanBeSeenPartly(true);
+	field.update();
 	field.update();
 	vector<Circle> obstacles = field.getAllSoftObstacles();
 
@@ -1513,6 +1750,9 @@ void FieldTest::getAllSoftObstacles_oneGreenObstacle_resultSizeIs0()
 	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorGreen, Point(1, 0)));
 	camera.setAllObjects(cameraObjects);
 
+	lidar.setCanBeSeen(true);
+	lidar.setCanBeSeenPartly(true);
+	field.update();
 	field.update();
 	vector<Circle> obstacles = field.getAllSoftObstacles();
 
@@ -1532,6 +1772,9 @@ void FieldTest::getAllSoftObstacles_oneBigObstacle_resultSizeIs0()
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 0), 0.5));
 	lidar.setAllObjects(lidarObjects);
 
+	lidar.setCanBeSeen(true);
+	lidar.setCanBeSeenPartly(true);
+	field.update();
 	field.update();
 	vector<Circle> obstacles = field.getAllSoftObstacles();
 
@@ -1554,11 +1797,15 @@ void FieldTest::getAllSoftObstacles_onePuckDisappeared_resultSizeIs0()
 	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorBlue, Point(1, 0)));
 	camera.setAllObjects(cameraObjects);
 
+	lidar.setCanBeSeen(true);
+	lidar.setCanBeSeenPartly(true);
+	field.update();
 	field.update();
 	lidarObjects.clear();
 	cameraObjects.clear();
 	lidar.setAllObjects(lidarObjects);
 	camera.setAllObjects(cameraObjects);
+	field.update();
 	field.update();
 	vector<Circle> obstacles = field.getAllSoftObstacles();
 
@@ -1578,6 +1825,9 @@ void FieldTest::getAllSoftObstacles_oneSmallObstacleWithUnknownColor_resultDiame
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 0), 0.06));
 	lidar.setAllObjects(lidarObjects);
 
+	lidar.setCanBeSeen(true);
+	lidar.setCanBeSeenPartly(true);
+	field.update();
 	field.update();
 	Circle obstacle = field.getAllSoftObstacles().front();
 
@@ -1600,6 +1850,9 @@ void FieldTest::getAllHardObstacles_oneGreenObject_resultSizeIs1()
 	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorGreen, Point(1, 0)));
 	camera.setAllObjects(cameraObjects);
 
+	lidar.setCanBeSeen(true);
+	lidar.setCanBeSeenPartly(true);
+	field.update();
 	field.update();
 	vector<Circle> obstacles = field.getAllHardObstacles();
 
@@ -1619,6 +1872,9 @@ void FieldTest::getAllHardObstacles_oneBigObstacle_resultSizeIs1()
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 0), 0.5));
 	lidar.setAllObjects(lidarObjects);
 
+	lidar.setCanBeSeen(true);
+	lidar.setCanBeSeenPartly(true);
+	field.update();
 	field.update();
 	vector<Circle> obstacles = field.getAllHardObstacles();
 
@@ -1638,6 +1894,9 @@ void FieldTest::getAllHardObstacles_oneSmallObstacleWithUnknownColor_resultSizeI
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 0), 0.06));
 	lidar.setAllObjects(lidarObjects);
 
+	lidar.setCanBeSeen(true);
+	lidar.setCanBeSeenPartly(true);
+	field.update();
 	field.update();
 	vector<Circle> obstacles = field.getAllHardObstacles();
 
@@ -1657,9 +1916,13 @@ void FieldTest::getAllHardObstacles_oneBigObstacleDisappeared_resultSizeIs0()
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 0), 0.5));
 	lidar.setAllObjects(lidarObjects);
 
+	lidar.setCanBeSeen(true);
+	lidar.setCanBeSeenPartly(true);
+	field.update();
 	field.update();
 	lidarObjects.clear();
 	lidar.setAllObjects(lidarObjects);
+	field.update();
 	field.update();
 	vector<Circle> obstacles = field.getAllHardObstacles();
 
@@ -1679,6 +1942,9 @@ void FieldTest::getAllHardObstacles_fairlyBigObject_diameterIs08()
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 0), 0.14));
 	lidar.setAllObjects(lidarObjects);
 
+	lidar.setCanBeSeen(true);
+	lidar.setCanBeSeenPartly(true);
+	field.update();
 	field.update();
 	vector<Circle> obstacles = field.getAllHardObstacles();
 
