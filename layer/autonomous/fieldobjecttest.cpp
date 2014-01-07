@@ -245,18 +245,6 @@ void FieldObjectTest::isDefinitelyNotExisting_notSeenVeryOften_true()
 	CPPUNIT_ASSERT(object.isDefinitelyNotExisting());
 }
 
-void FieldObjectTest::isDefinitelyNotExisting_shouldBeSeenVeryOftenButSeenOnlyOnce_true()
-{
-	Circle circle(Point(4, 3), 2);
-	FieldObject object(circle, FieldColorGreen, 2);
-
-	object.shouldBeSeen();
-	object.seen();
-	object.shouldBeSeen();
-
-	CPPUNIT_ASSERT(object.isDefinitelyNotExisting());
-}
-
 void FieldObjectTest::isMaybeExisting_seenOnceAndTresholdIs4_false()
 {
 	Circle circle(Point(4, 3), 2);

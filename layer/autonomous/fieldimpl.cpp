@@ -18,6 +18,7 @@ using namespace RoboHockey::Layer::Autonomous;
 
 FieldImpl::FieldImpl(DataAnalysis::Odometry &odometry, const DataAnalysis::Lidar &lidar, DataAnalysis::Camera &camera, Robot &autonomousRobot):
 	m_seenTresholdForFieldObjects(5),
+	m_maximumDistanceToDeleteFieldObject(2.5),
 	m_odometry(&odometry),
 	m_lidar(&lidar),
 	m_camera(&camera),
@@ -593,8 +594,11 @@ void FieldImpl::removeNotExistingFieldObjects()
 	for (vector<FieldObject>::const_iterator i = m_fieldObjects.begin(); i != m_fieldObjects.end(); ++i)
 	{
 		const FieldObject &object = *i;
+		const Circle &circle = object.getCircle();
+		const Point &ownPosition = m_position->getPosition();
+		const double distance = ownPosition.distanceTo(circle.getCenter());
 
-		if (!object.isDefinitelyNotExisting())
+		if (!(object.isDefinitelyNotExisting() && distance < m_maximumDistanceToDeleteFieldObject))
 			newFieldObjects.push_back(object);
 	}
 

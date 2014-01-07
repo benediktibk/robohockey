@@ -237,8 +237,21 @@ void FieldTest::update_oneObjectOutAndOneObjectInsideOfCalibratedField_correctOb
 	field.update();
 	field.update();
 
-	CPPUNIT_ASSERT_EQUAL((size_t) 1, field.getAllFieldObjects().size());
-	CPPUNIT_ASSERT_EQUAL(Point(1, 1), field.getAllFieldObjects().front().getCircle().getCenter());
+	vector<FieldObject> fieldObjects = field.getAllFieldObjects();
+	CPPUNIT_ASSERT_EQUAL((size_t) 3, fieldObjects.size());
+	unsigned int found = 0;
+	Compare compare(0.01);
+
+	for (vector<FieldObject>::const_iterator i = fieldObjects.begin(); i != fieldObjects.end(); ++i)
+	{
+		const FieldObject &object = *i;
+		const Circle &circle = object.getCircle();
+		const Point &position = circle.getCenter();
+
+		if (compare.isFuzzyEqual(Point(1, 1), position))
+			++found;
+	}
+	CPPUNIT_ASSERT_EQUAL((unsigned int)1, found);
 }
 
 void FieldTest::update_threeObjectsAndTwoObjectsInGoal_twoAchievedGoals()

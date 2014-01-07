@@ -95,6 +95,7 @@ namespace Autonomous
 
 	private:
 		const unsigned int m_seenTresholdForFieldObjects;
+		const double m_maximumDistanceToDeleteFieldObject;
 		DataAnalysis::Odometry *m_odometry;
 		const DataAnalysis::Lidar *m_lidar;
 		DataAnalysis::Camera *m_camera;
