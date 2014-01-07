@@ -580,21 +580,7 @@ void FieldImpl::updateWithCameraData()
 		if (currentObject.getPosition().distanceTo(nextFieldObject.getCircle().getCenter()) > 0.07)
 			continue;
 
-		{
-			nextFieldObject.setColor(currentObject.getColor());
-			Circle circle = nextFieldObject.getCircle();
-
-			if (currentObject.getColor() == FieldColorBlue || currentObject.getColor() == FieldColorYellow)
-			{
-				circle.setDiameter(0.12);
-				nextFieldObject.setCircle(circle);
-			}
-			else if (currentObject.getColor() == FieldColorGreen)
-			{
-				circle.setDiameter(0.06);
-				nextFieldObject.setCircle(circle);
-			}
-		}
+		nextFieldObject.setColor(currentObject.getColor());
 	}
 }
 
