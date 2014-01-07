@@ -263,3 +263,111 @@ void FieldObjectTest::isMaybeExisting_seenTwiceAndTresholdIs4_true()
 
 	CPPUNIT_ASSERT(object.isMaybeExisting());
 }
+
+void FieldObjectTest::isHardObstacle_verySmallAndGreen_true()
+{
+	Circle circle(Point(4, 3), 0.02);
+	FieldObject object(circle, FieldColorGreen, 4);
+
+	CPPUNIT_ASSERT(object.isHardObstacle());
+}
+
+void FieldObjectTest::isHardObstacle_verySmallAndBlue_false()
+{
+	Circle circle(Point(4, 3), 0.02);
+	FieldObject object(circle, FieldColorBlue, 4);
+
+	CPPUNIT_ASSERT(!object.isHardObstacle());
+}
+
+void FieldObjectTest::isHardObstacle_verySmallAndYellow_false()
+{
+	Circle circle(Point(4, 3), 0.02);
+	FieldObject object(circle, FieldColorYellow, 4);
+
+	CPPUNIT_ASSERT(!object.isHardObstacle());
+}
+
+void FieldObjectTest::isHardObstacle_verySmallAndUnknownColor_false()
+{
+	Circle circle(Point(4, 3), 0.02);
+	FieldObject object(circle, FieldColorUnknown, 4);
+
+	CPPUNIT_ASSERT(!object.isHardObstacle());
+}
+
+void FieldObjectTest::isHardObstacle_veryBigAndGreen_true()
+{
+	Circle circle(Point(4, 3), 0.135);
+	FieldObject object(circle, FieldColorGreen, 4);
+
+	CPPUNIT_ASSERT(object.isHardObstacle());
+}
+
+void FieldObjectTest::isHardObstacle_veryBigAndBlue_true()
+{
+	Circle circle(Point(4, 3), 0.135);
+	FieldObject object(circle, FieldColorBlue, 4);
+
+	CPPUNIT_ASSERT(object.isHardObstacle());
+}
+
+void FieldObjectTest::isHardObstacle_veryBigAndYellow_true()
+{
+	Circle circle(Point(4, 3), 0.135);
+	FieldObject object(circle, FieldColorYellow, 4);
+
+	CPPUNIT_ASSERT(object.isHardObstacle());
+}
+
+void FieldObjectTest::isHardObstacle_veryBigAndUnkownColor_true()
+{
+	Circle circle(Point(4, 3), 0.135);
+	FieldObject object(circle, FieldColorUnknown, 4);
+
+	CPPUNIT_ASSERT(object.isHardObstacle());
+}
+
+void FieldObjectTest::getObstacle_green_boundaryPost()
+{
+	Circle circle(Point(4, 3), 0.03);
+	FieldObject object(circle, FieldColorGreen, 4);
+
+	Circle obstacle = object.getObstacle();
+
+	Compare compare(0.00001);
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(Circle(Point(4, 3), 0.06), obstacle));
+}
+
+void FieldObjectTest::getObstacle_blue_bluePuck()
+{
+	Circle circle(Point(4, 3), 0.03);
+	FieldObject object(circle, FieldColorBlue, 4);
+
+	Circle obstacle = object.getObstacle();
+
+	Compare compare(0.00001);
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(Circle(Point(4, 3), 0.12), obstacle));
+}
+
+void FieldObjectTest::getObstacle_yellow_yellowPuck()
+{
+	Circle circle(Point(1, 3), 0.03);
+	FieldObject object(circle, FieldColorYellow, 4);
+
+	Circle obstacle = object.getObstacle();
+
+	Compare compare(0.00001);
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(Circle(Point(1, 3), 0.12), obstacle));
+}
+
+void FieldObjectTest::getObstacle_big_enemyRobot()
+{
+	Circle circle(Point(4, 3), 0.135);
+	FieldObject object(circle, FieldColorBlue, 4);
+
+	Circle obstacle = object.getObstacle();
+
+	Compare compare(0.00001);
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(Circle(Point(4, 3), 0.8), obstacle));
+}

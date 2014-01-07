@@ -29,6 +29,8 @@ namespace Autonomous
 		bool isDefinitelyExisting() const;
 		bool isMaybeExisting() const;
 		bool isDefinitelyNotExisting() const;
+		bool isHardObstacle() const;
+		Common::Circle getObstacle() const;
 
 	private:
 		Common::Circle m_circle;
@@ -37,6 +39,12 @@ namespace Autonomous
 		unsigned int m_shouldBeSeen;
 		unsigned int m_notSeen;
 		unsigned int m_seenTreshold;
+
+	private:
+		static const double m_robotDiameterTreshold;
+		static const double m_robotDiameterMaximum;
+		static const double m_boundaryPostDiameter;
+		static const double m_puckDiameter;
 	};
 }
 }

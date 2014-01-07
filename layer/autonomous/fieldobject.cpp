@@ -1,8 +1,13 @@
 #include "layer/autonomous/fieldobject.h"
+#include <assert.h>
 
 using namespace RoboHockey::Layer::Autonomous;
 using namespace RoboHockey::Common;
 
+const double FieldObject::m_robotDiameterTreshold = 0.13;
+const double FieldObject::m_robotDiameterMaximum = 0.8;
+const double FieldObject::m_boundaryPostDiameter = 0.06;
+const double FieldObject::m_puckDiameter = 0.12;
 
 FieldObject::FieldObject(const Circle &circle, FieldColor color, unsigned int seenTreshold) :
 	m_circle(circle),
@@ -88,4 +93,31 @@ bool FieldObject::isMaybeExisting() const
 bool FieldObject::isDefinitelyNotExisting() const
 {
 	return getNotSeen() >= m_seenTreshold || (getShouldBeSeen() >= m_seenTreshold && getSeen() < m_seenTreshold);
+}
+
+bool FieldObject::isHardObstacle() const
+{
+	return m_color == FieldColorGreen || m_circle.getDiameter() > m_robotDiameterTreshold;
+}
+
+Circle FieldObject::getObstacle() const
+{
+	const Point &center = m_circle.getCenter();
+
+	if (m_circle.getDiameter() > m_robotDiameterTreshold)
+		return Circle(center, m_robotDiameterMaximum);
+
+	switch(m_color)
+	{
+	case FieldColorGreen:
+		return Circle(center, m_boundaryPostDiameter);
+	case FieldColorBlue:
+	case FieldColorYellow:
+		return Circle(center, m_puckDiameter);
+	case FieldColorUnknown:
+		return m_circle;
+	}
+
+	assert(false);
+	return Circle(); // make the compiler happy
 }

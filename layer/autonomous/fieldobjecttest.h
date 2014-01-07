@@ -39,6 +39,18 @@ namespace Autonomous
 		CPPUNIT_TEST(isDefinitelyNotExisting_shouldBeSeenVeryOftenButSeenOnlyOnce_true);
 		CPPUNIT_TEST(isMaybeExisting_seenOnceAndTresholdIs4_false);
 		CPPUNIT_TEST(isMaybeExisting_seenTwiceAndTresholdIs4_true);
+		CPPUNIT_TEST(isHardObstacle_verySmallAndGreen_true);
+		CPPUNIT_TEST(isHardObstacle_verySmallAndBlue_false);
+		CPPUNIT_TEST(isHardObstacle_verySmallAndYellow_false);
+		CPPUNIT_TEST(isHardObstacle_verySmallAndUnknownColor_false);
+		CPPUNIT_TEST(isHardObstacle_veryBigAndGreen_true);
+		CPPUNIT_TEST(isHardObstacle_veryBigAndBlue_true);
+		CPPUNIT_TEST(isHardObstacle_veryBigAndYellow_true);
+		CPPUNIT_TEST(isHardObstacle_veryBigAndUnkownColor_true);
+		CPPUNIT_TEST(getObstacle_green_boundaryPost);
+		CPPUNIT_TEST(getObstacle_blue_bluePuck);
+		CPPUNIT_TEST(getObstacle_yellow_yellowPuck);
+		CPPUNIT_TEST(getObstacle_big_enemyRobot);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
@@ -67,6 +79,18 @@ namespace Autonomous
 		void isDefinitelyNotExisting_shouldBeSeenVeryOftenButSeenOnlyOnce_true();
 		void isMaybeExisting_seenOnceAndTresholdIs4_false();
 		void isMaybeExisting_seenTwiceAndTresholdIs4_true();
+		void isHardObstacle_verySmallAndGreen_true();
+		void isHardObstacle_verySmallAndBlue_false();
+		void isHardObstacle_verySmallAndYellow_false();
+		void isHardObstacle_verySmallAndUnknownColor_false();
+		void isHardObstacle_veryBigAndGreen_true();
+		void isHardObstacle_veryBigAndBlue_true();
+		void isHardObstacle_veryBigAndYellow_true();
+		void isHardObstacle_veryBigAndUnkownColor_true();
+		void getObstacle_green_boundaryPost();
+		void getObstacle_blue_bluePuck();
+		void getObstacle_yellow_yellowPuck();
+		void getObstacle_big_enemyRobot();
 	};
 }
 }
