@@ -41,6 +41,7 @@ namespace Main
 		virtual ~Game();
 
 		virtual bool keepRunning() const = 0;
+		bool guiEnabled();
 
 	private slots:
 		void execute();
@@ -63,6 +64,7 @@ namespace Main
 		const double m_loopTimeMaximum;
 		const double m_loopTimeWeight;
 		double m_loopTimeAverage;
+		bool m_enablegui;
 	};
 }
 }

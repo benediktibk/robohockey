@@ -27,24 +27,37 @@ Game::Game(int argc, char **argv) :
 	m_loopTimeWeight(0.1),
 	m_loopTimeAverage(0)
 {
-	string playerServer;
-	string AngelinaAdressServer;
 
-	if(argc == 3)
+	string playerServer = "localhost";
+	string AngelinaAdressServer = "localhost";
+	m_enablegui = false;
+
+	vector<string> arguments(argc);
+	for(int i=1; i < argc; i++)
 	{
-		playerServer = argv[1];
-		AngelinaAdressServer = argv[2];
+		arguments.push_back(string(argv[i]));
 	}
-	else if(argc == 2)
+
+	for(size_t i=0; i < arguments.size(); i++)
 	{
-		playerServer = argv[1];
-		AngelinaAdressServer = "localhost";
+		if(arguments[i] == "--player" && arguments[i+1] != "--angelina" && arguments[i+1] != "--enablegui" && i+1 <= arguments.size())
+		{
+			playerServer = arguments[i+1];
+		}
+
+		if(arguments[i] == "--angelina" && arguments[i+1] != "--player" && arguments[i+1] != "--enablegui" && i+1 <= arguments.size())
+		{
+			AngelinaAdressServer = arguments[i+1];
+		}
+		if(arguments[i] == "--enablegui")
+		{
+			m_enablegui = true;
+		}
 	}
-	else
+
+	if(playerServer == "localhost")
 	{
 		cout << "no player server selected, using localhost" << endl;
-		playerServer = "localhost";
-		AngelinaAdressServer = "localhost";
 	}
 
 	Hardware::Robot *hardwareRobot = new Hardware::RobotImpl(playerServer);
@@ -75,6 +88,11 @@ Game::~Game()
 	m_referee = 0;
 	delete m_timer;
 	m_timer = 0;
+}
+
+bool Game::guiEnabled()
+{
+	return m_enablegui;
 }
 
 void Game::execute()

@@ -28,6 +28,7 @@ GameAutomatic::GameAutomatic(int argc, char **argv) :
 
 	cout << "starting the robot" << endl;
 	cout << "program can be closed with 'q'" << endl;
+	if(guiEnabled())
 	m_controller->show();
 }
 
