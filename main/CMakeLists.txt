@@ -47,7 +47,6 @@ set(LIBRARIES
 	${QT_LIBRARIES}
 	${PLAYERCPP_LINK_LIBS}
 	${OpenCV_LIBS}
-	${Boost_SYSTEM_LIBRARY}
 )
 
 if(Boost_FOUND)
