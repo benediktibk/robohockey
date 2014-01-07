@@ -225,16 +225,20 @@ void FieldTest::update_oneObjectOutAndOneObjectInsideOfCalibratedField_correctOb
 
 	CPPUNIT_ASSERT(field.calibratePosition());
 
-	DataAnalysis::LidarObjects lidarObjectsAfterCalibration(odometry.getCurrentPosition().getPosition());
+	const Point &currentPosition = odometry.getCurrentPosition().getPosition();
+	DataAnalysis::LidarObjects lidarObjectsAfterCalibration(currentPosition);
 	lidarObjectsAfterCalibration.addObject(DataAnalysis::LidarObject(Point(1,1), 0.06));
 	lidarObjectsAfterCalibration.addObject(DataAnalysis::LidarObject(Point(-2, 2.6), 0.06));
 	lidar.setAllObjects(lidarObjectsAfterCalibration);
 
 	field.update();
 	field.update();
+	field.update();
+	field.update();
+	field.update();
 
 	CPPUNIT_ASSERT_EQUAL((size_t) 1, field.getAllFieldObjects().size());
-	CPPUNIT_ASSERT_EQUAL(Point(1,1), field.getAllFieldObjects().front().getCircle().getCenter());
+	CPPUNIT_ASSERT_EQUAL(Point(1, 1), field.getAllFieldObjects().front().getCircle().getCenter());
 }
 
 void FieldTest::update_threeObjectsAndTwoObjectsInGoal_twoAchievedGoals()
@@ -1271,7 +1275,7 @@ void FieldTest::update_lidarObjectNotSeenOnce_oneFieldObject()
 	CPPUNIT_ASSERT_EQUAL((size_t)1, fieldObjects.size());
 }
 
-void FieldTest::update_lidarObjectNotSeenTwice_noFieldObjects()
+void FieldTest::update_lidarObjectNotSeenFiveTimes_noFieldObjects()
 {
 	DataAnalysis::OdometryMock odometry;
 	DataAnalysis::LidarMock lidar;
@@ -1290,6 +1294,10 @@ void FieldTest::update_lidarObjectNotSeenTwice_noFieldObjects()
 	lidar.setAllObjects(objects);
 	field.update();
 	field.update();
+	field.update();
+	field.update();
+	field.update();
+
 
 	vector<FieldObject> fieldObjects = field.getAllFieldObjects();
 	CPPUNIT_ASSERT_EQUAL((size_t)0, fieldObjects.size());
@@ -1807,6 +1815,9 @@ void FieldTest::getAllSoftObstacles_onePuckDisappeared_resultSizeIs0()
 	camera.setAllObjects(cameraObjects);
 	field.update();
 	field.update();
+	field.update();
+	field.update();
+	field.update();
 	vector<Circle> obstacles = field.getAllSoftObstacles();
 
 	CPPUNIT_ASSERT_EQUAL((size_t)0, obstacles.size());
@@ -1922,6 +1933,9 @@ void FieldTest::getAllHardObstacles_oneBigObstacleDisappeared_resultSizeIs0()
 	field.update();
 	lidarObjects.clear();
 	lidar.setAllObjects(lidarObjects);
+	field.update();
+	field.update();
+	field.update();
 	field.update();
 	field.update();
 	vector<Circle> obstacles = field.getAllHardObstacles();

@@ -61,7 +61,7 @@ namespace Autonomous
 		CPPUNIT_TEST(update_lidarObjectSeenOnlyOnce_noObstacles);
 		CPPUNIT_TEST(update_lidarObjectSeenTwice_oneFieldObject);
 		CPPUNIT_TEST(update_lidarObjectNotSeenOnce_oneFieldObject);
-		CPPUNIT_TEST(update_lidarObjectNotSeenTwice_noFieldObjects);
+		CPPUNIT_TEST(update_lidarObjectNotSeenFiveTimes_noFieldObjects);
 		CPPUNIT_TEST(calibratePosition_noValidPattern_false);
 		CPPUNIT_TEST(calibratePosition_validPattern_true);
 		CPPUNIT_TEST(calibratePosition_noValidPattern_noTransformation);
@@ -154,7 +154,7 @@ namespace Autonomous
 		void update_lidarObjectSeenOnlyOnce_noObstacles();
 		void update_lidarObjectSeenTwice_oneFieldObject();
 		void update_lidarObjectNotSeenOnce_oneFieldObject();
-		void update_lidarObjectNotSeenTwice_noFieldObjects();
+		void update_lidarObjectNotSeenFiveTimes_noFieldObjects();
 		void calibratePosition_noValidPattern_false();
 		void calibratePosition_validPattern_true();
 		void calibratePosition_noValidPattern_noTransformation();

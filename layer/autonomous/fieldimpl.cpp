@@ -17,7 +17,7 @@ using namespace RoboHockey::Common;
 using namespace RoboHockey::Layer::Autonomous;
 
 FieldImpl::FieldImpl(DataAnalysis::Odometry &odometry, const DataAnalysis::Lidar &lidar, DataAnalysis::Camera &camera, Robot &autonomousRobot):
-	m_seenTresholdForFieldObjects(2),
+	m_seenTresholdForFieldObjects(5),
 	m_odometry(&odometry),
 	m_lidar(&lidar),
 	m_camera(&camera),
@@ -49,7 +49,7 @@ void FieldImpl::update()
 		updateWithLidarData(0.3);
 
 	removeNotExistingFieldObjects();
-	updateDefiniteFieldObjects();
+	updateUsefulFieldObjects();
 
 	if (!m_robot->isRotating())
 		updateObstacles();
@@ -60,7 +60,7 @@ void FieldImpl::update()
 
 const vector<FieldObject> &FieldImpl::getAllFieldObjects() const
 {
-	return m_definiteFieldObjects;
+	return m_usefulFieldObjects;
 }
 
 const vector<Circle> &FieldImpl::getAllSoftObstacles() const
@@ -89,12 +89,11 @@ unsigned int FieldImpl::getNumberOfObjectsWithColor(FieldColor color) const
 bool FieldImpl::calibratePosition()
 {
 	RobotPosition newOrigin = getNewOriginFromFieldDetection();
-	Point newOriginPoint = newOrigin.getPosition();
 
 	bool result = !(newOrigin.getPosition() == Point::zero()) || !(newOrigin.getOrientation().getValueBetweenMinusPiAndPi() == 0.0);
 
 	if (result)
-		transformCoordinateSystem(newOriginPoint, newOrigin.getOrientation().getValueBetweenMinusPiAndPi());
+		transformCoordinateSystem(newOrigin);
 
 	return result;
 }
@@ -483,13 +482,12 @@ RobotPosition FieldImpl::getNewOriginFromFieldDetection()
 
 	delete input;
 
-	return RobotPosition( newOrigin, Angle(rotation) );
+	return RobotPosition(newOrigin, Angle(rotation));
 }
 
 void FieldImpl::transformFieldToNewOrigin(const RobotPosition newOrigin)
 {
-	Point newOriginPoint = newOrigin.getPosition();
-	transformCoordinateSystem(newOriginPoint, newOrigin.getOrientation().getValueBetweenMinusPiAndPi());
+	transformCoordinateSystem(newOrigin);
 }
 
 vector<RobotPosition> FieldImpl::getTargetsForWaitingPhase() const
@@ -616,16 +614,16 @@ void FieldImpl::removeNotExistingFieldObjects()
 	m_fieldObjects = newFieldObjects;
 }
 
-void FieldImpl::updateDefiniteFieldObjects()
+void FieldImpl::updateUsefulFieldObjects()
 {
-	m_definiteFieldObjects.clear();
+	m_usefulFieldObjects.clear();
 
 	for (vector<FieldObject>::const_iterator i = m_fieldObjects.begin(); i != m_fieldObjects.end(); ++i)
 	{
 		const FieldObject &object = *i;
 
-		if (object.isDefinitelyExisting())
-			m_definiteFieldObjects.push_back(object);
+		if (object.isMaybeExisting())
+			m_usefulFieldObjects.push_back(object);
 	}
 }
 
@@ -636,7 +634,7 @@ void FieldImpl::updateObstacles()
 	m_softObstacles.reserve(m_fieldObjects.size());
 	m_hardObstacles.reserve(m_fieldObjects.size());
 
-	for (vector<FieldObject>::const_iterator i = m_definiteFieldObjects.begin(); i != m_definiteFieldObjects.end(); ++i)
+	for (vector<FieldObject>::const_iterator i = m_usefulFieldObjects.begin(); i != m_usefulFieldObjects.end(); ++i)
 	{
 		const FieldObject &fieldObject = *i;
 		Circle circle = fieldObject.getCircle();
@@ -661,7 +659,7 @@ void FieldImpl::updateAchievedGoals()
 	Rectangle goal(Point(4.167, 1), Point(4.583, 2));
 
 	m_achievedGoals = 0;
-	for (vector<FieldObject>::const_iterator i = m_definiteFieldObjects.begin(); i != m_definiteFieldObjects.end(); ++i)
+	for (vector<FieldObject>::const_iterator i = m_usefulFieldObjects.begin(); i != m_usefulFieldObjects.end(); ++i)
 	{
 		const FieldObject &fieldObject = *i;
 
@@ -675,7 +673,7 @@ void FieldImpl::updateHiddenPucks()
 	Rectangle hiddenArea(Point(3.334, 0), Point(5, 3));
 
 	m_hiddenPucks = 0;
-	for (vector<FieldObject>::const_iterator i = m_definiteFieldObjects.begin(); i != m_definiteFieldObjects.end(); ++i)
+	for (vector<FieldObject>::const_iterator i = m_usefulFieldObjects.begin(); i != m_usefulFieldObjects.end(); ++i)
 	{
 		const FieldObject &fieldObject = *i;
 
@@ -740,10 +738,10 @@ bool FieldImpl::couldBeTheSameObject(const FieldObject &fieldObject, const DataA
 	return positionCompare.isFuzzyEqual(fieldObject.getCircle().getCenter(), lidarObject.getCenter());
 }
 
-void FieldImpl::transformCoordinateSystem(const Point &newOrigin, const Angle &rotation)
+void FieldImpl::transformCoordinateSystem(const RobotPosition &newOrigin)
 {
-	moveCoordinateSystem(newOrigin);
-	rotateCoordinateSystem(rotation);
+	moveCoordinateSystem(newOrigin.getPosition());
+	rotateCoordinateSystem(newOrigin.getOrientation());
 
 	m_fieldState = FieldStateCalibrated;
 	removeAllFieldObjectsOutsideOfField();

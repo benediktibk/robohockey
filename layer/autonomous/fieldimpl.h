@@ -70,7 +70,7 @@ namespace Autonomous
 		void updateWithOdometryData();
 		void updateWithCameraData();
 		void removeNotExistingFieldObjects();
-		void updateDefiniteFieldObjects();
+		void updateUsefulFieldObjects();
 		void updateObstacles();
 		void updateAchievedGoals();
 		void updateHiddenPucks();
@@ -80,7 +80,7 @@ namespace Autonomous
 		bool tryToMergeLidarAndFieldObject(FieldObject &fieldObject, const DataAnalysis::LidarObject &lidarObject);
 		bool couldBeTheSameObject(const FieldObject &fieldObject, const DataAnalysis::LidarObject &lidarObject) const;
 
-		void transformCoordinateSystem(const Common::Point &newOrigin, const Common::Angle &rotation);
+		void transformCoordinateSystem(const Common::RobotPosition &newOrigin);
 		void moveCoordinateSystem(const Common::Point &newOrigin);
 		void rotateCoordinateSystem(const Common::Angle &rotation);
 
@@ -101,7 +101,7 @@ namespace Autonomous
 
 		Common::RobotPosition *m_position;
 		std::vector<FieldObject> m_fieldObjects;
-		std::vector<FieldObject> m_definiteFieldObjects;
+		std::vector<FieldObject> m_usefulFieldObjects;
 		std::vector<Common::Circle> m_softObstacles;
 		std::vector<Common::Circle> m_hardObstacles;
 		FieldState m_fieldState;
