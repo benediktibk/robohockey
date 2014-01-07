@@ -553,7 +553,12 @@ void FieldImpl::updateWithLidarData(double range)
 	for (vector<FieldObject>::iterator i = inVisibleArea.begin(); i != inVisibleArea.end(); ++i)
 	{
 		FieldObject &fieldObject = *i;
-		fieldObject.notSeen();
+		const Circle &circle = fieldObject.getCircle();
+		const Point &ownPosition = m_position->getPosition();
+		const double distance = ownPosition.distanceTo(circle.getCenter());
+
+		if (distance < m_maximumDistanceToDeleteFieldObject)
+			fieldObject.notSeen();
 	}
 
 	m_fieldObjects.insert(m_fieldObjects.end(), inVisibleArea.begin(), inVisibleArea.end());
@@ -594,11 +599,7 @@ void FieldImpl::removeNotExistingFieldObjects()
 	for (vector<FieldObject>::const_iterator i = m_fieldObjects.begin(); i != m_fieldObjects.end(); ++i)
 	{
 		const FieldObject &object = *i;
-		const Circle &circle = object.getCircle();
-		const Point &ownPosition = m_position->getPosition();
-		const double distance = ownPosition.distanceTo(circle.getCenter());
-
-		if (!(object.isDefinitelyNotExisting() && distance < m_maximumDistanceToDeleteFieldObject))
+		if (!object.isDefinitelyNotExisting())
 			newFieldObjects.push_back(object);
 	}
 
