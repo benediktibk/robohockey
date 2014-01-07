@@ -758,7 +758,7 @@ bool FieldImpl::couldBeTheSameObject(const Circle &firstObject, const Circle &se
 	const Point &ownPosition = m_position->getPosition();
 	Point objectPosition = (firstObject.getCenter() + secondObject.getCenter())/2;
 	double distance = ownPosition.distanceTo(objectPosition);
-	Compare positionCompare(0.15/3*distance + 0.05);
+	Compare positionCompare(0.1/3*distance + 0.05);
 	return positionCompare.isFuzzyEqual(firstObject.getCenter(), secondObject.getCenter());
 }
 
