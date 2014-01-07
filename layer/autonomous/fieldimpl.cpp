@@ -49,6 +49,7 @@ void FieldImpl::update()
 	else
 		updateWithLidarData(0.3);
 
+	tryToMergeDoubledFieldObjects();
 	removeNotExistingFieldObjects();
 	updateUsefulFieldObjects();
 
@@ -538,7 +539,7 @@ void FieldImpl::updateWithLidarData(double range)
 		bool couldBeAPartlyVisibleObject = false;
 
 		for (vector<FieldObject>::const_iterator i = partlyVisibleObjects.begin(); i != partlyVisibleObjects.end() && !couldBeAPartlyVisibleObject; ++i)
-			if (couldBeTheSameObject(*i, lidarObject))
+			if (couldBeTheSameObject(i->getCircle(), lidarObject))
 				couldBeAPartlyVisibleObject = true;
 
 		if (!couldBeAPartlyVisibleObject)
@@ -563,6 +564,50 @@ void FieldImpl::updateWithLidarData(double range)
 
 	m_fieldObjects.insert(m_fieldObjects.end(), inVisibleArea.begin(), inVisibleArea.end());
 	m_fieldObjects.insert(m_fieldObjects.end(), newObjects.begin(), newObjects.end());
+}
+
+void FieldImpl::tryToMergeDoubledFieldObjects()
+{
+	bool changed;
+
+	do
+	{
+		changed = false;
+
+		for (vector<FieldObject>::iterator i = m_fieldObjects.begin(); i != m_fieldObjects.end() && !changed; ++i)
+			for (vector<FieldObject>::iterator j = i + 1; j != m_fieldObjects.end() && !changed; ++j)
+			{
+				const FieldObject &firstObject = *i;
+				const FieldObject &secondObject = *j;
+
+				if (!couldBeTheSameObject(firstObject.getCircle(), secondObject.getCircle()))
+					continue;
+
+				if (firstObject.getColor() != FieldColorUnknown && secondObject.getColor() != FieldColorUnknown)
+					continue;
+
+				const Circle &firstCircle = firstObject.getCircle();
+				const Circle &secondCircle = secondObject.getCircle();
+				unsigned int shouldBeSeen = (firstObject.getShouldBeSeen() + secondObject.getShouldBeSeen())/2;
+				unsigned int seen = (firstObject.getSeen() + secondObject.getSeen())/2;
+				unsigned int notSeen = (firstObject.getNotSeen() + secondObject.getNotSeen())/2;
+				Point center = (firstCircle.getCenter() + secondCircle.getCenter())/2;
+				double diameter = (firstCircle.getDiameter() + secondCircle.getDiameter())/2;
+				FieldColor color = FieldColorUnknown;
+
+				if (firstObject.getColor() != FieldColorUnknown)
+					color = firstObject.getColor();
+				if (secondObject.getColor() != FieldColorUnknown)
+					color = secondObject.getColor();
+
+				FieldObject mergedObject(Circle(center, diameter), color, m_seenTresholdForFieldObjects, seen, shouldBeSeen, notSeen);
+				m_fieldObjects.erase(i);
+				m_fieldObjects.erase(j);
+				m_fieldObjects.push_back(mergedObject);
+
+				changed = true;
+			}
+	} while(changed);
 }
 
 void FieldImpl::updateWithOdometryData()
@@ -694,7 +739,7 @@ vector<FieldObject>::iterator FieldImpl::getNextObjectFromPosition(vector<FieldO
 
 bool FieldImpl::tryToMergeLidarAndFieldObject(FieldObject &fieldObject, const DataAnalysis::LidarObject &lidarObject)
 {
-	if (!couldBeTheSameObject(fieldObject, lidarObject))
+	if (!couldBeTheSameObject(fieldObject.getCircle(), lidarObject))
 		return false;
 
 	Point newCenter  = (fieldObject.getCircle().getCenter() + lidarObject.getCenter())/2;
@@ -708,14 +753,13 @@ bool FieldImpl::tryToMergeLidarAndFieldObject(FieldObject &fieldObject, const Da
 	return true;
 }
 
-bool FieldImpl::couldBeTheSameObject(const FieldObject &fieldObject, const DataAnalysis::LidarObject &lidarObject) const
+bool FieldImpl::couldBeTheSameObject(const Circle &firstObject, const Circle &secondObject) const
 {
 	const Point &ownPosition = m_position->getPosition();
-	const Circle &circle = fieldObject.getCircle();
-	Point objectPosition = (circle.getCenter() + lidarObject.getCenter())/2;
+	Point objectPosition = (firstObject.getCenter() + secondObject.getCenter())/2;
 	double distance = ownPosition.distanceTo(objectPosition);
 	Compare positionCompare(0.15/3*distance + 0.05);
-	return positionCompare.isFuzzyEqual(fieldObject.getCircle().getCenter(), lidarObject.getCenter());
+	return positionCompare.isFuzzyEqual(firstObject.getCenter(), secondObject.getCenter());
 }
 
 void FieldImpl::transformCoordinateSystem(const RobotPosition &newOrigin)
