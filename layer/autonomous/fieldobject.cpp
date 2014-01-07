@@ -113,9 +113,8 @@ Circle FieldObject::getObstacle() const
 		return Circle(center, m_boundaryPostDiameter);
 	case FieldColorBlue:
 	case FieldColorYellow:
-		return Circle(center, m_puckDiameter);
 	case FieldColorUnknown:
-		return m_circle;
+		return Circle(center, m_puckDiameter);
 	}
 
 	assert(false);

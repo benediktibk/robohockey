@@ -637,20 +637,12 @@ void FieldImpl::updateObstacles()
 	for (vector<FieldObject>::const_iterator i = m_usefulFieldObjects.begin(); i != m_usefulFieldObjects.end(); ++i)
 	{
 		const FieldObject &fieldObject = *i;
-		Circle circle = fieldObject.getCircle();
+		Circle obstacle = fieldObject.getObstacle();
 
-		if (circle.getDiameter() > 0.13)
-		{
-			circle.setDiameter(0.8);
-			m_hardObstacles.push_back(circle);
-		}
-		else if (fieldObject.getColor() == FieldColorGreen)
-			m_hardObstacles.push_back(circle);
+		if (fieldObject.isHardObstacle())
+			m_hardObstacles.push_back(obstacle);
 		else
-		{
-			circle.setDiameter(0.12);
-			m_softObstacles.push_back(circle);
-		}
+			m_softObstacles.push_back(obstacle);
 	}
 }
 

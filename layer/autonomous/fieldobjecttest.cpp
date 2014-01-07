@@ -361,6 +361,17 @@ void FieldObjectTest::getObstacle_yellow_yellowPuck()
 	CPPUNIT_ASSERT(compare.isFuzzyEqual(Circle(Point(1, 3), 0.12), obstacle));
 }
 
+void FieldObjectTest::getObstacle_smallAndUnknownColor_puckSize()
+{
+	Circle circle(Point(1, 2), 0.03);
+	FieldObject object(circle, FieldColorUnknown, 4);
+
+	Circle obstacle = object.getObstacle();
+
+	Compare compare(0.00001);
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(Circle(Point(1, 2), 0.12), obstacle));
+}
+
 void FieldObjectTest::getObstacle_big_enemyRobot()
 {
 	Circle circle(Point(4, 3), 0.135);

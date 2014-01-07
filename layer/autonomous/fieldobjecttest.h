@@ -50,6 +50,7 @@ namespace Autonomous
 		CPPUNIT_TEST(getObstacle_green_boundaryPost);
 		CPPUNIT_TEST(getObstacle_blue_bluePuck);
 		CPPUNIT_TEST(getObstacle_yellow_yellowPuck);
+		CPPUNIT_TEST(getObstacle_smallAndUnknownColor_puckSize);
 		CPPUNIT_TEST(getObstacle_big_enemyRobot);
 		CPPUNIT_TEST_SUITE_END();
 
@@ -90,6 +91,7 @@ namespace Autonomous
 		void getObstacle_green_boundaryPost();
 		void getObstacle_blue_bluePuck();
 		void getObstacle_yellow_yellowPuck();
+		void getObstacle_smallAndUnknownColor_puckSize();
 		void getObstacle_big_enemyRobot();
 	};
 }
