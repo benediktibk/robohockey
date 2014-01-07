@@ -29,6 +29,7 @@ Game::Game(int argc, char **argv) :
 {
 	string playerServer;
 	string AngelinaAdressServer;
+
 	if(argc == 3)
 	{
 		playerServer = argv[1];
