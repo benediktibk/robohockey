@@ -5,7 +5,7 @@ find_library(CPPUNIT_LIBRARY cppunit)
 include(UsePlayerC++)
 find_package(OpenCV REQUIRED)
 find_package(Qt4 COMPONENTS QtCore QtGui QtDeclarative QtNetwork QtXml REQUIRED)
-find_package(Boost COMPONENTS system REQUIRED)
+find_package(Boost COMPONENTS system)
 include(${QT_USE_FILE})
 add_definitions(${QT_DEFINITIONS})
 
@@ -49,6 +49,13 @@ set(LIBRARIES
 	${OpenCV_LIBS}
 	${Boost_SYSTEM_LIBRARY}
 )
+
+if(DEFINED Boost_SYSTEM_LIBRARY)
+	set(LIBRARIES
+		${LIBRARIES}
+		${Boost_SYSTEM_LIBRARY}
+	)
+endif()
 
 set(LIBRARIES_TEST
 	layerstrategymainstatemachinetest
