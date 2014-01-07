@@ -80,6 +80,11 @@ bool FieldObject::isDefinitelyExisting() const
 	return getShouldBeSeen() >= m_seenTreshold && getSeen() >= m_seenTreshold;
 }
 
+bool FieldObject::isMaybeExisting() const
+{
+	return getShouldBeSeen() >= m_seenTreshold/2 && getSeen() >= m_seenTreshold/2;
+}
+
 bool FieldObject::isDefinitelyNotExisting() const
 {
 	return getNotSeen() >= m_seenTreshold || (getShouldBeSeen() >= m_seenTreshold && getSeen() < m_seenTreshold);
