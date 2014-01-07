@@ -97,7 +97,7 @@ bool FieldObject::isMaybeExisting() const
 
 bool FieldObject::isDefinitelyNotExisting() const
 {
-	return getNotSeen() >= m_seenTreshold || (getShouldBeSeen() >= m_seenTreshold && getSeen() < m_seenTreshold);
+	return getNotSeen() >= m_seenTreshold;
 }
 
 bool FieldObject::isHardObstacle() const
