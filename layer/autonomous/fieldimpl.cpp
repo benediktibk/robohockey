@@ -507,6 +507,7 @@ void FieldImpl::updateWithLidarData(double range)
 
 	vector<FieldObject> inVisibleArea = moveAllFieldObjectsInVisibleAreaToTemporaryVector(range);
 	vector<FieldObject> partlyVisibleObjects = getAllPartlyVisibleObjects();
+	updateAllNotVisibleObjects();
 	vector<FieldObject> newObjects;
 
 	for (vector<FieldObject>::iterator i = inVisibleArea.begin(); i != inVisibleArea.end(); ++i)
@@ -841,6 +842,17 @@ vector<FieldObject> FieldImpl::getAllPartlyVisibleObjects() const
 	}
 
 	return result;
+}
+
+void FieldImpl::updateAllNotVisibleObjects()
+{
+	for (vector<FieldObject>::iterator i = m_fieldObjects.begin(); i != m_fieldObjects.end(); ++i)
+	{
+		FieldObject &object = *i;
+
+		if (!m_lidar->canBeSeenPartly(object.getCircle(), *m_position))
+			object.cantBeSeen();
+	}
 }
 
 bool FieldImpl::isPointFuzzyInsideField(const Point &point, double epsilon) const
