@@ -694,26 +694,18 @@ vector<FieldObject>::iterator FieldImpl::getNextObjectFromPosition(vector<FieldO
 
 bool FieldImpl::tryToMergeLidarAndFieldObject(FieldObject &fieldObject, const DataAnalysis::LidarObject &lidarObject)
 {
-	Point newCenter;
-	double diameter = 0.0;
+	if (!couldBeTheSameObject(fieldObject, lidarObject))
+		return false;
 
-	if (couldBeTheSameObject(fieldObject, lidarObject))
-	{
-		newCenter  = ( fieldObject.getCircle().getCenter() + lidarObject.getCenter() ) * 0.5;
-		diameter = fieldObject.getCircle().getDiameter();
+	Point newCenter  = (fieldObject.getCircle().getCenter() + lidarObject.getCenter())/2;
+	double diameter = (fieldObject.getCircle().getDiameter() + lidarObject.getDiameter())/2;
 
-		if (fieldObject.getColor() == FieldColorUnknown)
-			diameter = 0.5 * (fieldObject.getCircle().getDiameter() + lidarObject.getDiameter());
+	FieldObject mergedFieldObject(
+				Circle(newCenter, diameter), fieldObject.getColor(), m_seenTresholdForFieldObjects,
+				fieldObject.getSeen(), fieldObject.getShouldBeSeen(), fieldObject.getNotSeen());
 
-		FieldObject mergedFieldObject(
-					Circle(newCenter, diameter), fieldObject.getColor(), m_seenTresholdForFieldObjects,
-					fieldObject.getSeen(), fieldObject.getShouldBeSeen(), fieldObject.getNotSeen());
-
-		fieldObject = mergedFieldObject;
-		return true;
-	}
-
-	return false;
+	fieldObject = mergedFieldObject;
+	return true;
 }
 
 bool FieldImpl::couldBeTheSameObject(const FieldObject &fieldObject, const DataAnalysis::LidarObject &lidarObject) const
