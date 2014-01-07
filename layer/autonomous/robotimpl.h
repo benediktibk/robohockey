@@ -74,6 +74,7 @@ namespace Autonomous
 		bool isCurrentTargetPuckCollectable() const;
 		bool checkTimeout();
 		void shrinkObstacles(std::vector<Common::Circle> &obstacles) const;
+		void growObstacles(std::vector<Common::Circle> &obstacles) const;
 
 	private:
 		// forbid copies
