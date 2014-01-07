@@ -26,6 +26,7 @@ namespace Autonomous
 		void seen();
 		void shouldBeSeen();
 		void notSeen();
+		void cantBeSeen();
 		bool isDefinitelyExisting() const;
 		bool isMaybeExisting() const;
 		bool isDefinitelyNotExisting() const;

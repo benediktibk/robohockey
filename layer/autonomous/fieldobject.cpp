@@ -80,6 +80,11 @@ void FieldObject::notSeen()
 	++m_notSeen;
 }
 
+void FieldObject::cantBeSeen()
+{
+	m_notSeen = 0;
+}
+
 bool FieldObject::isDefinitelyExisting() const
 {
 	return getShouldBeSeen() >= m_seenTreshold && getSeen() >= m_seenTreshold;

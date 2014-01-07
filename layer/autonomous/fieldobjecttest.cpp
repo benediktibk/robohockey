@@ -167,6 +167,24 @@ void FieldObjectTest::shouldBeSeen_twiceCalled_shouldBeSeenIs2()
 	CPPUNIT_ASSERT_EQUAL((unsigned int)2, object.getShouldBeSeen());
 }
 
+void FieldObjectTest::cantBeSeen_twiceNotSeen_notSeenIs0()
+{
+	Circle circle(Point(4, 3), 2);
+	FieldObject object(circle, FieldColorGreen, 2);
+
+	object.shouldBeSeen();
+	object.seen();
+	object.shouldBeSeen();
+	object.notSeen();
+	object.shouldBeSeen();
+	object.notSeen();
+	object.cantBeSeen();
+
+	CPPUNIT_ASSERT_EQUAL((unsigned int)0, object.getNotSeen());
+	CPPUNIT_ASSERT_EQUAL((unsigned int)3, object.getShouldBeSeen());
+	CPPUNIT_ASSERT_EQUAL((unsigned int)1, object.getSeen());
+}
+
 void FieldObjectTest::isDefinitelyExisting_shouldBeSeenOnlyOnceAndSeen_false()
 {
 	Circle circle(Point(4, 3), 2);
