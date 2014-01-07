@@ -588,9 +588,9 @@ void FieldImpl::tryToMergeDoubledFieldObjects()
 
 				const Circle &firstCircle = firstObject.getCircle();
 				const Circle &secondCircle = secondObject.getCircle();
-				unsigned int shouldBeSeen = (firstObject.getShouldBeSeen() + secondObject.getShouldBeSeen())/2;
-				unsigned int seen = (firstObject.getSeen() + secondObject.getSeen())/2;
-				unsigned int notSeen = (firstObject.getNotSeen() + secondObject.getNotSeen())/2;
+				unsigned int shouldBeSeen = max(firstObject.getShouldBeSeen(), secondObject.getShouldBeSeen());
+				unsigned int seen = max(firstObject.getSeen(), secondObject.getSeen());
+				unsigned int notSeen = min(firstObject.getNotSeen(), secondObject.getNotSeen());
 				Point center = (firstCircle.getCenter() + secondCircle.getCenter())/2;
 				double diameter = (firstCircle.getDiameter() + secondCircle.getDiameter())/2;
 				FieldColor color = FieldColorUnknown;
