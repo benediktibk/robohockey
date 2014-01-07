@@ -698,12 +698,12 @@ void RobotTest::goTo_hardObstacleMovedALittleBitIntoTheRoute_engineGotNoAddition
 	RobotImpl robot(dataAnalyser, new RouterImpl(0.5), m_watchMock);
 	FieldMock field;
 	vector<Circle> obstacles;
-	obstacles.push_back(Circle(Point(5, 1), 3));
+	obstacles.push_back(Circle(Point(7, 1), 1));
 	field.setHardObstacles(obstacles);
 	field.setNegativeCoordinatesOutside(true);
 
 	robot.updateSensorData();
-	m_targets.push_back(RobotPosition(Point(10, 1), 0));
+	m_targets.push_back(RobotPosition(Point(14, 1), 0));
 	robot.goTo(m_targets);
 	robot.updateActuators(field);
 	engine.setReachedTarget(true);
@@ -715,7 +715,7 @@ void RobotTest::goTo_hardObstacleMovedALittleBitIntoTheRoute_engineGotNoAddition
 	robot.updateSensorData();
 	robot.updateActuators(field);
 	engine.resetCounters();
-	obstacles.push_back(Circle(Point(5, 1.1), 3));
+	obstacles.push_back(Circle(Point(7, 1.1), 1));
 	field.setHardObstacles(obstacles);
 	robot.updateSensorData();
 	robot.updateActuators(field);

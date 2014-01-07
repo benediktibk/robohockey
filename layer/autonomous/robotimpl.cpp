@@ -353,6 +353,16 @@ void RobotImpl::shrinkObstacles(vector<Circle> &obstacles) const
 	}
 }
 
+void RobotImpl::growObstacles(std::vector<Circle> &obstacles) const
+{
+	for (vector<Circle>::iterator i = obstacles.begin(); i != obstacles.end(); ++i)
+	{
+		Circle &circle = *i;
+		double diameter = circle.getDiameter();
+		circle.setDiameter(diameter*1.1);
+	}
+}
+
 void RobotImpl::updateActuators(const Field &field)
 {
 	detectCollisions();
@@ -513,12 +523,17 @@ bool RobotImpl::updateRoute(const Field &field)
 	const RobotPosition robotPosition = getCurrentPosition();
 	vector<Circle> softObstacles = field.getAllSoftObstacles();
 	vector<Circle> hardObstacles = field.getAllHardObstacles();
-	shrinkObstacles(softObstacles);
-	shrinkObstacles(hardObstacles);
+	vector<Circle> softObstaclesShrinked = softObstacles;
+	vector<Circle> hardObstaclesShrinked = hardObstacles;
+	shrinkObstacles(softObstaclesShrinked);
+	shrinkObstacles(hardObstaclesShrinked);
+	growObstacles(softObstacles);
+	growObstacles(hardObstacles);
 	const vector<Circle> allObstacles = m_router->filterObstacles(softObstacles, hardObstacles, robotPosition.getPosition());
+	const vector<Circle> allObstaclesShrinked = m_router->filterObstacles(softObstaclesShrinked, hardObstaclesShrinked, robotPosition.getPosition());
 
-	if (	(m_ignoringSoftObstacles && isRouteFeasible(softObstacles)) ||
-			(!m_ignoringSoftObstacles && isRouteFeasible(allObstacles)))
+	if (	(m_ignoringSoftObstacles && isRouteFeasible(softObstaclesShrinked)) ||
+			(!m_ignoringSoftObstacles && isRouteFeasible(allObstaclesShrinked)))
 		return false;
 
 	//! If the current route is not feasible anymore we try to create a new one.
