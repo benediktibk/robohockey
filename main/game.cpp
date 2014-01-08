@@ -25,7 +25,10 @@ Game::Game(int argc, char **argv) :
 	m_timer(new QTimer()),
 	m_loopTimeMaximum(0.2),
 	m_loopTimeWeight(0.1),
-	m_loopTimeAverage(0)
+	m_loopTimeAverage(0),
+	m_blueObjectCount(0),
+	m_yellowObjectCount(0),
+	m_greenObjectCount(0)
 {
 
 	string playerServer = "localhost";
@@ -111,6 +114,9 @@ void Game::execute()
 	m_robot->updateSensorData();
 	double timeForSensorUpdate = watch.getTimeAndRestart();
 	m_field->update();
+	double blueObjectCountNew = m_field->getNumberOfObjectsWithColor(FieldColorBlue);
+	double yellowObjectCountNew = m_field->getNumberOfObjectsWithColor(FieldColorYellow);
+	double greenObjectCountNew = m_field->getNumberOfObjectsWithColor(FieldColorGreen);
 	double timeForFieldUpdate = watch.getTimeAndRestart();
 	executeRobotControl();
 	double timeForLogic = watch.getTimeAndRestart();
@@ -143,6 +149,24 @@ void Game::execute()
 		printTimeInMs("time spent on logic", timeForLogic);
 		printTimeInMs("time spent on actuator updates", timeForActuatorUpdate);
 		printTimeInMs("time spent on event processing", timeForEventProcessing);
+	}
+
+	if (blueObjectCountNew != m_blueObjectCount)
+	{
+		cout << blueObjectCountNew << " blue objects are known" << endl;
+		m_blueObjectCount = blueObjectCountNew;
+	}
+
+	if (yellowObjectCountNew != m_yellowObjectCount)
+	{
+		cout << yellowObjectCountNew << " yellow objects are known" << endl;
+		m_yellowObjectCount = yellowObjectCountNew;
+	}
+
+	if (greenObjectCountNew != m_greenObjectCount)
+	{
+		cout << greenObjectCountNew << " green objects are known" << endl;
+		m_greenObjectCount = greenObjectCountNew;
 	}
 
 	if (keepRunning())
