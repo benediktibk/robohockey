@@ -475,3 +475,7 @@ layer/strategy/common/waitstate.h
 layer/strategy/common/waitstatetest.cpp
 layer/strategy/common/waitstate.cpp
 resources/testfiles/lidar_40.txt
+common/pointdistancecomparetest.h
+common/pointdistancecompare.h
+common/pointdistancecomparetest.cpp
+common/pointdistancecompare.cpp
