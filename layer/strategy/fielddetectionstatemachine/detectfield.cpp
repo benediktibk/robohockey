@@ -6,6 +6,8 @@
 #include "layer/autonomous/robot.h"
 #include "layer/autonomous/field.h"
 #include "common/angle.h"
+#include <boost/bind.hpp>
+#include <algorithm>
 
 using namespace std;
 using namespace RoboHockey::Common;
@@ -13,7 +15,7 @@ using namespace RoboHockey::Layer::Strategy::Common;
 using namespace RoboHockey::Layer::Strategy::FieldDetectionStateMachine;
 using namespace RoboHockey::Layer::Autonomous;
 
-DetectField::DetectField(Robot &robot, Field &field, Referee &referee, vector<RobotPosition> previousCalibrationResults) :
+DetectField::DetectField(Robot &robot, Field &field, Referee &referee, std::vector<std::pair<unsigned int, RobotPosition> > previousCalibrationResults) :
 	State(robot, field, referee, false),
 	m_successful(false),
 	m_numberOfTries(0),
@@ -44,11 +46,14 @@ string DetectField::getName()
 
 void DetectField::updateInternal()
 {
-	RobotPosition result = m_field.getNewOriginFromFieldDetection();
+	unsigned int *numberOfStones = new unsigned int;
+
+	RobotPosition result = m_field.getNewOriginFromFieldDetection(numberOfStones);
+
 
 	if (!(result == RobotPosition()))
 	{
-		m_calibrationResults.push_back(result);
+		m_calibrationResults.push_back(pair<unsigned int, RoboHockey::Common::RobotPosition>(*numberOfStones, result));
 		m_successful = true;
 	}
 
@@ -56,7 +61,7 @@ void DetectField::updateInternal()
 
 	if ((size_t) 4 <= m_calibrationResults.size())
 	{
-		m_field.transformFieldToNewOrigin(m_calibrationResults.front());
+		m_field.transformFieldToNewOrigin(m_calibrationResults.front().second);
 		m_successful = true;
 	}
 }
