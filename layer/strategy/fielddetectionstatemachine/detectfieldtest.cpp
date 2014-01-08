@@ -117,4 +117,5 @@ void DetectFieldTest::nextState_calibrationSuccessfulButTooFewCalibrationResults
 	state = detectFieldState.nextState();
 	stateCasted = dynamic_cast<DriveToState*>(state);
 	CPPUNIT_ASSERT(stateCasted == 0);
+	delete state;
 }

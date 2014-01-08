@@ -40,6 +40,7 @@ void FindPuckStateTest::nextState_targetReached_nextStateIsDriveToCollectPuck()
 
 	CPPUNIT_ASSERT(stateCasted != 0);
 	delete state;
+	delete driveToState;
 }
 
 void FindPuckStateTest::nextState_cantReachTarget_nextStateIsFindPuckState()
@@ -58,6 +59,7 @@ void FindPuckStateTest::nextState_cantReachTarget_nextStateIsFindPuckState()
 
 	CPPUNIT_ASSERT(stateCasted != 0);
 	delete state;
+	delete driveToState;
 }
 
 void FindPuckStateTest::nextState_canReachTarget_nextStateIs0()

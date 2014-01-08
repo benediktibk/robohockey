@@ -67,6 +67,7 @@ void CalibrateTest::nextState_gameStartAndStopMovement_notInitialState()
 
 	InitialState *stateCasted = dynamic_cast<InitialState*>(state);
 	CPPUNIT_ASSERT(stateCasted == 0);
+	delete state;
 }
 
 void CalibrateTest::nextState_gameOverAndStopMovement_pause()
@@ -104,6 +105,7 @@ void CalibrateTest::nextState_gameStartAndGameOver_notInitialState()
 
 	InitialState *stateCasted = dynamic_cast<InitialState*>(state);
 	CPPUNIT_ASSERT(stateCasted == 0);
+	delete state;
 }
 
 void CalibrateTest::nextState_detectionStart_notPause()
@@ -159,6 +161,7 @@ void CalibrateTest::nextState_GameStartAndGameOver_notCalibrate()
 
 	Calibrate *stateCasted = dynamic_cast<Calibrate*>(state);
 	CPPUNIT_ASSERT(stateCasted == 0);
+	delete state;
 }
 
 void CalibrateTest::nextState_stopMovement_pause()
