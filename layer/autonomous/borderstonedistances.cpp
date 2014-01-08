@@ -73,7 +73,9 @@ bool BorderStoneDistances::verifyPoints(vector<Point> &points)
 
 	for (vector<Point>::const_iterator it = points.begin() + 1; it != points.end(); ++it)
 	{
-		BorderStoneFieldDistance currentDistance = getStandardDistanceType(lastPoint.distanceTo(*it));
+		double distance = lastPoint.distanceTo(*it);
+
+		BorderStoneFieldDistance currentDistance = getStandardDistanceType(distance);
 
 		if (currentDistance == BorderStoneFieldDistanceFalse || currentDistance == BorderStoneFieldDistanceD
 				|| currentDistance == BorderStoneFieldDistanceRoot)
