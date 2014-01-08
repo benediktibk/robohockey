@@ -12,7 +12,6 @@ using namespace RoboHockey::Layer::Autonomous;
 using namespace RoboHockey::Layer::Strategy::Common;
 using namespace RoboHockey::Layer::Strategy::FieldDetectionStateMachine;
 
-
 void CalibrationFinishedTest::nextState_3TargetsReached_NULL()
 {
 	RobotMock robot;
@@ -41,6 +40,7 @@ void CalibrationFinishedTest::nextState_0TargetsReached_WaitState()
 	WaitState *stateCasted = dynamic_cast<WaitState*>(state);
 
 	CPPUNIT_ASSERT(stateCasted != 0);
+	delete state;
 }
 
 void CalibrationFinishedTest::nextState_1TargetsReached_WaitState()
@@ -57,4 +57,5 @@ void CalibrationFinishedTest::nextState_1TargetsReached_WaitState()
 	WaitState *stateCasted = dynamic_cast<WaitState*>(state);
 
 	CPPUNIT_ASSERT(stateCasted != 0);
+	delete state;
 }

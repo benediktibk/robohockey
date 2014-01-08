@@ -20,8 +20,8 @@ State *FindPuckState::nextState()
 	return new DriveToState(
 				m_robot, m_field, m_referee, m_field.getTargetsForSearchingPucks(),
 				new WaitState(m_robot, m_field, m_referee,
-				new DriveToCollectPuckState(m_robot, m_field, m_referee, m_drivePuck), 10),
-				new FindPuckState(m_robot, m_field, m_referee, m_drivePuck));
+					new DriveToCollectPuckState(m_robot, m_field, m_referee, m_drivePuck), 10),
+					new FindPuckState(m_robot, m_field, m_referee, m_drivePuck));
 }
 
 std::string FindPuckState::getName()

@@ -73,4 +73,5 @@ void FindPuckStateTest::nextState_canReachTarget_nextStateIs0()
 	state = driveToState->nextState();
 
 	CPPUNIT_ASSERT(state == 0);
+	delete driveToState;
 }
