@@ -24,6 +24,7 @@ namespace Autonomous
 {
 	class Route;
 	class Router;
+	class FieldPositionChecker;
 
 	class RobotImpl :
 			public Robot
@@ -55,9 +56,10 @@ namespace Autonomous
 
 	private:
 		void clearRoute();
-		bool updateRouteForTarget(
-				const Field &field, const Common::RobotPosition &target,
-				const std::vector<Common::Circle> &obstacles, bool ignoreSoftObstacles, bool ignoreFinalOrientation);
+		bool updateRouteForTarget(const FieldPositionChecker &field, const Common::RobotPosition &target,
+				const std::vector<Common::Circle> &filteredObstacles,
+				bool ignoreFinalOrientation, const std::vector<Common::Circle> &hardObstacles,
+				const std::vector<Common::Circle> &softObstacles);
 		bool updateRoute(const Field &field);
 		bool isRouteFeasible(const std::vector<Common::Circle> &obstacles) const;
 		void updateEngine(const Field &field);

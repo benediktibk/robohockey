@@ -11,7 +11,8 @@ RouterMock::RouterMock() :
 { }
 
 Route RouterMock::calculateRoute(
-		const RobotPosition &start, const RobotPosition &end, const Field &, const Angle &, double, bool, bool) const
+		const RobotPosition &start, const RobotPosition &end, const FieldPositionChecker &, const Angle &, double, bool,
+		const vector<Circle> &, const vector<Circle> &) const
 {
 	Route route(0.38);
 	route.addPoint(start.getPosition());

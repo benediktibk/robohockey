@@ -18,7 +18,7 @@ namespace Layer
 namespace Autonomous
 {
 	class Route;
-	class Field;
+	class FieldPositionChecker;
 
 	class Router
 	{
@@ -26,9 +26,9 @@ namespace Autonomous
 		virtual ~Router() { }
 
 		virtual Route calculateRoute(
-				const Common::RobotPosition &start, const Common::RobotPosition &end, const Field &field,
-				const Common::Angle &maximumRotation, double minimumStepAfterMaximumRotation,
-				bool ignoreSoftObstacles, bool ignoreFinalOrientation) const = 0;
+				const Common::RobotPosition &start, const Common::RobotPosition &end, const FieldPositionChecker &field,
+				const Common::Angle &maximumRotation, double minimumStepAfterMaximumRotation, bool ignoreFinalOrientation,
+				const std::vector<Common::Circle> &hardObstacles, const std::vector<Common::Circle> &softObstacles) const = 0;
 		virtual std::vector<Common::Circle> filterObstacles(const std::vector<Common::Circle> &softObstacles,
 				const std::vector<Common::Circle> &hardObstacles, const Common::Point &position) const = 0;
 	};

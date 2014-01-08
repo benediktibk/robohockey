@@ -3,6 +3,8 @@
 
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
+#include "common/circle.h"
+#include <vector>
 
 namespace RoboHockey
 {
@@ -45,8 +47,6 @@ namespace Autonomous
 		CPPUNIT_TEST(calculateRoute_endRotationNotPossibleBecauseOfObstacles_invalidRoute);
 		CPPUNIT_TEST(calculateRoute_twoSmallObstaclesVeryClose_validRoute);
 		CPPUNIT_TEST(calculateRoute_targetOutsideOfTheField_invalidRoute);
-		CPPUNIT_TEST(calculateRoute_softObstacleOnTheWayAndIgnoreSoftObstacles_directConnection);
-		CPPUNIT_TEST(calculateRoute_hardObstacleOnTheWayAndIgnoreSoftObstacles_reasonableRouteBesideTheObstacle);
 		CPPUNIT_TEST(calculateRoute_completeTurnAtEndAndIgnoreFinalOrientation_directConnection);
 		CPPUNIT_TEST(calculateRoute_hardObstacleInsideStartPosition_directConnection);
 		CPPUNIT_TEST(calculateRoute_hardObstacleIntersectingWithStartPosition_reasonableRoute);
@@ -121,8 +121,6 @@ namespace Autonomous
 		void calculateRoute_endRotationNotPossibleBecauseOfObstacles_invalidRoute();
 		void calculateRoute_twoSmallObstaclesVeryClose_validRoute();
 		void calculateRoute_targetOutsideOfTheField_invalidRoute();
-		void calculateRoute_softObstacleOnTheWayAndIgnoreSoftObstacles_directConnection();
-		void calculateRoute_hardObstacleOnTheWayAndIgnoreSoftObstacles_reasonableRouteBesideTheObstacle();
 		void calculateRoute_completeTurnAtEndAndIgnoreFinalOrientation_directConnection();
 		void calculateRoute_hardObstacleInsideStartPosition_directConnection();
 		void calculateRoute_hardObstacleIntersectingWithStartPosition_reasonableRoute();
@@ -169,6 +167,9 @@ namespace Autonomous
 
 	private:
 		static bool routeIsInsideField(const Route &route, const Field &field);
+
+	private:
+		static const std::vector<Common::Circle> m_noObstacles;
 	};
 }
 }

@@ -773,11 +773,10 @@ void RobotTest::goTo_positionInsideHardObstacle_cantReachTarget()
 	CPPUNIT_ASSERT(robot.cantReachTarget());
 }
 
-void RobotTest::goTo_positionInsideSoftObstacle_cantReachTarget()
+void RobotTest::goTo_positionInsideSoftObstacle_canReachTarget()
 {
 	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
 	DataAnalysis::Odometry &odometry = dataAnalyser->getOdometry();
-	DataAnalysis::EngineMock &engine = dataAnalyser->getEngineMock();
 	odometry.setCurrentPosition(RobotPosition(Point(0, 0), Angle(0)));
 	RobotImpl robot(dataAnalyser, new RouterImpl(0.5), m_watchMock);
 	FieldMock field;
@@ -790,9 +789,7 @@ void RobotTest::goTo_positionInsideSoftObstacle_cantReachTarget()
 	robot.goTo(m_targets);
 	robot.updateActuators(field);
 
-	CPPUNIT_ASSERT(engine.getCallsToGoToStraight() == 0);
-	CPPUNIT_ASSERT(engine.getCallsToTurnToTarget() == 0);
-	CPPUNIT_ASSERT(robot.cantReachTarget());
+	CPPUNIT_ASSERT(!robot.cantReachTarget());
 }
 
 void RobotTest::stuckAtObstacle_tryingToTackleObstacle_true()

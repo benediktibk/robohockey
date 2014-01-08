@@ -5,6 +5,7 @@
 #include <list>
 #include "common/fieldcolor.h"
 #include "layer/autonomous/fieldobject.h"
+#include "layer/autonomous/fieldpositionchecker.h"
 
 namespace RoboHockey
 {
@@ -17,7 +18,8 @@ namespace Layer
 {
 namespace Autonomous
 {
-	class Field
+	class Field :
+			public FieldPositionChecker
 	{
 	public:
 		virtual ~Field() { }
@@ -31,7 +33,6 @@ namespace Autonomous
 		virtual unsigned int getNumberOfObjectsWithColor(Common::FieldColor color) const = 0;
 
 		virtual bool calibratePosition() = 0;
-		virtual bool isPointInsideField(const Common::Point &point) const = 0;
 		virtual unsigned int getNumberOfHiddenPucks() = 0;
 		virtual bool isCalibrated() const = 0;
 		virtual Common::FieldColor getOwnTeamColor() const = 0;

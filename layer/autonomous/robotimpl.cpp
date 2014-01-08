@@ -502,8 +502,9 @@ void RobotImpl::clearRoute()
 }
 
 bool RobotImpl::updateRouteForTarget(
-		const Field &field, const Common::RobotPosition &target,
-		const vector<Circle> &obstacles, bool ignoreSoftObstacles, bool ignoreFinalOrientation)
+		const FieldPositionChecker &field, const Common::RobotPosition &target,
+		const vector<Circle> &filteredObstacles, bool ignoreFinalOrientation,
+		const vector<Circle> &hardObstacles, const vector<Circle> &softObstacles)
 {
 	const RobotPosition robotPosition = getCurrentPosition();
 	Angle maximumRotation = Angle::getHalfRotation();
@@ -515,9 +516,10 @@ bool RobotImpl::updateRouteForTarget(
 	m_ignoringSoftObstacles = false;
 	*m_currentRoute = m_router->calculateRoute(
 				robotPosition, target, field, maximumRotation,
-				minimumStepAfterMaximumRotation, ignoreSoftObstacles, ignoreFinalOrientation);
+				minimumStepAfterMaximumRotation, ignoreFinalOrientation,
+				hardObstacles, softObstacles);
 
-	return isRouteFeasible(obstacles);
+	return isRouteFeasible(filteredObstacles);
 }
 
 bool RobotImpl::updateRoute(const Field &field)
@@ -547,7 +549,8 @@ bool RobotImpl::updateRoute(const Field &field)
 	for (list<RobotPosition>::const_iterator i = m_possibleTargets.begin(); i != m_possibleTargets.end() && !success; ++i)
 	{
 		m_currentTarget = *i;
-		success = updateRouteForTarget(field, m_currentTarget, allObstacles, m_ignoringSoftObstacles, false);
+		success = updateRouteForTarget(
+					field, m_currentTarget, allObstacles, false, hardObstacles, softObstacles);
 	}
 
 	if (success)
@@ -557,7 +560,8 @@ bool RobotImpl::updateRoute(const Field &field)
 	for (list<RobotPosition>::const_iterator i = m_possibleTargets.begin(); i != m_possibleTargets.end() && !success; ++i)
 	{
 		m_currentTarget = *i;
-		success = updateRouteForTarget(field, m_currentTarget, hardObstacles, m_ignoringSoftObstacles, false);
+		success = updateRouteForTarget(
+					field, m_currentTarget, hardObstacles, false, hardObstacles, vector<Circle>());
 	}
 
 	if (success)
@@ -567,7 +571,8 @@ bool RobotImpl::updateRoute(const Field &field)
 	for (list<RobotPosition>::const_iterator i = m_possibleTargets.begin(); i != m_possibleTargets.end() && !success; ++i)
 	{
 		m_currentTarget = *i;
-		success = updateRouteForTarget(field, m_currentTarget, hardObstacles, m_ignoringSoftObstacles, true);
+		success = updateRouteForTarget(
+					field, m_currentTarget, hardObstacles, true, hardObstacles, vector<Circle>());
 	}
 
 	if (!success)

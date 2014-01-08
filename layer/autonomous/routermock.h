@@ -16,9 +16,9 @@ namespace Autonomous
 		RouterMock();
 
 		virtual Route calculateRoute(
-				const Common::RobotPosition &start, const Common::RobotPosition &end, const Field &field,
-				const Common::Angle &maximumRotation, double minimumStepAfterMaximumRotation,
-				bool ignoreSoftObstacles, bool ignoreFinalOrientation) const;
+				const Common::RobotPosition &start, const Common::RobotPosition &end, const FieldPositionChecker &field,
+				const Common::Angle &maximumRotation, double minimumStepAfterMaximumRotation, bool ignoreFinalOrientation,
+				const std::vector<Common::Circle> &hardObstacles, const std::vector<Common::Circle> &softObstacles) const;
 		virtual std::vector<Common::Circle> filterObstacles(const std::vector<Common::Circle> &softObstacles,
 				const std::vector<Common::Circle> &hardObstacles, const Common::Point &position) const;
 		void setChessMode(bool value);

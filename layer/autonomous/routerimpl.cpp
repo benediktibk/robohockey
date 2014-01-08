@@ -25,13 +25,10 @@ RouterImpl::RouterImpl(double robotWidth) :
 { }
 
 Route RouterImpl::calculateRoute(
-		const RobotPosition &start, const RobotPosition &end, const Field &field,
-		const Angle &maximumRotation, double minimumStepAfterMaximumRotation,
-		bool ignoreSoftObstacles, bool ignoreFinalOrientation) const
+		const RobotPosition &start, const RobotPosition &end, const FieldPositionChecker &field,
+		const Angle &maximumRotation, double minimumStepAfterMaximumRotation, bool ignoreFinalOrientation,
+		const vector<Circle> &hardObstacles, const vector<Circle> &softObstacles) const
 {
-	const vector<Circle> softObstacles = field.getAllSoftObstacles();
-	const vector<Circle> hardObstacles = field.getAllHardObstacles();
-
 	if (!field.isPointInsideField(end.getPosition()))
 		return Route();
 
@@ -44,12 +41,7 @@ Route RouterImpl::calculateRoute(
 	const Point &endPosition = end.getPosition();
 	const Angle &startOrientation = start.getOrientation();
 	const Angle &endOrientation = end.getOrientation();
-	vector<Circle> allObstacles;
-
-	if (ignoreSoftObstacles)
-		allObstacles = hardObstacles;
-	else
-		allObstacles = filterObstacles(softObstacles, hardObstacles, startPosition);
+	vector<Circle> allObstacles = filterObstacles(softObstacles, hardObstacles, startPosition);
 
 	bool startInsideField = field.isPointInsideField(startPosition);
 	list<RoutingObstacle> consideredObstacles;
@@ -160,7 +152,7 @@ vector<Circle> RouterImpl::filterObstacles(
 }
 
 vector<RoutingResult> RouterImpl::calculateStartParts(
-		const RobotPosition &start, const Point &end, const Field &field,
+		const RobotPosition &start, const Point &end, const FieldPositionChecker &field,
 		const vector<Circle> &obstacles, unsigned int searchDepth,
 		const list<RoutingObstacle> &consideredObstacles,
 		const Common::Angle &maximumRotation, double minimumStepAfterMaximumRotation,
@@ -183,7 +175,7 @@ vector<RoutingResult> RouterImpl::calculateStartParts(
 }
 
 vector<RoutingResult> RouterImpl::calculateStartPartsWithFreeEnd(
-		const RobotPosition &start, const Point &end, const Field &field,
+		const RobotPosition &start, const Point &end, const FieldPositionChecker &field,
 		const vector<Circle> &obstacles, unsigned int searchDepth,
 		const list<RoutingObstacle> &consideredObstacles,
 		const Common::Angle &maximumRotation, double minimumStepAfterMaximumRotation,
@@ -209,7 +201,7 @@ vector<RoutingResult> RouterImpl::calculateStartPartsWithFreeEnd(
 }
 
 vector<RoutingResult> RouterImpl::calculateStartPartsWithCoveredEnd(
-		const RobotPosition &start, const Point &end, const Field &field, const vector<Circle> &obstacles,
+		const RobotPosition &start, const Point &end, const FieldPositionChecker &field, const vector<Circle> &obstacles,
 		unsigned int searchDepth, const list<RoutingObstacle> &consideredObstacles,
 		const Common::Angle &maximumRotation, double minimumStepAfterMaximumRotation,
 		bool startInsideField) const
@@ -241,7 +233,7 @@ vector<RoutingResult> RouterImpl::calculateStartPartsWithCoveredEnd(
 }
 
 vector<RoutingResult> RouterImpl::calculateStartPartsWithFreeDirectPath(
-		const RobotPosition &start, const Point &end, const Field &field,
+		const RobotPosition &start, const Point &end, const FieldPositionChecker &field,
 		const vector<Circle> &obstacles, unsigned int searchDepth,
 		const list<RoutingObstacle> &consideredObstacles, const Angle &maximumRotation,
 		double minimumStepAfterMaximumRotation, bool startInsideField) const
@@ -279,7 +271,7 @@ vector<RoutingResult> RouterImpl::calculateStartPartsWithFreeDirectPath(
 }
 
 vector<RoutingResult> RouterImpl::calculateEndParts(
-		const vector<RoutingResult> &startRoutes, const Point &end, const Field &field,
+		const vector<RoutingResult> &startRoutes, const Point &end, const FieldPositionChecker &field,
 		const vector<Circle> &obstacles, unsigned int searchDepth,
 		const Common::Angle &maximumRotation, double minimumStepAfterMaximumRotation) const
 {
@@ -350,7 +342,7 @@ Circle RouterImpl::findClosestObstacle(const vector<Circle> &obstacles, const Po
 }
 
 vector<RoutingResult> RouterImpl::calculateRoutesToPointsBesideObstacle(
-		const Circle &obstacle, const RobotPosition &start, const Point &end, const Field &field,
+		const Circle &obstacle, const RobotPosition &start, const Point &end, const FieldPositionChecker &field,
 		const vector<Circle> &obstacles, unsigned int searchDepth,
 		const list<RoutingObstacle> &consideredObstacles, const Common::Angle &maximumRotation,
 		double minimumStepAfterMaximumRotation, bool startIsInsideField) const
