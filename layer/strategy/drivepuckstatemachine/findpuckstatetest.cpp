@@ -20,8 +20,7 @@ void FindPuckStateTest::nextState_targetReached_nextStateIsDriveToCollectPuck()
 	DrivePuckMock drivePuck;
 	robot.setReachedTarget(true);
 	FindPuckState findPuckState(robot, field, referee, drivePuck);
-	State *driveToState;
-	driveToState = findPuckState.nextState();
+	State *driveToState = findPuckState.nextState();
 	State *waitState;
 	waitState = driveToState->nextState();
 	waitState->update();
@@ -41,6 +40,7 @@ void FindPuckStateTest::nextState_targetReached_nextStateIsDriveToCollectPuck()
 	CPPUNIT_ASSERT(stateCasted != 0);
 	delete state;
 	delete driveToState;
+	delete waitState;
 }
 
 void FindPuckStateTest::nextState_cantReachTarget_nextStateIsFindPuckState()
