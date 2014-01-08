@@ -96,7 +96,8 @@ unsigned int FieldImpl::getNumberOfObjectsWithColor(FieldColor color) const
 
 bool FieldImpl::calibratePosition()
 {
-	RobotPosition newOrigin = getNewOriginFromFieldDetection();
+	unsigned int numberOfBorderStones;
+	RobotPosition newOrigin = getNewOriginFromFieldDetection(numberOfBorderStones);
 
 	bool result = !(newOrigin.getPosition() == Point::zero()) || !(newOrigin.getOrientation().getValueBetweenMinusPiAndPi() == 0.0);
 
@@ -465,10 +466,10 @@ void FieldImpl::setTrueTeamColor(FieldColor trueTeamColor)
 	m_teamColor = trueTeamColor;
 }
 
-RobotPosition FieldImpl::getNewOriginFromFieldDetection(unsigned int *outNumberOfBorderstones)
+RobotPosition FieldImpl::getNewOriginFromFieldDetection(unsigned int &outNumberOfBorderstones)
 {
+	outNumberOfBorderstones = 0;
 	vector<Point> *input = getPointsOfObjectsWithDiameterAndColor(0.06, FieldColorGreen);
-
 	FieldDetector detector(m_position->getPosition(), *input);
 
 	bool result = detector.tryToDetectField();
@@ -480,9 +481,7 @@ RobotPosition FieldImpl::getNewOriginFromFieldDetection(unsigned int *outNumberO
 	{
 		newOrigin = detector.getNewOrigin();
 		rotation = detector.getRotation();
-
-		if (outNumberOfBorderstones != 0)
-			*outNumberOfBorderstones = detector.getNumberOfBorderStonesInRow();
+		outNumberOfBorderstones = detector.getNumberOfBorderStonesInRow();
 	}
 
 	delete input;

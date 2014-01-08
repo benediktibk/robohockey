@@ -89,8 +89,9 @@ void FieldMock::setTrueTeamColor(FieldColor teamColor)
 	m_teamColor = teamColor;
 }
 
-RobotPosition FieldMock::getNewOriginFromFieldDetection(unsigned int *)
+RobotPosition FieldMock::getNewOriginFromFieldDetection(unsigned int &outNumberOfBorderStones)
 {
+	outNumberOfBorderStones = 0;
 	return m_newOrigin;
 }
 

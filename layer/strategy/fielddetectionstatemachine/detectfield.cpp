@@ -46,24 +46,18 @@ string DetectField::getName()
 
 void DetectField::updateInternal()
 {
-	unsigned int *numberOfStones = new unsigned int;
-	*numberOfStones = 0;
-
+	unsigned int numberOfStones = 0;
 	RobotPosition result = m_field.getNewOriginFromFieldDetection(numberOfStones);
-
 
 	if (!(result == RobotPosition()))
 	{
-		if (*numberOfStones >= m_calibrationResults.front().first)
-			m_calibrationResults.push_front(pair<unsigned int, RoboHockey::Common::RobotPosition>(*numberOfStones, result));
+		if (numberOfStones >= m_calibrationResults.front().first)
+			m_calibrationResults.push_front(pair<unsigned int, RoboHockey::Common::RobotPosition>(numberOfStones, result));
 		else
-			m_calibrationResults.push_back(pair<unsigned int, RoboHockey::Common::RobotPosition>(*numberOfStones, result));
+			m_calibrationResults.push_back(pair<unsigned int, RoboHockey::Common::RobotPosition>(numberOfStones, result));
 
 		m_successful = true;
 	}
-
-	numberOfStones = 0;
-	delete numberOfStones;
 
 	m_numberOfTries++;
 

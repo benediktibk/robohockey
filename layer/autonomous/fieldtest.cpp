@@ -2132,7 +2132,8 @@ void FieldTest::getNewOriginFromFieldDetection_realWorldExample1_correctNewOrigi
 	dataAnalyser.updateSensorData();
 
 	field.update();
-	RobotPosition resultOrigin = field.getNewOriginFromFieldDetection();
+	unsigned int numberOfBorderStones;
+	RobotPosition resultOrigin = field.getNewOriginFromFieldDetection(numberOfBorderStones);
 	cout << resultOrigin << endl;
 
 //	Compare compare(0.5);
@@ -2153,7 +2154,8 @@ void FieldTest::getNewOriginFromFieldDetection_realWorldExample2_correctNewOrigi
 	dataAnalyser.updateSensorData();
 
 	field.update();
-	RobotPosition resultOrigin = field.getNewOriginFromFieldDetection();
+	unsigned int numberOfBorderStones;
+	RobotPosition resultOrigin = field.getNewOriginFromFieldDetection(numberOfBorderStones);
 	cout << resultOrigin << endl;
 
 //	Compare compare(0.5);
@@ -2174,7 +2176,8 @@ void FieldTest::getNewOriginFromFieldDetection_realWorldExample3_correctNewOrigi
 	dataAnalyser.updateSensorData();
 
 	field.update();
-	RobotPosition resultOrigin = field.getNewOriginFromFieldDetection();
+	unsigned int numberOfBorderStones;
+	RobotPosition resultOrigin = field.getNewOriginFromFieldDetection(numberOfBorderStones);
 	cout << resultOrigin << endl;
 
 //	Compare compare(0.5);
