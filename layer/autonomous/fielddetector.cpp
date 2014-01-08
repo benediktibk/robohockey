@@ -79,6 +79,14 @@ double FieldDetector::getRotation()
 	return m_rotation;
 }
 
+unsigned int FieldDetector::getNumberOfBorderStonesInRow()
+{
+	if (m_maxBorderstonesArranged < 3)
+		return 0;
+
+	return m_maxBorderstonesArranged;
+}
+
 bool FieldDetector::tryToFigureOutNewOrigin(BorderStone &root)
 {
 	Rectangle fieldGround(Point(0,0), Point(5,3));

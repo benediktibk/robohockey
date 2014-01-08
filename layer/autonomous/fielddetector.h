@@ -22,6 +22,7 @@ namespace Autonomous
 		bool tryToDetectField();
 		Common::Point getNewOrigin();
 		double getRotation();
+		unsigned int getNumberOfBorderStonesInRow();
 
 	private:
 		bool tryToFigureOutNewOrigin(BorderStone &root);
