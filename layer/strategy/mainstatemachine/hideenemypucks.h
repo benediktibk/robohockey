@@ -10,6 +10,11 @@ namespace Layer
 {
 namespace Strategy
 {
+namespace Common
+{
+	class DrivePuck;
+}
+
 namespace MainStateMachine
 {
 class HideEnemyPucks :
@@ -27,6 +32,7 @@ class HideEnemyPucks :
 
 	private:
 		Common::StateMachine *m_drivePuckStateMachine;
+		Common::DrivePuck *m_drivePuck;
 	};
 }
 }

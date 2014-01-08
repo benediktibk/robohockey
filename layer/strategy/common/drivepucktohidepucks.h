@@ -16,15 +16,15 @@ namespace Common
 			public DrivePuck
 	{
 	public:
-		DrivePuckToHidePucks(Autonomous::Field &field);
+		DrivePuckToHidePucks(const Autonomous::Field &field);
 
-		virtual std::list<RoboHockey::Common::RobotPosition> getTargetPositions();
-		virtual std::list<RoboHockey::Common::RobotPosition> getPositionsToCollectPuck();
-		virtual RoboHockey::Common::FieldColor getColorOfTargetPucks();
-		virtual unsigned int getNumberOfKnownPucksNotInTarget();
+		virtual std::list<RoboHockey::Common::RobotPosition> getTargetPositions() const;
+		virtual std::list<RoboHockey::Common::RobotPosition> getPositionsToCollectPuck() const;
+		virtual RoboHockey::Common::FieldColor getColorOfTargetPucks() const;
+		virtual unsigned int getNumberOfKnownPucksNotInTarget() const;
 
 	private:
-		Autonomous::Field &m_field;
+		const Autonomous::Field &m_field;
 
 	};
 }

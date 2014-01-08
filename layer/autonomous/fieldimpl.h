@@ -47,8 +47,8 @@ namespace Autonomous
 		virtual std::vector<FieldObject> getObjectsWithColorOrderdByDistance(Common::FieldColor color, const Common::Point &position) const;
 		virtual unsigned int getNumberOfObjectsWithColor(Common::FieldColor color) const;
 		virtual bool calibratePosition();
-		virtual unsigned int getNumberOfAchievedGoals();
-		virtual unsigned int getNumberOfHiddenPucks();
+		virtual unsigned int getNumberOfAchievedGoals() const;
+		virtual unsigned int getNumberOfHiddenPucks() const;
 		virtual bool isPointInsideField(const Common::Point &point) const;
 		virtual bool isCalibrated() const;
 		virtual Common::FieldColor getOwnTeamColor() const;

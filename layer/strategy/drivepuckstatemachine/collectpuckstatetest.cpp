@@ -18,7 +18,7 @@ void CollectPuckStateTest::nextState_puckCollected_nextStateIsDriveToPositionSta
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	DrivePuckMock *drivePuck = new DrivePuckMock();
+	DrivePuckMock drivePuck;
 	robot.setPuckCollected(true);
 	CollectPuckState collectPuckState(robot, field, referee, drivePuck);
 	State *state;
@@ -26,6 +26,7 @@ void CollectPuckStateTest::nextState_puckCollected_nextStateIsDriveToPositionSta
 	DrivePuckToPositionState *stateCasted = dynamic_cast<DrivePuckToPositionState*>(state);
 
 	CPPUNIT_ASSERT(stateCasted != 0);
+	delete state;
 }
 
 void CollectPuckStateTest::nextState_cantReachTarget_nextStatedIsDriveToCollectPuckState()
@@ -33,7 +34,7 @@ void CollectPuckStateTest::nextState_cantReachTarget_nextStatedIsDriveToCollectP
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	DrivePuckMock *drivePuck = new DrivePuckMock();
+	DrivePuckMock drivePuck;
 	robot.setCantReachedTarget(true);
 	CollectPuckState collectPuckState(robot, field, referee, drivePuck);
 	State *state;
@@ -41,6 +42,7 @@ void CollectPuckStateTest::nextState_cantReachTarget_nextStatedIsDriveToCollectP
 	DriveToCollectPuckState *stateCasted = dynamic_cast<DriveToCollectPuckState*>(state);
 
 	CPPUNIT_ASSERT(stateCasted != 0);
+	delete state;
 }
 
 void CollectPuckStateTest::nextState_canReachTarget_nextStatedIs0()
@@ -49,13 +51,14 @@ void CollectPuckStateTest::nextState_canReachTarget_nextStatedIs0()
 	FieldMock field;
 	RefereeMock referee;
 	robot.setPuckCollectable(true);
-	DrivePuckMock *drivePuck = new DrivePuckMock();
+	DrivePuckMock drivePuck;
 	CollectPuckState collectPuckState(robot, field, referee, drivePuck);
 	State *state;
 	collectPuckState.update();
 	state = collectPuckState.nextState();
 
 	CPPUNIT_ASSERT(state == 0);
+	delete state;
 }
 
 void CollectPuckStateTest::nextState_puckIsNotCollectable_nextStateIsDriveToCollectPuckState()
@@ -63,12 +66,13 @@ void CollectPuckStateTest::nextState_puckIsNotCollectable_nextStateIsDriveToColl
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	DrivePuckMock *drivePuck = new DrivePuckMock();
+	DrivePuckMock drivePuck;
 	CollectPuckState collectPuckState(robot, field, referee, drivePuck);
 	State *state;
 	state = collectPuckState.nextState();
 	DriveToCollectPuckState *stateCasted = dynamic_cast<DriveToCollectPuckState*>(state);
 
 	CPPUNIT_ASSERT(stateCasted != 0);
+	delete state;
 }
 

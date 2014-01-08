@@ -17,7 +17,7 @@ void FindPuckStateTest::nextState_targetReached_nextStateIsDriveToCollectPuck()
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	DrivePuckMock *drivePuck = new DrivePuckMock();
+	DrivePuckMock drivePuck;
 	robot.setReachedTarget(true);
 	FindPuckState findPuckState(robot, field, referee, drivePuck);
 	State *driveToState;
@@ -39,6 +39,7 @@ void FindPuckStateTest::nextState_targetReached_nextStateIsDriveToCollectPuck()
 	DriveToCollectPuckState *stateCasted = dynamic_cast<DriveToCollectPuckState*>(state);
 
 	CPPUNIT_ASSERT(stateCasted != 0);
+	delete state;
 }
 
 void FindPuckStateTest::nextState_cantReachTarget_nextStateIsFindPuckState()
@@ -46,7 +47,7 @@ void FindPuckStateTest::nextState_cantReachTarget_nextStateIsFindPuckState()
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	DrivePuckMock *drivePuck = new DrivePuckMock();
+	DrivePuckMock drivePuck;
 	robot.setCantReachedTarget(true);
 	FindPuckState findPuckState(robot, field, referee, drivePuck);
 	State *driveToState;
@@ -56,6 +57,7 @@ void FindPuckStateTest::nextState_cantReachTarget_nextStateIsFindPuckState()
 	FindPuckState *stateCasted = dynamic_cast<FindPuckState*>(state);
 
 	CPPUNIT_ASSERT(stateCasted != 0);
+	delete state;
 }
 
 void FindPuckStateTest::nextState_canReachTarget_nextStateIs0()
@@ -63,7 +65,7 @@ void FindPuckStateTest::nextState_canReachTarget_nextStateIs0()
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	DrivePuckMock *drivePuck = new DrivePuckMock();
+	DrivePuckMock drivePuck;
 	FindPuckState findPuckState(robot, field, referee, drivePuck);
 	State *driveToState;
 	driveToState = findPuckState.nextState();

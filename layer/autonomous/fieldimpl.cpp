@@ -107,12 +107,12 @@ bool FieldImpl::calibratePosition()
 	return result;
 }
 
-unsigned int FieldImpl::getNumberOfAchievedGoals()
+unsigned int FieldImpl::getNumberOfAchievedGoals() const
 {
 	return m_achievedGoals;
 }
 
-unsigned int FieldImpl::getNumberOfHiddenPucks()
+unsigned int FieldImpl::getNumberOfHiddenPucks() const
 {
 	return m_hiddenPucks;
 }

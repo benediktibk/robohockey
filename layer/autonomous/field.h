@@ -25,7 +25,7 @@ namespace Autonomous
 		virtual ~Field() { }
 
 		virtual void update() = 0;
-		virtual unsigned int getNumberOfAchievedGoals() = 0;
+		virtual unsigned int getNumberOfAchievedGoals() const = 0;
 		virtual const std::vector<FieldObject>& getAllFieldObjects() const = 0;
 		virtual const std::vector<Common::Circle>& getAllSoftObstacles() const = 0;
 		virtual const std::vector<Common::Circle>& getAllHardObstacles() const = 0;
@@ -33,7 +33,7 @@ namespace Autonomous
 		virtual unsigned int getNumberOfObjectsWithColor(Common::FieldColor color) const = 0;
 
 		virtual bool calibratePosition() = 0;
-		virtual unsigned int getNumberOfHiddenPucks() = 0;
+		virtual unsigned int getNumberOfHiddenPucks() const = 0;
 		virtual bool isCalibrated() const = 0;
 		virtual Common::FieldColor getOwnTeamColor() const = 0;
 		virtual Common::FieldColor getEnemyTeamColor() const = 0;

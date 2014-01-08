@@ -10,7 +10,7 @@ using namespace RoboHockey::Layer::Strategy::Common;
 using namespace RoboHockey::Layer::Strategy::DrivePuckStateMachine;
 using namespace RoboHockey::Layer::Autonomous;
 
-CollectPuckState::CollectPuckState(Robot &robot, Field &field, Referee &referee, DrivePuck *drivePuck) :
+CollectPuckState::CollectPuckState(Robot &robot, Field &field, Referee &referee, const DrivePuck &drivePuck) :
 	State(robot, field, referee, true),
 	m_drivePuck(drivePuck),
 	m_isPuckNotCollectable(true)
@@ -36,8 +36,9 @@ void CollectPuckState::updateInternal()
 	if(m_robot.isPuckCollectable())
 	{
 		m_isPuckNotCollectable = false;
-		m_robot.collectPuckInFront(m_field.getObjectsWithColorOrderdByDistance(
-								   m_drivePuck->getColorOfTargetPucks(),
-								   m_robot.getCurrentPosition().getPosition()).front().getCircle().getCenter());
+		m_robot.collectPuckInFront(
+					m_field.getObjectsWithColorOrderdByDistance(
+					m_drivePuck.getColorOfTargetPucks(),
+					m_robot.getCurrentPosition().getPosition()).front().getCircle().getCenter());
 	}
 }

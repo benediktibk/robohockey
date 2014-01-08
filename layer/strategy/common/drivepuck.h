@@ -21,10 +21,10 @@ namespace Common
 		public:
 			virtual ~DrivePuck() { }
 
-			virtual std::list<RoboHockey::Common::RobotPosition> getTargetPositions() = 0;
-			virtual std::list<RoboHockey::Common::RobotPosition> getPositionsToCollectPuck() = 0;
-			virtual RoboHockey::Common::FieldColor getColorOfTargetPucks() = 0;
-			virtual unsigned int getNumberOfKnownPucksNotInTarget() = 0;
+			virtual std::list<RoboHockey::Common::RobotPosition> getTargetPositions() const = 0;
+			virtual std::list<RoboHockey::Common::RobotPosition> getPositionsToCollectPuck() const = 0;
+			virtual RoboHockey::Common::FieldColor getColorOfTargetPucks() const = 0;
+			virtual unsigned int getNumberOfKnownPucksNotInTarget() const = 0;
 		};
 	}
 }

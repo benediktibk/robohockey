@@ -9,7 +9,7 @@ using namespace RoboHockey::Layer::Strategy::Common;
 using namespace RoboHockey::Layer::Strategy::DrivePuckStateMachine;
 using namespace RoboHockey::Layer::Autonomous;
 
-InitialState::InitialState(Robot &robot, Field &field, Referee &referee, DrivePuck *drivePuck) :
+InitialState::InitialState(Robot &robot, Field &field, Referee &referee, const DrivePuck &drivePuck) :
 	State(robot, field, referee, false),
 	m_drivePuck(drivePuck)
 { }
@@ -18,7 +18,7 @@ State* InitialState::nextState()
 {
 	if(m_robot.isPuckCollected())
 		return new LeavePuckState(m_robot, m_field, m_referee, m_drivePuck);
-	if(m_drivePuck->getNumberOfKnownPucksNotInTarget() > 0)
+	if(m_drivePuck.getNumberOfKnownPucksNotInTarget() > 0)
 		return new DriveToCollectPuckState(m_robot, m_field, m_referee, m_drivePuck);
 	else
 		return new FindPuckState(m_robot, m_field, m_referee, m_drivePuck);

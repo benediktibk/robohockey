@@ -19,7 +19,7 @@ void LeavePuckStateTest::nextState_cantReachTarget_nextStateIsInitialState()
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	DrivePuckMock *drivePuck = new DrivePuckMock();
+	DrivePuckMock drivePuck;
 	robot.setCantReachedTarget(true);
 	LeavePuckState leavePuckState(robot, field, referee, drivePuck);
 	State *state;
@@ -27,6 +27,7 @@ void LeavePuckStateTest::nextState_cantReachTarget_nextStateIsInitialState()
 	InitialState *stateCasted = dynamic_cast<InitialState*>(state);
 
 	CPPUNIT_ASSERT(stateCasted != 0);
+	delete state;
 }
 
 void LeavePuckStateTest::nextState_reachedTargetAndNumberOfKnownPucksIs0_nextStateIsFindPuckState()
@@ -34,7 +35,7 @@ void LeavePuckStateTest::nextState_reachedTargetAndNumberOfKnownPucksIs0_nextSta
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	DrivePuckMock *drivePuck = new DrivePuckMock();
+	DrivePuckMock drivePuck;
 	robot.setReachedTarget(true);
 	LeavePuckState leavePuckState(robot, field, referee, drivePuck);
 	State *state;
@@ -42,6 +43,7 @@ void LeavePuckStateTest::nextState_reachedTargetAndNumberOfKnownPucksIs0_nextSta
 	FindPuckState *stateCasted = dynamic_cast<FindPuckState*>(state);
 
 	CPPUNIT_ASSERT(stateCasted != 0);
+	delete state;
 }
 
 void LeavePuckStateTest::nextState_reachedTargetAndNumberOfKnownPucksIsNot0_nextStateIsDriveToCollectPuckState()
@@ -49,14 +51,15 @@ void LeavePuckStateTest::nextState_reachedTargetAndNumberOfKnownPucksIsNot0_next
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	DrivePuckMock *drivePuck = new DrivePuckMock();
+	DrivePuckMock drivePuck;
 	robot.setReachedTarget(true);
-	drivePuck->setNumberOfKnownPucksNotInTarget(2);
+	drivePuck.setNumberOfKnownPucksNotInTarget(2);
 	LeavePuckState leavePuckState(robot, field, referee, drivePuck);
 	State *state;
 	state = leavePuckState.nextState();
 	DriveToCollectPuckState *stateCasted = dynamic_cast<DriveToCollectPuckState*>(state);
 
 	CPPUNIT_ASSERT(stateCasted != 0);
+	delete state;
 }
 

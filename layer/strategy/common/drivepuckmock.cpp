@@ -8,25 +8,24 @@ using namespace RoboHockey::Common;
 
 DrivePuckMock::DrivePuckMock() :
 	m_numberOfKnownPucksNotInTarget(0)
-{
-}
+{ }
 
-std::list<RoboHockey::Common::RobotPosition> DrivePuckMock::getTargetPositions()
-{
-	return list<RobotPosition>();
-}
-
-std::list<RobotPosition> DrivePuckMock::getPositionsToCollectPuck()
+list<RobotPosition> DrivePuckMock::getTargetPositions() const
 {
 	return list<RobotPosition>();
 }
 
-FieldColor DrivePuckMock::getColorOfTargetPucks()
+list<RobotPosition> DrivePuckMock::getPositionsToCollectPuck() const
+{
+	return list<RobotPosition>();
+}
+
+FieldColor DrivePuckMock::getColorOfTargetPucks() const
 {
 	return FieldColorUnknown;
 }
 
-unsigned int DrivePuckMock::getNumberOfKnownPucksNotInTarget()
+unsigned int DrivePuckMock::getNumberOfKnownPucksNotInTarget() const
 {
 	return m_numberOfKnownPucksNotInTarget;
 }

@@ -10,6 +10,11 @@ namespace Layer
 {
 namespace Strategy
 {
+namespace Common
+{
+	class DrivePuck;
+}
+
 namespace MainStateMachine
 {
 	class AchieveGoals :
@@ -27,6 +32,7 @@ namespace MainStateMachine
 
 	private:
 		Common::StateMachine *m_drivePuckStateMachine;
+		Common::DrivePuck *m_drivePuck;
 	};
 }
 }

@@ -20,13 +20,14 @@ void DriveToCollectPuckStateTest::nextState_numberOfKnownPucksIs0_nextStateIsFin
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	DrivePuckMock *drivePuck = new DrivePuckMock();
+	DrivePuckMock drivePuck;
 	DriveToCollectPuckState driveToCollectPuckState(robot, field, referee, drivePuck);
 	State *state;
 	state = driveToCollectPuckState.nextState();
 	FindPuckState *stateCasted = dynamic_cast<FindPuckState*>(state);
 
 	CPPUNIT_ASSERT(stateCasted != 0);
+	delete state;
 }
 
 void DriveToCollectPuckStateTest::nextState_reachedTarget_nextStateIsCollectPuckState()
@@ -34,8 +35,8 @@ void DriveToCollectPuckStateTest::nextState_reachedTarget_nextStateIsCollectPuck
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	DrivePuckMock *drivePuck = new DrivePuckMock();
-	drivePuck->setNumberOfKnownPucksNotInTarget(2);
+	DrivePuckMock drivePuck;
+	drivePuck.setNumberOfKnownPucksNotInTarget(2);
 	robot.setReachedTarget(true);
 	DriveToCollectPuckState driveToCollectPuckState(robot, field, referee, drivePuck);
 	State *driveToState;
@@ -45,6 +46,7 @@ void DriveToCollectPuckStateTest::nextState_reachedTarget_nextStateIsCollectPuck
 	CollectPuckState *stateCasted = dynamic_cast<CollectPuckState*>(state);
 
 	CPPUNIT_ASSERT(stateCasted != 0);
+	delete state;
 }
 
 void DriveToCollectPuckStateTest::nextState_canReachTarget_nextStateIs0()
@@ -52,8 +54,8 @@ void DriveToCollectPuckStateTest::nextState_canReachTarget_nextStateIs0()
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	DrivePuckMock *drivePuck = new DrivePuckMock();
-	drivePuck->setNumberOfKnownPucksNotInTarget(2);
+	DrivePuckMock drivePuck;
+	drivePuck.setNumberOfKnownPucksNotInTarget(2);
 	DriveToCollectPuckState driveToCollectPuckState(robot, field, referee, drivePuck);
 	State *driveToState;
 	driveToState = driveToCollectPuckState.nextState();
@@ -61,6 +63,7 @@ void DriveToCollectPuckStateTest::nextState_canReachTarget_nextStateIs0()
 	state = driveToState->nextState();
 
 	CPPUNIT_ASSERT(state == 0);
+	delete state;
 }
 
 void DriveToCollectPuckStateTest::nextState_cantReachTarget_nextStateIsInitialState()
@@ -68,8 +71,8 @@ void DriveToCollectPuckStateTest::nextState_cantReachTarget_nextStateIsInitialSt
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	DrivePuckMock *drivePuck = new DrivePuckMock();
-	drivePuck->setNumberOfKnownPucksNotInTarget(2);
+	DrivePuckMock drivePuck;
+	drivePuck.setNumberOfKnownPucksNotInTarget(2);
 	robot.setCantReachedTarget(true);
 	DriveToCollectPuckState driveToCollectPuckState(robot, field, referee, drivePuck);
 	State *driveToState;
@@ -79,5 +82,6 @@ void DriveToCollectPuckStateTest::nextState_cantReachTarget_nextStateIsInitialSt
 	InitialState *stateCasted = dynamic_cast<InitialState*>(state);
 
 	CPPUNIT_ASSERT(stateCasted != 0);
+	delete state;
 }
 

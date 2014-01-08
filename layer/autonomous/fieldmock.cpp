@@ -131,7 +131,7 @@ FieldColor FieldMock::getEnemyTeamColor() const
 void FieldMock::detectTeamColorWithGoalInFront()
 { }
 
-unsigned int FieldMock::getNumberOfHiddenPucks()
+unsigned int FieldMock::getNumberOfHiddenPucks() const
 {
 	return m_hiddenPucks;
 }
@@ -166,7 +166,7 @@ list<RobotPosition> FieldMock::getTargetsForCollectingOnePuck(FieldColor) const
 	return list<RobotPosition>();
 }
 
-unsigned int FieldMock::getNumberOfAchievedGoals()
+unsigned int FieldMock::getNumberOfAchievedGoals() const
 {
 	return m_achievedGoals;
 }

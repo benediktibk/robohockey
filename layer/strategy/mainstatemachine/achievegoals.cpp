@@ -13,8 +13,8 @@ using namespace RoboHockey::Layer::Autonomous;
 AchieveGoals::AchieveGoals(Robot &robot, Field &field, Referee &referee) :
 	State(robot, field, referee, false)
 {
-	DrivePuck *drivePuck = new DrivePuckToAchiveGoals(m_field);
-	State *initialState = new DrivePuckStateMachine::InitialState(robot, field, referee, drivePuck);
+	m_drivePuck = new DrivePuckToAchiveGoals(m_field);
+	State *initialState = new DrivePuckStateMachine::InitialState(robot, field, referee, *m_drivePuck);
 	m_drivePuckStateMachine = new StateMachine(initialState, robot, field, referee);
 }
 
@@ -22,6 +22,8 @@ AchieveGoals::~AchieveGoals()
 {
 	delete m_drivePuckStateMachine;
 	m_drivePuckStateMachine = 0;
+	delete m_drivePuck;
+	m_drivePuck = 0;
 }
 
 State* AchieveGoals::nextState()

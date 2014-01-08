@@ -19,7 +19,7 @@ void DrivePuckToPositionStateTest::nextState_reachedTarget_nextStateIsLeavePuckS
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	DrivePuckMock *drivePuck = new DrivePuckMock();
+	DrivePuckMock drivePuck;
 	robot.setReachedTarget(true);
 	robot.setPuckCollected(true);
 	DrivePuckToPositionState driveToPositionState(robot, field, referee, drivePuck);
@@ -30,6 +30,7 @@ void DrivePuckToPositionStateTest::nextState_reachedTarget_nextStateIsLeavePuckS
 	LeavePuckState *stateCasted = dynamic_cast<LeavePuckState*>(state);
 
 	CPPUNIT_ASSERT(stateCasted != 0);
+	delete state;
 }
 
 void DrivePuckToPositionStateTest::nextState_cantReachTarget_nextStateIsLeavePuckState()
@@ -37,7 +38,7 @@ void DrivePuckToPositionStateTest::nextState_cantReachTarget_nextStateIsLeavePuc
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	DrivePuckMock *drivePuck = new DrivePuckMock();
+	DrivePuckMock drivePuck;
 	robot.setCantReachedTarget(true);
 	robot.setPuckCollected(true);
 	DrivePuckToPositionState driveToPositionState(robot, field, referee, drivePuck);
@@ -48,6 +49,7 @@ void DrivePuckToPositionStateTest::nextState_cantReachTarget_nextStateIsLeavePuc
 	LeavePuckState *stateCasted = dynamic_cast<LeavePuckState*>(state);
 
 	CPPUNIT_ASSERT(stateCasted != 0);
+	delete state;
 }
 
 void DrivePuckToPositionStateTest::nextState_canReachTarget_nextStateIs0()
@@ -55,7 +57,7 @@ void DrivePuckToPositionStateTest::nextState_canReachTarget_nextStateIs0()
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	DrivePuckMock *drivePuck = new DrivePuckMock();
+	DrivePuckMock drivePuck;
 	robot.setPuckCollected(true);
 	DrivePuckToPositionState driveToPositionState(robot, field, referee, drivePuck);
 	State *driveToState;
@@ -71,14 +73,15 @@ void DrivePuckToPositionStateTest::nextState_puckIsNotCollected_nextStateIsDrive
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	DrivePuckMock *drivePuck = new DrivePuckMock();
-	drivePuck->setNumberOfKnownPucksNotInTarget(2);
+	DrivePuckMock drivePuck;
+	drivePuck.setNumberOfKnownPucksNotInTarget(2);
 	DrivePuckToPositionState driveToPositionState(robot, field, referee, drivePuck);
 	State *state;
 	state = driveToPositionState.nextState();
 	DriveToCollectPuckState *stateCasted = dynamic_cast<DriveToCollectPuckState*>(state);
 
 	CPPUNIT_ASSERT(stateCasted != 0);
+	delete state;
 }
 
 

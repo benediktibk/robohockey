@@ -16,7 +16,7 @@ namespace DrivePuckStateMachine
 			public Common::State
 	{
 	public:
-		DrivePuckToPositionState(Autonomous::Robot &robot, Autonomous::Field &field, Common::Referee &referee, RoboHockey::Layer::Strategy::Common::DrivePuck *drivePuck);
+		DrivePuckToPositionState(Autonomous::Robot &robot, Autonomous::Field &field, Common::Referee &referee, const Common::DrivePuck &drivePuck);
 
 		virtual State* nextState();
 		virtual std::string getName();
@@ -25,7 +25,7 @@ namespace DrivePuckStateMachine
 		virtual void updateInternal();
 
 	private:
-		Common::DrivePuck *m_drivePuck;
+		const Common::DrivePuck &m_drivePuck;
 
 };
 }

@@ -23,12 +23,12 @@ namespace Autonomous
 		virtual const std::vector<Common::Circle>& getAllHardObstacles() const;
 		virtual std::vector<FieldObject> getObjectsWithColorOrderdByDistance(Common::FieldColor color, const Common::Point &position) const;
 		virtual unsigned int getNumberOfObjectsWithColor(Common::FieldColor color) const;
-		virtual unsigned int getNumberOfAchievedGoals();
+		virtual unsigned int getNumberOfAchievedGoals() const;
 		void setAchievedGoals(unsigned int goalsAchieved);
 		void setEnemyHiddenPucks(unsigned int getNumberOfHiddenPucks);
 		virtual bool calibratePosition();
 		virtual bool isPointInsideField(const Common::Point &point) const;
-		virtual unsigned int getNumberOfHiddenPucks();
+		virtual unsigned int getNumberOfHiddenPucks() const;
 		virtual bool isCalibrated() const;
 		virtual Common::FieldColor getOwnTeamColor() const;
 		virtual Common::FieldColor getEnemyTeamColor() const;

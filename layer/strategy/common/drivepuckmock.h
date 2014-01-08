@@ -23,10 +23,10 @@ namespace Common
 		public:
 			DrivePuckMock();
 
-			virtual std::list<RoboHockey::Common::RobotPosition> getTargetPositions();
-			virtual std::list<RoboHockey::Common::RobotPosition> getPositionsToCollectPuck();
-			virtual RoboHockey::Common::FieldColor getColorOfTargetPucks();
-			virtual unsigned int getNumberOfKnownPucksNotInTarget();
+			virtual std::list<RoboHockey::Common::RobotPosition> getTargetPositions() const;
+			virtual std::list<RoboHockey::Common::RobotPosition> getPositionsToCollectPuck() const;
+			virtual RoboHockey::Common::FieldColor getColorOfTargetPucks() const;
+			virtual unsigned int getNumberOfKnownPucksNotInTarget() const;
 
 			void setNumberOfKnownPucksNotInTarget(unsigned int value);
 

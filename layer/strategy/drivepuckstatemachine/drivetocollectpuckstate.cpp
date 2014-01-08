@@ -11,19 +11,20 @@ using namespace RoboHockey::Layer::Strategy::Common;
 using namespace RoboHockey::Layer::Strategy::DrivePuckStateMachine;
 using namespace RoboHockey::Layer::Autonomous;
 
-DriveToCollectPuckState::DriveToCollectPuckState(Robot &robot, Field &field, Referee &referee, DrivePuck *drivePuck) :
+DriveToCollectPuckState::DriveToCollectPuckState(Robot &robot, Field &field, Referee &referee, const DrivePuck &drivePuck) :
 	State(robot, field, referee, true),
 	m_drivePuck(drivePuck)
 { }
 
 State* DriveToCollectPuckState::nextState()
 {
-	if(m_drivePuck->getNumberOfKnownPucksNotInTarget() == 0)
+	if(m_drivePuck.getNumberOfKnownPucksNotInTarget() == 0)
 		return new FindPuckState(m_robot, m_field, m_referee, m_drivePuck);
 	else
-		return new DriveToState(m_robot, m_field, m_referee, m_drivePuck->getPositionsToCollectPuck(),
-						   new CollectPuckState(m_robot, m_field, m_referee, m_drivePuck),
-						   new InitialState(m_robot, m_field, m_referee, m_drivePuck));
+		return new DriveToState(
+					m_robot, m_field, m_referee, m_drivePuck.getPositionsToCollectPuck(),
+					new CollectPuckState(m_robot, m_field, m_referee, m_drivePuck),
+					new InitialState(m_robot, m_field, m_referee, m_drivePuck));
 }
 
 std::string DriveToCollectPuckState::getName()
