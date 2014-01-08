@@ -50,13 +50,13 @@ std::vector<BorderStone> &BorderStone::getAllChildren()
 	return m_children;
 }
 
-std::vector<Point> BorderStone::getPointsOfAllChildrenRecursive()
+std::vector<Point> BorderStone::getPointsOfAllNodesInTreeRecursive()
 {
 	vector<Point> result;
 
 	for (vector<BorderStone>::iterator i = m_children.begin(); i != m_children.end(); ++i)
 	{
-		vector<Point> childrenResult = (*i).getPointsOfAllChildrenRecursive();
+		vector<Point> childrenResult = (*i).getPointsOfAllNodesInTreeRecursive();
 		result.insert(result.end(), childrenResult.begin(), childrenResult.end());
 	}
 

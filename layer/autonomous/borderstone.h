@@ -19,7 +19,7 @@ namespace Autonomous
 					BorderStoneDistances &distances, Common::Point &point, double epsilon);
 		virtual void searchNeighbourBorderStones(std::vector<Point*> &candidates);
 		virtual std::vector<BorderStone> &getAllChildren();
-		virtual std::vector<Point> getPointsOfAllChildrenRecursive();
+		virtual std::vector<Point> getPointsOfAllNodesInTreeRecursive();
 		virtual unsigned int getNumberOfChildrenRecursive();
 		virtual BorderStoneFieldDistance getDistanceToFather();
 
