@@ -20,6 +20,7 @@ namespace Common
 		DriveToState(Autonomous::Robot &robot, Autonomous::Field &field, Common::Referee &referee,
 				std::list<RoboHockey::Common::RobotPosition> targetList,
 				State *stateAfterTargetReached, State *stateAfterTargetUnreachable);
+		virtual ~DriveToState();
 
 		virtual State* nextState();
 		virtual std::string getName();

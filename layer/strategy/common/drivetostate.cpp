@@ -5,48 +5,55 @@
 #include "common/point.h"
 #include <assert.h>
 
+using namespace std;
 using namespace RoboHockey::Common;
 using namespace RoboHockey::Layer::Strategy::Common;
 using namespace RoboHockey::Layer::Autonomous;
 
-DriveToState::DriveToState(Autonomous::Robot &robot, Autonomous::Field &field, Common::Referee &referee,
-				 std::list<RobotPosition> targetList,
-				 State *stateAfterTargetReached, State *stateAfterTargetUnreachable) :
+DriveToState::DriveToState(
+		Autonomous::Robot &robot, Autonomous::Field &field, Common::Referee &referee,
+		list<RobotPosition> targetList,
+		State *stateAfterTargetReached, State *stateAfterTargetUnreachable) :
 	State(robot, field, referee, true),
 	m_target(targetList),
 	m_stateAfterTargetReached(stateAfterTargetReached),
 	m_stateAfterTargetUnreachable(stateAfterTargetUnreachable)
 {
+	assert(m_stateAfterTargetReached != m_stateAfterTargetUnreachable);
 	assert(m_stateAfterTargetReached != 0);
+	assert(m_stateAfterTargetUnreachable != 0);
+}
+
+DriveToState::~DriveToState()
+{
+	delete m_stateAfterTargetReached;
+	m_stateAfterTargetReached = 0;
+	delete m_stateAfterTargetUnreachable;
+	m_stateAfterTargetUnreachable = 0;
 }
 
 State* DriveToState::nextState()
 {
+	assert(m_stateAfterTargetReached != 0);
+	assert(m_stateAfterTargetUnreachable != 0);
+
 	if (m_robot.stuckAtObstacle() || m_robot.cantReachTarget())
 	{
-		if (m_stateAfterTargetReached != m_stateAfterTargetUnreachable)
-		{
-			delete m_stateAfterTargetReached;
-			m_stateAfterTargetReached = 0;
-		}
-
-		return m_stateAfterTargetUnreachable;
+		State *result = m_stateAfterTargetUnreachable;
+		m_stateAfterTargetUnreachable = 0;
+		return result;
 	}
 	else if (m_robot.reachedTarget())
 	{
-		if (m_stateAfterTargetReached != m_stateAfterTargetUnreachable)
-		{
-			delete m_stateAfterTargetUnreachable;
-			m_stateAfterTargetUnreachable = 0;
-		}
-
-		return m_stateAfterTargetReached;
+		State *result = m_stateAfterTargetReached;
+		m_stateAfterTargetReached = 0;
+		return result;
 	}
 
 	return 0;
 }
 
-std::string DriveToState::getName()
+string DriveToState::getName()
 {
 	return "DriveTo";
 }
