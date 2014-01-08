@@ -9,10 +9,10 @@ using namespace RoboHockey::Common;
 char Console::getAsynchronousInput()
 {
 	struct termios oldt, newt;
-	char key;
+	int key;
 	int oldf;
 
-	// just copied from stackoverflow, got no idea what it actually does - Benedikt
+	//! just copied from stackoverflow, got no idea what it actually does - Benedikt
 	tcgetattr(STDIN_FILENO, &oldt);
 	newt = oldt;
 	newt.c_lflag &= ~(ICANON | ECHO);
