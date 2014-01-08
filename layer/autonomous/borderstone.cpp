@@ -50,6 +50,21 @@ std::vector<BorderStone> &BorderStone::getAllChildren()
 	return m_children;
 }
 
+std::vector<Point> BorderStone::getPointsOfAllNodesInTreeRecursive()
+{
+	vector<Point> result;
+
+	for (vector<BorderStone>::iterator i = m_children.begin(); i != m_children.end(); ++i)
+	{
+		vector<Point> childrenResult = (*i).getPointsOfAllNodesInTreeRecursive();
+		result.insert(result.end(), childrenResult.begin(), childrenResult.end());
+	}
+
+	result.push_back(Point(getX(), getY()));
+
+	return result;
+}
+
 unsigned int BorderStone::getNumberOfChildrenRecursive()
 {
 	unsigned int result = 0;

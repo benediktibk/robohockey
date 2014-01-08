@@ -2,9 +2,11 @@
 #include "layer/autonomous/borderstone.h"
 #include "common/angle.h"
 #include "common/rectangle.h"
+#include "common/pointdistancecompare.h"
 #include <iostream>
 #include <math.h>
 #include <assert.h>
+#include <algorithm>
 
 using namespace std;
 using namespace RoboHockey::Common;
@@ -75,6 +77,14 @@ double FieldDetector::getRotation()
 
 //	return medianRotation.getValueBetweenMinusPiAndPi();
 	return m_rotation;
+}
+
+unsigned int FieldDetector::getNumberOfBorderStonesInRow()
+{
+	if (m_maxBorderstonesArranged < 3)
+		return 0;
+
+	return m_maxBorderstonesArranged;
 }
 
 bool FieldDetector::tryToFigureOutNewOrigin(BorderStone &root)
@@ -210,7 +220,7 @@ bool FieldDetector::tryToFigureOutNewOrigin(BorderStone &root)
 	currentPositionInNewCoordinates = m_currentPosition - possibleNewOrigin;
 	currentPositionInNewCoordinates.rotate(rotation);
 
-	if (!fieldGround.isInside(currentPositionInNewCoordinates, Compare(0.1)))
+	if (!fieldGround.isInside(currentPositionInNewCoordinates, Compare(0.1)) || !verifyNewOriginWithRoot(possibleNewOrigin, rotation, root))
 	{
 		return false;
 	}
@@ -226,3 +236,26 @@ bool FieldDetector::tryToFigureOutNewOrigin(BorderStone &root)
 
 	return true;
 }
+
+
+bool FieldDetector::verifyNewOriginWithRoot(Common::Point &newOrigin, double , BorderStone &root)
+{
+	vector<Point> orderedPositions = orderBorderstonesByDistanceToRoot(root, newOrigin);
+
+	if (!m_distanceChecker.verifyPoints(orderedPositions))
+		return false;
+
+	return true;
+}
+
+vector<Point> FieldDetector::orderBorderstonesByDistanceToRoot(BorderStone &borderstone, Common::Point &root)
+{
+	vector<Point> result = borderstone.getPointsOfAllNodesInTreeRecursive();
+
+	sort(result.begin(), result.end(), PointDistanceCompare(root));
+
+	return result;
+}
+
+
+
