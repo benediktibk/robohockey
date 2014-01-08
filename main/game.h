@@ -65,6 +65,9 @@ namespace Main
 		const double m_loopTimeWeight;
 		double m_loopTimeAverage;
 		bool m_enablegui;
+		unsigned int m_blueObjectCount;
+		unsigned int m_yellowObjectCount;
+		unsigned int m_greenObjectCount;
 	};
 }
 }

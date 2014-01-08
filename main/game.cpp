@@ -25,40 +25,40 @@ Game::Game(int argc, char **argv) :
 	m_timer(new QTimer()),
 	m_loopTimeMaximum(0.2),
 	m_loopTimeWeight(0.1),
-	m_loopTimeAverage(0)
+	m_loopTimeAverage(0),
+	m_blueObjectCount(0),
+	m_yellowObjectCount(0),
+	m_greenObjectCount(0)
 {
 
 	string playerServer = "localhost";
-	string AngelinaAdressServer = "localhost";
+	string angelinaServer = "localhost";
 	m_enablegui = false;
 
 	vector<string> arguments(argc);
-	for(int i=1; i < argc; i++)
-	{
+	for(int i = 1; i < argc; i++)
 		arguments.push_back(string(argv[i]));
-	}
 
-	for(size_t i=0; i < arguments.size(); i++)
+	for(size_t i = 0; i < arguments.size(); i++)
 	{
-		if(arguments[i] == "--player" && arguments[i+1] != "--angelina" && arguments[i+1] != "--enablegui" && i+1 <= arguments.size())
-		{
-			playerServer = arguments[i+1];
-		}
+		if(arguments[i] == "--player" && arguments[i + 1] != "--angelina" && arguments[i + 1] != "--enablegui" && i + 1 <= arguments.size())
+			playerServer = arguments[i + 1];
 
-		if(arguments[i] == "--angelina" && arguments[i+1] != "--player" && arguments[i+1] != "--enablegui" && i+1 <= arguments.size())
-		{
-			AngelinaAdressServer = arguments[i+1];
-		}
+		if(arguments[i] == "--angelina" && arguments[i + 1] != "--player" && arguments[i + 1] != "--enablegui" && i + 1 <= arguments.size())
+			angelinaServer = arguments[i + 1];
+
 		if(arguments[i] == "--enablegui")
-		{
 			m_enablegui = true;
-		}
 	}
 
-	if(playerServer == "localhost")
-	{
+	if (playerServer == "localhost")
 		cout << "no player server selected, using localhost" << endl;
-	}
+
+	if (angelinaServer == "localhost")
+		cout << "no angelina server selected, using localhost" << endl;
+
+	if (m_enablegui)
+		cout << "gui enabled" << endl;
 
 	Hardware::Robot *hardwareRobot = new Hardware::RobotImpl(playerServer);
 	DataAnalysis::DataAnalyser *dataAnalyser = new DataAnalysis::DataAnalyserImpl(hardwareRobot);
@@ -67,7 +67,7 @@ Game::Game(int argc, char **argv) :
 	m_field = new Autonomous::FieldImpl(
 				dataAnalyser->getOdometry(), dataAnalyser->getLidar(),
 				dataAnalyser->getCamera(), *m_robot);
-	m_referee = new Strategy::Common::RefereeImpl(AngelinaAdressServer);
+	m_referee = new Strategy::Common::RefereeImpl(angelinaServer);
 
 	connect(m_timer, SIGNAL(timeout()), this, SLOT(execute()));
 
@@ -111,6 +111,9 @@ void Game::execute()
 	m_robot->updateSensorData();
 	double timeForSensorUpdate = watch.getTimeAndRestart();
 	m_field->update();
+	double blueObjectCountNew = m_field->getNumberOfObjectsWithColor(FieldColorBlue);
+	double yellowObjectCountNew = m_field->getNumberOfObjectsWithColor(FieldColorYellow);
+	double greenObjectCountNew = m_field->getNumberOfObjectsWithColor(FieldColorGreen);
 	double timeForFieldUpdate = watch.getTimeAndRestart();
 	executeRobotControl();
 	double timeForLogic = watch.getTimeAndRestart();
@@ -143,6 +146,24 @@ void Game::execute()
 		printTimeInMs("time spent on logic", timeForLogic);
 		printTimeInMs("time spent on actuator updates", timeForActuatorUpdate);
 		printTimeInMs("time spent on event processing", timeForEventProcessing);
+	}
+
+	if (blueObjectCountNew != m_blueObjectCount)
+	{
+		cout << blueObjectCountNew << " blue objects are known" << endl;
+		m_blueObjectCount = blueObjectCountNew;
+	}
+
+	if (yellowObjectCountNew != m_yellowObjectCount)
+	{
+		cout << yellowObjectCountNew << " yellow objects are known" << endl;
+		m_yellowObjectCount = yellowObjectCountNew;
+	}
+
+	if (greenObjectCountNew != m_greenObjectCount)
+	{
+		cout << greenObjectCountNew << " green objects are known" << endl;
+		m_greenObjectCount = greenObjectCountNew;
 	}
 
 	if (keepRunning())

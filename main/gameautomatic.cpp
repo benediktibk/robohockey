@@ -28,8 +28,9 @@ GameAutomatic::GameAutomatic(int argc, char **argv) :
 
 	cout << "starting the robot" << endl;
 	cout << "program can be closed with 'q'" << endl;
+
 	if(guiEnabled())
-	m_controller->show();
+		m_controller->show();
 }
 
 GameAutomatic::~GameAutomatic()
@@ -51,20 +52,24 @@ bool GameAutomatic::keepRunning() const
 void GameAutomatic::executeRobotControl()
 {
 	m_stateMachine->update();
+
 	if(m_oldString != m_stateMachine->getNameOfCurrentState())
 	{
 		m_oldString = m_stateMachine->getNameOfCurrentState();
-		cout << "Current State: " << m_stateMachine->getNameOfCurrentState() << endl;
+		cout << "current state: " << m_stateMachine->getNameOfCurrentState() << endl;
 	}
 
-	Layer::Autonomous::Robot &robot = getRobot();
-	Layer::Autonomous::Field &field = getField();
+	if (guiEnabled())
+	{
+		Layer::Autonomous::Robot &robot = getRobot();
+		Layer::Autonomous::Field &field = getField();
 
-	m_model->setData(
-				field.getAllFieldObjects(), robot.getAllRoutePoints(), robot.stuckAtObstacle(),
-				robot.reachedTarget(), robot.getCurrentPosition(),
-				Point::zero(), robot.isMoving(), robot.cantReachTarget(),
-				robot.isPuckCollected(), robot.isPuckCollectable(), false,
-				Point::zero(), robot.isRotating());
+		m_model->setData(
+					field.getAllFieldObjects(), robot.getAllRoutePoints(), robot.stuckAtObstacle(),
+					robot.reachedTarget(), robot.getCurrentPosition(),
+					Point::zero(), robot.isMoving(), robot.cantReachTarget(),
+					robot.isPuckCollected(), robot.isPuckCollectable(), false,
+					Point::zero(), robot.isRotating());
+	}
 }
 
