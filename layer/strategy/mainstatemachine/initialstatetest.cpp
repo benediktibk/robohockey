@@ -13,30 +13,35 @@ using namespace RoboHockey::Layer::Autonomous;
 
 void InitialStateTest::nextState_detectionStart_calibrate()
 {
-    RobotMock robot;
-    FieldMock field;
-    RefereeMock referee;
-    InitialState initialState(robot, field, referee);
-    referee.setDetectionStart(true);
-    referee.setGameStart(true);
-    State *state;
-    state = initialState.nextState();
-    Calibrate *stateCasted = dynamic_cast<Calibrate*>(state);
-    CPPUNIT_ASSERT(stateCasted != 0);
+	RobotMock robot;
+	FieldMock field;
+	RefereeMock referee;
+	InitialState initialState(robot, field, referee);
+	referee.setDetectionStart(true);
+	referee.setGameStart(true);
+	State *state;
+
+	state = initialState.nextState();
+
+	Calibrate *stateCasted = dynamic_cast<Calibrate*>(state);
+	CPPUNIT_ASSERT(stateCasted != 0);
+	delete state;
 }
 
 void InitialStateTest::nextState_gameStartAndNotDetectionStart_notCalibrate()
 {
-    RobotMock robot;
-    FieldMock field;
-    RefereeMock referee;
-    InitialState initialState(robot, field, referee);
-    referee.setDetectionStart(false);
-    referee.setGameStart(true);
-    State *state;
-    state = initialState.nextState();
-    Calibrate *stateCasted = dynamic_cast<Calibrate*>(state);
-    CPPUNIT_ASSERT(stateCasted == 0);
+	RobotMock robot;
+	FieldMock field;
+	RefereeMock referee;
+	InitialState initialState(robot, field, referee);
+	referee.setDetectionStart(false);
+	referee.setGameStart(true);
+	State *state;
+
+	state = initialState.nextState();
+
+	Calibrate *stateCasted = dynamic_cast<Calibrate*>(state);
+	CPPUNIT_ASSERT(stateCasted == 0);
 }
 
 
