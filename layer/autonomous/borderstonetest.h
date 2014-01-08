@@ -21,6 +21,7 @@ namespace Autonomous
 		CPPUNIT_TEST(getAllChildren_noValidChildren_isEmpty);
 		CPPUNIT_TEST(getAllChildren_2validChildren_has2Entries);
 		CPPUNIT_TEST(getAllChildren_2validChildren_correctChildren);
+		CPPUNIT_TEST(getPointsOfAllChildren_2validChildren_has3Entries);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
@@ -31,6 +32,7 @@ namespace Autonomous
 		void getAllChildren_noValidChildren_isEmpty();
 		void getAllChildren_2validChildren_has2Entries();
 		void getAllChildren_2validChildren_correctChildren();
+		void getPointsOfAllChildren_2validChildren_has3Entries();
 	};
 }
 }
