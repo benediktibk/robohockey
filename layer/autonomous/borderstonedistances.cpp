@@ -68,7 +68,7 @@ bool BorderStoneDistances::verifyPoints(vector<Point> &points)
 	Point lastPoint = points.front();
 	BorderStoneFieldDistance lastDistance = BorderStoneFieldDistanceFalse;
 
-	if (points.size() < (size_t) 3)
+	if (points.size() < (size_t) 3 || points.size() > (size_t) 7)
 		return false;
 
 	for (vector<Point>::const_iterator it = points.begin() + 1; it != points.end(); ++it)
@@ -85,6 +85,12 @@ bool BorderStoneDistances::verifyPoints(vector<Point> &points)
 		if (currentDistance == BorderStoneFieldDistanceC && lastDistance != BorderStoneFieldDistanceC && numberOfC > 0)
 			return false;
 
+		if (currentDistance == BorderStoneFieldDistanceA && numberOfA > 0 && (numberOfB != 2 || numberOfC != 2))
+			return false;
+
+		if (currentDistance == BorderStoneFieldDistanceB && numberOfB > 0 && numberOfC != 2)
+			return false;
+
 		if (currentDistance == BorderStoneFieldDistanceA)
 			++numberOfA;
 		else if (currentDistance == BorderStoneFieldDistanceB)
@@ -93,6 +99,7 @@ bool BorderStoneDistances::verifyPoints(vector<Point> &points)
 			++numberOfC;
 
 		lastPoint = (*it);
+		lastDistance = currentDistance;
 	}
 
 	if (numberOfA > 2 || numberOfB > 2 || numberOfC > 2)
