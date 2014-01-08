@@ -8,12 +8,15 @@ using namespace cv;
 CameraMock::CameraMock() :
 	m_callsToGetFrame(0),
 	m_testpicture(new Mat(240, 320, CV_8UC3))
-{ }
+{
+	m_testpicture->setTo(cv::Scalar(0, 0, 0));
+}
 
 CameraMock::CameraMock(std::string filename) :
 	m_callsToGetFrame(0),
 	m_testpicture(new Mat(240, 320, CV_8UC3))
 {
+	m_testpicture->setTo(cv::Scalar(0, 0, 0));
 	string filepath = "resources/testfiles/" + filename + ".png";
 	Mat img = imread(filepath);
 	if(!img.data)
