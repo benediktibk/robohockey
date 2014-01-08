@@ -488,3 +488,4 @@ common/stopwatchtest.h
 common/stopwatch.h
 common/stopwatchtest.cpp
 common/stopwatch.cpp
+testrunner.supp

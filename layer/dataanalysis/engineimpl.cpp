@@ -20,7 +20,8 @@ EngineImpl::EngineImpl(Hardware::Engine &engine, Hardware::Odometry &odometry) :
 	m_tryingToTackleObstacle(false),
 	m_speedTresholder(new SpeedTresholder()),
 	m_desiredSpeed(0),
-	m_isMoving(false)
+	m_isMoving(false),
+	m_startedMovement(false)
 { }
 
 EngineImpl::~EngineImpl()
