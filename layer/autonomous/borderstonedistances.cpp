@@ -1,6 +1,8 @@
 #include "layer/autonomous/borderstonedistances.h"
 #include "common/compare.h"
+#include "common/point.h"
 
+using namespace std;
 using namespace RoboHockey::Common;
 using namespace RoboHockey::Layer::Autonomous;
 
@@ -55,4 +57,46 @@ BorderStoneFieldDistance BorderStoneDistances::getStandardDistanceType(double di
 			return static_cast<BorderStoneFieldDistance>(i);
 
 	return BorderStoneFieldDistanceFalse;
+}
+
+bool BorderStoneDistances::verifyPoints(vector<Point> &points)
+{
+	unsigned int numberOfA = 0;
+	unsigned int numberOfB = 0;
+	unsigned int numberOfC = 0;
+
+	Point lastPoint = points.front();
+	BorderStoneFieldDistance lastDistance = BorderStoneFieldDistanceFalse;
+
+	if (points.size() < (size_t) 3)
+		return false;
+
+	for (vector<Point>::const_iterator it = points.begin() + 1; it != points.end(); ++it)
+	{
+		BorderStoneFieldDistance currentDistance = getStandardDistanceType(lastPoint.distanceTo(*it));
+
+		if (currentDistance == BorderStoneFieldDistanceFalse || currentDistance == BorderStoneFieldDistanceD
+				|| currentDistance == BorderStoneFieldDistanceRoot)
+			return false;
+
+		if (currentDistance == lastDistance && (currentDistance == BorderStoneFieldDistanceA || currentDistance == BorderStoneFieldDistanceB))
+			return false;
+
+		if (currentDistance == BorderStoneFieldDistanceC && lastDistance != BorderStoneFieldDistanceC && numberOfC > 0)
+			return false;
+
+		if (currentDistance == BorderStoneFieldDistanceA)
+			++numberOfA;
+		else if (currentDistance == BorderStoneFieldDistanceB)
+			++numberOfB;
+		else if (currentDistance == BorderStoneFieldDistanceC)
+			++numberOfC;
+
+		lastPoint = (*it);
+	}
+
+	if (numberOfA > 2 || numberOfB > 2 || numberOfC > 2)
+		return false;
+
+	return true;
 }
