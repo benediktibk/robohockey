@@ -11,17 +11,18 @@ using namespace RoboHockey::Layer::Strategy::Common;
 using namespace RoboHockey::Layer::Strategy::FieldDetectionStateMachine;
 using namespace RoboHockey::Layer::Autonomous;
 
-
 void InitialStateTest::nextState_always_detectFieldState()
 {
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
 	InitialState initialState(robot, field, referee);
-	State *state;
-	state = initialState.nextState();
+
+	State *state = initialState.nextState();
+
 	DetectField *stateCasted = dynamic_cast<DetectField*>(state);
 	CPPUNIT_ASSERT(stateCasted != 0);
+	delete state;
 }
 
 

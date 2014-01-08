@@ -70,6 +70,7 @@ void CheckGoalColorTest::nextState_successfulColorCheckGotResponse_calibrationFi
 	state = checkGoalColorState.nextState();
 	stateCasted = dynamic_cast<CalibrationFinished*>(state);
 	CPPUNIT_ASSERT(stateCasted != 0);
+	delete state;
 }
 
 
