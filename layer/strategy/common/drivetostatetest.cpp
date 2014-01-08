@@ -22,13 +22,12 @@ void DriveToStateTest::nextState_didntReachedTarget_NULL()
 	std::list<RobotPosition> targetList;
 	targetList.push_back(RobotPosition());
 	DriveToState driveToState(robot, field, referee, targetList, stateAfterTargetReached, stateAfterTargetUnreachable);
-
 	driveToState.update();
 	robot.setReachedTarget(false);
 	robot.setStuckAtObstacle(false);
 
-	State *state;
-	state = driveToState.nextState();
+	State *state = driveToState.nextState();
+
 	CPPUNIT_ASSERT(state == 0);
 }
 
@@ -42,14 +41,14 @@ void DriveToStateTest::nextState_reachedTarget_stateAfterReachedTarget()
 	std::list<RobotPosition> targetList;
 	targetList.push_back(RobotPosition());
 	DriveToState driveToState(robot, field, referee, targetList, stateAfterTargetReached, stateAfterTargetUnreachable);
-
 	driveToState.update();
 	robot.setReachedTarget(true);
 	robot.setStuckAtObstacle(false);
 
-	State *state;
-	state = driveToState.nextState();
+	State *state = driveToState.nextState();
+
 	CPPUNIT_ASSERT(state == stateAfterTargetReached);
+	delete state;
 }
 
 void DriveToStateTest::nextState_cantReachTarget_stateAfterCantReachTarget()
@@ -62,15 +61,15 @@ void DriveToStateTest::nextState_cantReachTarget_stateAfterCantReachTarget()
 	std::list<RobotPosition> targetList;
 	targetList.push_back(RobotPosition());
 	DriveToState driveToState(robot, field, referee, targetList, stateAfterTargetReached, stateAfterTargetUnreachable);
-
 	driveToState.update();
 	robot.setReachedTarget(true);
 	robot.setStuckAtObstacle(false);
 	robot.setCantReachedTarget(true);
 
-	State *state;
-	state = driveToState.nextState();
+	State *state = driveToState.nextState();
+
 	CPPUNIT_ASSERT(state == stateAfterTargetUnreachable);
+	delete state;
 }
 
 void DriveToStateTest::nextState_stuckAtObstacle_stateAfterCantReachTarget()
@@ -83,12 +82,12 @@ void DriveToStateTest::nextState_stuckAtObstacle_stateAfterCantReachTarget()
 	std::list<RobotPosition> targetList;
 	targetList.push_back(RobotPosition());
 	DriveToState driveToState(robot, field, referee, targetList, stateAfterTargetReached, stateAfterTargetUnreachable);
-
 	driveToState.update();
 	robot.setReachedTarget(true);
 	robot.setStuckAtObstacle(true);
 
-	State *state;
-	state = driveToState.nextState();
+	State *state = driveToState.nextState();
+
 	CPPUNIT_ASSERT(state == stateAfterTargetUnreachable);
+	delete state;
 }

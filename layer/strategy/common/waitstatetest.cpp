@@ -15,14 +15,13 @@ void WaitStateTest::nextState_didntWaitEnoughCycles_resultIs0()
 	RefereeMock referee;
 	State *stateAfterWaitCycles = new StateMock(robot, field, referee);
 	WaitState waitState(robot, field, referee, stateAfterWaitCycles, 10);
-
 	waitState.update();
 	waitState.update();
 	waitState.update();
 	waitState.update();
 
-	State *state;
-	state = waitState.nextState();
+	State *state = waitState.nextState();
+
 	CPPUNIT_ASSERT(state == 0);
 }
 
@@ -40,7 +39,8 @@ void WaitStateTest::nextState_didWaitEnoughCycles_resultIsStateAfterWaitCycles()
 	waitState.update();
 	waitState.update();
 
-	State *state;
-	state = waitState.nextState();
+	State *state = waitState.nextState();
+
 	CPPUNIT_ASSERT(state == stateAfterWaitCycles);
+	delete state;
 }
