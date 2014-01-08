@@ -7,12 +7,14 @@
 #include "common/robotposition.h"
 #include <assert.h>
 
+using namespace std;
 using namespace RoboHockey::Common;
 using namespace RoboHockey::Layer::Strategy::Common;
 using namespace RoboHockey::Layer::Strategy::FieldDetectionStateMachine;
 using namespace RoboHockey::Layer::Autonomous;
 
-TurnAngle::TurnAngle(Autonomous::Robot &robot, Autonomous::Field &field, Common::Referee &referee, Angle angle, std::vector<std::pair<unsigned int, RobotPosition> > calibratedPositions) :
+TurnAngle::TurnAngle(Autonomous::Robot &robot, Autonomous::Field &field, Common::Referee &referee, Angle angle,
+					 list<pair<unsigned int, RobotPosition> > calibratedPositions) :
 	State(robot, field, referee, true),
 	m_angle(angle),
 	m_calibratedPositions(calibratedPositions)

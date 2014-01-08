@@ -15,7 +15,7 @@ using namespace RoboHockey::Layer::Strategy::Common;
 using namespace RoboHockey::Layer::Strategy::FieldDetectionStateMachine;
 using namespace RoboHockey::Layer::Autonomous;
 
-DetectField::DetectField(Robot &robot, Field &field, Referee &referee, std::vector<std::pair<unsigned int, RobotPosition> > previousCalibrationResults) :
+DetectField::DetectField(Robot &robot, Field &field, Referee &referee, list<pair<unsigned int, RobotPosition> > previousCalibrationResults) :
 	State(robot, field, referee, false),
 	m_successful(false),
 	m_numberOfTries(0),

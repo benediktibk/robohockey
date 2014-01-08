@@ -19,7 +19,7 @@ void DetectFieldTest::nextState_notCalibrated3Tries_turnAngle()
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	DetectField detectFieldState(robot, field, referee, vector<pair<unsigned int, RobotPosition> >());
+	DetectField detectFieldState(robot, field, referee, list<pair<unsigned int, RobotPosition> >());
 
 	field.setCalibrationReturn(false);
 	detectFieldState.update();
@@ -37,7 +37,7 @@ void DetectFieldTest::nextState_notCalibrated1Try_NULL()
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	DetectField detectFieldState(robot, field, referee, vector<pair<unsigned int, RobotPosition> >());
+	DetectField detectFieldState(robot, field, referee, list<pair<unsigned int, RobotPosition> >());
 
 	field.setCalibrationReturn(false);
 	detectFieldState.update();
@@ -53,7 +53,7 @@ void DetectFieldTest::nextState_calibrated_driveTo()
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	vector<pair<unsigned int, RobotPosition> > calibratedData;
+	list<pair<unsigned int, RobotPosition> > calibratedData;
 	calibratedData.push_back(pair<unsigned int, RobotPosition>(3, RobotPosition(Point(), Angle())));
 	calibratedData.push_back(pair<unsigned int, RobotPosition>(3, RobotPosition(Point(), Angle())));
 	calibratedData.push_back(pair<unsigned int, RobotPosition>(3, RobotPosition(Point(), Angle())));
@@ -74,7 +74,7 @@ void DetectFieldTest::nextState_calibratedOnSecondTry_driveTo()
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	vector<pair<unsigned int, RobotPosition> > calibratedData;
+	list<pair<unsigned int, RobotPosition> > calibratedData;
 	calibratedData.push_back(pair<unsigned int, RobotPosition>(3, RobotPosition(Point(), Angle())));
 	calibratedData.push_back(pair<unsigned int, RobotPosition>(3, RobotPosition(Point(), Angle())));
 	calibratedData.push_back(pair<unsigned int, RobotPosition>(3, RobotPosition(Point(), Angle())));
@@ -102,7 +102,7 @@ void DetectFieldTest::nextState_calibrationSuccessfulButTooFewCalibrationResults
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	vector<pair<unsigned int, RobotPosition> > calibratedData;
+	list<pair<unsigned int, RobotPosition> > calibratedData;
 	calibratedData.push_back(pair<unsigned int, RobotPosition>(3, RobotPosition(Point(), Angle())));
 	calibratedData.push_back(pair<unsigned int, RobotPosition>(3, RobotPosition(Point(), Angle())));
 

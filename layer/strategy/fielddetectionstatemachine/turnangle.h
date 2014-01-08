@@ -3,7 +3,7 @@
 
 #include "common/robotposition.h"
 #include "layer/strategy/common/state.h"
-#include <vector>
+#include <list>
 
 namespace RoboHockey
 {
@@ -22,7 +22,7 @@ namespace FieldDetectionStateMachine
 	{
 	public:
 		TurnAngle(Autonomous::Robot &robot, Autonomous::Field &field, Common::Referee &referee, RoboHockey::Common::Angle angle,
-				  std::vector<std::pair<unsigned int, RoboHockey::Common::RobotPosition> > calibratedPositions);
+				  std::list<std::pair<unsigned int, RoboHockey::Common::RobotPosition> > calibratedPositions);
 
 		virtual State* nextState();
 		virtual std::string getName();
@@ -32,7 +32,7 @@ namespace FieldDetectionStateMachine
 
 	private:
 		RoboHockey::Common::Angle m_angle;
-		std::vector<std::pair<unsigned int, RoboHockey::Common::RobotPosition> > m_calibratedPositions;
+		std::list<std::pair<unsigned int, RoboHockey::Common::RobotPosition> > m_calibratedPositions;
 
 	};
 }

@@ -22,7 +22,7 @@ void TurnAngleTest::nextState_targetReached_detectField()
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	TurnAngle turnAngleState(robot, field, referee, Angle::getThreeQuarterRotation(), vector<pair<unsigned int, RobotPosition> >());
+	TurnAngle turnAngleState(robot, field, referee, Angle::getThreeQuarterRotation(), list<pair<unsigned int, RobotPosition> >());
 
 	turnAngleState.update();
 	robot.setReachedTarget(true);
@@ -38,7 +38,7 @@ void TurnAngleTest::nextState_targetNotReached_NULL()
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	TurnAngle turnAngleState(robot, field, referee, Angle::getThreeQuarterRotation(), vector<pair<unsigned int, RobotPosition> >());
+	TurnAngle turnAngleState(robot, field, referee, Angle::getThreeQuarterRotation(), list<pair<unsigned int, RobotPosition> >());
 
 	turnAngleState.update();
 	robot.setReachedTarget(false);
@@ -56,7 +56,7 @@ void TurnAngleTest::update_quarterRotation_robotGetsCorrectTarget()
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	TurnAngle turnAngleState(robot, field, referee, Angle::getQuarterRotation(), vector<pair<unsigned int, RobotPosition> >());
+	TurnAngle turnAngleState(robot, field, referee, Angle::getQuarterRotation(), list<pair<unsigned int, RobotPosition> >());
 
 	turnAngleState.update();
 
@@ -73,7 +73,7 @@ void TurnAngleTest::update_halfRotation_robotGetsCorrectTarget()
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	TurnAngle turnAngleState(robot, field, referee, Angle::getHalfRotation(), vector<pair<unsigned int, RobotPosition> >());
+	TurnAngle turnAngleState(robot, field, referee, Angle::getHalfRotation(), list<pair<unsigned int, RobotPosition> >());
 
 	turnAngleState.update();
 
