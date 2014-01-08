@@ -1,6 +1,7 @@
 #ifndef ROBOHOCKEY_LAYER_AUTONOMOUS_FIELDIMPL_H
 #define ROBOHOCKEY_LAYER_AUTONOMOUS_FIELDIMPL_H
 
+#include "common/angle.h"
 #include "layer/autonomous/field.h"
 #include "common/fieldcolor.h"
 #include <vector>
@@ -12,6 +13,7 @@ namespace Common
 	class Point;
 	class RobotPosition;
 }
+
 namespace Layer
 {
 namespace DataAnalysis
@@ -97,6 +99,7 @@ namespace Autonomous
 	private:
 		const unsigned int m_seenTresholdForFieldObjects;
 		const double m_maximumDistanceToDeleteFieldObject;
+		const Common::Angle m_maximumAngleToDeleteFieldObject;
 		DataAnalysis::Odometry *m_odometry;
 		const DataAnalysis::Lidar *m_lidar;
 		DataAnalysis::Camera *m_camera;

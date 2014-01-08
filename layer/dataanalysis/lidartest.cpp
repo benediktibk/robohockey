@@ -1595,6 +1595,42 @@ void LidarTest::canBeSeen_enemyRobotInFront_true()
 	CPPUNIT_ASSERT(lidar.canBeSeen(circle, ownPosition));
 }
 
+void LidarTest::canBeSeen_objectBehindObjectAtEdgeOfViewArea_false()
+{
+	Hardware::LidarMock hardwareLidar(10);
+	LidarImpl lidar(hardwareLidar);
+	Circle circle(Point(0, 2), 0.01);
+	RobotPosition ownPosition(Point(0, 0), Angle(0));
+	hardwareLidar.setValueForAngle(0, 3);
+	hardwareLidar.setValueForAngle(356, 1);
+	hardwareLidar.setValueForAngle(357, 1);
+	hardwareLidar.setValueForAngle(358, 1);
+	hardwareLidar.setValueForAngle(359, 1);
+	hardwareLidar.setValueForAngle(360, 1);
+
+	lidar.updateSensorData();
+	bool canBeSeen = lidar.canBeSeen(circle, ownPosition);
+
+	CPPUNIT_ASSERT(!canBeSeen);
+}
+
+void LidarTest::canBeSeen_objectPartlyVisibleAtEdgeOfViewArea_false()
+{
+	Hardware::LidarMock hardwareLidar(10);
+	LidarImpl lidar(hardwareLidar);
+	Circle circle(Point(0, 2), 0.08);
+	RobotPosition ownPosition(Point(0, 0), Angle(0));
+	hardwareLidar.setValueForAngle(0, 3);
+	hardwareLidar.setValueForAngle(358, 1);
+	hardwareLidar.setValueForAngle(359, 1);
+	hardwareLidar.setValueForAngle(360, 1);
+
+	lidar.updateSensorData();
+	bool canBeSeen = lidar.canBeSeen(circle, ownPosition);
+
+	CPPUNIT_ASSERT(!canBeSeen);
+}
+
 vector<LidarObject> LidarTest::getDifferentObjects(
 		const vector<LidarObject> &one, const vector<LidarObject> &two)
 {

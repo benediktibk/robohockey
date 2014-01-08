@@ -19,6 +19,7 @@ using namespace RoboHockey::Layer::Autonomous;
 FieldImpl::FieldImpl(DataAnalysis::Odometry &odometry, const DataAnalysis::Lidar &lidar, DataAnalysis::Camera &camera, Robot &autonomousRobot):
 	m_seenTresholdForFieldObjects(5),
 	m_maximumDistanceToDeleteFieldObject(2.5),
+	m_maximumAngleToDeleteFieldObject(Angle::getQuarterRotation()),
 	m_odometry(&odometry),
 	m_lidar(&lidar),
 	m_camera(&camera),
@@ -559,8 +560,10 @@ void FieldImpl::updateWithLidarData(double range)
 		const Circle &circle = fieldObject.getCircle();
 		const Point &ownPosition = m_position->getPosition();
 		const double distance = ownPosition.distanceTo(circle.getCenter());
+		const Angle angle = Angle(ownPosition, circle.getCenter()) - m_position->getOrientation();
 
-		if (distance < m_maximumDistanceToDeleteFieldObject)
+		if (	distance < m_maximumDistanceToDeleteFieldObject &&
+				fabs(angle.getValueBetweenMinusPiAndPi()) < m_maximumAngleToDeleteFieldObject.getValueBetweenZeroAndTwoPi())
 			fieldObject.notSeen();
 	}
 
