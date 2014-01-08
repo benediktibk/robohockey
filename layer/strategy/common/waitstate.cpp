@@ -1,5 +1,6 @@
 #include "layer/strategy/common/waitstate.h"
 
+using namespace std;
 using namespace RoboHockey::Layer::Strategy::Common;
 using namespace RoboHockey::Layer::Autonomous;
 
@@ -10,12 +11,23 @@ WaitState::WaitState(Robot &robot, Field &field, Referee &referee, State *stateA
 	m_updateCounter(0)
 { }
 
+WaitState::~WaitState()
+{
+	delete m_stateAfterWaitCycles;
+	m_stateAfterWaitCycles = 0;
+}
+
 State *WaitState::nextState()
 {
-	if(m_updateCounter < m_cycles)
-		return 0;
-	else
-		return m_stateAfterWaitCycles;
+	State *result = 0;
+
+	if(m_updateCounter >= m_cycles)
+	{
+		result = m_stateAfterWaitCycles;
+		m_stateAfterWaitCycles = 0;
+	}
+
+	return result;
 }
 
 void WaitState::updateInternal()
@@ -23,7 +35,7 @@ void WaitState::updateInternal()
 	++m_updateCounter;
 }
 
-std::string WaitState::getName()
+string WaitState::getName()
 {
 	return "WaitState";
 }

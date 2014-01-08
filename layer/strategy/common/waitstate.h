@@ -17,6 +17,7 @@ namespace Common
 	public:
 		WaitState(Autonomous::Robot &robot, Autonomous::Field &field, Common::Referee &referee,
 				  State *stateAfterTargetReached, unsigned int cycles);
+		virtual ~WaitState();
 
 		virtual State* nextState();
 		virtual std::string getName();
