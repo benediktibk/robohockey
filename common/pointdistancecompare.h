@@ -1,12 +1,13 @@
 #ifndef ROBOHOCKEY_COMMON_POINTDISTANCECOMPARE_H
 #define ROBOHOCKEY_COMMON_POINTDISTANCECOMPARE_H
 
+#include "common/point.h"
+
+
 namespace RoboHockey
 {
 namespace Common
 {
-
-	class Point;
 
 	class PointDistanceCompare
 	{
