@@ -25,6 +25,8 @@ namespace Autonomous
 
 	private:
 		bool tryToFigureOutNewOrigin(BorderStone &root);
+		bool verifyNewOriginWithRoot(Common::Point &newOrigin, double rotation, BorderStone &root);
+		std::vector<Common::Point> orderBorderstonesByDistanceToRoot(BorderStone &borderstone, Common::Point &root);
 
 	private:
 		const Common::Point m_currentPosition;
