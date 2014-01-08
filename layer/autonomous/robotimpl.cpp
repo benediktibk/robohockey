@@ -345,24 +345,36 @@ bool RobotImpl::checkTimeout()
 		return false;
 }
 
-void RobotImpl::shrinkObstacles(vector<Circle> &obstacles) const
+vector<Circle> RobotImpl::shrinkObstacles(const vector<Circle> &obstacles) const
 {
-	for (vector<Circle>::iterator i = obstacles.begin(); i != obstacles.end(); ++i)
+	vector<Circle> result;
+	result.reserve(obstacles.size());
+
+	for (vector<Circle>::const_iterator i = obstacles.begin(); i != obstacles.end(); ++i)
 	{
-		Circle &circle = *i;
+		Circle circle = *i;
 		double diameter = circle.getDiameter();
 		circle.setDiameter(diameter*0.9);
+		result.push_back(circle);
 	}
+
+	return result;
 }
 
-void RobotImpl::growObstacles(std::vector<Circle> &obstacles) const
+vector<Circle> RobotImpl::growObstacles(const vector<Circle> &obstacles) const
 {
-	for (vector<Circle>::iterator i = obstacles.begin(); i != obstacles.end(); ++i)
+	vector<Circle> result;
+	result.reserve(obstacles.size());
+
+	for (vector<Circle>::const_iterator i = obstacles.begin(); i != obstacles.end(); ++i)
 	{
-		Circle &circle = *i;
+		Circle circle = *i;
 		double diameter = circle.getDiameter();
 		circle.setDiameter(diameter*1.1);
+		result.push_back(circle);
 	}
+
+	return result;
 }
 
 void RobotImpl::updateActuators(const Field &field)
@@ -527,18 +539,27 @@ bool RobotImpl::updateRoute(const Field &field)
 	const RobotPosition robotPosition = getCurrentPosition();
 	vector<Circle> softObstacles = field.getAllSoftObstacles();
 	vector<Circle> hardObstacles = field.getAllHardObstacles();
-	vector<Circle> softObstaclesShrinked = softObstacles;
-	vector<Circle> hardObstaclesShrinked = hardObstacles;
-	shrinkObstacles(softObstaclesShrinked);
-	shrinkObstacles(hardObstaclesShrinked);
-	growObstacles(softObstacles);
-	growObstacles(hardObstacles);
-	const vector<Circle> allObstacles = m_router->filterObstacles(softObstacles, hardObstacles, robotPosition.getPosition());
-	const vector<Circle> allObstaclesShrinked = m_router->filterObstacles(softObstaclesShrinked, hardObstaclesShrinked, robotPosition.getPosition());
 
-	if (	(m_ignoringSoftObstacles && isRouteFeasible(softObstaclesShrinked)) ||
-			(!m_ignoringSoftObstacles && isRouteFeasible(allObstaclesShrinked)))
-		return false;
+	if (m_ignoringSoftObstacles)
+	{
+		vector<Circle> softObstaclesShrinked = shrinkObstacles(softObstacles);
+
+		if (isRouteFeasible(softObstaclesShrinked))
+				return false;
+	}
+	else
+	{
+		vector<Circle> softObstaclesShrinked = shrinkObstacles(softObstacles);
+		vector<Circle> hardObstaclesShrinked = shrinkObstacles(hardObstacles);
+		const vector<Circle> allObstaclesShrinked = m_router->filterObstacles(softObstaclesShrinked, hardObstaclesShrinked, robotPosition.getPosition());
+
+		if (isRouteFeasible(allObstaclesShrinked))
+			return false;
+	}
+
+	vector<Circle> softObstaclesGrown = growObstacles(softObstacles);
+	vector<Circle> hardObstaclesGrown = growObstacles(hardObstacles);
+	const vector<Circle> allObstaclesGrown = m_router->filterObstacles(softObstaclesGrown, hardObstaclesGrown, robotPosition.getPosition());
 
 	//! If the current route is not feasible anymore we try to create a new one.
 	clearRoute();
@@ -550,7 +571,7 @@ bool RobotImpl::updateRoute(const Field &field)
 	{
 		m_currentTarget = *i;
 		success = updateRouteForTarget(
-					field, m_currentTarget, allObstacles, false, hardObstacles, softObstacles);
+					field, m_currentTarget, allObstaclesGrown, false, hardObstaclesGrown, softObstaclesGrown);
 	}
 
 	if (success)
@@ -561,7 +582,7 @@ bool RobotImpl::updateRoute(const Field &field)
 	{
 		m_currentTarget = *i;
 		success = updateRouteForTarget(
-					field, m_currentTarget, hardObstacles, false, hardObstacles, vector<Circle>());
+					field, m_currentTarget, hardObstaclesGrown, false, hardObstaclesGrown, vector<Circle>());
 	}
 
 	if (success)
@@ -572,7 +593,7 @@ bool RobotImpl::updateRoute(const Field &field)
 	{
 		m_currentTarget = *i;
 		success = updateRouteForTarget(
-					field, m_currentTarget, hardObstacles, true, hardObstacles, vector<Circle>());
+					field, m_currentTarget, hardObstaclesGrown, true, hardObstaclesGrown, vector<Circle>());
 	}
 
 	if (!success)
