@@ -113,7 +113,8 @@ namespace DataAnalysis
 		CPPUNIT_TEST(canBeSeen_lookingLeftShiftedAndObstacleBehind_false);
 		CPPUNIT_TEST(canBeSeen_enemyRobotInFront_true);
 		CPPUNIT_TEST(canBeSeen_objectBehindObjectAtEdgeOfViewArea_false);
-		CPPUNIT_TEST(canBeSeen_objectPartlyVisibleAtEdgeOfViewArea_false);
+		CPPUNIT_TEST(canBeSeen_objectPartlyVisibleAtLeftEdgeOfViewArea_false);
+		CPPUNIT_TEST(canBeSeen_objectPartlyVisibleAtRightEdgeOfViewArea_false);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
@@ -208,7 +209,8 @@ namespace DataAnalysis
 		void canBeSeen_lookingLeftShiftedAndObstacleBehind_false();
 		void canBeSeen_enemyRobotInFront_true();
 		void canBeSeen_objectBehindObjectAtEdgeOfViewArea_false();
-		void canBeSeen_objectPartlyVisibleAtEdgeOfViewArea_false();
+		void canBeSeen_objectPartlyVisibleAtLeftEdgeOfViewArea_false();
+		void canBeSeen_objectPartlyVisibleAtRightEdgeOfViewArea_false();
 
 	private:
 		static std::vector<LidarObject> getDifferentObjects(const std::vector<LidarObject> &one, const std::vector<LidarObject> &two);
