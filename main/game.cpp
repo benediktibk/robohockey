@@ -32,36 +32,33 @@ Game::Game(int argc, char **argv) :
 {
 
 	string playerServer = "localhost";
-	string AngelinaAdressServer = "localhost";
+	string angelinaServer = "localhost";
 	m_enablegui = false;
 
 	vector<string> arguments(argc);
-	for(int i=1; i < argc; i++)
-	{
+	for(int i = 1; i < argc; i++)
 		arguments.push_back(string(argv[i]));
-	}
 
-	for(size_t i=0; i < arguments.size(); i++)
+	for(size_t i = 0; i < arguments.size(); i++)
 	{
-		if(arguments[i] == "--player" && arguments[i+1] != "--angelina" && arguments[i+1] != "--enablegui" && i+1 <= arguments.size())
-		{
-			playerServer = arguments[i+1];
-		}
+		if(arguments[i] == "--player" && arguments[i + 1] != "--angelina" && arguments[i + 1] != "--enablegui" && i + 1 <= arguments.size())
+			playerServer = arguments[i + 1];
 
-		if(arguments[i] == "--angelina" && arguments[i+1] != "--player" && arguments[i+1] != "--enablegui" && i+1 <= arguments.size())
-		{
-			AngelinaAdressServer = arguments[i+1];
-		}
+		if(arguments[i] == "--angelina" && arguments[i + 1] != "--player" && arguments[i + 1] != "--enablegui" && i + 1 <= arguments.size())
+			angelinaServer = arguments[i + 1];
+
 		if(arguments[i] == "--enablegui")
-		{
 			m_enablegui = true;
-		}
 	}
 
-	if(playerServer == "localhost")
-	{
+	if (playerServer == "localhost")
 		cout << "no player server selected, using localhost" << endl;
-	}
+
+	if (angelinaServer == "localhost")
+		cout << "no angelina server selected, using localhost" << endl;
+
+	if (m_enablegui)
+		cout << "gui enabled" << endl;
 
 	Hardware::Robot *hardwareRobot = new Hardware::RobotImpl(playerServer);
 	DataAnalysis::DataAnalyser *dataAnalyser = new DataAnalysis::DataAnalyserImpl(hardwareRobot);
@@ -70,7 +67,7 @@ Game::Game(int argc, char **argv) :
 	m_field = new Autonomous::FieldImpl(
 				dataAnalyser->getOdometry(), dataAnalyser->getLidar(),
 				dataAnalyser->getCamera(), *m_robot);
-	m_referee = new Strategy::Common::RefereeImpl(AngelinaAdressServer);
+	m_referee = new Strategy::Common::RefereeImpl(angelinaServer);
 
 	connect(m_timer, SIGNAL(timeout()), this, SLOT(execute()));
 
