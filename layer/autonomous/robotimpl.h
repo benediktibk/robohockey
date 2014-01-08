@@ -11,6 +11,7 @@ namespace RoboHockey
 namespace Common
 {
 	class Watch;
+	class StopWatch;
 }
 
 namespace Layer
@@ -91,6 +92,7 @@ namespace Autonomous
 		DataAnalysis::DataAnalyser *m_dataAnalyser;
 		Router *m_router;
 		Common::Watch *m_watch;
+		Common::StopWatch *m_watchDog;
 		bool m_tryingToTackleObstacle;
 		bool m_cantReachTarget;
 		Route *m_currentRoute;

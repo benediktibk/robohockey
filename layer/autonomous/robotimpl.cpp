@@ -10,6 +10,7 @@
 #include "common/compare.h"
 #include "common/path.h"
 #include "common/watch.h"
+#include "common/stopwatch.h"
 #include <math.h>
 #include <assert.h>
 
@@ -26,6 +27,7 @@ RobotImpl::RobotImpl(DataAnalysis::DataAnalyser *dataAnalyser, Router *router, W
 	m_dataAnalyser(dataAnalyser),
 	m_router(router),
 	m_watch(watch),
+	m_watchDog(new StopWatch(*watch)),
 	m_tryingToTackleObstacle(false),
 	m_cantReachTarget(false),
 	m_currentRoute(0),
@@ -41,6 +43,8 @@ RobotImpl::~RobotImpl()
 	m_dataAnalyser = 0;
 	delete m_router;
 	m_router = 0;
+	delete m_watchDog;
+	m_watchDog = 0;
 	delete m_watch;
 	m_watch = 0;
 	clearRoute();
@@ -54,14 +58,14 @@ void RobotImpl::goTo(const list<RobotPosition> &possibleTargets)
 	m_possibleTargets = possibleTargets;
 	m_currentTarget = m_possibleTargets.front();
 	m_carryingPuck = isPuckCollected();
-	m_watch->getTimeAndRestart();
+	m_watchDog->getTimeAndRestart();
 }
 
 void RobotImpl::turnTo(const Point &position)
 {
 	changeIntoState(RobotStateTurnTo);
 	m_currentTarget.setPosition(position);
-	m_watch->getTimeAndRestart();
+	m_watchDog->getTimeAndRestart();
 }
 
 bool RobotImpl::stuckAtObstacle()
@@ -411,7 +415,7 @@ void RobotImpl::collectPuckInFront(const Point &puckPosition)
 	changeIntoState(RobotStateCollectingPuck);
 	m_currentTarget.setPosition(puckPosition);
 	m_startPosition = getCurrentPosition().getPosition();
-	m_watch->getTimeAndRestart();
+	m_watchDog->getTimeAndRestart();
 }
 
 void RobotImpl::updatePuckPosition(const Point &puckPosition)
@@ -424,7 +428,7 @@ void RobotImpl::updatePuckPosition(const Point &puckPosition)
 void RobotImpl::leaveCollectedPuck()
 {
 	changeIntoState(RobotStateLeavingPuck);
-	m_watch->getTimeAndRestart();
+	m_watchDog->getTimeAndRestart();
 }
 
 bool RobotImpl::isMoving() const
@@ -435,7 +439,7 @@ bool RobotImpl::isMoving() const
 void RobotImpl::turnAround()
 {
 	changeIntoState(RobotStateTurnAround);
-	m_watch->getTimeAndRestart();
+	m_watchDog->getTimeAndRestart();
 }
 
 RobotPosition RobotImpl::getCurrentPosition() const

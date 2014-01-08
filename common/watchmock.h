@@ -13,15 +13,12 @@ namespace Common
 	public:
 		WatchMock();
 
-		virtual double getTimeAndRestart();
 		virtual double getTime() const;
 
 		void setTime(double time);
-		unsigned int getCallsToGetTimeAndRestart() const;
 
 	private:
 		double m_time;
-		unsigned int m_callsToGetTimeAndRestart;
 	};
 }
 }

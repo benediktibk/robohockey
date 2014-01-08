@@ -10,7 +10,6 @@ namespace Common
 	public:
 		virtual ~Watch() { }
 
-		virtual double getTimeAndRestart() = 0;
 		virtual double getTime() const = 0;
 	};
 }

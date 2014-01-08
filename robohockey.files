@@ -480,3 +480,11 @@ common/pointdistancecomparetest.h
 common/pointdistancecompare.h
 common/pointdistancecomparetest.cpp
 common/pointdistancecompare.cpp
+common/timesmoothedbooleantest.h
+common/timesmoothedboolean.h
+common/timesmoothedbooleantest.cpp
+common/timesmoothedboolean.cpp
+common/stopwatchtest.h
+common/stopwatch.h
+common/stopwatchtest.cpp
+common/stopwatch.cpp

@@ -14,6 +14,8 @@ set(COMMON_SRC
 	watchimpl.cpp
 	randomdecision.cpp
 	pointdistancecompare.cpp
+	timesmoothedboolean.cpp
+	stopwatch.cpp
 )
 
 set(COMMON_TEST_SRC
@@ -33,6 +35,8 @@ set(COMMON_TEST_SRC
 	watchmock.cpp
 	randomdecisiontest.cpp
 	pointdistancecomparetest.cpp
+	timesmoothedbooleantest.cpp
+	stopwatchtest.cpp
 )
 
 add_library(common ${COMMON_SRC})
