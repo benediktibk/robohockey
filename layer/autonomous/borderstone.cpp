@@ -34,15 +34,13 @@ void BorderStone::searchNeighbourBorderStones(std::vector<Point*> &candidates)
 			{
 				m_children.push_back(BorderStone(*this, type, m_distances, **i, m_epsilon));
 				candidates.erase(i);
-				i--;
+				--i;
 			}
 		}
 	}
 
 	for (vector<BorderStone>::iterator i = m_children.begin(); i != m_children.end(); ++i)
-	{
 		(*i).searchNeighbourBorderStones(candidates);
-	}
 }
 
 std::vector<BorderStone> &BorderStone::getAllChildren()
