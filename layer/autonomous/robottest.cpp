@@ -722,6 +722,7 @@ void RobotTest::goTo_puckCollectedButLostInBetween_newRouteStillConsideringThePu
 	vector<Circle> obstacles;
 	obstacles.push_back(Circle(Point(5, 0), 1));
 
+	m_watchMock->setTime(1);
 	lidar.setPuckCollected(true);
 	robot.updateSensorData();
 	robot.goTo(m_targets);
@@ -1500,14 +1501,36 @@ void RobotTest::isPuckCollected_lidarSaysNo_false()
 	CPPUNIT_ASSERT(!robot.isPuckCollected());
 }
 
-void RobotTest::isPuckCollected_lidarSaysYes_true()
+void RobotTest::isPuckCollected_lidarSaysYesVeryShort_false()
 {
 	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
 	DataAnalysis::LidarMock &lidar = dataAnalyser->getLidarMock();
-	lidar.setPuckCollected(true);
 	RobotImpl robot(dataAnalyser, m_routerMock, m_watchMock);
 	FieldMock field;
 
+	lidar.setPuckCollected(false);
+	robot.updateSensorData();
+	robot.updateActuators(field);
+	lidar.setPuckCollected(true);
+	m_watchMock->setTime(0.1);
+	robot.updateSensorData();
+	robot.updateActuators(field);
+
+	CPPUNIT_ASSERT(!robot.isPuckCollected());
+}
+
+void RobotTest::isPuckCollected_lidarSaysYesLong_true()
+{
+	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
+	DataAnalysis::LidarMock &lidar = dataAnalyser->getLidarMock();
+	RobotImpl robot(dataAnalyser, m_routerMock, m_watchMock);
+	FieldMock field;
+
+	lidar.setPuckCollected(false);
+	robot.updateSensorData();
+	robot.updateActuators(field);
+	lidar.setPuckCollected(true);
+	m_watchMock->setTime(1);
 	robot.updateSensorData();
 	robot.updateActuators(field);
 
@@ -1615,6 +1638,7 @@ void RobotTest::collectPuckInFront_puckCollectedButEngineTargetNotReached_reache
 	robot.updateSensorData();
 	robot.collectPuckInFront(Point(0.4, 0));
 	robot.updateActuators(field);
+	m_watchMock->setTime(1);
 	lidar.setPuckCollectable(true);
 	lidar.setPuckCollected(true);
 	robot.updateSensorData();
@@ -1781,6 +1805,7 @@ void RobotTest::collectPuckInFront_puckCollected_isNotCollectingPuck()
 	robot.updateSensorData();
 	robot.collectPuckInFront(Point(0.4, 0));
 	robot.updateActuators(field);
+	m_watchMock->setTime(1);
 	lidar.setPuckCollected(true);
 	robot.updateSensorData();
 	robot.updateActuators(field);

@@ -94,7 +94,8 @@ namespace Autonomous
 		CPPUNIT_TEST(cantReachTarget_leavePuckCalled_false);
 		CPPUNIT_TEST(cantReachTarget_stuckAtObstacle_true);
 		CPPUNIT_TEST(isPuckCollected_lidarSaysNo_false);
-		CPPUNIT_TEST(isPuckCollected_lidarSaysYes_true);
+		CPPUNIT_TEST(isPuckCollected_lidarSaysYesVeryShort_false);
+		CPPUNIT_TEST(isPuckCollected_lidarSaysYesLong_true);
 		CPPUNIT_TEST(isPuckCollectable_lidarSaysNo_false);
 		CPPUNIT_TEST(isPuckCollectable_lidarSaysYes_true);
 		CPPUNIT_TEST(collectPuckInFront_puckAhead_notStuckAtObstacle);
@@ -202,7 +203,8 @@ namespace Autonomous
 		void cantReachTarget_leavePuckCalled_false();
 		void cantReachTarget_stuckAtObstacle_true();
 		void isPuckCollected_lidarSaysNo_false();
-		void isPuckCollected_lidarSaysYes_true();
+		void isPuckCollected_lidarSaysYesVeryShort_false();
+		void isPuckCollected_lidarSaysYesLong_true();
 		void isPuckCollectable_lidarSaysNo_false();
 		void isPuckCollectable_lidarSaysYes_true();
 		void collectPuckInFront_puckAhead_notStuckAtObstacle();

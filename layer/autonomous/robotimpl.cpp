@@ -11,6 +11,7 @@
 #include "common/path.h"
 #include "common/watch.h"
 #include "common/stopwatch.h"
+#include "common/timesmoothedboolean.h"
 #include <math.h>
 #include <assert.h>
 
@@ -34,7 +35,8 @@ RobotImpl::RobotImpl(DataAnalysis::DataAnalyser *dataAnalyser, Router *router, W
 	m_state(RobotStateWaiting),
 	m_stateChanged(false),
 	m_ignoringSoftObstacles(false),
-	m_carryingPuck(false)
+	m_carryingPuck(false),
+	m_puckCollected(new TimeSmoothedBoolean(*m_watch, false, 0.2))
 { }
 
 RobotImpl::~RobotImpl()
@@ -45,6 +47,8 @@ RobotImpl::~RobotImpl()
 	m_router = 0;
 	delete m_watchDog;
 	m_watchDog = 0;
+	delete m_puckCollected;
+	m_puckCollected = 0;
 	delete m_watch;
 	m_watch = 0;
 	clearRoute();
@@ -397,6 +401,8 @@ void RobotImpl::updateSensorData()
 	m_stateChanged = false;
 	m_puckPositionChanged = false;
 	m_dataAnalyser->updateSensorData();
+	const DataAnalysis::Lidar &lidar = m_dataAnalyser->getLidar();
+	m_puckCollected->update(lidar.isPuckCollected());
 
 	if (m_currentRoute != 0 && m_currentRoute->isValid())
 	{
@@ -472,8 +478,7 @@ bool RobotImpl::cantReachTarget() const
 
 bool RobotImpl::isPuckCollected() const
 {
-	const DataAnalysis::Lidar &lidar = m_dataAnalyser->getLidar();
-	return lidar.isPuckCollected();
+	return m_puckCollected->get();
 }
 
 bool RobotImpl::isPuckCollectable() const

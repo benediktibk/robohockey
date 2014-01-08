@@ -12,6 +12,7 @@ namespace Common
 {
 	class Watch;
 	class StopWatch;
+	class TimeSmoothedBoolean;
 }
 
 namespace Layer
@@ -105,6 +106,7 @@ namespace Autonomous
 		bool m_rotationReached;
 		bool m_ignoringSoftObstacles;
 		bool m_carryingPuck;
+		Common::TimeSmoothedBoolean *m_puckCollected;
 	};
 }
 }
