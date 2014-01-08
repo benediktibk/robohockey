@@ -13,11 +13,11 @@ RefereeImpl::RefereeImpl(const std::string &AngelinaAdressServer):
 {
 	m_detectionStart = false;
 	m_disconnected = false;
-	m_GameStart = false;
-	m_GameOver = false;
+	m_gameStart = false;
+	m_gameOver = false;
 	m_stopMovement = false;
-	m_Connected = false;
-	m_ConnectFailed = false;
+	m_connected = false;
+	m_connectFailed = false;
 	m_isValid = false;
 	m_referee = new Extern::Angelina::Referee(0);
 	connect(m_referee, SIGNAL(disconnected()),this, SLOT(slotDisconnected()));
@@ -87,12 +87,12 @@ bool RefereeImpl::detectionStart()
 
 bool RefereeImpl::gameStart()
 {
-	return m_GameStart;
+	return m_gameStart;
 }
 
 bool RefereeImpl::gameOver()
 {
-	return m_GameOver;
+	return m_gameOver;
 }
 
 FieldColor RefereeImpl::trueColorOfTeam()
@@ -118,24 +118,24 @@ void RefereeImpl::slotDisconnected()
 void RefereeImpl::slotDetectionStart()
 {
 	m_detectionStart = true;
-	m_GameStart = false;
-	m_GameOver = false;
+	m_gameStart = false;
+	m_gameOver = false;
 	m_stopMovement = false;
 }
 
 void RefereeImpl::slotGameStart()
 {
 	m_detectionStart = false;
-	m_GameStart = true;
-	m_GameOver = false;
+	m_gameStart = true;
+	m_gameOver = false;
 	m_stopMovement = false;
 }
 
 void RefereeImpl::slotGameOver()
 {
 	m_detectionStart = false;
-	m_GameStart = false;
-	m_GameOver = true;
+	m_gameStart = false;
+	m_gameOver = true;
 	m_stopMovement = true;
 }
 
@@ -150,17 +150,17 @@ void RefereeImpl::slotTrueColorOfTeam(TeamColor color)
 void RefereeImpl::slotStopMovement()
 {
 	m_detectionStart = false;
-	m_GameStart = false;
-	m_GameOver = false;
+	m_gameStart = false;
+	m_gameOver = false;
 	m_stopMovement = true;
 }
 
 void RefereeImpl::slotConnected()
 {
-	m_Connected = true;
+	m_connected = true;
 }
 
 void RefereeImpl::slotConnectFailed()
 {
-	m_ConnectFailed = true;
+	m_connectFailed = true;
 }

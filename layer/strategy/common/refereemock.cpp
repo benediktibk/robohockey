@@ -5,6 +5,10 @@ using namespace RoboHockey::Layer::Strategy::Common;
 using namespace Extern::Angelina;
 
 RefereeMock::RefereeMock() :
+	m_detectionStart(false),
+	m_gameStart(false),
+	m_gameOver(false),
+	m_stopMovement(false),
 	m_trueColor(FieldColorUnknown)
 { }
 

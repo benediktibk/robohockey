@@ -56,12 +56,12 @@ namespace Common
 		Extern::Angelina::Referee *m_referee;
 		bool m_disconnected;
 		bool m_detectionStart;
-		bool m_GameStart;
-		bool m_GameOver;
+		bool m_gameStart;
+		bool m_gameOver;
 		RoboHockey::Common::FieldColor m_trueColorOfTeam;
 		bool m_stopMovement;
-		bool m_Connected;
-		bool m_ConnectFailed;
+		bool m_connected;
+		bool m_connectFailed;
 		bool m_isValid;
 	};
 }
