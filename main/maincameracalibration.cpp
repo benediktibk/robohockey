@@ -20,7 +20,6 @@ double g_tolerance = 2.0;
 
 int main()
 {
-
 	cout << "##\n## Take a picture to current dir with 'p'.\n## Exit with 'q'\n## Press 'u' to en-/disable picture\n##"<< endl;
 
 	Camera *camera = new CameraImpl(0);
@@ -41,7 +40,6 @@ int main()
 
 	namedWindow( "Video", CV_WINDOW_AUTOSIZE );
 
-	char key;
 	while(true)
 	{
 		chessBoardPoints.clear();
@@ -70,7 +68,7 @@ int main()
 			imshow( "Video", frame );
 
 
-		key = cvWaitKey(25);
+		char key = cvWaitKey(25);
 		if (key == 'u')
 		{
 			if(updatePicture)
