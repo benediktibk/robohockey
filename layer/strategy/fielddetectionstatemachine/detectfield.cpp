@@ -54,7 +54,11 @@ void DetectField::updateInternal()
 
 	if (!(result == RobotPosition()))
 	{
-		m_calibrationResults.push_back(pair<unsigned int, RoboHockey::Common::RobotPosition>(*numberOfStones, result));
+		if (*numberOfStones >= m_calibrationResults.front().first)
+			m_calibrationResults.push_front(pair<unsigned int, RoboHockey::Common::RobotPosition>(*numberOfStones, result));
+		else
+			m_calibrationResults.push_back(pair<unsigned int, RoboHockey::Common::RobotPosition>(*numberOfStones, result));
+
 		m_successful = true;
 	}
 
