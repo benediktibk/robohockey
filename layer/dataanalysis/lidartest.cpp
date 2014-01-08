@@ -1608,7 +1608,7 @@ vector<LidarObject> LidarTest::getDifferentObjects(
 		const Point &oneObjectPosition = oneObject.getCenter();
 		bool found = false;
 
-		for (vector<LidarObject>::iterator j = twoReduced.begin(); j != twoReduced.end() && !found; ++j)
+		for (vector<LidarObject>::iterator j = twoReduced.begin(); !found && j != twoReduced.end(); ++j)
 		{
 			const LidarObject &twoObject = *j;
 			const Point &twoObjectPosition = twoObject.getCenter();
@@ -1617,6 +1617,7 @@ vector<LidarObject> LidarTest::getDifferentObjects(
 			{
 				twoReduced.erase(j);
 				found = true;
+				break;
 			}
 		}
 
