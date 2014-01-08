@@ -467,6 +467,7 @@ void RobotTest::goTo_surroundedBySoftObstacles_canReachTarget()
 	robot.updateActuators(field);
 
 	CPPUNIT_ASSERT(!robot.cantReachTarget());
+	delete m_routerMock;
 }
 
 void RobotTest::goTo_surroundedByHardObstacles_cantReachTarget()
@@ -490,6 +491,7 @@ void RobotTest::goTo_surroundedByHardObstacles_cantReachTarget()
 	robot.updateActuators(field);
 
 	CPPUNIT_ASSERT(robot.cantReachTarget());
+	delete m_routerMock;
 }
 
 void RobotTest::goTo_finalOrientationNotPossible_canReachTarget()
@@ -512,6 +514,7 @@ void RobotTest::goTo_finalOrientationNotPossible_canReachTarget()
 	robot.updateActuators(field);
 
 	CPPUNIT_ASSERT(!robot.cantReachTarget());
+	delete m_routerMock;
 }
 
 void RobotTest::goTo_twoTargetsAndFirstOnePossible_canReachFirstTarget()
@@ -534,6 +537,7 @@ void RobotTest::goTo_twoTargetsAndFirstOnePossible_canReachFirstTarget()
 	CPPUNIT_ASSERT_EQUAL((size_t)2, routePoints.size());
 	Compare compare(0.0001);
 	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(10, 0), routePoints.back()));
+	delete m_routerMock;
 }
 
 void RobotTest::goTo_twoTargetsAndOnlySecondOnePossible_canReachSecondTarget()
@@ -559,6 +563,7 @@ void RobotTest::goTo_twoTargetsAndOnlySecondOnePossible_canReachSecondTarget()
 	CPPUNIT_ASSERT_EQUAL((size_t)2, routePoints.size());
 	Compare compare(0.0001);
 	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(-5, 0), routePoints.back()));
+	delete m_routerMock;
 }
 
 void RobotTest::goTo_minuteWaited_cantReachTarget()
@@ -578,6 +583,7 @@ void RobotTest::goTo_minuteWaited_cantReachTarget()
 	robot.updateActuators(field);
 
 	CPPUNIT_ASSERT(robot.cantReachTarget());
+	delete m_routerMock;
 }
 
 void RobotTest::goTo_obstacleSuddenlyAppearedDuringDriving_engineGotCallToTurnTowardsNewRoute()
@@ -610,6 +616,7 @@ void RobotTest::goTo_obstacleSuddenlyAppearedDuringDriving_engineGotCallToTurnTo
 	const Point &nextPoint = *(++routePoints.begin());
 	Compare compare(0.001);
 	CPPUNIT_ASSERT(compare.isFuzzyEqual(nextPoint, engine.getLastTarget()));
+	delete m_routerMock;
 }
 
 void RobotTest::goTo_obstacleSuddenlyAppearedDuringTurning_engineGotCallToTurnTowardsNewRoute()
@@ -640,6 +647,7 @@ void RobotTest::goTo_obstacleSuddenlyAppearedDuringTurning_engineGotCallToTurnTo
 	const Point &nextPoint = *(++routePoints.begin());
 	Compare compare(0.001);
 	CPPUNIT_ASSERT(compare.isFuzzyEqual(nextPoint, engine.getLastTarget()));
+	delete m_routerMock;
 }
 
 void RobotTest::goTo_hardObstacleAtStart_engineGotCallToGoToStraight()
@@ -671,6 +679,7 @@ void RobotTest::goTo_hardObstacleAtStart_engineGotCallToGoToStraight()
 	CPPUNIT_ASSERT(!robot.cantReachTarget());
 	CPPUNIT_ASSERT_EQUAL((unsigned int)0, engine.getCallsToTurnToTarget());
 	CPPUNIT_ASSERT_EQUAL((unsigned int)1, engine.getCallsToGoToStraight());
+	delete m_routerMock;
 }
 
 void RobotTest::goTo_hardObstacleMovedALittleBitIntoTheRoute_engineGotNoAdditionalCalls()
@@ -707,6 +716,7 @@ void RobotTest::goTo_hardObstacleMovedALittleBitIntoTheRoute_engineGotNoAddition
 	CPPUNIT_ASSERT(!robot.cantReachTarget());
 	CPPUNIT_ASSERT_EQUAL((unsigned int)0, engine.getCallsToTurnToTarget());
 	CPPUNIT_ASSERT_EQUAL((unsigned int)0, engine.getCallsToGoToStraight());
+	delete m_routerMock;
 }
 
 void RobotTest::goTo_puckCollectedButLostInBetween_newRouteStillConsideringThePuck()
@@ -734,6 +744,7 @@ void RobotTest::goTo_puckCollectedButLostInBetween_newRouteStillConsideringThePu
 
 	list<Point> routePoints = robot.getAllRoutePoints();
 	CPPUNIT_ASSERT(routePoints.size() > 2);
+	delete m_routerMock;
 }
 
 void RobotTest::goTo_positionInsideHardObstacle_cantReachTarget()
@@ -756,6 +767,7 @@ void RobotTest::goTo_positionInsideHardObstacle_cantReachTarget()
 	CPPUNIT_ASSERT(engine.getCallsToGoToStraight() == 0);
 	CPPUNIT_ASSERT(engine.getCallsToTurnToTarget() == 0);
 	CPPUNIT_ASSERT(robot.cantReachTarget());
+	delete m_routerMock;
 }
 
 void RobotTest::goTo_positionInsideSoftObstacle_canReachTarget()
@@ -775,6 +787,7 @@ void RobotTest::goTo_positionInsideSoftObstacle_canReachTarget()
 	robot.updateActuators(field);
 
 	CPPUNIT_ASSERT(!robot.cantReachTarget());
+	delete m_routerMock;
 }
 
 void RobotTest::stuckAtObstacle_tryingToTackleObstacle_true()
@@ -1042,6 +1055,7 @@ void RobotTest::turnToTarget_minuteWaited_cantReachTarget()
 	robot.updateActuators(field);
 
 	CPPUNIT_ASSERT(robot.cantReachTarget());
+	delete m_routerMock;
 }
 
 void RobotTest::updateActuators_notTryingToTackleObstacle_engineGotNoCallToStop()
@@ -1209,6 +1223,7 @@ void RobotTest::turnAround_minuteWaited_cantReachTarget()
 	robot.updateActuators(field);
 
 	CPPUNIT_ASSERT(robot.cantReachTarget());
+	delete m_routerMock;
 }
 
 void RobotTest::getCurrentPosition_position3And4InOdometry_3And4()
@@ -1899,6 +1914,7 @@ void RobotTest::collectPuckInFront_minuteWaited_cantReachTarget()
 	robot.updateActuators(field);
 
 	CPPUNIT_ASSERT(robot.cantReachTarget());
+	delete m_routerMock;
 }
 
 void RobotTest::collectPuckInFront_sonarDetectsCollision_notStuckAtObstacle()
@@ -1923,6 +1939,7 @@ void RobotTest::collectPuckInFront_sonarDetectsCollision_notStuckAtObstacle()
 
 	CPPUNIT_ASSERT(!robot.stuckAtObstacle());
 	CPPUNIT_ASSERT(!robot.cantReachTarget());
+	delete m_routerMock;
 }
 
 void RobotTest::updatePuckPosition_newPositionOfPuck_goToStraightSlowlyCalledTwice()
@@ -1983,6 +2000,7 @@ void RobotTest::leaveCollectedPuck_minuteWaited_cantReachTarget()
 	robot.updateActuators(field);
 
 	CPPUNIT_ASSERT(robot.cantReachTarget());
+	delete m_routerMock;
 }
 
 void RobotTest::isRotating_waiting_false()
