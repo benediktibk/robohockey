@@ -84,31 +84,32 @@ void RobotImpl::updateEngineForDrivingStraightPart(const Field &field)
 
 	//! If there is no route at this point we can't reach the target.
 	if (m_currentRoute == 0)
-		m_cantReachTarget = true;
-	else
 	{
-		if (routeChanged)
+		m_cantReachTarget = true;
+		return;
+	}
+
+	if (routeChanged)
+	{
+		changeIntoState(RobotStateDrivingTurningPart);
+		engine.turnToTarget(m_currentRoute->getSecondPoint());
+	}
+	else if (engine.reachedTarget())
+	{
+		m_currentRoute->removeFirstPoint();
+
+		if (m_currentRoute->getPointCount() == 1)
+		{
+			const Angle &finalOrientation = m_currentTarget.getOrientation();
+			Point smallStep(1, 0);
+			smallStep.rotate(finalOrientation);
+			engine.turnToTarget(getCurrentPosition().getPosition() + smallStep);
+			changeIntoState(RobotStateDrivingTurningPart);
+		}
+		else
 		{
 			changeIntoState(RobotStateDrivingTurningPart);
 			engine.turnToTarget(m_currentRoute->getSecondPoint());
-		}
-		else if (engine.reachedTarget())
-		{
-			m_currentRoute->removeFirstPoint();
-
-			if (m_currentRoute->getPointCount() == 1)
-			{
-				const Angle &finalOrientation = m_currentTarget.getOrientation();
-				Point smallStep(1, 0);
-				smallStep.rotate(finalOrientation);
-				engine.turnToTarget(getCurrentPosition().getPosition() + smallStep);
-				changeIntoState(RobotStateDrivingTurningPart);
-			}
-			else
-			{
-				changeIntoState(RobotStateDrivingTurningPart);
-				engine.turnToTarget(m_currentRoute->getSecondPoint());
-			}
 		}
 	}
 }
@@ -122,21 +123,22 @@ void RobotImpl::updateEngineForDrivingTurningPart(const Field &field)
 	bool routeChanged = updateRoute(field);
 
 	if (m_currentRoute == 0)
-		m_cantReachTarget = true;
-	else
 	{
-		if (m_stateChanged || routeChanged)
-			engine.turnToTarget(m_currentRoute->getSecondPoint());
-		else if (engine.reachedTarget())
+		m_cantReachTarget = true;
+		return;
+	}
+
+	if (m_stateChanged || routeChanged)
+		engine.turnToTarget(m_currentRoute->getSecondPoint());
+	else if (engine.reachedTarget())
+	{
+		if (m_currentRoute->getPointCount() > 1)
 		{
-			if (m_currentRoute->getPointCount() > 1)
-			{
-				changeIntoState(RobotStateDrivingStraightPart);
-				engine.goToStraight(m_currentRoute->getSecondPoint());
-			}
-			else
-				changeIntoState(RobotStateWaiting);
+			changeIntoState(RobotStateDrivingStraightPart);
+			engine.goToStraight(m_currentRoute->getSecondPoint());
 		}
+		else
+			changeIntoState(RobotStateWaiting);
 	}
 }
 
