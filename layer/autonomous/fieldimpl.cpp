@@ -142,14 +142,13 @@ FieldColor FieldImpl::getEnemyTeamColor() const
 void FieldImpl::detectTeamColorWithGoalInFront()
 {
 	assert(m_teamColor == FieldColorUnknown);
-	Compare compare(0.10);
 
 	double blueGoal = m_camera->getProbabilityForBlueGoal();
 	double yellowGoal = m_camera->getProbabilityForYellowGoal();
 
-	if(compare.isStrictFuzzyGreater(blueGoal, yellowGoal))
+	if(blueGoal > yellowGoal)
 		m_teamColor = FieldColorBlue;
-	else if (compare.isStrictFuzzyGreater(yellowGoal, blueGoal))
+	else
 		m_teamColor = FieldColorYellow;
 }
 

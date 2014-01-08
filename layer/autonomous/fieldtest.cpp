@@ -2103,7 +2103,7 @@ void FieldTest::detectTeamColorWithGoalInFront_yellowMuchSmallerBlue_teamBlue()
 	CPPUNIT_ASSERT_EQUAL(FieldColorBlue, field.getOwnTeamColor());
 }
 
-void FieldTest::detectTeamColorWithGoalInFront_yellowAndBlueFuzzyEqual_teamUnknown()
+void FieldTest::detectTeamColorWithGoalInFront_yellowAndBlueEqual_teamNotUnknown()
 {
 	DataAnalysis::OdometryMock odometry;
 	DataAnalysis::LidarMock lidar;
@@ -2111,12 +2111,12 @@ void FieldTest::detectTeamColorWithGoalInFront_yellowAndBlueFuzzyEqual_teamUnkno
 	Autonomous::RobotMock autonomousRobot;
 	FieldImpl field(odometry, lidar, camera, autonomousRobot);
 
-	camera.setProbabilityForYellowGoal(0.43);
+	camera.setProbabilityForYellowGoal(0.47);
 	camera.setProbabilityForBlueGoal(0.47);
 
 	field.detectTeamColorWithGoalInFront();
 
-	CPPUNIT_ASSERT_EQUAL(FieldColorUnknown, field.getOwnTeamColor());
+	CPPUNIT_ASSERT(FieldColorUnknown != field.getOwnTeamColor());
 }
 
 void FieldTest::getNewOriginFromFieldDetection_realWorldExample1_correctNewOrigin()
