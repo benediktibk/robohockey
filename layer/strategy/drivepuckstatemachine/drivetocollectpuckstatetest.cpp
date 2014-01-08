@@ -14,7 +14,6 @@ using namespace RoboHockey::Layer::Strategy::Common;
 using namespace RoboHockey::Layer::Strategy::DrivePuckStateMachine;
 using namespace RoboHockey::Layer::Autonomous;
 
-
 void DriveToCollectPuckStateTest::nextState_numberOfKnownPucksIs0_nextStateIsFindPuckState()
 {
 	RobotMock robot;
@@ -47,6 +46,7 @@ void DriveToCollectPuckStateTest::nextState_reachedTarget_nextStateIsCollectPuck
 
 	CPPUNIT_ASSERT(stateCasted != 0);
 	delete state;
+	delete driveToState;
 }
 
 void DriveToCollectPuckStateTest::nextState_canReachTarget_nextStateIs0()
@@ -64,6 +64,7 @@ void DriveToCollectPuckStateTest::nextState_canReachTarget_nextStateIs0()
 
 	CPPUNIT_ASSERT(state == 0);
 	delete state;
+	delete driveToState;
 }
 
 void DriveToCollectPuckStateTest::nextState_cantReachTarget_nextStateIsInitialState()
@@ -83,5 +84,6 @@ void DriveToCollectPuckStateTest::nextState_cantReachTarget_nextStateIsInitialSt
 
 	CPPUNIT_ASSERT(stateCasted != 0);
 	delete state;
+	delete driveToState;
 }
 

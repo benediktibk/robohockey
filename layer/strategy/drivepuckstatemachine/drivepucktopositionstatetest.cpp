@@ -13,7 +13,6 @@ using namespace RoboHockey::Layer::Strategy::Common;
 using namespace RoboHockey::Layer::Strategy::DrivePuckStateMachine;
 using namespace RoboHockey::Layer::Autonomous;
 
-
 void DrivePuckToPositionStateTest::nextState_reachedTarget_nextStateIsLeavePuckState()
 {
 	RobotMock robot;
@@ -31,6 +30,7 @@ void DrivePuckToPositionStateTest::nextState_reachedTarget_nextStateIsLeavePuckS
 
 	CPPUNIT_ASSERT(stateCasted != 0);
 	delete state;
+	delete driveToState;
 }
 
 void DrivePuckToPositionStateTest::nextState_cantReachTarget_nextStateIsLeavePuckState()
@@ -50,6 +50,7 @@ void DrivePuckToPositionStateTest::nextState_cantReachTarget_nextStateIsLeavePuc
 
 	CPPUNIT_ASSERT(stateCasted != 0);
 	delete state;
+	delete driveToState;
 }
 
 void DrivePuckToPositionStateTest::nextState_canReachTarget_nextStateIs0()
@@ -66,6 +67,7 @@ void DrivePuckToPositionStateTest::nextState_canReachTarget_nextStateIs0()
 	state = driveToState->nextState();
 
 	CPPUNIT_ASSERT(state == 0);
+	delete driveToState;
 }
 
 void DrivePuckToPositionStateTest::nextState_puckIsNotCollected_nextStateIsDriveToCollectPuck()
