@@ -28,6 +28,7 @@ namespace Common
 		virtual State* nextState() = 0;
 		void update();
 		virtual std::string getName() = 0;
+		virtual bool allowLogMessages();
 
 	protected:
 		virtual void updateInternal() = 0;

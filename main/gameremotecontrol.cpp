@@ -44,15 +44,12 @@ void GameRemoteControl::executeRobotControl()
 	Field &field = getField();
 	const RobotPosition &positionAndOrientation = robot.getCurrentPosition();
 	vector<Point> targets = m_model->getAllTargetPoints();
-	vector<FieldObject> pucks = field.getObjectsWithColorOrderdByDistance(
-				m_model->getPuckColor(), positionAndOrientation.getPosition());
+	vector<FieldObject> pucks = field.getObjectsWithColorOrderdByDistance(m_model->getPuckColor());
 
 	if (m_model->getPuckColor() == FieldColorUnknown)
 	{
-		vector<FieldObject> bluePucks = field.getObjectsWithColorOrderdByDistance(
-					FieldColorBlue, positionAndOrientation.getPosition());
-		vector<FieldObject> yellowPucks = field.getObjectsWithColorOrderdByDistance(
-					FieldColorYellow, positionAndOrientation.getPosition());
+		vector<FieldObject> bluePucks = field.getObjectsWithColorOrderdByDistance(FieldColorBlue);
+		vector<FieldObject> yellowPucks = field.getObjectsWithColorOrderdByDistance(FieldColorYellow);
 
 		pucks.insert(pucks.end(), bluePucks.begin(), bluePucks.end());
 		pucks.insert(pucks.end(), yellowPucks.begin(), yellowPucks.end());

@@ -21,3 +21,8 @@ void State::update()
 
 	m_updateAlreadyCalled = true;
 }
+
+bool State::allowLogMessages()
+{
+	return true;
+}

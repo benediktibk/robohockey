@@ -46,7 +46,7 @@ namespace Autonomous
 		virtual const std::vector<FieldObject>& getAllFieldObjects() const;
 		virtual const std::vector<Common::Circle>& getAllSoftObstacles() const;
 		virtual const std::vector<Common::Circle>& getAllHardObstacles() const;
-		virtual std::vector<FieldObject> getObjectsWithColorOrderdByDistance(Common::FieldColor color, const Common::Point &position) const;
+		virtual std::vector<FieldObject> getObjectsWithColorOrderdByDistance(Common::FieldColor color) const;
 		virtual unsigned int getNumberOfObjectsWithColor(Common::FieldColor color) const;
 		virtual bool calibratePosition();
 		virtual unsigned int getNumberOfAchievedGoals() const;
@@ -64,6 +64,8 @@ namespace Autonomous
 		virtual std::list<Common::RobotPosition> getTargetsForSearchingPucks() const;
 		virtual std::list<Common::RobotPosition> getTargetsForHidingEnemyPucks() const;
 		virtual std::list<Common::RobotPosition> getTargetsForCollectingOnePuck(Common::FieldColor puckColor) const;
+		virtual std::list<Common::RobotPosition> getTargetsForCollectingOnePuckOrSearchingForColorOfPuck(const Common::Point &position) const;
+		virtual std::vector<FieldObject> random(std::vector<FieldObject> &objects);
 		virtual void setTrueTeamColor(Common::FieldColor trueTeamColor);
 		virtual Common::RobotPosition getNewOriginFromFieldDetection(unsigned int &outNumberOfBorderstones);
 		virtual void transformFieldToNewOrigin(const Common::RobotPosition newOrigin);

@@ -33,7 +33,7 @@ const vector<Circle> &FieldMock::getAllHardObstacles() const
 	return m_hardObstacles;
 }
 
-vector<FieldObject> FieldMock::getObjectsWithColorOrderdByDistance(FieldColor, const Point&) const
+vector<FieldObject> FieldMock::getObjectsWithColorOrderdByDistance(FieldColor) const
 {
 	return m_objectsWithColorOrderedByDistance;
 }

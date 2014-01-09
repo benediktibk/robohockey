@@ -13,21 +13,20 @@ using namespace RoboHockey::Layer::Strategy::Common;
 using namespace RoboHockey::Layer::Strategy::DrivePuckStateMachine;
 using namespace RoboHockey::Layer::Autonomous;
 
-CollectPuckState::CollectPuckState(Robot &robot, Field &field, Referee &referee, const ColorDependentPuckTargetFetcher &drivePuck) :
+CollectPuckState::CollectPuckState(Robot &robot, Field &field, Referee &referee, const ColorDependentPuckTargetFetcher &puckTargetFetcher) :
 	State(robot, field, referee, true),
-	m_drivePuck(drivePuck)
+	m_puckTargetFetcher(puckTargetFetcher)
 { }
 
 State* CollectPuckState::nextState()
 {
-	vector<FieldObject> targetPositions = m_field.getObjectsWithColorOrderdByDistance(
-				m_drivePuck.getColorOfTargetPucks(),
-				m_robot.getCurrentPosition().getPosition());
+	vector<FieldObject> targetPositions =
+			m_field.getObjectsWithColorOrderdByDistance(m_puckTargetFetcher.getColorOfTargetPucks());
 
 	if(m_robot.isPuckCollected())
-		return new DrivePuckToPositionState(m_robot, m_field, m_referee, m_drivePuck);
+		return new DrivePuckToPositionState(m_robot, m_field, m_referee, m_puckTargetFetcher);
 	else if(m_robot.cantReachTarget() || !m_robot.isPuckCollectable() || targetPositions.empty())
-		return new DriveToCollectPuckState(m_robot, m_field, m_referee, m_drivePuck);
+		return new DriveToCollectPuckState(m_robot, m_field, m_referee, m_puckTargetFetcher);
 	else
 		return 0;
 }
@@ -39,9 +38,8 @@ string CollectPuckState::getName()
 
 void CollectPuckState::updateInternal()
 {
-	vector<FieldObject> targetPositions = m_field.getObjectsWithColorOrderdByDistance(
-				m_drivePuck.getColorOfTargetPucks(),
-				m_robot.getCurrentPosition().getPosition());
+	vector<FieldObject> targetPositions =
+			m_field.getObjectsWithColorOrderdByDistance(m_puckTargetFetcher.getColorOfTargetPucks());
 
 	if(m_robot.isPuckCollectable() && !targetPositions.empty())
 		m_robot.collectPuckInFront(targetPositions.front().getCircle().getCenter());

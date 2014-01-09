@@ -52,6 +52,7 @@ bool GameAutomatic::keepRunning() const
 void GameAutomatic::executeRobotControl()
 {
 	m_stateMachine->update();
+	setLogMessagesEnabled(m_stateMachine->allowLogMessages());
 
 	if(m_oldString != m_stateMachine->getNameOfCurrentState())
 	{
@@ -59,7 +60,7 @@ void GameAutomatic::executeRobotControl()
 		cout << "current state: " << m_stateMachine->getNameOfCurrentState() << endl;
 	}
 
-	if (guiEnabled())
+	if (guiEnabled() && logMessagesEnabled())
 	{
 		Layer::Autonomous::Robot &robot = getRobot();
 		Layer::Autonomous::Field &field = getField();

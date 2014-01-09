@@ -1,15 +1,17 @@
 #include "layer/strategy/mainstatemachine/pause.h"
 #include "layer/strategy/mainstatemachine/calibrate.h"
 #include "layer/strategy/common/referee.h"
+#include "layer/autonomous/robot.h"
 #include "layer/autonomous/field.h"
 
 using namespace RoboHockey::Layer::Strategy::Common;
 using namespace RoboHockey::Layer::Strategy::MainStateMachine;
 using namespace RoboHockey::Layer::Autonomous;
+using namespace std;
 
 Pause::Pause(Robot &robot, Field &field, Referee &referee) :
-	State(robot, field, referee, false)
-{ }
+	State(robot, field, referee, true)
+{}
 
 State* Pause::nextState()
 {
@@ -23,11 +25,18 @@ State* Pause::nextState()
 		return 0;
 }
 
-std::string Pause::getName()
+string Pause::getName()
 {
 	return "Pause";
 }
 
+bool Pause::allowLogMessages()
+{
+	return false;
+}
+
 void Pause::updateInternal()
-{ }
+{
+	m_robot.stop();
+}
 

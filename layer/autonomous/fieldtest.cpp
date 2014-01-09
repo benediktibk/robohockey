@@ -1572,10 +1572,11 @@ void FieldTest::getObjectsWithColorOrderedByDistance_oneObjectWithCorrectColorAn
 	camera.setAllObjects(cameraObjects);
 	lidar.setCanBeSeen(true);
 	lidar.setCanBeSeenPartly(true);
+	odometry.setCurrentPosition(RobotPosition(Point(0, 0), 0));
 	field.update();
 	field.update();
 
-	vector<FieldObject> fieldObjects = field.getObjectsWithColorOrderdByDistance(FieldColorYellow, Point(0, 0));
+	vector<FieldObject> fieldObjects = field.getObjectsWithColorOrderdByDistance(FieldColorYellow);
 
 	CPPUNIT_ASSERT_EQUAL((size_t)1, fieldObjects.size());
 }
@@ -1598,10 +1599,11 @@ void FieldTest::getObjectsWithColorOrderedByDistance_twoObjectsWithCorrectColorI
 	camera.setAllObjects(cameraObjects);
 	lidar.setCanBeSeen(true);
 	lidar.setCanBeSeenPartly(true);
+	odometry.setCurrentPosition(RobotPosition(ownPosition, 0));
 	field.update();
 	field.update();
 
-	vector<FieldObject> fieldObjects = field.getObjectsWithColorOrderdByDistance(FieldColorYellow, ownPosition);
+	vector<FieldObject> fieldObjects = field.getObjectsWithColorOrderdByDistance(FieldColorYellow);
 
 	CPPUNIT_ASSERT_EQUAL((size_t)2, fieldObjects.size());
 	const FieldObject &firstObject = fieldObjects.front();
@@ -1629,10 +1631,11 @@ void FieldTest::getObjectsWithColorOrderedByDistance_twoObjectsWithCorrectColorI
 	camera.setAllObjects(cameraObjects);
 	lidar.setCanBeSeen(true);
 	lidar.setCanBeSeenPartly(true);
+	odometry.setCurrentPosition(RobotPosition(ownPosition, 0));
 	field.update();
 	field.update();
 
-	vector<FieldObject> fieldObjects = field.getObjectsWithColorOrderdByDistance(FieldColorYellow, ownPosition);
+	vector<FieldObject> fieldObjects = field.getObjectsWithColorOrderdByDistance(FieldColorYellow);
 
 	CPPUNIT_ASSERT_EQUAL((size_t)2, fieldObjects.size());
 	const FieldObject &firstObject = fieldObjects.front();
@@ -2071,7 +2074,7 @@ void FieldTest::getTargetsForSearchingPucks_always_numberOfPositionsBigger5()
 	CPPUNIT_ASSERT((size_t) 5 < field.getTargetsForSearchingPucks().size());
 }
 
-void FieldTest::getTargetsForSearchingPucks_twoObjectsWithUnknownColor_numberOfPositions18()
+void FieldTest::getTargetsForSearchingPucks_twoObjectsWithUnknownColor_numberOfPositions33()
 {
 	DataAnalysis::OdometryMock odometry;
 	DataAnalysis::LidarMock lidar;
@@ -2094,7 +2097,7 @@ void FieldTest::getTargetsForSearchingPucks_twoObjectsWithUnknownColor_numberOfP
 	field.update();
 	field.update();
 
-	CPPUNIT_ASSERT_EQUAL((size_t)21, field.getTargetsForSearchingPucks().size());
+	CPPUNIT_ASSERT_EQUAL((size_t)33, field.getTargetsForSearchingPucks().size());
 }
 
 void FieldTest::getTargetsForSearchingPucks_threeObjectsWithUnknownColorNotInField_numberOfPositions10()
@@ -2122,7 +2125,7 @@ void FieldTest::getTargetsForSearchingPucks_threeObjectsWithUnknownColorNotInFie
 	CPPUNIT_ASSERT_EQUAL((size_t)13, field.getTargetsForSearchingPucks().size());
 }
 
-void FieldTest::getTargetsForSearchungPucks_fourObjectsWithUnknownColorAndOneObjectWithKnownColorAndTwoPucksWithUnknownColorNotInField_numberOfPositions18()
+void FieldTest::getTargetsForSearchungPucks_fourObjectsWithUnknownColorAndOneObjectWithKnownColorAndTwoPucksWithUnknownColorNotInField_numberOfPositions33()
 {
 	DataAnalysis::OdometryMock odometry;
 	DataAnalysis::LidarMock lidar;
@@ -2148,7 +2151,7 @@ void FieldTest::getTargetsForSearchungPucks_fourObjectsWithUnknownColorAndOneObj
 	field.update();
 	field.update();
 
-	CPPUNIT_ASSERT_EQUAL((size_t)21, field.getTargetsForSearchingPucks().size());
+	CPPUNIT_ASSERT_EQUAL((size_t)33, field.getTargetsForSearchingPucks().size());
 }
 
 void FieldTest::detectTeamColorWithGoalInFront_yellowMuchBiggerBlue_teamYellow()
