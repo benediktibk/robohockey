@@ -16,7 +16,7 @@ namespace DrivePuckStateMachine
 			public Common::State
 	{
 	public:
-		LeavePuckState(Autonomous::Robot &robot, Autonomous::Field &field, Common::Referee &referee, const Common::ColorDependentPuckTargetFetcher &drivePuck);
+		LeavePuckState(Autonomous::Robot &robot, Autonomous::Field &field, Common::Referee &referee, const Common::ColorDependentPuckTargetFetcher &puckTargetFetcher, bool shouldIncreaseGoalCount = false);
 
 		virtual State* nextState();
 		virtual std::string getName();
@@ -25,7 +25,8 @@ namespace DrivePuckStateMachine
 		virtual void updateInternal();
 
 	private:
-		const Common::ColorDependentPuckTargetFetcher &m_drivePuck;
+		const Common::ColorDependentPuckTargetFetcher &m_puckTargetFetcher;
+		const bool m_shouldIncreaseGoalCount;
 };
 }
 }

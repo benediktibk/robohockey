@@ -13,17 +13,17 @@ using namespace RoboHockey::Layer::Autonomous;
 AchieveGoals::AchieveGoals(Robot &robot, Field &field, Referee &referee) :
 	State(robot, field, referee, false)
 {
-	m_drivePuck = new ColorDependentPuckTargetFetcherToAchiveGoals(m_field);
-	State *initialState = new DrivePuckStateMachine::InitialState(robot, field, referee, *m_drivePuck);
-	m_drivePuckStateMachine = new StateMachine(initialState, robot, field, referee);
+	m_puckTargetFetcher = new ColorDependentPuckTargetFetcherToAchiveGoals(m_field);
+	State *initialState = new DrivePuckStateMachine::InitialState(robot, field, referee, *m_puckTargetFetcher);
+	m_puckTargetFetcherStateMachine = new StateMachine(initialState, robot, field, referee);
 }
 
 AchieveGoals::~AchieveGoals()
 {
-	delete m_drivePuckStateMachine;
-	m_drivePuckStateMachine = 0;
-	delete m_drivePuck;
-	m_drivePuck = 0;
+	delete m_puckTargetFetcherStateMachine;
+	m_puckTargetFetcherStateMachine = 0;
+	delete m_puckTargetFetcher;
+	m_puckTargetFetcher = 0;
 }
 
 State* AchieveGoals::nextState()
@@ -38,10 +38,10 @@ State* AchieveGoals::nextState()
 
 std::string AchieveGoals::getName()
 {
-	return "AchiveGoals: " + m_drivePuckStateMachine->getNameOfCurrentState();
+	return "AchiveGoals: " + m_puckTargetFetcherStateMachine->getNameOfCurrentState();
 }
 
 void AchieveGoals::updateInternal()
 {
-	m_drivePuckStateMachine->update();
+	m_puckTargetFetcherStateMachine->update();
 }

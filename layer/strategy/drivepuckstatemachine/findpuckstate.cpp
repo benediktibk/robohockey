@@ -10,9 +10,9 @@ using namespace RoboHockey::Layer::Strategy::Common;
 using namespace RoboHockey::Layer::Strategy::DrivePuckStateMachine;
 using namespace RoboHockey::Layer::Autonomous;
 
-FindPuckState::FindPuckState(Robot &robot, Field &field, Referee &referee, const ColorDependentPuckTargetFetcher &drivePuck):
+FindPuckState::FindPuckState(Robot &robot, Field &field, Referee &referee, const ColorDependentPuckTargetFetcher &puckTargetFetcher):
 	State(robot, field, referee, true),
-	m_drivePuck(drivePuck)
+	m_puckTargetFetcher(puckTargetFetcher)
 { }
 
 State *FindPuckState::nextState()
@@ -20,8 +20,8 @@ State *FindPuckState::nextState()
 	return new DriveToState(
 				m_robot, m_field, m_referee, m_field.getTargetsForSearchingPucks(),
 				new WaitCyclesState(m_robot, m_field, m_referee,
-					new DriveToCollectPuckState(m_robot, m_field, m_referee, m_drivePuck), 10),
-					new FindPuckState(m_robot, m_field, m_referee, m_drivePuck));
+					new DriveToCollectPuckState(m_robot, m_field, m_referee, m_puckTargetFetcher), 10),
+					new FindPuckState(m_robot, m_field, m_referee, m_puckTargetFetcher));
 }
 
 std::string FindPuckState::getName()

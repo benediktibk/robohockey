@@ -19,9 +19,9 @@ void InitialStateTest::nextState_puckCollected_nextStateIsLeavePuck()
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	ColorDependentPuckTargetFetcherMock drivePuck;
+	ColorDependentPuckTargetFetcherMock puckTargetFetcher;
 	robot.setPuckCollected(true);
-	InitialState initialState(robot, field, referee, drivePuck);
+	InitialState initialState(robot, field, referee, puckTargetFetcher);
 	State *state;
 	state = initialState.nextState();
 	LeavePuckState *stateCasted = dynamic_cast<LeavePuckState*>(state);
@@ -35,8 +35,8 @@ void InitialStateTest::nextState_numberOfKnownPucksIs0_nextStateIsFindPuck()
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	ColorDependentPuckTargetFetcherMock drivePuck;
-	InitialState initialState(robot, field, referee, drivePuck);
+	ColorDependentPuckTargetFetcherMock puckTargetFetcher;
+	InitialState initialState(robot, field, referee, puckTargetFetcher);
 	State *state;
 	state = initialState.nextState();
 	FindPuckState *stateCasted = dynamic_cast<FindPuckState*>(state);
@@ -50,9 +50,9 @@ void InitialStateTest::nextState_numberOfKnownPucksIs2_nextStateIsDriveToCollect
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	ColorDependentPuckTargetFetcherMock drivePuck;
-	drivePuck.setNumberOfKnownPucksNotInTarget(2);
-	InitialState initialState(robot, field, referee, drivePuck);
+	ColorDependentPuckTargetFetcherMock puckTargetFetcher;
+	puckTargetFetcher.setNumberOfKnownPucksNotInTarget(2);
+	InitialState initialState(robot, field, referee, puckTargetFetcher);
 	State *state;
 	state = initialState.nextState();
 	DriveToCollectPuckState *stateCasted = dynamic_cast<DriveToCollectPuckState*>(state);
