@@ -14,12 +14,12 @@ using namespace RoboHockey::Layer::Autonomous;
 CheckGoalColor::CheckGoalColor(Robot &robot, Field &field, Referee &referee) :
 	State(robot, field, referee, false),
 	m_teamColorSend(false),
-	m_gotResponse(false)
+	m_gotResponse(false),
+	m_numberOfTries(0)
 { }
 
 State* CheckGoalColor::nextState()
 {
-	//! @todo Replace Target Point with target point from field.
 	if (m_teamColorSend && m_gotResponse)
 		return new CalibrationFinished(m_robot, m_field, m_referee, 0);
 
@@ -40,6 +40,13 @@ void CheckGoalColor::updateInternal()
 		if (m_field.getOwnTeamColor() != FieldColorUnknown)
 		{
 			m_referee.tellTeamColor(m_field.getOwnTeamColor());
+			m_teamColorSend = true;
+		}
+		else if (m_numberOfTries < 5)
+			++m_numberOfTries;
+		else
+		{
+			m_referee.tellTeamColor(FieldColorYellow);
 			m_teamColorSend = true;
 		}
 	}

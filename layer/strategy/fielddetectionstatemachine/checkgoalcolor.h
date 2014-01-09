@@ -26,6 +26,7 @@ namespace FieldDetectionStateMachine
 	private:
 		bool m_teamColorSend;
 		bool m_gotResponse;
+		unsigned int m_numberOfTries;
 
 	};
 }
