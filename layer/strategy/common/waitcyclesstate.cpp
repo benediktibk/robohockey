@@ -1,23 +1,23 @@
-#include "layer/strategy/common/waitstate.h"
+#include "layer/strategy/common/waitcyclesstate.h"
 
 using namespace std;
 using namespace RoboHockey::Layer::Strategy::Common;
 using namespace RoboHockey::Layer::Autonomous;
 
-WaitState::WaitState(Robot &robot, Field &field, Referee &referee, State *stateAfterWaitCycles, unsigned int cycles) :
+WaitCyclesState::WaitCyclesState(Robot &robot, Field &field, Referee &referee, State *stateAfterWaitCycles, unsigned int cycles) :
 	State(robot, field, referee, false),
 	m_stateAfterWaitCycles(stateAfterWaitCycles),
 	m_cycles(cycles),
 	m_updateCounter(0)
 { }
 
-WaitState::~WaitState()
+WaitCyclesState::~WaitCyclesState()
 {
 	delete m_stateAfterWaitCycles;
 	m_stateAfterWaitCycles = 0;
 }
 
-State *WaitState::nextState()
+State *WaitCyclesState::nextState()
 {
 	State *result = 0;
 
@@ -30,12 +30,12 @@ State *WaitState::nextState()
 	return result;
 }
 
-void WaitState::updateInternal()
+void WaitCyclesState::updateInternal()
 {
 	++m_updateCounter;
 }
 
-string WaitState::getName()
+string WaitCyclesState::getName()
 {
 	return "WaitState";
 }

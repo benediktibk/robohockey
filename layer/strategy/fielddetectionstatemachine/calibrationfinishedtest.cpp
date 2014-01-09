@@ -4,7 +4,7 @@
 #include "layer/strategy/common/statemock.h"
 #include "layer/strategy/common/refereemock.h"
 #include "layer/strategy/common/drivetostate.h"
-#include "layer/strategy/common/waitstate.h"
+#include "layer/strategy/common/waitcyclesstate.h"
 #include "layer/autonomous/robotmock.h"
 #include "layer/autonomous/fieldmock.h"
 
@@ -37,7 +37,7 @@ void CalibrationFinishedTest::nextState_0TargetsReached_WaitState()
 
 	State *state;
 	state = calibrationFinishedState.nextState();
-	WaitState *stateCasted = dynamic_cast<WaitState*>(state);
+	WaitCyclesState *stateCasted = dynamic_cast<WaitCyclesState*>(state);
 
 	CPPUNIT_ASSERT(stateCasted != 0);
 	delete state;
@@ -54,7 +54,7 @@ void CalibrationFinishedTest::nextState_1TargetsReached_WaitState()
 
 	State *state;
 	state = calibrationFinishedState.nextState();
-	WaitState *stateCasted = dynamic_cast<WaitState*>(state);
+	WaitCyclesState *stateCasted = dynamic_cast<WaitCyclesState*>(state);
 
 	CPPUNIT_ASSERT(stateCasted != 0);
 	delete state;

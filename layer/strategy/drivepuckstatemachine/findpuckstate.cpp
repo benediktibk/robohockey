@@ -4,7 +4,7 @@
 #include "layer/strategy/common/referee.h"
 #include "layer/autonomous/robot.h"
 #include "layer/autonomous/field.h"
-#include "layer/strategy/common/waitstate.h"
+#include "layer/strategy/common/waitcyclesstate.h"
 
 using namespace RoboHockey::Layer::Strategy::Common;
 using namespace RoboHockey::Layer::Strategy::DrivePuckStateMachine;
@@ -19,7 +19,7 @@ State *FindPuckState::nextState()
 {
 	return new DriveToState(
 				m_robot, m_field, m_referee, m_field.getTargetsForSearchingPucks(),
-				new WaitState(m_robot, m_field, m_referee,
+				new WaitCyclesState(m_robot, m_field, m_referee,
 					new DriveToCollectPuckState(m_robot, m_field, m_referee, m_drivePuck), 10),
 					new FindPuckState(m_robot, m_field, m_referee, m_drivePuck));
 }

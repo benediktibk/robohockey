@@ -470,10 +470,10 @@ layer/strategy/common/drivepuckmock.h
 layer/strategy/common/drivepuckmock.cpp
 resources/testfiles/lidar_moving_3_current.txt
 resources/testfiles/lidar_moving_3_previous.txt
-layer/strategy/common/waitstatetest.h
-layer/strategy/common/waitstate.h
-layer/strategy/common/waitstatetest.cpp
-layer/strategy/common/waitstate.cpp
+layer/strategy/common/waitcyclesstatetest.h
+layer/strategy/common/waitcyclesstate.h
+layer/strategy/common/waitcyclesstatetest.cpp
+layer/strategy/common/waitcyclesstate.cpp
 resources/testfiles/lidar_40.txt
 layer/autonomous/fieldpositionchecker.h
 common/pointdistancecomparetest.h
