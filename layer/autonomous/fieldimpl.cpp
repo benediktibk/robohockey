@@ -43,7 +43,7 @@ void FieldImpl::update()
 
 	if (!m_robot->isRotating())
 	{
-		updateWithLidarData(6.0);
+		updateWithLidarData(getRangeOfViewArea());
 		if (!m_robot->isMoving())
 			updateWithCameraData();
 	}
@@ -513,6 +513,41 @@ vector<RobotPosition> FieldImpl::getTargetsForWaitingPhase() const
 	return targetVector;
 }
 
+double FieldImpl::getRangeOfViewArea() const
+{
+	switch(m_fieldState)
+	{
+	case FieldStateCalibrated:
+		return 2;
+	case FieldStateUnknownPosition:
+		return 6;
+	}
+
+	assert(false);
+	return 0;
+}
+
+Angle FieldImpl::getAngleOfViewArea() const
+{
+	switch(m_fieldState)
+	{
+	case FieldStateCalibrated:
+		return Angle::getEighthRotation();
+	case FieldStateUnknownPosition:
+		return Angle::getQuarterRotation();
+	}
+
+	assert(false);
+	return 0;
+}
+
+Angle FieldImpl::calculateRelativeAngleOfObject(const Circle &circle) const
+{
+	const Point &ownPosition = m_position->getPosition();
+	const Angle &ownOrientation = m_position->getOrientation();
+	return Angle(ownPosition, circle.getCenter()) - ownOrientation;
+}
+
 void FieldImpl::updateWithLidarData(double range)
 {
 	const DataAnalysis::LidarObjects &lidarObjects =  m_lidar->getAllObjects(*m_position);
@@ -565,14 +600,7 @@ void FieldImpl::updateWithLidarData(double range)
 	for (vector<FieldObject>::iterator i = inVisibleArea.begin(); i != inVisibleArea.end(); ++i)
 	{
 		FieldObject &fieldObject = *i;
-		const Circle &circle = fieldObject.getCircle();
-		const Point &ownPosition = m_position->getPosition();
-		const double distance = ownPosition.distanceTo(circle.getCenter());
-		const Angle angle = Angle(ownPosition, circle.getCenter()) - m_position->getOrientation();
-
-		if (	distance < m_maximumDistanceToDeleteFieldObject &&
-				fabs(angle.getValueBetweenMinusPiAndPi()) < m_maximumAngleToDeleteFieldObject.getValueBetweenZeroAndTwoPi())
-			fieldObject.notSeen();
+		fieldObject.notSeen();
 	}
 
 	m_fieldObjects.insert(m_fieldObjects.end(), inVisibleArea.begin(), inVisibleArea.end());
@@ -867,6 +895,7 @@ vector<FieldObject> FieldImpl::moveAllFieldObjectsInVisibleAreaToTemporaryVector
 	visibleObjects.reserve(m_fieldObjects.size());
 	const RobotPosition &ownPosition = m_odometry->getCurrentPosition();
 	const Point &positionOnly = ownPosition.getPosition();
+	const Angle maximumAngle = getAngleOfViewArea();
 
 	for (vector<FieldObject>::const_iterator i = m_fieldObjects.begin(); i != m_fieldObjects.end(); ++i)
 	{
@@ -874,8 +903,10 @@ vector<FieldObject> FieldImpl::moveAllFieldObjectsInVisibleAreaToTemporaryVector
 		const Circle &circle = fieldObject.getCircle();
 		bool canBeSeen = m_lidar->canBeSeen(circle, ownPosition);
 		double distance = positionOnly.distanceTo(circle.getCenter());
+		Angle angle = calculateRelativeAngleOfObject(circle);
+		angle.abs();
 
-		if (canBeSeen && distance < range)
+		if (canBeSeen && distance < range && angle.getValueBetweenZeroAndTwoPi() < maximumAngle.getValueBetweenZeroAndTwoPi())
 			visibleObjects.push_back(fieldObject);
 		else
 			invisibleObjects.push_back(fieldObject);
