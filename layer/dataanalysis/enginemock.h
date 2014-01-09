@@ -18,7 +18,6 @@ namespace DataAnalysis
 
 		virtual void goToStraight(const Common::Point &position);
 		virtual void goToStraightSlowly(const Common::Point &targetPosition);
-		virtual void goToStraightThrough(const Common::Point &targetPosition);
 		virtual void goToStraightSlowlyBack(const Common::Point &targetPosition);
 		virtual void updateSpeedAndRotation();
 		virtual void stop();
@@ -36,7 +35,6 @@ namespace DataAnalysis
 
 		unsigned int getCallsToGoToStraight() const;
 		unsigned int getCallsToGoToStraightSlowly() const;
-		unsigned int getCallsToGoToStraightThrough() const;
 		unsigned int getCallsToGoToStraightSlowlyBack() const;
 		unsigned int getCallsToStop() const;
 		unsigned int getCallsToUpdateSpeedAndMagnitude() const;
@@ -54,7 +52,6 @@ namespace DataAnalysis
 	private:
 		unsigned int m_callsToGoToStraight;
 		unsigned int m_callsToGoToStraightSlowly;
-		unsigned int m_callsToGoToStraightThrough;
 		unsigned int m_callsToGoToStraightSlowlyBack;
 		unsigned int m_callsToStop;
 		unsigned int m_callsToUpdateSpeedAndMagnitude;

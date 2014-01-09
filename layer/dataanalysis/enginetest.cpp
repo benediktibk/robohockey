@@ -575,34 +575,6 @@ void EngineTest::goToStraightSlowly_twiceCalled_hardwareEngineGotNoCallToSlowDow
 	CPPUNIT_ASSERT(hardwareEngine.getLastMagnitude() > 0);
 }
 
-void EngineTest::goToStraightThrough_currentPositionDifferentToTarget_atLeastOneCallToSetSpeed()
-{
-	Hardware::EngineMock hardwareEngine;
-	Hardware::OdometryMock hardwareOdometry;
-	EngineImpl engine(hardwareEngine, hardwareOdometry);
-	hardwareOdometry.setCurrentPosition(RobotPosition(Point(1, 2), 0));
-
-	engine.goToStraightThrough(Point(4, 20));
-	engine.updateSpeedAndRotation();
-
-	CPPUNIT_ASSERT(hardwareEngine.getCallsToSetSpeed() > 0);
-}
-
-void EngineTest::goToStraightThrough_TargetAlmostReachedAfterSomeTime_lastMagnitudeIs0p5()
-{
-	Hardware::EngineMock hardwareEngine;
-	Hardware::OdometryMock hardwareOdometry;
-	EngineImpl engine(hardwareEngine, hardwareOdometry);
-	hardwareOdometry.setCurrentPosition(RobotPosition(Point(0, 0), 0));
-
-	engine.goToStraightThrough(Point(-1, 0));
-	engine.updateSpeedAndRotation();
-	hardwareOdometry.setCurrentPosition(RobotPosition(Point(-0.95, 0), M_PI));
-	engine.updateSpeedAndRotation();
-
-	CPPUNIT_ASSERT_DOUBLES_EQUAL(0.5, hardwareEngine.getLastMagnitude(), 0.025);
-}
-
 void EngineTest::goToStraightSlowlyBack_currentPositionDifferentToTarget_atLeastOneCallToSetSpeed()
 {
 	Hardware::EngineMock hardwareEngine;

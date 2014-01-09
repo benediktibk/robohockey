@@ -24,12 +24,6 @@ void EngineMock::goToStraightSlowly(const Point &target)
 	m_lastTarget = target;
 }
 
-void EngineMock::goToStraightThrough(const Point &target)
-{
-	++m_callsToGoToStraightThrough;
-	m_lastTarget = target;
-}
-
 void EngineMock::goToStraightSlowlyBack(const Point &target)
 {
 	++m_callsToGoToStraightSlowlyBack;
@@ -111,11 +105,6 @@ unsigned int EngineMock::getCallsToGoToStraightSlowly() const
 	return m_callsToGoToStraightSlowly;
 }
 
-unsigned int EngineMock::getCallsToGoToStraightThrough() const
-{
-	return m_callsToGoToStraightThrough;
-}
-
 unsigned int EngineMock::getCallsToGoToStraightSlowlyBack() const
 {
 	return m_callsToGoToStraightSlowlyBack;
@@ -175,7 +164,6 @@ void EngineMock::resetCounters()
 {
 	m_callsToGoToStraight = 0;
 	m_callsToGoToStraightSlowly = 0;
-	m_callsToGoToStraightThrough = 0;
 	m_callsToGoToStraightSlowlyBack = 0;
 	m_callsToStop = 0;
 	m_callsToUpdateSpeedAndMagnitude = 0;
