@@ -20,9 +20,9 @@ void CollectPuckStateTest::nextState_puckCollected_nextStateIsDriveToPositionSta
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	ColorDependentPuckTargetFetcherMock drivePuck;
+	ColorDependentPuckTargetFetcherMock puckTargetFetcher;
 	robot.setPuckCollected(true);
-	CollectPuckState collectPuckState(robot, field, referee, drivePuck);
+	CollectPuckState collectPuckState(robot, field, referee, puckTargetFetcher);
 	State *state;
 	state = collectPuckState.nextState();
 	DrivePuckToPositionState *stateCasted = dynamic_cast<DrivePuckToPositionState*>(state);
@@ -36,9 +36,9 @@ void CollectPuckStateTest::nextState_cantReachTarget_nextStatedIsDriveToCollectP
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	ColorDependentPuckTargetFetcherMock drivePuck;
+	ColorDependentPuckTargetFetcherMock puckTargetFetcher;
 	robot.setCantReachedTarget(true);
-	CollectPuckState collectPuckState(robot, field, referee, drivePuck);
+	CollectPuckState collectPuckState(robot, field, referee, puckTargetFetcher);
 
 	State *state = collectPuckState.nextState();
 
@@ -53,8 +53,8 @@ void CollectPuckStateTest::nextState_canReachTarget_nextStatedIs0()
 	FieldMock field;
 	RefereeMock referee;
 	robot.setPuckCollectable(true);
-	ColorDependentPuckTargetFetcherMock drivePuck;
-	CollectPuckState collectPuckState(robot, field, referee, drivePuck);
+	ColorDependentPuckTargetFetcherMock puckTargetFetcher;
+	CollectPuckState collectPuckState(robot, field, referee, puckTargetFetcher);
 	collectPuckState.update();
 
 	State *state = collectPuckState.nextState();
@@ -68,8 +68,8 @@ void CollectPuckStateTest::nextState_puckIsNotCollectable_nextStateIsDriveToColl
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	ColorDependentPuckTargetFetcherMock drivePuck;
-	CollectPuckState collectPuckState(robot, field, referee, drivePuck);
+	ColorDependentPuckTargetFetcherMock puckTargetFetcher;
+	CollectPuckState collectPuckState(robot, field, referee, puckTargetFetcher);
 	vector<FieldObject> fieldObjects;
 	fieldObjects.push_back(FieldObject(Circle(Point(1, 1), 0.1), FieldColorBlue, 1));
 	field.setObjectsWithColorOrderedByDistance(fieldObjects);
@@ -87,8 +87,8 @@ void CollectPuckStateTest::nextState_puckIsCollectableButNoTargetIsLeft_nextStat
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	ColorDependentPuckTargetFetcherMock drivePuck;
-	CollectPuckState collectPuckState(robot, field, referee, drivePuck);
+	ColorDependentPuckTargetFetcherMock puckTargetFetcher;
+	CollectPuckState collectPuckState(robot, field, referee, puckTargetFetcher);
 	robot.setPuckCollectable(true);
 	field.setObjectsWithColorOrderedByDistance(vector<FieldObject>());
 
@@ -104,8 +104,8 @@ void CollectPuckStateTest::update_targetLostButPuckCollectable_runThrough()
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	ColorDependentPuckTargetFetcherMock drivePuck;
-	CollectPuckState collectPuckState(robot, field, referee, drivePuck);
+	ColorDependentPuckTargetFetcherMock puckTargetFetcher;
+	CollectPuckState collectPuckState(robot, field, referee, puckTargetFetcher);
 	robot.setPuckCollectable(true);
 	field.setObjectsWithColorOrderedByDistance(vector<FieldObject>());
 
