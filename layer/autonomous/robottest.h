@@ -125,6 +125,11 @@ namespace Autonomous
 		CPPUNIT_TEST(isRotating_firstPhaseOfCollectingPuck_true);
 		CPPUNIT_TEST(isRotating_secondPhaseOfCollectingPuck_false);
 		CPPUNIT_TEST(isRotating_leavingPuck_false);
+		CPPUNIT_TEST(calculateFinalSpeedForGoingStraight_obtuseAngle_0);
+		CPPUNIT_TEST(calculateFinalSpeedForGoingStraight_quarterRotation_0);
+		CPPUNIT_TEST(calculateFinalSpeedForGoingStraight_zeroAngle_valueGreaterOrEqual05);
+		CPPUNIT_TEST(calculateFinalSpeedForGoingStraight_eighthRotation_notZeroAndSmallerThan05);
+		CPPUNIT_TEST(calculateFinalSpeedForGoingStraight_zeroAngleButOnlyShortDistanceLeft_smallerThan05);
 		CPPUNIT_TEST_SUITE_END();
 
 	public:
@@ -234,6 +239,11 @@ namespace Autonomous
 		void isRotating_firstPhaseOfCollectingPuck_true();
 		void isRotating_secondPhaseOfCollectingPuck_false();
 		void isRotating_leavingPuck_false();
+		void calculateFinalSpeedForGoingStraight_obtuseAngle_0();
+		void calculateFinalSpeedForGoingStraight_quarterRotation_0();
+		void calculateFinalSpeedForGoingStraight_zeroAngle_valueGreaterOrEqual05();
+		void calculateFinalSpeedForGoingStraight_eighthRotation_notZeroAndSmallerThan05();
+		void calculateFinalSpeedForGoingStraight_zeroAngleButOnlyShortDistanceLeft_smallerThan05();
 
 	private:
 		RouterMock *m_routerMock;

@@ -50,6 +50,7 @@ namespace DataAnalysis
 		void resetCounters();
 		const Common::Point& getLastTarget() const;
 		double getLastFinalSpeed() const;
+		void setSpeedForGoingStraight(double value);
 
 	private:
 		unsigned int m_callsToGoToStraight;
@@ -67,6 +68,7 @@ namespace DataAnalysis
 		bool m_isGoingStraight;
 		Common::Point m_lastTarget;
 		double m_lastFinalSpeed;
+		double m_speedForGoingStraight;
 	};
 }
 }

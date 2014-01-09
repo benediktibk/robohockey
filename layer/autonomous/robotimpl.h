@@ -56,6 +56,8 @@ namespace Autonomous
 		virtual bool isCollectingPuck() const;
 		virtual bool isRotating() const;
 
+		double calculateFinalSpeedForGoingStraight(const Common::Point &current, const Common::Point &next, const Common::Point &nextButOne) const;
+
 	private:
 		void clearRoute();
 		bool updateRouteForTarget(const FieldPositionChecker &field, const Common::RobotPosition &target,
