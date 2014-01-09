@@ -11,9 +11,10 @@ using namespace RoboHockey::Layer::Strategy::Common;
 using namespace RoboHockey::Layer::Strategy::DrivePuckStateMachine;
 using namespace RoboHockey::Layer::Autonomous;
 
-LeavePuckState::LeavePuckState(Robot &robot, Field &field, Referee &referee, const ColorDependentPuckTargetFetcher &drivePuck) :
+LeavePuckState::LeavePuckState(Robot &robot, Field &field, Referee &referee, const ColorDependentPuckTargetFetcher &drivePuck, bool shouldIncreaseGoalCount) :
 	State(robot, field, referee, true),
-	m_drivePuck(drivePuck)
+	m_drivePuck(drivePuck),
+	m_shouldIncreaseGoalCount(shouldIncreaseGoalCount)
 { }
 
 State* LeavePuckState::nextState()
@@ -37,4 +38,7 @@ std::string LeavePuckState::getName()
 void LeavePuckState::updateInternal()
 {
 	m_robot.leaveCollectedPuck();
+
+	if (m_shouldIncreaseGoalCount)
+		m_field.increaseNumberOfEstimatedGoals();
 }
