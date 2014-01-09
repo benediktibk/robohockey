@@ -97,6 +97,11 @@ bool EngineMock::isGoingStraight() const
 	return m_isGoingStraight;
 }
 
+double EngineMock::calculateSpeedForGoingStraight(double) const
+{
+	return 0;
+}
+
 unsigned int EngineMock::getCallsToGoToStraight() const
 {
 	return m_callsToGoToStraight;

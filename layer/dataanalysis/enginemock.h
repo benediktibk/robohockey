@@ -32,6 +32,7 @@ namespace DataAnalysis
 		virtual double getCurrentSpeed() const;
 		virtual void updateSensorData();
 		virtual bool isGoingStraight() const;
+		virtual double calculateSpeedForGoingStraight(double distance) const;
 
 		unsigned int getCallsToGoToStraight() const;
 		unsigned int getCallsToGoToStraightSlowly() const;

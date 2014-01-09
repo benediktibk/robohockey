@@ -145,6 +145,12 @@ bool EngineImpl::isGoingStraight() const
 	return m_engineState == EngineStateDriving;
 }
 
+double EngineImpl::calculateSpeedForGoingStraight(double distance) const
+{
+	double distanceAmplification = 0.7;
+	return distanceAmplification*distance;
+}
+
 const Point &EngineImpl::getStartPosition() const
 {
 	return m_startPosition;
@@ -234,9 +240,8 @@ void EngineImpl::driveAndTurn(const RobotPosition &currentPosition)
 	}
 
 	double orientationAmplification = 1;
-	double distanceAmplification = 0.7;
 	double rotationSpeed = orientationAmplification*orthogonalError;
-	double magnitude = distanceAmplification*forwardError + m_finalSpeed;
+	double magnitude = calculateSpeedForGoingStraight(forwardError) + m_finalSpeed;
 
 	switch (m_engineState)
 	{
