@@ -12,7 +12,7 @@ namespace Strategy
 {
 namespace Common
 {
-	class ColorDependendPuckTargetFetcher;
+	class ColorDependentPuckTargetFetcher;
 }
 
 namespace MainStateMachine
@@ -32,7 +32,7 @@ namespace MainStateMachine
 
 	private:
 		Common::StateMachine *m_drivePuckStateMachine;
-		Common::ColorDependendPuckTargetFetcher *m_drivePuck;
+		Common::ColorDependentPuckTargetFetcher *m_drivePuck;
 	};
 }
 }
