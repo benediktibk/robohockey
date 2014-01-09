@@ -183,17 +183,17 @@ list<RobotPosition> FieldImpl::getTargetsForScoringGoals() const
 
 	if (m_estimatedAchievedGoals == 0)
 	{
-		targets.push_front(RobotPosition( Point(5 - 5.0/8.0 - 0.14, 1.8), Angle() ));
-		targets.push_back(RobotPosition( Point(5 - 5.0/8.0 + 0.14, 1.8), Angle::getHalfRotation() ));
-		targets.push_back(RobotPosition( Point(5 - 5.0/8.0, 1.8 + 0.14), Angle::getThreeQuarterRotation()));
-		targets.push_back(RobotPosition( Point(5 - 5.0/8.0, 1.8 - 0.14), Angle::getQuarterRotation() ));
+		targets.push_front(RobotPosition( Point(5 - 5.0/8.0 - 0.14, 1.75), Angle() ));
+		targets.push_back(RobotPosition( Point(5 - 5.0/8.0 + 0.14, 1.75), Angle::getHalfRotation() ));
+		targets.push_back(RobotPosition( Point(5 - 5.0/8.0, 1.75 + 0.14), Angle::getThreeQuarterRotation()));
+		targets.push_back(RobotPosition( Point(5 - 5.0/8.0, 1.75 - 0.14), Angle::getQuarterRotation() ));
 	}
 	else if (m_estimatedAchievedGoals == 2)
 	{
-		targets.push_front(RobotPosition( Point(5 - 5.0/8.0 - 0.14, 1.2), Angle() ));
-		targets.push_back(RobotPosition( Point(5 - 5.0/8.0 + 0.14, 1.2), Angle::getHalfRotation() ));
-		targets.push_back(RobotPosition( Point(5 - 5.0/8.0, 1.2 + 0.14), Angle::getThreeQuarterRotation()));
-		targets.push_back(RobotPosition( Point(5 - 5.0/8.0, 1.2 - 0.14), Angle::getQuarterRotation() ));
+		targets.push_front(RobotPosition( Point(5 - 5.0/8.0 - 0.14, 1.25), Angle() ));
+		targets.push_back(RobotPosition( Point(5 - 5.0/8.0 + 0.14, 1.25), Angle::getHalfRotation() ));
+		targets.push_back(RobotPosition( Point(5 - 5.0/8.0, 1.25 + 0.14), Angle::getThreeQuarterRotation()));
+		targets.push_back(RobotPosition( Point(5 - 5.0/8.0, 1.25 - 0.14), Angle::getQuarterRotation() ));
 	}
 	else
 	{
