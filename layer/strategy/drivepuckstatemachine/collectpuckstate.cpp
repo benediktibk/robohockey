@@ -47,7 +47,7 @@ void CollectPuckState::updateInternal()
 		}
 		else
 		{
-			cerr << "#### NO TARGET PUCKS IN FIELD! ####" << endl;
+			cerr << "#### CollectPuckState::updateInternal()\n#### NO TARGET PUCKS IN FIELD!" << endl;
 			assert(false);
 		}
 
