@@ -20,9 +20,8 @@ CollectPuckState::CollectPuckState(Robot &robot, Field &field, Referee &referee,
 
 State* CollectPuckState::nextState()
 {
-	vector<FieldObject> targetPositions = m_field.getObjectsWithColorOrderdByDistance(
-				m_puckTargetFetcher.getColorOfTargetPucks(),
-				m_robot.getCurrentPosition().getPosition());
+	vector<FieldObject> targetPositions =
+			m_field.getObjectsWithColorOrderdByDistance(m_puckTargetFetcher.getColorOfTargetPucks());
 
 	if(m_robot.isPuckCollected())
 		return new DrivePuckToPositionState(m_robot, m_field, m_referee, m_puckTargetFetcher);
@@ -39,9 +38,8 @@ string CollectPuckState::getName()
 
 void CollectPuckState::updateInternal()
 {
-	vector<FieldObject> targetPositions = m_field.getObjectsWithColorOrderdByDistance(
-				m_puckTargetFetcher.getColorOfTargetPucks(),
-				m_robot.getCurrentPosition().getPosition());
+	vector<FieldObject> targetPositions =
+			m_field.getObjectsWithColorOrderdByDistance(m_puckTargetFetcher.getColorOfTargetPucks());
 
 	if(m_robot.isPuckCollectable() && !targetPositions.empty())
 		m_robot.collectPuckInFront(targetPositions.front().getCircle().getCenter());

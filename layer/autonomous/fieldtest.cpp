@@ -1572,10 +1572,11 @@ void FieldTest::getObjectsWithColorOrderedByDistance_oneObjectWithCorrectColorAn
 	camera.setAllObjects(cameraObjects);
 	lidar.setCanBeSeen(true);
 	lidar.setCanBeSeenPartly(true);
+	odometry.setCurrentPosition(RobotPosition(Point(0, 0), 0));
 	field.update();
 	field.update();
 
-	vector<FieldObject> fieldObjects = field.getObjectsWithColorOrderdByDistance(FieldColorYellow, Point(0, 0));
+	vector<FieldObject> fieldObjects = field.getObjectsWithColorOrderdByDistance(FieldColorYellow);
 
 	CPPUNIT_ASSERT_EQUAL((size_t)1, fieldObjects.size());
 }
@@ -1598,10 +1599,11 @@ void FieldTest::getObjectsWithColorOrderedByDistance_twoObjectsWithCorrectColorI
 	camera.setAllObjects(cameraObjects);
 	lidar.setCanBeSeen(true);
 	lidar.setCanBeSeenPartly(true);
+	odometry.setCurrentPosition(RobotPosition(ownPosition, 0));
 	field.update();
 	field.update();
 
-	vector<FieldObject> fieldObjects = field.getObjectsWithColorOrderdByDistance(FieldColorYellow, ownPosition);
+	vector<FieldObject> fieldObjects = field.getObjectsWithColorOrderdByDistance(FieldColorYellow);
 
 	CPPUNIT_ASSERT_EQUAL((size_t)2, fieldObjects.size());
 	const FieldObject &firstObject = fieldObjects.front();
@@ -1629,10 +1631,11 @@ void FieldTest::getObjectsWithColorOrderedByDistance_twoObjectsWithCorrectColorI
 	camera.setAllObjects(cameraObjects);
 	lidar.setCanBeSeen(true);
 	lidar.setCanBeSeenPartly(true);
+	odometry.setCurrentPosition(RobotPosition(ownPosition, 0));
 	field.update();
 	field.update();
 
-	vector<FieldObject> fieldObjects = field.getObjectsWithColorOrderdByDistance(FieldColorYellow, ownPosition);
+	vector<FieldObject> fieldObjects = field.getObjectsWithColorOrderdByDistance(FieldColorYellow);
 
 	CPPUNIT_ASSERT_EQUAL((size_t)2, fieldObjects.size());
 	const FieldObject &firstObject = fieldObjects.front();

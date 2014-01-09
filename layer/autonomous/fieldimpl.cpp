@@ -77,10 +77,10 @@ const vector<Circle> &FieldImpl::getAllHardObstacles() const
 	return m_hardObstacles;
 }
 
-vector<FieldObject> FieldImpl::getObjectsWithColorOrderdByDistance(FieldColor color, const Point &position) const
+vector<FieldObject> FieldImpl::getObjectsWithColorOrderdByDistance(FieldColor color) const
 {
 	vector<FieldObject> result = getObjectsWithColor(color);
-	FieldObjectDistanceCompare compare(position);
+	FieldObjectDistanceCompare compare(m_position->getPosition());
 	sort(result.begin(), result.end(), compare);
 	return result;
 }
@@ -256,7 +256,7 @@ list<RobotPosition> FieldImpl::getTargetsForSearchingPucks() const
 
 	RandomDecision decider(0.5);
 	double distanceFromRobotToObject = 0.50;
-	vector<FieldObject> interchangedFieldObjects = getObjectsWithColorOrderdByDistance(FieldColorUnknown, m_position->getPosition());
+	vector<FieldObject> interchangedFieldObjects = getObjectsWithColorOrderdByDistance(FieldColorUnknown);
 	random_shuffle(interchangedFieldObjects.begin(), interchangedFieldObjects.end());
 
 	for (vector<FieldObject>::const_iterator i = interchangedFieldObjects.begin(); i != interchangedFieldObjects.end(); ++i)
@@ -347,8 +347,7 @@ list<RobotPosition> FieldImpl::getTargetsForCollectingOnePuck(FieldColor puckCol
 	list<RobotPosition> listToArrange;
 	Rectangle sectorOfGoal(Point(4.16,1), Point(4.59, 2));
 	Rectangle sectorOfField(Point(0, 0), Point(5,3));
-	vector<FieldObject> targetObjects = getObjectsWithColorOrderdByDistance(puckColor, m_position->getPosition());
-
+	vector<FieldObject> targetObjects = getObjectsWithColorOrderdByDistance(puckColor);
 
 	for (vector<FieldObject>::const_iterator i =targetObjects.begin(); i != targetObjects.end(); ++i)
 	{
