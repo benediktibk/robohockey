@@ -51,7 +51,7 @@ namespace Autonomous
 		virtual bool calibratePosition();
 		virtual unsigned int getNumberOfAchievedGoals() const;
 		virtual unsigned int getNumberOfHiddenPucks() const;
-		virtual unsigned int getNumberOfEstimatedGoals() const;
+		virtual unsigned int getEstimatedNumberOfGoals() const;
 		virtual void increaseNumberOfEstimatedGoals();
 		virtual bool isPointInsideField(const Common::Point &point) const;
 		virtual bool isCalibrated() const;

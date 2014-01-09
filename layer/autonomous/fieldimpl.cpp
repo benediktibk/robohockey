@@ -119,7 +119,7 @@ unsigned int FieldImpl::getNumberOfHiddenPucks() const
 	return m_hiddenPucks;
 }
 
-unsigned int FieldImpl::getNumberOfEstimatedGoals() const
+unsigned int FieldImpl::getEstimatedNumberOfGoals() const
 {
 	return m_estimatedAchievedGoals;
 }

@@ -136,7 +136,7 @@ unsigned int FieldMock::getNumberOfHiddenPucks() const
 	return m_hiddenPucks;
 }
 
-unsigned int FieldMock::getNumberOfEstimatedGoals() const
+unsigned int FieldMock::getEstimatedNumberOfGoals() const
 {
 	return 0;
 }

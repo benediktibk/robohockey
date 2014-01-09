@@ -34,7 +34,7 @@ namespace Autonomous
 
 		virtual bool calibratePosition() = 0;
 		virtual unsigned int getNumberOfHiddenPucks() const = 0;
-		virtual unsigned int getNumberOfEstimatedGoals() const = 0;
+		virtual unsigned int getEstimatedNumberOfGoals() const = 0;
 		virtual void increaseNumberOfEstimatedGoals() = 0;
 		virtual bool isCalibrated() const = 0;
 		virtual Common::FieldColor getOwnTeamColor() const = 0;

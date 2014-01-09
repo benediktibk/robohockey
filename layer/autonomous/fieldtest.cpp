@@ -2320,7 +2320,7 @@ void FieldTest::getEstimatedNumberOfAchievedGoals_init_0()
 
 	field.update();
 
-	CPPUNIT_ASSERT_EQUAL((unsigned int) 0, field.getNumberOfEstimatedGoals());
+	CPPUNIT_ASSERT_EQUAL((unsigned int) 0, field.getEstimatedNumberOfGoals());
 }
 
 void FieldTest::getEstimatedNumberOfAchievedGoals_2goals_2()
@@ -2334,5 +2334,5 @@ void FieldTest::getEstimatedNumberOfAchievedGoals_2goals_2()
 	field.increaseNumberOfEstimatedGoals();
 	field.increaseNumberOfEstimatedGoals();
 
-	CPPUNIT_ASSERT_EQUAL((unsigned int) 2, field.getNumberOfEstimatedGoals());
+	CPPUNIT_ASSERT_EQUAL((unsigned int) 2, field.getEstimatedNumberOfGoals());
 }
