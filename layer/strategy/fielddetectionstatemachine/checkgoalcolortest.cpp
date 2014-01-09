@@ -73,5 +73,38 @@ void CheckGoalColorTest::nextState_successfulColorCheckGotResponse_calibrationFi
 	delete state;
 }
 
+void CheckGoalColorTest::nextState_unsuccessfulChecks_guessesAfter5Tries()
+{
+	RobotMock robot;
+	FieldMock field;
+	RefereeMock referee;
+	CheckGoalColor checkGoalColorState(robot, field, referee);
+
+	field.setTrueTeamColor(FieldColorUnknown);
+	checkGoalColorState.update();
+
+	State *state;
+	state = checkGoalColorState.nextState();
+	CalibrationFinished *stateCasted = dynamic_cast<CalibrationFinished*>(state);
+	CPPUNIT_ASSERT(stateCasted == 0);
+
+	checkGoalColorState.update();
+	checkGoalColorState.update();
+	checkGoalColorState.update();
+	checkGoalColorState.update();
+
+	state = checkGoalColorState.nextState();
+	stateCasted = dynamic_cast<CalibrationFinished*>(state);
+	CPPUNIT_ASSERT(stateCasted == 0);
+
+	referee.setTrueColorOfTeam(FieldColorBlue);
+	checkGoalColorState.update();
+
+	state = checkGoalColorState.nextState();
+	stateCasted = dynamic_cast<CalibrationFinished*>(state);
+	CPPUNIT_ASSERT(stateCasted != 0);
+	delete state;
+}
+
 
 
