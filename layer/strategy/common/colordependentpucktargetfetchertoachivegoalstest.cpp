@@ -13,9 +13,9 @@ void ColorDependentPuckTargetFetcherToAchiveGoalsTest::getColorOfTargetPucks_own
 {
 	FieldMock field;
 	field.setTrueTeamColor(FieldColorYellow);
-	ColorDependentPuckTargetFetcherToAchiveGoals drivePuck(field);
+	ColorDependentPuckTargetFetcherToAchiveGoals puckTargetFetcher(field);
 
-	CPPUNIT_ASSERT_EQUAL(FieldColorYellow, drivePuck.getColorOfTargetPucks());
+	CPPUNIT_ASSERT_EQUAL(FieldColorYellow, puckTargetFetcher.getColorOfTargetPucks());
 }
 
 void ColorDependentPuckTargetFetcherToAchiveGoalsTest::getNumberOfKnownPucksNotInTarget_oneKnownPuck_resultIs1()
@@ -24,9 +24,9 @@ void ColorDependentPuckTargetFetcherToAchiveGoalsTest::getNumberOfKnownPucksNotI
 	vector<FieldObject> objects;
 	objects.push_back(FieldObject(Circle(Point(1,1), 0.2), FieldColorUnknown, 2));
 	field.setFieldObjects(objects);
-	ColorDependentPuckTargetFetcherToAchiveGoals drivePuck(field);
+	ColorDependentPuckTargetFetcherToAchiveGoals puckTargetFetcher(field);
 
-	CPPUNIT_ASSERT_EQUAL((unsigned int)1, drivePuck.getNumberOfKnownPucksNotInTarget());
+	CPPUNIT_ASSERT_EQUAL((unsigned int)1, puckTargetFetcher.getNumberOfKnownPucksNotInTarget());
 }
 
 void ColorDependentPuckTargetFetcherToAchiveGoalsTest::getNumberOfKnownPucksNotInTarget_threePucksOneInGoal_resultIs2()
@@ -38,9 +38,9 @@ void ColorDependentPuckTargetFetcherToAchiveGoalsTest::getNumberOfKnownPucksNotI
 	objects.push_back(FieldObject(Circle(Point(2,1), 0.2), FieldColorUnknown, 2));
 	field.setFieldObjects(objects);
 	field.setAchievedGoals(1);
-	ColorDependentPuckTargetFetcherToAchiveGoals drivePuck(field);
+	ColorDependentPuckTargetFetcherToAchiveGoals puckTargetFetcher(field);
 
-	CPPUNIT_ASSERT_EQUAL((unsigned int)2, drivePuck.getNumberOfKnownPucksNotInTarget());
+	CPPUNIT_ASSERT_EQUAL((unsigned int)2, puckTargetFetcher.getNumberOfKnownPucksNotInTarget());
 }
 
 

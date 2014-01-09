@@ -31,8 +31,8 @@ namespace MainStateMachine
 		virtual void updateInternal();
 
 	private:
-		Common::StateMachine *m_drivePuckStateMachine;
-		Common::ColorDependentPuckTargetFetcher *m_drivePuck;
+		Common::StateMachine *m_puckTargetFetcherStateMachine;
+		Common::ColorDependentPuckTargetFetcher *m_puckTargetFetcher;
 	};
 }
 }

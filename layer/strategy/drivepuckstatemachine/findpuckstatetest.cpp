@@ -17,9 +17,9 @@ void FindPuckStateTest::nextState_targetReached_nextStateIsDriveToCollectPuck()
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	ColorDependentPuckTargetFetcherMock drivePuck;
+	ColorDependentPuckTargetFetcherMock puckTargetFetcher;
 	robot.setReachedTarget(true);
-	FindPuckState findPuckState(robot, field, referee, drivePuck);
+	FindPuckState findPuckState(robot, field, referee, puckTargetFetcher);
 	State *driveToState = findPuckState.nextState();
 	State *waitState;
 	waitState = driveToState->nextState();
@@ -48,9 +48,9 @@ void FindPuckStateTest::nextState_cantReachTarget_nextStateIsFindPuckState()
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	ColorDependentPuckTargetFetcherMock drivePuck;
+	ColorDependentPuckTargetFetcherMock puckTargetFetcher;
 	robot.setCantReachedTarget(true);
-	FindPuckState findPuckState(robot, field, referee, drivePuck);
+	FindPuckState findPuckState(robot, field, referee, puckTargetFetcher);
 	State *driveToState;
 	driveToState = findPuckState.nextState();
 	State *state;
@@ -67,8 +67,8 @@ void FindPuckStateTest::nextState_canReachTarget_nextStateIs0()
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	ColorDependentPuckTargetFetcherMock drivePuck;
-	FindPuckState findPuckState(robot, field, referee, drivePuck);
+	ColorDependentPuckTargetFetcherMock puckTargetFetcher;
+	FindPuckState findPuckState(robot, field, referee, puckTargetFetcher);
 	State *driveToState;
 	driveToState = findPuckState.nextState();
 	State *state;
