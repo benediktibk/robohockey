@@ -369,8 +369,6 @@ list<RobotPosition> FieldImpl::getTargetsForCollectingOnePuck(FieldColor puckCol
 
 list<RobotPosition> FieldImpl::getTargetsForCollectingOnePuckOrSearchungForColorOfPuck(const Common::Point &position) const
 {
-	RandomDecision decider(0.5);
-	list<RobotPosition> targetsToCollect;
 	list<RobotPosition> listToArrange;
 	Rectangle ownFieldSector(Point(0, 0), Point(3.7, 3));
 	Rectangle sectorAboveUpperLeftHandCornerOfGoal(Point(3.7, 2), Point(4.16, 3));
@@ -492,12 +490,15 @@ list<RobotPosition> FieldImpl::getTargetsForCollectingOnePuckOrSearchungForColor
 			listToArrange.push_back(RobotPosition( point8, angle8));
 			listToArrange.push_back(RobotPosition( point9, angle9));
 
-			if(decider.decide())
-				targetsToCollect.splice(targetsToCollect.begin(), listToArrange);
-			else
-				targetsToCollect.splice((targetsToCollect.end()), listToArrange);
+			return listToArrange;
+}
 
-	return targetsToCollect;
+vector<FieldObject> FieldImpl::random(vector<FieldObject> &objects)
+{
+	vector<FieldObject> randomObjects = objects;
+	random_shuffle(randomObjects.begin(), randomObjects.end());
+	return randomObjects;
+
 }
 
 void FieldImpl::setTrueTeamColor(FieldColor trueTeamColor)
