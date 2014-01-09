@@ -29,6 +29,7 @@ namespace Common
 		void update();
 		const State& getCurrentState() const;
 		std::string getNameOfCurrentState() const;
+		bool allowLogMessages() const;
 
 	private:
 		State *m_currentState;

@@ -7,6 +7,7 @@
 #include "layer/autonomous/robot.h"
 #include "common/console.h"
 #include <iostream>
+#include <sstream>
 
 using namespace std;
 using namespace RoboHockey;
@@ -52,14 +53,17 @@ bool GameAutomatic::keepRunning() const
 void GameAutomatic::executeRobotControl()
 {
 	m_stateMachine->update();
+	setLogMessagesEnabled(m_stateMachine->allowLogMessages());
 
 	if(m_oldString != m_stateMachine->getNameOfCurrentState())
 	{
 		m_oldString = m_stateMachine->getNameOfCurrentState();
-		cout << "current state: " << m_stateMachine->getNameOfCurrentState() << endl;
+		stringstream stream;
+		stream << "current state: " << m_stateMachine->getNameOfCurrentState();
+		logToConsole(stream.str());
 	}
 
-	if (guiEnabled())
+	if (guiEnabled() && logMessagesEnabled())
 	{
 		Layer::Autonomous::Robot &robot = getRobot();
 		Layer::Autonomous::Field &field = getField();

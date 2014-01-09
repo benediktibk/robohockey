@@ -20,6 +20,7 @@ namespace MainStateMachine
 
 		virtual State* nextState();
 		virtual std::string getName();
+		virtual bool allowLogMessages();
 
 	protected:
 		virtual void updateInternal();

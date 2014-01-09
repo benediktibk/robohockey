@@ -11,6 +11,7 @@
 #include <QtCore/QTimer>
 #include <iostream>
 #include <iomanip>
+#include <sstream>
 
 using namespace std;
 using namespace RoboHockey;
@@ -30,7 +31,8 @@ Game::Game(int argc, char **argv) :
 	m_blueObjectCount(0),
 	m_yellowObjectCount(0),
 	m_greenObjectCount(0),
-	m_stackTracePrinter(new SegFaultStackTracePrinter())
+	m_stackTracePrinter(new SegFaultStackTracePrinter()),
+	m_consoleMessagesEnabled(false)
 {
 
 	string playerServer = "localhost";
@@ -99,6 +101,22 @@ bool Game::guiEnabled()
 	return m_enablegui;
 }
 
+void Game::setLogMessagesEnabled(bool enable)
+{
+	m_consoleMessagesEnabled = enable;
+}
+
+bool Game::logMessagesEnabled()
+{
+	return m_consoleMessagesEnabled;
+}
+
+void Game::logToConsole(const string &message)
+{
+	if (logMessagesEnabled())
+		cout << message << endl;
+}
+
 void Game::execute()
 {
 	WatchImpl watch;
@@ -154,19 +172,25 @@ void Game::execute()
 
 	if (blueObjectCountNew != m_blueObjectCount)
 	{
-		cout << blueObjectCountNew << " blue objects are known" << endl;
+		stringstream stream;
+		stream << blueObjectCountNew << " blue objects are known";
+		logToConsole(stream.str());
 		m_blueObjectCount = blueObjectCountNew;
 	}
 
 	if (yellowObjectCountNew != m_yellowObjectCount)
 	{
-		cout << yellowObjectCountNew << " yellow objects are known" << endl;
+		stringstream stream;
+		stream << yellowObjectCountNew << " yellow objects are known" << endl;
+		logToConsole(stream.str());
 		m_yellowObjectCount = yellowObjectCountNew;
 	}
 
 	if (greenObjectCountNew != m_greenObjectCount)
 	{
-		cout << greenObjectCountNew << " green objects are known" << endl;
+		stringstream stream;
+		stream << greenObjectCountNew << " green objects are known" << endl;
+		logToConsole(stream.str());
 		m_greenObjectCount = greenObjectCountNew;
 	}
 

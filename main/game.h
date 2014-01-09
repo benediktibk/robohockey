@@ -43,6 +43,9 @@ namespace Main
 
 		virtual bool keepRunning() const = 0;
 		bool guiEnabled();
+		void setLogMessagesEnabled(bool enable);
+		bool logMessagesEnabled();
+		void logToConsole(const std::string &message);
 
 	private slots:
 		void execute();
@@ -70,6 +73,7 @@ namespace Main
 		unsigned int m_yellowObjectCount;
 		unsigned int m_greenObjectCount;
 		Common::SegFaultStackTracePrinter *m_stackTracePrinter;
+		bool m_consoleMessagesEnabled;
 	};
 }
 }

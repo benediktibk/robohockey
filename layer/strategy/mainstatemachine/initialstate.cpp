@@ -5,6 +5,7 @@
 using namespace RoboHockey::Layer::Strategy::Common;
 using namespace RoboHockey::Layer::Strategy::MainStateMachine;
 using namespace RoboHockey::Layer::Autonomous;
+using namespace std;
 
 InitialState::InitialState(Robot &robot, Field &field, Referee &referee) :
 	State(robot, field, referee, false)
@@ -18,9 +19,14 @@ State* InitialState::nextState()
 		return 0;
 }
 
-std::string InitialState::getName()
+string InitialState::getName()
 {
 	return "Initial";
+}
+
+bool InitialState::allowLogMessages()
+{
+	return false;
 }
 
 void InitialState::updateInternal()

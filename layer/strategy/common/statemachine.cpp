@@ -4,6 +4,7 @@
 #include "layer/strategy/common/referee.h"
 #include <assert.h>
 
+using namespace std;
 using namespace RoboHockey::Layer::Strategy::Common;
 
 StateMachine::StateMachine(State *initialState, Autonomous::Robot &robot, Autonomous::Field &field, Referee &referee) :
@@ -39,7 +40,12 @@ const State &StateMachine::getCurrentState() const
 	return *m_currentState;
 }
 
-std::string StateMachine::getNameOfCurrentState() const
+string StateMachine::getNameOfCurrentState() const
 {
 	return m_currentState->getName();
+}
+
+bool StateMachine::allowLogMessages() const
+{
+	return m_currentState->allowLogMessages();
 }

@@ -7,6 +7,7 @@
 using namespace RoboHockey::Layer::Strategy::Common;
 using namespace RoboHockey::Layer::Strategy::MainStateMachine;
 using namespace RoboHockey::Layer::Autonomous;
+using namespace std;
 
 Pause::Pause(Robot &robot, Field &field, Referee &referee) :
 	State(robot, field, referee, true)
@@ -24,9 +25,14 @@ State* Pause::nextState()
 		return 0;
 }
 
-std::string Pause::getName()
+string Pause::getName()
 {
 	return "Pause";
+}
+
+bool Pause::allowLogMessages()
+{
+	return false;
 }
 
 void Pause::updateInternal()
