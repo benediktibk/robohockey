@@ -130,8 +130,9 @@ namespace Autonomous
 		CPPUNIT_TEST(calculateFinalSpeedForGoingStraight_obtuseAngle_0);
 		CPPUNIT_TEST(calculateFinalSpeedForGoingStraight_quarterRotation_0);
 		CPPUNIT_TEST(calculateFinalSpeedForGoingStraight_zeroAngle_valueGreaterOrEqual05);
-		CPPUNIT_TEST(calculateFinalSpeedForGoingStraight_eighthRotation_notZeroAndSmallerThan05);
+		CPPUNIT_TEST(calculateFinalSpeedForGoingStraight_eighthRotation_0);
 		CPPUNIT_TEST(calculateFinalSpeedForGoingStraight_zeroAngleButOnlyShortDistanceLeft_smallerThan05);
+		CPPUNIT_TEST(calculateFinalSpeedForGoingStraight_smallAngle_betweenZeroAnd05);
 		CPPUNIT_TEST_SUITE_END();
 
 	public:
@@ -246,8 +247,9 @@ namespace Autonomous
 		void calculateFinalSpeedForGoingStraight_obtuseAngle_0();
 		void calculateFinalSpeedForGoingStraight_quarterRotation_0();
 		void calculateFinalSpeedForGoingStraight_zeroAngle_valueGreaterOrEqual05();
-		void calculateFinalSpeedForGoingStraight_eighthRotation_notZeroAndSmallerThan05();
+		void calculateFinalSpeedForGoingStraight_eighthRotation_0();
 		void calculateFinalSpeedForGoingStraight_zeroAngleButOnlyShortDistanceLeft_smallerThan05();
+		void calculateFinalSpeedForGoingStraight_smallAngle_betweenZeroAnd05();
 
 	private:
 		RouterMock *m_routerMock;

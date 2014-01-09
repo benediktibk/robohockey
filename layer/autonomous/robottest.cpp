@@ -2193,7 +2193,7 @@ void RobotTest::calculateFinalSpeedForGoingStraight_zeroAngle_valueGreaterOrEqua
 	CPPUNIT_ASSERT(finalSpeed >= 0.5);
 }
 
-void RobotTest::calculateFinalSpeedForGoingStraight_eighthRotation_notZeroAndSmallerThan05()
+void RobotTest::calculateFinalSpeedForGoingStraight_eighthRotation_0()
 {
 	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
 	DataAnalysis::EngineMock &engine = dataAnalyser->getEngineMock();
@@ -2202,8 +2202,7 @@ void RobotTest::calculateFinalSpeedForGoingStraight_eighthRotation_notZeroAndSma
 
 	double finalSpeed = robot.calculateFinalSpeedForGoingStraight(Point(0, 0), Point(-1, 0), Point(-2, -1));
 
-	CPPUNIT_ASSERT(finalSpeed < 0.4);
-	CPPUNIT_ASSERT(finalSpeed > 0.1);
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(0, finalSpeed, 0.0001);
 }
 
 void RobotTest::calculateFinalSpeedForGoingStraight_zeroAngleButOnlyShortDistanceLeft_smallerThan05()
@@ -2216,4 +2215,17 @@ void RobotTest::calculateFinalSpeedForGoingStraight_zeroAngleButOnlyShortDistanc
 	double finalSpeed = robot.calculateFinalSpeedForGoingStraight(Point(0, 0), Point(1, 1), Point(1.1, 1.1));
 
 	CPPUNIT_ASSERT_DOUBLES_EQUAL(0.1, finalSpeed, 0.0001);
+}
+
+void RobotTest::calculateFinalSpeedForGoingStraight_smallAngle_betweenZeroAnd05()
+{
+	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
+	DataAnalysis::EngineMock &engine = dataAnalyser->getEngineMock();
+	RobotImpl robot(dataAnalyser, m_routerMock, m_watchMock);
+	engine.setSpeedForGoingStraight(0.1);
+
+	double finalSpeed = robot.calculateFinalSpeedForGoingStraight(Point(0, 0), Point(1, 1), Point(2, 2.1));
+
+	CPPUNIT_ASSERT(finalSpeed > 0);
+	CPPUNIT_ASSERT(finalSpeed < 0.5);
 }

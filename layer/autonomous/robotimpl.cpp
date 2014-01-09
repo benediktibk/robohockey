@@ -548,12 +548,13 @@ double RobotImpl::calculateFinalSpeedForGoingStraight(
 {
 	Angle angle = Angle::getHalfRotation() - Angle(next, current, nextButOne);
 	angle.abs();
+	const Angle maximumAngle = Angle::getEighthRotation();
 
-	if (angle.isObtuse())
+	if (angle.getValueBetweenZeroAndTwoPi() > maximumAngle.getValueBetweenZeroAndTwoPi())
 		return 0;
 
-	Angle angleDifference = Angle::getQuarterRotation() - angle;
-	double speedFromAngle = angleDifference.getValueBetweenZeroAndTwoPi()/3;
+	Angle angleDifference = maximumAngle - angle;
+	double speedFromAngle = angleDifference.getValueBetweenZeroAndTwoPi()*0.7;
 	double distanceLeft = next.distanceTo(nextButOne);
 	const DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
 	double speedFromDistance = engine.calculateSpeedForGoingStraight(distanceLeft);
