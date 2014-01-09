@@ -62,14 +62,12 @@ void RobotImpl::goTo(const list<RobotPosition> &possibleTargets)
 	m_possibleTargets = possibleTargets;
 	m_currentTarget = m_possibleTargets.front();
 	m_carryingPuck = isPuckCollected();
-	m_watchDog->getTimeAndRestart();
 }
 
 void RobotImpl::turnTo(const Point &position)
 {
 	changeIntoState(RobotStateTurnTo);
 	m_currentTarget.setPosition(position);
-	m_watchDog->getTimeAndRestart();
 }
 
 bool RobotImpl::stuckAtObstacle()
@@ -327,6 +325,7 @@ void RobotImpl::changeIntoState(RobotState state)
 	m_state = state;
 	m_stateChanged = true;
 	m_rotationReached = false;
+	m_watchDog->getTimeAndRestart();
 }
 
 bool RobotImpl::isCurrentTargetPuckCollectable() const
@@ -343,7 +342,7 @@ bool RobotImpl::isCurrentTargetPuckCollectable() const
 
 bool RobotImpl::checkTimeout()
 {
-	if (m_watch->getTime() > m_timeout)
+	if (m_watchDog->getTime() > m_timeout)
 	{
 		stop();
 		m_cantReachTarget = true;
@@ -421,7 +420,6 @@ void RobotImpl::collectPuckInFront(const Point &puckPosition)
 	changeIntoState(RobotStateCollectingPuck);
 	m_currentTarget.setPosition(puckPosition);
 	m_startPosition = getCurrentPosition().getPosition();
-	m_watchDog->getTimeAndRestart();
 }
 
 void RobotImpl::updatePuckPosition(const Point &puckPosition)
@@ -434,7 +432,6 @@ void RobotImpl::updatePuckPosition(const Point &puckPosition)
 void RobotImpl::leaveCollectedPuck()
 {
 	changeIntoState(RobotStateLeavingPuck);
-	m_watchDog->getTimeAndRestart();
 }
 
 bool RobotImpl::isMoving() const
@@ -445,7 +442,6 @@ bool RobotImpl::isMoving() const
 void RobotImpl::turnAround()
 {
 	changeIntoState(RobotStateTurnAround);
-	m_watchDog->getTimeAndRestart();
 }
 
 RobotPosition RobotImpl::getCurrentPosition() const

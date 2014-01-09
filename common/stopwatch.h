@@ -13,6 +13,7 @@ namespace Common
 		StopWatch(const Watch &watch);
 
 		double getTimeAndRestart();
+		double getTime() const;
 
 	private:
 		const Watch &m_watch;

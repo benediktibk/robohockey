@@ -16,3 +16,9 @@ double StopWatch::getTimeAndRestart()
 	return timeDifference;
 }
 
+double StopWatch::getTime() const
+{
+	double time = m_watch.getTime();
+	return time - m_startTime;
+}
+
