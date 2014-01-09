@@ -133,7 +133,7 @@ void RobotImpl::updateEngineForDrivingStraightPart(const Field &field)
 			{
 				changeIntoState(RobotStateDrivingStraightPart);
 				m_finalSpeed = calculateNextFinalSpeedForGoingStraight();
-				engine.goToStraight(m_currentRoute->getFirstPoint(), m_finalSpeed);
+				engine.goToStraight(m_currentRoute->getSecondPoint(), m_finalSpeed);
 			}
 		}
 	}

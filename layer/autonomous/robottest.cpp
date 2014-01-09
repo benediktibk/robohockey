@@ -840,11 +840,43 @@ void RobotTest::goTo_firstPointReachedAndSmallTurnNecessary_noCallsToTurnToTarge
 	robot.updateSensorData();
 	robot.updateActuators(field);
 	engine.setReachedTarget(false);
-	odometry.setCurrentPosition(RobotPosition(Point(4.9, 0), Angle(0)));
+	odometry.setCurrentPosition(RobotPosition(Point(5, 0), Angle(0)));
 	robot.updateSensorData();
 	robot.updateActuators(field);
 
 	CPPUNIT_ASSERT_EQUAL((unsigned int)0, engine.getCallsToTurnToTarget());
+}
+
+void RobotTest::goTo_firstPointReachedAndSmallTurnNecessary_engineGotCorrectNextTarget()
+{
+	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
+	DataAnalysis::Odometry &odometry = dataAnalyser->getOdometry();
+	DataAnalysis::EngineMock &engine = dataAnalyser->getEngineMock();
+	RobotImpl robot(dataAnalyser, m_routerMock, m_watchMock);
+	FieldMock field;
+	m_routerMock->setRoute(Point(0, 0), Point(5, 0), Point(7, 0.1));
+	m_targets.push_back(RobotPosition(Point(7, 0.1), Angle(0)));
+
+	engine.setReachedTarget(false);
+	engine.setSpeedForGoingStraight(1);
+	odometry.setCurrentPosition(RobotPosition(Point(0, 0), Angle(0)));
+	robot.updateSensorData();
+	robot.goTo(m_targets);
+	robot.updateActuators(field);
+	engine.setReachedTarget(true);
+	engine.resetCounters();
+	robot.updateSensorData();
+	robot.updateActuators(field);
+	engine.setReachedTarget(true);
+	engine.resetCounters();
+	odometry.setCurrentPosition(RobotPosition(Point(5, 0), Angle(0)));
+	robot.updateSensorData();
+	robot.updateActuators(field);
+
+	CPPUNIT_ASSERT_EQUAL((unsigned int)1, engine.getCallsToGoToStraight());
+	const Point &lastTarget = engine.getLastTarget();
+	Compare compare(0.001);
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(7, 0.1), lastTarget));
 }
 
 void RobotTest::stuckAtObstacle_tryingToTackleObstacle_true()
