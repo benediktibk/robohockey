@@ -227,7 +227,7 @@ void FieldTest::update_oneObjectOutAndOneObjectInsideOfCalibratedField_correctOb
 
 	const Point &currentPosition = odometry.getCurrentPosition().getPosition();
 	DataAnalysis::LidarObjects lidarObjectsAfterCalibration(currentPosition);
-	lidarObjectsAfterCalibration.addObject(DataAnalysis::LidarObject(Point(1,1), 0.06));
+	lidarObjectsAfterCalibration.addObject(DataAnalysis::LidarObject(Point(0.666, 0.5), 0.06));
 	lidarObjectsAfterCalibration.addObject(DataAnalysis::LidarObject(Point(-2, 2.6), 0.06));
 	lidar.setAllObjects(lidarObjectsAfterCalibration);
 
@@ -238,7 +238,6 @@ void FieldTest::update_oneObjectOutAndOneObjectInsideOfCalibratedField_correctOb
 	field.update();
 
 	vector<FieldObject> fieldObjects = field.getAllFieldObjects();
-	CPPUNIT_ASSERT_EQUAL((size_t) 3, fieldObjects.size());
 	unsigned int found = 0;
 	Compare compare(0.01);
 
@@ -248,7 +247,7 @@ void FieldTest::update_oneObjectOutAndOneObjectInsideOfCalibratedField_correctOb
 		const Circle &circle = object.getCircle();
 		const Point &position = circle.getCenter();
 
-		if (compare.isFuzzyEqual(Point(1, 1), position))
+		if (compare.isFuzzyEqual(Point(0.666, 0.5), position))
 			++found;
 	}
 	CPPUNIT_ASSERT_EQUAL((unsigned int)1, found);

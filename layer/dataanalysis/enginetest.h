@@ -22,6 +22,7 @@ namespace DataAnalysis
 		CPPUNIT_TEST(goToStraight_orientationReachedAfterSomeTime_lastMagnitudeIsNotZero);
 		CPPUNIT_TEST(goToStraight_stillMoving_lastSpeedsAreZero);
 		CPPUNIT_TEST(goToStraight_movingFinishedFromPreviousMovement_lastSpeedIsNotZero);
+		CPPUNIT_TEST(goToStraight_droveToFar_lastRotationAndMagnitudeIsZero);
 		CPPUNIT_TEST(stop_movingSomewhere_lastMagnitudeIsZero);
 		CPPUNIT_TEST(stop_movingSomewhere_lastRotationIsZero);
 		CPPUNIT_TEST(turnAround_empty_lastMagnitudeIsZero);
@@ -71,6 +72,7 @@ namespace DataAnalysis
 		void goToStraight_orientationReachedAfterSomeTime_lastMagnitudeIsNotZero();
 		void goToStraight_stillMoving_lastSpeedsAreZero();
 		void goToStraight_movingFinishedFromPreviousMovement_lastSpeedIsNotZero();
+		void goToStraight_droveToFar_lastRotationAndMagnitudeIsZero();
 		void stop_movingSomewhere_lastMagnitudeIsZero();
 		void stop_movingSomewhere_lastRotationIsZero();
 		void turnAround_empty_lastMagnitudeIsZero();

@@ -67,6 +67,10 @@ namespace Autonomous
 		virtual void transformFieldToNewOrigin(const Common::RobotPosition newOrigin);
 		virtual std::vector<Common::RobotPosition> getTargetsForWaitingPhase() const;
 
+		double getRangeOfViewArea() const;
+		Common::Angle getAngleOfViewArea() const;
+		Common::Angle calculateRelativeAngleOfObject(const Common::Circle &circle) const;
+
 	private:
 		void updateWithLidarData(double range);
 		void tryToMergeDoubledFieldObjects();

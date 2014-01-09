@@ -12,15 +12,14 @@ using namespace RoboHockey::Layer::Autonomous;
 
 CollectPuckState::CollectPuckState(Robot &robot, Field &field, Referee &referee, const ColorDependentPuckTargetFetcher &drivePuck) :
 	State(robot, field, referee, true),
-	m_drivePuck(drivePuck),
-	m_isPuckNotCollectable(true)
+	m_drivePuck(drivePuck)
 { }
 
 State* CollectPuckState::nextState()
 {
 	if(m_robot.isPuckCollected())
 		return new DrivePuckToPositionState(m_robot, m_field, m_referee, m_drivePuck);
-	else if(m_robot.cantReachTarget() || m_isPuckNotCollectable)
+	else if(m_robot.cantReachTarget() || !m_robot.isPuckCollectable())
 		return new DriveToCollectPuckState(m_robot, m_field, m_referee, m_drivePuck);
 	else
 		return 0;
@@ -35,7 +34,6 @@ void CollectPuckState::updateInternal()
 {
 	if(m_robot.isPuckCollectable())
 	{
-		m_isPuckNotCollectable = false;
 		m_robot.collectPuckInFront(
 					m_field.getObjectsWithColorOrderdByDistance(
 					m_drivePuck.getColorOfTargetPucks(),
