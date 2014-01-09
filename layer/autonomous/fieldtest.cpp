@@ -2333,6 +2333,7 @@ void FieldTest::getNumberOfObjectsWithColor_2BlueObjects_2()
 	DataAnalysis::OdometryMock odometry;
 	DataAnalysis::LidarMock lidar;
 	DataAnalysis::CameraMock camera;
+
 	Autonomous::RobotMock autonomousRobot;
 	FieldImpl field(odometry, lidar, camera, autonomousRobot);
 
@@ -2360,4 +2361,31 @@ void FieldTest::getNumberOfObjectsWithColor_2BlueObjects_2()
 	CPPUNIT_ASSERT_EQUAL((unsigned int)1, field.getNumberOfObjectsWithColor(FieldColorYellow));
 	CPPUNIT_ASSERT_EQUAL((unsigned int)1, field.getNumberOfObjectsWithColor(FieldColorGreen));
 	CPPUNIT_ASSERT_EQUAL((unsigned int)0, field.getNumberOfObjectsWithColor(FieldColorUnknown));
+}
+
+void FieldTest::getEstimatedNumberOfAchievedGoals_init_0()
+{
+	DataAnalysis::OdometryMock odometry;
+	DataAnalysis::LidarMock lidar;
+	DataAnalysis::CameraMock camera;
+	Autonomous::RobotMock autonomousRobot;
+	FieldImpl field(odometry, lidar, camera, autonomousRobot);
+
+	field.update();
+
+	CPPUNIT_ASSERT_EQUAL((unsigned int) 0, field.getEstimatedNumberOfGoals());
+}
+
+void FieldTest::getEstimatedNumberOfAchievedGoals_2goals_2()
+{
+	DataAnalysis::OdometryMock odometry;
+	DataAnalysis::LidarMock lidar;
+	DataAnalysis::CameraMock camera;
+	Autonomous::RobotMock autonomousRobot;
+	FieldImpl field(odometry, lidar, camera, autonomousRobot);
+
+	field.increaseNumberOfEstimatedGoals();
+	field.increaseNumberOfEstimatedGoals();
+
+	CPPUNIT_ASSERT_EQUAL((unsigned int) 2, field.getEstimatedNumberOfGoals());
 }

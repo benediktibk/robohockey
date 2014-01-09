@@ -29,6 +29,8 @@ namespace Autonomous
 		virtual bool calibratePosition();
 		virtual bool isPointInsideField(const Common::Point &point) const;
 		virtual unsigned int getNumberOfHiddenPucks() const;
+		virtual unsigned int getEstimatedNumberOfGoals() const;
+		virtual void increaseNumberOfEstimatedGoals();
 		virtual bool isCalibrated() const;
 		virtual Common::FieldColor getOwnTeamColor() const;
 		virtual Common::FieldColor getEnemyTeamColor() const;
@@ -50,6 +52,7 @@ namespace Autonomous
 		void setNegativeCoordinatesOutside(bool value);
 		void setCalibrationReturn(bool value);
 		void setCalibrationReturnPosition(Common::RobotPosition newOrigin);
+		void setObjectsWithColorOrderedByDistance(const std::vector<FieldObject> &objects);
 
 	private:
 		std::vector<FieldObject> m_objects;
@@ -61,6 +64,7 @@ namespace Autonomous
 		bool m_calibrated;
 		Common::FieldColor m_teamColor;
 		Common::RobotPosition m_newOrigin;
+		std::vector<FieldObject> m_objectsWithColorOrderedByDistance;
 	};
 }
 }

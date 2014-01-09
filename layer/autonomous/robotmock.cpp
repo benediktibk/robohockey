@@ -85,8 +85,10 @@ unsigned int RobotMock::getCallsToStop() const
 	return m_callsToStop;
 }
 
-void RobotMock::collectPuckInFront(const Point &)
-{ }
+void RobotMock::collectPuckInFront(const Point &target)
+{
+	m_lastTarget = RobotPosition(target, Angle());
+}
 
 void RobotMock::updatePuckPosition(const Point &)
 { }

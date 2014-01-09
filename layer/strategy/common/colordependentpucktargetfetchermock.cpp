@@ -12,7 +12,7 @@ ColorDependentPuckTargetFetcherMock::ColorDependentPuckTargetFetcherMock() :
 
 list<RobotPosition> ColorDependentPuckTargetFetcherMock::getTargetPositions() const
 {
-	return list<RobotPosition>();
+	return m_targetPositions;
 }
 
 list<RobotPosition> ColorDependentPuckTargetFetcherMock::getPositionsToCollectPuck() const
@@ -33,4 +33,9 @@ unsigned int ColorDependentPuckTargetFetcherMock::getNumberOfKnownPucksNotInTarg
 void ColorDependentPuckTargetFetcherMock::setNumberOfKnownPucksNotInTarget(unsigned int value)
 {
 	m_numberOfKnownPucksNotInTarget = value;
+}
+
+void ColorDependentPuckTargetFetcherMock::setTargetPositions(const list<RobotPosition> &positions)
+{
+	m_targetPositions = positions;
 }

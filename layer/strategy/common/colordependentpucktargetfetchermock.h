@@ -29,9 +29,11 @@ namespace Common
 			virtual unsigned int getNumberOfKnownPucksNotInTarget() const;
 
 			void setNumberOfKnownPucksNotInTarget(unsigned int value);
+			void setTargetPositions(const std::list<RoboHockey::Common::RobotPosition> &positions);
 
 		private:
 			unsigned int m_numberOfKnownPucksNotInTarget;
+			std::list<RoboHockey::Common::RobotPosition> m_targetPositions;
 		};
 	}
 }

@@ -51,6 +51,8 @@ namespace Autonomous
 		virtual bool calibratePosition();
 		virtual unsigned int getNumberOfAchievedGoals() const;
 		virtual unsigned int getNumberOfHiddenPucks() const;
+		virtual unsigned int getEstimatedNumberOfGoals() const;
+		virtual void increaseNumberOfEstimatedGoals();
 		virtual bool isPointInsideField(const Common::Point &point) const;
 		virtual bool isCalibrated() const;
 		virtual Common::FieldColor getOwnTeamColor() const;
@@ -119,6 +121,7 @@ namespace Autonomous
 		unsigned int m_achievedGoals;
 		unsigned int m_hiddenPucks;
 		Common::FieldColor m_teamColor;
+		unsigned int m_estimatedAchievedGoals;
 	};
 }
 }

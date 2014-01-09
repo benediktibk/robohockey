@@ -11,6 +11,7 @@
 using namespace RoboHockey::Common;
 using namespace RoboHockey::Layer::Strategy::Common;
 using namespace RoboHockey::Layer::Autonomous;
+using namespace std;
 
 void DriveToStateTest::nextState_didntReachedTarget_NULL()
 {
@@ -19,7 +20,7 @@ void DriveToStateTest::nextState_didntReachedTarget_NULL()
 	RefereeMock referee;
 	State *stateAfterTargetReached = new StateMock(robot, field, referee);
 	State *stateAfterTargetUnreachable = new StateMock(robot, field, referee);
-	std::list<RobotPosition> targetList;
+	list<RobotPosition> targetList;
 	targetList.push_back(RobotPosition());
 	DriveToState driveToState(robot, field, referee, targetList, stateAfterTargetReached, stateAfterTargetUnreachable);
 	driveToState.update();
@@ -38,7 +39,7 @@ void DriveToStateTest::nextState_reachedTarget_stateAfterReachedTarget()
 	RefereeMock referee;
 	State *stateAfterTargetReached = new StateMock(robot, field, referee);
 	State *stateAfterTargetUnreachable = new StateMock(robot, field, referee);
-	std::list<RobotPosition> targetList;
+	list<RobotPosition> targetList;
 	targetList.push_back(RobotPosition());
 	DriveToState driveToState(robot, field, referee, targetList, stateAfterTargetReached, stateAfterTargetUnreachable);
 	driveToState.update();
@@ -58,7 +59,7 @@ void DriveToStateTest::nextState_cantReachTarget_stateAfterCantReachTarget()
 	RefereeMock referee;
 	State *stateAfterTargetReached = new StateMock(robot, field, referee);
 	State *stateAfterTargetUnreachable = new StateMock(robot, field, referee);
-	std::list<RobotPosition> targetList;
+	list<RobotPosition> targetList;
 	targetList.push_back(RobotPosition());
 	DriveToState driveToState(robot, field, referee, targetList, stateAfterTargetReached, stateAfterTargetUnreachable);
 	driveToState.update();
@@ -79,7 +80,7 @@ void DriveToStateTest::nextState_stuckAtObstacle_stateAfterCantReachTarget()
 	RefereeMock referee;
 	State *stateAfterTargetReached = new StateMock(robot, field, referee);
 	State *stateAfterTargetUnreachable = new StateMock(robot, field, referee);
-	std::list<RobotPosition> targetList;
+	list<RobotPosition> targetList;
 	targetList.push_back(RobotPosition());
 	DriveToState driveToState(robot, field, referee, targetList, stateAfterTargetReached, stateAfterTargetUnreachable);
 	driveToState.update();
