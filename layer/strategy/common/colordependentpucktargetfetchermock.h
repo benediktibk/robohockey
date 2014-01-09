@@ -1,9 +1,9 @@
-#ifndef ROBOHOCKEY_LAYER_STRATEGY_COMMON_DRIVEPUCKMOCK_H
-#define ROBOHOCKEY_LAYER_STRATEGY_COMMON_DRIVEPUCKMOCK_H
+#ifndef ROBOHOCKEY_LAYER_STRATEGY_COMMON_COLORDEPENDENTPUCKTARGETFETCHERMOCK_H
+#define ROBOHOCKEY_LAYER_STRATEGY_COMMON_COLORDEPENDENTPUCKTARGETFETCHERMOCK_H
 
 #include <list>
 #include "common/fieldcolor.h"
-#include "layer/strategy/common/drivepuck.h"
+#include "layer/strategy/common/colordependentpucktargetfetcher.h"
 
 namespace RoboHockey
 {
@@ -17,11 +17,11 @@ namespace Strategy
 {
 namespace Common
 {
-	class DrivePuckMock :
-			public DrivePuck
+	class ColorDependentPuckTargetFetcherMock :
+			public ColorDependentPuckTargetFetcher
 	{
 		public:
-			DrivePuckMock();
+			ColorDependentPuckTargetFetcherMock();
 
 			virtual std::list<RoboHockey::Common::RobotPosition> getTargetPositions() const;
 			virtual std::list<RoboHockey::Common::RobotPosition> getPositionsToCollectPuck() const;

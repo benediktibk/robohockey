@@ -6,7 +6,7 @@
 #include "layer/strategy/common/refereemock.h"
 #include "layer/autonomous/robotmock.h"
 #include "layer/autonomous/fieldmock.h"
-#include "layer/strategy/common/drivepuckmock.h"
+#include "layer/strategy/common/colordependentpucktargetfetchermock.h"
 
 using namespace RoboHockey::Layer::Strategy::Common;
 using namespace RoboHockey::Layer::Strategy::DrivePuckStateMachine;
@@ -17,7 +17,7 @@ void FindPuckStateTest::nextState_targetReached_nextStateIsDriveToCollectPuck()
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	DrivePuckMock drivePuck;
+	ColorDependentPuckTargetFetcherMock drivePuck;
 	robot.setReachedTarget(true);
 	FindPuckState findPuckState(robot, field, referee, drivePuck);
 	State *driveToState = findPuckState.nextState();
@@ -48,7 +48,7 @@ void FindPuckStateTest::nextState_cantReachTarget_nextStateIsFindPuckState()
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	DrivePuckMock drivePuck;
+	ColorDependentPuckTargetFetcherMock drivePuck;
 	robot.setCantReachedTarget(true);
 	FindPuckState findPuckState(robot, field, referee, drivePuck);
 	State *driveToState;
@@ -67,7 +67,7 @@ void FindPuckStateTest::nextState_canReachTarget_nextStateIs0()
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	DrivePuckMock drivePuck;
+	ColorDependentPuckTargetFetcherMock drivePuck;
 	FindPuckState findPuckState(robot, field, referee, drivePuck);
 	State *driveToState;
 	driveToState = findPuckState.nextState();

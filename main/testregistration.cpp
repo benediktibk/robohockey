@@ -43,8 +43,8 @@
 #include "layer/view/modeltest.h"
 #include "layer/strategy/common/statemachinetest.h"
 #include "layer/strategy/common/drivetostatetest.h"
-#include "layer/strategy/common/drivepucktoachivegoalstest.h"
-#include "layer/strategy/common/drivepucktohidepuckstest.h"
+#include "layer/strategy/common/colordependentpucktargetfetchertoachivegoalstest.h"
+#include "layer/strategy/common/colordependentpucktargetfetchertohidepuckstest.h"
 #include "layer/strategy/common/statetest.h"
 #include "layer/strategy/mainstatemachine/initialstatetest.h"
 #include "layer/strategy/mainstatemachine/calibratetest.h"
@@ -63,7 +63,7 @@
 #include "layer/strategy/drivepuckstatemachine/drivepucktopositionstatetest.h"
 #include "layer/strategy/drivepuckstatemachine/drivetocollectpuckstatetest.h"
 #include "layer/strategy/drivepuckstatemachine/leavepuckstatetest.h"
-#include "layer/strategy/common/waitstatetest.h"
+#include "layer/strategy/common/waitcyclesstatetest.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Common::CompareTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Common::WatchTest);
@@ -110,10 +110,10 @@ CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Autonomous::RoutingResultTest
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::View::ModelTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Strategy::Common::StateMachineTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Strategy::Common::DriveToStateTest);
-CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Strategy::Common::DrivePuckToAchiveGoalsTest);
-CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Strategy::Common::DrivePuckToHidePucksTest);
+CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Strategy::Common::ColorDependentPuckTargetFetcherToAchiveGoalsTest);
+CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Strategy::Common::ColorDependentPuckTargetFetcherToHidePucksTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Strategy::Common::StateTest);
-CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Strategy::Common::WaitStateTest);
+CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Strategy::Common::WaitCyclesStateTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Strategy::MainStateMachine::InitialStateTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Strategy::MainStateMachine::CalibrateTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Strategy::MainStateMachine::AchieveGoalsTest);

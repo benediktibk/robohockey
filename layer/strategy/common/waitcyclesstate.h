@@ -1,5 +1,5 @@
-#ifndef ROBOHOCKEY_LAYER_STRATEGY_COMMON_WAITSTATE_H
-#define ROBOHOCKEY_LAYER_STRATEGY_COMMON_WAITSTATE_H
+#ifndef ROBOHOCKEY_LAYER_STRATEGY_COMMON_WAITCYCLESSTATE_H
+#define ROBOHOCKEY_LAYER_STRATEGY_COMMON_WAITCYCLESSTATE_H
 
 #include "layer/strategy/common/state.h"
 
@@ -11,13 +11,13 @@ namespace Strategy
 {
 namespace Common
 {
-	class WaitState :
+	class WaitCyclesState :
 			public State
 	{
 	public:
-		WaitState(Autonomous::Robot &robot, Autonomous::Field &field, Common::Referee &referee,
+		WaitCyclesState(Autonomous::Robot &robot, Autonomous::Field &field, Common::Referee &referee,
 				  State *stateAfterTargetReached, unsigned int cycles);
-		virtual ~WaitState();
+		virtual ~WaitCyclesState();
 
 		virtual State* nextState();
 		virtual std::string getName();

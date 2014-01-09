@@ -4,7 +4,7 @@
 #include "layer/autonomous/robot.h"
 #include "layer/autonomous/field.h"
 #include "common/robotposition.h"
-#include "layer/strategy/common/waitstate.h"
+#include "layer/strategy/common/waitcyclesstate.h"
 
 using namespace RoboHockey::Common;
 using namespace RoboHockey::Layer::Strategy::Common;
@@ -23,7 +23,7 @@ State* CalibrationFinished::nextState()
 	std::list<RobotPosition> targetList;
 	targetList.push_back(m_field.getTargetsForWaitingPhase()[m_reachedTargets]);
 
-	return new WaitState(m_robot, m_field, m_referee,
+	return new WaitCyclesState(m_robot, m_field, m_referee,
 					new DriveToState(m_robot, m_field, m_referee, targetList,
 					   new CalibrationFinished(m_robot, m_field, m_referee, m_reachedTargets +1),
 					   new CalibrationFinished(m_robot, m_field, m_referee, m_reachedTargets +1)), 10);

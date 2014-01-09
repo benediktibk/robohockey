@@ -1,5 +1,5 @@
-#ifndef ROBOHOCKEY_LAYER_STRATEGY_COMMON_WAITSTATETEST_H
-#define ROBOHOCKEY_LAYER_STRATEGY_COMMON_WAITSTATETEST_H
+#ifndef ROBOHOCKEY_LAYER_STRATEGY_COMMON_WAITCYCLESSTATETEST_H
+#define ROBOHOCKEY_LAYER_STRATEGY_COMMON_WAITCYCLESSTATETEST_H
 
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
@@ -12,10 +12,10 @@ namespace Strategy
 {
 namespace Common
 {
-	class WaitStateTest :
+	class WaitCyclesStateTest :
 			public CPPUNIT_NS::TestFixture
 	{
-		CPPUNIT_TEST_SUITE(WaitStateTest);
+		CPPUNIT_TEST_SUITE(WaitCyclesStateTest);
 		CPPUNIT_TEST(nextState_didntWaitEnoughCycles_resultIs0);
 		CPPUNIT_TEST(nextState_didWaitEnoughCycles_resultIsStateAfterWaitCycles);
 		CPPUNIT_TEST_SUITE_END();

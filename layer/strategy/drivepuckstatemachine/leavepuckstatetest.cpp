@@ -8,7 +8,7 @@
 #include "layer/strategy/common/refereemock.h"
 #include "layer/autonomous/robotmock.h"
 #include "layer/autonomous/fieldmock.h"
-#include "layer/strategy/common/drivepuckmock.h"
+#include "layer/strategy/common/colordependentpucktargetfetchermock.h"
 
 using namespace RoboHockey::Layer::Strategy::Common;
 using namespace RoboHockey::Layer::Strategy::DrivePuckStateMachine;
@@ -19,7 +19,7 @@ void LeavePuckStateTest::nextState_cantReachTarget_nextStateIsInitialState()
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	DrivePuckMock drivePuck;
+	ColorDependentPuckTargetFetcherMock drivePuck;
 	robot.setCantReachedTarget(true);
 	LeavePuckState leavePuckState(robot, field, referee, drivePuck);
 	State *state;
@@ -35,7 +35,7 @@ void LeavePuckStateTest::nextState_reachedTargetAndNumberOfKnownPucksIs0_nextSta
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	DrivePuckMock drivePuck;
+	ColorDependentPuckTargetFetcherMock drivePuck;
 	robot.setReachedTarget(true);
 	LeavePuckState leavePuckState(robot, field, referee, drivePuck);
 	State *state;
@@ -51,7 +51,7 @@ void LeavePuckStateTest::nextState_reachedTargetAndNumberOfKnownPucksIsNot0_next
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	DrivePuckMock drivePuck;
+	ColorDependentPuckTargetFetcherMock drivePuck;
 	robot.setReachedTarget(true);
 	drivePuck.setNumberOfKnownPucksNotInTarget(2);
 	LeavePuckState leavePuckState(robot, field, referee, drivePuck);

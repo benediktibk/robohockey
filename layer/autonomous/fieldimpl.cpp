@@ -147,8 +147,12 @@ void FieldImpl::detectTeamColorWithGoalInFront()
 
 	double blueGoal = m_camera->getProbabilityForBlueGoal();
 	double yellowGoal = m_camera->getProbabilityForYellowGoal();
+	Compare compare(0.1);
 
-	if(blueGoal > yellowGoal)
+	//! The field should not make a strategic decision, therefore it does not decide on the team color if it is not clear.
+	if (compare.isFuzzyEqual(blueGoal, yellowGoal))
+		m_teamColor = FieldColorUnknown;
+	else if(blueGoal > yellowGoal)
 		m_teamColor = FieldColorBlue;
 	else
 		m_teamColor = FieldColorYellow;
@@ -821,10 +825,7 @@ bool FieldImpl::tryToMergeLidarAndFieldObject(FieldObject &fieldObject, const Da
 
 bool FieldImpl::couldBeTheSameObject(const Circle &firstObject, const Circle &secondObject) const
 {
-	const Point &ownPosition = m_position->getPosition();
-	Point objectPosition = (firstObject.getCenter() + secondObject.getCenter())/2;
-	double distance = ownPosition.distanceTo(objectPosition);
-	Compare positionCompare(0.1/3*distance + 0.05);
+	Compare positionCompare(0.11);
 	return positionCompare.isFuzzyEqual(firstObject.getCenter(), secondObject.getCenter());
 }
 
