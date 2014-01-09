@@ -52,6 +52,7 @@ namespace Autonomous
 		void setNegativeCoordinatesOutside(bool value);
 		void setCalibrationReturn(bool value);
 		void setCalibrationReturnPosition(Common::RobotPosition newOrigin);
+		void setObjectsWithColorOrderedByDistance(const std::vector<FieldObject> &objects);
 
 	private:
 		std::vector<FieldObject> m_objects;
@@ -63,6 +64,7 @@ namespace Autonomous
 		bool m_calibrated;
 		Common::FieldColor m_teamColor;
 		Common::RobotPosition m_newOrigin;
+		std::vector<FieldObject> m_objectsWithColorOrderedByDistance;
 	};
 }
 }

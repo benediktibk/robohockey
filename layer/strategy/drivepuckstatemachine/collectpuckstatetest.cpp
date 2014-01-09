@@ -9,9 +9,11 @@
 #include "layer/autonomous/fieldmock.h"
 #include "layer/strategy/common/colordependentpucktargetfetchermock.h"
 
+using namespace RoboHockey::Common;
 using namespace RoboHockey::Layer::Strategy::Common;
 using namespace RoboHockey::Layer::Strategy::DrivePuckStateMachine;
 using namespace RoboHockey::Layer::Autonomous;
+using namespace std;
 
 void CollectPuckStateTest::nextState_puckCollected_nextStateIsDriveToPositionState()
 {
@@ -37,10 +39,10 @@ void CollectPuckStateTest::nextState_cantReachTarget_nextStatedIsDriveToCollectP
 	ColorDependentPuckTargetFetcherMock drivePuck;
 	robot.setCantReachedTarget(true);
 	CollectPuckState collectPuckState(robot, field, referee, drivePuck);
-	State *state;
-	state = collectPuckState.nextState();
-	DriveToCollectPuckState *stateCasted = dynamic_cast<DriveToCollectPuckState*>(state);
 
+	State *state = collectPuckState.nextState();
+
+	DriveToCollectPuckState *stateCasted = dynamic_cast<DriveToCollectPuckState*>(state);
 	CPPUNIT_ASSERT(stateCasted != 0);
 	delete state;
 }
@@ -53,9 +55,9 @@ void CollectPuckStateTest::nextState_canReachTarget_nextStatedIs0()
 	robot.setPuckCollectable(true);
 	ColorDependentPuckTargetFetcherMock drivePuck;
 	CollectPuckState collectPuckState(robot, field, referee, drivePuck);
-	State *state;
 	collectPuckState.update();
-	state = collectPuckState.nextState();
+
+	State *state = collectPuckState.nextState();
 
 	CPPUNIT_ASSERT(state == 0);
 	delete state;
@@ -68,11 +70,47 @@ void CollectPuckStateTest::nextState_puckIsNotCollectable_nextStateIsDriveToColl
 	RefereeMock referee;
 	ColorDependentPuckTargetFetcherMock drivePuck;
 	CollectPuckState collectPuckState(robot, field, referee, drivePuck);
-	State *state;
-	state = collectPuckState.nextState();
-	DriveToCollectPuckState *stateCasted = dynamic_cast<DriveToCollectPuckState*>(state);
+	vector<FieldObject> fieldObjects;
+	fieldObjects.push_back(FieldObject(Circle(Point(1, 1), 0.1), FieldColorBlue, 1));
+	field.setObjectsWithColorOrderedByDistance(fieldObjects);
+	robot.setPuckCollectable(false);
 
+	State *state = collectPuckState.nextState();
+
+	DriveToCollectPuckState *stateCasted = dynamic_cast<DriveToCollectPuckState*>(state);
 	CPPUNIT_ASSERT(stateCasted != 0);
 	delete state;
+}
+
+void CollectPuckStateTest::nextState_puckIsCollectableButNoTargetIsLeft_nextStateIsDriveToCollectPuckState()
+{
+	RobotMock robot;
+	FieldMock field;
+	RefereeMock referee;
+	ColorDependentPuckTargetFetcherMock drivePuck;
+	CollectPuckState collectPuckState(robot, field, referee, drivePuck);
+	robot.setPuckCollectable(true);
+	field.setObjectsWithColorOrderedByDistance(vector<FieldObject>());
+
+	State *state = collectPuckState.nextState();
+
+	DriveToCollectPuckState *stateCasted = dynamic_cast<DriveToCollectPuckState*>(state);
+	CPPUNIT_ASSERT(stateCasted != 0);
+	delete state;
+}
+
+void CollectPuckStateTest::update_targetLostButPuckCollectable_runThrough()
+{
+	RobotMock robot;
+	FieldMock field;
+	RefereeMock referee;
+	ColorDependentPuckTargetFetcherMock drivePuck;
+	CollectPuckState collectPuckState(robot, field, referee, drivePuck);
+	robot.setPuckCollectable(true);
+	field.setObjectsWithColorOrderedByDistance(vector<FieldObject>());
+
+	collectPuckState.update();
+
+	CPPUNIT_ASSERT(true);
 }
 

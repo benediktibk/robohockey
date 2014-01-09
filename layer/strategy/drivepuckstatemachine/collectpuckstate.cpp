@@ -20,36 +20,29 @@ CollectPuckState::CollectPuckState(Robot &robot, Field &field, Referee &referee,
 
 State* CollectPuckState::nextState()
 {
+	vector<FieldObject> targetPositions = m_field.getObjectsWithColorOrderdByDistance(
+				m_drivePuck.getColorOfTargetPucks(),
+				m_robot.getCurrentPosition().getPosition());
+
 	if(m_robot.isPuckCollected())
 		return new DrivePuckToPositionState(m_robot, m_field, m_referee, m_drivePuck);
-	else if(m_robot.cantReachTarget() || !m_robot.isPuckCollectable())
+	else if(m_robot.cantReachTarget() || !m_robot.isPuckCollectable() || targetPositions.empty())
 		return new DriveToCollectPuckState(m_robot, m_field, m_referee, m_drivePuck);
 	else
 		return 0;
 }
 
-std::string CollectPuckState::getName()
+string CollectPuckState::getName()
 {
 	return "CollectPuck";
 }
 
 void CollectPuckState::updateInternal()
 {
-	if(m_robot.isPuckCollectable())
-	{
-		vector<FieldObject> targetPositions = m_field.getObjectsWithColorOrderdByDistance(
-					m_drivePuck.getColorOfTargetPucks(),
-					m_robot.getCurrentPosition().getPosition());
+	vector<FieldObject> targetPositions = m_field.getObjectsWithColorOrderdByDistance(
+				m_drivePuck.getColorOfTargetPucks(),
+				m_robot.getCurrentPosition().getPosition());
 
-		if (targetPositions.size() > (size_t) 0)
-		{
-			m_robot.collectPuckInFront(targetPositions.front().getCircle().getCenter());
-		}
-		else
-		{
-			cerr << "#### CollectPuckState::updateInternal()\n#### NO TARGET PUCKS IN FIELD!" << endl;
-			assert(false);
-		}
-
-	}
+	if(m_robot.isPuckCollectable() && !targetPositions.empty())
+		m_robot.collectPuckInFront(targetPositions.front().getCircle().getCenter());
 }

@@ -11,7 +11,9 @@ FieldMock::FieldMock() :
 	m_hiddenPucks(0),
 	m_calibrated(false),
 	m_teamColor(FieldColorUnknown)
-{ }
+{
+	m_objectsWithColorOrderedByDistance.push_back(FieldObject(Circle(), FieldColorBlue, 2));
+}
 
 void FieldMock::update()
 { }
@@ -31,11 +33,9 @@ const vector<Circle> &FieldMock::getAllHardObstacles() const
 	return m_hardObstacles;
 }
 
-vector<FieldObject> FieldMock::getObjectsWithColorOrderdByDistance(FieldColor color, const Point&) const
+vector<FieldObject> FieldMock::getObjectsWithColorOrderdByDistance(FieldColor, const Point&) const
 {
-	vector<FieldObject> result;
-	result.push_back(FieldObject(Circle(), color, 2));
-	return result;
+	return m_objectsWithColorOrderedByDistance;
 }
 
 unsigned int FieldMock::getNumberOfObjectsWithColor(FieldColor) const
@@ -84,6 +84,11 @@ void FieldMock::setCalibrationReturn(bool value)
 void FieldMock::setCalibrationReturnPosition(RobotPosition newOrigin)
 {
 	m_newOrigin = newOrigin;
+}
+
+void FieldMock::setObjectsWithColorOrderedByDistance(const std::vector<FieldObject> &objects)
+{
+	m_objectsWithColorOrderedByDistance = objects;
 }
 
 void FieldMock::setTrueTeamColor(FieldColor teamColor)
