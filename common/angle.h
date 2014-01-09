@@ -20,6 +20,7 @@ namespace Common
 		double getValueBetweenMinusPiAndPi() const;
 		double getValueBetweenZeroAndTwoPi() const;
 		void abs();
+		bool isObtuse() const;
 
 		Angle operator+(const Angle &rhs) const;
 		Angle operator-(const Angle &rhs) const;

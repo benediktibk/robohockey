@@ -226,9 +226,10 @@ void EngineImpl::driveAndTurn(const RobotPosition &currentPosition)
 	double orthogonalError = distanceToTarget*sin(orientationDifference.getValueBetweenMinusPiAndPi());
 	double forwardError = max(0.0, distanceToTarget*cos(alpha.getValueBetweenMinusPiAndPi()));
 
-	if (positionCompare.isFuzzyEqual(forwardError, 0))
+	if (positionCompare.isFuzzyEqual(forwardError, 0) || alpha.isObtuse())
 	{
 		stop();
+		setSpeed(0, 0);
 		return;
 	}
 
