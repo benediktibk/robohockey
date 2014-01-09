@@ -800,10 +800,16 @@ void RobotTest::goTo_firstPointNearlyReachedAndSmallTurnNecessary_lastSpeedIsBig
 	m_routerMock->setRoute(Point(0, 0), Point(5, 0), Point(7, 0.1));
 	m_targets.push_back(RobotPosition(Point(7, 0.1), Angle(0)));
 
+	engine.setReachedTarget(false);
+	engine.setSpeedForGoingStraight(1);
 	odometry.setCurrentPosition(RobotPosition(Point(0, 0), Angle(0)));
 	robot.updateSensorData();
 	robot.goTo(m_targets);
 	robot.updateActuators(field);
+	engine.setReachedTarget(true);
+	robot.updateSensorData();
+	robot.updateActuators(field);
+	engine.setReachedTarget(false);
 	odometry.setCurrentPosition(RobotPosition(Point(4.8, 0), Angle(0)));
 	robot.updateSensorData();
 	robot.updateActuators(field);
@@ -823,10 +829,17 @@ void RobotTest::goTo_firstPointReachedAndSmallTurnNecessary_noCallsToTurnToTarge
 	m_routerMock->setRoute(Point(0, 0), Point(5, 0), Point(7, 0.1));
 	m_targets.push_back(RobotPosition(Point(7, 0.1), Angle(0)));
 
+	engine.setReachedTarget(false);
+	engine.setSpeedForGoingStraight(1);
 	odometry.setCurrentPosition(RobotPosition(Point(0, 0), Angle(0)));
 	robot.updateSensorData();
 	robot.goTo(m_targets);
 	robot.updateActuators(field);
+	engine.setReachedTarget(true);
+	engine.resetCounters();
+	robot.updateSensorData();
+	robot.updateActuators(field);
+	engine.setReachedTarget(false);
 	odometry.setCurrentPosition(RobotPosition(Point(4.9, 0), Angle(0)));
 	robot.updateSensorData();
 	robot.updateActuators(field);
