@@ -31,9 +31,11 @@ const vector<Circle> &FieldMock::getAllHardObstacles() const
 	return m_hardObstacles;
 }
 
-vector<FieldObject> FieldMock::getObjectsWithColorOrderdByDistance(FieldColor, const Point&) const
+vector<FieldObject> FieldMock::getObjectsWithColorOrderdByDistance(FieldColor color, const Point&) const
 {
-	return vector<FieldObject>();
+	vector<FieldObject> result;
+	result.push_back(FieldObject(Circle(), color, 2));
+	return result;
 }
 
 unsigned int FieldMock::getNumberOfObjectsWithColor(FieldColor) const
@@ -135,6 +137,14 @@ unsigned int FieldMock::getNumberOfHiddenPucks() const
 {
 	return m_hiddenPucks;
 }
+
+unsigned int FieldMock::getEstimatedNumberOfGoals() const
+{
+	return 0;
+}
+
+void FieldMock::increaseNumberOfEstimatedGoals()
+{ }
 
 list<RobotPosition> FieldMock::getTargetsForGoalDetection() const
 {

@@ -5,7 +5,10 @@
 #include "layer/strategy/common/referee.h"
 #include "layer/autonomous/robot.h"
 #include "layer/autonomous/field.h"
+#include <iostream>
+#include <assert.h>
 
+using namespace std;
 using namespace RoboHockey::Layer::Strategy::Common;
 using namespace RoboHockey::Layer::Strategy::DrivePuckStateMachine;
 using namespace RoboHockey::Layer::Autonomous;
@@ -34,9 +37,19 @@ void CollectPuckState::updateInternal()
 {
 	if(m_robot.isPuckCollectable())
 	{
-		m_robot.collectPuckInFront(
-					m_field.getObjectsWithColorOrderdByDistance(
+		vector<FieldObject> targetPositions = m_field.getObjectsWithColorOrderdByDistance(
 					m_drivePuck.getColorOfTargetPucks(),
-					m_robot.getCurrentPosition().getPosition()).front().getCircle().getCenter());
+					m_robot.getCurrentPosition().getPosition());
+
+		if (targetPositions.size() > (size_t) 0)
+		{
+			m_robot.collectPuckInFront(targetPositions.front().getCircle().getCenter());
+		}
+		else
+		{
+			cerr << "#### CollectPuckState::updateInternal()\n#### NO TARGET PUCKS IN FIELD!" << endl;
+			assert(false);
+		}
+
 	}
 }

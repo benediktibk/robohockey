@@ -3,6 +3,7 @@
 #include "layer/strategy/drivepuckstatemachine/findpuckstate.h"
 #include "layer/strategy/drivepuckstatemachine/initialstate.h"
 #include "layer/strategy/drivepuckstatemachine/collectpuckstate.h"
+#include "layer/strategy/common/drivetostate.h"
 #include "layer/strategy/common/statemachine.h"
 #include "layer/strategy/common/statemock.h"
 #include "layer/strategy/common/refereemock.h"
@@ -87,3 +88,19 @@ void DriveToCollectPuckStateTest::nextState_cantReachTarget_nextStateIsInitialSt
 	delete driveToState;
 }
 
+void DriveToCollectPuckStateTest::nextState_cantReachTarget_nextStateIsDriveToState()
+{
+	RobotMock robot;
+	FieldMock field;
+	RefereeMock referee;
+	ColorDependentPuckTargetFetcherMock drivePuck;
+	drivePuck.setNumberOfKnownPucksNotInTarget(2);
+	robot.setCantReachedTarget(true);
+	DriveToCollectPuckState driveToCollectPuckState(robot, field, referee, drivePuck);
+	State *state;
+	state = driveToCollectPuckState.nextState();
+	DriveToState *stateCasted = dynamic_cast<DriveToState*>(state);
+
+	CPPUNIT_ASSERT(stateCasted != 0);
+	delete state;
+}
