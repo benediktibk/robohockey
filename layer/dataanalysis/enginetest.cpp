@@ -146,7 +146,7 @@ void EngineTest::goToStraight_droveToFar_lastRotationAndMagnitudeIsZero()
 	engine.updateSensorData();
 	engine.updateSpeedAndRotation();
 
-	CPPUNIT_ASSERT_DOUBLES_EQUAL(0, hardwareEngine.getLastMagnitude(), 0.000001);
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(0.3, hardwareEngine.getLastMagnitude(), 0.000001);
 	CPPUNIT_ASSERT_DOUBLES_EQUAL(0, hardwareEngine.getLastRotation(), 0.000001);
 }
 
