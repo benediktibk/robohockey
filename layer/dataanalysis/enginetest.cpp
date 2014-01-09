@@ -16,7 +16,7 @@ void EngineTest::goToStraight_currentPositionDifferentToTarget_atLeastOneCallToS
 	EngineImpl engine(hardwareEngine, hardwareOdometry);
 	hardwareOdometry.setCurrentPosition(RobotPosition(Point(1, 2), 0));
 
-	engine.goToStraight(Point(4, 20));
+	engine.goToStraight(Point(4, 20), 0);
 	engine.updateSpeedAndRotation();
 
 	CPPUNIT_ASSERT(hardwareEngine.getCallsToSetSpeed() > 0);
@@ -29,7 +29,7 @@ void EngineTest::goToStraight_lookingRightButHaveToGoLeftUp_lastRotationIsLeft()
 	EngineImpl engine(hardwareEngine, hardwareOdometry);
 	hardwareOdometry.setCurrentPosition(RobotPosition(Point(1, 1), 0));
 
-	engine.goToStraight(Point(0, 2));
+	engine.goToStraight(Point(0, 2), 0);
 	engine.updateSpeedAndRotation();
 
 	CPPUNIT_ASSERT(hardwareEngine.getLastRotation() > 0);
@@ -42,7 +42,7 @@ void EngineTest::goToStraight_lookingRightButHaveToGoDown_lastRotationIsRight()
 	EngineImpl engine(hardwareEngine, hardwareOdometry);
 	hardwareOdometry.setCurrentPosition(RobotPosition(Point(1, 1), 0));
 
-	engine.goToStraight(Point(1, -2));
+	engine.goToStraight(Point(1, -2), 0);
 	engine.updateSpeedAndRotation();
 
 	CPPUNIT_ASSERT(hardwareEngine.getCallsToSetSpeed() > 0);
@@ -56,7 +56,7 @@ void EngineTest::goToStraight_startOrientationCompletelyWrong_lastMagnitudeIsNot
 	EngineImpl engine(hardwareEngine, hardwareOdometry);
 	hardwareOdometry.setCurrentPosition(RobotPosition(Point(0, 0), 0));
 
-	engine.goToStraight(Point(-1, 0));
+	engine.goToStraight(Point(-1, 0), 0);
 	engine.updateSpeedAndRotation();
 
 	CPPUNIT_ASSERT(hardwareEngine.getCallsToSetSpeed() > 0);
@@ -70,7 +70,7 @@ void EngineTest::goToStraight_startOrientationCorrect_lastMagnitudeIsNotZero()
 	EngineImpl engine(hardwareEngine, hardwareOdometry);
 	hardwareOdometry.setCurrentPosition(RobotPosition(Point(0, 0), 0));
 
-	engine.goToStraight(Point(1, 0));
+	engine.goToStraight(Point(1, 0), 0);
 	engine.updateSpeedAndRotation();
 
 	CPPUNIT_ASSERT(hardwareEngine.getLastMagnitude() > 0.01);
@@ -83,7 +83,7 @@ void EngineTest::goToStraight_orientationReachedAfterSomeTime_lastMagnitudeIsNot
 	EngineImpl engine(hardwareEngine, hardwareOdometry);
 	hardwareOdometry.setCurrentPosition(RobotPosition(Point(0, 0), 0));
 
-	engine.goToStraight(Point(-1, 0));
+	engine.goToStraight(Point(-1, 0), 0);
 	engine.updateSpeedAndRotation();
 	hardwareOdometry.setCurrentPosition(RobotPosition(Point(0, 0), M_PI));
 	engine.updateSpeedAndRotation();
@@ -100,7 +100,7 @@ void EngineTest::goToStraight_stillMoving_lastSpeedsAreZero()
 
 	hardwareEngine.setIsMoving(true);
 	engine.updateSensorData();
-	engine.goToStraight(Point(1, 0));
+	engine.goToStraight(Point(1, 0), 0);
 	engine.updateSpeedAndRotation();
 
 	CPPUNIT_ASSERT_DOUBLES_EQUAL(0, hardwareEngine.getLastMagnitude(), 0.00001);
@@ -116,7 +116,7 @@ void EngineTest::goToStraight_movingFinishedFromPreviousMovement_lastSpeedIsNotZ
 
 	hardwareEngine.setIsMoving(true);
 	engine.updateSensorData();
-	engine.goToStraight(Point(1, 0));
+	engine.goToStraight(Point(1, 0), 0);
 	engine.updateSpeedAndRotation();
 	hardwareEngine.setIsMoving(false);
 	engine.updateSensorData();
@@ -134,7 +134,7 @@ void EngineTest::goToStraight_droveToFar_lastRotationAndMagnitudeIsZero()
 
 	hardwareEngine.setIsMoving(false);
 	engine.updateSensorData();
-	engine.goToStraight(Point(1, 0));
+	engine.goToStraight(Point(1, 0), 0);
 	engine.updateSpeedAndRotation();
 	hardwareEngine.setIsMoving(true);
 	engine.updateSensorData();
@@ -156,7 +156,7 @@ void EngineTest::stop_movingSomewhere_lastMagnitudeIsZero()
 	Hardware::OdometryMock hardwareOdometry;
 	EngineImpl engine(hardwareEngine, hardwareOdometry);
 	hardwareOdometry.setCurrentPosition(RobotPosition(Point(0, 0), 0));
-	engine.goToStraight(Point(1, 0));
+	engine.goToStraight(Point(1, 0), 0);
 	engine.updateSpeedAndRotation();
 
 	engine.stop();
@@ -171,7 +171,7 @@ void EngineTest::stop_movingSomewhere_lastRotationIsZero()
 	Hardware::OdometryMock hardwareOdometry;
 	EngineImpl engine(hardwareEngine, hardwareOdometry);
 	hardwareOdometry.setCurrentPosition(RobotPosition(Point(0, 0), 0));
-	engine.goToStraight(Point(-1, 0));
+	engine.goToStraight(Point(-1, 0), 0);
 	engine.updateSpeedAndRotation();
 
 	engine.stop();
@@ -270,7 +270,7 @@ void EngineTest::lockForwardMovement_tryingToDriveForward_lastMagnitudeIsZero()
 	Hardware::OdometryMock hardwareOdometry;
 	EngineImpl engine(hardwareEngine, hardwareOdometry);
 	hardwareOdometry.setCurrentPosition(RobotPosition(Point(0, 0), 0));
-	engine.goToStraight(Point(10, 0));
+	engine.goToStraight(Point(10, 0), 0);
 	engine.updateSpeedAndRotation();
 
 	engine.lockForwardMovement();
@@ -286,7 +286,7 @@ void EngineTest::unlockForwardMovement_tryingToDriveForward_lastMagnitudeIsNotZe
 	EngineImpl engine(hardwareEngine, hardwareOdometry);
 	hardwareOdometry.setCurrentPosition(RobotPosition(Point(0, 0), 0));
 	engine.lockForwardMovement();
-	engine.goToStraight(Point(10, 0));
+	engine.goToStraight(Point(10, 0), 0);
 	engine.updateSpeedAndRotation();
 
 	engine.unlockForwardMovement();
@@ -302,7 +302,7 @@ void EngineTest::unlockForwardMovement_tryingToDriveForward_notTryingToTackleObs
 	EngineImpl engine(hardwareEngine, hardwareOdometry);
 	hardwareOdometry.setCurrentPosition(RobotPosition(Point(0, 0), 0));
 	engine.lockForwardMovement();
-	engine.goToStraight(Point(10, 0));
+	engine.goToStraight(Point(10, 0), 0);
 	engine.updateSpeedAndRotation();
 
 	engine.unlockForwardMovement();
@@ -319,7 +319,7 @@ void EngineTest::tryingToTackleObstacle_drivingForwardAndForwardMovementLocked_t
 	hardwareOdometry.setCurrentPosition(RobotPosition(Point(0, 0), 0));
 
 	engine.lockForwardMovement();
-	engine.goToStraight(Point(10, 0));
+	engine.goToStraight(Point(10, 0), 0);
 	engine.updateSpeedAndRotation();
 
 	CPPUNIT_ASSERT(engine.tryingToTackleObstacle());
@@ -332,7 +332,7 @@ void EngineTest::tryingToTackleObstacle_drivingForwardAndForwardMovementNotLocke
 	EngineImpl engine(hardwareEngine, hardwareOdometry);
 	hardwareOdometry.setCurrentPosition(RobotPosition(Point(0, 0), 0));
 
-	engine.goToStraight(Point(10, 0));
+	engine.goToStraight(Point(10, 0), 0);
 	engine.updateSpeedAndRotation();
 
 	CPPUNIT_ASSERT(!engine.tryingToTackleObstacle());
@@ -345,7 +345,7 @@ void EngineTest::tryingToTackleObstacle_turningAroundAndForwardMovementLocked_fa
 	EngineImpl engine(hardwareEngine, hardwareOdometry);
 	hardwareOdometry.setCurrentPosition(RobotPosition(Point(0, 0), 0));
 	engine.lockForwardMovement();
-	engine.goToStraight(Point(10, 0));
+	engine.goToStraight(Point(10, 0), 0);
 	engine.updateSpeedAndRotation();
 
 	engine.turnAround();
@@ -361,7 +361,7 @@ void EngineTest::tryingToTackleObstacle_turningToTargetAndForwardMovementLocked_
 	EngineImpl engine(hardwareEngine, hardwareOdometry);
 	hardwareOdometry.setCurrentPosition(RobotPosition(Point(0, 0), 0));
 	engine.lockForwardMovement();
-	engine.goToStraight(Point(10, 0));
+	engine.goToStraight(Point(10, 0), 0);
 	engine.updateSpeedAndRotation();
 
 	engine.turnToTarget(Point(0, 1));
@@ -377,10 +377,10 @@ void EngineTest::tryingToTackleObstacle_turningToNewTargetAndForwardMovementLock
 	EngineImpl engine(hardwareEngine, hardwareOdometry);
 	hardwareOdometry.setCurrentPosition(RobotPosition(Point(0, 0), 0));
 	engine.lockForwardMovement();
-	engine.goToStraight(Point(10, 0));
+	engine.goToStraight(Point(10, 0), 0);
 	engine.updateSpeedAndRotation();
 
-	engine.goToStraight(Point(-1, 0));
+	engine.goToStraight(Point(-1, 0), 0);
 	engine.updateSpeedAndRotation();
 
 	CPPUNIT_ASSERT(engine.tryingToTackleObstacle());
@@ -393,7 +393,7 @@ void EngineTest::tryingToTackleObstacle_stoppedAndForwardMovementLocked_false()
 	EngineImpl engine(hardwareEngine, hardwareOdometry);
 	hardwareOdometry.setCurrentPosition(RobotPosition(Point(0, 0), 0));
 	engine.lockForwardMovement();
-	engine.goToStraight(Point(10, 0));
+	engine.goToStraight(Point(10, 0), 0);
 	engine.updateSpeedAndRotation();
 
 	engine.stop();
@@ -482,7 +482,7 @@ void EngineTest::goToStraight_validTargetPosition_startPositionIsCorrect()
 	EngineImpl engine(hardwareEngine, hardwareOdometry);
 	hardwareOdometry.setCurrentPosition(RobotPosition(Point(3, 5), 0));
 
-	engine.goToStraight(Point(6, 7));
+	engine.goToStraight(Point(6, 7), 0);
 
 	Compare compare(0.00001);
 	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(3, 5), engine.getStartPosition()));
@@ -495,7 +495,7 @@ void EngineTest::goToStraight_moveAwayFromStartPosition_startPositionIsCorrect()
 	EngineImpl engine(hardwareEngine, hardwareOdometry);
 	hardwareOdometry.setCurrentPosition(RobotPosition(Point(3, 5), 0));
 
-	engine.goToStraight(Point(6, 7));
+	engine.goToStraight(Point(6, 7), 0);
 	hardwareOdometry.setCurrentPosition(RobotPosition(Point(4, 5), 0));
 	engine.updateSpeedAndRotation();
 
@@ -510,7 +510,7 @@ void EngineTest::goToStraight_rotationDoneAndLittleBitLeftOfDirectConnection_las
 	EngineImpl engine(hardwareEngine, hardwareOdometry);
 	hardwareOdometry.setCurrentPosition(RobotPosition(Point(0, 0), 0));
 
-	engine.goToStraight(Point(5, 5));
+	engine.goToStraight(Point(5, 5), 0);
 	engine.updateSpeedAndRotation();
 	hardwareOdometry.setCurrentPosition(RobotPosition(Point(0, 0), 0));
 	engine.updateSpeedAndRotation();
@@ -530,7 +530,7 @@ void EngineTest::goToStraight_rotationDoneAndLittleBitRightOfDirectConnection_la
 	EngineImpl engine(hardwareEngine, hardwareOdometry);
 	hardwareOdometry.setCurrentPosition(RobotPosition(Point(0, 0), 0));
 
-	engine.goToStraight(Point(5, 5));
+	engine.goToStraight(Point(5, 5), 0);
 	engine.updateSpeedAndRotation();
 	hardwareOdometry.setCurrentPosition(RobotPosition(Point(0, 0), 0));
 	engine.updateSpeedAndRotation();
@@ -705,7 +705,7 @@ void EngineTest::updateSpeedAndRotation_tryingToTackleObstacle_motorIsDisabled()
 
 	engine.updateSensorData();
 	engine.lockForwardMovement();
-	engine.goToStraight(Point(1, 0));
+	engine.goToStraight(Point(1, 0), 0);
 	engine.updateSpeedAndRotation();
 
 	CPPUNIT_ASSERT_EQUAL((unsigned int)1, hardwareEngine.getCallsToSetEnabled());

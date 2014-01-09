@@ -30,22 +30,23 @@ EngineImpl::~EngineImpl()
 	m_speedTresholder = 0;
 }
 
-void EngineImpl::goToStraight(const Common::Point &position)
+void EngineImpl::goToStraight(const Common::Point &position, double finalSpeed)
 {
-	m_target = position;
 	switchIntoState(EngineStateDriving);
+	m_target = position;
+	m_finalSpeed = finalSpeed;
 }
 
 void EngineImpl::goToStraightSlowly(const Point &position)
 {
-	m_target = position;
 	switchIntoState(EngineStateDrivingSlowly);
+	m_target = position;
 }
 
 void EngineImpl::goToStraightSlowlyBack(const Point &position)
 {
-	m_target = position;
 	switchIntoState(EngineStateDrivingSlowlyBack);
+	m_target = position;
 }
 
 void EngineImpl::updateSpeedAndRotation()
@@ -95,8 +96,8 @@ void EngineImpl::turnAround()
 
 void EngineImpl::turnToTarget(const Point &position)
 {
-	m_target = position;
 	switchIntoState(EngineStateRotating);
+	m_target = position;
 }
 
 void EngineImpl::lockForwardMovement()
@@ -270,6 +271,7 @@ void EngineImpl::switchIntoState(EngineState state)
 	m_startPosition = currentRobotPosition.getPosition();
 	m_tryingToTackleObstacle = false;
 	m_oneHalfTurnDone = false;
+	m_finalSpeed = 0;
 
 	if (m_engineState != state)
 		m_startedMovement = false;

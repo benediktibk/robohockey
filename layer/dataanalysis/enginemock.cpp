@@ -7,15 +7,17 @@ using namespace RoboHockey::Layer::DataAnalysis;
 EngineMock::EngineMock() :
 	m_tryingToTackleObstacle(false),
 	m_reachedTarget(true),
-	m_isGoingStraight(false)
+	m_isGoingStraight(false),
+	m_lastFinalSpeed(0)
 {
 	resetCounters();
 }
 
-void EngineMock::goToStraight(const Point &target)
+void EngineMock::goToStraight(const Point &target, double finalSpeed)
 {
 	++m_callsToGoToStraight;
 	m_lastTarget = target;
+	m_lastFinalSpeed = finalSpeed;
 }
 
 void EngineMock::goToStraightSlowly(const Point &target)
@@ -177,6 +179,11 @@ void EngineMock::resetCounters()
 const Point &EngineMock::getLastTarget() const
 {
 	return m_lastTarget;
+}
+
+double EngineMock::getLastFinalSpeed() const
+{
+	return m_lastFinalSpeed;
 }
 
 

@@ -141,7 +141,7 @@ void RobotImpl::updateEngineForDrivingTurningPart(const Field &field)
 		if (m_currentRoute->getPointCount() > 1)
 		{
 			changeIntoState(RobotStateDrivingStraightPart);
-			engine.goToStraight(m_currentRoute->getSecondPoint());
+			engine.goToStraight(m_currentRoute->getSecondPoint(), 0);
 		}
 		else
 			changeIntoState(RobotStateWaiting);
