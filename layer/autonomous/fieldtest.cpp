@@ -2097,6 +2097,60 @@ void FieldTest::getTargetsForSearchingPucks_twoObjectsWithUnknownColor_numberOfP
 	CPPUNIT_ASSERT_EQUAL((size_t)18, field.getTargetsForSearchingPucks().size());
 }
 
+void FieldTest::getTargetsForSearchingPucks_threeObjectsWithUnknownColorNotInField_numberOfPositions10()
+{
+	DataAnalysis::OdometryMock odometry;
+	DataAnalysis::LidarMock lidar;
+	DataAnalysis::CameraMock camera;
+	Autonomous::RobotMock autonomousRobot;
+	FieldImpl field(odometry, lidar, camera, autonomousRobot);
+
+	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(0, -0.1), 0.1));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(5.3, 1.5), 0.1));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(6, 1.5), 0.1));
+	lidar.setAllObjects(lidarObjects);
+	DataAnalysis::CameraObjects cameraObjects;
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorUnknown, Point(0, -0.1)));
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorUnknown, Point(5.3, 1.5)));
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorUnknown, Point(6, 1.5)));
+	camera.setAllObjects(cameraObjects);
+
+	field.update();
+	field.update();
+
+	CPPUNIT_ASSERT_EQUAL((size_t)10, field.getTargetsForSearchingPucks().size());
+}
+
+void FieldTest::getTargetsForSearchungPucks_fourObjectsWithUnknownColorAndOneObjectWithKnownColorAndTwoPucksWithUnknownColorNotInField_numberOfPositions18()
+{
+	DataAnalysis::OdometryMock odometry;
+	DataAnalysis::LidarMock lidar;
+	DataAnalysis::CameraMock camera;
+	Autonomous::RobotMock autonomousRobot;
+	FieldImpl field(odometry, lidar, camera, autonomousRobot);
+
+	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(0, -0.1), 0.1));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(5.3, 1.5), 0.1));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(3, 1.5), 0.1));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(2, 1.7), 0.1));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(2.5, 2), 0.1));
+	lidar.setAllObjects(lidarObjects);
+	DataAnalysis::CameraObjects cameraObjects;
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorUnknown, Point(0, -0.1)));
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorUnknown, Point(5.3, 1.5)));
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorUnknown, Point(3, 1.5)));
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorUnknown, Point(2, 1.7)));
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(2.5, 2)));
+	camera.setAllObjects(cameraObjects);
+
+	field.update();
+	field.update();
+
+	CPPUNIT_ASSERT_EQUAL((size_t)18, field.getTargetsForSearchingPucks().size());
+}
+
 void FieldTest::detectTeamColorWithGoalInFront_yellowMuchBiggerBlue_teamYellow()
 {
 	DataAnalysis::OdometryMock odometry;
