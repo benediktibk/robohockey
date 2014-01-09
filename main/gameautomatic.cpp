@@ -7,7 +7,6 @@
 #include "layer/autonomous/robot.h"
 #include "common/console.h"
 #include <iostream>
-#include <sstream>
 
 using namespace std;
 using namespace RoboHockey;
@@ -58,9 +57,7 @@ void GameAutomatic::executeRobotControl()
 	if(m_oldString != m_stateMachine->getNameOfCurrentState())
 	{
 		m_oldString = m_stateMachine->getNameOfCurrentState();
-		stringstream stream;
-		stream << "current state: " << m_stateMachine->getNameOfCurrentState();
-		logToConsole(stream.str());
+		cout << "current state: " << m_stateMachine->getNameOfCurrentState() << endl;
 	}
 
 	if (guiEnabled() && logMessagesEnabled())
