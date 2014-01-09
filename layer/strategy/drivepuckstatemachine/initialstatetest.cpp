@@ -8,7 +8,7 @@
 #include "layer/strategy/common/refereemock.h"
 #include "layer/autonomous/robotmock.h"
 #include "layer/autonomous/fieldmock.h"
-#include "layer/strategy/common/colordependendpucktargetfetchermock.h"
+#include "layer/strategy/common/colordependentpucktargetfetchermock.h"
 
 using namespace RoboHockey::Layer::Strategy::Common;
 using namespace RoboHockey::Layer::Strategy::DrivePuckStateMachine;
@@ -19,7 +19,7 @@ void InitialStateTest::nextState_puckCollected_nextStateIsLeavePuck()
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	ColorDependendPuckTargetFetcherMock drivePuck;
+	ColorDependentPuckTargetFetcherMock drivePuck;
 	robot.setPuckCollected(true);
 	InitialState initialState(robot, field, referee, drivePuck);
 	State *state;
@@ -35,7 +35,7 @@ void InitialStateTest::nextState_numberOfKnownPucksIs0_nextStateIsFindPuck()
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	ColorDependendPuckTargetFetcherMock drivePuck;
+	ColorDependentPuckTargetFetcherMock drivePuck;
 	InitialState initialState(robot, field, referee, drivePuck);
 	State *state;
 	state = initialState.nextState();
@@ -50,7 +50,7 @@ void InitialStateTest::nextState_numberOfKnownPucksIs2_nextStateIsDriveToCollect
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	ColorDependendPuckTargetFetcherMock drivePuck;
+	ColorDependentPuckTargetFetcherMock drivePuck;
 	drivePuck.setNumberOfKnownPucksNotInTarget(2);
 	InitialState initialState(robot, field, referee, drivePuck);
 	State *state;

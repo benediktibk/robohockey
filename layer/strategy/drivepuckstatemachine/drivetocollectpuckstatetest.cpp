@@ -8,7 +8,7 @@
 #include "layer/strategy/common/refereemock.h"
 #include "layer/autonomous/robotmock.h"
 #include "layer/autonomous/fieldmock.h"
-#include "layer/strategy/common/colordependendpucktargetfetchermock.h"
+#include "layer/strategy/common/colordependentpucktargetfetchermock.h"
 
 using namespace RoboHockey::Layer::Strategy::Common;
 using namespace RoboHockey::Layer::Strategy::DrivePuckStateMachine;
@@ -19,7 +19,7 @@ void DriveToCollectPuckStateTest::nextState_numberOfKnownPucksIs0_nextStateIsFin
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	ColorDependendPuckTargetFetcherMock drivePuck;
+	ColorDependentPuckTargetFetcherMock drivePuck;
 	DriveToCollectPuckState driveToCollectPuckState(robot, field, referee, drivePuck);
 	State *state;
 	state = driveToCollectPuckState.nextState();
@@ -34,7 +34,7 @@ void DriveToCollectPuckStateTest::nextState_reachedTarget_nextStateIsCollectPuck
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	ColorDependendPuckTargetFetcherMock drivePuck;
+	ColorDependentPuckTargetFetcherMock drivePuck;
 	drivePuck.setNumberOfKnownPucksNotInTarget(2);
 	robot.setReachedTarget(true);
 	DriveToCollectPuckState driveToCollectPuckState(robot, field, referee, drivePuck);
@@ -54,7 +54,7 @@ void DriveToCollectPuckStateTest::nextState_canReachTarget_nextStateIs0()
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	ColorDependendPuckTargetFetcherMock drivePuck;
+	ColorDependentPuckTargetFetcherMock drivePuck;
 	drivePuck.setNumberOfKnownPucksNotInTarget(2);
 	DriveToCollectPuckState driveToCollectPuckState(robot, field, referee, drivePuck);
 	State *driveToState;
@@ -72,7 +72,7 @@ void DriveToCollectPuckStateTest::nextState_cantReachTarget_nextStateIsInitialSt
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	ColorDependendPuckTargetFetcherMock drivePuck;
+	ColorDependentPuckTargetFetcherMock drivePuck;
 	drivePuck.setNumberOfKnownPucksNotInTarget(2);
 	robot.setCantReachedTarget(true);
 	DriveToCollectPuckState driveToCollectPuckState(robot, field, referee, drivePuck);

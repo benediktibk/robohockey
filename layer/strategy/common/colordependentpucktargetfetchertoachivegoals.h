@@ -1,7 +1,7 @@
-#ifndef ROBOHOCKEY_LAYER_STRATEGY_COMMON_COLORDEPENDENDPUCKTARGETFETCHERTOACHIVEGOALS_H
-#define ROBOHOCKEY_LAYER_STRATEGY_COMMON_COLORDEPENDENDPUCKTARGETFETCHERTOACHIVEGOALS_H
+#ifndef ROBOHOCKEY_LAYER_STRATEGY_COMMON_COLORDEPENDENTPUCKTARGETFETCHERTOACHIVEGOALS_H
+#define ROBOHOCKEY_LAYER_STRATEGY_COMMON_COLORDEPENDENTPUCKTARGETFETCHERTOACHIVEGOALS_H
 
-#include "layer/strategy/common/colordependendpucktargetfetcher.h"
+#include "layer/strategy/common/colordependentpucktargetfetcher.h"
 #include "layer/autonomous/field.h"
 
 namespace RoboHockey
@@ -12,11 +12,11 @@ namespace Strategy
 {
 namespace Common
 {
-	class ColorDependendPuckTargetFetcherToAchiveGoals :
-			public ColorDependendPuckTargetFetcher
+	class ColorDependentPuckTargetFetcherToAchiveGoals :
+			public ColorDependentPuckTargetFetcher
 	{
 	public:
-		ColorDependendPuckTargetFetcherToAchiveGoals(const Autonomous::Field &field);
+		ColorDependentPuckTargetFetcherToAchiveGoals(const Autonomous::Field &field);
 
 		virtual std::list<RoboHockey::Common::RobotPosition> getTargetPositions() const;
 		virtual std::list<RoboHockey::Common::RobotPosition> getPositionsToCollectPuck() const;
