@@ -768,7 +768,7 @@ bool FieldImpl::tryToMergeLidarAndFieldObject(FieldObject &fieldObject, const Da
 
 bool FieldImpl::couldBeTheSameObject(const Circle &firstObject, const Circle &secondObject) const
 {
-	Compare positionCompare(0.15);
+	Compare positionCompare(0.11);
 	return positionCompare.isFuzzyEqual(firstObject.getCenter(), secondObject.getCenter());
 }
 
