@@ -256,11 +256,13 @@ list<RobotPosition> FieldImpl::getTargetsForSearchingPucks() const
 
 	RandomDecision decider(0.5);
 	double distanceFromRobotToObject = 0.50;
+	vector<FieldObject> interchangedFieldObjects = getObjectsWithColorOrderdByDistance(FieldColorUnknown, m_position->getPosition());
+	random_shuffle(interchangedFieldObjects.begin(), interchangedFieldObjects.end());
 
-	for (vector<FieldObject>::const_iterator i = m_usefulFieldObjects.begin(); i != m_usefulFieldObjects.end(); ++i)
+	for (vector<FieldObject>::const_iterator i = interchangedFieldObjects.begin(); i != interchangedFieldObjects.end(); ++i)
 	{
 		const FieldObject &fieldObject = *i;
-		if(fieldObject.getColor() == FieldColorUnknown && neutralSector.isInside(fieldObject.getCircle().getCenter(), 0.01))
+		if(neutralSector.isInside(fieldObject.getCircle().getCenter(), 0.01))
 		{
 			list<RobotPosition> currentList;
 			currentList = getTargetsForCollectingOnePuckOrSearchingForColorOfPuck(fieldObject.getCircle().getCenter());
@@ -270,7 +272,7 @@ list<RobotPosition> FieldImpl::getTargetsForSearchingPucks() const
 			else
 				unknownTargetsInNeutralSector.splice((unknownTargetsInNeutralSector.end()), currentList);
 		}
-		else if(fieldObject.getColor() == FieldColorUnknown && fieldSector.isInside(fieldObject.getCircle().getCenter(), 0.01))
+		else if(fieldSector.isInside(fieldObject.getCircle().getCenter(), 0.01))
 		{
 			list<RobotPosition> currentList;
 			currentList = getTargetsForCollectingOnePuckOrSearchingForColorOfPuck(fieldObject.getCircle().getCenter());
@@ -341,26 +343,22 @@ list<RobotPosition> FieldImpl::getTargetsForHidingEnemyPucks() const
 
 list<RobotPosition> FieldImpl::getTargetsForCollectingOnePuck(FieldColor puckColor) const
 {
-	RandomDecision decider(0.5);
 	list<RobotPosition> targetsToCollect;
 	list<RobotPosition> listToArrange;
 	Rectangle sectorOfGoal(Point(4.16,1), Point(4.59, 2));
 	Rectangle sectorOfField(Point(0, 0), Point(5,3));
+	vector<FieldObject> targetObjects = getObjectsWithColorOrderdByDistance(puckColor, m_position->getPosition());
 
-	for (vector<FieldObject>::const_iterator i = m_usefulFieldObjects.begin(); i != m_usefulFieldObjects.end(); ++i)
+
+	for (vector<FieldObject>::const_iterator i =targetObjects.begin(); i != targetObjects.end(); ++i)
 	{
 		const FieldObject &fieldObject = *i;
 
-		if (fieldObject.getColor() == puckColor && puckColor != FieldColorUnknown
-				&& sectorOfGoal.isInside(fieldObject.getCircle().getCenter(), 0.01) == false
+		if (sectorOfGoal.isInside(fieldObject.getCircle().getCenter(), 0.01) == false
 				&& sectorOfField.isInside(fieldObject.getCircle().getCenter(), 0.01))
 		{
 			listToArrange = getTargetsForCollectingOnePuckOrSearchingForColorOfPuck(fieldObject.getCircle().getCenter());
-
-			if(decider.decide())
-				targetsToCollect.splice(targetsToCollect.begin(), listToArrange);
-			else
-				targetsToCollect.splice((targetsToCollect.end()), listToArrange);
+			targetsToCollect.splice((targetsToCollect.end()), listToArrange);
 		}
 	}
 
