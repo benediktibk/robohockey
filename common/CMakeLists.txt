@@ -16,6 +16,7 @@ set(COMMON_SRC
 	pointdistancecompare.cpp
 	timesmoothedboolean.cpp
 	stopwatch.cpp
+	segfaultstacktraceprinter.cpp
 )
 
 set(COMMON_TEST_SRC

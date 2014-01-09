@@ -11,6 +11,7 @@ namespace RoboHockey
 namespace Common
 {
 	class WatchImpl;
+	class SegFaultStackTracePrinter;
 }
 
 namespace Layer
@@ -68,6 +69,7 @@ namespace Main
 		unsigned int m_blueObjectCount;
 		unsigned int m_yellowObjectCount;
 		unsigned int m_greenObjectCount;
+		Common::SegFaultStackTracePrinter *m_stackTracePrinter;
 	};
 }
 }

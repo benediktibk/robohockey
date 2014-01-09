@@ -1,5 +1,6 @@
 #include "main/game.h"
 #include "common/watchimpl.h"
+#include "common/segfaultstacktraceprinter.h"
 #include "layer/dataanalysis/dataanalyserimpl.h"
 #include "layer/hardware/robotimpl.h"
 #include "layer/autonomous/robotimpl.h"
@@ -28,7 +29,8 @@ Game::Game(int argc, char **argv) :
 	m_loopTimeAverage(0),
 	m_blueObjectCount(0),
 	m_yellowObjectCount(0),
-	m_greenObjectCount(0)
+	m_greenObjectCount(0),
+	m_stackTracePrinter(new SegFaultStackTracePrinter())
 {
 
 	string playerServer = "localhost";
@@ -88,6 +90,8 @@ Game::~Game()
 	m_referee = 0;
 	delete m_timer;
 	m_timer = 0;
+	delete m_stackTracePrinter;
+	m_stackTracePrinter = 0;
 }
 
 bool Game::guiEnabled()
