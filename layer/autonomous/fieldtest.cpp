@@ -2095,7 +2095,7 @@ void FieldTest::getTargetsForSearchingPucks_twoObjectsWithUnknownColor_numberOfP
 	field.update();
 	field.update();
 
-	CPPUNIT_ASSERT_EQUAL((size_t)18, field.getTargetsForSearchingPucks().size());
+	CPPUNIT_ASSERT_EQUAL((size_t)21, field.getTargetsForSearchingPucks().size());
 }
 
 void FieldTest::getTargetsForSearchingPucks_threeObjectsWithUnknownColorNotInField_numberOfPositions10()
@@ -2120,7 +2120,7 @@ void FieldTest::getTargetsForSearchingPucks_threeObjectsWithUnknownColorNotInFie
 	field.update();
 	field.update();
 
-	CPPUNIT_ASSERT_EQUAL((size_t)10, field.getTargetsForSearchingPucks().size());
+	CPPUNIT_ASSERT_EQUAL((size_t)13, field.getTargetsForSearchingPucks().size());
 }
 
 void FieldTest::getTargetsForSearchungPucks_fourObjectsWithUnknownColorAndOneObjectWithKnownColorAndTwoPucksWithUnknownColorNotInField_numberOfPositions18()
@@ -2149,7 +2149,7 @@ void FieldTest::getTargetsForSearchungPucks_fourObjectsWithUnknownColorAndOneObj
 	field.update();
 	field.update();
 
-	CPPUNIT_ASSERT_EQUAL((size_t)18, field.getTargetsForSearchingPucks().size());
+	CPPUNIT_ASSERT_EQUAL((size_t)21, field.getTargetsForSearchingPucks().size());
 }
 
 void FieldTest::detectTeamColorWithGoalInFront_yellowMuchBiggerBlue_teamYellow()

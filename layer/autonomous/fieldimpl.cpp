@@ -232,9 +232,11 @@ list<RobotPosition> FieldImpl::getTargetsForFinalPosition() const
 list<RobotPosition> FieldImpl::getTargetsForSearchingPucks() const
 {
 	vector<RobotPosition> targetVector2;
+	vector<RobotPosition> targetVector4;
 	list<RobotPosition> targetList;
 	list<RobotPosition> targetList2(10);
 	list<RobotPosition> targetList3;
+	list<RobotPosition> targetList4;
 	RandomDecision decider(0.5);
 	Rectangle neutralSector(Point(5.0/3.0, 0.1), Point(10.0/3.0, 2.9));
 	Rectangle neutralSector2(Point(0.1, 0.1), Point(4.9, 2.9));
@@ -351,12 +353,15 @@ list<RobotPosition> FieldImpl::getTargetsForSearchingPucks() const
 	targetVector2.push_back(RobotPosition( Point(1.4, 0.6), Angle()));
 	targetVector2.push_back(RobotPosition( Point(2.5, 0.7), Angle::getThreeQuarterRotation()));
 
+	targetList4.push_back(RobotPosition( Point(4.17 - distanceFromRobotToObject, 1.50), Angle()));
+	targetList4.push_back(RobotPosition( Point(4.17 - distanceFromRobotToObject, 1.25), Angle()));
+	targetList4.push_back(RobotPosition( Point(4.17 - distanceFromRobotToObject, 1.75), Angle()));
 
 	random_shuffle(targetVector2.begin(), targetVector2.end());
-
 	copy(targetVector2.begin(), targetVector2.end(), targetList2.begin());
 
 	targetList.splice(targetList.end(), targetList3);
+	targetList.splice(targetList.end(), targetList4);
 	targetList.splice((targetList.end()), targetList2);
 
 	return targetList;
