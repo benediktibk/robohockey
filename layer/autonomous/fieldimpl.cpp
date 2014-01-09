@@ -147,8 +147,12 @@ void FieldImpl::detectTeamColorWithGoalInFront()
 
 	double blueGoal = m_camera->getProbabilityForBlueGoal();
 	double yellowGoal = m_camera->getProbabilityForYellowGoal();
+	Compare compare(0.1);
 
-	if(blueGoal > yellowGoal)
+	//! The field should not make a strategic decision, therefore it does not decide on the team color if it is not clear.
+	if (compare.isFuzzyEqual(blueGoal, yellowGoal))
+		m_teamColor = FieldColorUnknown;
+	else if(blueGoal > yellowGoal)
 		m_teamColor = FieldColorBlue;
 	else
 		m_teamColor = FieldColorYellow;

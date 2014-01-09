@@ -2116,7 +2116,7 @@ void FieldTest::detectTeamColorWithGoalInFront_yellowAndBlueEqual_teamNotUnknown
 
 	field.detectTeamColorWithGoalInFront();
 
-	CPPUNIT_ASSERT(FieldColorUnknown != field.getOwnTeamColor());
+	CPPUNIT_ASSERT_EQUAL(FieldColorUnknown, field.getOwnTeamColor());
 }
 
 void FieldTest::getNewOriginFromFieldDetection_realWorldExample1_correctNewOrigin()
