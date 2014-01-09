@@ -227,6 +227,7 @@ list<RobotPosition> FieldImpl::getTargetsForSearchingPucks() const
 		{
 			list<RobotPosition> listToArrange(4);
 			vector<RobotPosition> targetVector;
+			vector<RobotPosition> targetVector3;
 			Angle angle1 = angle0 + Angle::convertFromDegreeToRadiant(90);
 			Angle angle2 = angle0 + Angle::convertFromDegreeToRadiant(180);
 			Angle angle3 = angle0 + Angle::convertFromDegreeToRadiant(270);
@@ -248,12 +249,14 @@ list<RobotPosition> FieldImpl::getTargetsForSearchingPucks() const
 			point3 = point3 + fieldObject.getCircle().getCenter();
 
 			targetVector.push_back(RobotPosition(point0, angle0));
-			targetVector.push_back(RobotPosition(point1, angle1));
+			targetVector3.push_back(RobotPosition(point1, angle1));
 			targetVector.push_back(RobotPosition(point2, angle2));
-			targetVector.push_back(RobotPosition(point3, angle3));
+			targetVector3.push_back(RobotPosition(point3, angle3));
 
 			random_shuffle(targetVector.begin(), targetVector.end());
+			random_shuffle(targetVector3.begin(), targetVector3.end());
 
+			copy(targetVector3.begin(), targetVector3.end(), listToArrange.begin());
 			copy(targetVector.begin(), targetVector.end(), listToArrange.begin());
 
 			if(decider.decide())
@@ -263,16 +266,17 @@ list<RobotPosition> FieldImpl::getTargetsForSearchingPucks() const
 		}
 	}
 
-	targetVector2.push_back(RobotPosition( Point(1.4, 0.6), Angle()));
 	targetVector2.push_back(RobotPosition( Point(1.4, 2.4), Angle()));
 	targetVector2.push_back(RobotPosition( Point(2.0, 1.0), Angle()));
 	targetVector2.push_back(RobotPosition( Point(2.0, 2.0), Angle()));
-	targetVector2.push_back(RobotPosition( Point(2.5, 2.2), Angle::getQuarterRotation() * 3));
+	targetVector2.push_back(RobotPosition( Point(2.5, 2.2), Angle::getHalfRotation()));
 	targetVector2.push_back(RobotPosition( Point(2.5, 2.2), Angle()));
 	targetVector2.push_back(RobotPosition( Point(2.5, 0.8), Angle()));
-	targetVector2.push_back(RobotPosition( Point(2.5, 0.7), Angle::getQuarterRotation()));
 	targetVector2.push_back(RobotPosition( Point(3.0, 1.5), Angle::getEighthRotation() + Angle::getQuarterRotation()));
 	targetVector2.push_back(RobotPosition( Point(3.0, 1.5), Angle::getHalfRotation() + Angle::getQuarterRotation()));
+	targetVector2.push_back(RobotPosition( Point(1.4, 0.6), Angle()));
+	targetVector2.push_back(RobotPosition( Point(2.5, 0.7), Angle::getQuarterRotation()));
+
 
 	random_shuffle(targetVector2.begin(), targetVector2.end());
 
