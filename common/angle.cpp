@@ -64,6 +64,12 @@ void Angle::abs()
 	fixRange();
 }
 
+bool Angle::isObtuse() const
+{
+	double value = fabs(m_value);
+	return value > M_PI/2;
+}
+
 Angle Angle::operator+(const Angle &rhs) const
 {
 	return Angle(getValueBetweenMinusPiAndPi() + rhs.getValueBetweenMinusPiAndPi());

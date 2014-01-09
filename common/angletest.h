@@ -34,6 +34,12 @@ namespace Common
 		CPPUNIT_TEST(abs_minus1_valueIs1);
 		CPPUNIT_TEST(getEighthRotation_empty_valueIsPiQuarter);
 		CPPUNIT_TEST(getThreeQuarterRotation_empty_valueIsThreeHalfPi);
+		CPPUNIT_TEST(isObtuse_0_false);
+		CPPUNIT_TEST(isObtuse_pi_true);
+		CPPUNIT_TEST(isObtuse_piQuarter_false);
+		CPPUNIT_TEST(isObtuse_minusPiQuarter_false);
+		CPPUNIT_TEST(isObtuse_piThreeQuarter_true);
+		CPPUNIT_TEST(isObtuse_minusPiThreeQuarter_true);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
@@ -59,6 +65,12 @@ namespace Common
 		void abs_minus1_valueIs1();
 		void getEighthRotation_empty_valueIsPiQuarter();
 		void getThreeQuarterRotation_empty_valueIsThreeHalfPi();
+		void isObtuse_0_false();
+		void isObtuse_pi_true();
+		void isObtuse_piQuarter_false();
+		void isObtuse_minusPiQuarter_false();
+		void isObtuse_piThreeQuarter_true();
+		void isObtuse_minusPiThreeQuarter_true();
 	};
 }
 }

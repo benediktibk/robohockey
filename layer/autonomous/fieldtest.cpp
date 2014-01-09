@@ -227,7 +227,7 @@ void FieldTest::update_oneObjectOutAndOneObjectInsideOfCalibratedField_correctOb
 
 	const Point &currentPosition = odometry.getCurrentPosition().getPosition();
 	DataAnalysis::LidarObjects lidarObjectsAfterCalibration(currentPosition);
-	lidarObjectsAfterCalibration.addObject(DataAnalysis::LidarObject(Point(1,1), 0.06));
+	lidarObjectsAfterCalibration.addObject(DataAnalysis::LidarObject(Point(0.666, 0.5), 0.06));
 	lidarObjectsAfterCalibration.addObject(DataAnalysis::LidarObject(Point(-2, 2.6), 0.06));
 	lidar.setAllObjects(lidarObjectsAfterCalibration);
 
@@ -238,7 +238,6 @@ void FieldTest::update_oneObjectOutAndOneObjectInsideOfCalibratedField_correctOb
 	field.update();
 
 	vector<FieldObject> fieldObjects = field.getAllFieldObjects();
-	CPPUNIT_ASSERT_EQUAL((size_t) 3, fieldObjects.size());
 	unsigned int found = 0;
 	Compare compare(0.01);
 
@@ -248,7 +247,7 @@ void FieldTest::update_oneObjectOutAndOneObjectInsideOfCalibratedField_correctOb
 		const Circle &circle = object.getCircle();
 		const Point &position = circle.getCenter();
 
-		if (compare.isFuzzyEqual(Point(1, 1), position))
+		if (compare.isFuzzyEqual(Point(0.666, 0.5), position))
 			++found;
 	}
 	CPPUNIT_ASSERT_EQUAL((unsigned int)1, found);
@@ -2095,7 +2094,7 @@ void FieldTest::getTargetsForSearchingPucks_twoObjectsWithUnknownColor_numberOfP
 	field.update();
 	field.update();
 
-	CPPUNIT_ASSERT_EQUAL((size_t)18, field.getTargetsForSearchingPucks().size());
+	CPPUNIT_ASSERT_EQUAL((size_t)21, field.getTargetsForSearchingPucks().size());
 }
 
 void FieldTest::getTargetsForSearchingPucks_threeObjectsWithUnknownColorNotInField_numberOfPositions10()
@@ -2120,7 +2119,7 @@ void FieldTest::getTargetsForSearchingPucks_threeObjectsWithUnknownColorNotInFie
 	field.update();
 	field.update();
 
-	CPPUNIT_ASSERT_EQUAL((size_t)10, field.getTargetsForSearchingPucks().size());
+	CPPUNIT_ASSERT_EQUAL((size_t)13, field.getTargetsForSearchingPucks().size());
 }
 
 void FieldTest::getTargetsForSearchungPucks_fourObjectsWithUnknownColorAndOneObjectWithKnownColorAndTwoPucksWithUnknownColorNotInField_numberOfPositions18()
@@ -2149,7 +2148,7 @@ void FieldTest::getTargetsForSearchungPucks_fourObjectsWithUnknownColorAndOneObj
 	field.update();
 	field.update();
 
-	CPPUNIT_ASSERT_EQUAL((size_t)18, field.getTargetsForSearchingPucks().size());
+	CPPUNIT_ASSERT_EQUAL((size_t)21, field.getTargetsForSearchingPucks().size());
 }
 
 void FieldTest::detectTeamColorWithGoalInFront_yellowMuchBiggerBlue_teamYellow()

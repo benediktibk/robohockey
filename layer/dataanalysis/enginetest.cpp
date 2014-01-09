@@ -125,6 +125,31 @@ void EngineTest::goToStraight_movingFinishedFromPreviousMovement_lastSpeedIsNotZ
 	CPPUNIT_ASSERT(hardwareEngine.getLastMagnitude() > 0.1);
 }
 
+void EngineTest::goToStraight_droveToFar_lastRotationAndMagnitudeIsZero()
+{
+	Hardware::EngineMock hardwareEngine;
+	Hardware::OdometryMock hardwareOdometry;
+	EngineImpl engine(hardwareEngine, hardwareOdometry);
+	hardwareOdometry.setCurrentPosition(RobotPosition(Point(0, 0), 0));
+
+	hardwareEngine.setIsMoving(false);
+	engine.updateSensorData();
+	engine.goToStraight(Point(1, 0));
+	engine.updateSpeedAndRotation();
+	hardwareEngine.setIsMoving(true);
+	engine.updateSensorData();
+	engine.updateSpeedAndRotation();
+	hardwareOdometry.setCurrentPosition(RobotPosition(Point(0.9, 0), 0));
+	engine.updateSensorData();
+	engine.updateSpeedAndRotation();
+	hardwareOdometry.setCurrentPosition(RobotPosition(Point(2, 0), 0));
+	engine.updateSensorData();
+	engine.updateSpeedAndRotation();
+
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(0, hardwareEngine.getLastMagnitude(), 0.000001);
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(0, hardwareEngine.getLastRotation(), 0.000001);
+}
+
 void EngineTest::stop_movingSomewhere_lastMagnitudeIsZero()
 {
 	Hardware::EngineMock hardwareEngine;
