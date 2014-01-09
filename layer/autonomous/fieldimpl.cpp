@@ -602,8 +602,8 @@ vector<RobotPosition> FieldImpl::getTargetsForWaitingPhase() const
 {
 	vector<RobotPosition> targetVector;
 	targetVector.push_back(RobotPosition(Point(1.4, 2.25), Angle()));
-	targetVector.push_back(RobotPosition(Point(1.4, 0.75), Angle()));
 	targetVector.push_back(RobotPosition(Point(1.4, 1.50), Angle()));
+	targetVector.push_back(RobotPosition(Point(1.4, 0.75), Angle()));
 
 	return targetVector;
 }
