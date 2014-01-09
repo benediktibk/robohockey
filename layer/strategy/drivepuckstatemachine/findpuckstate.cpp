@@ -10,7 +10,7 @@ using namespace RoboHockey::Layer::Strategy::Common;
 using namespace RoboHockey::Layer::Strategy::DrivePuckStateMachine;
 using namespace RoboHockey::Layer::Autonomous;
 
-FindPuckState::FindPuckState(Robot &robot, Field &field, Referee &referee, const DrivePuck &drivePuck):
+FindPuckState::FindPuckState(Robot &robot, Field &field, Referee &referee, const ColorDependendPuckTargetFetcher &drivePuck):
 	State(robot, field, referee, true),
 	m_drivePuck(drivePuck)
 { }

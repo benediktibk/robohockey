@@ -1,5 +1,5 @@
-#ifndef ROBOHOCKEY_LAYER_STRATEGY_COMMON_DRIVEPUCKTOACHIVEGOALSTEST_H
-#define ROBOHOCKEY_LAYER_STRATEGY_COMMON_DRIVEPUCKTOACHIVEGOALSTEST_H
+#ifndef ROBOHOCKEY_LAYER_STRATEGY_COMMON_COLORDEPENDENDPUCKTARGETFETCHERTOACHIVEGOALSTEST_H
+#define ROBOHOCKEY_LAYER_STRATEGY_COMMON_COLORDEPENDENDPUCKTARGETFETCHERTOACHIVEGOALSTEST_H
 
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
@@ -12,10 +12,10 @@ namespace Strategy
 {
 namespace Common
 {
-	class DrivePuckToAchiveGoalsTest :
+	class ColorDependendPuckTargetFetcherToAchiveGoalsTest :
 			public CPPUNIT_NS::TestFixture
 	{
-		CPPUNIT_TEST_SUITE(DrivePuckToAchiveGoalsTest);
+		CPPUNIT_TEST_SUITE(ColorDependendPuckTargetFetcherToAchiveGoalsTest);
 		CPPUNIT_TEST(getColorOfTargetPucks_ownColorIsYellow_resultIsYellow);
 		CPPUNIT_TEST(getNumberOfKnownPucksNotInTarget_oneKnownPuck_resultIs1);
 		CPPUNIT_TEST(getNumberOfKnownPucksNotInTarget_threePucksOneInGoal_resultIs2);

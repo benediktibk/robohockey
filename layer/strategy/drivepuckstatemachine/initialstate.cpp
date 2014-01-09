@@ -9,7 +9,7 @@ using namespace RoboHockey::Layer::Strategy::Common;
 using namespace RoboHockey::Layer::Strategy::DrivePuckStateMachine;
 using namespace RoboHockey::Layer::Autonomous;
 
-InitialState::InitialState(Robot &robot, Field &field, Referee &referee, const DrivePuck &drivePuck) :
+InitialState::InitialState(Robot &robot, Field &field, Referee &referee, const ColorDependendPuckTargetFetcher &drivePuck) :
 	State(robot, field, referee, false),
 	m_drivePuck(drivePuck)
 { }

@@ -43,8 +43,8 @@
 #include "layer/view/modeltest.h"
 #include "layer/strategy/common/statemachinetest.h"
 #include "layer/strategy/common/drivetostatetest.h"
-#include "layer/strategy/common/drivepucktoachivegoalstest.h"
-#include "layer/strategy/common/drivepucktohidepuckstest.h"
+#include "layer/strategy/common/colordependendpucktargetfetchertoachivegoalstest.h"
+#include "layer/strategy/common/colordependendpucktargetfetchertohidepuckstest.h"
 #include "layer/strategy/common/statetest.h"
 #include "layer/strategy/mainstatemachine/initialstatetest.h"
 #include "layer/strategy/mainstatemachine/calibratetest.h"
@@ -110,8 +110,8 @@ CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Autonomous::RoutingResultTest
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::View::ModelTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Strategy::Common::StateMachineTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Strategy::Common::DriveToStateTest);
-CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Strategy::Common::DrivePuckToAchiveGoalsTest);
-CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Strategy::Common::DrivePuckToHidePucksTest);
+CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Strategy::Common::ColorDependendPuckTargetFetcherToAchiveGoalsTest);
+CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Strategy::Common::ColorDependendPuckTargetFetcherToHidePucksTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Strategy::Common::StateTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Strategy::Common::WaitCyclesStateTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Strategy::MainStateMachine::InitialStateTest);

@@ -2,7 +2,7 @@
 #define ROBOHOCKEY_LAYER_STRATEGY_DRIVEPUCKSTATEMACHINE_LEAVEPUCKSTATE_H
 
 #include "layer/strategy/common/state.h"
-#include "layer/strategy/common/drivepuck.h"
+#include "layer/strategy/common/colordependendpucktargetfetcher.h"
 
 namespace RoboHockey
 {
@@ -16,7 +16,7 @@ namespace DrivePuckStateMachine
 			public Common::State
 	{
 	public:
-		LeavePuckState(Autonomous::Robot &robot, Autonomous::Field &field, Common::Referee &referee, const Common::DrivePuck &drivePuck);
+		LeavePuckState(Autonomous::Robot &robot, Autonomous::Field &field, Common::Referee &referee, const Common::ColorDependendPuckTargetFetcher &drivePuck);
 
 		virtual State* nextState();
 		virtual std::string getName();
@@ -25,7 +25,7 @@ namespace DrivePuckStateMachine
 		virtual void updateInternal();
 
 	private:
-		const Common::DrivePuck &m_drivePuck;
+		const Common::ColorDependendPuckTargetFetcher &m_drivePuck;
 };
 }
 }
