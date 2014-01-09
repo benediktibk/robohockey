@@ -26,7 +26,6 @@ namespace DrivePuckStateMachine
 
 	private:
 		const Common::ColorDependentPuckTargetFetcher &m_drivePuck;
-		bool m_isPuckNotCollectable;
 };
 }
 }
