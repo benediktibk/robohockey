@@ -170,20 +170,35 @@ list<RobotPosition> FieldImpl::getTargetsForScoringGoals() const
 {
 	list<RobotPosition> targetList;
 
-	targetList.push_front(RobotPosition( Point(5 - 5.0/8.0 - 0.14, 1.3), Angle() ));
-	targetList.push_back(RobotPosition( Point(5 - 5.0/8.0 + 0.14, 1.3), Angle::getHalfRotation() ));
-	targetList.push_back(RobotPosition( Point(5 - 5.0/8.0, 1.3 + 0.14), Angle::getThreeQuarterRotation()));
-	targetList.push_back(RobotPosition( Point(5 - 5.0/8.0, 1.3 - 0.14), Angle::getQuarterRotation() ));
+	targetList.push_front(RobotPosition( Point(5 - 5.0/8.0 - 0.14, 1.2), Angle() ));
+	targetList.push_back(RobotPosition( Point(5 - 5.0/8.0 + 0.14, 1.2), Angle::getHalfRotation() ));
+	targetList.push_back(RobotPosition( Point(5 - 5.0/8.0, 1.2 + 0.14), Angle::getThreeQuarterRotation()));
+	targetList.push_back(RobotPosition( Point(5 - 5.0/8.0, 1.2 - 0.14), Angle::getQuarterRotation() ));
 
-	targetList.push_front(RobotPosition( Point(5 - 5.0/8.0 - 0.14, 1.7), Angle() ));
-	targetList.push_back(RobotPosition( Point(5 - 5.0/8.0 + 0.14, 1.7), Angle::getHalfRotation() ));
-	targetList.push_back(RobotPosition( Point(5 - 5.0/8.0, 1.7 + 0.14), Angle::getThreeQuarterRotation()));
-	targetList.push_back(RobotPosition( Point(5 - 5.0/8.0, 1.7 - 0.14), Angle::getQuarterRotation() ));
+	targetList.push_front(RobotPosition( Point(5 - 5.0/8.0 - 0.14, 1.8), Angle() ));
+	targetList.push_back(RobotPosition( Point(5 - 5.0/8.0 + 0.14, 1.8), Angle::getHalfRotation() ));
+	targetList.push_back(RobotPosition( Point(5 - 5.0/8.0, 1.8 + 0.14), Angle::getThreeQuarterRotation()));
+	targetList.push_back(RobotPosition( Point(5 - 5.0/8.0, 1.8 - 0.14), Angle::getQuarterRotation() ));
 
 	targetList.push_front(RobotPosition( Point(5 - 5.0/8.0 - 0.14, 1.5), Angle() ));
 	targetList.push_back(RobotPosition( Point(5 - 5.0/8.0 + 0.14, 1.5), Angle::getHalfRotation() ));
 	targetList.push_back(RobotPosition( Point(5 - 5.0/8.0, 1.5 + 0.14), Angle::getThreeQuarterRotation()));
 	targetList.push_back(RobotPosition( Point(5 - 5.0/8.0, 1.5 - 0.14), Angle::getQuarterRotation() ));
+
+	targetList.push_back(RobotPosition( Point(5 - 0.8 - 0.14, 1.5), Angle() ));
+	targetList.push_back(RobotPosition( Point(5 - 0.8 - 0.14, 1.3), Angle() ));
+	targetList.push_back(RobotPosition( Point(5 - 0.8 - 0.14, 1.7), Angle() ));
+	targetList.push_back(RobotPosition( Point(5 - 0.8 - 0.14, 1.9), Angle() ));
+	targetList.push_back(RobotPosition( Point(5 - 0.8 - 0.14, 1.1), Angle() ));
+
+	targetList.push_back(RobotPosition( Point(5 - 5.0/8.0, 1.1 + 0.14), Angle::getThreeQuarterRotation() ));
+	targetList.push_back(RobotPosition( Point(5 - 5.0/8.0, 1.9 - 0.14), Angle::getQuarterRotation() ));
+
+	targetList.push_back(RobotPosition( Point(5 - 0.45 + 0.14, 1.5), Angle::getHalfRotation() ));
+	targetList.push_back(RobotPosition( Point(5 - 0.45 + 0.14, 1.3), Angle::getHalfRotation() ));
+	targetList.push_back(RobotPosition( Point(5 - 0.45 + 0.14, 1.7), Angle::getHalfRotation() ));
+	targetList.push_back(RobotPosition( Point(5 - 0.45 + 0.14, 1.9), Angle::getHalfRotation() ));
+	targetList.push_back(RobotPosition( Point(5 - 0.45 + 0.14, 1.1), Angle::getHalfRotation() ));
 
 	return targetList;
 }
