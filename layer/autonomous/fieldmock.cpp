@@ -136,6 +136,14 @@ unsigned int FieldMock::getNumberOfHiddenPucks() const
 	return m_hiddenPucks;
 }
 
+unsigned int FieldMock::getNumberOfEstimatedGoals() const
+{
+	return 0;
+}
+
+void FieldMock::increaseNumberOfEstimatedGoals()
+{ }
+
 list<RobotPosition> FieldMock::getTargetsForGoalDetection() const
 {
 	return list<RobotPosition>();

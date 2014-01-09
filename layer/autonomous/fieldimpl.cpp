@@ -26,7 +26,8 @@ FieldImpl::FieldImpl(DataAnalysis::Odometry &odometry, const DataAnalysis::Lidar
 	m_robot(&autonomousRobot),
 	m_position(new Common::RobotPosition(m_odometry->getCurrentPosition())),
 	m_fieldState(FieldStateUnknownPosition),
-	m_teamColor(FieldColorUnknown)
+	m_teamColor(FieldColorUnknown),
+	m_estimatedAchievedGoals(0)
 { }
 
 FieldImpl::~FieldImpl()
@@ -116,6 +117,16 @@ unsigned int FieldImpl::getNumberOfAchievedGoals() const
 unsigned int FieldImpl::getNumberOfHiddenPucks() const
 {
 	return m_hiddenPucks;
+}
+
+unsigned int FieldImpl::getNumberOfEstimatedGoals() const
+{
+	return m_estimatedAchievedGoals;
+}
+
+void FieldImpl::increaseNumberOfEstimatedGoals()
+{
+	++m_estimatedAchievedGoals;
 }
 
 bool FieldImpl::isPointInsideField(const Point &point) const
