@@ -189,3 +189,45 @@ void AngleTest::getThreeQuarterRotation_empty_valueIsThreeHalfPi()
 
 	CPPUNIT_ASSERT_DOUBLES_EQUAL(-M_PI/2, angle.getValueBetweenMinusPiAndPi(), 0.00001);
 }
+
+void AngleTest::isObtuse_0_false()
+{
+	Angle angle(0);
+
+	CPPUNIT_ASSERT(!angle.isObtuse());
+}
+
+void AngleTest::isObtuse_pi_true()
+{
+	Angle angle(Angle::getHalfRotation());
+
+	CPPUNIT_ASSERT(angle.isObtuse());
+}
+
+void AngleTest::isObtuse_piQuarter_false()
+{
+	Angle angle(Angle::getEighthRotation());
+
+	CPPUNIT_ASSERT(!angle.isObtuse());
+}
+
+void AngleTest::isObtuse_minusPiQuarter_false()
+{
+	Angle angle(Angle::getEighthRotation()*(-1));
+
+	CPPUNIT_ASSERT(!angle.isObtuse());
+}
+
+void AngleTest::isObtuse_piThreeQuarter_true()
+{
+	Angle angle(Angle::getEighthRotation()*3);
+
+	CPPUNIT_ASSERT(angle.isObtuse());
+}
+
+void AngleTest::isObtuse_minusPiThreeQuarter_true()
+{
+	Angle angle(Angle::getEighthRotation()*(-3));
+
+	CPPUNIT_ASSERT(angle.isObtuse());
+}
