@@ -249,13 +249,13 @@ list<RobotPosition> FieldImpl::getTargetsForFinalPosition() const
 
 list<RobotPosition> FieldImpl::getTargetsForSearchingPucks() const
 {
-	vector<RobotPosition> randomizeVector;
-	list<RobotPosition> targetList;
-	list<RobotPosition> targetList2;
-	list<RobotPosition> targetList3;
-	RandomDecision decider(0.5);
+	list<RobotPosition> unknownTargetsInNeutralSector;
+	list<RobotPosition> unknownTargetsInField;
+
 	Rectangle neutralSector(Point(5.0/3.0, 0.1), Point(10.0/3.0, 2.9));
-	Rectangle neutralSector2(Point(0.1, 0.1), Point(4.9, 2.9));
+	Rectangle fieldSector(Point(0.1, 0.1), Point(4.9, 2.9));
+
+	RandomDecision decider(0.5);
 	double distanceFromRobotToObject = 0.50;
 
 	for (vector<FieldObject>::const_iterator i = m_usefulFieldObjects.begin(); i != m_usefulFieldObjects.end(); ++i)
@@ -263,47 +263,48 @@ list<RobotPosition> FieldImpl::getTargetsForSearchingPucks() const
 		const FieldObject &fieldObject = *i;
 		if(fieldObject.getColor() == FieldColorUnknown && neutralSector.isInside(fieldObject.getCircle().getCenter(), 0.01))
 		{
-			list<RobotPosition> listToArrange;
-			listToArrange = getTargetsForCollectingOnePuckOrSearchungForColorOfPuck(fieldObject.getCircle().getCenter());
+			list<RobotPosition> currentList;
+			currentList = getTargetsForCollectingOnePuckOrSearchungForColorOfPuck(fieldObject.getCircle().getCenter());
 
 			if(decider.decide())
-				targetList.splice(targetList.begin(), listToArrange);
+				unknownTargetsInNeutralSector.splice(unknownTargetsInNeutralSector.begin(), currentList);
 			else
-				targetList.splice((targetList.end()), listToArrange);
+				unknownTargetsInNeutralSector.splice((unknownTargetsInNeutralSector.end()), currentList);
 		}
-		else if(fieldObject.getColor() == FieldColorUnknown && neutralSector2.isInside(fieldObject.getCircle().getCenter(), 0.01))
+		else if(fieldObject.getColor() == FieldColorUnknown && fieldSector.isInside(fieldObject.getCircle().getCenter(), 0.01))
 		{
-			list<RobotPosition> listToArrange2;
-			listToArrange2 = getTargetsForCollectingOnePuckOrSearchungForColorOfPuck(fieldObject.getCircle().getCenter());
+			list<RobotPosition> currentList;
+			currentList = getTargetsForCollectingOnePuckOrSearchungForColorOfPuck(fieldObject.getCircle().getCenter());
 
 			if(decider.decide())
-				targetList2.splice(targetList2.begin(), listToArrange2);
+				unknownTargetsInField.splice(unknownTargetsInField.begin(), currentList);
 			else
-				targetList2.splice(targetList2.end(), listToArrange2);
+				unknownTargetsInField.splice(unknownTargetsInField.end(), currentList);
 		}
 	}
 
-	randomizeVector.push_back(RobotPosition( Point(1.4, 2.4), Angle()));
-	randomizeVector.push_back(RobotPosition( Point(2.0, 1.0), Angle()));
-	randomizeVector.push_back(RobotPosition( Point(2.0, 2.0), Angle()));
-	randomizeVector.push_back(RobotPosition( Point(2.5, 2.2), Angle::getHalfRotation()));
-	randomizeVector.push_back(RobotPosition( Point(2.5, 2.2), Angle()));
-	randomizeVector.push_back(RobotPosition( Point(2.5, 0.8), Angle()));
-	randomizeVector.push_back(RobotPosition( Point(3.0, 1.5), Angle::getEighthRotation() + Angle::getQuarterRotation()));
-	randomizeVector.push_back(RobotPosition( Point(3.0, 1.5), Angle::getThreeQuarterRotation()));
-	randomizeVector.push_back(RobotPosition( Point(1.4, 0.6), Angle()));
-	randomizeVector.push_back(RobotPosition( Point(2.5, 0.7), Angle::getThreeQuarterRotation()));
+	vector<RobotPosition> randomPostionsVector;
+	randomPostionsVector.push_back(RobotPosition( Point(1.4, 2.4), Angle()));
+	randomPostionsVector.push_back(RobotPosition( Point(2.0, 1.0), Angle()));
+	randomPostionsVector.push_back(RobotPosition( Point(2.0, 2.0), Angle()));
+	randomPostionsVector.push_back(RobotPosition( Point(2.5, 2.2), Angle::getHalfRotation()));
+	randomPostionsVector.push_back(RobotPosition( Point(2.5, 2.2), Angle()));
+	randomPostionsVector.push_back(RobotPosition( Point(2.5, 0.8), Angle()));
+	randomPostionsVector.push_back(RobotPosition( Point(3.0, 1.5), Angle::getEighthRotation() + Angle::getQuarterRotation()));
+	randomPostionsVector.push_back(RobotPosition( Point(3.0, 1.5), Angle::getThreeQuarterRotation()));
+	randomPostionsVector.push_back(RobotPosition( Point(1.4, 0.6), Angle()));
+	randomPostionsVector.push_back(RobotPosition( Point(2.5, 0.7), Angle::getThreeQuarterRotation()));
 
-	random_shuffle(randomizeVector.begin(), randomizeVector.end());
-	targetList3.assign(randomizeVector.begin(), randomizeVector.end());
+	random_shuffle(randomPostionsVector.begin(), randomPostionsVector.end());
+	list<RobotPosition> randomPositionsList(randomPostionsVector.begin(), randomPostionsVector.end());
 
-	targetList.splice(targetList.end(), targetList2);
-	targetList.push_back(RobotPosition( Point(4.17 - distanceFromRobotToObject, 1.50), Angle()));
-	targetList.push_back(RobotPosition( Point(4.17 - distanceFromRobotToObject, 1.25), Angle()));
-	targetList.push_back(RobotPosition( Point(4.17 - distanceFromRobotToObject, 1.75), Angle()));
-	targetList.splice((targetList.end()), targetList3);
+	unknownTargetsInNeutralSector.splice(unknownTargetsInNeutralSector.end(), unknownTargetsInField);
+	unknownTargetsInNeutralSector.push_back(RobotPosition( Point(4.17 - distanceFromRobotToObject, 1.50), Angle()));
+	unknownTargetsInNeutralSector.push_back(RobotPosition( Point(4.17 - distanceFromRobotToObject, 1.25), Angle()));
+	unknownTargetsInNeutralSector.push_back(RobotPosition( Point(4.17 - distanceFromRobotToObject, 1.75), Angle()));
+	unknownTargetsInNeutralSector.splice((unknownTargetsInNeutralSector.end()), randomPositionsList);
 
-	return targetList;
+	return unknownTargetsInNeutralSector;
 }
 
 list<RobotPosition> FieldImpl::getTargetsForHidingEnemyPucks() const
