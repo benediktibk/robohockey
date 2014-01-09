@@ -1311,9 +1311,36 @@ void FieldTest::update_lidarObjectNotSeenFiveTimes_noFieldObjects()
 	field.update();
 	field.update();
 
-
 	vector<FieldObject> fieldObjects = field.getAllFieldObjects();
 	CPPUNIT_ASSERT_EQUAL((size_t)0, fieldObjects.size());
+}
+
+void FieldTest::update_collectedPuckAndMovedForward_oneFieldObjects()
+{
+	DataAnalysis::OdometryMock odometry;
+	DataAnalysis::LidarMock lidar;
+	DataAnalysis::CameraMock camera;
+	Autonomous::RobotMock autonomousRobot;
+	DataAnalysis::LidarObjects objectsPrevious(Point(0, 0));
+	objectsPrevious.addObject(DataAnalysis::LidarObject(Point(0.2, 0), 0.04));
+	DataAnalysis::LidarObjects objectsAfter(Point(0.1, 0));
+	objectsAfter.addObject(DataAnalysis::LidarObject(Point(0.3, 0), 0.04));
+	FieldImpl field(odometry, lidar, camera, autonomousRobot);
+	odometry.setCurrentPosition(RobotPosition(Point(0, 0), 0));
+
+	lidar.setCanBeSeen(true);
+	lidar.setCanBeSeenPartly(true);
+	lidar.setAllObjects(objectsPrevious);
+	field.update();
+	field.update();
+	vector<FieldObject> fieldObjects = field.getAllFieldObjects();
+	CPPUNIT_ASSERT_EQUAL((size_t)1, fieldObjects.size());
+	lidar.setAllObjects(objectsAfter);
+	field.update();
+	field.update();
+
+	fieldObjects = field.getAllFieldObjects();
+	CPPUNIT_ASSERT_EQUAL((size_t)1, fieldObjects.size());
 }
 
 void FieldTest::calibratePosition_noValidPattern_false()
