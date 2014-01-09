@@ -6,6 +6,7 @@
 #include "layer/autonomous/robot.h"
 #include "layer/autonomous/field.h"
 #include <iostream>
+#include <assert.h>
 
 using namespace std;
 using namespace RoboHockey::Layer::Strategy::Common;
@@ -42,12 +43,12 @@ void CollectPuckState::updateInternal()
 
 		if (targetPositions.size() > (size_t) 0)
 		{
-			m_isPuckNotCollectable = false;
 			m_robot.collectPuckInFront(targetPositions.front().getCircle().getCenter());
-		} else
+		}
+		else
 		{
-			m_isPuckNotCollectable = true;
-			cout << "#### NO TARGET PUCKS IN FIELD! ####" << endl;
+			cerr << "#### NO TARGET PUCKS IN FIELD! ####" << endl;
+			assert(false);
 		}
 
 	}
