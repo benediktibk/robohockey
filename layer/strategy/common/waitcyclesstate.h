@@ -16,7 +16,7 @@ namespace Common
 	{
 	public:
 		WaitCyclesState(Autonomous::Robot &robot, Autonomous::Field &field, Common::Referee &referee,
-				  State *stateAfterTargetReached, unsigned int cycles);
+				  State *stateAfterWaitCycles, unsigned int cycles);
 		virtual ~WaitCyclesState();
 
 		virtual State* nextState();

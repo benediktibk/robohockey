@@ -2,6 +2,7 @@
 #include "layer/strategy/drivepuckstatemachine/collectpuckstate.h"
 #include "layer/strategy/drivepuckstatemachine/findpuckstate.h"
 #include "layer/strategy/drivepuckstatemachine/initialstate.h"
+#include "layer/strategy/common/waitcyclesstate.h"
 #include "layer/strategy/common/drivetostate.h"
 #include "layer/strategy/common/referee.h"
 #include "layer/autonomous/robot.h"
@@ -23,7 +24,8 @@ State* DriveToCollectPuckState::nextState()
 	else
 		return new DriveToState(
 					m_robot, m_field, m_referee, m_puckTargetFetcher.getPositionsToCollectPuck(),
-					new CollectPuckState(m_robot, m_field, m_referee, m_puckTargetFetcher),
+					new WaitCyclesState(m_robot, m_field, m_referee,
+							new CollectPuckState(m_robot, m_field, m_referee, m_puckTargetFetcher), 5)	,
 					new InitialState(m_robot, m_field, m_referee, m_puckTargetFetcher));
 }
 
