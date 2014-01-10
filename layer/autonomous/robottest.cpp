@@ -816,7 +816,7 @@ void RobotTest::goTo_firstPointNearlyReachedAndSmallTurnNecessary_lastSpeedIsBig
 
 	double lastSpeed = engine.getLastFinalSpeed();
 	CPPUNIT_ASSERT(!robot.cantReachTarget());
-	CPPUNIT_ASSERT(lastSpeed > 0.3);
+	CPPUNIT_ASSERT(lastSpeed > 0.1);
 }
 
 void RobotTest::goTo_firstPointReachedAndSmallTurnNecessary_noCallsToTurnToTarget()
@@ -2213,7 +2213,7 @@ void RobotTest::calculateFinalSpeedForGoingStraight_quarterRotation_0()
 	CPPUNIT_ASSERT_DOUBLES_EQUAL(0, finalSpeed, 0.0001);
 }
 
-void RobotTest::calculateFinalSpeedForGoingStraight_zeroAngle_valueGreaterOrEqual05()
+void RobotTest::calculateFinalSpeedForGoingStraight_zeroAngle_valueBig()
 {
 	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
 	DataAnalysis::EngineMock &engine = dataAnalyser->getEngineMock();
@@ -2222,7 +2222,7 @@ void RobotTest::calculateFinalSpeedForGoingStraight_zeroAngle_valueGreaterOrEqua
 
 	double finalSpeed = robot.calculateFinalSpeedForGoingStraight(Point(0, 0), Point(1, 1), Point(2, 2));
 
-	CPPUNIT_ASSERT(finalSpeed >= 0.5);
+	CPPUNIT_ASSERT(finalSpeed >= 0.2);
 }
 
 void RobotTest::calculateFinalSpeedForGoingStraight_eighthRotation_greaterThan0()
