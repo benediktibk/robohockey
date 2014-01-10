@@ -25,14 +25,6 @@ bool Path::intersectsWith(const Circle &circle) const
 	return false;
 }
 
-bool Path::intersectsWith(const vector<Circle> &circles) const
-{
-	for (vector<Circle>::const_iterator i = circles.begin(); i != circles.end(); ++i)
-		if (intersectsWith(*i))
-			return true;
-	return false;
-}
-
 bool Path::isCircleCenterOnPath(const Circle &circle) const
 {
 	Point circleCenter = circle.getCenter();

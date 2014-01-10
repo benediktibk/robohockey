@@ -19,7 +19,6 @@ namespace Common
 		Path(const Point &start, const Point &end, double width);
 
 		bool intersectsWith(const Circle &circle) const;
-		bool intersectsWith(const std::vector<Circle> &circles) const;
 		bool isCircleCenterOnPath(const Circle &circle) const;
 		PathIntersectPoints getIntersectPoints(const Circle &circle) const;
 		Angle getAngleBetweenStartAndEnd() const;

@@ -31,7 +31,6 @@ class LoggerImpl :
 		std::fstream m_globalLogFile;
 		std::fstream m_stateChangesLogFile;
 		std::fstream m_fieldDetectionLogFile;
-
 	};
 }
 }
