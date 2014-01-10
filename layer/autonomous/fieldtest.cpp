@@ -2154,6 +2154,17 @@ void FieldTest::getTargetsForSearchungPucks_fourObjectsWithUnknownColorAndOneObj
 	CPPUNIT_ASSERT_EQUAL((size_t)33, field.getTargetsForSearchingPucks().size());
 }
 
+void FieldTest::getTargetsInEnemyThird_always_numberOfPositionsBiggerThan4()
+{
+	DataAnalysis::OdometryMock odometry;
+	DataAnalysis::LidarMock lidar;
+	DataAnalysis::CameraMock camera;
+	Autonomous::RobotMock autonomousRobot;
+	FieldImpl field(odometry, lidar, camera, autonomousRobot);
+
+	CPPUNIT_ASSERT((size_t) 4 < field.getTargetsInEnemyThird().size());
+}
+
 void FieldTest::detectTeamColorWithGoalInFront_yellowMuchBiggerBlue_teamYellow()
 {
 	DataAnalysis::OdometryMock odometry;
