@@ -42,9 +42,7 @@ Game::Game(int argc, char **argv) :
 	for(int i = 1; i < argc; i++)
 	{
 		arguments.push_back(string(argv[i]));
-		cout << string(argv[i]) << " ";
 	}
-	cout << endl;
 
 	for(size_t i = 0; i < arguments.size(); i++)
 	{
@@ -58,11 +56,15 @@ Game::Game(int argc, char **argv) :
 			m_enablegui = true;
 	}
 
-	cout << "##### starting player server from " << playerServer << endl;
-	cout << "##### starting angelina server from " << angelinaServer << endl;
+	cout << "##### ---------------------------\n##### GAME START" << endl;
+	cout << "##### player ip     : " << playerServer << endl;
+	cout << "##### angelina ip   : " << angelinaServer << endl;
 
 	if (m_enablegui)
-		cout << "gui enabled" << endl;
+		cout << "##### GUI Enabled   : " << "TRUE" << endl;
+	else
+		cout << "##### GUI Enabled   : " << "FALSE" << endl;
+	cout << "##### ---------------------------" << endl;
 
 	Hardware::Robot *hardwareRobot = new Hardware::RobotImpl(playerServer);
 	DataAnalysis::DataAnalyser *dataAnalyser = new DataAnalysis::DataAnalyserImpl(hardwareRobot);
