@@ -58,11 +58,8 @@ Game::Game(int argc, char **argv) :
 			m_enablegui = true;
 	}
 
-	if (playerServer == "localhost")
-		cout << "no player server selected, using localhost" << endl;
-
-	if (angelinaServer == "localhost")
-		cout << "no angelina server selected, using localhost" << endl;
+	cout << "##### starting player server from " << playerServer << endl;
+	cout << "##### starting angelina server from " << angelinaServer << endl;
 
 	if (m_enablegui)
 		cout << "gui enabled" << endl;
