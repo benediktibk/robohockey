@@ -500,3 +500,5 @@ layer/strategy/drivepuckstatemachine/drivepucktoenemythirdstate.h
 layer/strategy/drivepuckstatemachine/drivepucktoenemythirdstatetest.cpp
 layer/strategy/drivepuckstatemachine/drivepucktoenemythirdstate.cpp
 common/loggerimpl.h
+common/loggermock.h
+common/loggermock.cpp

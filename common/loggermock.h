@@ -1,5 +1,5 @@
-#ifndef ROBOHOCKEY_COMMON_LOGGERIMPL_H
-#define ROBOHOCKEY_COMMON_LOGGERIMPL_H
+#ifndef ROBOHOCKEY_COMMON_LOGGERMOCK_H
+#define ROBOHOCKEY_COMMON_LOGGERMOCK_H
 
 #include "common/logger.h"
 
@@ -7,12 +7,11 @@ namespace RoboHockey
 {
 namespace Common
 {
-class LoggerImpl :
+class LoggerMock :
 		public Logger
 	{
-
 	public:
-		LoggerImpl();
+		LoggerMock();
 
 		virtual void logToConsole(const std::string &message);
 		virtual void logErrorToConsole(const std::string &message);
@@ -23,15 +22,7 @@ class LoggerImpl :
 		virtual void disableConsoleOutput();
 		virtual void enableLogWriting();
 		virtual void disableLogWriting();
-
-	private:
-		bool m_consoleOutputEnabled;
-		bool m_logWritingEnabled;
-
-		std::fstream m_globalLogFile;
-		std::fstream m_stateChangesLogFile;
-		std::fstream m_fieldDetectionLogFile;
-
+		
 	};
 }
 }

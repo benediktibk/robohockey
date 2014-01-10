@@ -40,6 +40,7 @@ set(COMMON_TEST_SRC
 	timesmoothedbooleantest.cpp
 	stopwatchtest.cpp
 	loggertest.cpp
+	loggermock.cpp
 )
 
 add_library(common ${COMMON_SRC})
