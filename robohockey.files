@@ -491,3 +491,7 @@ common/stopwatch.cpp
 testrunner.supp
 common/segfaultstacktraceprinter.h
 common/segfaultstacktraceprinter.cpp
+layer/strategy/drivepuckstatemachine/drivepucktoenemythirdstatetest.h
+layer/strategy/drivepuckstatemachine/drivepucktoenemythirdstate.h
+layer/strategy/drivepuckstatemachine/drivepucktoenemythirdstatetest.cpp
+layer/strategy/drivepuckstatemachine/drivepucktoenemythirdstate.cpp
