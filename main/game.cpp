@@ -34,14 +34,17 @@ Game::Game(int argc, char **argv) :
 	m_stackTracePrinter(new SegFaultStackTracePrinter()),
 	m_consoleMessagesEnabled(false)
 {
-
 	string playerServer = "localhost";
 	string angelinaServer = "localhost";
 	m_enablegui = false;
 
 	vector<string> arguments(argc);
 	for(int i = 1; i < argc; i++)
+	{
 		arguments.push_back(string(argv[i]));
+		cout << string(argv[i]) << " ";
+	}
+	cout << endl;
 
 	for(size_t i = 0; i < arguments.size(); i++)
 	{
