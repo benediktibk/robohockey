@@ -24,7 +24,7 @@ FieldImpl::FieldImpl(DataAnalysis::Odometry &odometry, const DataAnalysis::Lidar
 	m_lidar(&lidar),
 	m_camera(&camera),
 	m_robot(&autonomousRobot),
-	m_position(new Common::RobotPosition(m_odometry->getCurrentPosition())),
+	m_position(new RobotPosition(m_odometry->getCurrentPosition())),
 	m_fieldState(FieldStateUnknownPosition),
 	m_teamColor(FieldColorUnknown),
 	m_estimatedAchievedGoals(0)
@@ -218,7 +218,6 @@ list<RobotPosition> FieldImpl::getTargetsForScoringGoals() const
 	targets.push_back(RobotPosition( Point(5 - 0.45 + 0.14, 1.9), Angle::getHalfRotation() ));
 	targets.push_back(RobotPosition( Point(5 - 0.45 + 0.14, 1.1), Angle::getHalfRotation() ));
 
-
 	return targets;
 }
 
@@ -350,7 +349,7 @@ list<RobotPosition> FieldImpl::getTargetsForCollectingOnePuck(FieldColor puckCol
 	Rectangle sectorOfField(Point(0, 0), Point(5,3));
 	vector<FieldObject> targetObjects = getObjectsWithColorOrderdByDistance(puckColor);
 
-	for (vector<FieldObject>::const_iterator i =targetObjects.begin(); i != targetObjects.end(); ++i)
+	for (vector<FieldObject>::const_iterator i = targetObjects.begin(); i != targetObjects.end(); ++i)
 	{
 		const FieldObject &fieldObject = *i;
 
@@ -365,7 +364,7 @@ list<RobotPosition> FieldImpl::getTargetsForCollectingOnePuck(FieldColor puckCol
 	return targetsToCollect;
 }
 
-list<RobotPosition> FieldImpl::getTargetsForCollectingOnePuckOrSearchingForColorOfPuck(const Common::Point &position) const
+list<RobotPosition> FieldImpl::getTargetsForCollectingOnePuckOrSearchingForColorOfPuck(const Point &position) const
 {
 	list<RobotPosition> listToArrange;
 	Rectangle ownFieldSector(Point(0, 0), Point(3.7, 3));
