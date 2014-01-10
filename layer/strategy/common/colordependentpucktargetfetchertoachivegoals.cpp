@@ -17,7 +17,10 @@ list<RobotPosition> ColorDependentPuckTargetFetcherToAchiveGoals::getTargetPosit
 
 list<RobotPosition> ColorDependentPuckTargetFetcherToAchiveGoals::getPositionsToCollectPuck() const
 {
-	return m_field.getTargetsForCollectingOnePuck(getColorOfTargetPucks());
+	if(m_field.getNumberOfPuckInEnemyThird() < 3)
+		return m_field.getTargetsForCollectingOnePuckNotInEnemyThird(getColorOfTargetPucks());
+	else
+		return m_field.getTargetsForCollectingOnePuck(getColorOfTargetPucks());
 }
 
 FieldColor ColorDependentPuckTargetFetcherToAchiveGoals::getColorOfTargetPucks() const
