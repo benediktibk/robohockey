@@ -549,7 +549,6 @@ vector<FieldObject> FieldImpl::random(vector<FieldObject> &objects)
 	vector<FieldObject> randomObjects = objects;
 	random_shuffle(randomObjects.begin(), randomObjects.end());
 	return randomObjects;
-
 }
 
 void FieldImpl::setTrueTeamColor(FieldColor trueTeamColor)
