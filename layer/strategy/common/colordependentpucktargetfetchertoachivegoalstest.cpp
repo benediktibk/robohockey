@@ -43,4 +43,18 @@ void ColorDependentPuckTargetFetcherToAchiveGoalsTest::getNumberOfKnownPucksNotI
 	CPPUNIT_ASSERT_EQUAL((unsigned int)2, puckTargetFetcher.getNumberOfKnownPucksNotInTarget());
 }
 
+void ColorDependentPuckTargetFetcherToAchiveGoalsTest::getNumberOfKnownPucksNotInEnemyThird_threePucksOneInGoal_resultIs2()
+{
+	FieldMock field;
+	vector<FieldObject> objects;
+	objects.push_back(FieldObject(Circle(Point(1,1), 0.2), FieldColorUnknown, 2));
+	objects.push_back(FieldObject(Circle(Point(1,2), 0.2), FieldColorUnknown, 2));
+	objects.push_back(FieldObject(Circle(Point(2,1), 0.2), FieldColorUnknown, 2));
+	field.setFieldObjects(objects);
+	field.setPucksInEnemyThird(1);
+	ColorDependentPuckTargetFetcherToAchiveGoals puckTargetFetcher(field);
+
+	CPPUNIT_ASSERT_EQUAL((unsigned int)2, puckTargetFetcher.getNumberOfKnownPucksNotInEnemyThird());
+}
+
 

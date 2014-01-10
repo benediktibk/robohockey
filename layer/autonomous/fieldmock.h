@@ -49,6 +49,7 @@ namespace Autonomous
 
 		void setAchievedGoals(unsigned int goalsAchieved);
 		void setEnemyHiddenPucks(unsigned int getNumberOfHiddenPucks);
+		void setPucksInEnemyThird(unsigned int value);
 		void setFieldObjects(const std::vector<FieldObject> &objects);
 		void setSoftObstacles(const std::vector<Common::Circle> &obstacles);
 		void setHardObstacles(const std::vector<Common::Circle> &obstacles);

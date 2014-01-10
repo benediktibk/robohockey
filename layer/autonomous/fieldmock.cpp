@@ -211,3 +211,8 @@ void FieldMock::setEnemyHiddenPucks(unsigned int enemyHiddenPucks)
 {
 	m_hiddenPucks = enemyHiddenPucks;
 }
+
+void FieldMock::setPucksInEnemyThird(unsigned int value)
+{
+	m_pucksInEnemyThird = value;
+}
