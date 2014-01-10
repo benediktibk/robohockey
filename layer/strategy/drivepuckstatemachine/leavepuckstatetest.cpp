@@ -53,7 +53,7 @@ void LeavePuckStateTest::nextState_reachedTargetAndNumberOfKnownPucksIsNot0_next
 	RefereeMock referee;
 	ColorDependentPuckTargetFetcherMock puckTargetFetcher;
 	robot.setReachedTarget(true);
-	puckTargetFetcher.setNumberOfKnownPucksNotInTarget(2);
+	puckTargetFetcher.setNumberOfKnownPucksNotInEnemyThird(2);
 	LeavePuckState leavePuckState(robot, field, referee, puckTargetFetcher, false);
 
 	State *state = leavePuckState.nextState();
