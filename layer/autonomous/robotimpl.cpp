@@ -554,7 +554,7 @@ double RobotImpl::calculateFinalSpeedForGoingStraight(
 		return 0;
 
 	Angle angleDifference = maximumAngle - angle;
-	double speedFromAngle = angleDifference.getValueBetweenZeroAndTwoPi()*0.7;
+	double speedFromAngle = angleDifference.getValueBetweenZeroAndTwoPi()*0.3;
 	double distanceLeft = next.distanceTo(nextButOne);
 	const DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
 	double speedFromDistance = engine.calculateSpeedForGoingStraight(distanceLeft);
