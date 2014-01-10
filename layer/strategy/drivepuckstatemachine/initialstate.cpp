@@ -17,7 +17,7 @@ InitialState::InitialState(Robot &robot, Field &field, Referee &referee, const C
 State* InitialState::nextState()
 {
 	if(m_robot.isPuckCollected())
-		return new LeavePuckState(m_robot, m_field, m_referee, m_puckTargetFetcher);
+		return new LeavePuckState(m_robot, m_field, m_referee, m_puckTargetFetcher, false);
 	if(m_puckTargetFetcher.getNumberOfKnownPucksNotInTarget() > 0)
 		return new DriveToCollectPuckState(m_robot, m_field, m_referee, m_puckTargetFetcher);
 	else

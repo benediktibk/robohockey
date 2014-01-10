@@ -9,7 +9,8 @@ RefereeMock::RefereeMock() :
 	m_gameStart(false),
 	m_gameOver(false),
 	m_stopMovement(false),
-	m_trueColor(FieldColorUnknown)
+	m_trueColor(FieldColorUnknown),
+	m_reportedGoals(0)
 { }
 
 void RefereeMock::reportReady()
@@ -25,7 +26,9 @@ void RefereeMock::tellTeamColor(RoboHockey::Common::FieldColor)
 { }
 
 void RefereeMock::reportGoal()
-{ }
+{
+	++m_reportedGoals;
+}
 
 void RefereeMock::tellEgoPos(const RoboHockey::Common::Point &)
 { }
@@ -83,4 +86,9 @@ void RefereeMock::setStopMovement(bool value)
 void RefereeMock::setTrueColorOfTeam(FieldColor color)
 {
 	m_trueColor = color;
+}
+
+unsigned int RefereeMock::getReportedGoals() const
+{
+	return m_reportedGoals;
 }
