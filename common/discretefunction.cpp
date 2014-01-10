@@ -52,18 +52,6 @@ void DiscreteFunction::suppressNoiseHeavy()
 	applyCore(m_coreNoiseSuppressionHeavy, m_start, m_end);
 }
 
-void DiscreteFunction::suppressNoiseInRange(int start, int end)
-{
-	assert(end >= start);
-	assert(withinRange(start));
-	assert(withinRange(end));
-	size_t range = end - start;
-	if (range >= m_coreNoiseSuppressionHeavy.size() + 2)
-		applyCore(m_coreNoiseSuppressionHeavy, start, end);
-	else if (range >= m_coreNoiseSuppressionLight.size() + 2)
-		applyCore(m_coreNoiseSuppressionLight, start, end);
-}
-
 void DiscreteFunction::differentiate(double stepSize)
 {
 	assert(m_values.size() > 2);

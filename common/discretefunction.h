@@ -19,7 +19,6 @@ namespace Common
 		double getValue(int x) const;
 		void suppressNoiseLight();
 		void suppressNoiseHeavy();
-		void suppressNoiseInRange(int start, int end);
 		void differentiate(double stepSize);
 		bool withinRange(int x) const;
 		std::list<int> getPositionsWithValuesAbove(double value) const;
