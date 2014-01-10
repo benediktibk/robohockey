@@ -71,8 +71,8 @@ namespace Autonomous
 		CPPUNIT_TEST(update_lidarObjectSeenOnlyOnce_noObstacles);
 		CPPUNIT_TEST(update_lidarObjectSeenTwice_oneFieldObject);
 		CPPUNIT_TEST(update_lidarObjectNotSeenOnce_oneFieldObject);
-		CPPUNIT_TEST(update_lidarObjectNotSeenFiveTimes_noFieldObjects);
-		CPPUNIT_TEST(update_collectedPuckAndMovedForward_oneFieldObjects);
+		CPPUNIT_TEST(update_lidarObjectNotSeenOften_noFieldObjects);
+		CPPUNIT_TEST(update_collectedPuckAndMovedForward_oneFieldObject);
 		CPPUNIT_TEST(update_rotatingAndObjectALittleBitDistanceMoved_onlyFieldObjectStaysTheSame);
 		CPPUNIT_TEST(update_rotatingAndObjectVeryClose_onlyFieldObjectIsUpdated);
 		CPPUNIT_TEST(calibratePosition_noValidPattern_false);
@@ -176,8 +176,8 @@ namespace Autonomous
 		void update_lidarObjectSeenOnlyOnce_noObstacles();
 		void update_lidarObjectSeenTwice_oneFieldObject();
 		void update_lidarObjectNotSeenOnce_oneFieldObject();
-		void update_lidarObjectNotSeenFiveTimes_noFieldObjects();
-		void update_collectedPuckAndMovedForward_oneFieldObjects();
+		void update_lidarObjectNotSeenOften_noFieldObjects();
+		void update_collectedPuckAndMovedForward_oneFieldObject();
 		void update_rotatingAndObjectALittleBitDistanceMoved_onlyFieldObjectStaysTheSame();
 		void update_rotatingAndObjectVeryClose_onlyFieldObjectIsUpdated();
 		void calibratePosition_noValidPattern_false();
@@ -227,6 +227,12 @@ namespace Autonomous
 		void getEstimatedNumberOfAchievedGoals_2goals_2();
 		void getNumberOfPucksInEnemyThird_3PucksAnd2InEnemyThird_resultIs2();
 		void getTargetsForCollectingOnePuckNotInEnemyThird_3Objects1Unknown1InEnemyThird_numberOfPositions10();
+
+	private:
+		void updateFieldForObjectsToAppear(FieldImpl &field);
+		void updateFieldForObjectsToDisappear(FieldImpl &field);
+		void updateFieldForObjectsToAppear();
+		void updateFieldForObjectsToDisappear();
 
 	private:
 		DataAnalysis::CameraMock *m_camera;

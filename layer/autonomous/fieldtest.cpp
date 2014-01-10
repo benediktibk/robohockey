@@ -40,7 +40,7 @@ void FieldTest::tearDown()
 
 void FieldTest::update_noLidarObjects_noFieldObjects()
 {
-	m_field->update();
+	updateFieldForObjectsToAppear();
 
 	vector<FieldObject> fieldObjects = m_field->getAllFieldObjects();
 	CPPUNIT_ASSERT_EQUAL((size_t)0, fieldObjects.size());
@@ -54,8 +54,7 @@ void FieldTest::update_oneObjectFromLidarInView_oneObject()
 
 	m_lidar->setCanBeSeen(true);
 	m_lidar->setCanBeSeenPartly(true);
-	m_field->update();
-	m_field->update();
+	updateFieldForObjectsToAppear();
 
 	vector<FieldObject> fieldObjects = m_field->getAllFieldObjects();
 	CPPUNIT_ASSERT_EQUAL((size_t)1, fieldObjects.size());
@@ -67,9 +66,9 @@ void FieldTest::update_oneObjectFromLidarNotInViewAnymoreDuringSecondCall_noFiel
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 0), 0.1));
 	m_lidar->setAllObjects(lidarObjects);
 
-	m_field->update();
+	updateFieldForObjectsToAppear();
 	m_lidar->setAllObjects(DataAnalysis::LidarObjects(Point()));
-	m_field->update();
+	updateFieldForObjectsToDisappear();
 
 	vector<FieldObject> fieldObjects = m_field->getAllFieldObjects();
 	CPPUNIT_ASSERT_EQUAL((size_t)0, fieldObjects.size());
@@ -81,9 +80,9 @@ void FieldTest::update_oneObjectFromLidarLeftNotInViewAnymoreDuringSecondCall_no
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 1), 0.1));
 	m_lidar->setAllObjects(lidarObjects);
 
-	m_field->update();
+	updateFieldForObjectsToAppear();
 	m_lidar->setAllObjects(DataAnalysis::LidarObjects(Point()));
-	m_field->update();
+	updateFieldForObjectsToDisappear();
 
 	vector<FieldObject> fieldObjects = m_field->getAllFieldObjects();
 	CPPUNIT_ASSERT_EQUAL((size_t)0, fieldObjects.size());
@@ -95,9 +94,9 @@ void FieldTest::update_oneObjectFromLidarRightNotInViewAnymoreDuringSecondCall_n
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, -1), 0.1));
 	m_lidar->setAllObjects(lidarObjects);
 
-	m_field->update();
+	updateFieldForObjectsToAppear();
 	m_lidar->setAllObjects(DataAnalysis::LidarObjects(Point()));
-	m_field->update();
+	updateFieldForObjectsToDisappear();
 
 	vector<FieldObject> fieldObjects = m_field->getAllFieldObjects();
 	CPPUNIT_ASSERT_EQUAL((size_t)0, fieldObjects.size());
@@ -111,13 +110,12 @@ void FieldTest::update_objectFromLidarNotInViewAnymoreThroughRotation_oneFieldOb
 
 	m_lidar->setCanBeSeen(true);
 	m_lidar->setCanBeSeenPartly(true);
-	m_field->update();
-	m_field->update();
+	updateFieldForObjectsToAppear();
 	m_lidar->setAllObjects(DataAnalysis::LidarObjects(Point()));
 	m_odometry->setCurrentPosition(RobotPosition(Point(0, 0), Angle::getHalfRotation()));
 	m_lidar->setCanBeSeen(false);
 	m_lidar->setCanBeSeenPartly(false);
-	m_field->update();
+	updateFieldForObjectsToDisappear();
 
 	vector<FieldObject> fieldObjects = m_field->getAllFieldObjects();
 	CPPUNIT_ASSERT_EQUAL((size_t)1, fieldObjects.size());
@@ -131,8 +129,7 @@ void FieldTest::update_oneObjectFromLidarAndNoObjectFromCamera_noColor()
 
 	m_lidar->setCanBeSeen(true);
 	m_lidar->setCanBeSeenPartly(true);
-	m_field->update();
-	m_field->update();
+	updateFieldForObjectsToAppear();
 
 	vector<FieldObject> fieldObjects = m_field->getAllFieldObjects();
 	CPPUNIT_ASSERT(fieldObjects.size() > 0);
@@ -150,8 +147,7 @@ void FieldTest::update_twoObjectsFromLidarAndOneFromCamera_correctColor()
 
 	m_lidar->setCanBeSeen(true);
 	m_lidar->setCanBeSeenPartly(true);
-	m_field->update();
-	m_field->update();
+	updateFieldForObjectsToAppear();
 
 	vector<FieldObject> fieldObjects = m_field->getAllFieldObjects();
 	CPPUNIT_ASSERT(fieldObjects.size() > 0);
@@ -169,7 +165,7 @@ void FieldTest::update_twoObjectsFromLidarAndOneFromCameraNoColorAnymoreDuringSe
 
 	m_lidar->setCanBeSeen(true);
 	m_lidar->setCanBeSeenPartly(true);
-	m_field->update();
+	updateFieldForObjectsToAppear();
 	m_camera->setAllObjects(DataAnalysis::CameraObjects());
 	m_field->update();
 
@@ -189,8 +185,7 @@ void FieldTest::update_oneObjectOutAndOneObjectInsideOfCalibratedField_correctOb
 
 	m_lidar->setCanBeSeen(true);
 	m_lidar->setCanBeSeenPartly(true);
-	m_field->update();
-	m_field->update();
+	updateFieldForObjectsToAppear();
 
 	CPPUNIT_ASSERT_EQUAL((size_t) 4, m_field->getAllFieldObjects().size());
 
@@ -203,11 +198,7 @@ void FieldTest::update_oneObjectOutAndOneObjectInsideOfCalibratedField_correctOb
 	lidarObjectsAfterCalibration.addObject(DataAnalysis::LidarObject(Point(-2, 2.6), 0.06));
 	m_lidar->setAllObjects(lidarObjectsAfterCalibration);
 
-	m_field->update();
-	m_field->update();
-	m_field->update();
-	m_field->update();
-	m_field->update();
+	updateFieldForObjectsToDisappear();
 
 	vector<FieldObject> fieldObjects = m_field->getAllFieldObjects();
 	unsigned int found = 0;
@@ -241,8 +232,7 @@ void FieldTest::update_threeObjectsAndTwoObjectsInGoal_twoAchievedGoals()
 
 	m_lidar->setCanBeSeen(true);
 	m_lidar->setCanBeSeenPartly(true);
-	m_field->update();
-	m_field->update();
+	updateFieldForObjectsToAppear();
 
 	CPPUNIT_ASSERT_EQUAL((unsigned int)2, m_field->getNumberOfAchievedGoals());
 }
@@ -263,8 +253,7 @@ void FieldTest::update_threeObjectsAndThreeObjectsInGoal_threeAchievedGoals()
 
 	m_lidar->setCanBeSeen(true);
 	m_lidar->setCanBeSeenPartly(true);
-	m_field->update();
-	m_field->update();
+	updateFieldForObjectsToAppear();
 
 	CPPUNIT_ASSERT_EQUAL((unsigned int)3, m_field->getNumberOfAchievedGoals());
 }
@@ -287,8 +276,7 @@ void FieldTest::update_fourObjectsAndFourObjectsInGoal_fourAchievedGoals()
 
 	m_lidar->setCanBeSeen(true);
 	m_lidar->setCanBeSeenPartly(true);
-	m_field->update();
-	m_field->update();
+	updateFieldForObjectsToAppear();
 
 	CPPUNIT_ASSERT_EQUAL((unsigned int)4, m_field->getNumberOfAchievedGoals());
 }
@@ -311,8 +299,7 @@ void FieldTest::update_fourObjectsAndThreeObjectsInGoal_threeAchievedGoals()
 
 	m_lidar->setCanBeSeen(true);
 	m_lidar->setCanBeSeenPartly(true);
-	m_field->update();
-	m_field->update();
+	updateFieldForObjectsToAppear();
 
 	CPPUNIT_ASSERT_EQUAL((unsigned int)3, m_field->getNumberOfAchievedGoals());
 }
@@ -329,8 +316,7 @@ void FieldTest::update_oneObjectAndZeroObjectsInGoal_ZeroAchievedGoals()
 
 	m_lidar->setCanBeSeen(true);
 	m_lidar->setCanBeSeenPartly(true);
-	m_field->update();
-	m_field->update();
+	updateFieldForObjectsToAppear();
 
 	CPPUNIT_ASSERT_EQUAL((unsigned int)0, m_field->getNumberOfAchievedGoals());
 }
@@ -351,8 +337,7 @@ void FieldTest::update_threeObjectsAndTwoObjectsHidden_twoHiddenPucks()
 
 	m_lidar->setCanBeSeen(true);
 	m_lidar->setCanBeSeenPartly(true);
-	m_field->update();
-	m_field->update();
+	updateFieldForObjectsToAppear();
 
 	CPPUNIT_ASSERT_EQUAL((unsigned int)2, m_field->getNumberOfHiddenPucks());
 }
@@ -373,8 +358,7 @@ void FieldTest::update_threeObjectsAndThreeObjectsHidden_threeHiddenPucks()
 
 	m_lidar->setCanBeSeen(true);
 	m_lidar->setCanBeSeenPartly(true);
-	m_field->update();
-	m_field->update();
+	updateFieldForObjectsToAppear();
 
 	CPPUNIT_ASSERT_EQUAL((unsigned int)3, m_field->getNumberOfHiddenPucks());
 }
@@ -395,8 +379,7 @@ void FieldTest::update_threeObjectsAndZeroObjectsHidden_zeroHiddenPucks()
 
 	m_lidar->setCanBeSeen(true);
 	m_lidar->setCanBeSeenPartly(true);
-	m_field->update();
-	m_field->update();
+	updateFieldForObjectsToAppear();
 
 	CPPUNIT_ASSERT_EQUAL((unsigned int)0, m_field->getNumberOfHiddenPucks());
 }
@@ -419,8 +402,7 @@ void FieldTest::update_fourObjectsAndTwoObjectsHidden_twoHiddenPucks()
 
 	m_lidar->setCanBeSeen(true);
 	m_lidar->setCanBeSeenPartly(true);
-	m_field->update();
-	m_field->update();
+	updateFieldForObjectsToAppear();
 
 	CPPUNIT_ASSERT_EQUAL((unsigned int)2, m_field->getNumberOfHiddenPucks());
 }
@@ -443,8 +425,7 @@ void FieldTest::update_fourObjectsAndFourObjectsHidden_fourHiddenPucks()
 
 	m_lidar->setCanBeSeen(true);
 	m_lidar->setCanBeSeenPartly(true);
-	m_field->update();
-	m_field->update();
+	updateFieldForObjectsToAppear();
 
 	CPPUNIT_ASSERT_EQUAL((unsigned int)4, m_field->getNumberOfHiddenPucks());
 }
@@ -467,8 +448,7 @@ void FieldTest::update_fourObjectsAndThreeObjectsHidden_threeHiddenPucks()
 
 	m_lidar->setCanBeSeen(true);
 	m_lidar->setCanBeSeenPartly(true);
-	m_field->update();
-	m_field->update();
+	updateFieldForObjectsToAppear();
 
 	CPPUNIT_ASSERT_EQUAL((unsigned int)3, m_field->getNumberOfHiddenPucks());
 }
@@ -490,8 +470,7 @@ void FieldTest::update_threePucksWithTeamColor_30ElementsInList()
 
 	m_lidar->setCanBeSeen(true);
 	m_lidar->setCanBeSeenPartly(true);
-	m_field->update();
-	m_field->update();
+	updateFieldForObjectsToAppear();
 
 	testlist = m_field->getTargetsForCollectingOnePuck(FieldColorYellow);
 	CPPUNIT_ASSERT_EQUAL((size_t)30, testlist.size());
@@ -516,8 +495,7 @@ void FieldTest::update_fourPucksWithTeamColorInRectangle1_40ElementsInList()
 
 	m_lidar->setCanBeSeen(true);
 	m_lidar->setCanBeSeenPartly(true);
-	m_field->update();
-	m_field->update();
+	updateFieldForObjectsToAppear();
 
 	testlist = m_field->getTargetsForCollectingOnePuck(FieldColorYellow);
 	CPPUNIT_ASSERT_EQUAL((size_t)40, testlist.size());
@@ -538,8 +516,7 @@ void FieldTest::update_twoPucksWithTeamColorInRectangle2_20ElementsInList()
 
 	m_lidar->setCanBeSeen(true);
 	m_lidar->setCanBeSeenPartly(true);
-	m_field->update();
-	m_field->update();
+	updateFieldForObjectsToAppear();
 
 	testlist = m_field->getTargetsForCollectingOnePuck(FieldColorYellow);
 	CPPUNIT_ASSERT_EQUAL((size_t)20, testlist.size());
@@ -560,8 +537,7 @@ void FieldTest::update_onePuckWithTeamColorInRectangle3_10ElementsInList()
 
 	m_lidar->setCanBeSeen(true);
 	m_lidar->setCanBeSeenPartly(true);
-	m_field->update();
-	m_field->update();
+	updateFieldForObjectsToAppear();
 
 	testlist = m_field->getTargetsForCollectingOnePuck(FieldColorYellow);
 	CPPUNIT_ASSERT_EQUAL((size_t)10, testlist.size());
@@ -578,8 +554,7 @@ void FieldTest::update_zeroPucksWithTeamColor_0ElementsInList()
 
 	m_lidar->setCanBeSeen(true);
 	m_lidar->setCanBeSeenPartly(true);
-	m_field->update();
-	m_field->update();
+	updateFieldForObjectsToAppear();
 
 	testlist = m_field->getTargetsForCollectingOnePuck(FieldColorYellow);
 	CPPUNIT_ASSERT_EQUAL((size_t)0, testlist.size());
@@ -606,8 +581,7 @@ void FieldTest::update_fivePucksWithTeamColorInRectangle4_50ElementsInList()
 
 	m_lidar->setCanBeSeen(true);
 	m_lidar->setCanBeSeenPartly(true);
-	m_field->update();
-	m_field->update();
+	updateFieldForObjectsToAppear();
 
 	testlist = m_field->getTargetsForCollectingOnePuck(FieldColorYellow);
 	CPPUNIT_ASSERT_EQUAL((size_t)50, testlist.size());
@@ -636,8 +610,7 @@ void FieldTest::update_sixPucksWithTeamColorInRectangle5_60ElementsInList()
 
 	m_lidar->setCanBeSeen(true);
 	m_lidar->setCanBeSeenPartly(true);
-	m_field->update();
-	m_field->update();
+	updateFieldForObjectsToAppear();
 
 	testlist = m_field->getTargetsForCollectingOnePuck(FieldColorYellow);
 	CPPUNIT_ASSERT_EQUAL((size_t)60, testlist.size());
@@ -670,8 +643,7 @@ void FieldTest::update_sevenPucksWithTeamColorInRectangle6_70ElementsInList()
 
 	m_lidar->setCanBeSeen(true);
 	m_lidar->setCanBeSeenPartly(true);
-	m_field->update();
-	m_field->update();
+	updateFieldForObjectsToAppear();
 
 	testlist = m_field->getTargetsForCollectingOnePuck(FieldColorYellow);
 	CPPUNIT_ASSERT_EQUAL((size_t)70, testlist.size());
@@ -704,8 +676,7 @@ void FieldTest::update_eightPucksWithTeamColorInRectangle7_80ElementsInList()
 
 	m_lidar->setCanBeSeen(true);
 	m_lidar->setCanBeSeenPartly(true);
-	m_field->update();
-	m_field->update();
+	updateFieldForObjectsToAppear();
 
 	testlist = m_field->getTargetsForCollectingOnePuck(FieldColorYellow);
 	CPPUNIT_ASSERT_EQUAL((size_t)80, testlist.size());
@@ -740,8 +711,7 @@ void FieldTest::update_ninePucksWithTeamColorInRectangle8_90ElementsInList()
 
 	m_lidar->setCanBeSeen(true);
 	m_lidar->setCanBeSeenPartly(true);
-	m_field->update();
-	m_field->update();
+	updateFieldForObjectsToAppear();
 
 	testlist = m_field->getTargetsForCollectingOnePuck(FieldColorYellow);
 	CPPUNIT_ASSERT_EQUAL((size_t)90, testlist.size());
@@ -778,8 +748,7 @@ void FieldTest::update_tenPucksWithTeamColorInRectangle9_100ElementsInList()
 
 	m_lidar->setCanBeSeen(true);
 	m_lidar->setCanBeSeenPartly(true);
-	m_field->update();
-	m_field->update();
+	updateFieldForObjectsToAppear();
 
 	testlist = m_field->getTargetsForCollectingOnePuck(FieldColorYellow);
 	CPPUNIT_ASSERT_EQUAL((size_t)100, testlist.size());
@@ -798,8 +767,7 @@ void FieldTest::getTargetsForFinalPosition_callFunction_17ElementsInList()
 
 	m_lidar->setCanBeSeen(true);
 	m_lidar->setCanBeSeenPartly(true);
-	m_field->update();
-	m_field->update();
+	updateFieldForObjectsToAppear();
 
 	testlist = m_field->getTargetsForFinalPosition();
 	CPPUNIT_ASSERT_EQUAL((size_t)17, testlist.size());
@@ -824,17 +792,16 @@ void FieldTest::update_objectsInFieldRobotOn00_correctlyUpdated()
 	CPPUNIT_ASSERT_EQUAL((size_t)0, field.getAllFieldObjects().size());
 
 	lidar.updateSensorData();
-	field.update();
+	updateFieldForObjectsToAppear(field);
 	CPPUNIT_ASSERT_EQUAL((size_t)1, field.getAllFieldObjects().size());
 
 	lidar.updateSensorData();
-	field.update();
+	updateFieldForObjectsToAppear(field);
 	CPPUNIT_ASSERT_EQUAL((size_t)1, field.getAllFieldObjects().size());
 
 	lidar.updateSensorData();
-	field.update();
+	updateFieldForObjectsToAppear(field);
 	CPPUNIT_ASSERT_EQUAL((size_t)1, field.getAllFieldObjects().size());
-
 }
 
 void FieldTest::update_objectsInFieldRobotOn1And2_correctlyUpdated()
@@ -843,7 +810,7 @@ void FieldTest::update_objectsInFieldRobotOn1And2_correctlyUpdated()
 	DataAnalysis::LidarImpl lidar(hardwareLidarMock);
 	FieldImpl field(*m_odometry, lidar, *m_camera, *m_robot);
 
-	m_odometry->setCurrentPosition(RobotPosition(Point(1,2), Angle()));
+	m_odometry->setCurrentPosition(RobotPosition(Point(1, 2), Angle()));
 
 	hardwareLidarMock.setValueForAngle(0, 5);
 	hardwareLidarMock.setValueForAngle(360, 5);
@@ -859,15 +826,15 @@ void FieldTest::update_objectsInFieldRobotOn1And2_correctlyUpdated()
 	CPPUNIT_ASSERT_EQUAL((size_t)0, field.getAllFieldObjects().size());
 
 	lidar.updateSensorData();
-	field.update();
+	updateFieldForObjectsToAppear(field);
 	CPPUNIT_ASSERT_EQUAL((size_t)1, field.getAllFieldObjects().size());
 
 	lidar.updateSensorData();
-	field.update();
+	updateFieldForObjectsToAppear(field);
 	CPPUNIT_ASSERT_EQUAL((size_t)1, field.getAllFieldObjects().size());
 
 	lidar.updateSensorData();
-	field.update();
+	updateFieldForObjectsToAppear(field);
 	CPPUNIT_ASSERT_EQUAL((size_t)1, field.getAllFieldObjects().size());
 }
 
@@ -880,8 +847,7 @@ void FieldTest::update_movingAndLidarDataChanges_fieldObjectCountDoesntChange()
 	m_odometry->setCurrentPosition(RobotPosition(Point(0, 0), Angle(0)));
 	hardwareLidarMock.readSensorDataFromFile("resources/testfiles/lidar_moving_1_previous.txt");
 	lidar.updateSensorData();
-	field.update();
-	field.update();
+	updateFieldForObjectsToAppear(field);
 	vector<FieldObject> oldObjects = field.getAllFieldObjects();
 	size_t oldObjectCount = oldObjects.size();
 	m_odometry->setCurrentPosition(RobotPosition(Point(0.03, 0), Angle(0)));
@@ -904,8 +870,7 @@ void FieldTest::update_movingAndLidatDataChangesSecondVersion_fieldObjectCountDo
 	m_odometry->setCurrentPosition(RobotPosition(Point(0, 0), Angle(0)));
 	hardwareLidarMock.readSensorDataFromFile("resources/testfiles/lidar_moving_2_previous.txt");
 	lidar.updateSensorData();
-	field.update();
-	field.update();
+	updateFieldForObjectsToAppear(field);
 	vector<FieldObject> oldObjects = field.getAllFieldObjects();
 	size_t oldObjectCount = oldObjects.size();
 	m_odometry->setCurrentPosition(RobotPosition(Point(0.0481614, 0), Angle(0)));
@@ -928,8 +893,7 @@ void FieldTest::update_movingAndLidarDataChangesThirdVersion_fieldObjectCountDoe
 	m_odometry->setCurrentPosition(RobotPosition(Point(0, 0), Angle(0)));
 	hardwareLidarMock.readSensorDataFromFile("resources/testfiles/lidar_moving_3_previous.txt");
 	lidar.updateSensorData();
-	field.update();
-	field.update();
+	updateFieldForObjectsToAppear(field);
 	vector<FieldObject> oldObjects = field.getAllFieldObjects();
 	size_t oldObjectCount = oldObjects.size();
 	m_odometry->setCurrentPosition(RobotPosition(Point(0.0474765, 0), Angle(0)));
@@ -952,8 +916,7 @@ void FieldTest::update_enemyRobotInFront_oneFieldObject()
 	hardwareLidarMock.readSensorDataFromFile("resources/testfiles/lidar_40.txt");
 
 	lidar.updateSensorData();
-	field.update();
-	field.update();
+	updateFieldForObjectsToAppear(field);
 
 	vector<FieldObject> fieldObjects = field.getAllFieldObjects();
 	CPPUNIT_ASSERT_EQUAL((size_t)1, fieldObjects.size());
@@ -968,8 +931,7 @@ void FieldTest::update_enemyRobotInFront_oneHardObstacle()
 	hardwareLidarMock.readSensorDataFromFile("resources/testfiles/lidar_40.txt");
 
 	lidar.updateSensorData();
-	field.update();
-	field.update();
+	updateFieldForObjectsToAppear(field);
 
 	vector<Circle> hardObstacles = field.getAllHardObstacles();
 	CPPUNIT_ASSERT_EQUAL((size_t)1, hardObstacles.size());
@@ -983,8 +945,7 @@ void FieldTest::update_lidarReturnsObjectWhichCantBeSeenActually_noFieldObjects(
 	m_lidar->setCanBeSeen(false);
 	m_lidar->setCanBeSeenPartly(false);
 	m_lidar->setAllObjects(objects);
-	m_field->update();
-	m_field->update();
+	updateFieldForObjectsToAppear();
 
 	vector<FieldObject> fieldObjects = m_field->getAllFieldObjects();
 	CPPUNIT_ASSERT_EQUAL((size_t)0, fieldObjects.size());
@@ -1016,9 +977,7 @@ void FieldTest::update_lidarObjectSeenThreeTimes_oneFieldObjectAndObstacle()
 	m_lidar->setCanBeSeen(true);
 	m_lidar->setCanBeSeenPartly(true);
 	m_lidar->setAllObjects(objects);
-	m_field->update();
-	m_field->update();
-	m_field->update();
+	updateFieldForObjectsToAppear();
 
 	vector<FieldObject> fieldObjects = m_field->getAllFieldObjects();
 	vector<Circle> softObstacles = m_field->getAllSoftObstacles();
@@ -1064,8 +1023,7 @@ void FieldTest::update_lidarObjectSeenTwice_oneFieldObject()
 	m_lidar->setCanBeSeen(true);
 	m_lidar->setCanBeSeenPartly(true);
 	m_lidar->setAllObjects(objects);
-	m_field->update();
-	m_field->update();
+	updateFieldForObjectsToAppear();
 
 	vector<FieldObject> fieldObjects = m_field->getAllFieldObjects();
 	CPPUNIT_ASSERT_EQUAL((size_t)1, fieldObjects.size());
@@ -1079,8 +1037,7 @@ void FieldTest::update_lidarObjectNotSeenOnce_oneFieldObject()
 	m_lidar->setCanBeSeen(true);
 	m_lidar->setCanBeSeenPartly(true);
 	m_lidar->setAllObjects(objects);
-	m_field->update();
-	m_field->update();
+	updateFieldForObjectsToAppear();
 	objects.clear();
 	m_lidar->setAllObjects(objects);
 	m_field->update();
@@ -1089,7 +1046,7 @@ void FieldTest::update_lidarObjectNotSeenOnce_oneFieldObject()
 	CPPUNIT_ASSERT_EQUAL((size_t)1, fieldObjects.size());
 }
 
-void FieldTest::update_lidarObjectNotSeenFiveTimes_noFieldObjects()
+void FieldTest::update_lidarObjectNotSeenOften_noFieldObjects()
 {
 	DataAnalysis::LidarObjects objects(Point(0, 0));
 	objects.addObject(DataAnalysis::LidarObject(Point(2, 0), 0.1));
@@ -1097,21 +1054,17 @@ void FieldTest::update_lidarObjectNotSeenFiveTimes_noFieldObjects()
 	m_lidar->setCanBeSeen(true);
 	m_lidar->setCanBeSeenPartly(true);
 	m_lidar->setAllObjects(objects);
-	m_field->update();
-	m_field->update();
+	updateFieldForObjectsToAppear();
 	objects.clear();
 	m_lidar->setAllObjects(objects);
-	m_field->update();
-	m_field->update();
-	m_field->update();
-	m_field->update();
-	m_field->update();
+
+	updateFieldForObjectsToDisappear();
 
 	vector<FieldObject> fieldObjects = m_field->getAllFieldObjects();
 	CPPUNIT_ASSERT_EQUAL((size_t)0, fieldObjects.size());
 }
 
-void FieldTest::update_collectedPuckAndMovedForward_oneFieldObjects()
+void FieldTest::update_collectedPuckAndMovedForward_oneFieldObject()
 {
 	DataAnalysis::LidarObjects objectsPrevious(Point(0, 0));
 	objectsPrevious.addObject(DataAnalysis::LidarObject(Point(0.2, 0), 0.04));
@@ -1122,13 +1075,11 @@ void FieldTest::update_collectedPuckAndMovedForward_oneFieldObjects()
 	m_lidar->setCanBeSeen(true);
 	m_lidar->setCanBeSeenPartly(true);
 	m_lidar->setAllObjects(objectsPrevious);
-	m_field->update();
-	m_field->update();
+	updateFieldForObjectsToAppear();
 	vector<FieldObject> fieldObjects = m_field->getAllFieldObjects();
 	CPPUNIT_ASSERT_EQUAL((size_t)1, fieldObjects.size());
 	m_lidar->setAllObjects(objectsAfter);
-	m_field->update();
-	m_field->update();
+	updateFieldForObjectsToDisappear();
 
 	fieldObjects = m_field->getAllFieldObjects();
 	CPPUNIT_ASSERT_EQUAL((size_t)1, fieldObjects.size());
@@ -1146,14 +1097,12 @@ void FieldTest::update_rotatingAndObjectALittleBitDistanceMoved_onlyFieldObjectS
 	m_lidar->setCanBeSeenPartly(true);
 	m_lidar->setAllObjects(objectsPrevious);
 	m_robot->setIsRotating(false);
-	m_field->update();
-	m_field->update();
+	updateFieldForObjectsToAppear();
 	vector<FieldObject> fieldObjects = m_field->getAllFieldObjects();
 	CPPUNIT_ASSERT_EQUAL((size_t)1, fieldObjects.size());
 	m_lidar->setAllObjects(objectsAfter);
 	m_robot->setIsRotating(true);
-	m_field->update();
-	m_field->update();
+	updateFieldForObjectsToDisappear();
 
 	fieldObjects = m_field->getAllFieldObjects();
 	CPPUNIT_ASSERT_EQUAL((size_t)1, fieldObjects.size());
@@ -1174,14 +1123,12 @@ void FieldTest::update_rotatingAndObjectVeryClose_onlyFieldObjectIsUpdated()
 	m_lidar->setCanBeSeenPartly(true);
 	m_lidar->setAllObjects(objectsPrevious);
 	m_robot->setIsRotating(false);
-	m_field->update();
-	m_field->update();
+	updateFieldForObjectsToAppear();
 	vector<FieldObject> fieldObjects = m_field->getAllFieldObjects();
 	CPPUNIT_ASSERT_EQUAL((size_t)1, fieldObjects.size());
 	m_lidar->setAllObjects(objectsAfter);
 	m_robot->setIsRotating(false);
-	m_field->update();
-	m_field->update();
+	updateFieldForObjectsToDisappear();
 
 	fieldObjects = m_field->getAllFieldObjects();
 	CPPUNIT_ASSERT_EQUAL((size_t)1, fieldObjects.size());
@@ -1199,7 +1146,7 @@ void FieldTest::calibratePosition_noValidPattern_false()
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(4.5, -1), 0.1));
 	m_lidar->setAllObjects(lidarObjects);
 
-	m_field->update();
+	updateFieldForObjectsToAppear();
 
 	CPPUNIT_ASSERT(!m_field->calibratePosition());
 	CPPUNIT_ASSERT(!m_field->isCalibrated());
@@ -1214,11 +1161,7 @@ void FieldTest::calibratePosition_validPattern_true()
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 3.916), 0.06));
 	m_lidar->setAllObjects(lidarObjects);
 
-	m_field->update();
-	m_field->update();
-	m_field->update();
-	m_field->update();
-	m_field->update();
+	updateFieldForObjectsToAppear();
 
 	CPPUNIT_ASSERT(m_field->calibratePosition());
 	CPPUNIT_ASSERT(m_field->isCalibrated());
@@ -1236,8 +1179,7 @@ void FieldTest::calibratePosition_noValidPattern_noTransformation()
 
 	m_lidar->setCanBeSeen(true);
 	m_lidar->setCanBeSeenPartly(true);
-	m_field->update();
-	m_field->update();
+	updateFieldForObjectsToAppear();
 	m_field->calibratePosition();
 
 	vector<FieldObject> fieldObjects = m_field->getAllFieldObjects();
@@ -1260,8 +1202,7 @@ void FieldTest::calibratePosition_validPattern_transformed()
 
 	m_lidar->setCanBeSeen(true);
 	m_lidar->setCanBeSeenPartly(true);
-	m_field->update();
-	m_field->update();
+	updateFieldForObjectsToAppear();
 	m_field->calibratePosition();
 	m_field->update();
 
@@ -1283,10 +1224,9 @@ void FieldTest::calibratePosition_validPattern_correctNumberOfFieldObjects()
 
 	m_lidar->setCanBeSeen(true);
 	m_lidar->setCanBeSeenPartly(true);
-	m_field->update();
-	m_field->update();
+	updateFieldForObjectsToAppear();
 	m_field->calibratePosition();
-	m_field->update();
+	updateFieldForObjectsToDisappear();
 
 	vector<FieldObject> fieldObjects = m_field->getAllFieldObjects();
 	vector<DataAnalysis::LidarObject> lidarObjectsVector = lidarObjects.getObjectsWithDistanceBelow(10);
@@ -1307,8 +1247,7 @@ void FieldTest::calibratePosition_validPattern_correctTransformation()
 
 	m_lidar->setCanBeSeen(true);
 	m_lidar->setCanBeSeenPartly(true);
-	m_field->update();
-	m_field->update();
+	updateFieldForObjectsToAppear();
 	m_field->calibratePosition();
 	m_field->update();
 
@@ -1335,8 +1274,7 @@ void FieldTest::calibratePosition_realWorldExample_positionIsCorrect()
 	lidar.readSensorDataFromFile("resources/testfiles/lidar_35.txt");
 
 	dataAnalyser.updateSensorData();
-	field.update();
-	field.update();
+	updateFieldForObjectsToAppear(field);
 	field.calibratePosition();
 	field.update();
 
@@ -1358,8 +1296,7 @@ void FieldTest::calibratePosition_validPattern_objectsOutsideFieldAreDeleted()
 
 	m_lidar->setCanBeSeen(true);
 	m_lidar->setCanBeSeenPartly(true);
-	m_field->update();
-	m_field->update();
+	updateFieldForObjectsToAppear();
 	vector<FieldObject> fieldObjects = m_field->getAllFieldObjects();
 	CPPUNIT_ASSERT_EQUAL((size_t) 5, fieldObjects.size());
 
@@ -1368,7 +1305,8 @@ void FieldTest::calibratePosition_validPattern_objectsOutsideFieldAreDeleted()
 	m_lidar->setCanBeSeenPartly(false);
 	lidarObjects.clear();
 	m_lidar->setAllObjects(lidarObjects);
-	m_field->update();
+	updateFieldForObjectsToDisappear();
+
 	fieldObjects = m_field->getAllFieldObjects();
 	CPPUNIT_ASSERT_EQUAL((size_t) 4, fieldObjects.size());
 	CPPUNIT_ASSERT(m_field->isCalibrated());
@@ -1386,8 +1324,7 @@ void FieldTest::getObjectsWithColorOrderedByDistance_oneObjectWithCorrectColorAn
 	m_lidar->setCanBeSeen(true);
 	m_lidar->setCanBeSeenPartly(true);
 	m_odometry->setCurrentPosition(RobotPosition(Point(0, 0), 0));
-	m_field->update();
-	m_field->update();
+	updateFieldForObjectsToAppear();
 
 	vector<FieldObject> fieldObjects = m_field->getObjectsWithColorOrderdByDistance(FieldColorYellow);
 
@@ -1408,8 +1345,7 @@ void FieldTest::getObjectsWithColorOrderedByDistance_twoObjectsWithCorrectColorI
 	m_lidar->setCanBeSeen(true);
 	m_lidar->setCanBeSeenPartly(true);
 	m_odometry->setCurrentPosition(RobotPosition(ownPosition, 0));
-	m_field->update();
-	m_field->update();
+	updateFieldForObjectsToAppear();
 
 	vector<FieldObject> fieldObjects = m_field->getObjectsWithColorOrderdByDistance(FieldColorYellow);
 
@@ -1435,8 +1371,7 @@ void FieldTest::getObjectsWithColorOrderedByDistance_twoObjectsWithCorrectColorI
 	m_lidar->setCanBeSeen(true);
 	m_lidar->setCanBeSeenPartly(true);
 	m_odometry->setCurrentPosition(RobotPosition(ownPosition, 0));
-	m_field->update();
-	m_field->update();
+	updateFieldForObjectsToAppear();
 
 	vector<FieldObject> fieldObjects = m_field->getObjectsWithColorOrderdByDistance(FieldColorYellow);
 
@@ -1452,8 +1387,7 @@ void FieldTest::isPointInsideField_notCalibrated_true()
 {
 	m_lidar->setCanBeSeen(true);
 	m_lidar->setCanBeSeenPartly(true);
-	m_field->update();
-	m_field->update();
+	updateFieldForObjectsToAppear();
 
 	CPPUNIT_ASSERT(m_field->isPointInsideField(Point(-1, -3)));
 }
@@ -1469,8 +1403,7 @@ void FieldTest::isPointInsideField_pointIsInside_true()
 
 	m_lidar->setCanBeSeen(true);
 	m_lidar->setCanBeSeenPartly(true);
-	m_field->update();
-	m_field->update();
+	updateFieldForObjectsToAppear();
 	m_field->calibratePosition();
 
 	CPPUNIT_ASSERT(m_field->isCalibrated());
@@ -1488,8 +1421,7 @@ void FieldTest::isPointInsideField_pointIsOutside_false()
 
 	m_lidar->setCanBeSeen(true);
 	m_lidar->setCanBeSeenPartly(true);
-	m_field->update();
-	m_field->update();
+	updateFieldForObjectsToAppear();
 	m_field->calibratePosition();
 
 	CPPUNIT_ASSERT(m_field->isCalibrated());
@@ -1507,8 +1439,7 @@ void FieldTest::isPointInsideField_pointIsUnderField_false()
 
 	m_lidar->setCanBeSeen(true);
 	m_lidar->setCanBeSeenPartly(true);
-	m_field->update();
-	m_field->update();
+	updateFieldForObjectsToAppear();
 	m_field->calibratePosition();
 
 	CPPUNIT_ASSERT(m_field->isCalibrated());
@@ -1533,8 +1464,7 @@ void FieldTest::getAllSoftObstacles_oneBluePuck_resultSizeIs1()
 
 	m_lidar->setCanBeSeen(true);
 	m_lidar->setCanBeSeenPartly(true);
-	m_field->update();
-	m_field->update();
+	updateFieldForObjectsToAppear();
 	vector<Circle> obstacles = m_field->getAllSoftObstacles();
 
 	CPPUNIT_ASSERT_EQUAL((size_t)1, obstacles.size());
@@ -1550,8 +1480,7 @@ void FieldTest::getAllSoftObstacles_oneSmallObstacleWithUnknownColor_resultSizeI
 
 	m_lidar->setCanBeSeen(true);
 	m_lidar->setCanBeSeenPartly(true);
-	m_field->update();
-	m_field->update();
+	updateFieldForObjectsToAppear();
 	vector<Circle> obstacles = m_field->getAllSoftObstacles();
 
 	CPPUNIT_ASSERT_EQUAL((size_t)1, obstacles.size());
@@ -1570,8 +1499,7 @@ void FieldTest::getAllSoftObstacles_oneGreenObstacle_resultSizeIs0()
 
 	m_lidar->setCanBeSeen(true);
 	m_lidar->setCanBeSeenPartly(true);
-	m_field->update();
-	m_field->update();
+	updateFieldForObjectsToAppear();
 	vector<Circle> obstacles = m_field->getAllSoftObstacles();
 
 	CPPUNIT_ASSERT_EQUAL((size_t)0, obstacles.size());
@@ -1587,8 +1515,7 @@ void FieldTest::getAllSoftObstacles_oneBigObstacle_resultSizeIs0()
 
 	m_lidar->setCanBeSeen(true);
 	m_lidar->setCanBeSeenPartly(true);
-	m_field->update();
-	m_field->update();
+	updateFieldForObjectsToAppear();
 	vector<Circle> obstacles = m_field->getAllSoftObstacles();
 
 	CPPUNIT_ASSERT_EQUAL((size_t)0, obstacles.size());
@@ -1607,17 +1534,13 @@ void FieldTest::getAllSoftObstacles_onePuckDisappeared_resultSizeIs0()
 
 	m_lidar->setCanBeSeen(true);
 	m_lidar->setCanBeSeenPartly(true);
-	m_field->update();
-	m_field->update();
+	updateFieldForObjectsToAppear();
 	lidarObjects.clear();
 	cameraObjects.clear();
 	m_lidar->setAllObjects(lidarObjects);
 	m_camera->setAllObjects(cameraObjects);
-	m_field->update();
-	m_field->update();
-	m_field->update();
-	m_field->update();
-	m_field->update();
+	updateFieldForObjectsToDisappear();
+
 	vector<Circle> obstacles = m_field->getAllSoftObstacles();
 
 	CPPUNIT_ASSERT_EQUAL((size_t)0, obstacles.size());
@@ -1633,8 +1556,7 @@ void FieldTest::getAllSoftObstacles_oneSmallObstacleWithUnknownColor_resultDiame
 
 	m_lidar->setCanBeSeen(true);
 	m_lidar->setCanBeSeenPartly(true);
-	m_field->update();
-	m_field->update();
+	updateFieldForObjectsToAppear();
 	Circle obstacle = m_field->getAllSoftObstacles().front();
 
 	CPPUNIT_ASSERT_EQUAL(0.12, obstacle.getDiameter());
@@ -1653,8 +1575,7 @@ void FieldTest::getAllHardObstacles_oneGreenObject_resultSizeIs1()
 
 	m_lidar->setCanBeSeen(true);
 	m_lidar->setCanBeSeenPartly(true);
-	m_field->update();
-	m_field->update();
+	updateFieldForObjectsToAppear();
 	vector<Circle> obstacles = m_field->getAllHardObstacles();
 
 	CPPUNIT_ASSERT_EQUAL((size_t)1, obstacles.size());
@@ -1670,8 +1591,7 @@ void FieldTest::getAllHardObstacles_oneBigObstacle_resultSizeIs1()
 
 	m_lidar->setCanBeSeen(true);
 	m_lidar->setCanBeSeenPartly(true);
-	m_field->update();
-	m_field->update();
+	updateFieldForObjectsToAppear();
 	vector<Circle> obstacles = m_field->getAllHardObstacles();
 
 	CPPUNIT_ASSERT_EQUAL((size_t)1, obstacles.size());
@@ -1687,8 +1607,7 @@ void FieldTest::getAllHardObstacles_oneSmallObstacleWithUnknownColor_resultSizeI
 
 	m_lidar->setCanBeSeen(true);
 	m_lidar->setCanBeSeenPartly(true);
-	m_field->update();
-	m_field->update();
+	updateFieldForObjectsToAppear();
 	vector<Circle> obstacles = m_field->getAllHardObstacles();
 
 	CPPUNIT_ASSERT_EQUAL((size_t)0, obstacles.size());
@@ -1704,15 +1623,10 @@ void FieldTest::getAllHardObstacles_oneBigObstacleDisappeared_resultSizeIs0()
 
 	m_lidar->setCanBeSeen(true);
 	m_lidar->setCanBeSeenPartly(true);
-	m_field->update();
-	m_field->update();
+	updateFieldForObjectsToAppear();
 	lidarObjects.clear();
 	m_lidar->setAllObjects(lidarObjects);
-	m_field->update();
-	m_field->update();
-	m_field->update();
-	m_field->update();
-	m_field->update();
+	updateFieldForObjectsToDisappear();
 	vector<Circle> obstacles = m_field->getAllHardObstacles();
 
 	CPPUNIT_ASSERT_EQUAL((size_t)0, obstacles.size());
@@ -1728,8 +1642,7 @@ void FieldTest::getAllHardObstacles_fairlyBigObject_diameterIs08()
 
 	m_lidar->setCanBeSeen(true);
 	m_lidar->setCanBeSeenPartly(true);
-	m_field->update();
-	m_field->update();
+	updateFieldForObjectsToAppear();
 	vector<Circle> obstacles = m_field->getAllHardObstacles();
 
 	CPPUNIT_ASSERT_EQUAL((size_t)1, obstacles.size());
@@ -1779,11 +1692,7 @@ void FieldTest::getTargetsForSearchingPucks_twoObjectsWithUnknownColor_numberOfP
 	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorUnknown, Point(2, 1.5)));
 	m_camera->setAllObjects(cameraObjects);
 
-	m_field->update();
-	m_field->update();
-	m_field->update();
-	m_field->update();
-	m_field->update();
+	updateFieldForObjectsToAppear();
 
 	CPPUNIT_ASSERT_EQUAL((size_t)33, m_field->getTargetsForSearchingPucks().size());
 }
@@ -1801,8 +1710,7 @@ void FieldTest::getTargetsForSearchingPucks_threeObjectsWithUnknownColorNotInFie
 	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorUnknown, Point(6, 1.5)));
 	m_camera->setAllObjects(cameraObjects);
 
-	m_field->update();
-	m_field->update();
+	updateFieldForObjectsToAppear();
 
 	CPPUNIT_ASSERT_EQUAL((size_t)13, m_field->getTargetsForSearchingPucks().size());
 }
@@ -1824,8 +1732,7 @@ void FieldTest::getTargetsForSearchungPucks_fourObjectsWithUnknownColorAndOneObj
 	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(2.5, 2)));
 	m_camera->setAllObjects(cameraObjects);
 
-	m_field->update();
-	m_field->update();
+	updateFieldForObjectsToAppear();
 
 	CPPUNIT_ASSERT_EQUAL((size_t)33, m_field->getTargetsForSearchingPucks().size());
 }
@@ -1874,11 +1781,9 @@ void FieldTest::getNewOriginFromFieldDetection_realWorldExample1_correctNewOrigi
 	FieldImpl field(dataAnalyser.getOdometry(), dataAnalyser.getLidar(), dataAnalyser.getCamera(), autonomousRobot);
 	Hardware::LidarMock &lidar = hardwareRobot->getLidarMock();
 	lidar.readSensorDataFromFile("resources/testfiles/lidar_detect3.txt");
-
 	dataAnalyser.updateSensorData();
 
-	field.update();
-	field.update();
+	updateFieldForObjectsToAppear(field);
 	unsigned int numberOfBorderStones;
 	RobotPosition resultOrigin = field.getNewOriginFromFieldDetection(numberOfBorderStones);
 	cout << "\nNumber Of Stones: " << numberOfBorderStones << "\nFound Origin: " << resultOrigin << endl;
@@ -1896,11 +1801,7 @@ void FieldTest::getNumberOfObjectsWithColor_noColoredObject_0()
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(4.4, 1.8), 0.1));
 	m_lidar->setAllObjects(lidarObjects);
 
-	m_field->update();
-	m_field->update();
-	m_field->update();
-	m_field->update();
-	m_field->update();
+	updateFieldForObjectsToAppear();
 
 	CPPUNIT_ASSERT_EQUAL((unsigned int)0, m_field->getNumberOfObjectsWithColor(FieldColorBlue));
 	CPPUNIT_ASSERT_EQUAL((unsigned int)0, m_field->getNumberOfObjectsWithColor(FieldColorYellow));
@@ -1926,11 +1827,8 @@ void FieldTest::getNumberOfObjectsWithColor_3YellowAnd2GreenAnd1UnknownObject_co
 	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorGreen, Point(3, 1.8)));
 	m_camera->setAllObjects(cameraObjects);
 
-	m_field->update();
-	m_field->update();
-	m_field->update();
-	m_field->update();
-	m_field->update();
+
+	updateFieldForObjectsToAppear();
 
 	CPPUNIT_ASSERT_EQUAL((unsigned int)0, m_field->getNumberOfObjectsWithColor(FieldColorBlue));
 	CPPUNIT_ASSERT_EQUAL((unsigned int)3, m_field->getNumberOfObjectsWithColor(FieldColorYellow));
@@ -1954,11 +1852,7 @@ void FieldTest::getNumberOfObjectsWithColor_2BlueObjects_2()
 	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorGreen, Point(2, 1.8)));
 	m_camera->setAllObjects(cameraObjects);
 
-	m_field->update();
-	m_field->update();
-	m_field->update();
-	m_field->update();
-	m_field->update();
+	updateFieldForObjectsToAppear();
 
 	CPPUNIT_ASSERT_EQUAL((unsigned int)2, m_field->getNumberOfObjectsWithColor(FieldColorBlue));
 	CPPUNIT_ASSERT_EQUAL((unsigned int)1, m_field->getNumberOfObjectsWithColor(FieldColorYellow));
@@ -1968,8 +1862,6 @@ void FieldTest::getNumberOfObjectsWithColor_2BlueObjects_2()
 
 void FieldTest::getEstimatedNumberOfAchievedGoals_init_0()
 {
-	m_field->update();
-
 	CPPUNIT_ASSERT_EQUAL((unsigned int) 0, m_field->getEstimatedNumberOfGoals());
 }
 
@@ -1997,8 +1889,7 @@ void FieldTest::getNumberOfPucksInEnemyThird_3PucksAnd2InEnemyThird_resultIs2()
 
 	m_lidar->setCanBeSeen(true);
 	m_lidar->setCanBeSeenPartly(true);
-	m_field->update();
-	m_field->update();
+	updateFieldForObjectsToAppear();
 
 	CPPUNIT_ASSERT_EQUAL((unsigned int)2, m_field->getNumberOfPuckInEnemyThird());
 }
@@ -2016,8 +1907,32 @@ void FieldTest::getTargetsForCollectingOnePuckNotInEnemyThird_3Objects1Unknown1I
 	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorUnknown, Point(2.5, 2)));
 	m_camera->setAllObjects(cameraObjects);
 
-	m_field->update();
-	m_field->update();
+	updateFieldForObjectsToAppear();
 
 	CPPUNIT_ASSERT_EQUAL((size_t)10, m_field->getTargetsForCollectingOnePuckNotInEnemyThird(FieldColorYellow).size());
+}
+
+void FieldTest::updateFieldForObjectsToAppear(FieldImpl &field)
+{
+	field.update();
+	field.update();
+}
+
+void FieldTest::updateFieldForObjectsToDisappear(FieldImpl &field)
+{
+	field.update();
+	field.update();
+	field.update();
+	field.update();
+	field.update();
+}
+
+void FieldTest::updateFieldForObjectsToAppear()
+{
+	updateFieldForObjectsToAppear(*m_field);
+}
+
+void FieldTest::updateFieldForObjectsToDisappear()
+{
+	updateFieldForObjectsToDisappear(*m_field);
 }
