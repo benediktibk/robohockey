@@ -2430,3 +2430,28 @@ void FieldTest::getNumberOfPucksInEnemyThird_3PucksAnd2InEnemyThird_resultIs2()
 
 	CPPUNIT_ASSERT_EQUAL((unsigned int)2, field.getNumberOfPuckInEnemyThird());
 }
+
+void FieldTest::getTargetsForCollectingOnePuckNotInEnemyThird_3Objects1Unknown1InEnemyThird_numberOfPositions10()
+{
+	DataAnalysis::OdometryMock odometry;
+	DataAnalysis::LidarMock lidar;
+	DataAnalysis::CameraMock camera;
+	Autonomous::RobotMock autonomousRobot;
+	FieldImpl field(odometry, lidar, camera, autonomousRobot);
+
+	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(3.5, 1.5), 0.1));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(2, 1.7), 0.1));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(2.5, 2), 0.1));
+	lidar.setAllObjects(lidarObjects);
+	DataAnalysis::CameraObjects cameraObjects;
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(3.5, 1.5)));
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(2, 1.7)));
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorUnknown, Point(2.5, 2)));
+	camera.setAllObjects(cameraObjects);
+
+	field.update();
+	field.update();
+
+	CPPUNIT_ASSERT_EQUAL((size_t)10, field.getTargetsForCollectingOnePuckNotInEnemyThird(FieldColorYellow).size());
+}
