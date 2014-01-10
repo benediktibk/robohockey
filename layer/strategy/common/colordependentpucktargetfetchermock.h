@@ -27,14 +27,17 @@ namespace Common
 			virtual std::list<RoboHockey::Common::RobotPosition> getPositionsToCollectPuck() const;
 			virtual RoboHockey::Common::FieldColor getColorOfTargetPucks() const;
 			virtual unsigned int getNumberOfKnownPucksNotInTarget() const;
+			virtual unsigned int getNumberOfKnownPucksNotInEnemyThird() const;
 			virtual bool isAchievingGoals() const;
 
 			void setNumberOfKnownPucksNotInTarget(unsigned int value);
+			void setNumberOfKnownPucksNotInEnemyThird(unsigned int value);
 			void setTargetPositions(const std::list<RoboHockey::Common::RobotPosition> &positions);
 			void setisAchievingGoals(bool value);
 
 		private:
 			unsigned int m_numberOfKnownPucksNotInTarget;
+			unsigned int m_numberOfKnownPucksNotInEnemyThird;
 			std::list<RoboHockey::Common::RobotPosition> m_targetPositions;
 			bool m_isAchievingGoals;
 		};

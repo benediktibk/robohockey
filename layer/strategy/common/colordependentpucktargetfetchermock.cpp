@@ -8,6 +8,7 @@ using namespace RoboHockey::Common;
 
 ColorDependentPuckTargetFetcherMock::ColorDependentPuckTargetFetcherMock() :
 	m_numberOfKnownPucksNotInTarget(0),
+	m_numberOfKnownPucksNotInEnemyThird(0),
 	m_isAchievingGoals(false)
 { }
 
@@ -31,6 +32,11 @@ unsigned int ColorDependentPuckTargetFetcherMock::getNumberOfKnownPucksNotInTarg
 	return m_numberOfKnownPucksNotInTarget;
 }
 
+unsigned int ColorDependentPuckTargetFetcherMock::getNumberOfKnownPucksNotInEnemyThird() const
+{
+	return m_numberOfKnownPucksNotInEnemyThird;
+}
+
 bool ColorDependentPuckTargetFetcherMock::isAchievingGoals() const
 {
 	return m_isAchievingGoals;
@@ -39,6 +45,11 @@ bool ColorDependentPuckTargetFetcherMock::isAchievingGoals() const
 void ColorDependentPuckTargetFetcherMock::setNumberOfKnownPucksNotInTarget(unsigned int value)
 {
 	m_numberOfKnownPucksNotInTarget = value;
+}
+
+void ColorDependentPuckTargetFetcherMock::setNumberOfKnownPucksNotInEnemyThird(unsigned int value)
+{
+	m_numberOfKnownPucksNotInEnemyThird = value;
 }
 
 void ColorDependentPuckTargetFetcherMock::setTargetPositions(const list<RobotPosition> &positions)

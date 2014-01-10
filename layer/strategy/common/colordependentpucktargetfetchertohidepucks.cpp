@@ -29,6 +29,11 @@ unsigned int ColorDependentPuckTargetFetcherToHidePucks::getNumberOfKnownPucksNo
 	return m_field.getNumberOfObjectsWithColor(getColorOfTargetPucks()) - m_field.getNumberOfHiddenPucks();
 }
 
+unsigned int ColorDependentPuckTargetFetcherToHidePucks::getNumberOfKnownPucksNotInEnemyThird() const
+{
+	return m_field.getNumberOfObjectsWithColor(getColorOfTargetPucks()) - m_field.getNumberOfHiddenPucks();
+}
+
 bool ColorDependentPuckTargetFetcherToHidePucks::isAchievingGoals() const
 {
 	return false;
