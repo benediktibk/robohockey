@@ -8,8 +8,17 @@ namespace RoboHockey
 {
 namespace Layer
 {
+namespace DataAnalysis
+{
+	class OdometryMock;
+	class LidarMock;
+	class CameraMock;
+}
+
 namespace Autonomous
 {
+	class RobotMock;
+
 	class FieldTest:
 			public CPPUNIT_NS::TestFixture
 	{
@@ -114,6 +123,10 @@ namespace Autonomous
 		CPPUNIT_TEST(getTargetsForCollectingOnePuckNotInEnemyThird_3Objects1Unknown1InEnemyThird_numberOfPositions10);
 		CPPUNIT_TEST_SUITE_END();
 
+	public:
+		virtual void setUp();
+		virtual void tearDown();
+
 	private:
 		void update_noLidarObjects_noFieldObjects();
 		void update_oneObjectFromLidarInView_oneObject();
@@ -213,6 +226,12 @@ namespace Autonomous
 		void getEstimatedNumberOfAchievedGoals_2goals_2();
 		void getNumberOfPucksInEnemyThird_3PucksAnd2InEnemyThird_resultIs2();
 		void getTargetsForCollectingOnePuckNotInEnemyThird_3Objects1Unknown1InEnemyThird_numberOfPositions10();
+
+	private:
+		DataAnalysis::CameraMock *m_camera;
+		DataAnalysis::LidarMock *m_lidar;
+		DataAnalysis::OdometryMock *m_odometry;
+		RobotMock *m_robot;
 	};
 }
 }

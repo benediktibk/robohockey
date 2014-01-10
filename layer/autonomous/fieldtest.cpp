@@ -15,13 +15,29 @@ using namespace RoboHockey::Layer;
 using namespace RoboHockey::Layer::Autonomous;
 using namespace std;
 
+void FieldTest::setUp()
+{
+	m_camera = new DataAnalysis::CameraMock();
+	m_lidar = new DataAnalysis::LidarMock();
+	m_odometry = new DataAnalysis::OdometryMock();
+	m_robot = new RobotMock();
+}
+
+void FieldTest::tearDown()
+{
+	delete m_camera;
+	m_camera = 0;
+	delete m_lidar;
+	m_lidar = 0;
+	delete m_odometry;
+	m_odometry = 0;
+	delete m_robot;
+	m_robot = 0;
+}
+
 void FieldTest::update_noLidarObjects_noFieldObjects()
 {
-	DataAnalysis::OdometryMock odometry;
-	DataAnalysis::LidarMock lidar;
-	DataAnalysis::CameraMock camera;
-	Autonomous::RobotMock autonomousRobot;
-	FieldImpl field(odometry, lidar, camera, autonomousRobot);
+	FieldImpl field(*m_odometry, *m_lidar, *m_camera, *m_robot);
 
 	field.update();
 
