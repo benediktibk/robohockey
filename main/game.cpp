@@ -45,7 +45,7 @@ Game::Game(int argc, char **argv) :
 		cout << "invalid arguments" << endl;
 		cout << parser.usage();
 		m_valid = false;
-		return;
+		exit(1);
 	}
 
 	string playerServer = parser.playerServer();

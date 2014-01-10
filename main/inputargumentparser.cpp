@@ -56,7 +56,7 @@ vector<string> InputArgumentParser::convertArguments(int argc, char **argv)
 	vector<string> arguments;
 	arguments.reserve(argc - 1);
 
-	for (int i = 1; i < argc; ++i)
+	for (int i = 0; i < argc; ++i)
 		arguments.push_back(argv[i]);
 
 	return arguments;
