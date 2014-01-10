@@ -40,5 +40,8 @@ void LeavePuckState::updateInternal()
 	m_robot.leaveCollectedPuck();
 
 	if (m_shouldIncreaseGoalCount)
+	{
 		m_field.increaseNumberOfEstimatedGoals();
+		m_referee.reportGoal();
+	}
 }

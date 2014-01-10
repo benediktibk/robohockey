@@ -34,6 +34,7 @@ namespace Common
 		void setGameOver(bool value);
 		void setStopMovement(bool value);
 		void setTrueColorOfTeam(RoboHockey::Common::FieldColor color);
+		unsigned int getReportedGoals() const;
 
 	private:
 		bool m_detectionStart;
@@ -41,6 +42,7 @@ namespace Common
 		bool m_gameOver;
 		bool m_stopMovement;
 		RoboHockey::Common::FieldColor m_trueColor;
+		unsigned int m_reportedGoals;
 
 
 	};
