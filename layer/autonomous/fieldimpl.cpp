@@ -60,6 +60,7 @@ void FieldImpl::update()
 
 	updateAchievedGoals();
 	updateHiddenPucks();
+	updatePucksInEnemyThird();
 }
 
 const vector<FieldObject> &FieldImpl::getAllFieldObjects() const
@@ -112,6 +113,11 @@ bool FieldImpl::calibratePosition()
 unsigned int FieldImpl::getNumberOfAchievedGoals() const
 {
 	return m_achievedGoals;
+}
+
+unsigned int FieldImpl::getNumberOfPuckInEnemyThird() const
+{
+	return m_puckInEnemyThird;
 }
 
 unsigned int FieldImpl::getNumberOfHiddenPucks() const
@@ -805,6 +811,20 @@ void FieldImpl::updateHiddenPucks()
 
 		if (fieldObject.getColor() == getEnemyTeamColor() && hiddenArea.isInside(fieldObject.getCircle().getCenter(), 0.001))
 			m_hiddenPucks++;
+	}
+}
+
+void FieldImpl::updatePucksInEnemyThird()
+{
+	Rectangle goal(Point(10.0/3.0, 0), Point(5, 3));
+
+	m_puckInEnemyThird = 0;
+	for (vector<FieldObject>::const_iterator i = m_usefulFieldObjects.begin(); i != m_usefulFieldObjects.end(); ++i)
+	{
+		const FieldObject &fieldObject = *i;
+
+		if (fieldObject.getColor() == m_teamColor && goal.isInside(fieldObject.getCircle().getCenter(), 0.001))
+			m_puckInEnemyThird++;
 	}
 }
 

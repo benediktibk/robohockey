@@ -26,6 +26,7 @@ namespace Autonomous
 
 		virtual void update() = 0;
 		virtual unsigned int getNumberOfAchievedGoals() const = 0;
+		virtual unsigned int getNumberOfPuckInEnemyThird() const = 0;
 		virtual const std::vector<FieldObject>& getAllFieldObjects() const = 0;
 		virtual const std::vector<Common::Circle>& getAllSoftObstacles() const = 0;
 		virtual const std::vector<Common::Circle>& getAllHardObstacles() const = 0;

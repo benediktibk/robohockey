@@ -50,6 +50,7 @@ namespace Autonomous
 		virtual unsigned int getNumberOfObjectsWithColor(Common::FieldColor color) const;
 		virtual bool calibratePosition();
 		virtual unsigned int getNumberOfAchievedGoals() const;
+		virtual unsigned int getNumberOfPuckInEnemyThird() const;
 		virtual unsigned int getNumberOfHiddenPucks() const;
 		virtual unsigned int getEstimatedNumberOfGoals() const;
 		virtual void increaseNumberOfEstimatedGoals();
@@ -86,6 +87,7 @@ namespace Autonomous
 		void updateObstacles();
 		void updateAchievedGoals();
 		void updateHiddenPucks();
+		void updatePucksInEnemyThird();
 
 		std::vector<FieldObject>::iterator getNextObjectFromPosition(Common::Point position);
 		std::vector<FieldObject>::iterator getNextObjectFromPosition(std::vector<FieldObject> &fieldObjects, Common::Point position);
@@ -121,6 +123,7 @@ namespace Autonomous
 		std::vector<Common::Circle> m_hardObstacles;
 		FieldState m_fieldState;
 		unsigned int m_achievedGoals;
+		unsigned int m_puckInEnemyThird;
 		unsigned int m_hiddenPucks;
 		Common::FieldColor m_teamColor;
 		unsigned int m_estimatedAchievedGoals;

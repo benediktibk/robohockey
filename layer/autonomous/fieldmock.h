@@ -24,8 +24,7 @@ namespace Autonomous
 		virtual std::vector<FieldObject> getObjectsWithColorOrderdByDistance(Common::FieldColor color) const;
 		virtual unsigned int getNumberOfObjectsWithColor(Common::FieldColor color) const;
 		virtual unsigned int getNumberOfAchievedGoals() const;
-		void setAchievedGoals(unsigned int goalsAchieved);
-		void setEnemyHiddenPucks(unsigned int getNumberOfHiddenPucks);
+		virtual unsigned int getNumberOfPuckInEnemyThird() const;
 		virtual bool calibratePosition();
 		virtual bool isPointInsideField(const Common::Point &point) const;
 		virtual unsigned int getNumberOfHiddenPucks() const;
@@ -47,6 +46,8 @@ namespace Autonomous
 		virtual void transformFieldToNewOrigin(const Common::RobotPosition newOrigin);
 		virtual std::vector<Common::RobotPosition> getTargetsForWaitingPhase() const;
 
+		void setAchievedGoals(unsigned int goalsAchieved);
+		void setEnemyHiddenPucks(unsigned int getNumberOfHiddenPucks);
 		void setFieldObjects(const std::vector<FieldObject> &objects);
 		void setSoftObstacles(const std::vector<Common::Circle> &obstacles);
 		void setHardObstacles(const std::vector<Common::Circle> &obstacles);
@@ -60,6 +61,7 @@ namespace Autonomous
 		std::vector<Common::Circle> m_softObstacles;
 		std::vector<Common::Circle> m_hardObstacles;
 		unsigned int m_achievedGoals;
+		unsigned int m_pucksInEnemyThird;
 		bool m_negativeCoordinatesOutside;
 		unsigned int m_hiddenPucks;
 		bool m_calibrated;

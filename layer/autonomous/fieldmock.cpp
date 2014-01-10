@@ -7,6 +7,7 @@ using namespace RoboHockey::Layer::Autonomous;
 
 FieldMock::FieldMock() :
 	m_achievedGoals(0),
+	m_pucksInEnemyThird(0),
 	m_negativeCoordinatesOutside(false),
 	m_hiddenPucks(0),
 	m_calibrated(false),
@@ -189,6 +190,11 @@ list<RobotPosition> FieldMock::getTargetsInEnemyThird() const
 unsigned int FieldMock::getNumberOfAchievedGoals() const
 {
 	return m_achievedGoals;
+}
+
+unsigned int FieldMock::getNumberOfPuckInEnemyThird() const
+{
+	return m_pucksInEnemyThird;
 }
 
 void FieldMock::setAchievedGoals(unsigned int goalsAchieved)
