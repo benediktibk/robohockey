@@ -46,7 +46,7 @@ string InputArgumentParser::usage() const
 	stream << "All arguments are optional. If a server-IP is not specified localhost is used. By default the gui is disabled." << endl;
 	stream << "\t--player <IP>" << endl;
 	stream << "\t--angelina <IP>" << endl;
-	stream << "\t--enableGui <IP>" << endl;
+	stream << "\t--enableGui" << endl;
 
 	return stream.str();
 }
