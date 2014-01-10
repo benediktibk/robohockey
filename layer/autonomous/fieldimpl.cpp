@@ -506,11 +506,11 @@ list<RobotPosition> FieldImpl::getTargetsInEnemyThird() const
 {
 	list<RobotPosition> targets;
 
-	targets.push_back(RobotPosition( Point(3.6, 1.5), Angle()));
 	targets.push_back(RobotPosition( Point(3.6, 1.0), Angle()));
 	targets.push_back(RobotPosition( Point(3.6, 2.0), Angle()));
 	targets.push_back(RobotPosition ( Point(4.0, 2.5), Angle()));
 	targets.push_back(RobotPosition ( Point(4.0, 0.5), Angle()));
+	targets.push_back(RobotPosition( Point(3.6, 1.5), Angle()));
 
 	return targets;
 }

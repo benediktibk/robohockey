@@ -3,6 +3,7 @@
 #include "layer/strategy/drivepuckstatemachine/findpuckstate.h"
 #include "layer/strategy/drivepuckstatemachine/initialstate.h"
 #include "layer/strategy/drivepuckstatemachine/collectpuckstate.h"
+#include "layer/strategy/common/waitcyclesstate.h"
 #include "layer/strategy/common/drivetostate.h"
 #include "layer/strategy/common/statemachine.h"
 #include "layer/strategy/common/statemock.h"
@@ -41,12 +42,20 @@ void DriveToCollectPuckStateTest::nextState_reachedTarget_nextStateIsCollectPuck
 	DriveToCollectPuckState driveToCollectPuckState(robot, field, referee, puckTargetFetcher);
 	State *driveToState;
 	driveToState = driveToCollectPuckState.nextState();
+	State *waitState;
+	waitState = driveToState->nextState();
+	waitState->update();
+	waitState->update();
+	waitState->update();
+	waitState->update();
+	waitState->update();
 	State *state;
-	state = driveToState->nextState();
+	state = waitState->nextState();
 	CollectPuckState *stateCasted = dynamic_cast<CollectPuckState*>(state);
 
 	CPPUNIT_ASSERT(stateCasted != 0);
 	delete state;
+	delete waitState;
 	delete driveToState;
 }
 

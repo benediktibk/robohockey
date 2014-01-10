@@ -37,7 +37,6 @@ Game::Game(int argc, char **argv) :
 	m_consoleMessagesEnabled(false),
 	m_valid(true)
 {
-
 	InputArgumentParser parser(InputArgumentParser::convertArguments(argc, argv));
 
 	if (!parser.isValid())
@@ -52,11 +51,15 @@ Game::Game(int argc, char **argv) :
 	string angelinaServer = parser.angelinaServer();
 	m_enablegui = parser.enableGui();
 
-	cout << "##### starting player server from " << playerServer << endl;
-	cout << "##### starting angelina server from " << angelinaServer << endl;
+	cout << "##### ---------------------------\n##### GAME START" << endl;
+	cout << "##### player ip     : " << playerServer << endl;
+	cout << "##### angelina ip   : " << angelinaServer << endl;
 
 	if (m_enablegui)
-		cout << "gui enabled" << endl;
+		cout << "##### GUI Enabled   : " << "TRUE" << endl;
+	else
+		cout << "##### GUI Enabled   : " << "FALSE" << endl;
+	cout << "##### ---------------------------" << endl;
 
 	Hardware::Robot *hardwareRobot = new Hardware::RobotImpl(playerServer);
 	DataAnalysis::DataAnalyser *dataAnalyser = new DataAnalysis::DataAnalyserImpl(hardwareRobot);
