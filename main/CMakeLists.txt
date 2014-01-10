@@ -22,6 +22,11 @@ set(MAIN_SRC
 	game.cpp
 	gameautomatic.cpp
 	gameremotecontrol.cpp
+	inputargumentparser.cpp
+)
+
+set(MAIN_TEST_SRC
+	inputargumentparsertest.cpp
 )
 
 set(MAIN_HEADERS
@@ -57,6 +62,7 @@ if(Boost_FOUND)
 endif()
 
 set(LIBRARIES_TEST
+	maintest
 	layerstrategymainstatemachinetest
 	layerstrategyfielddetectionstatemachinetest
 	layerstrategydrivepuckstatemachinetest
@@ -68,6 +74,8 @@ set(LIBRARIES_TEST
 	commontest
 	${CPPUNIT_LIBRARY}
 )
+
+add_library(maintest ${MAIN_TEST_SRC})
 
 add_executable(robot main.cpp)
 add_executable(testrunner testregistration.cpp maintestrunner.cpp)

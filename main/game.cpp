@@ -1,4 +1,5 @@
 #include "main/game.h"
+#include "main/inputargumentparser.h"
 #include "common/watchimpl.h"
 #include "common/segfaultstacktraceprinter.h"
 #include "layer/dataanalysis/dataanalyserimpl.h"
@@ -12,6 +13,7 @@
 #include <iostream>
 #include <iomanip>
 #include <sstream>
+#include <assert.h>
 
 using namespace std;
 using namespace RoboHockey;
@@ -32,31 +34,23 @@ Game::Game(int argc, char **argv) :
 	m_yellowObjectCount(0),
 	m_greenObjectCount(0),
 	m_stackTracePrinter(new SegFaultStackTracePrinter()),
-	m_consoleMessagesEnabled(false)
+	m_consoleMessagesEnabled(false),
+	m_valid(true)
 {
-	string playerServer = "localhost";
-	string angelinaServer = "localhost";
-	m_enablegui = false;
 
-	vector<string> arguments(argc);
-	for(int i = 1; i < argc; i++)
+	InputArgumentParser parser(InputArgumentParser::convertArguments(argc, argv));
+
+	if (!parser.isValid())
 	{
-		arguments.push_back(string(argv[i]));
-		cout << string(argv[i]) << " ";
+		cout << "invalid arguments" << endl;
+		cout << parser.usage();
+		m_valid = false;
+		return;
 	}
-	cout << endl;
 
-	for(size_t i = 0; i < arguments.size(); i++)
-	{
-		if(arguments[i] == "--player" && arguments[i + 1] != "--angelina" && arguments[i + 1] != "--enablegui" && i + 1 <= arguments.size())
-			playerServer = arguments[i + 1];
-
-		if(arguments[i] == "--angelina" && arguments[i + 1] != "--player" && arguments[i + 1] != "--enablegui" && i + 1 <= arguments.size())
-			angelinaServer = arguments[i + 1];
-
-		if(arguments[i] == "--enablegui")
-			m_enablegui = true;
-	}
+	string playerServer = parser.playerServer();
+	string angelinaServer = parser.angelinaServer();
+	m_enablegui = parser.enableGui();
 
 	cout << "##### starting player server from " << playerServer << endl;
 	cout << "##### starting angelina server from " << angelinaServer << endl;
@@ -98,27 +92,32 @@ Game::~Game()
 
 bool Game::guiEnabled()
 {
+	assert(m_valid);
 	return m_enablegui;
 }
 
 void Game::setLogMessagesEnabled(bool enable)
 {
+	assert(m_valid);
 	m_consoleMessagesEnabled = enable;
 }
 
 bool Game::logMessagesEnabled()
 {
+	assert(m_valid);
 	return m_consoleMessagesEnabled;
 }
 
 void Game::logToConsole(const string &message)
 {
+	assert(m_valid);
 	if (logMessagesEnabled())
 		cout << message << endl;
 }
 
 void Game::execute()
 {
+	assert(m_valid);
 	WatchImpl watch;
 
 	/*!
@@ -202,21 +201,25 @@ void Game::execute()
 
 Autonomous::Robot &Game::getRobot()
 {
+	assert(m_valid);
 	return *m_robot;
 }
 
 Autonomous::Field &Game::getField()
 {
+	assert(m_valid);
 	return *m_field;
 }
 
 Strategy::Common::Referee &Game::getReferee()
 {
+	assert(m_valid);
 	return *m_referee;
 }
 
 void Game::printTimeInMs(const string &message, double time) const
 {
+	assert(m_valid);
 	cout << setprecision(1) << fixed << message << ": " << time*1000 << " ms" << endl;
 }
 

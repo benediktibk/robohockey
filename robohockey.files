@@ -502,3 +502,7 @@ layer/strategy/drivepuckstatemachine/drivepucktoenemythirdstate.cpp
 common/loggerimpl.h
 common/loggermock.h
 common/loggermock.cpp
+main/inputargumentparsertest.h
+main/inputargumentparser.h
+main/inputargumentparsertest.cpp
+main/inputargumentparser.cpp
