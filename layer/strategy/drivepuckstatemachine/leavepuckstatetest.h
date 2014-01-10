@@ -19,13 +19,17 @@ namespace DrivePuckStateMachine
 		CPPUNIT_TEST(nextState_cantReachTarget_nextStateIsInitialState);
 		CPPUNIT_TEST(nextState_reachedTargetAndNumberOfKnownPucksIs0_nextStateIsFindPuckState);
 		CPPUNIT_TEST(nextState_reachedTargetAndNumberOfKnownPucksIsNot0_nextStateIsDriveToCollectPuckState);
+		CPPUNIT_TEST(update_shouldReportGoal_oneGoalReported);
+		CPPUNIT_TEST(update_shouldNotReportGoal_noGoalReported);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
 		void nextState_cantReachTarget_nextStateIsInitialState();
 		void nextState_reachedTargetAndNumberOfKnownPucksIs0_nextStateIsFindPuckState();
 		void nextState_reachedTargetAndNumberOfKnownPucksIsNot0_nextStateIsDriveToCollectPuckState();
-	
+		void update_shouldReportGoal_oneGoalReported();
+		void update_shouldNotReportGoal_noGoalReported();
+
 };
 }
 }

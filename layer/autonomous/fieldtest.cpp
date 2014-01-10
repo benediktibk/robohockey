@@ -2221,62 +2221,18 @@ void FieldTest::getNewOriginFromFieldDetection_realWorldExample1_correctNewOrigi
 	Autonomous::RobotMock autonomousRobot;
 	FieldImpl field(dataAnalyser.getOdometry(), dataAnalyser.getLidar(), dataAnalyser.getCamera(), autonomousRobot);
 	Hardware::LidarMock &lidar = hardwareRobot->getLidarMock();
-	lidar.readSensorDataFromFile("resources/testfiles/lidar_detect1.txt");
-
-	dataAnalyser.updateSensorData();
-
-	field.update();
-	unsigned int numberOfBorderStones;
-	RobotPosition resultOrigin = field.getNewOriginFromFieldDetection(numberOfBorderStones);
-	cout << resultOrigin << endl;
-
-//	Compare compare(0.5);
-//	CPPUNIT_ASSERT(compare.isFuzzyEqual(RobotPosition(Point(0, 0), Angle()), resultOrigin));
-	CPPUNIT_ASSERT(true);
-}
-
-void FieldTest::getNewOriginFromFieldDetection_realWorldExample2_correctNewOrigin()
-{
-	//! @todo Test
-	Hardware::RobotMock *hardwareRobot = new Hardware::RobotMock();
-	DataAnalysis::DataAnalyserImpl dataAnalyser(hardwareRobot);
-	Autonomous::RobotMock autonomousRobot;
-	FieldImpl field(dataAnalyser.getOdometry(), dataAnalyser.getLidar(), dataAnalyser.getCamera(), autonomousRobot);
-	Hardware::LidarMock &lidar = hardwareRobot->getLidarMock();
-	lidar.readSensorDataFromFile("resources/testfiles/lidar_detect2.txt");
-
-	dataAnalyser.updateSensorData();
-
-	field.update();
-	unsigned int numberOfBorderStones;
-	RobotPosition resultOrigin = field.getNewOriginFromFieldDetection(numberOfBorderStones);
-	cout << resultOrigin << endl;
-
-//	Compare compare(0.5);
-//	CPPUNIT_ASSERT(compare.isFuzzyEqual(RobotPosition(Point(0, 0), Angle()), resultOrigin));
-	CPPUNIT_ASSERT(true);
-}
-
-void FieldTest::getNewOriginFromFieldDetection_realWorldExample3_correctNewOrigin()
-{
-	//! @todo Test
-	Hardware::RobotMock *hardwareRobot = new Hardware::RobotMock();
-	DataAnalysis::DataAnalyserImpl dataAnalyser(hardwareRobot);
-	Autonomous::RobotMock autonomousRobot;
-	FieldImpl field(dataAnalyser.getOdometry(), dataAnalyser.getLidar(), dataAnalyser.getCamera(), autonomousRobot);
-	Hardware::LidarMock &lidar = hardwareRobot->getLidarMock();
 	lidar.readSensorDataFromFile("resources/testfiles/lidar_detect3.txt");
 
 	dataAnalyser.updateSensorData();
 
 	field.update();
+	field.update();
 	unsigned int numberOfBorderStones;
 	RobotPosition resultOrigin = field.getNewOriginFromFieldDetection(numberOfBorderStones);
-	cout << resultOrigin << endl;
+	cout << "\nNumber Of Stones: " << numberOfBorderStones << "\nFound Origin: " << resultOrigin << endl;
 
-//	Compare compare(0.5);
-//	CPPUNIT_ASSERT(compare.isFuzzyEqual(RobotPosition(Point(0, 0), Angle()), resultOrigin));
-	CPPUNIT_ASSERT(true);
+	Compare compare(0.5);
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(RobotPosition(Point(1.8, -0.5), Angle(-1.9)), resultOrigin));
 }
 
 void FieldTest::getNumberOfObjectsWithColor_noColoredObject_0()

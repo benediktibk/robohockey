@@ -74,6 +74,7 @@ namespace Main
 		unsigned int m_greenObjectCount;
 		Common::SegFaultStackTracePrinter *m_stackTracePrinter;
 		bool m_consoleMessagesEnabled;
+		bool m_valid;
 	};
 }
 }

@@ -21,7 +21,7 @@ void LeavePuckStateTest::nextState_cantReachTarget_nextStateIsInitialState()
 	RefereeMock referee;
 	ColorDependentPuckTargetFetcherMock puckTargetFetcher;
 	robot.setCantReachedTarget(true);
-	LeavePuckState leavePuckState(robot, field, referee, puckTargetFetcher);
+	LeavePuckState leavePuckState(robot, field, referee, puckTargetFetcher, false);
 	State *state;
 	state = leavePuckState.nextState();
 	InitialState *stateCasted = dynamic_cast<InitialState*>(state);
@@ -37,7 +37,7 @@ void LeavePuckStateTest::nextState_reachedTargetAndNumberOfKnownPucksIs0_nextSta
 	RefereeMock referee;
 	ColorDependentPuckTargetFetcherMock puckTargetFetcher;
 	robot.setReachedTarget(true);
-	LeavePuckState leavePuckState(robot, field, referee, puckTargetFetcher);
+	LeavePuckState leavePuckState(robot, field, referee, puckTargetFetcher, false);
 	State *state;
 	state = leavePuckState.nextState();
 	FindPuckState *stateCasted = dynamic_cast<FindPuckState*>(state);
@@ -54,12 +54,42 @@ void LeavePuckStateTest::nextState_reachedTargetAndNumberOfKnownPucksIsNot0_next
 	ColorDependentPuckTargetFetcherMock puckTargetFetcher;
 	robot.setReachedTarget(true);
 	puckTargetFetcher.setNumberOfKnownPucksNotInTarget(2);
-	LeavePuckState leavePuckState(robot, field, referee, puckTargetFetcher);
-	State *state;
-	state = leavePuckState.nextState();
-	DriveToCollectPuckState *stateCasted = dynamic_cast<DriveToCollectPuckState*>(state);
+	LeavePuckState leavePuckState(robot, field, referee, puckTargetFetcher, false);
 
+	State *state = leavePuckState.nextState();
+
+	DriveToCollectPuckState *stateCasted = dynamic_cast<DriveToCollectPuckState*>(state);
 	CPPUNIT_ASSERT(stateCasted != 0);
 	delete state;
+}
+
+void LeavePuckStateTest::update_shouldReportGoal_oneGoalReported()
+{
+	RobotMock robot;
+	FieldMock field;
+	RefereeMock referee;
+	ColorDependentPuckTargetFetcherMock puckTargetFetcher;
+	robot.setReachedTarget(true);
+	puckTargetFetcher.setNumberOfKnownPucksNotInTarget(2);
+	LeavePuckState leavePuckState(robot, field, referee, puckTargetFetcher, true);
+
+	leavePuckState.update();
+
+	CPPUNIT_ASSERT_EQUAL((unsigned int)1, referee.getReportedGoals());
+}
+
+void LeavePuckStateTest::update_shouldNotReportGoal_noGoalReported()
+{
+	RobotMock robot;
+	FieldMock field;
+	RefereeMock referee;
+	ColorDependentPuckTargetFetcherMock puckTargetFetcher;
+	robot.setReachedTarget(true);
+	puckTargetFetcher.setNumberOfKnownPucksNotInTarget(2);
+	LeavePuckState leavePuckState(robot, field, referee, puckTargetFetcher, false);
+
+	leavePuckState.update();
+
+	CPPUNIT_ASSERT_EQUAL((unsigned int)0, referee.getReportedGoals());
 }
 
