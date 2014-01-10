@@ -383,6 +383,29 @@ list<RobotPosition> FieldImpl::getTargetsForCollectingOnePuck(FieldColor puckCol
 	return targetsToCollect;
 }
 
+list<RobotPosition> FieldImpl::getTargetsForCollectingOnePuckNotInEnemyThird(FieldColor puckColor) const
+{
+	list<RobotPosition> targetsToCollect;
+	list<RobotPosition> listToArrange;
+	Rectangle sectorOfEnemyThird(Point(10.0/3.0,0), Point(5,3));
+	Rectangle sectorOfField(Point(0,0), Point(5,3));
+	vector<FieldObject> targetObjects = getObjectsWithColorOrderdByDistance(puckColor);
+
+	for (vector<FieldObject>::const_iterator i = targetObjects.begin(); i != targetObjects.end(); ++i)
+	{
+		const FieldObject &fieldObject = *i;
+
+		if (!sectorOfEnemyThird.isInside(fieldObject.getCircle().getCenter(), 0.01)
+				&& sectorOfField.isInside(fieldObject.getCircle().getCenter(), 0.01))
+		{
+			listToArrange = getTargetsForCollectingOnePuckOrSearchingForColorOfPuck(fieldObject.getCircle().getCenter());
+			targetsToCollect.splice((targetsToCollect.end()), listToArrange);
+		}
+	}
+
+	return targetsToCollect;
+}
+
 list<RobotPosition> FieldImpl::getTargetsForCollectingOnePuckOrSearchingForColorOfPuck(const Point &position) const
 {
 	list<RobotPosition> listToArrange;

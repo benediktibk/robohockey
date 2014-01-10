@@ -182,6 +182,11 @@ list<RobotPosition> FieldMock::getTargetsForCollectingOnePuck(FieldColor) const
 	return list<RobotPosition>();
 }
 
+list<RobotPosition> FieldMock::getTargetsForCollectingOnePuckNotInEnemyThird(FieldColor) const
+{
+	return list<RobotPosition>();
+}
+
 list<RobotPosition> FieldMock::getTargetsInEnemyThird() const
 {
 	return list<RobotPosition> ();
