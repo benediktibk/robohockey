@@ -548,7 +548,7 @@ double RobotImpl::calculateFinalSpeedForGoingStraight(
 {
 	Angle angle = Angle::getHalfRotation() - Angle(next, current, nextButOne);
 	angle.abs();
-	const Angle maximumAngle = Angle::getEighthRotation();
+	const Angle maximumAngle = Angle::getQuarterRotation();
 
 	if (angle.getValueBetweenZeroAndTwoPi() > maximumAngle.getValueBetweenZeroAndTwoPi())
 		return 0;
