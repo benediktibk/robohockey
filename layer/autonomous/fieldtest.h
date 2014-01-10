@@ -110,6 +110,7 @@ namespace Autonomous
 		CPPUNIT_TEST(getNumberOfObjectsWithColor_2BlueObjects_2);
 		CPPUNIT_TEST(getEstimatedNumberOfAchievedGoals_init_0);
 		CPPUNIT_TEST(getEstimatedNumberOfAchievedGoals_2goals_2);
+		CPPUNIT_TEST(getNumberOfPucksInEnemyThird_3PucksAnd2InEnemyThird_resultIs2);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
@@ -209,6 +210,7 @@ namespace Autonomous
 		void getNumberOfObjectsWithColor_2BlueObjects_2();
 		void getEstimatedNumberOfAchievedGoals_init_0();
 		void getEstimatedNumberOfAchievedGoals_2goals_2();
+		void getNumberOfPucksInEnemyThird_3PucksAnd2InEnemyThird_resultIs2();
 	};
 }
 }
