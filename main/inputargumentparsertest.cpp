@@ -153,3 +153,14 @@ void InputArgumentParserTest::constructor_ipOfPlayerMissing_invalid()
 
 	CPPUNIT_ASSERT(!parser.isValid());
 }
+
+void InputArgumentParserTest::constructor_wrongArgument_invalid()
+{
+	vector<string> arguments;
+	arguments.push_back("blub");
+	arguments.push_back("BLOB");
+
+	InputArgumentParser parser(arguments);
+
+	CPPUNIT_ASSERT(!parser.isValid());
+}

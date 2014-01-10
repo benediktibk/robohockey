@@ -71,12 +71,11 @@ void InputArgumentParser::parse(const vector<string> &arguments)
 	}
 
 	list<string> argumentsLeft(arguments.begin() + 1, arguments.end());
-	bool foundValidArgument = true;
 	bool foundEnableGui = false;
 	bool foundAngelina = false;
 	bool foundPlayer = false;
 
-	while (argumentsLeft.size() > 0 && foundValidArgument)
+	while (argumentsLeft.size() > 0)
 	{
 		const string firstArgument = argumentsLeft.front();
 
@@ -118,10 +117,11 @@ void InputArgumentParser::parse(const vector<string> &arguments)
 			foundAngelina = true;
 		}
 		else
-			foundValidArgument = false;
+		{
+			m_isValid = false;
+			return;
+		}
 
 		argumentsLeft.pop_front();
 	}
-
-	m_isValid = argumentsLeft.empty();
 }

@@ -23,6 +23,7 @@ namespace Main
 		CPPUNIT_TEST(constructor_everythingSet_validAndSettingsCorrect);
 		CPPUNIT_TEST(constructor_ipOfAngelinaMissing_invalid);
 		CPPUNIT_TEST(constructor_ipOfPlayerMissing_invalid);
+		CPPUNIT_TEST(constructor_wrongArgument_invalid);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
@@ -37,6 +38,7 @@ namespace Main
 		void constructor_everythingSet_validAndSettingsCorrect();
 		void constructor_ipOfAngelinaMissing_invalid();
 		void constructor_ipOfPlayerMissing_invalid();
+		void constructor_wrongArgument_invalid();
 	};
 }
 }
