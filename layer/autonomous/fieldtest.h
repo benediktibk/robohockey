@@ -103,8 +103,6 @@ namespace Autonomous
 		CPPUNIT_TEST(detectTeamColorWithGoalInFront_yellowMuchSmallerBlue_teamBlue);
 		CPPUNIT_TEST(detectTeamColorWithGoalInFront_yellowAndBlueEqual_teamNotUnknown);
 		CPPUNIT_TEST(getNewOriginFromFieldDetection_realWorldExample1_correctNewOrigin);
-		CPPUNIT_TEST(getNewOriginFromFieldDetection_realWorldExample2_correctNewOrigin);
-		CPPUNIT_TEST(getNewOriginFromFieldDetection_realWorldExample3_correctNewOrigin);
 		CPPUNIT_TEST(getNumberOfObjectsWithColor_noColoredObject_0);
 		CPPUNIT_TEST(getNumberOfObjectsWithColor_3YellowAnd2GreenAnd1UnknownObject_correctValues);
 		CPPUNIT_TEST(getNumberOfObjectsWithColor_2BlueObjects_2);
@@ -202,8 +200,6 @@ namespace Autonomous
 		void detectTeamColorWithGoalInFront_yellowMuchSmallerBlue_teamBlue();
 		void detectTeamColorWithGoalInFront_yellowAndBlueEqual_teamNotUnknown();
 		void getNewOriginFromFieldDetection_realWorldExample1_correctNewOrigin();
-		void getNewOriginFromFieldDetection_realWorldExample2_correctNewOrigin();
-		void getNewOriginFromFieldDetection_realWorldExample3_correctNewOrigin();
 		void getNumberOfObjectsWithColor_noColoredObject_0();
 		void getNumberOfObjectsWithColor_3YellowAnd2GreenAnd1UnknownObject_correctValues();
 		void getNumberOfObjectsWithColor_2BlueObjects_2();
