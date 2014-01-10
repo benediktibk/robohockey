@@ -1,10 +1,10 @@
-#include "common/logger.h"
+#include "common/loggerimpl.h"
 #include <iostream>
 
 using namespace std;
 using namespace RoboHockey::Common;
 
-Logger::Logger() :
+LoggerImpl::LoggerImpl() :
 	m_consoleOutputEnabled(true),
 	m_logWritingEnabled(false),
 	m_globalLogFile("log_global.txt", ios_base::out | ios_base::trunc),
@@ -12,28 +12,25 @@ Logger::Logger() :
 	m_fieldDetectionLogFile("log_fieldDetection.txt", ios_base::out | ios_base::trunc)
 { }
 
-Logger::~Logger()
-{ }
-
-void Logger::logToConsole(const string &message)
+void LoggerImpl::logToConsole(const string &message)
 {
 	if (m_consoleOutputEnabled)
 		cout << message << endl;
 }
 
-void Logger::logErrorToConsole(const string &message)
+void LoggerImpl::logErrorToConsole(const string &message)
 {
 	if (m_consoleOutputEnabled)
 		cerr << message << endl;
 }
 
-void Logger::writeToGlobalLogFile(const string &message)
+void LoggerImpl::writeToGlobalLogFile(const string &message)
 {
 	if (m_logWritingEnabled)
 		m_globalLogFile << message << endl;
 }
 
-void Logger::writeToLogFileOfType(LogFileType logType, const string &message)
+void LoggerImpl::writeToLogFileOfType(LogFileType logType, const string &message)
 {
 	if (m_logWritingEnabled)
 	{
@@ -54,22 +51,22 @@ void Logger::writeToLogFileOfType(LogFileType logType, const string &message)
 	}
 }
 
-void Logger::enableConsoleOutput()
+void LoggerImpl::enableConsoleOutput()
 {
 	m_consoleOutputEnabled = true;
 }
 
-void Logger::disableConsoleOutput()
+void LoggerImpl::disableConsoleOutput()
 {
 	m_consoleOutputEnabled = false;
 }
 
-void Logger::enableLogWriting()
+void LoggerImpl::enableLogWriting()
 {
 	m_logWritingEnabled = true;
 }
 
-void Logger::disableLogWriting()
+void LoggerImpl::disableLogWriting()
 {
 	m_logWritingEnabled = false;
 }

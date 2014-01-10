@@ -19,27 +19,17 @@ class Logger
 		};
 
 	public:
-		Logger();
-		~Logger();
 
-		virtual void logToConsole(const std::string &message);
-		virtual void logErrorToConsole(const std::string &message);
-		virtual void writeToGlobalLogFile(const std::string &message);
-		virtual void writeToLogFileOfType(LogFileType logType, const std::string &message);
+		virtual void logToConsole(const std::string &message) = 0;
+		virtual void logErrorToConsole(const std::string &message) = 0;
+		virtual void writeToGlobalLogFile(const std::string &message) = 0;
+		virtual void writeToLogFileOfType(LogFileType logType, const std::string &message) = 0;
 
-		virtual void enableConsoleOutput();
-		virtual void disableConsoleOutput();
-		virtual void enableLogWriting();
-		virtual void disableLogWriting();
+		virtual void enableConsoleOutput() = 0;
+		virtual void disableConsoleOutput() = 0;
+		virtual void enableLogWriting() = 0;
+		virtual void disableLogWriting() = 0;
 
-	private:
-		bool m_consoleOutputEnabled;
-		bool m_logWritingEnabled;
-
-		std::fstream m_globalLogFile;
-		std::fstream m_stateChangesLogFile;
-		std::fstream m_fieldDetectionLogFile;
-		
 	};
 }
 }

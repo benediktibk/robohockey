@@ -494,8 +494,9 @@ common/segfaultstacktraceprinter.cpp
 common/loggertest.h
 common/logger.h
 common/loggertest.cpp
-common/logger.cpp
+common/loggerimpl.cpp
 layer/strategy/drivepuckstatemachine/drivepucktoenemythirdstatetest.h
 layer/strategy/drivepuckstatemachine/drivepucktoenemythirdstate.h
 layer/strategy/drivepuckstatemachine/drivepucktoenemythirdstatetest.cpp
 layer/strategy/drivepuckstatemachine/drivepucktoenemythirdstate.cpp
+common/loggerimpl.h

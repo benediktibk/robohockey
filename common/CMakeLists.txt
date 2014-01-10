@@ -17,7 +17,7 @@ set(COMMON_SRC
 	timesmoothedboolean.cpp
 	stopwatch.cpp
 	segfaultstacktraceprinter.cpp
-	logger.cpp
+	loggerimpl.cpp
 )
 
 set(COMMON_TEST_SRC
