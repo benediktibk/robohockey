@@ -19,7 +19,7 @@ DriveToCollectPuckState::DriveToCollectPuckState(Robot &robot, Field &field, Ref
 
 State* DriveToCollectPuckState::nextState()
 {
-	if(m_puckTargetFetcher.getNumberOfKnownPucksNotInTarget() == 0)
+	if(m_puckTargetFetcher.getNumberOfKnownPucksNotInEnemyThird() == 0)
 		return new FindPuckState(m_robot, m_field, m_referee, m_puckTargetFetcher);
 	else
 		return new DriveToState(

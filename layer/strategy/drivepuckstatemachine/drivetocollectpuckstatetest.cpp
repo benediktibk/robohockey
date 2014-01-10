@@ -37,7 +37,7 @@ void DriveToCollectPuckStateTest::nextState_reachedTarget_nextStateIsCollectPuck
 	FieldMock field;
 	RefereeMock referee;
 	ColorDependentPuckTargetFetcherMock puckTargetFetcher;
-	puckTargetFetcher.setNumberOfKnownPucksNotInTarget(2);
+	puckTargetFetcher.setNumberOfKnownPucksNotInEnemyThird(2);
 	robot.setReachedTarget(true);
 	DriveToCollectPuckState driveToCollectPuckState(robot, field, referee, puckTargetFetcher);
 	State *driveToState;
@@ -65,7 +65,7 @@ void DriveToCollectPuckStateTest::nextState_canReachTarget_nextStateIs0()
 	FieldMock field;
 	RefereeMock referee;
 	ColorDependentPuckTargetFetcherMock puckTargetFetcher;
-	puckTargetFetcher.setNumberOfKnownPucksNotInTarget(2);
+	puckTargetFetcher.setNumberOfKnownPucksNotInEnemyThird(2);
 	DriveToCollectPuckState driveToCollectPuckState(robot, field, referee, puckTargetFetcher);
 	State *driveToState;
 	driveToState = driveToCollectPuckState.nextState();
@@ -83,7 +83,7 @@ void DriveToCollectPuckStateTest::nextState_cantReachTarget_nextStateIsInitialSt
 	FieldMock field;
 	RefereeMock referee;
 	ColorDependentPuckTargetFetcherMock puckTargetFetcher;
-	puckTargetFetcher.setNumberOfKnownPucksNotInTarget(2);
+	puckTargetFetcher.setNumberOfKnownPucksNotInEnemyThird(2);
 	robot.setCantReachedTarget(true);
 	DriveToCollectPuckState driveToCollectPuckState(robot, field, referee, puckTargetFetcher);
 	State *driveToState;
@@ -103,7 +103,7 @@ void DriveToCollectPuckStateTest::nextState_cantReachTarget_nextStateIsDriveToSt
 	FieldMock field;
 	RefereeMock referee;
 	ColorDependentPuckTargetFetcherMock puckTargetFetcher;
-	puckTargetFetcher.setNumberOfKnownPucksNotInTarget(2);
+	puckTargetFetcher.setNumberOfKnownPucksNotInEnemyThird(2);
 	robot.setCantReachedTarget(true);
 	DriveToCollectPuckState driveToCollectPuckState(robot, field, referee, puckTargetFetcher);
 	State *state;
