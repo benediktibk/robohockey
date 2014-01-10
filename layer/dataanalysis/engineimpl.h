@@ -28,7 +28,6 @@ namespace DataAnalysis
 						   EngineStateDriving,
 						   EngineStateRotating,
 						   EngineStateDrivingSlowly,
-						   EngineStateDrivingThrough,
 						   EngineStateDrivingSlowlyBack
 						 };
 
@@ -36,9 +35,8 @@ namespace DataAnalysis
 		EngineImpl(Hardware::Engine &engine, Hardware::Odometry &odometry);
 		virtual ~EngineImpl();
 
-		virtual void goToStraight(const Common::Point &position);
+		virtual void goToStraight(const Common::Point &position, double finalSpeed);
 		virtual void goToStraightSlowly(const Common::Point &position);
-		virtual void goToStraightThrough(const Common::Point &position);
 		virtual void goToStraightSlowlyBack(const Common::Point &position);
 		virtual void updateSpeedAndRotation();
 		virtual void stop();
@@ -53,6 +51,7 @@ namespace DataAnalysis
 		virtual double getCurrentSpeed() const;
 		virtual void updateSensorData();
 		virtual bool isGoingStraight() const;
+		virtual double calculateSpeedForGoingStraight(double distance) const;
 
 		const Common::Point& getStartPosition() const;
 
@@ -80,6 +79,7 @@ namespace DataAnalysis
 		double m_desiredSpeed;
 		bool m_isMoving;
 		bool m_startedMovement;
+		double m_finalSpeed;
 	};
 }
 }

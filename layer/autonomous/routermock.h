@@ -2,6 +2,7 @@
 #define ROBOHOCKEY_LAYER_AUTONOMOUS_ROUTERMOCK_H
 
 #include "layer/autonomous/router.h"
+#include "layer/autonomous/route.h"
 
 namespace RoboHockey
 {
@@ -23,8 +24,12 @@ namespace Autonomous
 				const std::vector<Common::Circle> &hardObstacles, const Common::Point &position) const;
 		void setChessMode(bool value);
 
+		void setRoute(const Common::Point &one, const Common::Point &two, const Common::Point &three);
+
 	private:
 		bool m_chessMode;
+		bool m_routeSet;
+		Route m_route;
 	};
 }
 }

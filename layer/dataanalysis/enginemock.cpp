@@ -7,26 +7,23 @@ using namespace RoboHockey::Layer::DataAnalysis;
 EngineMock::EngineMock() :
 	m_tryingToTackleObstacle(false),
 	m_reachedTarget(true),
-	m_isGoingStraight(false)
+	m_isGoingStraight(false),
+	m_lastFinalSpeed(0),
+	m_speedForGoingStraight(0)
 {
 	resetCounters();
 }
 
-void EngineMock::goToStraight(const Point &target)
+void EngineMock::goToStraight(const Point &target, double finalSpeed)
 {
 	++m_callsToGoToStraight;
 	m_lastTarget = target;
+	m_lastFinalSpeed = finalSpeed;
 }
 
 void EngineMock::goToStraightSlowly(const Point &target)
 {
 	++m_callsToGoToStraightSlowly;
-	m_lastTarget = target;
-}
-
-void EngineMock::goToStraightThrough(const Point &target)
-{
-	++m_callsToGoToStraightThrough;
 	m_lastTarget = target;
 }
 
@@ -101,6 +98,11 @@ bool EngineMock::isGoingStraight() const
 	return m_isGoingStraight;
 }
 
+double EngineMock::calculateSpeedForGoingStraight(double) const
+{
+	return m_speedForGoingStraight;
+}
+
 unsigned int EngineMock::getCallsToGoToStraight() const
 {
 	return m_callsToGoToStraight;
@@ -109,11 +111,6 @@ unsigned int EngineMock::getCallsToGoToStraight() const
 unsigned int EngineMock::getCallsToGoToStraightSlowly() const
 {
 	return m_callsToGoToStraightSlowly;
-}
-
-unsigned int EngineMock::getCallsToGoToStraightThrough() const
-{
-	return m_callsToGoToStraightThrough;
 }
 
 unsigned int EngineMock::getCallsToGoToStraightSlowlyBack() const
@@ -175,7 +172,6 @@ void EngineMock::resetCounters()
 {
 	m_callsToGoToStraight = 0;
 	m_callsToGoToStraightSlowly = 0;
-	m_callsToGoToStraightThrough = 0;
 	m_callsToGoToStraightSlowlyBack = 0;
 	m_callsToStop = 0;
 	m_callsToUpdateSpeedAndMagnitude = 0;
@@ -189,6 +185,16 @@ void EngineMock::resetCounters()
 const Point &EngineMock::getLastTarget() const
 {
 	return m_lastTarget;
+}
+
+double EngineMock::getLastFinalSpeed() const
+{
+	return m_lastFinalSpeed;
+}
+
+void EngineMock::setSpeedForGoingStraight(double value)
+{
+	m_speedForGoingStraight = value;
 }
 
 

@@ -218,6 +218,7 @@ list<RobotPosition> FieldImpl::getTargetsForScoringGoals() const
 	targets.push_back(RobotPosition( Point(5 - 0.45 + 0.14, 1.9), Angle::getHalfRotation() ));
 	targets.push_back(RobotPosition( Point(5 - 0.45 + 0.14, 1.1), Angle::getHalfRotation() ));
 
+
 	return targets;
 }
 
@@ -285,7 +286,7 @@ list<RobotPosition> FieldImpl::getTargetsForSearchingPucks() const
 	}
 
 	vector<RobotPosition> randomPostionsVector;
-	randomPostionsVector.push_back(RobotPosition( Point(1.4, 2.4), Angle()));
+	randomPostionsVector.push_back(RobotPosition( Point(2.0, 1.5), Angle()));
 	randomPostionsVector.push_back(RobotPosition( Point(2.0, 1.0), Angle()));
 	randomPostionsVector.push_back(RobotPosition( Point(2.0, 2.0), Angle()));
 	randomPostionsVector.push_back(RobotPosition( Point(2.5, 2.2), Angle::getHalfRotation()));
@@ -486,7 +487,20 @@ list<RobotPosition> FieldImpl::getTargetsForCollectingOnePuckOrSearchingForColor
 	listToArrange.push_back(RobotPosition( point8, angle8));
 	listToArrange.push_back(RobotPosition( point9, angle9));
 
-			return listToArrange;
+	return listToArrange;
+}
+
+list<RobotPosition> FieldImpl::getTargetsInEnemyThird() const
+{
+	list<RobotPosition> targets;
+
+	targets.push_back(RobotPosition( Point(3.6, 1.5), Angle()));
+	targets.push_back(RobotPosition( Point(3.6, 1.0), Angle()));
+	targets.push_back(RobotPosition( Point(3.6, 2.0), Angle()));
+	targets.push_back(RobotPosition ( Point(4.0, 2.5), Angle()));
+	targets.push_back(RobotPosition ( Point(4.0, 0.5), Angle()));
+
+	return targets;
 }
 
 vector<FieldObject> FieldImpl::random(vector<FieldObject> &objects)

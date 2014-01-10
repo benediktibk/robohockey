@@ -790,6 +790,95 @@ void RobotTest::goTo_positionInsideSoftObstacle_canReachTarget()
 	delete m_routerMock;
 }
 
+void RobotTest::goTo_firstPointNearlyReachedAndSmallTurnNecessary_lastSpeedIsBig()
+{
+	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
+	DataAnalysis::Odometry &odometry = dataAnalyser->getOdometry();
+	DataAnalysis::EngineMock &engine = dataAnalyser->getEngineMock();
+	RobotImpl robot(dataAnalyser, m_routerMock, m_watchMock);
+	FieldMock field;
+	m_routerMock->setRoute(Point(0, 0), Point(5, 0), Point(7, 0.1));
+	m_targets.push_back(RobotPosition(Point(7, 0.1), Angle(0)));
+
+	engine.setReachedTarget(false);
+	engine.setSpeedForGoingStraight(1);
+	odometry.setCurrentPosition(RobotPosition(Point(0, 0), Angle(0)));
+	robot.updateSensorData();
+	robot.goTo(m_targets);
+	robot.updateActuators(field);
+	engine.setReachedTarget(true);
+	robot.updateSensorData();
+	robot.updateActuators(field);
+	engine.setReachedTarget(false);
+	odometry.setCurrentPosition(RobotPosition(Point(4.8, 0), Angle(0)));
+	robot.updateSensorData();
+	robot.updateActuators(field);
+
+	double lastSpeed = engine.getLastFinalSpeed();
+	CPPUNIT_ASSERT(!robot.cantReachTarget());
+	CPPUNIT_ASSERT(lastSpeed > 0.1);
+}
+
+void RobotTest::goTo_firstPointReachedAndSmallTurnNecessary_noCallsToTurnToTarget()
+{
+	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
+	DataAnalysis::Odometry &odometry = dataAnalyser->getOdometry();
+	DataAnalysis::EngineMock &engine = dataAnalyser->getEngineMock();
+	RobotImpl robot(dataAnalyser, m_routerMock, m_watchMock);
+	FieldMock field;
+	m_routerMock->setRoute(Point(0, 0), Point(5, 0), Point(7, 0.1));
+	m_targets.push_back(RobotPosition(Point(7, 0.1), Angle(0)));
+
+	engine.setReachedTarget(false);
+	engine.setSpeedForGoingStraight(1);
+	odometry.setCurrentPosition(RobotPosition(Point(0, 0), Angle(0)));
+	robot.updateSensorData();
+	robot.goTo(m_targets);
+	robot.updateActuators(field);
+	engine.setReachedTarget(true);
+	engine.resetCounters();
+	robot.updateSensorData();
+	robot.updateActuators(field);
+	engine.setReachedTarget(false);
+	odometry.setCurrentPosition(RobotPosition(Point(5, 0), Angle(0)));
+	robot.updateSensorData();
+	robot.updateActuators(field);
+
+	CPPUNIT_ASSERT_EQUAL((unsigned int)0, engine.getCallsToTurnToTarget());
+}
+
+void RobotTest::goTo_firstPointReachedAndSmallTurnNecessary_engineGotCorrectNextTarget()
+{
+	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
+	DataAnalysis::Odometry &odometry = dataAnalyser->getOdometry();
+	DataAnalysis::EngineMock &engine = dataAnalyser->getEngineMock();
+	RobotImpl robot(dataAnalyser, m_routerMock, m_watchMock);
+	FieldMock field;
+	m_routerMock->setRoute(Point(0, 0), Point(5, 0), Point(7, 0.1));
+	m_targets.push_back(RobotPosition(Point(7, 0.1), Angle(0)));
+
+	engine.setReachedTarget(false);
+	engine.setSpeedForGoingStraight(1);
+	odometry.setCurrentPosition(RobotPosition(Point(0, 0), Angle(0)));
+	robot.updateSensorData();
+	robot.goTo(m_targets);
+	robot.updateActuators(field);
+	engine.setReachedTarget(true);
+	engine.resetCounters();
+	robot.updateSensorData();
+	robot.updateActuators(field);
+	engine.setReachedTarget(true);
+	engine.resetCounters();
+	odometry.setCurrentPosition(RobotPosition(Point(5, 0), Angle(0)));
+	robot.updateSensorData();
+	robot.updateActuators(field);
+
+	CPPUNIT_ASSERT_EQUAL((unsigned int)1, engine.getCallsToGoToStraight());
+	const Point &lastTarget = engine.getLastTarget();
+	Compare compare(0.001);
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(7, 0.1), lastTarget));
+}
+
 void RobotTest::stuckAtObstacle_tryingToTackleObstacle_true()
 {
 	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
@@ -2098,4 +2187,77 @@ void RobotTest::isRotating_leavingPuck_false()
 	robot.updateActuators(field);
 
 	CPPUNIT_ASSERT(!robot.isRotating());
+}
+
+void RobotTest::calculateFinalSpeedForGoingStraight_obtuseAngle_0()
+{
+	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
+	DataAnalysis::EngineMock &engine = dataAnalyser->getEngineMock();
+	RobotImpl robot(dataAnalyser, m_routerMock, m_watchMock);
+	engine.setSpeedForGoingStraight(1);
+
+	double finalSpeed = robot.calculateFinalSpeedForGoingStraight(Point(0, 1), Point(0, 2), Point(-1, 1));
+
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(0, finalSpeed, 0.0001);
+}
+
+void RobotTest::calculateFinalSpeedForGoingStraight_quarterRotation_0()
+{
+	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
+	DataAnalysis::EngineMock &engine = dataAnalyser->getEngineMock();
+	RobotImpl robot(dataAnalyser, m_routerMock, m_watchMock);
+	engine.setSpeedForGoingStraight(1);
+
+	double finalSpeed = robot.calculateFinalSpeedForGoingStraight(Point(0, 1), Point(0, 2), Point(1, 2));
+
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(0, finalSpeed, 0.0001);
+}
+
+void RobotTest::calculateFinalSpeedForGoingStraight_zeroAngle_valueBig()
+{
+	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
+	DataAnalysis::EngineMock &engine = dataAnalyser->getEngineMock();
+	RobotImpl robot(dataAnalyser, m_routerMock, m_watchMock);
+	engine.setSpeedForGoingStraight(1);
+
+	double finalSpeed = robot.calculateFinalSpeedForGoingStraight(Point(0, 0), Point(1, 1), Point(2, 2));
+
+	CPPUNIT_ASSERT(finalSpeed >= 0.2);
+}
+
+void RobotTest::calculateFinalSpeedForGoingStraight_eighthRotation_greaterThan0()
+{
+	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
+	DataAnalysis::EngineMock &engine = dataAnalyser->getEngineMock();
+	RobotImpl robot(dataAnalyser, m_routerMock, m_watchMock);
+	engine.setSpeedForGoingStraight(1);
+
+	double finalSpeed = robot.calculateFinalSpeedForGoingStraight(Point(0, 0), Point(-1, 0), Point(-2, -1));
+
+	CPPUNIT_ASSERT(finalSpeed > 0);
+}
+
+void RobotTest::calculateFinalSpeedForGoingStraight_zeroAngleButOnlyShortDistanceLeft_smallerThan05()
+{
+	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
+	DataAnalysis::EngineMock &engine = dataAnalyser->getEngineMock();
+	RobotImpl robot(dataAnalyser, m_routerMock, m_watchMock);
+	engine.setSpeedForGoingStraight(0.1);
+
+	double finalSpeed = robot.calculateFinalSpeedForGoingStraight(Point(0, 0), Point(1, 1), Point(1.1, 1.1));
+
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(0.1, finalSpeed, 0.0001);
+}
+
+void RobotTest::calculateFinalSpeedForGoingStraight_smallAngle_betweenZeroAnd05()
+{
+	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
+	DataAnalysis::EngineMock &engine = dataAnalyser->getEngineMock();
+	RobotImpl robot(dataAnalyser, m_routerMock, m_watchMock);
+	engine.setSpeedForGoingStraight(0.1);
+
+	double finalSpeed = robot.calculateFinalSpeedForGoingStraight(Point(0, 0), Point(1, 1), Point(2, 2.1));
+
+	CPPUNIT_ASSERT(finalSpeed > 0);
+	CPPUNIT_ASSERT(finalSpeed < 0.5);
 }

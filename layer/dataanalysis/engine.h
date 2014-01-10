@@ -17,9 +17,8 @@ namespace DataAnalysis
 	public:
 		virtual ~Engine() { }
 
-		virtual void goToStraight(const Common::Point &targetPosition) = 0;
+		virtual void goToStraight(const Common::Point &targetPosition, double finalSpeed) = 0;
 		virtual void goToStraightSlowly(const Common::Point &targetPosition) = 0;
-		virtual void goToStraightThrough(const Common::Point &targetPosition) = 0;
 		virtual void goToStraightSlowlyBack(const Common::Point &targetPosition) = 0;
 		virtual void stop() = 0;
 		virtual void updateSpeedAndRotation() = 0;
@@ -34,6 +33,7 @@ namespace DataAnalysis
 		virtual double getCurrentSpeed() const = 0;
 		virtual void updateSensorData() = 0;
 		virtual bool isGoingStraight() const = 0;
+		virtual double calculateSpeedForGoingStraight(double distance) const = 0;
 	};
 }
 }

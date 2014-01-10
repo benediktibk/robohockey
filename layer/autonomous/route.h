@@ -30,6 +30,7 @@ namespace Autonomous
 		const Common::Point& getNextToLastPoint() const;
 		const Common::Point& getSecondPoint() const;
 		const Common::Point& getFirstPoint() const;
+		const Common::Point& getThirdPoint() const;
 		std::list<Common::Point> getAllPoints() const;
 		void removeFirstPoint();
 		double getWidth() const;

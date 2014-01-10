@@ -30,28 +30,23 @@ EngineImpl::~EngineImpl()
 	m_speedTresholder = 0;
 }
 
-void EngineImpl::goToStraight(const Common::Point &position)
+void EngineImpl::goToStraight(const Common::Point &position, double finalSpeed)
 {
-	m_target = position;
 	switchIntoState(EngineStateDriving);
+	m_target = position;
+	m_finalSpeed = finalSpeed;
 }
 
 void EngineImpl::goToStraightSlowly(const Point &position)
 {
-	m_target = position;
 	switchIntoState(EngineStateDrivingSlowly);
-}
-
-void EngineImpl::goToStraightThrough(const Point &position)
-{
 	m_target = position;
-	switchIntoState(EngineStateDrivingThrough);
 }
 
 void EngineImpl::goToStraightSlowlyBack(const Point &position)
 {
-	m_target = position;
 	switchIntoState(EngineStateDrivingSlowlyBack);
+	m_target = position;
 }
 
 void EngineImpl::updateSpeedAndRotation()
@@ -75,7 +70,6 @@ void EngineImpl::updateSpeedAndRotation()
 		break;
 	case EngineStateDriving:
 	case EngineStateDrivingSlowly:
-	case EngineStateDrivingThrough:
 	case EngineStateDrivingSlowlyBack:
 		updateSpeedAndRotationForDriving();
 		break;
@@ -102,8 +96,8 @@ void EngineImpl::turnAround()
 
 void EngineImpl::turnToTarget(const Point &position)
 {
-	m_target = position;
 	switchIntoState(EngineStateRotating);
+	m_target = position;
 }
 
 void EngineImpl::lockForwardMovement()
@@ -149,6 +143,12 @@ void EngineImpl::updateSensorData()
 bool EngineImpl::isGoingStraight() const
 {
 	return m_engineState == EngineStateDriving;
+}
+
+double EngineImpl::calculateSpeedForGoingStraight(double distance) const
+{
+	double distanceAmplification = 0.7;
+	return distanceAmplification*distance;
 }
 
 const Point &EngineImpl::getStartPosition() const
@@ -228,21 +228,24 @@ void EngineImpl::driveAndTurn(const RobotPosition &currentPosition)
 
 	if (positionCompare.isFuzzyEqual(forwardError, 0) || alpha.isObtuse())
 	{
+		setSpeed(m_finalSpeed, 0);
 		stop();
-		setSpeed(0, 0);
 		return;
 	}
 
-	double orientationAmplification = 1;
-	double distanceAmplification = 0.7;
+	double orientationAmplification = 2;
 	double rotationSpeed = orientationAmplification*orthogonalError;
-	double magnitude = distanceAmplification*forwardError;
+	double magnitude = calculateSpeedForGoingStraight(forwardError) + m_finalSpeed;
+
+	double magnitudeModification = 1 - fabs(rotationSpeed/2);
+	if (magnitudeModification > 1)
+		magnitudeModification = 1;
+	else if (magnitudeModification < 0)
+		magnitudeModification = 0;
+	magnitude *= magnitudeModification;
 
 	switch (m_engineState)
 	{
-	case EngineStateDrivingThrough:
-		magnitude = 0.5;
-		break;
 	case EngineStateDrivingSlowly:
 		magnitude = min(magnitude, 0.1);
 		break;
@@ -280,6 +283,7 @@ void EngineImpl::switchIntoState(EngineState state)
 	m_startPosition = currentRobotPosition.getPosition();
 	m_tryingToTackleObstacle = false;
 	m_oneHalfTurnDone = false;
+	m_finalSpeed = 0;
 
 	if (m_engineState != state)
 		m_startedMovement = false;

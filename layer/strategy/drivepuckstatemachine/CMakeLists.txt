@@ -5,6 +5,7 @@ set(LAYER_STRATEGY_DRIVEPUCKSTATEMACHINE_SRC
 	drivepucktopositionstate.cpp
 	drivetocollectpuckstate.cpp
 	leavepuckstate.cpp
+	drivepucktoenemythirdstate.cpp
 )
 
 set(LAYER_STRATEGY_DRIVEPUCKSTATEMACHINE_TEST_SRC
@@ -14,6 +15,7 @@ set(LAYER_STRATEGY_DRIVEPUCKSTATEMACHINE_TEST_SRC
 	drivepucktopositionstatetest.cpp
 	drivetocollectpuckstatetest.cpp
 	leavepuckstatetest.cpp
+	drivepucktoenemythirdstatetest.cpp
 )
 
 add_library(layerstrategydrivepuckstatemachine ${LAYER_STRATEGY_DRIVEPUCKSTATEMACHINE_SRC})

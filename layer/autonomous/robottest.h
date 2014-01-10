@@ -52,6 +52,9 @@ namespace Autonomous
 		CPPUNIT_TEST(goTo_puckCollectedButLostInBetween_newRouteStillConsideringThePuck);
 		CPPUNIT_TEST(goTo_positionInsideHardObstacle_cantReachTarget);
 		CPPUNIT_TEST(goTo_positionInsideSoftObstacle_canReachTarget);
+		CPPUNIT_TEST(goTo_firstPointNearlyReachedAndSmallTurnNecessary_lastSpeedIsBig);
+		CPPUNIT_TEST(goTo_firstPointReachedAndSmallTurnNecessary_noCallsToTurnToTarget);
+		CPPUNIT_TEST(goTo_firstPointReachedAndSmallTurnNecessary_engineGotCorrectNextTarget);
 		CPPUNIT_TEST(stuckAtObstacle_tryingToTackleObstacle_true);
 		CPPUNIT_TEST(stuckAtObstacle_notTryingToTackleObstacle_false);
 		CPPUNIT_TEST(stuckAtObstacle_updateCalledTwiceAfterStuckAtObstacle_true);
@@ -125,6 +128,12 @@ namespace Autonomous
 		CPPUNIT_TEST(isRotating_firstPhaseOfCollectingPuck_true);
 		CPPUNIT_TEST(isRotating_secondPhaseOfCollectingPuck_false);
 		CPPUNIT_TEST(isRotating_leavingPuck_false);
+		CPPUNIT_TEST(calculateFinalSpeedForGoingStraight_obtuseAngle_0);
+		CPPUNIT_TEST(calculateFinalSpeedForGoingStraight_quarterRotation_0);
+		CPPUNIT_TEST(calculateFinalSpeedForGoingStraight_zeroAngle_valueBig);
+		CPPUNIT_TEST(calculateFinalSpeedForGoingStraight_eighthRotation_greaterThan0);
+		CPPUNIT_TEST(calculateFinalSpeedForGoingStraight_zeroAngleButOnlyShortDistanceLeft_smallerThan05);
+		CPPUNIT_TEST(calculateFinalSpeedForGoingStraight_smallAngle_betweenZeroAnd05);
 		CPPUNIT_TEST_SUITE_END();
 
 	public:
@@ -161,6 +170,9 @@ namespace Autonomous
 		void goTo_puckCollectedButLostInBetween_newRouteStillConsideringThePuck();
 		void goTo_positionInsideHardObstacle_cantReachTarget();
 		void goTo_positionInsideSoftObstacle_canReachTarget();
+		void goTo_firstPointNearlyReachedAndSmallTurnNecessary_lastSpeedIsBig();
+		void goTo_firstPointReachedAndSmallTurnNecessary_noCallsToTurnToTarget();
+		void goTo_firstPointReachedAndSmallTurnNecessary_engineGotCorrectNextTarget();
 		void stuckAtObstacle_tryingToTackleObstacle_true();
 		void stuckAtObstacle_notTryingToTackleObstacle_false();
 		void stuckAtObstacle_updateCalledTwiceAfterStuckAtObstacle_true();
@@ -234,6 +246,12 @@ namespace Autonomous
 		void isRotating_firstPhaseOfCollectingPuck_true();
 		void isRotating_secondPhaseOfCollectingPuck_false();
 		void isRotating_leavingPuck_false();
+		void calculateFinalSpeedForGoingStraight_obtuseAngle_0();
+		void calculateFinalSpeedForGoingStraight_quarterRotation_0();
+		void calculateFinalSpeedForGoingStraight_zeroAngle_valueBig();
+		void calculateFinalSpeedForGoingStraight_eighthRotation_greaterThan0();
+		void calculateFinalSpeedForGoingStraight_zeroAngleButOnlyShortDistanceLeft_smallerThan05();
+		void calculateFinalSpeedForGoingStraight_smallAngle_betweenZeroAnd05();
 
 	private:
 		RouterMock *m_routerMock;

@@ -56,6 +56,8 @@ namespace Autonomous
 		virtual bool isCollectingPuck() const;
 		virtual bool isRotating() const;
 
+		double calculateFinalSpeedForGoingStraight(const Common::Point &current, const Common::Point &next, const Common::Point &nextButOne) const;
+
 	private:
 		void clearRoute();
 		bool updateRouteForTarget(const FieldPositionChecker &field, const Common::RobotPosition &target,
@@ -79,6 +81,7 @@ namespace Autonomous
 		bool checkTimeout();
 		std::vector<Common::Circle> shrinkObstacles(const std::vector<Common::Circle> &obstacles) const;
 		std::vector<Common::Circle> growObstacles(const std::vector<Common::Circle> &obstacles) const;
+		double calculateNextFinalSpeedForGoingStraight() const;
 
 	private:
 		// forbid copies
@@ -107,6 +110,7 @@ namespace Autonomous
 		bool m_ignoringSoftObstacles;
 		bool m_carryingPuck;
 		Common::TimeSmoothedBoolean *m_puckCollected;
+		double m_finalSpeed;
 	};
 }
 }

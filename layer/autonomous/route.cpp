@@ -73,6 +73,15 @@ const Point &Route::getFirstPoint() const
 	return m_points.front();
 }
 
+const Point &Route::getThirdPoint() const
+{
+	assert(getPointCount() >= 3);
+	list<Point>::const_iterator iterator = m_points.begin();
+	++iterator;
+	++iterator;
+	return *iterator;
+}
+
 list<Point> Route::getAllPoints() const
 {
 	return m_points;

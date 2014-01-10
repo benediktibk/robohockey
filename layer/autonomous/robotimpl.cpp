@@ -103,19 +103,38 @@ void RobotImpl::updateEngineForDrivingStraightPart(const Field &field)
 	else if (engine.reachedTarget())
 	{
 		m_currentRoute->removeFirstPoint();
+		const Compare compare(0.001);
 
 		if (m_currentRoute->getPointCount() == 1)
 		{
-			const Angle &finalOrientation = m_currentTarget.getOrientation();
-			Point smallStep(1, 0);
-			smallStep.rotate(finalOrientation);
-			engine.turnToTarget(getCurrentPosition().getPosition() + smallStep);
-			changeIntoState(RobotStateDrivingTurningPart);
+			if (compare.isFuzzyEqual(m_finalSpeed, 0))
+			{
+				const Angle &finalOrientation = m_currentTarget.getOrientation();
+				Point smallStep(1, 0);
+				smallStep.rotate(finalOrientation);
+				engine.turnToTarget(getCurrentPosition().getPosition() + smallStep);
+				changeIntoState(RobotStateDrivingTurningPart);
+			}
+			else
+			{
+				changeIntoState(RobotStateDrivingStraightPart);
+				m_finalSpeed = calculateNextFinalSpeedForGoingStraight();
+				engine.goToStraight(m_currentRoute->getFirstPoint(), m_finalSpeed);
+			}
 		}
 		else
 		{
-			changeIntoState(RobotStateDrivingTurningPart);
-			engine.turnToTarget(m_currentRoute->getSecondPoint());
+			if (compare.isFuzzyEqual(m_finalSpeed, 0))
+			{
+				changeIntoState(RobotStateDrivingTurningPart);
+				engine.turnToTarget(m_currentRoute->getSecondPoint());
+			}
+			else
+			{
+				changeIntoState(RobotStateDrivingStraightPart);
+				m_finalSpeed = calculateNextFinalSpeedForGoingStraight();
+				engine.goToStraight(m_currentRoute->getSecondPoint(), m_finalSpeed);
+			}
 		}
 	}
 }
@@ -141,7 +160,8 @@ void RobotImpl::updateEngineForDrivingTurningPart(const Field &field)
 		if (m_currentRoute->getPointCount() > 1)
 		{
 			changeIntoState(RobotStateDrivingStraightPart);
-			engine.goToStraight(m_currentRoute->getSecondPoint());
+			m_finalSpeed = calculateNextFinalSpeedForGoingStraight();
+			engine.goToStraight(m_currentRoute->getSecondPoint(), m_finalSpeed);
 		}
 		else
 			changeIntoState(RobotStateWaiting);
@@ -326,6 +346,7 @@ void RobotImpl::changeIntoState(RobotState state)
 	m_stateChanged = true;
 	m_rotationReached = false;
 	m_watchDog->getTimeAndRestart();
+	m_finalSpeed = 0;
 }
 
 bool RobotImpl::isCurrentTargetPuckCollectable() const
@@ -382,6 +403,16 @@ vector<Circle> RobotImpl::growObstacles(const vector<Circle> &obstacles) const
 	}
 
 	return result;
+}
+
+double RobotImpl::calculateNextFinalSpeedForGoingStraight() const
+{
+	if (m_currentRoute->getPointCount() <= 2)
+		return 0;
+	else
+		return calculateFinalSpeedForGoingStraight(
+					m_currentRoute->getFirstPoint(), m_currentRoute->getSecondPoint(),
+					m_currentRoute->getThirdPoint());
 }
 
 void RobotImpl::updateActuators(const Field &field)
@@ -510,6 +541,24 @@ bool RobotImpl::isRotating() const
 
 	assert(false);
 	return true;
+}
+
+double RobotImpl::calculateFinalSpeedForGoingStraight(
+		const Point &current, const Point &next, const Point &nextButOne) const
+{
+	Angle angle = Angle::getHalfRotation() - Angle(next, current, nextButOne);
+	angle.abs();
+	const Angle maximumAngle = Angle::getHalfRotation()/3;
+
+	if (angle.getValueBetweenZeroAndTwoPi() > maximumAngle.getValueBetweenZeroAndTwoPi())
+		return 0;
+
+	Angle angleDifference = maximumAngle - angle;
+	double speedFromAngle = angleDifference.getValueBetweenZeroAndTwoPi()*0.2;
+	double distanceLeft = next.distanceTo(nextButOne);
+	const DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
+	double speedFromDistance = engine.calculateSpeedForGoingStraight(distanceLeft);
+	return min(speedFromAngle, speedFromDistance);
 }
 
 void RobotImpl::clearRoute()
