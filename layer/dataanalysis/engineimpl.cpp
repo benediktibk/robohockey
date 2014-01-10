@@ -237,9 +237,11 @@ void EngineImpl::driveAndTurn(const RobotPosition &currentPosition)
 	double rotationSpeed = orientationAmplification*orthogonalError;
 	double magnitude = calculateSpeedForGoingStraight(forwardError) + m_finalSpeed;
 
-	double magnitudeModification = 1 - fabs(rotationSpeed*2);
+	double magnitudeModification = 1 - fabs(rotationSpeed);
 	if (magnitudeModification > 1)
 		magnitudeModification = 1;
+	else if (magnitudeModification < 0)
+		magnitudeModification = 0;
 	magnitude *= magnitudeModification;
 
 	switch (m_engineState)
