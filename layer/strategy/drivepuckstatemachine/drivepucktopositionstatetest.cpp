@@ -8,6 +8,7 @@
 #include "layer/autonomous/robotmock.h"
 #include "layer/autonomous/fieldmock.h"
 #include "layer/strategy/common/colordependentpucktargetfetchermock.h"
+#include "layer/strategy/drivepuckstatemachine/drivepucktoenemythirdstate.h"
 
 using namespace RoboHockey::Layer::Strategy::Common;
 using namespace RoboHockey::Layer::Strategy::DrivePuckStateMachine;
@@ -33,7 +34,7 @@ void DrivePuckToPositionStateTest::nextState_reachedTarget_nextStateIsLeavePuckS
 	delete driveToState;
 }
 
-void DrivePuckToPositionStateTest::nextState_cantReachTarget_nextStateIsLeavePuckState()
+void DrivePuckToPositionStateTest::nextState_cantReachTarget_nextStateDrivePuckToEnemyThirdStateState()
 {
 	RobotMock robot;
 	FieldMock field;
@@ -46,7 +47,7 @@ void DrivePuckToPositionStateTest::nextState_cantReachTarget_nextStateIsLeavePuc
 	driveToState = driveToPositionState.nextState();
 	State *state;
 	state = driveToState->nextState();
-	LeavePuckState *stateCasted = dynamic_cast<LeavePuckState*>(state);
+	DrivePuckToEnemyThirdState *stateCasted = dynamic_cast<DrivePuckToEnemyThirdState*>(state);
 
 	CPPUNIT_ASSERT(stateCasted != 0);
 	delete state;

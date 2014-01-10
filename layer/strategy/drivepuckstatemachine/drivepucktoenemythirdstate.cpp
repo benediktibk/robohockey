@@ -1,6 +1,7 @@
 #include "layer/strategy/drivepuckstatemachine/drivepucktoenemythirdstate.h"
 #include "layer/strategy/drivepuckstatemachine/drivepucktopositionstate.h"
 #include "layer/strategy/drivepuckstatemachine/leavepuckstate.h"
+#include "layer/strategy/drivepuckstatemachine/drivetocollectpuckstate.h"
 #include "layer/strategy/common/drivetostate.h"
 #include "layer/autonomous/robot.h"
 #include "layer/strategy/common/colordependentpucktargetfetcher.h"
@@ -16,12 +17,18 @@ DrivePuckToEnemyThirdState::DrivePuckToEnemyThirdState(Robot &robot, Field &fiel
 
 State *DrivePuckToEnemyThirdState::nextState()
 {
-	return 0;
+	if(m_robot.isPuckCollected())
+		return new DriveToState(
+					m_robot, m_field, m_referee, m_puckTargetFetcher.getTargetPositions(),
+					new LeavePuckState(m_robot, m_field, m_referee, m_puckTargetFetcher, m_puckTargetFetcher.isAchievingGoals()),
+					new DrivePuckToEnemyThirdState(m_robot, m_field, m_referee, m_puckTargetFetcher));
+	else
+		return new DriveToCollectPuckState(m_robot, m_field, m_referee, m_puckTargetFetcher);
 }
 
 std::string DrivePuckToEnemyThirdState::getName()
 {
-	return "DriveToPosition";
+	return "DriveToEnemyThird";
 }
 
 void DrivePuckToEnemyThirdState::updateInternal()
