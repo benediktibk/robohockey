@@ -34,7 +34,7 @@ void DrivePuckToPositionStateTest::nextState_reachedTarget_nextStateIsLeavePuckS
 	delete driveToState;
 }
 
-void DrivePuckToPositionStateTest::nextState_cantReachTarget_nextStateDrivePuckToEnemyThirdStateState()
+void DrivePuckToPositionStateTest::nextState_cantReachTarget_nextStateDrivePuckToEnemyThirdState()
 {
 	RobotMock robot;
 	FieldMock field;
