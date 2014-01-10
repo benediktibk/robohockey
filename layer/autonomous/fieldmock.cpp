@@ -181,6 +181,11 @@ list<RobotPosition> FieldMock::getTargetsForCollectingOnePuck(FieldColor) const
 	return list<RobotPosition>();
 }
 
+list<RobotPosition> FieldMock::getTargetsInEnemyThird() const
+{
+	return list<RobotPosition> ();
+}
+
 unsigned int FieldMock::getNumberOfAchievedGoals() const
 {
 	return m_achievedGoals;
