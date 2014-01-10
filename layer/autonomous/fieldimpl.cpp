@@ -286,7 +286,7 @@ list<RobotPosition> FieldImpl::getTargetsForSearchingPucks() const
 	}
 
 	vector<RobotPosition> randomPostionsVector;
-	randomPostionsVector.push_back(RobotPosition( Point(1.4, 2.4), Angle()));
+	randomPostionsVector.push_back(RobotPosition( Point(2.0, 1.5), Angle()));
 	randomPostionsVector.push_back(RobotPosition( Point(2.0, 1.0), Angle()));
 	randomPostionsVector.push_back(RobotPosition( Point(2.0, 2.0), Angle()));
 	randomPostionsVector.push_back(RobotPosition( Point(2.5, 2.2), Angle::getHalfRotation()));
