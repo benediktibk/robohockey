@@ -18,6 +18,7 @@ namespace DataAnalysis
 namespace Autonomous
 {
 	class RobotMock;
+	class FieldImpl;
 
 	class FieldTest:
 			public CPPUNIT_NS::TestFixture
@@ -232,6 +233,7 @@ namespace Autonomous
 		DataAnalysis::LidarMock *m_lidar;
 		DataAnalysis::OdometryMock *m_odometry;
 		RobotMock *m_robot;
+		FieldImpl *m_field;
 	};
 }
 }
