@@ -15,6 +15,7 @@
 #include "common/pointdistancecomparetest.h"
 #include "common/timesmoothedbooleantest.h"
 #include "common/stopwatchtest.h"
+#include "common/loggertest.h"
 #include "layer/dataanalysis/dataanalysertest.h"
 #include "layer/dataanalysis/cameratest.h"
 #include "layer/dataanalysis/enginetest.h"
@@ -83,6 +84,7 @@ CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Common::RandomDecisionTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Common::PointDistanceCompareTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Common::TimeSmoothedBooleanTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Common::StopWatchTest);
+CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Common::LoggerTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::DataAnalysis::DataAnalyserTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::DataAnalysis::CameraTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::DataAnalysis::EngineTest);

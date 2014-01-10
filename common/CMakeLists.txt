@@ -17,6 +17,7 @@ set(COMMON_SRC
 	timesmoothedboolean.cpp
 	stopwatch.cpp
 	segfaultstacktraceprinter.cpp
+	loggerimpl.cpp
 )
 
 set(COMMON_TEST_SRC
@@ -38,6 +39,8 @@ set(COMMON_TEST_SRC
 	pointdistancecomparetest.cpp
 	timesmoothedbooleantest.cpp
 	stopwatchtest.cpp
+	loggertest.cpp
+	loggermock.cpp
 )
 
 add_library(common ${COMMON_SRC})
