@@ -2,6 +2,7 @@
 #include "common/circle.h"
 #include "common/compare.h"
 #include <math.h>
+#include <sstream>
 
 using namespace std;
 using namespace RoboHockey::Common;
@@ -244,4 +245,14 @@ void CircleTest::isOnCircle_onTheCircle_true()
 	Compare compare(0.001);
 	Point point(1.15, 2.2);
 	CPPUNIT_ASSERT(circle.isOnCircle(point, compare));
+}
+
+void CircleTest::stream_validCircle_correctString()
+{
+	Circle circle(Point(1, 2), 3);
+	stringstream stream;
+
+	stream << circle;
+
+	CPPUNIT_ASSERT_EQUAL(string("[(1, 2), 3]"), stream.str());
 }

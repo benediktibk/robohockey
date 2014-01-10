@@ -37,6 +37,7 @@ namespace Common
 		CPPUNIT_TEST(isOnCircle_insideTheCircle_false);
 		CPPUNIT_TEST(isOnCircle_outsideTheCircle_false);
 		CPPUNIT_TEST(isOnCircle_onTheCircle_true);
+		CPPUNIT_TEST(stream_validCircle_correctString);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
@@ -65,6 +66,7 @@ namespace Common
 		void isOnCircle_insideTheCircle_false();
 		void isOnCircle_outsideTheCircle_false();
 		void isOnCircle_onTheCircle_true();
+		void stream_validCircle_correctString();
 	};
 }
 }
