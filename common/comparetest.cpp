@@ -90,3 +90,10 @@ void CompareTest::isStrictFuzzySmaller_towAndTwoPointOneAndEpsilonZeroPointZeroF
 
 	CPPUNIT_ASSERT(compare.isStrictFuzzySmaller(2.0,2.1));
 }
+
+void CompareTest::isStrictFuzzyGreater_onlyLittleBitGreater_false()
+{
+	Compare compare(0.1);
+
+	CPPUNIT_ASSERT(!compare.isStrictFuzzyGreater(2.05, 2));
+}

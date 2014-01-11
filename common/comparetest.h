@@ -21,6 +21,7 @@ namespace Common
 	CPPUNIT_TEST(isFuzzySmaller_towAndTwoPointOneAndEpsilonZeroPointTwo_resultIsFuzzySmaller);
 	CPPUNIT_TEST(isStrictFuzzyGreater_twoPointOneAndTwoAndEpsilonZeroPointZeroFife_resultIsStrictFuzzyGreater);
 	CPPUNIT_TEST(isStrictFuzzySmaller_towAndTwoPointOneAndEpsilonZeroPointZeroFife_resultIsStrictFuzzySmaller);
+	CPPUNIT_TEST(isStrictFuzzyGreater_onlyLittleBitGreater_false);
 	CPPUNIT_TEST_SUITE_END();
 
 	private:
@@ -33,6 +34,7 @@ namespace Common
 		void isFuzzySmaller_towAndTwoPointOneAndEpsilonZeroPointTwo_resultIsFuzzySmaller();
 		void isStrictFuzzyGreater_twoPointOneAndTwoAndEpsilonZeroPointZeroFife_resultIsStrictFuzzyGreater();
 		void isStrictFuzzySmaller_towAndTwoPointOneAndEpsilonZeroPointZeroFife_resultIsStrictFuzzySmaller();
+		void isStrictFuzzyGreater_onlyLittleBitGreater_false();
 	};
 }
 }
