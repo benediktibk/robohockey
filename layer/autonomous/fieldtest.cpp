@@ -48,7 +48,7 @@ void FieldTest::update_noLidarObjects_noFieldObjects()
 
 void FieldTest::update_oneObjectFromLidarInView_oneObject()
 {
-	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
+	DataAnalysis::LidarObjects lidarObjects;
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 0), 0.1));
 	m_lidar->setAllObjects(lidarObjects);
 
@@ -62,12 +62,12 @@ void FieldTest::update_oneObjectFromLidarInView_oneObject()
 
 void FieldTest::update_oneObjectFromLidarNotInViewAnymoreDuringSecondCall_noFieldObjects()
 {
-	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
+	DataAnalysis::LidarObjects lidarObjects;
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 0), 0.1));
 	m_lidar->setAllObjects(lidarObjects);
 
 	updateFieldForObjectsToAppear();
-	m_lidar->setAllObjects(DataAnalysis::LidarObjects(Point()));
+	m_lidar->setAllObjects(DataAnalysis::LidarObjects());
 	updateFieldForObjectsToDisappear();
 
 	vector<FieldObject> fieldObjects = m_field->getAllFieldObjects();
@@ -76,12 +76,12 @@ void FieldTest::update_oneObjectFromLidarNotInViewAnymoreDuringSecondCall_noFiel
 
 void FieldTest::update_oneObjectFromLidarLeftNotInViewAnymoreDuringSecondCall_noFieldObjects()
 {
-	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
+	DataAnalysis::LidarObjects lidarObjects;
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 1), 0.1));
 	m_lidar->setAllObjects(lidarObjects);
 
 	updateFieldForObjectsToAppear();
-	m_lidar->setAllObjects(DataAnalysis::LidarObjects(Point()));
+	m_lidar->setAllObjects(DataAnalysis::LidarObjects());
 	updateFieldForObjectsToDisappear();
 
 	vector<FieldObject> fieldObjects = m_field->getAllFieldObjects();
@@ -90,12 +90,12 @@ void FieldTest::update_oneObjectFromLidarLeftNotInViewAnymoreDuringSecondCall_no
 
 void FieldTest::update_oneObjectFromLidarRightNotInViewAnymoreDuringSecondCall_noFieldObjects()
 {
-	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
+	DataAnalysis::LidarObjects lidarObjects;
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, -1), 0.1));
 	m_lidar->setAllObjects(lidarObjects);
 
 	updateFieldForObjectsToAppear();
-	m_lidar->setAllObjects(DataAnalysis::LidarObjects(Point()));
+	m_lidar->setAllObjects(DataAnalysis::LidarObjects());
 	updateFieldForObjectsToDisappear();
 
 	vector<FieldObject> fieldObjects = m_field->getAllFieldObjects();
@@ -104,14 +104,14 @@ void FieldTest::update_oneObjectFromLidarRightNotInViewAnymoreDuringSecondCall_n
 
 void FieldTest::update_objectFromLidarNotInViewAnymoreThroughRotation_oneFieldObject()
 {
-	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
+	DataAnalysis::LidarObjects lidarObjects;
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, -1), 0.1));
 	m_lidar->setAllObjects(lidarObjects);
 
 	m_lidar->setCanBeSeen(true);
 	m_lidar->setCanBeSeenPartly(true);
 	updateFieldForObjectsToAppear();
-	m_lidar->setAllObjects(DataAnalysis::LidarObjects(Point()));
+	m_lidar->setAllObjects(DataAnalysis::LidarObjects());
 	m_odometry->setCurrentPosition(RobotPosition(Point(0, 0), Angle::getHalfRotation()));
 	m_lidar->setCanBeSeen(false);
 	m_lidar->setCanBeSeenPartly(false);
@@ -123,7 +123,7 @@ void FieldTest::update_objectFromLidarNotInViewAnymoreThroughRotation_oneFieldOb
 
 void FieldTest::update_oneObjectFromLidarAndNoObjectFromCamera_noColor()
 {
-	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
+	DataAnalysis::LidarObjects lidarObjects;
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 0), 0.1));
 	m_lidar->setAllObjects(lidarObjects);
 
@@ -138,7 +138,7 @@ void FieldTest::update_oneObjectFromLidarAndNoObjectFromCamera_noColor()
 
 void FieldTest::update_twoObjectsFromLidarAndOneFromCamera_correctColor()
 {
-	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
+	DataAnalysis::LidarObjects lidarObjects;
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 0), 0.1));
 	m_lidar->setAllObjects(lidarObjects);
 	DataAnalysis::CameraObjects cameraObjects;
@@ -156,7 +156,7 @@ void FieldTest::update_twoObjectsFromLidarAndOneFromCamera_correctColor()
 
 void FieldTest::update_twoObjectsFromLidarAndOneFromCameraNoColorAnymoreDuringSecondCall_stillCorrectColor()
 {
-	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
+	DataAnalysis::LidarObjects lidarObjects;
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 0), 0.1));
 	m_lidar->setAllObjects(lidarObjects);
 	DataAnalysis::CameraObjects cameraObjects;
@@ -176,7 +176,7 @@ void FieldTest::update_twoObjectsFromLidarAndOneFromCameraNoColorAnymoreDuringSe
 
 void FieldTest::update_oneObjectOutAndOneObjectInsideOfCalibratedField_correctObjectAddedToField()
 {
-	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
+	DataAnalysis::LidarObjects lidarObjects;
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 1), 0.06));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 1.833), 0.06));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 2.666), 0.06));
@@ -192,8 +192,7 @@ void FieldTest::update_oneObjectOutAndOneObjectInsideOfCalibratedField_correctOb
 	CPPUNIT_ASSERT(m_field->calibratePosition());
 	CPPUNIT_ASSERT(m_field->isCalibrated());
 
-	const Point &currentPosition = m_odometry->getCurrentPosition().getPosition();
-	DataAnalysis::LidarObjects lidarObjectsAfterCalibration(currentPosition);
+	DataAnalysis::LidarObjects lidarObjectsAfterCalibration;
 	lidarObjectsAfterCalibration.addObject(DataAnalysis::LidarObject(Point(0.666, 0.5), 0.06));
 	lidarObjectsAfterCalibration.addObject(DataAnalysis::LidarObject(Point(-2, 2.6), 0.06));
 	m_lidar->setAllObjects(lidarObjectsAfterCalibration);
@@ -219,7 +218,7 @@ void FieldTest::update_oneObjectOutAndOneObjectInsideOfCalibratedField_correctOb
 void FieldTest::update_threeObjectsAndTwoObjectsInGoal_twoAchievedGoals()
 {
 	m_field->setTrueTeamColor(FieldColorYellow);
-	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
+	DataAnalysis::LidarObjects lidarObjects;
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 2), 0.1));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(4.2, 1.5), 0.1));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(4.4, 1.8), 0.1));
@@ -240,7 +239,7 @@ void FieldTest::update_threeObjectsAndTwoObjectsInGoal_twoAchievedGoals()
 void FieldTest::update_threeObjectsAndThreeObjectsInGoal_threeAchievedGoals()
 {
 	m_field->setTrueTeamColor(FieldColorYellow);
-	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
+	DataAnalysis::LidarObjects lidarObjects;
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(4.3, 1.7), 0.1));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(4.2, 1.5), 0.1));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(4.4, 1.8), 0.1));
@@ -261,7 +260,7 @@ void FieldTest::update_threeObjectsAndThreeObjectsInGoal_threeAchievedGoals()
 void FieldTest::update_fourObjectsAndFourObjectsInGoal_fourAchievedGoals()
 {
 	m_field->setTrueTeamColor(FieldColorYellow);
-	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
+	DataAnalysis::LidarObjects lidarObjects;
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(4.3, 1.7), 0.1));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(4.2, 1.5), 0.1));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(4.4, 1.8), 0.1));
@@ -284,7 +283,7 @@ void FieldTest::update_fourObjectsAndFourObjectsInGoal_fourAchievedGoals()
 void FieldTest::update_fourObjectsAndThreeObjectsInGoal_threeAchievedGoals()
 {
 	m_field->setTrueTeamColor(FieldColorBlue);
-	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
+	DataAnalysis::LidarObjects lidarObjects;
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(4.3, 1.7), 0.1));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(4.2, 1.5), 0.1));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(4.4, 1.8), 0.1));
@@ -307,7 +306,7 @@ void FieldTest::update_fourObjectsAndThreeObjectsInGoal_threeAchievedGoals()
 void FieldTest::update_oneObjectAndZeroObjectsInGoal_ZeroAchievedGoals()
 {
 	m_field->setTrueTeamColor(FieldColorYellow);
-	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
+	DataAnalysis::LidarObjects lidarObjects;
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(0.1, 4.3), 0.1));
 	m_lidar->setAllObjects(lidarObjects);
 	DataAnalysis::CameraObjects cameraObjects;
@@ -324,7 +323,7 @@ void FieldTest::update_oneObjectAndZeroObjectsInGoal_ZeroAchievedGoals()
 void FieldTest::update_threeObjectsAndTwoObjectsHidden_twoHiddenPucks()
 {
 	m_field->setTrueTeamColor(FieldColorBlue);
-	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
+	DataAnalysis::LidarObjects lidarObjects;
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(3.35, 0.1), 0.1));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(4, 2.8), 0.1));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(0, 1.8), 0.1));
@@ -345,7 +344,7 @@ void FieldTest::update_threeObjectsAndTwoObjectsHidden_twoHiddenPucks()
 void FieldTest::update_threeObjectsAndThreeObjectsHidden_threeHiddenPucks()
 {
 	m_field->setTrueTeamColor(FieldColorBlue);
-	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
+	DataAnalysis::LidarObjects lidarObjects;
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(3.34, 0), 0.1));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(5, 3), 0.1));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(4, 2), 0.1));
@@ -366,7 +365,7 @@ void FieldTest::update_threeObjectsAndThreeObjectsHidden_threeHiddenPucks()
 void FieldTest::update_threeObjectsAndZeroObjectsHidden_zeroHiddenPucks()
 {
 	m_field->setTrueTeamColor(FieldColorBlue);
-	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
+	DataAnalysis::LidarObjects lidarObjects;
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 0), 0.1));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(2, 3), 0.1));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(3, 2), 0.1));
@@ -387,7 +386,7 @@ void FieldTest::update_threeObjectsAndZeroObjectsHidden_zeroHiddenPucks()
 void FieldTest::update_fourObjectsAndTwoObjectsHidden_twoHiddenPucks()
 {
 	m_field->setTrueTeamColor(FieldColorBlue);
-	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
+	DataAnalysis::LidarObjects lidarObjects;
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 0), 0.1));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(2, 3), 0.1));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(3.5, 2), 0.1));
@@ -410,7 +409,7 @@ void FieldTest::update_fourObjectsAndTwoObjectsHidden_twoHiddenPucks()
 void FieldTest::update_fourObjectsAndFourObjectsHidden_fourHiddenPucks()
 {
 	m_field->setTrueTeamColor(FieldColorBlue);
-	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
+	DataAnalysis::LidarObjects lidarObjects;
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(3.4, 0), 0.1));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(4, 3), 0.1));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(3.5, 2), 0.1));
@@ -433,7 +432,7 @@ void FieldTest::update_fourObjectsAndFourObjectsHidden_fourHiddenPucks()
 void FieldTest::update_fourObjectsAndThreeObjectsHidden_threeHiddenPucks()
 {
 	m_field->setTrueTeamColor(FieldColorYellow);
-	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
+	DataAnalysis::LidarObjects lidarObjects;
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(3.4, 0), 0.1));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(4, 3), 0.1));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(3.5, 2), 0.1));
@@ -457,7 +456,7 @@ void FieldTest::update_threePucksWithTeamColor_30ElementsInList()
 {
 	list<RobotPosition> testlist;
 	m_field->setTrueTeamColor(FieldColorYellow);
-	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
+	DataAnalysis::LidarObjects lidarObjects;
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(3.4, 0), 0.1));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(4, 3), 0.1));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(3.5, 2), 0.1));
@@ -480,7 +479,7 @@ void FieldTest::update_fourPucksWithTeamColorInRectangle1_40ElementsInList()
 {
 	list<RobotPosition> testlist;
 	m_field->setTrueTeamColor(FieldColorYellow);
-	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
+	DataAnalysis::LidarObjects lidarObjects;
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(0, 0), 0.1));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 1), 0.1));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(2, 3), 0.1));
@@ -505,7 +504,7 @@ void FieldTest::update_twoPucksWithTeamColorInRectangle2_20ElementsInList()
 {
 	list<RobotPosition> testlist;
 	m_field->setTrueTeamColor(FieldColorYellow);
-	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
+	DataAnalysis::LidarObjects lidarObjects;
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(3.7, 2), 0.1));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(4.14, 2.8), 0.1));
 	m_lidar->setAllObjects(lidarObjects);
@@ -526,7 +525,7 @@ void FieldTest::update_onePuckWithTeamColorInRectangle3_10ElementsInList()
 {
 	list<RobotPosition> testlist;
 	m_field->setTrueTeamColor(FieldColorYellow);
-	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
+	DataAnalysis::LidarObjects lidarObjects;
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(4, 1.5), 0.1));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(5, 3.02), 0.1));
 	m_lidar->setAllObjects(lidarObjects);
@@ -547,7 +546,7 @@ void FieldTest::update_zeroPucksWithTeamColor_0ElementsInList()
 {
 	list<RobotPosition> testlist;
 	m_field->setTrueTeamColor(FieldColorYellow);
-	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
+	DataAnalysis::LidarObjects lidarObjects;
 	m_lidar->setAllObjects(lidarObjects);
 	DataAnalysis::CameraObjects cameraObjects;
 	m_camera->setAllObjects(cameraObjects);
@@ -564,7 +563,7 @@ void FieldTest::update_fivePucksWithTeamColorInRectangle4_50ElementsInList()
 {
 	list<RobotPosition> testlist;
 	m_field->setTrueTeamColor(FieldColorYellow);
-	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
+	DataAnalysis::LidarObjects lidarObjects;
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(3.7, 0), 0.1));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(4.14, 1), 0.1));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(4.16, 0.5), 0.1));
@@ -591,7 +590,7 @@ void FieldTest::update_sixPucksWithTeamColorInRectangle5_60ElementsInList()
 {
 	list<RobotPosition> testlist;
 	m_field->setTrueTeamColor(FieldColorYellow);
-	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
+	DataAnalysis::LidarObjects lidarObjects;
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(4.16, 2.02), 0.1));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(4.3, 2.2), 0.1));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(4.16, 3), 0.1));
@@ -620,7 +619,7 @@ void FieldTest::update_sevenPucksWithTeamColorInRectangle6_70ElementsInList()
 {
 	list<RobotPosition> testlist;
 	m_field->setTrueTeamColor(FieldColorYellow);
-	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
+	DataAnalysis::LidarObjects lidarObjects;
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(4.16, 0), 0.1));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(4.3, 0.2), 0.1));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(4.14, 1), 0.1));
@@ -653,7 +652,7 @@ void FieldTest::update_eightPucksWithTeamColorInRectangle7_80ElementsInList()
 {
 	list<RobotPosition> testlist;
 	m_field->setTrueTeamColor(FieldColorYellow);
-	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
+	DataAnalysis::LidarObjects lidarObjects;
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(4.59, 2.02), 0.1));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(5, 3), 0.1));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(4.6, 2.1), 0.1));
@@ -686,7 +685,7 @@ void FieldTest::update_ninePucksWithTeamColorInRectangle8_90ElementsInList()
 {
 	list<RobotPosition> testlist;
 	m_field->setTrueTeamColor(FieldColorYellow);
-	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
+	DataAnalysis::LidarObjects lidarObjects;
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(4.61, 1.02), 0.1));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(5, 2), 0.1));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(4.61, 1.1), 0.1));
@@ -721,7 +720,7 @@ void FieldTest::update_tenPucksWithTeamColorInRectangle9_100ElementsInList()
 {
 	list<RobotPosition> testlist;
 	m_field->setTrueTeamColor(FieldColorYellow);
-	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
+	DataAnalysis::LidarObjects lidarObjects;
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(4.59, 0), 0.1));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(5, 0), 0.1));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(4.61, 1), 0.1));
@@ -758,7 +757,7 @@ void FieldTest::getTargetsForFinalPosition_callFunction_17ElementsInList()
 {
 	list<RobotPosition> testlist;
 	m_field->setTrueTeamColor(FieldColorYellow);
-	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
+	DataAnalysis::LidarObjects lidarObjects;
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(4.59, 0), 0.1));
 	m_lidar->setAllObjects(lidarObjects);
 	DataAnalysis::CameraObjects cameraObjects;
@@ -939,7 +938,7 @@ void FieldTest::update_enemyRobotInFront_oneHardObstacle()
 
 void FieldTest::update_lidarReturnsObjectWhichCantBeSeenActually_noFieldObjects()
 {
-	DataAnalysis::LidarObjects objects(Point(0, 0));
+	DataAnalysis::LidarObjects objects;
 	objects.addObject(DataAnalysis::LidarObject(Point(1, 1), 1));
 
 	m_lidar->setCanBeSeen(false);
@@ -953,7 +952,7 @@ void FieldTest::update_lidarReturnsObjectWhichCantBeSeenActually_noFieldObjects(
 
 void FieldTest::update_lidarObjectSeenOnlyOnce_noFieldObjectsAndObstacles()
 {
-	DataAnalysis::LidarObjects objects(Point(0, 0));
+	DataAnalysis::LidarObjects objects;
 	objects.addObject(DataAnalysis::LidarObject(Point(2, 0), 0.1));
 
 	m_lidar->setCanBeSeen(true);
@@ -971,7 +970,7 @@ void FieldTest::update_lidarObjectSeenOnlyOnce_noFieldObjectsAndObstacles()
 
 void FieldTest::update_lidarObjectSeenThreeTimes_oneFieldObjectAndObstacle()
 {
-	DataAnalysis::LidarObjects objects(Point(0, 0));
+	DataAnalysis::LidarObjects objects;
 	objects.addObject(DataAnalysis::LidarObject(Point(2, 0), 0.1));
 
 	m_lidar->setCanBeSeen(true);
@@ -988,7 +987,7 @@ void FieldTest::update_lidarObjectSeenThreeTimes_oneFieldObjectAndObstacle()
 
 void FieldTest::update_lidarObjectSeenOnlyOnce_noFieldObjects()
 {
-	DataAnalysis::LidarObjects objects(Point(0, 0));
+	DataAnalysis::LidarObjects objects;
 	objects.addObject(DataAnalysis::LidarObject(Point(2, 0), 0.1));
 
 	m_lidar->setCanBeSeen(true);
@@ -1002,7 +1001,7 @@ void FieldTest::update_lidarObjectSeenOnlyOnce_noFieldObjects()
 
 void FieldTest::update_lidarObjectSeenOnlyOnce_noObstacles()
 {
-	DataAnalysis::LidarObjects objects(Point(0, 0));
+	DataAnalysis::LidarObjects objects;
 	objects.addObject(DataAnalysis::LidarObject(Point(2, 0), 0.1));
 
 	m_lidar->setCanBeSeen(true);
@@ -1017,7 +1016,7 @@ void FieldTest::update_lidarObjectSeenOnlyOnce_noObstacles()
 
 void FieldTest::update_lidarObjectSeenTwice_oneFieldObject()
 {
-	DataAnalysis::LidarObjects objects(Point(0, 0));
+	DataAnalysis::LidarObjects objects;
 	objects.addObject(DataAnalysis::LidarObject(Point(2, 0), 0.1));
 
 	m_lidar->setCanBeSeen(true);
@@ -1031,7 +1030,7 @@ void FieldTest::update_lidarObjectSeenTwice_oneFieldObject()
 
 void FieldTest::update_lidarObjectNotSeenOnce_oneFieldObject()
 {
-	DataAnalysis::LidarObjects objects(Point(0, 0));
+	DataAnalysis::LidarObjects objects;
 	objects.addObject(DataAnalysis::LidarObject(Point(2, 0), 0.1));
 
 	m_lidar->setCanBeSeen(true);
@@ -1048,7 +1047,7 @@ void FieldTest::update_lidarObjectNotSeenOnce_oneFieldObject()
 
 void FieldTest::update_lidarObjectNotSeenOften_noFieldObjects()
 {
-	DataAnalysis::LidarObjects objects(Point(0, 0));
+	DataAnalysis::LidarObjects objects;
 	objects.addObject(DataAnalysis::LidarObject(Point(2, 0), 0.1));
 
 	m_lidar->setCanBeSeen(true);
@@ -1066,9 +1065,9 @@ void FieldTest::update_lidarObjectNotSeenOften_noFieldObjects()
 
 void FieldTest::update_collectedPuckAndMovedForward_oneFieldObject()
 {
-	DataAnalysis::LidarObjects objectsPrevious(Point(0, 0));
+	DataAnalysis::LidarObjects objectsPrevious;
 	objectsPrevious.addObject(DataAnalysis::LidarObject(Point(0.2, 0), 0.04));
-	DataAnalysis::LidarObjects objectsAfter(Point(0.1, 0));
+	DataAnalysis::LidarObjects objectsAfter;
 	objectsAfter.addObject(DataAnalysis::LidarObject(Point(0.3, 0), 0.04));
 	m_odometry->setCurrentPosition(RobotPosition(Point(0, 0), 0));
 
@@ -1087,9 +1086,9 @@ void FieldTest::update_collectedPuckAndMovedForward_oneFieldObject()
 
 void FieldTest::update_rotatingAndObjectALittleBitDistanceMoved_onlyFieldObjectStaysTheSame()
 {
-	DataAnalysis::LidarObjects objectsPrevious(Point(0, 0));
+	DataAnalysis::LidarObjects objectsPrevious;
 	objectsPrevious.addObject(DataAnalysis::LidarObject(Point(1, 0), 0.04));
-	DataAnalysis::LidarObjects objectsAfter(Point(0, 0));
+	DataAnalysis::LidarObjects objectsAfter;
 	objectsAfter.addObject(DataAnalysis::LidarObject(Point(1, 0.1), 0.04));
 	m_odometry->setCurrentPosition(RobotPosition(Point(0, 0), 0));
 
@@ -1113,9 +1112,9 @@ void FieldTest::update_rotatingAndObjectALittleBitDistanceMoved_onlyFieldObjectS
 
 void FieldTest::update_rotatingAndObjectVeryClose_onlyFieldObjectIsUpdated()
 {
-	DataAnalysis::LidarObjects objectsPrevious(Point(0, 0));
+	DataAnalysis::LidarObjects objectsPrevious;
 	objectsPrevious.addObject(DataAnalysis::LidarObject(Point(1, 0), 0.04));
-	DataAnalysis::LidarObjects objectsAfter(Point(0, 0));
+	DataAnalysis::LidarObjects objectsAfter;
 	objectsAfter.addObject(DataAnalysis::LidarObject(Point(1, 0.1), 0.04));
 	m_odometry->setCurrentPosition(RobotPosition(Point(0, 0), 0));
 
@@ -1139,7 +1138,7 @@ void FieldTest::update_rotatingAndObjectVeryClose_onlyFieldObjectIsUpdated()
 
 void FieldTest::calibratePosition_noValidPattern_false()
 {
-	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
+	DataAnalysis::LidarObjects lidarObjects;
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 0), 0.1));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(3.4, 3), 0.1));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(3, -4), 0.1));
@@ -1154,7 +1153,7 @@ void FieldTest::calibratePosition_noValidPattern_false()
 
 void FieldTest::calibratePosition_validPattern_true()
 {
-	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
+	DataAnalysis::LidarObjects lidarObjects;
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 1), 0.06));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 1.833), 0.06));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 2.666), 0.06));
@@ -1170,7 +1169,7 @@ void FieldTest::calibratePosition_validPattern_true()
 void FieldTest::calibratePosition_noValidPattern_noTransformation()
 {
 	Compare compare(0.01);
-	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
+	DataAnalysis::LidarObjects lidarObjects;
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 0), 0.1));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(3.4, 3), 0.1));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(3, -4), 0.1));
@@ -1183,7 +1182,7 @@ void FieldTest::calibratePosition_noValidPattern_noTransformation()
 	m_field->calibratePosition();
 
 	vector<FieldObject> fieldObjects = m_field->getAllFieldObjects();
-	vector<DataAnalysis::LidarObject> lidarObjectsVector = lidarObjects.getObjectsWithDistanceBelow(10);
+	vector<DataAnalysis::LidarObject> lidarObjectsVector = lidarObjects.getObjectsWithDistanceBelow(m_odometry->getCurrentPosition(), 10);
 
 	CPPUNIT_ASSERT(fieldObjects.size() > 0);
 	CPPUNIT_ASSERT(compare.isFuzzyEqual(fieldObjects.front().getCircle(), lidarObjectsVector.front()));
@@ -1193,7 +1192,7 @@ void FieldTest::calibratePosition_noValidPattern_noTransformation()
 void FieldTest::calibratePosition_validPattern_transformed()
 {
 	Compare compare(0.01);
-	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
+	DataAnalysis::LidarObjects lidarObjects;
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 1), 0.06));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 1.833), 0.06));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 2.666), 0.06));
@@ -1207,7 +1206,7 @@ void FieldTest::calibratePosition_validPattern_transformed()
 	m_field->update();
 
 	vector<FieldObject> fieldObjects = m_field->getAllFieldObjects();
-	vector<DataAnalysis::LidarObject> lidarObjectsVector = lidarObjects.getObjectsWithDistanceBelow(10);
+	vector<DataAnalysis::LidarObject> lidarObjectsVector = lidarObjects.getObjectsWithDistanceBelow(m_odometry->getCurrentPosition(), 10);
 	CPPUNIT_ASSERT(fieldObjects.size() > 0);
 	CPPUNIT_ASSERT(!compare.isFuzzyEqual(fieldObjects.front().getCircle(), lidarObjectsVector.front()));
 	CPPUNIT_ASSERT(m_field->isCalibrated());
@@ -1215,7 +1214,7 @@ void FieldTest::calibratePosition_validPattern_transformed()
 
 void FieldTest::calibratePosition_validPattern_correctNumberOfFieldObjects()
 {
-	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
+	DataAnalysis::LidarObjects lidarObjects;
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 1), 0.06));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 1.833), 0.06));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 2.666), 0.06));
@@ -1229,7 +1228,7 @@ void FieldTest::calibratePosition_validPattern_correctNumberOfFieldObjects()
 	updateFieldForObjectsToDisappear();
 
 	vector<FieldObject> fieldObjects = m_field->getAllFieldObjects();
-	vector<DataAnalysis::LidarObject> lidarObjectsVector = lidarObjects.getObjectsWithDistanceBelow(10);
+	vector<DataAnalysis::LidarObject> lidarObjectsVector = lidarObjects.getObjectsWithDistanceBelow(m_odometry->getCurrentPosition(), 10);
 
 	CPPUNIT_ASSERT_EQUAL(lidarObjectsVector.size(), fieldObjects.size());
 	CPPUNIT_ASSERT(m_field->isCalibrated());
@@ -1238,7 +1237,7 @@ void FieldTest::calibratePosition_validPattern_correctNumberOfFieldObjects()
 void FieldTest::calibratePosition_validPattern_correctTransformation()
 {
 	Compare compare(0.05);
-	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
+	DataAnalysis::LidarObjects lidarObjects;
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 1), 0.06));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 1.833), 0.06));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 2.666), 0.06));
@@ -1286,7 +1285,7 @@ void FieldTest::calibratePosition_realWorldExample_positionIsCorrect()
 
 void FieldTest::calibratePosition_validPattern_objectsOutsideFieldAreDeleted()
 {
-	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
+	DataAnalysis::LidarObjects lidarObjects;
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 1), 0.06));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 1.833), 0.06));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 2.666), 0.06));
@@ -1314,7 +1313,7 @@ void FieldTest::calibratePosition_validPattern_objectsOutsideFieldAreDeleted()
 
 void FieldTest::getObjectsWithColorOrderedByDistance_oneObjectWithCorrectColorAndOneWithNoColor_resultSizeIsCorrect()
 {
-	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
+	DataAnalysis::LidarObjects lidarObjects;
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 0), 0.1));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(2, 1), 0.1));
 	m_lidar->setAllObjects(lidarObjects);
@@ -1334,7 +1333,7 @@ void FieldTest::getObjectsWithColorOrderedByDistance_oneObjectWithCorrectColorAn
 void FieldTest::getObjectsWithColorOrderedByDistance_twoObjectsWithCorrectColorInAscendingOrder_orderIsCorrect()
 {
 	Point ownPosition(0, 0);
-	DataAnalysis::LidarObjects lidarObjects(ownPosition);
+	DataAnalysis::LidarObjects lidarObjects;
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 0), 0.12));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(2, -1), 0.12));
 	m_lidar->setAllObjects(lidarObjects);
@@ -1360,7 +1359,7 @@ void FieldTest::getObjectsWithColorOrderedByDistance_twoObjectsWithCorrectColorI
 void FieldTest::getObjectsWithColorOrderedByDistance_twoObjectsWithCorrectColorInDescendingOrder_orderIsCorrect()
 {
 	Point ownPosition(0, 0);
-	DataAnalysis::LidarObjects lidarObjects(ownPosition);
+	DataAnalysis::LidarObjects lidarObjects;
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(2, -1), 0.12));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 0), 0.12));
 	m_lidar->setAllObjects(lidarObjects);
@@ -1394,7 +1393,7 @@ void FieldTest::isPointInsideField_notCalibrated_true()
 
 void FieldTest::isPointInsideField_pointIsInside_true()
 {
-	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
+	DataAnalysis::LidarObjects lidarObjects;
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 1), 0.06));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 1.833), 0.06));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 2.666), 0.06));
@@ -1412,7 +1411,7 @@ void FieldTest::isPointInsideField_pointIsInside_true()
 
 void FieldTest::isPointInsideField_pointIsOutside_false()
 {
-	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
+	DataAnalysis::LidarObjects lidarObjects;
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 1), 0.06));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 1.833), 0.06));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 2.666), 0.06));
@@ -1430,7 +1429,7 @@ void FieldTest::isPointInsideField_pointIsOutside_false()
 
 void FieldTest::isPointInsideField_pointIsUnderField_false()
 {
-	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
+	DataAnalysis::LidarObjects lidarObjects;
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 1), 0.06));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 1.833), 0.06));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 2.666), 0.06));
@@ -1455,7 +1454,7 @@ void FieldTest::getAllSoftObstacles_oneBluePuck_resultSizeIs1()
 {
 	RobotPosition ownPosition(Point(0, 0), 0);
 	m_odometry->setCurrentPosition(ownPosition);
-	DataAnalysis::LidarObjects lidarObjects(ownPosition.getPosition());
+	DataAnalysis::LidarObjects lidarObjects;
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 0), 0.06));
 	m_lidar->setAllObjects(lidarObjects);
 	DataAnalysis::CameraObjects cameraObjects;
@@ -1474,7 +1473,7 @@ void FieldTest::getAllSoftObstacles_oneSmallObstacleWithUnknownColor_resultSizeI
 {
 	RobotPosition ownPosition(Point(0, 0), 0);
 	m_odometry->setCurrentPosition(ownPosition);
-	DataAnalysis::LidarObjects lidarObjects(ownPosition.getPosition());
+	DataAnalysis::LidarObjects lidarObjects;
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 0), 0.06));
 	m_lidar->setAllObjects(lidarObjects);
 
@@ -1490,7 +1489,7 @@ void FieldTest::getAllSoftObstacles_oneGreenObstacle_resultSizeIs0()
 {
 	RobotPosition ownPosition(Point(0, 0), 0);
 	m_odometry->setCurrentPosition(ownPosition);
-	DataAnalysis::LidarObjects lidarObjects(ownPosition.getPosition());
+	DataAnalysis::LidarObjects lidarObjects;
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 0), 0.06));
 	m_lidar->setAllObjects(lidarObjects);
 	DataAnalysis::CameraObjects cameraObjects;
@@ -1509,7 +1508,7 @@ void FieldTest::getAllSoftObstacles_oneBigObstacle_resultSizeIs0()
 {
 	RobotPosition ownPosition(Point(0, 0), 0);
 	m_odometry->setCurrentPosition(ownPosition);
-	DataAnalysis::LidarObjects lidarObjects(ownPosition.getPosition());
+	DataAnalysis::LidarObjects lidarObjects;
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 0), 0.5));
 	m_lidar->setAllObjects(lidarObjects);
 
@@ -1525,7 +1524,7 @@ void FieldTest::getAllSoftObstacles_onePuckDisappeared_resultSizeIs0()
 {
 	RobotPosition ownPosition(Point(0, 0), 0);
 	m_odometry->setCurrentPosition(ownPosition);
-	DataAnalysis::LidarObjects lidarObjects(ownPosition.getPosition());
+	DataAnalysis::LidarObjects lidarObjects;
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 0), 0.06));
 	m_lidar->setAllObjects(lidarObjects);
 	DataAnalysis::CameraObjects cameraObjects;
@@ -1550,7 +1549,7 @@ void FieldTest::getAllSoftObstacles_oneSmallObstacleWithUnknownColor_resultDiame
 {
 	RobotPosition ownPosition(Point(0, 0), 0);
 	m_odometry->setCurrentPosition(ownPosition);
-	DataAnalysis::LidarObjects lidarObjects(ownPosition.getPosition());
+	DataAnalysis::LidarObjects lidarObjects;
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 0), 0.06));
 	m_lidar->setAllObjects(lidarObjects);
 
@@ -1566,7 +1565,7 @@ void FieldTest::getAllHardObstacles_oneGreenObject_resultSizeIs1()
 {
 	RobotPosition ownPosition(Point(0, 0), 0);
 	m_odometry->setCurrentPosition(ownPosition);
-	DataAnalysis::LidarObjects lidarObjects(ownPosition.getPosition());
+	DataAnalysis::LidarObjects lidarObjects;
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 0), 0.06));
 	m_lidar->setAllObjects(lidarObjects);
 	DataAnalysis::CameraObjects cameraObjects;
@@ -1585,7 +1584,7 @@ void FieldTest::getAllHardObstacles_oneBigObstacle_resultSizeIs1()
 {
 	RobotPosition ownPosition(Point(0, 0), 0);
 	m_odometry->setCurrentPosition(ownPosition);
-	DataAnalysis::LidarObjects lidarObjects(ownPosition.getPosition());
+	DataAnalysis::LidarObjects lidarObjects;
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 0), 0.5));
 	m_lidar->setAllObjects(lidarObjects);
 
@@ -1601,7 +1600,7 @@ void FieldTest::getAllHardObstacles_oneSmallObstacleWithUnknownColor_resultSizeI
 {
 	RobotPosition ownPosition(Point(0, 0), 0);
 	m_odometry->setCurrentPosition(ownPosition);
-	DataAnalysis::LidarObjects lidarObjects(ownPosition.getPosition());
+	DataAnalysis::LidarObjects lidarObjects;
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 0), 0.06));
 	m_lidar->setAllObjects(lidarObjects);
 
@@ -1617,7 +1616,7 @@ void FieldTest::getAllHardObstacles_oneBigObstacleDisappeared_resultSizeIs0()
 {
 	RobotPosition ownPosition(Point(0, 0), 0);
 	m_odometry->setCurrentPosition(ownPosition);
-	DataAnalysis::LidarObjects lidarObjects(ownPosition.getPosition());
+	DataAnalysis::LidarObjects lidarObjects;
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 0), 0.5));
 	m_lidar->setAllObjects(lidarObjects);
 
@@ -1636,7 +1635,7 @@ void FieldTest::getAllHardObstacles_fairlyBigObject_diameterIs08()
 {
 	RobotPosition ownPosition(Point(0, 0), 0);
 	m_odometry->setCurrentPosition(ownPosition);
-	DataAnalysis::LidarObjects lidarObjects(ownPosition.getPosition());
+	DataAnalysis::LidarObjects lidarObjects;
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 0), 0.14));
 	m_lidar->setAllObjects(lidarObjects);
 
@@ -1683,7 +1682,7 @@ void FieldTest::getTargetsForSearchingPucks_always_numberOfPositionsBigger5()
 
 void FieldTest::getTargetsForSearchingPucks_twoObjectsWithUnknownColor_numberOfPositions33()
 {
-	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
+	DataAnalysis::LidarObjects lidarObjects;
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(3, 0.4), 0.1));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(2, 1.5), 0.1));
 	m_lidar->setAllObjects(lidarObjects);
@@ -1699,7 +1698,7 @@ void FieldTest::getTargetsForSearchingPucks_twoObjectsWithUnknownColor_numberOfP
 
 void FieldTest::getTargetsForSearchingPucks_threeObjectsWithUnknownColorNotInField_numberOfPositions10()
 {
-	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
+	DataAnalysis::LidarObjects lidarObjects;
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(0, -0.1), 0.1));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(5.3, 1.5), 0.1));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(6, 1.5), 0.1));
@@ -1717,7 +1716,7 @@ void FieldTest::getTargetsForSearchingPucks_threeObjectsWithUnknownColorNotInFie
 
 void FieldTest::getTargetsForSearchungPucks_fourObjectsWithUnknownColorAndOneObjectWithKnownColorAndTwoPucksWithUnknownColorNotInField_numberOfPositions33()
 {
-	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
+	DataAnalysis::LidarObjects lidarObjects;
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(0, -0.1), 0.1));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(5.3, 1.5), 0.1));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(3, 1.5), 0.1));
@@ -1795,7 +1794,7 @@ void FieldTest::getNewOriginFromFieldDetection_realWorldExample1_correctNewOrigi
 void FieldTest::getNumberOfObjectsWithColor_noColoredObject_0()
 {
 	m_field->setTrueTeamColor(FieldColorYellow);
-	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
+	DataAnalysis::LidarObjects lidarObjects;
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 2), 0.1));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(4.2, 1.5), 0.1));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(4.4, 1.8), 0.1));
@@ -1812,7 +1811,7 @@ void FieldTest::getNumberOfObjectsWithColor_noColoredObject_0()
 void FieldTest::getNumberOfObjectsWithColor_3YellowAnd2GreenAnd1UnknownObject_correctValues()
 {
 	m_field->setTrueTeamColor(FieldColorYellow);
-	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
+	DataAnalysis::LidarObjects lidarObjects;
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 2), 0.1));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(4.2, 1.5), 0.1));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(4.4, 1.8), 0.1));
@@ -1839,7 +1838,7 @@ void FieldTest::getNumberOfObjectsWithColor_3YellowAnd2GreenAnd1UnknownObject_co
 void FieldTest::getNumberOfObjectsWithColor_2BlueObjects_2()
 {
 	m_field->setTrueTeamColor(FieldColorYellow);
-	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
+	DataAnalysis::LidarObjects lidarObjects;
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 2), 0.1));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(4.2, 1.5), 0.1));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(4.4, 1.8), 0.1));
@@ -1876,7 +1875,7 @@ void FieldTest::getEstimatedNumberOfAchievedGoals_2goals_2()
 void FieldTest::getNumberOfPucksInEnemyThird_3PucksAnd2InEnemyThird_resultIs2()
 {
 	m_field->setTrueTeamColor(FieldColorYellow);
-	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
+	DataAnalysis::LidarObjects lidarObjects;
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(4.2, 1.5), 0.1));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(3.4, 1.8), 0.1));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(2.35, 1.6), 0.1));
@@ -1896,7 +1895,7 @@ void FieldTest::getNumberOfPucksInEnemyThird_3PucksAnd2InEnemyThird_resultIs2()
 
 void FieldTest::getTargetsForCollectingOnePuckNotInEnemyThird_3Objects1Unknown1InEnemyThird_numberOfPositions10()
 {
-	DataAnalysis::LidarObjects lidarObjects(Point(0, 0));
+	DataAnalysis::LidarObjects lidarObjects;
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(3.5, 1.5), 0.1));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(2, 1.7), 0.1));
 	lidarObjects.addObject(DataAnalysis::LidarObject(Point(2.5, 2), 0.1));

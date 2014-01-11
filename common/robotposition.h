@@ -18,6 +18,7 @@ namespace Common
 		const Angle& getOrientation() const;
 		void setPosition(const Point &position);
 		const Point& getPosition() const;
+		double distanceTo(const RobotPosition &point) const;
 
 		bool operator ==(const RobotPosition &position) const;
 		RobotPosition operator*(double value) const;
@@ -25,7 +26,7 @@ namespace Common
 		RobotPosition operator+(const RobotPosition &point) const;
 		RobotPosition operator-(const RobotPosition &point) const;
 		void operator*=(double value);
-		double distanceTo(const RobotPosition &point) const;
+		operator Point() const;
 
 	private:
 		Point m_position;

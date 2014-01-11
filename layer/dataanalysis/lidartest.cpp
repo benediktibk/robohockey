@@ -89,7 +89,7 @@ void LidarTest::getAllObjects_oneTooBigObjectInFront_objectCountIs0()
 	lidar.updateSensorData();
 	LidarObjects allObjects = lidar.getAllObjects(RobotPosition(ownPosition, 0));
 
-	vector<LidarObject> objects = allObjects.getObjectsWithDistanceBelow(5);
+	vector<LidarObject> objects = allObjects.getObjectsWithDistanceBelow(ownPosition, 5);
 	CPPUNIT_ASSERT_EQUAL((size_t)0, objects.size());
 }
 
@@ -107,7 +107,7 @@ void LidarTest::getAllObjects_lookingIntoLeftUpperDirectionAndObjectSlightlyLeft
 	lidar.updateSensorData();
 	LidarObjects allObjects = lidar.getAllObjects(ownPosition);
 
-	vector<LidarObject> objects = allObjects.getObjectsWithDistanceBelow(5);
+	vector<LidarObject> objects = allObjects.getObjectsWithDistanceBelow(ownPosition, 5);
 	CPPUNIT_ASSERT_EQUAL((size_t)1, objects.size());
 	LidarObject object = objects.front();
 	CPPUNIT_ASSERT_DOUBLES_EQUAL(0.15, object.getDiameter(), 0.1);
@@ -134,7 +134,7 @@ void LidarTest::getAllObjects_twoObjects_objectCountIs2()
 	lidar.updateSensorData();
 	LidarObjects objects = lidar.getAllObjects(ownPosition);
 
-	vector<LidarObject> objectsInForeground = objects.getObjectsWithDistanceBelow(5);
+	vector<LidarObject> objectsInForeground = objects.getObjectsWithDistanceBelow(ownPosition, 5);
 	CPPUNIT_ASSERT_EQUAL((size_t)2, objectsInForeground.size());
 }
 
@@ -157,7 +157,7 @@ void LidarTest::getAllObjects_oneObjectBehindAnotherOneLeft_objectCountIsAtLeast
 	lidar.updateSensorData();
 	LidarObjects objects = lidar.getAllObjects(ownPosition);
 
-	vector<LidarObject> objectsInForeground = objects.getObjectsWithDistanceBelow(5);
+	vector<LidarObject> objectsInForeground = objects.getObjectsWithDistanceBelow(ownPosition, 5);
 	CPPUNIT_ASSERT(objectsInForeground.size() >= 1);
 }
 
@@ -180,7 +180,7 @@ void LidarTest::getAllObjects_oneObjectBehindAnotherOneRight_objectCountIsAtLeas
 	lidar.updateSensorData();
 	LidarObjects objects = lidar.getAllObjects(RobotPosition(ownPosition, M_PI*(-0.5)));
 
-	vector<LidarObject> objectsInForeground = objects.getObjectsWithDistanceBelow(5);
+	vector<LidarObject> objectsInForeground = objects.getObjectsWithDistanceBelow(ownPosition, 5);
 	CPPUNIT_ASSERT(objectsInForeground.size() >= 1);
 }
 
@@ -196,7 +196,7 @@ void LidarTest::getAllObjects_objectAtLeftBorder_objectCountIs0()
 	lidar.updateSensorData();
 	LidarObjects objects = lidar.getAllObjects(RobotPosition(ownPosition, M_PI*(-0.5)));
 
-	vector<LidarObject> objectsInForeground = objects.getObjectsWithDistanceBelow(5);
+	vector<LidarObject> objectsInForeground = objects.getObjectsWithDistanceBelow(ownPosition, 5);
 	CPPUNIT_ASSERT_EQUAL((size_t)0, objectsInForeground.size());
 }
 
@@ -212,7 +212,7 @@ void LidarTest::getAllObjects_objectAtRightBorder_objectCountIs0()
 	lidar.updateSensorData();
 	LidarObjects objects = lidar.getAllObjects(RobotPosition(ownPosition, M_PI*(-0.5)));
 
-	vector<LidarObject> objectsInForeground = objects.getObjectsWithDistanceBelow(5);
+	vector<LidarObject> objectsInForeground = objects.getObjectsWithDistanceBelow(ownPosition, 5);
 	CPPUNIT_ASSERT_EQUAL((size_t)0, objectsInForeground.size());
 }
 
@@ -239,7 +239,7 @@ void LidarTest::getAllObjects_puckDirectInFront_onlyObjectIsCorrect()
 	lidar.updateSensorData();
 	LidarObjects objects = lidar.getAllObjects(RobotPosition(ownPosition, 0));
 
-	vector<LidarObject> objectsInForeground = objects.getObjectsWithDistanceBelow(1);
+	vector<LidarObject> objectsInForeground = objects.getObjectsWithDistanceBelow(ownPosition, 1);
 	CPPUNIT_ASSERT_EQUAL((size_t)1, objectsInForeground.size());
 	const LidarObject &object = objectsInForeground.front();
 	Compare compare(0.02);
@@ -257,7 +257,7 @@ void LidarTest::getAllobjects_oneBoundaryPostInRange_diameterIsCorrect()
 	lidar.updateSensorData();
 	LidarObjects objects = lidar.getAllObjects(RobotPosition(ownPosition, 0));
 
-	vector<LidarObject> objectsInForeground = objects.getObjectsWithDistanceBelow(1);
+	vector<LidarObject> objectsInForeground = objects.getObjectsWithDistanceBelow(ownPosition, 1);
 	CPPUNIT_ASSERT_EQUAL((size_t)1, objectsInForeground.size());
 	const LidarObject &object = objectsInForeground.front();
 	Compare compare(0.01);
@@ -274,7 +274,7 @@ void LidarTest::getAllObjects_onePuckALittleBitDistant_diameterIsCorrect()
 	lidar.updateSensorData();
 	LidarObjects objects = lidar.getAllObjects(RobotPosition(ownPosition, 0));
 
-	vector<LidarObject> objectsInForeground = objects.getObjectsWithDistanceBelow(1);
+	vector<LidarObject> objectsInForeground = objects.getObjectsWithDistanceBelow(ownPosition, 1);
 	CPPUNIT_ASSERT_EQUAL((size_t)1, objectsInForeground.size());
 	const LidarObject &object = objectsInForeground.front();
 	Compare compare(0.02);
@@ -291,7 +291,7 @@ void LidarTest::getAllObjects_onePuck_positionAndDiameterIsCorrect()
 	lidar.updateSensorData();
 	LidarObjects objects = lidar.getAllObjects(RobotPosition(ownPosition, 0));
 
-	vector<LidarObject> objectsInForeground = objects.getObjectsWithDistanceBelow(1);
+	vector<LidarObject> objectsInForeground = objects.getObjectsWithDistanceBelow(ownPosition, 1);
 	CPPUNIT_ASSERT_EQUAL((size_t)1, objectsInForeground.size());
 	const LidarObject &object = objectsInForeground.front();
 	Compare compare(0.04);
@@ -309,7 +309,7 @@ void LidarTest::getAllObjects_onePuckInQuiteADistanceVersion1_distanceAndDiamete
 	lidar.updateSensorData();
 	LidarObjects objects = lidar.getAllObjects(RobotPosition(ownPosition, 0));
 
-	vector<LidarObject> objectsInForeground = objects.getObjectsWithDistanceBelow(2);
+	vector<LidarObject> objectsInForeground = objects.getObjectsWithDistanceBelow(ownPosition, 2);
 	CPPUNIT_ASSERT_EQUAL((size_t)1, objectsInForeground.size());
 	const LidarObject &object = objectsInForeground.front();
 	double distance = ownPosition.distanceTo(object.getCenter());
@@ -328,7 +328,7 @@ void LidarTest::getAllObjects_onePuckInQuiteADistanceVersion2_distanceAndDiamete
 	lidar.updateSensorData();
 	LidarObjects objects = lidar.getAllObjects(RobotPosition(ownPosition, 0));
 
-	vector<LidarObject> objectsInForeground = objects.getObjectsWithDistanceBelow(2.5);
+	vector<LidarObject> objectsInForeground = objects.getObjectsWithDistanceBelow(ownPosition, 2.5);
 	CPPUNIT_ASSERT_EQUAL((size_t)1, objectsInForeground.size());
 	const LidarObject &object = objectsInForeground.front();
 	double distance = ownPosition.distanceTo(object.getCenter());
@@ -347,7 +347,7 @@ void LidarTest::getAllObjects_maximumDistanceToBoundaryPostOfOwnFieldPart_distan
 	lidar.updateSensorData();
 	LidarObjects objects = lidar.getAllObjects(ownPosition);
 
-	vector<LidarObject> objectsInForeground = objects.getObjectsWithDistanceBelow(3.2);
+	vector<LidarObject> objectsInForeground = objects.getObjectsWithDistanceBelow(ownPosition, 3.2);
 	vector<LidarObject> farDistantObjects;
 
 	for (vector<LidarObject>::const_iterator i = objectsInForeground.begin(); i != objectsInForeground.end(); ++i)
@@ -375,7 +375,7 @@ void LidarTest::getAllObjects_twoObjectsInFrontOfWall_objectCountIs2()
 	lidar.updateSensorData();
 	LidarObjects objects = lidar.getAllObjects(ownPosition);
 
-	vector<LidarObject> objectsInForeground = objects.getObjectsWithDistanceBelow(2);
+	vector<LidarObject> objectsInForeground = objects.getObjectsWithDistanceBelow(ownPosition, 2);
 	vector<LidarObject> objectsWithSmallDiameter;
 	for (vector<LidarObject>::const_iterator i = objectsInForeground.begin(); i != objectsInForeground.end(); ++i)
 		if (i->getDiameter() < 0.1)
@@ -393,7 +393,7 @@ void LidarTest::getAllObjects_twoObjectsWithADistanceOfOneMeter_objectCountIs2()
 	lidar.updateSensorData();
 	LidarObjects objects = lidar.getAllObjects(ownPosition);
 
-	vector<LidarObject> objectsInForeground = objects.getObjectsWithDistanceBelow(1);
+	vector<LidarObject> objectsInForeground = objects.getObjectsWithDistanceBelow(ownPosition, 1);
 	vector<LidarObject> objectsWithSmallDiameter;
 	for (vector<LidarObject>::const_iterator i = objectsInForeground.begin(); i != objectsInForeground.end(); ++i)
 		if (i->getDiameter() < 0.1)
@@ -411,7 +411,7 @@ void LidarTest::getAllObjects_twoBorderStonesInFrontOfWall_objectCountIs2()
 	lidar.updateSensorData();
 	LidarObjects objects = lidar.getAllObjects(ownPosition);
 
-	vector<LidarObject> objectsInForeground = objects.getObjectsWithDistanceBelow(1);
+	vector<LidarObject> objectsInForeground = objects.getObjectsWithDistanceBelow(ownPosition, 1);
 	CPPUNIT_ASSERT_EQUAL((size_t)2, objectsInForeground.size());
 }
 
@@ -425,7 +425,7 @@ void LidarTest::getAllObjects_puckInFrontOfOtherRobot_puckIsDetetected()
 	lidar.updateSensorData();
 	LidarObjects objects = lidar.getAllObjects(ownPosition);
 
-	vector<LidarObject> objectsInForeground = objects.getObjectsWithDistanceBelow(1);
+	vector<LidarObject> objectsInForeground = objects.getObjectsWithDistanceBelow(ownPosition, 1);
 	CPPUNIT_ASSERT_EQUAL((size_t)1, objectsInForeground.size());
 }
 
@@ -442,8 +442,8 @@ void LidarTest::getAllObjects_twoDataSetsWhereTheRobotDroveForward_sameObjectCou
 	lidar.updateSensorData();
 	LidarObjects objectsCurrent = lidar.getAllObjects(ownPosition);
 
-	vector<LidarObject> objectsPreviousVector = objectsPrevious.getObjectsWithDistanceBelow(8);
-	vector<LidarObject> objectsCurrentVector = objectsCurrent.getObjectsWithDistanceBelow(8);
+	vector<LidarObject> objectsPreviousVector = objectsPrevious.getObjectsWithDistanceBelow(ownPosition, 8);
+	vector<LidarObject> objectsCurrentVector = objectsCurrent.getObjectsWithDistanceBelow(ownPosition, 8);
 	vector<LidarObject> differences = getDifferentObjects(objectsPreviousVector, objectsCurrentVector);
 	CPPUNIT_ASSERT_EQUAL(objectsPrevious.getObjectCount(), objectsCurrent.getObjectCount());
 	CPPUNIT_ASSERT_EQUAL((size_t)0, differences.size());

@@ -635,7 +635,7 @@ Angle FieldImpl::calculateRelativeAngleOfObject(const Circle &circle) const
 void FieldImpl::updateWithLidarData(double range)
 {
 	const DataAnalysis::LidarObjects &lidarObjects =  m_lidar->getAllObjects(*m_position);
-	const vector<DataAnalysis::LidarObject> &objectsInRange = lidarObjects.getObjectsWithDistanceBelow(range);
+	const vector<DataAnalysis::LidarObject> &objectsInRange = lidarObjects.getObjectsWithDistanceBelow(*m_position, range);
 
 	vector<FieldObject> inVisibleArea = moveAllFieldObjectsInVisibleAreaToTemporaryVector(range);
 	vector<FieldObject> partlyVisibleObjects = getAllPartlyVisibleObjects();

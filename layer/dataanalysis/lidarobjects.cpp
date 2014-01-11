@@ -7,37 +7,21 @@ using namespace RoboHockey::Common;
 using namespace RoboHockey::Layer::DataAnalysis;
 using namespace std;
 
-LidarObjects::LidarObjects(const RoboHockey::Common::Point &ownPosition) :
-	m_ownPosition(ownPosition),
-	m_distanceComparator(new LidarObjectDistanceComparator(m_ownPosition))
-{ }
-
-LidarObjects::LidarObjects(const LidarObjects &objects) :
-	m_ownPosition(objects.m_ownPosition),
-	m_objectsSortedByDistance(objects.m_objectsSortedByDistance),
-	m_distanceComparator(new LidarObjectDistanceComparator(m_ownPosition))
-{ }
-
-LidarObjects::~LidarObjects()
-{
-	delete m_distanceComparator;
-}
-
 void LidarObjects::addObject(const LidarObject &object)
 {
-	list<LidarObject>::iterator position =
-			upper_bound(m_objectsSortedByDistance.begin(), m_objectsSortedByDistance.end(),
-						object, *m_distanceComparator);
-	m_objectsSortedByDistance.insert(position, object);
+	m_objects.push_back(object);
 }
 
-vector<LidarObject> LidarObjects::getObjectsWithDistanceBelow(double distance) const
+vector<LidarObject> LidarObjects::getObjectsWithDistanceBelow(const Point &ownPosition, double distance) const
 {
-	LidarObject upperBoundObject(m_ownPosition + Point(distance, 0), 0);
-	list<LidarObject>::const_iterator lastPosition =
-			upper_bound(m_objectsSortedByDistance.begin(), m_objectsSortedByDistance.end(),
-						upperBoundObject, *m_distanceComparator);
-	return vector<LidarObject>(m_objectsSortedByDistance.begin(), lastPosition);
+	LidarObject upperBoundObject(ownPosition + Point(distance, 0), 0);
+	LidarObjectDistanceComparator comparator(ownPosition);
+	vector<LidarObject> objectsSorted = m_objects;
+	sort(objectsSorted.begin(), objectsSorted.end(), comparator);
+	vector<LidarObject>::iterator lastPosition =
+			upper_bound(objectsSorted.begin(), objectsSorted.end(),
+						upperBoundObject, comparator);
+	return vector<LidarObject>(objectsSorted.begin(), lastPosition);
 }
 
 list<LidarObject> LidarObjects::getObjectsInRegionOfInterest(const Rectangle &rectangle) const
@@ -45,7 +29,7 @@ list<LidarObject> LidarObjects::getObjectsInRegionOfInterest(const Rectangle &re
 	list<LidarObject> result;
 	Compare compare(0.01);
 
-	for (list<LidarObject>::const_iterator i = m_objectsSortedByDistance.begin(); i != m_objectsSortedByDistance.end(); ++i)
+	for (vector<LidarObject>::const_iterator i = m_objects.begin(); i != m_objects.end(); ++i)
 		if (rectangle.overlapsApproximately(*i, compare))
 			result.push_back(*i);
 
@@ -54,16 +38,10 @@ list<LidarObject> LidarObjects::getObjectsInRegionOfInterest(const Rectangle &re
 
 size_t LidarObjects::getObjectCount() const
 {
-	return m_objectsSortedByDistance.size();
+	return m_objects.size();
 }
 
 void LidarObjects::clear()
 {
-	m_objectsSortedByDistance.clear();
-}
-
-void LidarObjects::operator=(const LidarObjects &objects)
-{
-	m_ownPosition = objects.m_ownPosition;
-	m_objectsSortedByDistance = objects.m_objectsSortedByDistance;
+	m_objects.clear();
 }

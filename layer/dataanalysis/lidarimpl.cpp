@@ -41,7 +41,7 @@ LidarImpl::~LidarImpl()
 
 LidarObjects LidarImpl::getAllObjects(const RobotPosition &ownPosition) const
 {
-	LidarObjects objects(ownPosition.getPosition());
+	LidarObjects objects;
 
 	for (vector<LidarInternalObject*>::const_iterator i = m_objects.begin(); i != m_objects.end(); ++i)
 	{

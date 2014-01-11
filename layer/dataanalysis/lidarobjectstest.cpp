@@ -7,7 +7,7 @@ using namespace RoboHockey::Layer::DataAnalysis;
 
 void LidarObjectsTest::addObject_onceCalled_objectCountIs1()
 {
-	LidarObjects objects(Point(0, 0));
+	LidarObjects objects;
 	LidarObject objectOne(Point(3, 4), 2);
 
 	objects.addObject(objectOne);
@@ -17,7 +17,7 @@ void LidarObjectsTest::addObject_onceCalled_objectCountIs1()
 
 void LidarObjectsTest::getObjectsWithDistanceBelow_twoObjectsBelowAndOneNot_resultSizeIs2()
 {
-	LidarObjects objects(Point(0, 0));
+	LidarObjects objects;
 	LidarObject objectOne(Point(3, 4), 2);
 	LidarObject objectTwo(Point(5, -3), 1);
 	LidarObject objectThree(Point(50, 10), 1);
@@ -25,14 +25,14 @@ void LidarObjectsTest::getObjectsWithDistanceBelow_twoObjectsBelowAndOneNot_resu
 	objects.addObject(objectThree);
 	objects.addObject(objectTwo);
 
-	vector<LidarObject> result = objects.getObjectsWithDistanceBelow(10);
+	vector<LidarObject> result = objects.getObjectsWithDistanceBelow(Point(0, 0), 10);
 
 	CPPUNIT_ASSERT_EQUAL((size_t)2, result.size());
 }
 
 void LidarObjectsTest::getObjectsInRegionOfInterest_twoInsideAndThreeNot_resultSizeIs2()
 {
-	LidarObjects objects(Point(0, 0));
+	LidarObjects objects;
 	LidarObject objectOne(Point(3, 4), 2);
 	LidarObject objectTwo(Point(5, 3), 1);
 	LidarObject objectThree(Point(50, 10), 1);
@@ -48,5 +48,3 @@ void LidarObjectsTest::getObjectsInRegionOfInterest_twoInsideAndThreeNot_resultS
 
 	CPPUNIT_ASSERT_EQUAL((size_t)3, result.size());
 }
-
-

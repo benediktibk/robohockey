@@ -64,6 +64,11 @@ void RobotPosition::operator *=(double value)
 	m_position *= value;
 }
 
+RobotPosition::operator Point() const
+{
+	return m_position;
+}
+
 double RobotPosition::distanceTo(const RobotPosition &point) const
 {
 	return m_position.distanceTo(point.getPosition());

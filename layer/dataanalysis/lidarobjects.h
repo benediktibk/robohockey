@@ -21,22 +21,14 @@ namespace DataAnalysis
 	class LidarObjects
 	{
 	public:
-		LidarObjects(const Common::Point &ownPosition);
-		LidarObjects(const LidarObjects &objects);
-		~LidarObjects();
-
 		void addObject(const LidarObject &object);
-		std::vector<LidarObject> getObjectsWithDistanceBelow(double distance) const;
+		std::vector<LidarObject> getObjectsWithDistanceBelow(const Common::Point &ownPosition, double distance) const;
 		std::list<LidarObject> getObjectsInRegionOfInterest(const Common::Rectangle &rectangle) const;
 		size_t getObjectCount() const;
 		void clear();
 
-		void operator=(const LidarObjects &objects);
-
 	private:
-		Common::Point m_ownPosition;
-		std::list<LidarObject> m_objectsSortedByDistance;
-		LidarObjectDistanceComparator *m_distanceComparator;
+		std::vector<LidarObject> m_objects;
 	};
 }
 }

@@ -5,7 +5,6 @@ using namespace RoboHockey::Layer::DataAnalysis;
 using namespace RoboHockey::Common;
 
 LidarMock::LidarMock() :
-	m_objects(Point()),
 	m_puckCollected(false),
 	m_puckCollectable(false),
 	m_canBeSeen(true),
