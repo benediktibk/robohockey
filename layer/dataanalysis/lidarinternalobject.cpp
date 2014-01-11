@@ -6,11 +6,6 @@
 using namespace RoboHockey::Common;
 using namespace RoboHockey::Layer::DataAnalysis;
 
-LidarInternalObject::LidarInternalObject() :
-	m_distance(0),
-	m_widthInMeter(0)
-{ }
-
 LidarInternalObject::LidarInternalObject(const Angle &width, const Angle &orientation, double distance) :
 	m_width(width),
 	m_orientationRelativeToRobot(orientation),
