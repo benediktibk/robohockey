@@ -57,7 +57,7 @@ void ColorDependentPuckTargetFetcherMock::setTargetPositions(const list<RobotPos
 	m_targetPositions = positions;
 }
 
-void ColorDependentPuckTargetFetcherMock::setisAchievingGoals(bool value)
+void ColorDependentPuckTargetFetcherMock::setIsAchievingGoals(bool value)
 {
 	m_isAchievingGoals = value;
 }

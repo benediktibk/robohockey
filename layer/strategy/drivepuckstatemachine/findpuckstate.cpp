@@ -21,7 +21,7 @@ State *FindPuckState::nextState()
 				m_robot, m_field, m_referee, m_field.getTargetsForSearchingPucks(),
 				new WaitCyclesState(m_robot, m_field, m_referee,
 					new DriveToCollectPuckState(m_robot, m_field, m_referee, m_puckTargetFetcher), 10),
-					new FindPuckState(m_robot, m_field, m_referee, m_puckTargetFetcher));
+				new FindPuckState(m_robot, m_field, m_referee, m_puckTargetFetcher));
 }
 
 std::string FindPuckState::getName()
