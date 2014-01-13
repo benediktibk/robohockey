@@ -33,7 +33,7 @@ namespace Common
 			void setNumberOfKnownPucksNotInTarget(unsigned int value);
 			void setNumberOfKnownPucksNotInEnemyThird(unsigned int value);
 			void setTargetPositions(const std::list<RoboHockey::Common::RobotPosition> &positions);
-			void setisAchievingGoals(bool value);
+			void setIsAchievingGoals(bool value);
 
 		private:
 			unsigned int m_numberOfKnownPucksNotInTarget;

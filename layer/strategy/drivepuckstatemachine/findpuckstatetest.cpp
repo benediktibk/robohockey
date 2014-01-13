@@ -1,6 +1,6 @@
 #include "layer/strategy/drivepuckstatemachine/findpuckstatetest.h"
 #include "layer/strategy/drivepuckstatemachine/findpuckstate.h"
-#include "layer/strategy/drivepuckstatemachine/drivetocollectpuckstate.h"
+#include "layer/strategy/drivepuckstatemachine/verifypuckstate.h"
 #include "layer/strategy/common/statemachine.h"
 #include "layer/strategy/common/statemock.h"
 #include "layer/strategy/common/refereemock.h"
@@ -12,7 +12,7 @@ using namespace RoboHockey::Layer::Strategy::Common;
 using namespace RoboHockey::Layer::Strategy::DrivePuckStateMachine;
 using namespace RoboHockey::Layer::Autonomous;
 
-void FindPuckStateTest::nextState_targetReached_nextStateIsDriveToCollectPuck()
+void FindPuckStateTest::nextState_targetReached_nextStateIsVerifyPuckState()
 {
 	RobotMock robot;
 	FieldMock field;
@@ -35,7 +35,7 @@ void FindPuckStateTest::nextState_targetReached_nextStateIsDriveToCollectPuck()
 	waitState->update();
 	State *state;
 	state = waitState->nextState();
-	DriveToCollectPuckState *stateCasted = dynamic_cast<DriveToCollectPuckState*>(state);
+	VerifyPuckState *stateCasted = dynamic_cast<VerifyPuckState*>(state);
 
 	CPPUNIT_ASSERT(stateCasted != 0);
 	delete state;

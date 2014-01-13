@@ -1911,6 +1911,54 @@ void FieldTest::getTargetsForCollectingOnePuckNotInEnemyThird_3Objects1Unknown1I
 	CPPUNIT_ASSERT_EQUAL((size_t)10, m_field->getTargetsForCollectingOnePuckNotInEnemyThird(FieldColorYellow).size());
 }
 
+void FieldTest::isPuckOfColorInFront_noPuckInFront_resultIsFalse()
+{
+	DataAnalysis::LidarObjects lidarObjects;
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(3.5, 1.5), 0.1));
+	m_lidar->setAllObjects(lidarObjects);
+	DataAnalysis::CameraObjects cameraObjects;
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(3.5, 1.5)));
+	m_camera->setAllObjects(cameraObjects);
+
+	updateFieldForObjectsToAppear();
+
+	CPPUNIT_ASSERT(!m_field->isPuckOfColorInFront(FieldColorYellow));
+}
+
+void FieldTest::isPuckOfColorInFront_puckBehind_resultIsFalse()
+{
+	m_field->setTrueTeamColor(FieldColorYellow);
+	m_odometry->setCurrentPosition(RobotPosition(Point(1,1), 0));
+	DataAnalysis::LidarObjects lidarObjects;
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1.5, 1), 0.1));
+	m_lidar->setAllObjects(lidarObjects);
+	DataAnalysis::CameraObjects cameraObjects;
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(1.5, 1)));
+	m_camera->setAllObjects(cameraObjects);
+
+	updateFieldForObjectsToAppear();
+	m_odometry->setCurrentPosition(RobotPosition(Point(1,1), Angle::getHalfRotation()));
+	updateFieldForObjectsToAppear();
+
+	CPPUNIT_ASSERT(!m_field->isPuckOfColorInFront(FieldColorYellow));
+}
+
+void FieldTest::isPuckOfColorInFront_puckInFront_resultIsTrue()
+{
+	m_field->setTrueTeamColor(FieldColorYellow);
+	m_odometry->setCurrentPosition(RobotPosition(Point(1,1), 0));
+	DataAnalysis::LidarObjects lidarObjects;
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1.5, 1), 0.1));
+	m_lidar->setAllObjects(lidarObjects);
+	DataAnalysis::CameraObjects cameraObjects;
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(1.5, 1)));
+	m_camera->setAllObjects(cameraObjects);
+
+	updateFieldForObjectsToAppear();
+
+	CPPUNIT_ASSERT(m_field->isPuckOfColorInFront(FieldColorYellow));
+}
+
 void FieldTest::updateFieldForObjectsToAppear(FieldImpl &field)
 {
 	field.update();

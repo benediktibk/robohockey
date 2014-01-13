@@ -506,3 +506,7 @@ main/inputargumentparsertest.h
 main/inputargumentparser.h
 main/inputargumentparsertest.cpp
 main/inputargumentparser.cpp
+layer/strategy/drivepuckstatemachine/verifypuckstatetest.h
+layer/strategy/drivepuckstatemachine/verifypuckstate.h
+layer/strategy/drivepuckstatemachine/verifypuckstatetest.cpp
+layer/strategy/drivepuckstatemachine/verifypuckstate.cpp

@@ -13,6 +13,7 @@ class LoggerImpl :
 
 	public:
 		LoggerImpl();
+		~LoggerImpl();
 
 		virtual void logToConsole(const std::string &message);
 		virtual void logErrorToConsole(const std::string &message);
@@ -25,11 +26,16 @@ class LoggerImpl :
 		virtual void disableLogWriting();
 
 	private:
+		void initLogFiles();
+		void closeLogFiles();
+
+	private:
 		bool m_consoleOutputEnabled;
 		bool m_logWritingEnabled;
 
 		std::fstream m_globalLogFile;
 		std::fstream m_stateChangesLogFile;
+		std::fstream m_fieldLogFile;
 		std::fstream m_fieldDetectionLogFile;
 	};
 }

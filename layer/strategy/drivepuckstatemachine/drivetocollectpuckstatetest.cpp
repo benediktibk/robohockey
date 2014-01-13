@@ -2,7 +2,7 @@
 #include "layer/strategy/drivepuckstatemachine/drivetocollectpuckstate.h"
 #include "layer/strategy/drivepuckstatemachine/findpuckstate.h"
 #include "layer/strategy/drivepuckstatemachine/initialstate.h"
-#include "layer/strategy/drivepuckstatemachine/collectpuckstate.h"
+#include "layer/strategy/drivepuckstatemachine/verifypuckstate.h"
 #include "layer/strategy/common/waitcyclesstate.h"
 #include "layer/strategy/common/drivetostate.h"
 #include "layer/strategy/common/statemachine.h"
@@ -31,7 +31,7 @@ void DriveToCollectPuckStateTest::nextState_numberOfKnownPucksIs0_nextStateIsFin
 	delete state;
 }
 
-void DriveToCollectPuckStateTest::nextState_reachedTarget_nextStateIsCollectPuckState()
+void DriveToCollectPuckStateTest::nextState_reachedTarget_nextStateIsVerifyPuckState()
 {
 	RobotMock robot;
 	FieldMock field;
@@ -51,7 +51,7 @@ void DriveToCollectPuckStateTest::nextState_reachedTarget_nextStateIsCollectPuck
 	waitState->update();
 	State *state;
 	state = waitState->nextState();
-	CollectPuckState *stateCasted = dynamic_cast<CollectPuckState*>(state);
+	VerifyPuckState *stateCasted = dynamic_cast<VerifyPuckState*>(state);
 
 	CPPUNIT_ASSERT(stateCasted != 0);
 	delete state;

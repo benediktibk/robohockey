@@ -40,6 +40,6 @@ unsigned int ColorDependentPuckTargetFetcherToAchiveGoals::getNumberOfKnownPucks
 
 bool ColorDependentPuckTargetFetcherToAchiveGoals::isAchievingGoals() const
 {
-	return false;
+	return true;
 }
 
