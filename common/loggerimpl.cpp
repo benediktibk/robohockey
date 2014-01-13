@@ -7,7 +7,7 @@ using namespace RoboHockey::Common;
 
 LoggerImpl::LoggerImpl() :
 	m_consoleOutputEnabled(true),
-	m_logWritingEnabled(false),
+	m_logWritingEnabled(true),
 	m_globalLogFile("log_global.txt", ios_base::out | ios_base::trunc),
 	m_stateChangesLogFile("log_stateChanges.txt", ios_base::out | ios_base::trunc),
 	m_fieldLogFile("log_field.txt", ios_base::out | ios_base::trunc),
