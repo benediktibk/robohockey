@@ -1,18 +1,22 @@
 #include "common/loggerimpl.h"
 #include <iostream>
 #include <ctime>
+#include <boost/filesystem.hpp>
 
 using namespace std;
 using namespace RoboHockey::Common;
 
 LoggerImpl::LoggerImpl() :
 	m_consoleOutputEnabled(true),
-	m_logWritingEnabled(true),
-	m_globalLogFile("log_global.txt", ios_base::out | ios_base::trunc),
-	m_stateChangesLogFile("log_stateChanges.txt", ios_base::out | ios_base::trunc),
-	m_fieldLogFile("log_field.txt", ios_base::out | ios_base::trunc),
-	m_fieldDetectionLogFile("log_fieldDetection.txt", ios_base::out | ios_base::trunc)
+	m_logWritingEnabled(true)
 {
+	boost::filesystem::create_directory("log");
+	m_globalLogFile.open("log/0_global.txt", ios_base::out | ios_base::trunc);
+	m_stateChangesLogFile.open("log/1_stateChanges.txt", ios_base::out | ios_base::trunc);
+	m_fieldLogFile.open("log/2_field.txt", ios_base::out | ios_base::trunc);
+	m_fieldDetectionLogFile.open("log/3_fieldDetection.txt", ios_base::out | ios_base::trunc);
+
+
 	initLogFiles();
 }
 
@@ -101,11 +105,12 @@ void LoggerImpl::initLogFiles()
 	strftime(buffer, 80, "%d-%m-%Y %I:%M:%S", timeinfo);
 	string timestring(buffer);
 
-	string message = "## STARTING ROBOT\n## Starting Log: ";
+	string message;
+	message += "## Starting Log: ";
 	message += timestring;
-	message += "\n## \n";
+	message += "\n## STARTING ROBOT\n##\n";
 
-	for (int i = LogFileTypeGlobal; i != LogFileTypeFieldDetection; i++)
+	for (int i = LogFileTypeGlobal; i <= LogFileTypeFieldDetection; i++)
 	{
 		LogFileType currentLogFile = static_cast<LogFileType>(i);
 		writeToLogFileOfType(currentLogFile, message);
@@ -125,11 +130,12 @@ void LoggerImpl::closeLogFiles()
 	strftime(buffer, 80, "%d-%m-%Y %I:%M:%S", timeinfo);
 	string timestring(buffer);
 
-	string message = "## QUITTING ROBOT\n## Closing Log: ";
-	message += timestring;
+	string message;
 	message += "\n## \n";
+	message += "## QUITTING ROBOT\n## Closing Log: ";
+	message += timestring;
 
-	for (int i = LogFileTypeGlobal; i != LogFileTypeFieldDetection; i++)
+	for (int i = LogFileTypeGlobal; i <= LogFileTypeFieldDetection; ++i)
 	{
 		LogFileType currentLogFile = static_cast<LogFileType>(i);
 		writeToLogFileOfType(currentLogFile, message);
