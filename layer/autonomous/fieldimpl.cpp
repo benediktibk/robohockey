@@ -597,6 +597,11 @@ vector<RobotPosition> FieldImpl::getTargetsForWaitingPhase() const
 	return targets;
 }
 
+bool FieldImpl::isPuckOfColorInFront(FieldColor /*color*/) const
+{
+	return false;
+}
+
 double FieldImpl::getRangeOfViewArea() const
 {
 	switch(m_fieldState)

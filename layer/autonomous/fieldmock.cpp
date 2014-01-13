@@ -118,6 +118,11 @@ std::vector<RobotPosition> FieldMock::getTargetsForWaitingPhase() const
 	return targets;
 }
 
+bool FieldMock::isPuckOfColorInFront(FieldColor /*color*/) const
+{
+	return false;
+}
+
 bool FieldMock::isCalibrated() const
 {
 	return m_calibrated;

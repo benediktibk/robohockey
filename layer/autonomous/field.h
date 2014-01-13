@@ -45,6 +45,7 @@ namespace Autonomous
 		virtual void setTrueTeamColor(Common::FieldColor trueTeamColor) = 0;
 		virtual Common::RobotPosition getNewOriginFromFieldDetection(unsigned int &outNumberOfBorderstones) = 0;
 		virtual void transformFieldToNewOrigin(const Common::RobotPosition newOrigin) = 0;
+		virtual bool isPuckOfColorInFront(Common::FieldColor color) const = 0;
 
 		virtual std::list<Common::RobotPosition> getTargetsForGoalDetection() const = 0;
 		virtual std::list<Common::RobotPosition> getTargetsForScoringGoals() const = 0;
