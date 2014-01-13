@@ -38,9 +38,9 @@ bool EngineImpl::isMoving() const
 {
 	Compare compare(0.001);
 
-	return	compare.isFuzzyEqual(m_currentOrientation, m_lastOrientation) &&
-			compare.isFuzzyEqual(m_currentXPos, m_lastXPos) &&
-			compare.isFuzzyEqual(m_currentYPos, m_lastYPos);
+	return	!compare.isFuzzyEqual(m_currentOrientation, m_lastOrientation) &&
+			!compare.isFuzzyEqual(m_currentXPos, m_lastXPos) &&
+			!compare.isFuzzyEqual(m_currentYPos, m_lastYPos);
 }
 
 double EngineImpl::getSpeed() const
