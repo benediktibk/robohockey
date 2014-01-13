@@ -15,9 +15,20 @@ namespace Common
 
 namespace Layer
 {
+namespace DataAnalysis
+{
+	class DataAnalyserMock;
+	class OdometryMock;
+	class EngineMock;
+	class SonarMock;
+	class LidarMock;
+}
+
 namespace Autonomous
 {
 	class RouterMock;
+	class RobotImpl;
+	class FieldMock;
 
 	class RobotTest :
 			public CPPUNIT_NS::TestFixture
@@ -257,6 +268,13 @@ namespace Autonomous
 		RouterMock *m_routerMock;
 		Common::WatchMock *m_watchMock;
 		std::list<Common::RobotPosition> m_targets;
+		DataAnalysis::DataAnalyserMock *m_dataAnalyser;
+		DataAnalysis::OdometryMock *m_odometry;
+		DataAnalysis::EngineMock *m_engine;
+		DataAnalysis::SonarMock *m_sonar;
+		DataAnalysis::LidarMock *m_lidar;
+		RobotImpl *m_robot;
+		FieldMock *m_field;
 	};
 }
 }
