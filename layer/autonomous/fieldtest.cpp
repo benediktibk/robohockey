@@ -1913,11 +1913,13 @@ void FieldTest::getTargetsForCollectingOnePuckNotInEnemyThird_3Objects1Unknown1I
 
 void FieldTest::isPuckOfColorInFront_noPuckInFront_resultIsFalse()
 {
+	m_field->setTrueTeamColor(FieldColorYellow);
+	m_odometry->setCurrentPosition(RobotPosition(Point(1,1), 0));
 	DataAnalysis::LidarObjects lidarObjects;
-	lidarObjects.addObject(DataAnalysis::LidarObject(Point(3.5, 1.5), 0.1));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1.8, 1), 0.1));
 	m_lidar->setAllObjects(lidarObjects);
 	DataAnalysis::CameraObjects cameraObjects;
-	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(3.5, 1.5)));
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(1.8, 1)));
 	m_camera->setAllObjects(cameraObjects);
 
 	updateFieldForObjectsToAppear();
@@ -1952,6 +1954,22 @@ void FieldTest::isPuckOfColorInFront_puckInFront_resultIsTrue()
 	m_lidar->setAllObjects(lidarObjects);
 	DataAnalysis::CameraObjects cameraObjects;
 	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(1.5, 1)));
+	m_camera->setAllObjects(cameraObjects);
+
+	updateFieldForObjectsToAppear();
+
+	CPPUNIT_ASSERT(m_field->isPuckOfColorInFront(FieldColorYellow));
+}
+
+void FieldTest::isPuckOfColorInFront_puckAlmostInFront_resultIsTrue()
+{
+	m_field->setTrueTeamColor(FieldColorYellow);
+	m_odometry->setCurrentPosition(RobotPosition(Point(1,1), 0));
+	DataAnalysis::LidarObjects lidarObjects;
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1.4, 1.1), 0.1));
+	m_lidar->setAllObjects(lidarObjects);
+	DataAnalysis::CameraObjects cameraObjects;
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(1.4, 1.1)));
 	m_camera->setAllObjects(cameraObjects);
 
 	updateFieldForObjectsToAppear();

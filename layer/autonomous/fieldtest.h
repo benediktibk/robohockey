@@ -125,6 +125,7 @@ namespace Autonomous
 		CPPUNIT_TEST(isPuckOfColorInFront_noPuckInFront_resultIsFalse);
 		CPPUNIT_TEST(isPuckOfColorInFront_puckBehind_resultIsFalse);
 		CPPUNIT_TEST(isPuckOfColorInFront_puckInFront_resultIsTrue);
+		CPPUNIT_TEST(isPuckOfColorInFront_puckAlmostInFront_resultIsTrue);
 		CPPUNIT_TEST_SUITE_END();
 
 	public:
@@ -233,6 +234,7 @@ namespace Autonomous
 		void isPuckOfColorInFront_noPuckInFront_resultIsFalse();
 		void isPuckOfColorInFront_puckBehind_resultIsFalse();
 		void isPuckOfColorInFront_puckInFront_resultIsTrue();
+		void isPuckOfColorInFront_puckAlmostInFront_resultIsTrue();
 
 	private:
 		void updateFieldForObjectsToAppear(FieldImpl &field);
