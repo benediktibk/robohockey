@@ -597,8 +597,16 @@ vector<RobotPosition> FieldImpl::getTargetsForWaitingPhase() const
 	return targets;
 }
 
-bool FieldImpl::isPuckOfColorInFront(FieldColor /*color*/) const
+bool FieldImpl::isPuckOfColorInFront(FieldColor color) const
 {
+	FieldObject objectInFront = getObjectsWithColorOrderdByDistance(color).front();
+	Angle angleBetweenRobotAndObject(m_position->getPosition(), objectInFront.getCircle().getCenter());
+	Compare compare(Angle::getQuarterRotation().getValueBetweenMinusPiAndPi());
+
+	if(objectInFront.getObstacle().getDistanceTo(m_position->getPosition()) < 0.5 &&
+			compare.isFuzzyEqual(m_position->getOrientation(), angleBetweenRobotAndObject))
+		return true;
+
 	return false;
 }
 
