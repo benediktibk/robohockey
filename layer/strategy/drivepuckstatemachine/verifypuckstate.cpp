@@ -16,7 +16,7 @@ VerifyPuckState::VerifyPuckState(Robot &robot, Field &field, Referee &referee, c
 
 State *VerifyPuckState::nextState()
 {
-	if(m_robot.isPuckCollectable())
+	if(m_robot.isPuckCollectable() && m_field.isPuckOfColorInFront(m_puckTargetFetcher.getColorOfTargetPucks()))
 		return new CollectPuckState(m_robot, m_field, m_referee, m_puckTargetFetcher);
 	else
 		return new DriveToCollectPuckState(m_robot, m_field, m_referee, m_puckTargetFetcher);
