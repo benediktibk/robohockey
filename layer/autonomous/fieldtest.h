@@ -122,6 +122,9 @@ namespace Autonomous
 		CPPUNIT_TEST(getEstimatedNumberOfAchievedGoals_2goals_2);
 		CPPUNIT_TEST(getNumberOfPucksInEnemyThird_3PucksAnd2InEnemyThird_resultIs2);
 		CPPUNIT_TEST(getTargetsForCollectingOnePuckNotInEnemyThird_3Objects1Unknown1InEnemyThird_numberOfPositions10);
+		CPPUNIT_TEST(isPuckOfColorInFront_noPuckInFront_resultIsFalse);
+		CPPUNIT_TEST(isPuckOfColorInFront_puckBehind_resultIsFalse);
+		CPPUNIT_TEST(isPuckOfColorInFront_puckInFront_resultIsTrue);
 		CPPUNIT_TEST_SUITE_END();
 
 	public:
@@ -227,6 +230,9 @@ namespace Autonomous
 		void getEstimatedNumberOfAchievedGoals_2goals_2();
 		void getNumberOfPucksInEnemyThird_3PucksAnd2InEnemyThird_resultIs2();
 		void getTargetsForCollectingOnePuckNotInEnemyThird_3Objects1Unknown1InEnemyThird_numberOfPositions10();
+		void isPuckOfColorInFront_noPuckInFront_resultIsFalse();
+		void isPuckOfColorInFront_puckBehind_resultIsFalse();
+		void isPuckOfColorInFront_puckInFront_resultIsTrue();
 
 	private:
 		void updateFieldForObjectsToAppear(FieldImpl &field);
