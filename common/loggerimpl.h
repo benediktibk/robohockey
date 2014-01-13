@@ -13,6 +13,7 @@ class LoggerImpl :
 
 	public:
 		LoggerImpl();
+		~LoggerImpl();
 
 		virtual void logToConsole(const std::string &message);
 		virtual void logErrorToConsole(const std::string &message);

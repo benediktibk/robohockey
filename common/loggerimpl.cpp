@@ -12,7 +12,19 @@ LoggerImpl::LoggerImpl() :
 	m_stateChangesLogFile("log_stateChanges.txt", ios_base::out | ios_base::trunc),
 	m_fieldLogFile("log_field.txt", ios_base::out | ios_base::trunc),
 	m_fieldDetectionLogFile("log_fieldDetection.txt", ios_base::out | ios_base::trunc)
-{ }
+{
+	initLogFiles();
+}
+
+LoggerImpl::~LoggerImpl()
+{
+	closeLogFiles();
+
+	m_globalLogFile.close();
+	m_stateChangesLogFile.close();
+	m_fieldLogFile.close();
+	m_fieldDetectionLogFile.close();
+}
 
 void LoggerImpl::logToConsole(const string &message)
 {
