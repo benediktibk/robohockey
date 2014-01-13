@@ -16,9 +16,15 @@ namespace DrivePuckStateMachine
 			public CPPUNIT_NS::TestFixture
 	{
 		CPPUNIT_TEST_SUITE(VerifyPuckStateTest);
+		CPPUNIT_TEST(nextState_correctPuckIsCollectable_nextStateIsCollectPuckState);
+		CPPUNIT_TEST(nextState_wrongPuckIsCollectable_nextStateIsDriveToCollectPuckState);
+		CPPUNIT_TEST(nextState_correctPuckIsNotCollectable_nextStateIsDriveToCollectPuckState);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
+		void nextState_correctPuckIsCollectable_nextStateIsCollectPuckState();
+		void nextState_wrongPuckIsCollectable_nextStateIsDriveToCollectPuckState();
+		void nextState_correctPuckIsNotCollectable_nextStateIsDriveToCollectPuckState();
 
 };
 }
