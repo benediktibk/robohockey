@@ -15,6 +15,7 @@ class Logger
 		{
 			LogFileTypeGlobal,
 			LogFileTypeStateChanges,
+			LogFileTypeField,
 			LogFileTypeFieldDetection
 		};
 
