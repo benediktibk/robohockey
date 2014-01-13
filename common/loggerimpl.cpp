@@ -9,6 +9,7 @@ LoggerImpl::LoggerImpl() :
 	m_logWritingEnabled(false),
 	m_globalLogFile("log_global.txt", ios_base::out | ios_base::trunc),
 	m_stateChangesLogFile("log_stateChanges.txt", ios_base::out | ios_base::trunc),
+	m_fieldLogFile("log_field.txt", ios_base::out | ios_base::trunc),
 	m_fieldDetectionLogFile("log_fieldDetection.txt", ios_base::out | ios_base::trunc)
 { }
 
@@ -42,6 +43,10 @@ void LoggerImpl::writeToLogFileOfType(LogFileType logType, const string &message
 
 		case LogFileTypeStateChanges:
 			m_stateChangesLogFile << message << endl;
+			break;
+
+		case LogFileTypeField:
+			m_fieldLogFile << message << endl;
 			break;
 
 		case LogFileTypeFieldDetection:
