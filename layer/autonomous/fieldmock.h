@@ -56,6 +56,7 @@ namespace Autonomous
 		void setHardObstacles(const std::vector<Common::Circle> &obstacles);
 		void setNegativeCoordinatesOutside(bool value);
 		void setCalibrationReturn(bool value);
+		void setIsPuckOfColorInFront(bool value);
 		void setCalibrationReturnPosition(Common::RobotPosition newOrigin);
 		void setObjectsWithColorOrderedByDistance(const std::vector<FieldObject> &objects);
 
@@ -68,6 +69,7 @@ namespace Autonomous
 		bool m_negativeCoordinatesOutside;
 		unsigned int m_hiddenPucks;
 		bool m_calibrated;
+		bool m_isPuckOfColorInFront;
 		Common::FieldColor m_teamColor;
 		Common::RobotPosition m_newOrigin;
 		std::vector<FieldObject> m_objectsWithColorOrderedByDistance;
