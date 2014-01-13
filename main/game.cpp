@@ -61,6 +61,9 @@ Game::Game(int argc, char **argv) :
 		cout << "##### GUI Enabled   : " << "TRUE" << endl;
 	else
 		cout << "##### GUI Enabled   : " << "FALSE" << endl;
+
+	if (parser.enableRecorder())
+		cout << "##### recording to  : " << parser.recordingPath() << endl;
 	cout << "##### ---------------------------" << endl;
 
 	Hardware::Robot *hardwareRobot = new Hardware::RobotImpl(playerServer);

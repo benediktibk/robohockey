@@ -42,7 +42,7 @@ void SensorDataRecorder::recordCurrentValues()
 	odometryFileName << m_path << "/odometry_" << m_roundCount << ".txt";
 	engineFileName << m_path << "/engine_" << m_roundCount << ".txt";
 
-	if (!engine.isMoving())
+	if (!engine.isMoving() && camera.isValid())
 		camera.writeDataToFile(cameraFileName.str());
 
 	lidar.writeDataToFile(lidarFileName.str());
