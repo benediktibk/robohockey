@@ -1,15 +1,20 @@
 #include "layer/hardware/engineimpl.h"
 #include <libplayerc++/playerc++.h>
+#include <fstream>
 
 using namespace RoboHockey::Layer::Hardware;
 using namespace RoboHockey::Common;
 using namespace PlayerCc;
+using namespace std;
 
 EngineImpl::EngineImpl(PlayerCc::PlayerClient *playerClient) :
 	m_engine(new Position2dProxy(playerClient, 0)),
-	m_posX(m_engine->GetXPos()),
-	m_posY(m_engine->GetYPos()),
-	m_orientation(m_engine->GetYaw()),
+	m_lastXPos(m_engine->GetXPos()),
+	m_lastYPos(m_engine->GetYPos()),
+	m_lastOrientation(m_engine->GetYaw()),
+	m_currentXPos(m_engine->GetXPos()),
+	m_currentYPos(m_engine->GetYPos()),
+	m_currentOrientation(m_engine->GetYaw()),
 	m_enabled(false)
 {
 	m_engine->SetMotorEnable(true);
@@ -29,20 +34,13 @@ void EngineImpl::setSpeed(double magnitude, double rotation)
 	m_engine->SetSpeed(magnitude, rotation);
 }
 
-bool EngineImpl::isMoving()
+bool EngineImpl::isMoving() const
 {
 	Compare compare(0.001);
-	m_orientation_equal = compare.isFuzzyEqual(m_engine->GetYaw(), m_orientation);
-	m_posX_equal = compare.isFuzzyEqual(m_engine->GetXPos(), m_posX);
-	m_posY_equal = compare.isFuzzyEqual(m_engine->GetYPos(), m_posY);
-	m_posX = m_engine->GetXPos();
-	m_posY = m_engine->GetYPos();
-	m_orientation = m_engine->GetYaw();
 
-	if(m_orientation_equal && m_posX_equal && m_posY_equal)
-		return false;
-	else
-		return true;
+	return	compare.isFuzzyEqual(m_currentOrientation, m_lastOrientation) &&
+			compare.isFuzzyEqual(m_currentXPos, m_lastXPos) &&
+			compare.isFuzzyEqual(m_currentYPos, m_lastYPos);
 }
 
 double EngineImpl::getSpeed() const
@@ -55,6 +53,26 @@ void EngineImpl::setEnabled(bool value)
 	if (m_enabled != value)
 		m_engine->SetMotorEnable(value);
 	m_enabled = value;
+}
+
+void EngineImpl::writeDataToFile(const string &fileName) const
+{
+	fstream file(fileName.c_str(), ios_base::out | ios_base::trunc);
+
+	file << isMoving() << endl;
+	file << getSpeed() << endl;
+
+	file.close();
+}
+
+void EngineImpl::updateSensorData()
+{
+	m_lastXPos = m_currentXPos;
+	m_lastYPos = m_currentYPos;
+	m_lastOrientation = m_currentOrientation;
+	m_currentXPos = m_engine->GetXPos();
+	m_currentYPos = m_engine->GetYPos();
+	m_currentOrientation = m_engine->GetYaw();
 }
 
 EngineImpl::EngineImpl(const EngineImpl &)

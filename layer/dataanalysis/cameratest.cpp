@@ -8,16 +8,6 @@ using namespace RoboHockey::Layer;
 using namespace RoboHockey::Layer::DataAnalysis;
 using namespace RoboHockey::Common;
 
-void CameraTest::getAllCameraObjects_mockHardwareCamera_atLeastOneCallToGetFrame()
-{
-	Hardware::CameraMock hardwareCamera;
-	CameraImpl camera(hardwareCamera);
-
-	camera.getAllCameraObjects(RobotPosition());
-
-	CPPUNIT_ASSERT(hardwareCamera.getCallsToGetFrame() > 0);
-}
-
 void CameraTest::getProbabilityForYellowGoal_yellowGoal_resultIsOver80Percent()
 {
 	Hardware::CameraMock hardwareCamera("yellow_goal");

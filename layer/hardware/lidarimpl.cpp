@@ -17,14 +17,14 @@ LidarImpl::~LidarImpl()
 	m_laser = 0;
 }
 
-double LidarImpl::getDistance(int angle)
+double LidarImpl::getDistance(int angle) const
 {
 	assert(angle >= getMinimumSensorNumber());
 	assert(angle <= getMaximumSensorNumber());
 	return m_laser->GetRange(angle);
 }
 
-void LidarImpl::writeDataToFile(const string &fileName)
+void LidarImpl::writeDataToFile(const string &fileName) const
 {
 	fstream file(fileName.c_str(), ios_base::out | ios_base::trunc);
 

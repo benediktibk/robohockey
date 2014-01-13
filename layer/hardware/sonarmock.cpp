@@ -6,26 +6,18 @@
 using namespace std;
 using namespace RoboHockey::Layer::Hardware;
 
-SonarMock::SonarMock() :
-	m_callsToGetDistanceForSensor(0)
+SonarMock::SonarMock()
 { }
 
 void SonarMock::updateSensorData()
 { }
 
-double SonarMock::getDistanceForSensor(unsigned int sensorNumber)
+double SonarMock::getDistanceForSensor(unsigned int sensorNumber) const
 {
-	++m_callsToGetDistanceForSensor;
-
 	if (m_values.count(sensorNumber) != 0)
-		return m_values[sensorNumber];
+		return m_values.at(sensorNumber);
 	else
 		return 0;
-}
-
-unsigned int SonarMock::getCallsToGetDistanceForSensor() const
-{
-	return m_callsToGetDistanceForSensor;
 }
 
 void SonarMock::setValue(unsigned int sensorNumber, double value)
@@ -33,7 +25,10 @@ void SonarMock::setValue(unsigned int sensorNumber, double value)
 	m_values[sensorNumber] = value;
 }
 
-void SonarMock::readSensorDataFromFile(const string &fileName)
+void SonarMock::writeDataToFile(const string &) const
+{ }
+
+void SonarMock::readDataFromFile(const string &fileName)
 {
 	ifstream file(fileName.c_str());
 

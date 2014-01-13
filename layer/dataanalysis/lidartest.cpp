@@ -30,17 +30,6 @@ void LidarTest::constructor_empty_maximumAngleRightIs0()
 	CPPUNIT_ASSERT_DOUBLES_EQUAL(0, lidar.getMaximumAngleRight().getValueBetweenMinusPiAndPi(), 0.0001);
 }
 
-void LidarTest::getAllObjects_mockHardwareLidar_atLeastOneCallToGetDistance()
-{
-	Hardware::LidarMock hardwareLidar;
-	LidarImpl lidar(hardwareLidar);
-
-	lidar.updateSensorData();
-	lidar.getAllObjects(RobotPosition());
-
-	CPPUNIT_ASSERT(hardwareLidar.getCallsToGetDistance() > 0);
-}
-
 void LidarTest::getAllObjects_oneTooBigObjectInFront_objectCountIs0()
 {
 	Hardware::LidarMock hardwareLidar(10);
@@ -219,7 +208,7 @@ void LidarTest::getAllObjects_objectAtRightBorder_objectCountIs0()
 void LidarTest::getAllObjects_realWorldExample_runsThroughWithoutACrash()
 {
 	Hardware::LidarMock hardwareLidar(10);
-	hardwareLidar.readSensorDataFromFile("resources/testfiles/lidar_1.txt");
+	hardwareLidar.readDataFromFile("resources/testfiles/lidar_1.txt");
 	LidarImpl lidar(hardwareLidar);
 	Point ownPosition(0, 0);
 
@@ -232,7 +221,7 @@ void LidarTest::getAllObjects_realWorldExample_runsThroughWithoutACrash()
 void LidarTest::getAllObjects_puckDirectInFront_onlyObjectIsCorrect()
 {
 	Hardware::LidarMock hardwareLidar;
-	hardwareLidar.readSensorDataFromFile("resources/testfiles/lidar_2.txt");
+	hardwareLidar.readDataFromFile("resources/testfiles/lidar_2.txt");
 	LidarImpl lidar(hardwareLidar);
 	Point ownPosition(0, 0);
 
@@ -250,7 +239,7 @@ void LidarTest::getAllObjects_puckDirectInFront_onlyObjectIsCorrect()
 void LidarTest::getAllobjects_oneBoundaryPostInRange_diameterIsCorrect()
 {
 	Hardware::LidarMock hardwareLidar;
-	hardwareLidar.readSensorDataFromFile("resources/testfiles/lidar_4.txt");
+	hardwareLidar.readDataFromFile("resources/testfiles/lidar_4.txt");
 	LidarImpl lidar(hardwareLidar);
 	Point ownPosition(0, 0);
 
@@ -267,7 +256,7 @@ void LidarTest::getAllobjects_oneBoundaryPostInRange_diameterIsCorrect()
 void LidarTest::getAllObjects_onePuckALittleBitDistant_diameterIsCorrect()
 {
 	Hardware::LidarMock hardwareLidar;
-	hardwareLidar.readSensorDataFromFile("resources/testfiles/lidar_5.txt");
+	hardwareLidar.readDataFromFile("resources/testfiles/lidar_5.txt");
 	LidarImpl lidar(hardwareLidar);
 	Point ownPosition(0, 0);
 
@@ -284,7 +273,7 @@ void LidarTest::getAllObjects_onePuckALittleBitDistant_diameterIsCorrect()
 void LidarTest::getAllObjects_onePuck_positionAndDiameterIsCorrect()
 {
 	Hardware::LidarMock hardwareLidar;
-	hardwareLidar.readSensorDataFromFile("resources/testfiles/lidar_6.txt");
+	hardwareLidar.readDataFromFile("resources/testfiles/lidar_6.txt");
 	LidarImpl lidar(hardwareLidar);
 	Point ownPosition(0, 0);
 
@@ -302,7 +291,7 @@ void LidarTest::getAllObjects_onePuck_positionAndDiameterIsCorrect()
 void LidarTest::getAllObjects_onePuckInQuiteADistanceVersion1_distanceAndDiameterIsCorrect()
 {
 	Hardware::LidarMock hardwareLidar;
-	hardwareLidar.readSensorDataFromFile("resources/testfiles/lidar_7.txt");
+	hardwareLidar.readDataFromFile("resources/testfiles/lidar_7.txt");
 	LidarImpl lidar(hardwareLidar);
 	Point ownPosition(0, 0);
 
@@ -321,7 +310,7 @@ void LidarTest::getAllObjects_onePuckInQuiteADistanceVersion1_distanceAndDiamete
 void LidarTest::getAllObjects_onePuckInQuiteADistanceVersion2_distanceAndDiameterIsCorrect()
 {
 	Hardware::LidarMock hardwareLidar;
-	hardwareLidar.readSensorDataFromFile("resources/testfiles/lidar_8.txt");
+	hardwareLidar.readDataFromFile("resources/testfiles/lidar_8.txt");
 	LidarImpl lidar(hardwareLidar);
 	Point ownPosition(0, 0);
 
@@ -340,7 +329,7 @@ void LidarTest::getAllObjects_onePuckInQuiteADistanceVersion2_distanceAndDiamete
 void LidarTest::getAllObjects_maximumDistanceToBoundaryPostOfOwnFieldPart_distanceAndDiameterIsCorrect()
 {
 	Hardware::LidarMock hardwareLidar;
-	hardwareLidar.readSensorDataFromFile("resources/testfiles/lidar_9.txt");
+	hardwareLidar.readDataFromFile("resources/testfiles/lidar_9.txt");
 	LidarImpl lidar(hardwareLidar);
 	RobotPosition ownPosition(Point(0, 0), 0);
 
@@ -368,7 +357,7 @@ void LidarTest::getAllObjects_maximumDistanceToBoundaryPostOfOwnFieldPart_distan
 void LidarTest::getAllObjects_twoObjectsInFrontOfWall_objectCountIs2()
 {
 	Hardware::LidarMock hardwareLidar;
-	hardwareLidar.readSensorDataFromFile("resources/testfiles/lidar_11.txt");
+	hardwareLidar.readDataFromFile("resources/testfiles/lidar_11.txt");
 	LidarImpl lidar(hardwareLidar);
 	RobotPosition ownPosition(Point(0, 0), 0);
 
@@ -386,7 +375,7 @@ void LidarTest::getAllObjects_twoObjectsInFrontOfWall_objectCountIs2()
 void LidarTest::getAllObjects_twoObjectsWithADistanceOfOneMeter_objectCountIs2()
 {
 	Hardware::LidarMock hardwareLidar;
-	hardwareLidar.readSensorDataFromFile("resources/testfiles/lidar_12.txt");
+	hardwareLidar.readDataFromFile("resources/testfiles/lidar_12.txt");
 	LidarImpl lidar(hardwareLidar);
 	RobotPosition ownPosition(Point(0, 0), 0);
 
@@ -404,7 +393,7 @@ void LidarTest::getAllObjects_twoObjectsWithADistanceOfOneMeter_objectCountIs2()
 void LidarTest::getAllObjects_twoBorderStonesInFrontOfWall_objectCountIs2()
 {
 	Hardware::LidarMock hardwareLidar;
-	hardwareLidar.readSensorDataFromFile("resources/testfiles/lidar_36.txt");
+	hardwareLidar.readDataFromFile("resources/testfiles/lidar_36.txt");
 	LidarImpl lidar(hardwareLidar);
 	RobotPosition ownPosition(Point(0, 0), 0);
 
@@ -418,7 +407,7 @@ void LidarTest::getAllObjects_twoBorderStonesInFrontOfWall_objectCountIs2()
 void LidarTest::getAllObjects_puckInFrontOfOtherRobot_puckIsDetetected()
 {
 	Hardware::LidarMock hardwareLidar;
-	hardwareLidar.readSensorDataFromFile("resources/testfiles/lidar_37.txt");
+	hardwareLidar.readDataFromFile("resources/testfiles/lidar_37.txt");
 	LidarImpl lidar(hardwareLidar);
 	RobotPosition ownPosition(Point(0, 0), 0);
 
@@ -435,10 +424,10 @@ void LidarTest::getAllObjects_twoDataSetsWhereTheRobotDroveForward_sameObjectCou
 	LidarImpl lidar(hardwareLidar);
 	RobotPosition ownPosition(Point(0, 0), 0);
 
-	hardwareLidar.readSensorDataFromFile("resources/testfiles/lidar_moving_1_previous.txt");
+	hardwareLidar.readDataFromFile("resources/testfiles/lidar_moving_1_previous.txt");
 	lidar.updateSensorData();
 	LidarObjects objectsPrevious = lidar.getAllObjects(ownPosition);
-	hardwareLidar.readSensorDataFromFile("resources/testfiles/lidar_moving_1_current.txt");
+	hardwareLidar.readDataFromFile("resources/testfiles/lidar_moving_1_current.txt");
 	lidar.updateSensorData();
 	LidarObjects objectsCurrent = lidar.getAllObjects(ownPosition);
 
@@ -454,7 +443,7 @@ void LidarTest::getAllObjects_enemyRobotInFront_objectCountIs1()
 	Hardware::LidarMock hardwareLidar;
 	LidarImpl lidar(hardwareLidar);
 	RobotPosition ownPosition(Point(0, 0), 0);
-	hardwareLidar.readSensorDataFromFile("resources/testfiles/lidar_40.txt");
+	hardwareLidar.readDataFromFile("resources/testfiles/lidar_40.txt");
 
 	lidar.updateSensorData();
 	LidarObjects objects = lidar.getAllObjects(ownPosition);
@@ -474,7 +463,7 @@ void LidarTest::isObstacleInFront_noObstacleInFront_false()
 void LidarTest::isObstacleInFront_puckCollected_false()
 {
 	Hardware::LidarMock hardwareLidar;
-	hardwareLidar.readSensorDataFromFile("resources/testfiles/lidar_10.txt");
+	hardwareLidar.readDataFromFile("resources/testfiles/lidar_10.txt");
 	LidarImpl lidar(hardwareLidar);
 	lidar.updateSensorData();
 
@@ -508,7 +497,7 @@ void LidarTest::isObstacleInFront_obstacleOnRightSide_true()
 void LidarTest::isObstacleInFront_severalBoundPostsAndOtherRobotFarAway_false()
 {
 	Hardware::LidarMock hardwareLidar;
-	hardwareLidar.readSensorDataFromFile("resources/testfiles/lidar_13.txt");
+	hardwareLidar.readDataFromFile("resources/testfiles/lidar_13.txt");
 	LidarImpl lidar(hardwareLidar);
 	lidar.updateSensorData();
 
@@ -518,7 +507,7 @@ void LidarTest::isObstacleInFront_severalBoundPostsAndOtherRobotFarAway_false()
 void LidarTest::isObstacleInFront_robotVeryCloseAtTheSide_true()
 {
 	Hardware::LidarMock hardwareLidar;
-	hardwareLidar.readSensorDataFromFile("resources/testfiles/lidar_14.txt");
+	hardwareLidar.readDataFromFile("resources/testfiles/lidar_14.txt");
 	LidarImpl lidar(hardwareLidar);
 	lidar.updateSensorData();
 
@@ -528,7 +517,7 @@ void LidarTest::isObstacleInFront_robotVeryCloseAtTheSide_true()
 void LidarTest::isObstacleInFront_robotVeryCloseAheadAtTheSide_true()
 {
 	Hardware::LidarMock hardwareLidar;
-	hardwareLidar.readSensorDataFromFile("resources/testfiles/lidar_15.txt");
+	hardwareLidar.readDataFromFile("resources/testfiles/lidar_15.txt");
 	LidarImpl lidar(hardwareLidar);
 	lidar.updateSensorData();
 
@@ -538,7 +527,7 @@ void LidarTest::isObstacleInFront_robotVeryCloseAheadAtTheSide_true()
 void LidarTest::isObstacleInFront_robotFarDistance_false()
 {
 	Hardware::LidarMock hardwareLidar;
-	hardwareLidar.readSensorDataFromFile("resources/testfiles/lidar_16.txt");
+	hardwareLidar.readDataFromFile("resources/testfiles/lidar_16.txt");
 	LidarImpl lidar(hardwareLidar);
 	lidar.updateSensorData();
 
@@ -548,7 +537,7 @@ void LidarTest::isObstacleInFront_robotFarDistance_false()
 void LidarTest::isObstacleInFront_robotAtTheSide_false()
 {
 	Hardware::LidarMock hardwareLidar;
-	hardwareLidar.readSensorDataFromFile("resources/testfiles/lidar_38.txt");
+	hardwareLidar.readDataFromFile("resources/testfiles/lidar_38.txt");
 	LidarImpl lidar(hardwareLidar);
 	lidar.updateSensorData();
 
@@ -558,7 +547,7 @@ void LidarTest::isObstacleInFront_robotAtTheSide_false()
 void LidarTest::isObstacleInFront_realWorldExample_false()
 {
 	Hardware::LidarMock hardwareLidar;
-	hardwareLidar.readSensorDataFromFile("resources/testfiles/lidar_39.txt");
+	hardwareLidar.readDataFromFile("resources/testfiles/lidar_39.txt");
 	LidarImpl lidar(hardwareLidar);
 	lidar.updateSensorData();
 
@@ -568,7 +557,7 @@ void LidarTest::isObstacleInFront_realWorldExample_false()
 void LidarTest::isPuckCollected_noPuckInCloseDistance_false()
 {
 	Hardware::LidarMock hardwareLidar;
-	hardwareLidar.readSensorDataFromFile("resources/testfiles/lidar_17.txt");
+	hardwareLidar.readDataFromFile("resources/testfiles/lidar_17.txt");
 	LidarImpl lidar(hardwareLidar);
 	lidar.updateSensorData();
 
@@ -578,7 +567,7 @@ void LidarTest::isPuckCollected_noPuckInCloseDistance_false()
 void LidarTest::isPuckCollected_closeEnough_true()
 {
 	Hardware::LidarMock hardwareLidar;
-	hardwareLidar.readSensorDataFromFile("resources/testfiles/lidar_18.txt");
+	hardwareLidar.readDataFromFile("resources/testfiles/lidar_18.txt");
 	LidarImpl lidar(hardwareLidar);
 	lidar.updateSensorData();
 
@@ -588,7 +577,7 @@ void LidarTest::isPuckCollected_closeEnough_true()
 void LidarTest::isPuckCollected_directInTheMiddle_true()
 {
 	Hardware::LidarMock hardwareLidar;
-	hardwareLidar.readSensorDataFromFile("resources/testfiles/lidar_19.txt");
+	hardwareLidar.readDataFromFile("resources/testfiles/lidar_19.txt");
 	LidarImpl lidar(hardwareLidar);
 	lidar.updateSensorData();
 
@@ -598,7 +587,7 @@ void LidarTest::isPuckCollected_directInTheMiddle_true()
 void LidarTest::isPuckCollected_atLeftEndOfClutch_true()
 {
 	Hardware::LidarMock hardwareLidar;
-	hardwareLidar.readSensorDataFromFile("resources/testfiles/lidar_20.txt");
+	hardwareLidar.readDataFromFile("resources/testfiles/lidar_20.txt");
 	LidarImpl lidar(hardwareLidar);
 	lidar.updateSensorData();
 
@@ -608,7 +597,7 @@ void LidarTest::isPuckCollected_atLeftEndOfClutch_true()
 void LidarTest::isPuckCollected_atRightEndOfClutch_true()
 {
 	Hardware::LidarMock hardwareLidar;
-	hardwareLidar.readSensorDataFromFile("resources/testfiles/lidar_21.txt");
+	hardwareLidar.readDataFromFile("resources/testfiles/lidar_21.txt");
 	LidarImpl lidar(hardwareLidar);
 	lidar.updateSensorData();
 
@@ -618,7 +607,7 @@ void LidarTest::isPuckCollected_atRightEndOfClutch_true()
 void LidarTest::isPuckCollected_rightOfClutch_false()
 {
 	Hardware::LidarMock hardwareLidar;
-	hardwareLidar.readSensorDataFromFile("resources/testfiles/lidar_22.txt");
+	hardwareLidar.readDataFromFile("resources/testfiles/lidar_22.txt");
 	LidarImpl lidar(hardwareLidar);
 	lidar.updateSensorData();
 
@@ -628,7 +617,7 @@ void LidarTest::isPuckCollected_rightOfClutch_false()
 void LidarTest::isPuckCollected_leftOfClutch_false()
 {
 	Hardware::LidarMock hardwareLidar;
-	hardwareLidar.readSensorDataFromFile("resources/testfiles/lidar_23.txt");
+	hardwareLidar.readDataFromFile("resources/testfiles/lidar_23.txt");
 	LidarImpl lidar(hardwareLidar);
 	lidar.updateSensorData();
 
@@ -638,7 +627,7 @@ void LidarTest::isPuckCollected_leftOfClutch_false()
 void LidarTest::isPuckCollected_asDistantAsAfterOneQuarterTurn_true()
 {
 	Hardware::LidarMock hardwareLidar;
-	hardwareLidar.readSensorDataFromFile("resources/testfiles/lidar_24.txt");
+	hardwareLidar.readDataFromFile("resources/testfiles/lidar_24.txt");
 	LidarImpl lidar(hardwareLidar);
 	lidar.updateSensorData();
 
@@ -648,7 +637,7 @@ void LidarTest::isPuckCollected_asDistantAsAfterOneQuarterTurn_true()
 void LidarTest::isPuckCollected_slightlyMoreDistantThanOneQuarterTurn_false()
 {
 	Hardware::LidarMock hardwareLidar;
-	hardwareLidar.readSensorDataFromFile("resources/testfiles/lidar_25.txt");
+	hardwareLidar.readDataFromFile("resources/testfiles/lidar_25.txt");
 	LidarImpl lidar(hardwareLidar);
 	lidar.updateSensorData();
 
@@ -658,7 +647,7 @@ void LidarTest::isPuckCollected_slightlyMoreDistantThanOneQuarterTurn_false()
 void LidarTest::isPuckCollectable_noPuckInCloseDistance_false()
 {
 	Hardware::LidarMock hardwareLidar;
-	hardwareLidar.readSensorDataFromFile("resources/testfiles/lidar_17.txt");
+	hardwareLidar.readDataFromFile("resources/testfiles/lidar_17.txt");
 	LidarImpl lidar(hardwareLidar);
 	lidar.updateSensorData();
 
@@ -668,7 +657,7 @@ void LidarTest::isPuckCollectable_noPuckInCloseDistance_false()
 void LidarTest::isPuckCollectable_puckCollected_true()
 {
 	Hardware::LidarMock hardwareLidar;
-	hardwareLidar.readSensorDataFromFile("resources/testfiles/lidar_21.txt");
+	hardwareLidar.readDataFromFile("resources/testfiles/lidar_21.txt");
 	LidarImpl lidar(hardwareLidar);
 	lidar.updateSensorData();
 
@@ -678,7 +667,7 @@ void LidarTest::isPuckCollectable_puckCollected_true()
 void LidarTest::isPuckCollectable_puckStraightAheadCloseEnough_true()
 {
 	Hardware::LidarMock hardwareLidar;
-	hardwareLidar.readSensorDataFromFile("resources/testfiles/lidar_26.txt");
+	hardwareLidar.readDataFromFile("resources/testfiles/lidar_26.txt");
 	LidarImpl lidar(hardwareLidar);
 	lidar.updateSensorData();
 
@@ -688,7 +677,7 @@ void LidarTest::isPuckCollectable_puckStraightAheadCloseEnough_true()
 void LidarTest::isPuckCollectable_puckStraightAheadButTooDistant_false()
 {
 	Hardware::LidarMock hardwareLidar;
-	hardwareLidar.readSensorDataFromFile("resources/testfiles/lidar_27.txt");
+	hardwareLidar.readDataFromFile("resources/testfiles/lidar_27.txt");
 	LidarImpl lidar(hardwareLidar);
 	lidar.updateSensorData();
 
@@ -698,7 +687,7 @@ void LidarTest::isPuckCollectable_puckStraightAheadButTooDistant_false()
 void LidarTest::isPuckCollectable_puckCloseAndALittleBitLeft_true()
 {
 	Hardware::LidarMock hardwareLidar;
-	hardwareLidar.readSensorDataFromFile("resources/testfiles/lidar_28.txt");
+	hardwareLidar.readDataFromFile("resources/testfiles/lidar_28.txt");
 	LidarImpl lidar(hardwareLidar);
 	lidar.updateSensorData();
 
@@ -708,7 +697,7 @@ void LidarTest::isPuckCollectable_puckCloseAndALittleBitLeft_true()
 void LidarTest::isPuckCollectable_puckCloseAndALittleBitRight_true()
 {
 	Hardware::LidarMock hardwareLidar;
-	hardwareLidar.readSensorDataFromFile("resources/testfiles/lidar_29.txt");
+	hardwareLidar.readDataFromFile("resources/testfiles/lidar_29.txt");
 	LidarImpl lidar(hardwareLidar);
 	lidar.updateSensorData();
 
@@ -718,7 +707,7 @@ void LidarTest::isPuckCollectable_puckCloseAndALittleBitRight_true()
 void LidarTest::isPuckCollectable_puckCloseButTooMuchLeft_false()
 {
 	Hardware::LidarMock hardwareLidar;
-	hardwareLidar.readSensorDataFromFile("resources/testfiles/lidar_30.txt");
+	hardwareLidar.readDataFromFile("resources/testfiles/lidar_30.txt");
 	LidarImpl lidar(hardwareLidar);
 	lidar.updateSensorData();
 
@@ -728,7 +717,7 @@ void LidarTest::isPuckCollectable_puckCloseButTooMuchLeft_false()
 void LidarTest::isPuckCollectable_puckCloseButTooMuchRight_false()
 {
 	Hardware::LidarMock hardwareLidar;
-	hardwareLidar.readSensorDataFromFile("resources/testfiles/lidar_31.txt");
+	hardwareLidar.readDataFromFile("resources/testfiles/lidar_31.txt");
 	LidarImpl lidar(hardwareLidar);
 	lidar.updateSensorData();
 
@@ -738,7 +727,7 @@ void LidarTest::isPuckCollectable_puckCloseButTooMuchRight_false()
 void LidarTest::isPuckCollectable_twoPucksBeside_true()
 {
 	Hardware::LidarMock hardwareLidar;
-	hardwareLidar.readSensorDataFromFile("resources/testfiles/lidar_32.txt");
+	hardwareLidar.readDataFromFile("resources/testfiles/lidar_32.txt");
 	LidarImpl lidar(hardwareLidar);
 	lidar.updateSensorData();
 
@@ -748,7 +737,7 @@ void LidarTest::isPuckCollectable_twoPucksBeside_true()
 void LidarTest::isPuckCollectable_onePuckCloseEnoughtAndAnotherOneStraightAhead_false()
 {
 	Hardware::LidarMock hardwareLidar;
-	hardwareLidar.readSensorDataFromFile("resources/testfiles/lidar_33.txt");
+	hardwareLidar.readDataFromFile("resources/testfiles/lidar_33.txt");
 	LidarImpl lidar(hardwareLidar);
 	lidar.updateSensorData();
 
@@ -1588,7 +1577,7 @@ void LidarTest::canBeSeen_enemyRobotInFront_true()
 	Hardware::LidarMock hardwareLidar;
 	LidarImpl lidar(hardwareLidar);
 	RobotPosition ownPosition(Point(0, 0), 0);
-	hardwareLidar.readSensorDataFromFile("resources/testfiles/lidar_40.txt");
+	hardwareLidar.readDataFromFile("resources/testfiles/lidar_40.txt");
 	Circle circle(Point(1.1667, 0.0816), 0.2149);
 
 	lidar.updateSensorData();

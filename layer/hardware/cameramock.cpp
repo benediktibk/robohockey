@@ -6,23 +6,19 @@ using namespace std;
 using namespace cv;
 
 CameraMock::CameraMock() :
-	m_callsToGetFrame(0),
-	m_testpicture(new Mat(240, 320, CV_8UC3))
+	m_testpicture(new Mat(240, 320, CV_8UC3)),
+	m_pictureValid(true)
 {
-	m_testpicture->setTo(cv::Scalar(0, 0, 0));
+	m_testpicture->setTo(Scalar(0, 0, 0));
 }
 
-CameraMock::CameraMock(std::string filename) :
-	m_callsToGetFrame(0),
-	m_testpicture(new Mat(240, 320, CV_8UC3))
+CameraMock::CameraMock(string filename) :
+	m_testpicture(new Mat(240, 320, CV_8UC3)),
+	m_pictureValid(true)
 {
-	m_testpicture->setTo(cv::Scalar(0, 0, 0));
+	m_testpicture->setTo(Scalar(0, 0, 0));
 	string filepath = "resources/testfiles/" + filename + ".png";
-	Mat img = imread(filepath);
-	if(!img.data)
-		cout << "could not open file";
-	else
-		*m_testpicture = img;
+	readDataFromFile(filepath);
 }
 
 CameraMock::~CameraMock()
@@ -31,9 +27,9 @@ CameraMock::~CameraMock()
 	m_testpicture = 0;
 }
 
-cv::Mat CameraMock::getFrame()
+Mat CameraMock::getFrame() const
 {
-	++m_callsToGetFrame;
+	assert(m_pictureValid);
 	return *m_testpicture;
 }
 
@@ -42,7 +38,18 @@ bool CameraMock::isValid() const
 	return true;
 }
 
-unsigned int CameraMock::getCallsToGetFrame() const
+void CameraMock::writeDataToFile(const string &) const
+{ }
+
+void CameraMock::readDataFromFile(const string &fileName)
 {
-	return m_callsToGetFrame;
+	Mat img = imread(fileName);
+	assert(img.data);
+	*m_testpicture = img;
+	m_pictureValid = true;
+}
+
+void CameraMock::invalidatePicture()
+{
+	m_pictureValid = false;
 }

@@ -844,13 +844,13 @@ void FieldTest::update_movingAndLidarDataChanges_fieldObjectCountDoesntChange()
 	FieldImpl field(*m_odometry, lidar, *m_camera, *m_robot);
 
 	m_odometry->setCurrentPosition(RobotPosition(Point(0, 0), Angle(0)));
-	hardwareLidarMock.readSensorDataFromFile("resources/testfiles/lidar_moving_1_previous.txt");
+	hardwareLidarMock.readDataFromFile("resources/testfiles/lidar_moving_1_previous.txt");
 	lidar.updateSensorData();
 	updateFieldForObjectsToAppear(field);
 	vector<FieldObject> oldObjects = field.getAllFieldObjects();
 	size_t oldObjectCount = oldObjects.size();
 	m_odometry->setCurrentPosition(RobotPosition(Point(0.03, 0), Angle(0)));
-	hardwareLidarMock.readSensorDataFromFile("resources/testfiles/lidar_moving_1_current.txt");
+	hardwareLidarMock.readDataFromFile("resources/testfiles/lidar_moving_1_current.txt");
 	lidar.updateSensorData();
 	field.update();
 
@@ -867,13 +867,13 @@ void FieldTest::update_movingAndLidatDataChangesSecondVersion_fieldObjectCountDo
 	FieldImpl field(*m_odometry, lidar, *m_camera, *m_robot);
 
 	m_odometry->setCurrentPosition(RobotPosition(Point(0, 0), Angle(0)));
-	hardwareLidarMock.readSensorDataFromFile("resources/testfiles/lidar_moving_2_previous.txt");
+	hardwareLidarMock.readDataFromFile("resources/testfiles/lidar_moving_2_previous.txt");
 	lidar.updateSensorData();
 	updateFieldForObjectsToAppear(field);
 	vector<FieldObject> oldObjects = field.getAllFieldObjects();
 	size_t oldObjectCount = oldObjects.size();
 	m_odometry->setCurrentPosition(RobotPosition(Point(0.0481614, 0), Angle(0)));
-	hardwareLidarMock.readSensorDataFromFile("resources/testfiles/lidar_moving_2_current.txt");
+	hardwareLidarMock.readDataFromFile("resources/testfiles/lidar_moving_2_current.txt");
 	lidar.updateSensorData();
 	field.update();
 	vector<FieldObject> newObjects = field.getAllFieldObjects();
@@ -890,13 +890,13 @@ void FieldTest::update_movingAndLidarDataChangesThirdVersion_fieldObjectCountDoe
 	FieldImpl field(*m_odometry, lidar, *m_camera, *m_robot);
 
 	m_odometry->setCurrentPosition(RobotPosition(Point(0, 0), Angle(0)));
-	hardwareLidarMock.readSensorDataFromFile("resources/testfiles/lidar_moving_3_previous.txt");
+	hardwareLidarMock.readDataFromFile("resources/testfiles/lidar_moving_3_previous.txt");
 	lidar.updateSensorData();
 	updateFieldForObjectsToAppear(field);
 	vector<FieldObject> oldObjects = field.getAllFieldObjects();
 	size_t oldObjectCount = oldObjects.size();
 	m_odometry->setCurrentPosition(RobotPosition(Point(0.0474765, 0), Angle(0)));
-	hardwareLidarMock.readSensorDataFromFile("resources/testfiles/lidar_moving_3_current.txt");
+	hardwareLidarMock.readDataFromFile("resources/testfiles/lidar_moving_3_current.txt");
 	lidar.updateSensorData();
 	field.update();
 	vector<FieldObject> newObjects = field.getAllFieldObjects();
@@ -912,7 +912,7 @@ void FieldTest::update_enemyRobotInFront_oneFieldObject()
 	DataAnalysis::LidarImpl lidar(hardwareLidarMock);
 	FieldImpl field(*m_odometry, lidar, *m_camera, *m_robot);
 	m_odometry->setCurrentPosition(RobotPosition(Point(0, 0), Angle(0)));
-	hardwareLidarMock.readSensorDataFromFile("resources/testfiles/lidar_40.txt");
+	hardwareLidarMock.readDataFromFile("resources/testfiles/lidar_40.txt");
 
 	lidar.updateSensorData();
 	updateFieldForObjectsToAppear(field);
@@ -927,7 +927,7 @@ void FieldTest::update_enemyRobotInFront_oneHardObstacle()
 	DataAnalysis::LidarImpl lidar(hardwareLidarMock);
 	FieldImpl field(*m_odometry, lidar, *m_camera, *m_robot);
 	m_odometry->setCurrentPosition(RobotPosition(Point(0, 0), Angle(0)));
-	hardwareLidarMock.readSensorDataFromFile("resources/testfiles/lidar_40.txt");
+	hardwareLidarMock.readDataFromFile("resources/testfiles/lidar_40.txt");
 
 	lidar.updateSensorData();
 	updateFieldForObjectsToAppear(field);
@@ -1270,7 +1270,7 @@ void FieldTest::calibratePosition_realWorldExample_positionIsCorrect()
 	FieldImpl field(dataAnalyser.getOdometry(), dataAnalyser.getLidar(), dataAnalyser.getCamera(), autonomousRobot);
 	Hardware::OdometryMock &odometry = hardwareRobot->getOdometryMock();
 	Hardware::LidarMock &lidar = hardwareRobot->getLidarMock();
-	lidar.readSensorDataFromFile("resources/testfiles/lidar_35.txt");
+	lidar.readDataFromFile("resources/testfiles/lidar_35.txt");
 
 	dataAnalyser.updateSensorData();
 	updateFieldForObjectsToAppear(field);
@@ -1779,7 +1779,7 @@ void FieldTest::getNewOriginFromFieldDetection_realWorldExample1_correctNewOrigi
 	Autonomous::RobotMock autonomousRobot;
 	FieldImpl field(dataAnalyser.getOdometry(), dataAnalyser.getLidar(), dataAnalyser.getCamera(), autonomousRobot);
 	Hardware::LidarMock &lidar = hardwareRobot->getLidarMock();
-	lidar.readSensorDataFromFile("resources/testfiles/lidar_detect3.txt");
+	lidar.readDataFromFile("resources/testfiles/lidar_detect3.txt");
 	dataAnalyser.updateSensorData();
 
 	updateFieldForObjectsToAppear(field);

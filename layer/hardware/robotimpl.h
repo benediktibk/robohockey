@@ -27,6 +27,11 @@ namespace Hardware
 		virtual Camera& getCamera();
 		virtual Odometry& getOdometry();
 		virtual Engine& getEngine();
+		virtual const Sonar& getSonar() const;
+		virtual const Lidar& getLidar() const;
+		virtual const Camera& getCamera() const;
+		virtual const Odometry& getOdometry() const;
+		virtual const Engine& getEngine() const;
 		virtual void updateSensorData();
 
 	private:

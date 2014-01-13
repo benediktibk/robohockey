@@ -1,6 +1,7 @@
 #include "common/robotposition.h"
 #include "common/compare.h"
 #include <math.h>
+#include <sstream>
 
 using namespace RoboHockey::Common;
 using namespace std;
@@ -72,6 +73,28 @@ RobotPosition::operator Point() const
 double RobotPosition::distanceTo(const RobotPosition &point) const
 {
 	return m_position.distanceTo(point.getPosition());
+}
+
+void RobotPosition::read(const string &data)
+{
+	size_t openingBracket = data.find_first_of('(');
+	size_t firstComma = data.find_first_of(',', openingBracket);
+	size_t secondComma = data.find_first_of(',', firstComma + 1);
+	size_t closingBracket = data.find_first_of(')', secondComma);
+	string xString(data.substr(openingBracket + 1, firstComma - openingBracket - 1));
+	string yString(data.substr(firstComma + 2, secondComma - firstComma - 2));
+	string angleString(data.substr(secondComma + 2, closingBracket - secondComma - 2));
+	stringstream xStringStream(xString);
+	stringstream yStringStream(yString);
+	stringstream angleStringStream(angleString);
+	double x = 0;
+	double y = 0;
+	double angle = 0;
+	xStringStream >> x;
+	yStringStream >> y;
+	angleStringStream >> angle;
+	m_position = Point(x, y);
+	m_orientation = Angle(angle);
 }
 
 ostream &operator<<(ostream &stream, const RobotPosition &point)

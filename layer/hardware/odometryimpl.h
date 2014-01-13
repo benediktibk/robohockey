@@ -24,7 +24,8 @@ namespace Hardware
 		~OdometryImpl();
 
 		virtual void setCurrentPosition(const Common::RobotPosition &position);
-		virtual Common::RobotPosition getCurrentPosition();
+		virtual Common::RobotPosition getCurrentPosition() const;
+		virtual void writeDataToFile(const std::string &fileName) const;
 
 	private:
 		OdometryImpl(const OdometryImpl &odometry);

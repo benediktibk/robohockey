@@ -5,16 +5,6 @@
 using namespace RoboHockey::Layer;
 using namespace RoboHockey::Layer::DataAnalysis;
 
-void SonarTest::isObstacleInFront_mockHardwareSonar_atLeastOneCallToGetDistanceForSensor()
-{
-	Hardware::SonarMock hardwareSonar;
-	SonarImpl sonar(hardwareSonar);
-
-	sonar.isObstacleDirectInFront(1);
-
-	CPPUNIT_ASSERT(hardwareSonar.getCallsToGetDistanceForSensor() > 0);
-}
-
 void SonarTest::isObstacleInFront_nothingInFront_false()
 {
 	Hardware::SonarMock hardwareSonar;
@@ -39,7 +29,7 @@ void SonarTest::isObstacleInFront_farDistant_false()
 {
 	Hardware::SonarMock hardwareSonar;
 	SonarImpl sonar(hardwareSonar);
-	hardwareSonar.readSensorDataFromFile("resources/testfiles/sonar_1.txt");
+	hardwareSonar.readDataFromFile("resources/testfiles/sonar_1.txt");
 
 	CPPUNIT_ASSERT(!sonar.isObstacleDirectInFront(0.5));
 }
@@ -48,7 +38,7 @@ void SonarTest::isObstacleInFront_closeEnough_true()
 {
 	Hardware::SonarMock hardwareSonar;
 	SonarImpl sonar(hardwareSonar);
-	hardwareSonar.readSensorDataFromFile("resources/testfiles/sonar_2.txt");
+	hardwareSonar.readDataFromFile("resources/testfiles/sonar_2.txt");
 
 	CPPUNIT_ASSERT(sonar.isObstacleDirectInFront(0.5));
 }
@@ -57,7 +47,7 @@ void SonarTest::isObstacleInFront_bothSensorsCovered_false()
 {
 	Hardware::SonarMock hardwareSonar;
 	SonarImpl sonar(hardwareSonar);
-	hardwareSonar.readSensorDataFromFile("resources/testfiles/sonar_4.txt");
+	hardwareSonar.readDataFromFile("resources/testfiles/sonar_4.txt");
 
 	CPPUNIT_ASSERT(!sonar.isObstacleDirectInFront(0.5));
 }
@@ -66,7 +56,7 @@ void SonarTest::isObstacleInFront_bothSensorsCoveredSecondVersion_false()
 {
 	Hardware::SonarMock hardwareSonar;
 	SonarImpl sonar(hardwareSonar);
-	hardwareSonar.readSensorDataFromFile("resources/testfiles/sonar_5.txt");
+	hardwareSonar.readDataFromFile("resources/testfiles/sonar_5.txt");
 
 	CPPUNIT_ASSERT(!sonar.isObstacleDirectInFront(0.5));
 }
@@ -75,7 +65,7 @@ void SonarTest::isObstacleInFront_bothSensorsCoveredThirdVersion_false()
 {
 	Hardware::SonarMock hardwareSonar;
 	SonarImpl sonar(hardwareSonar);
-	hardwareSonar.readSensorDataFromFile("resources/testfiles/sonar_6.txt");
+	hardwareSonar.readDataFromFile("resources/testfiles/sonar_6.txt");
 
 	CPPUNIT_ASSERT(!sonar.isObstacleDirectInFront(0.5));
 }

@@ -3,6 +3,7 @@
 
 #include "common/point.h"
 #include "common/angle.h"
+#include <ostream>
 
 namespace RoboHockey
 {
@@ -19,6 +20,7 @@ namespace Common
 		void setPosition(const Point &position);
 		const Point& getPosition() const;
 		double distanceTo(const RobotPosition &point) const;
+		void read(const std::string &data);
 
 		bool operator ==(const RobotPosition &position) const;
 		RobotPosition operator*(double value) const;

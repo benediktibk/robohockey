@@ -1,10 +1,12 @@
 #include "layer/hardware/odometryimpl.h"
 #include "common/point.h"
 #include <libplayerc++/playerc++.h>
+#include <fstream>
 
 using namespace RoboHockey::Layer::Hardware;
 using namespace RoboHockey::Common;
 using namespace PlayerCc;
+using namespace std;
 
 OdometryImpl::OdometryImpl(PlayerClient *playerClient) :
 	m_odometry(new Position2dProxy(playerClient))
@@ -51,7 +53,7 @@ const RobotPosition OdometryImpl::getGlobalPositionAfterPlayerOffset() const
 	return RobotPosition(position, orientation);
 }
 
-RobotPosition OdometryImpl::getCurrentPosition()
+RobotPosition OdometryImpl::getCurrentPosition() const
 {
 	RobotPosition globalPositionAfterPlayerOffset = getGlobalPositionAfterPlayerOffset();
 	Point position = globalPositionAfterPlayerOffset.getPosition();
@@ -62,4 +64,11 @@ RobotPosition OdometryImpl::getCurrentPosition()
 	Angle orientation = globalPositionAfterPlayerOffset.getOrientation();
 	orientation = orientation + m_ownOffset.getOrientation();
 	return RobotPosition(position, orientation);
+}
+
+void OdometryImpl::writeDataToFile(const string &fileName) const
+{
+	fstream file(fileName.c_str(), ios::out | ios::trunc);
+	file << getCurrentPosition();
+	file.close();
 }

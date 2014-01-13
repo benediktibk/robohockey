@@ -49,8 +49,7 @@ int main(int argc, char **argv)
 	if (camera.isValid())
 	{
 		cout << "writing data for the camera to camera.bmp" << endl;
-		cv::Mat frame = camera.getFrame();
-		imwrite("camera.bmp", frame);
+		camera.writeDataToFile("camera.bmp");
 	}
 	else
 		cout << "couldn't open the camera" << endl;

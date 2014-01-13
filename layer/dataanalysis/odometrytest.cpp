@@ -16,13 +16,3 @@ void OdometryTest::setCurrentPosition_mockHardwareOdometry_atLeastOneCallToSetCu
 
 	CPPUNIT_ASSERT(hardwareOdometry.getCallsToSetCurrentPosition() > 0);
 }
-
-void OdometryTest::getCurrentPosition_mockHardwareOdometry_atLeastOneCallToGetCurrentPosition()
-{
-	Hardware::OdometryMock hardwareOdometry;
-	OdometryImpl odometry(hardwareOdometry);
-
-	odometry.getCurrentPosition();
-
-	CPPUNIT_ASSERT(hardwareOdometry.getCallsToGetCurrentPosition() > 0);
-}

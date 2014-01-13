@@ -14,7 +14,6 @@ namespace DataAnalysis
 			public CPPUNIT_NS::TestFixture
 	{
 		CPPUNIT_TEST_SUITE(CameraTest);
-		CPPUNIT_TEST(getAllCameraObjects_mockHardwareCamera_atLeastOneCallToGetFrame);
 		CPPUNIT_TEST(getProbabilityForYellowGoal_yellowGoal_resultIsOver80Percent);
 		CPPUNIT_TEST(getProbabilityForYellowGoal_blueGoal_resultIsNear0);
 		CPPUNIT_TEST(getProbabilityForBlueGoal_blueGoal_resultIsOver80Percent);
@@ -62,7 +61,6 @@ namespace DataAnalysis
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
-		void getAllCameraObjects_mockHardwareCamera_atLeastOneCallToGetFrame();
 		void getProbabilityForYellowGoal_yellowGoal_resultIsOver80Percent();
 		void getProbabilityForYellowGoal_blueGoal_resultIsNear0();
 		void getProbabilityForBlueGoal_blueGoal_resultIsOver80Percent();

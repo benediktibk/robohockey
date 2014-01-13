@@ -1,7 +1,9 @@
 #include "layer/hardware/enginemock.h"
 #include <assert.h>
+#include <fstream>
 
 using namespace RoboHockey::Layer::Hardware;
+using namespace std;
 
 EngineMock::EngineMock() :
 	m_callsToSetSpeed(0),
@@ -9,7 +11,8 @@ EngineMock::EngineMock() :
 	m_lastMagnitude(0),
 	m_lastRotation(0),
 	m_enabled(true),
-	m_isMoving(false)
+	m_isMoving(false),
+	m_speed(0)
 { }
 
 void EngineMock::setSpeed(double magnitude, double rotation)
@@ -51,14 +54,24 @@ void EngineMock::setIsMoving(bool value)
 	m_isMoving = value;
 }
 
-bool EngineMock::isMoving()
+void EngineMock::readDataFromFile(const string &fileName)
+{
+	fstream file(fileName.c_str(), ios::in);
+
+	file >> m_isMoving;
+	file >> m_speed;
+
+	file.close();
+}
+
+bool EngineMock::isMoving() const
 {
 	return m_isMoving;
 }
 
 double EngineMock::getSpeed() const
 {
-	return 0;
+	return m_speed;
 }
 
 void EngineMock::setEnabled(bool value)
@@ -66,3 +79,9 @@ void EngineMock::setEnabled(bool value)
 	m_enabled = value;
 	++m_callsToSetEnabled;
 }
+
+void EngineMock::writeDataToFile(const string &) const
+{ }
+
+void EngineMock::updateSensorData()
+{ }

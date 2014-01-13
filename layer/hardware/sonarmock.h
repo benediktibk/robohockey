@@ -18,13 +18,12 @@ namespace Hardware
 		SonarMock();
 
 		virtual void updateSensorData();
-		virtual double getDistanceForSensor(unsigned int sensorNumber);
-		unsigned int getCallsToGetDistanceForSensor() const;
+		virtual double getDistanceForSensor(unsigned int sensorNumber) const;
 		void setValue(unsigned int sensorNumber, double value);
-		void readSensorDataFromFile(const std::string &fileName);
+		virtual void writeDataToFile(const std::string &fileName) const;
+		void readDataFromFile(const std::string &fileName);
 
 	private:
-		unsigned int m_callsToGetDistanceForSensor;
 		std::map<unsigned int, double> m_values;
 	};
 }

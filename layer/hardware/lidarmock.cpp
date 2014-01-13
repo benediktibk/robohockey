@@ -7,7 +7,6 @@ using namespace RoboHockey::Layer::Hardware;
 using namespace std;
 
 LidarMock::LidarMock() :
-	m_callsToGetDistance(0),
 	m_defaultDistance(10)
 { }
 
@@ -15,12 +14,10 @@ LidarMock::LidarMock(double defaultDistance) :
 	m_defaultDistance(defaultDistance)
 { }
 
-double LidarMock::getDistance(int angle)
+double LidarMock::getDistance(int angle) const
 {
 	assert(angle >= getMinimumSensorNumber());
 	assert(angle <= getMaximumSensorNumber());
-
-	++m_callsToGetDistance;
 
 	map<unsigned int, double>::const_iterator value = m_valueForAngle.find(angle);
 
@@ -30,7 +27,7 @@ double LidarMock::getDistance(int angle)
 		return value->second;
 }
 
-void LidarMock::writeDataToFile(const string &)
+void LidarMock::writeDataToFile(const string &) const
 { }
 
 void LidarMock::setValueForAngle(unsigned int angle, double value)
@@ -38,7 +35,7 @@ void LidarMock::setValueForAngle(unsigned int angle, double value)
 	m_valueForAngle[angle] = value;
 }
 
-void LidarMock::readSensorDataFromFile(const string &fileName)
+void LidarMock::readDataFromFile(const string &fileName)
 {
 	ifstream file(fileName.c_str());
 
@@ -65,9 +62,4 @@ void LidarMock::readSensorDataFromFile(const string &fileName)
 		lineStream >> value;
 		setValueForAngle(sensorNumber, value);
 	}
-}
-
-unsigned int LidarMock::getCallsToGetDistance() const
-{
-	return m_callsToGetDistance;
 }

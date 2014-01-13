@@ -17,14 +17,14 @@ namespace Hardware
 		OdometryMock();
 
 		virtual void setCurrentPosition(const Common::RobotPosition &position);
-		virtual Common::RobotPosition getCurrentPosition();
+		virtual Common::RobotPosition getCurrentPosition() const;
+		virtual void writeDataToFile(const std::string &fileName) const;
 
 		unsigned int getCallsToSetCurrentPosition() const;
-		unsigned int getCallsToGetCurrentPosition() const;
+		void readDataFromFile(const std::string &fileName);
 
 	private:
 		unsigned int m_callsToSetCurrentPosition;
-		unsigned int m_callsToGetCurrentPosition;
 		Common::RobotPosition m_currentPosition;
 	};
 }

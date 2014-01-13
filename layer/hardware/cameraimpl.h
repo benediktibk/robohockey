@@ -21,8 +21,9 @@ namespace Hardware
 		CameraImpl(int device);
 		~CameraImpl();
 
-		virtual cv::Mat getFrame();
+		virtual cv::Mat getFrame() const;
 		virtual bool isValid() const;
+		virtual void writeDataToFile(const std::string &fileName) const;
 
 	private:
 		// forbid copies

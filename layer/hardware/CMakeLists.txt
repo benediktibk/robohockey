@@ -7,6 +7,7 @@ set(LAYER_HARDWARE_SRC
 	engineimpl.cpp
 	lidar.cpp
 	sonar.cpp
+	sensordatarecorder.cpp
 )
 
 set(LAYER_HARDWARE_TEST_SRC

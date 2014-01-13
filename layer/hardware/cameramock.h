@@ -18,13 +18,16 @@ namespace Hardware
 		CameraMock(std::string filename);
 		~CameraMock();
 
-		virtual cv::Mat getFrame();
+		virtual cv::Mat getFrame() const;
 		virtual bool isValid() const;
-		unsigned int getCallsToGetFrame() const;
+		virtual void writeDataToFile(const std::string &fileName) const;
+
+		void readDataFromFile(const std::string &fileName);
+		void invalidatePicture();
 
 	private:
-		unsigned int m_callsToGetFrame;
 		cv::Mat *m_testpicture;
+		bool m_pictureValid;
 	};
 }
 }

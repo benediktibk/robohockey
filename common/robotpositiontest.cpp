@@ -118,6 +118,21 @@ void RobotPositionTest::setOrientation_3_orientationIs3()
 	CPPUNIT_ASSERT(compare.isFuzzyEqual(Angle(3), position.getOrientation()));
 }
 
+void RobotPositionTest::read_validString_correctValues()
+{
+	RobotPosition source(Point(1.3, 3.2), Angle(1.1));
+	RobotPosition destination;
+	stringstream stream;
+	stream << source;
+	string sourceString = stream.str();
+
+	destination.read(sourceString);
+
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(1.3, destination.getPosition().getX(), 0.0001);
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(3.2, destination.getPosition().getY(), 0.0001);
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(1.1, destination.getOrientation().getValueBetweenMinusPiAndPi(), 0.0001);
+}
+
 void RobotPositionTest::constructor_orientationIsPi_orientationIsPi()
 {
 	RobotPosition position(Point(10, 23), Angle(M_PI));

@@ -4,6 +4,7 @@
 #include "common/segfaultstacktraceprinter.h"
 #include "layer/dataanalysis/dataanalyserimpl.h"
 #include "layer/hardware/robotimpl.h"
+#include "layer/hardware/sensordatarecorder.h"
 #include "layer/autonomous/robotimpl.h"
 #include "layer/autonomous/fieldimpl.h"
 #include "layer/autonomous/routerimpl.h"
@@ -35,7 +36,8 @@ Game::Game(int argc, char **argv) :
 	m_greenObjectCount(0),
 	m_stackTracePrinter(new SegFaultStackTracePrinter()),
 	m_consoleMessagesEnabled(false),
-	m_valid(true)
+	m_valid(true),
+	m_sensorDataRecorder(0)
 {
 	InputArgumentParser parser(InputArgumentParser::convertArguments(argc, argv));
 
@@ -49,13 +51,13 @@ Game::Game(int argc, char **argv) :
 
 	string playerServer = parser.playerServer();
 	string angelinaServer = parser.angelinaServer();
-	m_enablegui = parser.enableGui();
+	m_enableGui = parser.enableGui();
 
 	cout << "##### ---------------------------\n##### GAME START" << endl;
 	cout << "##### player ip     : " << playerServer << endl;
 	cout << "##### angelina ip   : " << angelinaServer << endl;
 
-	if (m_enablegui)
+	if (m_enableGui)
 		cout << "##### GUI Enabled   : " << "TRUE" << endl;
 	else
 		cout << "##### GUI Enabled   : " << "FALSE" << endl;
@@ -70,6 +72,9 @@ Game::Game(int argc, char **argv) :
 				dataAnalyser->getCamera(), *m_robot);
 	m_referee = new Strategy::Common::RefereeImpl(angelinaServer);
 
+	if (parser.enableRecorder())
+		m_sensorDataRecorder = new Hardware::SensorDataRecorder(*hardwareRobot, parser.recordingPath());
+
 	connect(m_timer, SIGNAL(timeout()), this, SLOT(execute()));
 
 	m_watch->getTimeAndRestart();
@@ -79,6 +84,8 @@ Game::Game(int argc, char **argv) :
 
 Game::~Game()
 {
+	delete m_sensorDataRecorder;
+	m_sensorDataRecorder = 0;
 	delete m_watch;
 	m_watch = 0;
 	delete m_field;
@@ -96,7 +103,7 @@ Game::~Game()
 bool Game::guiEnabled()
 {
 	assert(m_valid);
-	return m_enablegui;
+	return m_enableGui;
 }
 
 void Game::setLogMessagesEnabled(bool enable)
@@ -126,21 +133,28 @@ void Game::execute()
 	/*!
 	 * Unfortunately disabling the engine is very slow, this seems
 	 * to be a blocking call. If we then decide to stop and disable
-	 * the engine we would get in this iteration a very loop time.
+	 * the engine we would get in this iteration a very high loop time.
 	 * After this step the robot would say he is not moving anymore,
 	 * but still the loop time is very high. Therefore we check if
 	 * the robot is moving previously to avoid this problem.
 	 */
 	bool isMovingPreviously = m_robot->isMoving();
 	m_robot->updateSensorData();
+
+	if (m_sensorDataRecorder != 0)
+		m_sensorDataRecorder->recordCurrentValues();
+
 	double timeForSensorUpdate = watch.getTimeAndRestart();
+
 	m_field->update();
 	double blueObjectCountNew = m_field->getNumberOfObjectsWithColor(FieldColorBlue);
 	double yellowObjectCountNew = m_field->getNumberOfObjectsWithColor(FieldColorYellow);
 	double greenObjectCountNew = m_field->getNumberOfObjectsWithColor(FieldColorGreen);
 	double timeForFieldUpdate = watch.getTimeAndRestart();
+
 	executeRobotControl();
 	double timeForLogic = watch.getTimeAndRestart();
+
 	m_robot->updateActuators(*m_field);
 	m_referee->tellEgoPos(m_robot->getCurrentPosition().getPosition());
 	m_referee->sendAlive();

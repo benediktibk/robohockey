@@ -25,6 +25,7 @@ namespace Common
 		CPPUNIT_TEST(constructor_empty_orientationIs0);
 		CPPUNIT_TEST(constructor_orientationIsPi_orientationIsPi);
 		CPPUNIT_TEST(setOrientation_3_orientationIs3);
+		CPPUNIT_TEST(read_validString_correctValues);
 		CPPUNIT_TEST_SUITE_END();
 
    private:
@@ -41,7 +42,7 @@ namespace Common
 		void constructor_empty_orientationIs0();
 		void constructor_orientationIsPi_orientationIsPi();
 		void setOrientation_3_orientationIs3();
-
+		void read_validString_correctValues();
 	};
 }
 }

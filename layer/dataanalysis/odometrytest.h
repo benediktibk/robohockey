@@ -15,12 +15,10 @@ namespace DataAnalysis
 	{
 		CPPUNIT_TEST_SUITE(OdometryTest);
 		CPPUNIT_TEST(setCurrentPosition_mockHardwareOdometry_atLeastOneCallToSetCurrentPosition);
-		CPPUNIT_TEST(getCurrentPosition_mockHardwareOdometry_atLeastOneCallToGetCurrentPosition);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
 		void setCurrentPosition_mockHardwareOdometry_atLeastOneCallToSetCurrentPosition();
-		void getCurrentPosition_mockHardwareOdometry_atLeastOneCallToGetCurrentPosition();
 	};
 }
 }

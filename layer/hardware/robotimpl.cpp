@@ -65,10 +65,36 @@ Engine &RobotImpl::getEngine()
 	return *m_engine;
 }
 
+const Sonar &RobotImpl::getSonar() const
+{
+	return *m_sonar;
+}
+
+const Lidar &RobotImpl::getLidar() const
+{
+	return *m_lidar;
+}
+
+const Camera &RobotImpl::getCamera() const
+{
+	return *m_camera;
+}
+
+const Odometry &RobotImpl::getOdometry() const
+{
+	return *m_odometry;
+}
+
+const Engine &RobotImpl::getEngine() const
+{
+	return *m_engine;
+}
+
 void RobotImpl::updateSensorData()
 {
 	m_playerClient->Read();
 	m_sonar->updateSensorData();
+	m_engine->updateSensorData();
 }
 
 RobotImpl::RobotImpl(const RobotImpl &)

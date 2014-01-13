@@ -41,6 +41,31 @@ Engine &RobotMock::getEngine()
 	return m_engine;
 }
 
+const Sonar &RobotMock::getSonar() const
+{
+	return m_sonar;
+}
+
+const Lidar &RobotMock::getLidar() const
+{
+	return m_lidar;
+}
+
+const Camera &RobotMock::getCamera() const
+{
+	return m_camera;
+}
+
+const Odometry &RobotMock::getOdometry() const
+{
+	return m_odometry;
+}
+
+const Engine &RobotMock::getEngine() const
+{
+	return m_engine;
+}
+
 void RobotMock::updateSensorData()
 {
 	++m_callsToGetSensorData;

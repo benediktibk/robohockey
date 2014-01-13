@@ -24,7 +24,8 @@ namespace Hardware
 		~SonarImpl();
 
 		virtual void updateSensorData();
-		virtual double getDistanceForSensor(unsigned int sensorNumber);
+		virtual double getDistanceForSensor(unsigned int sensorNumber) const;
+		virtual void writeDataToFile(const std::string &fileName) const;
 
 	private:
 		SonarImpl(const SonarImpl &sonar);

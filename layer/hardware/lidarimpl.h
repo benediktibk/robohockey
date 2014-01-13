@@ -21,8 +21,8 @@ namespace Hardware
 		LidarImpl(PlayerCc::PlayerClient *playerClient);
 		~LidarImpl();
 
-		virtual double getDistance(int angle);
-		virtual void writeDataToFile(const std::string &fileName);
+		virtual double getDistance(int angle) const;
+		virtual void writeDataToFile(const std::string &fileName) const;
 
 	private:
 		// forbid copies

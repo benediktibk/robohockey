@@ -6,11 +6,12 @@
 using namespace RoboHockey::Main;
 using namespace std;
 
-InputArgumentParser::InputArgumentParser(const std::vector<string> &arguments) :
+InputArgumentParser::InputArgumentParser(const vector<string> &arguments) :
 	m_isValid(true),
 	m_enableGui(false),
 	m_playerServer("localhost"),
-	m_angelinaServer("localhost")
+	m_angelinaServer("localhost"),
+	m_enableRecorder(false)
 {
 	parse(arguments);
 }
@@ -33,6 +34,19 @@ const string &InputArgumentParser::angelinaServer() const
 	return m_angelinaServer;
 }
 
+bool InputArgumentParser::enableRecorder() const
+{
+	assert(isValid());
+	return m_enableRecorder;
+}
+
+const string &InputArgumentParser::recordingPath() const
+{
+	assert(isValid());
+	assert(enableRecorder());
+	return m_recordingPath;
+}
+
 bool InputArgumentParser::isValid() const
 {
 	return m_isValid;
@@ -47,6 +61,7 @@ string InputArgumentParser::usage() const
 	stream << "\t--player <IP>" << endl;
 	stream << "\t--angelina <IP>" << endl;
 	stream << "\t--enableGui" << endl;
+	stream << "\t--recordTo <path>" << endl;
 
 	return stream.str();
 }
@@ -74,6 +89,7 @@ void InputArgumentParser::parse(const vector<string> &arguments)
 	bool foundEnableGui = false;
 	bool foundAngelina = false;
 	bool foundPlayer = false;
+	bool foundRecordingPath = false;
 
 	while (argumentsLeft.size() > 0)
 	{
@@ -115,6 +131,20 @@ void InputArgumentParser::parse(const vector<string> &arguments)
 			const string secondArgument = argumentsLeft.front();
 			m_angelinaServer = secondArgument;
 			foundAngelina = true;
+		}
+		else if (firstArgument == "--recordTo")
+		{
+			if (argumentsLeft.size() == 1 || foundRecordingPath)
+			{
+				m_isValid = false;
+				return;
+			}
+
+			argumentsLeft.pop_front();
+			const string secondArgument = argumentsLeft.front();
+			m_recordingPath = secondArgument;
+			m_enableRecorder = true;
+			foundRecordingPath = true;
 		}
 		else
 		{

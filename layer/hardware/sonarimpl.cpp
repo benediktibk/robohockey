@@ -1,8 +1,10 @@
 #include "layer/hardware/sonarimpl.h"
 #include <libplayerc++/playerc++.h>
+#include <fstream>
 
 using namespace RoboHockey::Layer::Hardware;
 using namespace PlayerCc;
+using namespace std;
 
 SonarImpl::SonarImpl(PlayerCc::PlayerClient *playerClient) :
 	m_sonar(new RangerProxy(playerClient, 0))
@@ -29,13 +31,23 @@ void SonarImpl::updateSensorData()
 	}
 }
 
-double SonarImpl::getDistanceForSensor(unsigned int sensorNumber)
+double SonarImpl::getDistanceForSensor(unsigned int sensorNumber) const
 {
 	assert(m_currentValues.count(sensorNumber) != 0);
 	assert(m_lastValues.count(sensorNumber) != 0);
-	double currentValue = m_currentValues[sensorNumber];
-	double lastValue = m_lastValues[sensorNumber];
-	return min(lastValue, currentValue);
+	double currentValue = m_currentValues.at(sensorNumber);
+	double lastValue = m_lastValues.at(sensorNumber);
+	return std::min<double>(lastValue, currentValue);
+}
+
+void SonarImpl::writeDataToFile(const string &fileName) const
+{
+	fstream file(fileName.c_str(), ios::out | ios::trunc);
+
+	for (unsigned int i = getMinimumSensorNumber(); i <= getMaximumSensorNumber(); ++i)
+		file << i << ": " << getDistanceForSensor(i) << endl;
+
+	file.close();
 }
 
 SonarImpl::SonarImpl(const SonarImpl &)

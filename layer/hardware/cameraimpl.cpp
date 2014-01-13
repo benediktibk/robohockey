@@ -20,7 +20,7 @@ CameraImpl::~CameraImpl()
 	m_capture = 0;
 }
 
-Mat CameraImpl::getFrame()
+Mat CameraImpl::getFrame() const
 {
 	assert(isValid());
 
@@ -33,6 +33,12 @@ Mat CameraImpl::getFrame()
 bool CameraImpl::isValid() const
 {
 	return m_capture->isOpened();
+}
+
+void CameraImpl::writeDataToFile(const string &fileName) const
+{
+	Mat frame = getFrame();
+	imwrite(fileName, frame);
 }
 
 CameraImpl::CameraImpl(const CameraImpl &)

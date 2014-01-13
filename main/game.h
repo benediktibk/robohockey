@@ -16,6 +16,11 @@ namespace Common
 
 namespace Layer
 {
+namespace Hardware
+{
+	class SensorDataRecorder;
+}
+
 namespace Autonomous
 {
 	class Robot;
@@ -68,13 +73,14 @@ namespace Main
 		const double m_loopTimeMaximum;
 		const double m_loopTimeWeight;
 		double m_loopTimeAverage;
-		bool m_enablegui;
+		bool m_enableGui;
 		unsigned int m_blueObjectCount;
 		unsigned int m_yellowObjectCount;
 		unsigned int m_greenObjectCount;
 		Common::SegFaultStackTracePrinter *m_stackTracePrinter;
 		bool m_consoleMessagesEnabled;
 		bool m_valid;
+		Layer::Hardware::SensorDataRecorder *m_sensorDataRecorder;
 	};
 }
 }

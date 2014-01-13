@@ -1,12 +1,14 @@
 #include "layer/hardware/odometrymock.h"
 #include "common/point.h"
+#include <fstream>
+#include <sstream>
 
 using namespace RoboHockey::Common;
 using namespace RoboHockey::Layer::Hardware;
+using namespace std;
 
 OdometryMock::OdometryMock() :
-	m_callsToSetCurrentPosition(0),
-	m_callsToGetCurrentPosition(0)
+	m_callsToSetCurrentPosition(0)
 { }
 
 void OdometryMock::setCurrentPosition(const RobotPosition &position)
@@ -15,18 +17,24 @@ void OdometryMock::setCurrentPosition(const RobotPosition &position)
 	m_currentPosition = position;
 }
 
-RobotPosition OdometryMock::getCurrentPosition()
+RobotPosition OdometryMock::getCurrentPosition() const
 {
-	++m_callsToGetCurrentPosition;
 	return m_currentPosition;
 }
+
+void OdometryMock::writeDataToFile(const string &) const
+{ }
 
 unsigned int OdometryMock::getCallsToSetCurrentPosition() const
 {
 	return m_callsToSetCurrentPosition;
 }
 
-unsigned int OdometryMock::getCallsToGetCurrentPosition() const
+void OdometryMock::readDataFromFile(const string &fileName)
 {
-	return m_callsToGetCurrentPosition;
+	fstream file(fileName.c_str(), ios::in);
+	string content;
+	file >> content;
+	m_currentPosition.read(content);
+	file.close();
 }

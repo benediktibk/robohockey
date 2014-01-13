@@ -16,9 +16,11 @@ namespace Hardware
 		EngineMock();
 
 		virtual void setSpeed(double magnitude, double rotation);
-		virtual bool isMoving();
+		virtual bool isMoving() const;
 		virtual double getSpeed() const;
 		virtual void setEnabled(bool value);
+		virtual void writeDataToFile(const std::string &fileName) const;
+		virtual void updateSensorData();
 
 		unsigned int getCallsToSetSpeed() const;
 		unsigned int getCallsToSetEnabled() const;
@@ -26,6 +28,7 @@ namespace Hardware
 		double getLastMagnitude() const;
 		double getLastRotation() const;
 		void setIsMoving(bool value);
+		void readDataFromFile(const std::string &fileName);
 
 	private:
 		unsigned int m_callsToSetSpeed;
@@ -34,6 +37,7 @@ namespace Hardware
 		double m_lastRotation;
 		bool m_enabled;
 		bool m_isMoving;
+		double m_speed;
 	};
 }
 }

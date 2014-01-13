@@ -1380,8 +1380,8 @@ void RobotTest::collectPuckInFront_puckAhead_notStuckAtObstacle()
 	Hardware::RobotMock *hardwareRobot = new Hardware::RobotMock();
 	Hardware::LidarMock &lidar = hardwareRobot->getLidarMock();
 	Hardware::SonarMock &sonar = hardwareRobot->getSonarMock();
-	lidar.readSensorDataFromFile("resources/testfiles/lidar_34.txt");
-	sonar.readSensorDataFromFile("resources/testfiles/sonar_3.txt");
+	lidar.readDataFromFile("resources/testfiles/lidar_34.txt");
+	sonar.readDataFromFile("resources/testfiles/sonar_3.txt");
 	DataAnalysis::DataAnalyser *dataAnalyser = new DataAnalysis::DataAnalyserImpl(hardwareRobot);
 	RobotImpl robot(dataAnalyser, new RouterMock(), new WatchMock());
 
@@ -1397,8 +1397,8 @@ void RobotTest::collectPuckInFront_puckAheadAndStartedToMove_notStuckAtObstacle(
 	Hardware::RobotMock *hardwareRobot = new Hardware::RobotMock();
 	Hardware::LidarMock &lidar = hardwareRobot->getLidarMock();
 	Hardware::SonarMock &sonar = hardwareRobot->getSonarMock();
-	lidar.readSensorDataFromFile("resources/testfiles/lidar_34.txt");
-	sonar.readSensorDataFromFile("resources/testfiles/sonar_3.txt");
+	lidar.readDataFromFile("resources/testfiles/lidar_34.txt");
+	sonar.readDataFromFile("resources/testfiles/sonar_3.txt");
 	DataAnalysis::DataAnalyser *dataAnalyser = new DataAnalysis::DataAnalyserImpl(hardwareRobot);
 	RobotImpl robot(dataAnalyser, new RouterMock(), new WatchMock());
 
@@ -1416,8 +1416,8 @@ void RobotTest::collectPuckInFront_puckAheadAndAlreadyUpdatedTheEngine_notStuckA
 	Hardware::RobotMock *hardwareRobot = new Hardware::RobotMock();
 	Hardware::LidarMock &lidar = hardwareRobot->getLidarMock();
 	Hardware::SonarMock &sonar = hardwareRobot->getSonarMock();
-	lidar.readSensorDataFromFile("resources/testfiles/lidar_34.txt");
-	sonar.readSensorDataFromFile("resources/testfiles/sonar_3.txt");
+	lidar.readDataFromFile("resources/testfiles/lidar_34.txt");
+	sonar.readDataFromFile("resources/testfiles/sonar_3.txt");
 	DataAnalysis::DataAnalyser *dataAnalyser = new DataAnalysis::DataAnalyserImpl(hardwareRobot);
 	RobotImpl robot(dataAnalyser, new RouterMock(), new WatchMock());
 

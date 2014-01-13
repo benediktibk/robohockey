@@ -16,6 +16,8 @@ class InputArgumentParser
 		bool enableGui() const;
 		const std::string& playerServer() const;
 		const std::string& angelinaServer() const;
+		bool enableRecorder() const;
+		const std::string& recordingPath() const;
 		bool isValid() const;
 		std::string usage() const;
 
@@ -29,6 +31,8 @@ class InputArgumentParser
 		bool m_enableGui;
 		std::string m_playerServer;
 		std::string m_angelinaServer;
+		std::string m_recordingPath;
+		bool m_enableRecorder;
 	};
 }
 }
