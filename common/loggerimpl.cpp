@@ -1,5 +1,6 @@
 #include "common/loggerimpl.h"
 #include <iostream>
+#include <ctime>
 
 using namespace std;
 using namespace RoboHockey::Common;
@@ -74,5 +75,52 @@ void LoggerImpl::enableLogWriting()
 void LoggerImpl::disableLogWriting()
 {
 	m_logWritingEnabled = false;
+}
+
+void LoggerImpl::initLogFiles()
+{
+	time_t rawtime;
+	struct tm * timeinfo;
+	char buffer[80];
+
+	time(&rawtime);
+	timeinfo = localtime(&rawtime);
+
+	strftime(buffer, 80, "%d-%m-%Y %I:%M:%S", timeinfo);
+	string timestring(buffer);
+
+	string message = "## STARTING ROBOT\n## Starting Log: ";
+	message += timestring;
+	message += "\n## \n";
+
+	for (int i = LogFileTypeGlobal; i != LogFileTypeFieldDetection; i++)
+	{
+		LogFileType currentLogFile = static_cast<LogFileType>(i);
+		writeToLogFileOfType(currentLogFile, message);
+	}
+
+}
+
+void LoggerImpl::closeLogFiles()
+{
+	time_t rawtime;
+	struct tm * timeinfo;
+	char buffer[80];
+
+	time(&rawtime);
+	timeinfo = localtime(&rawtime);
+
+	strftime(buffer, 80, "%d-%m-%Y %I:%M:%S", timeinfo);
+	string timestring(buffer);
+
+	string message = "## QUITTING ROBOT\n## Closing Log: ";
+	message += timestring;
+	message += "\n## \n";
+
+	for (int i = LogFileTypeGlobal; i != LogFileTypeFieldDetection; i++)
+	{
+		LogFileType currentLogFile = static_cast<LogFileType>(i);
+		writeToLogFileOfType(currentLogFile, message);
+	}
 }
 

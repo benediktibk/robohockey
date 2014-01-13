@@ -25,6 +25,10 @@ class LoggerImpl :
 		virtual void disableLogWriting();
 
 	private:
+		void initLogFiles();
+		void closeLogFiles();
+
+	private:
 		bool m_consoleOutputEnabled;
 		bool m_logWritingEnabled;
 
