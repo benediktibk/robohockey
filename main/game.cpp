@@ -131,7 +131,11 @@ void Game::logToConsole(const string &message)
 {
 	assert(m_valid);
 	if (logMessagesEnabled())
-		cout << message << endl;
+	{
+		m_logger->logToConsoleAndGlobalLogFile(message);
+	}
+	else
+		m_logger->writeToGlobalLogFile(message);
 }
 
 void Game::execute()
