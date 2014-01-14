@@ -16,7 +16,7 @@ namespace Hardware
 	public:
 		SensorDataRecorder(const Robot &robot, const std::string &path);
 
-		void recordCurrentValues();
+		void recordCurrentValues(bool recordCamera);
 
 	private:
 		const Robot &m_robot;
