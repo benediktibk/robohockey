@@ -23,7 +23,7 @@ GameAutomatic::GameAutomatic(int argc, char **argv) :
 	m_model(new Model()),
 	m_controller(new Controller(*m_model))
 {
-	InitialState *initialState = new InitialState(getRobot(), getField(), getReferee());
+	InitialState *initialState = new InitialState(getRobot(), getField(), getReferee(), getLogger());
 	m_stateMachine = new StateMachine(initialState, getRobot(), getField(), getReferee());
 
 	cout << "starting the robot" << endl;

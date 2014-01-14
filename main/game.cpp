@@ -2,6 +2,7 @@
 #include "main/inputargumentparser.h"
 #include "common/watchimpl.h"
 #include "common/segfaultstacktraceprinter.h"
+#include "common/loggerimpl.h"
 #include "layer/dataanalysis/dataanalyserimpl.h"
 #include "layer/hardware/robotimpl.h"
 #include "layer/hardware/sensordatarecorder.h"
@@ -26,6 +27,7 @@ Game::Game(int argc, char **argv) :
 	m_robot(0),
 	m_field(0),
 	m_referee(0),
+	m_logger(0),
 	m_watch(new Common::WatchImpl()),
 	m_timer(new QTimer()),
 	m_loopTimeMaximum(0.2),
@@ -75,6 +77,8 @@ Game::Game(int argc, char **argv) :
 				dataAnalyser->getCamera(), *m_robot);
 	m_referee = new Strategy::Common::RefereeImpl(angelinaServer);
 
+	m_logger = new Common::LoggerImpl();
+
 	if (parser.enableRecorder())
 		m_sensorDataRecorder = new Hardware::SensorDataRecorder(*hardwareRobot, parser.recordingPath());
 
@@ -101,6 +105,8 @@ Game::~Game()
 	m_timer = 0;
 	delete m_stackTracePrinter;
 	m_stackTracePrinter = 0;
+	delete m_logger;
+	m_logger = 0;
 }
 
 bool Game::guiEnabled()
@@ -235,6 +241,12 @@ Strategy::Common::Referee &Game::getReferee()
 {
 	assert(m_valid);
 	return *m_referee;
+}
+
+Logger &Game::getLogger()
+{
+	assert(m_valid);
+	return *m_logger;
 }
 
 void Game::printTimeInMs(const string &message, double time) const
