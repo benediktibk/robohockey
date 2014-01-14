@@ -7,7 +7,9 @@
 #include "layer/autonomous/robotmock.h"
 #include "layer/autonomous/fieldmock.h"
 #include "layer/strategy/common/colordependentpucktargetfetchermock.h"
+#include "common/loggermock.h"
 
+using namespace RoboHockey::Common;
 using namespace RoboHockey::Layer::Strategy::Common;
 using namespace RoboHockey::Layer::Strategy::DrivePuckStateMachine;
 using namespace RoboHockey::Layer::Autonomous;
@@ -17,22 +19,14 @@ void FindPuckStateTest::nextState_targetReached_nextStateIsVerifyPuckState()
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
+	LoggerMock logger;
 	ColorDependentPuckTargetFetcherMock puckTargetFetcher;
 	robot.setReachedTarget(true);
-	FindPuckState findPuckState(robot, field, referee, puckTargetFetcher);
+	field.setIsPuckcolorDetected(true);
+	FindPuckState findPuckState(robot, field, referee, logger, puckTargetFetcher);
 	State *driveToState = findPuckState.nextState();
 	State *waitState;
 	waitState = driveToState->nextState();
-	waitState->update();
-	waitState->update();
-	waitState->update();
-	waitState->update();
-	waitState->update();
-	waitState->update();
-	waitState->update();
-	waitState->update();
-	waitState->update();
-	waitState->update();
 	State *state;
 	state = waitState->nextState();
 	VerifyPuckState *stateCasted = dynamic_cast<VerifyPuckState*>(state);
@@ -48,9 +42,10 @@ void FindPuckStateTest::nextState_cantReachTarget_nextStateIsFindPuckState()
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
+	LoggerMock logger;
 	ColorDependentPuckTargetFetcherMock puckTargetFetcher;
 	robot.setCantReachedTarget(true);
-	FindPuckState findPuckState(robot, field, referee, puckTargetFetcher);
+	FindPuckState findPuckState(robot, field, referee, logger, puckTargetFetcher);
 	State *driveToState;
 	driveToState = findPuckState.nextState();
 	State *state;
@@ -67,8 +62,9 @@ void FindPuckStateTest::nextState_canReachTarget_nextStateIs0()
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
+	LoggerMock logger;
 	ColorDependentPuckTargetFetcherMock puckTargetFetcher;
-	FindPuckState findPuckState(robot, field, referee, puckTargetFetcher);
+	FindPuckState findPuckState(robot, field, referee, logger, puckTargetFetcher);
 	State *driveToState;
 	driveToState = findPuckState.nextState();
 	State *state;

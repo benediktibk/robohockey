@@ -11,8 +11,8 @@ using namespace RoboHockey::Layer::Strategy::Common;
 using namespace RoboHockey::Layer::Strategy::FieldDetectionStateMachine;
 using namespace RoboHockey::Layer::Autonomous;
 
-CheckGoalColor::CheckGoalColor(Robot &robot, Field &field, Referee &referee) :
-	State(robot, field, referee, false),
+CheckGoalColor::CheckGoalColor(Robot &robot, Field &field, Referee &referee, Logger &logger) :
+	State(robot, field, referee, logger, false),
 	m_teamColorSend(false),
 	m_gotResponse(false),
 	m_numberOfTries(0)
@@ -21,7 +21,7 @@ CheckGoalColor::CheckGoalColor(Robot &robot, Field &field, Referee &referee) :
 State* CheckGoalColor::nextState()
 {
 	if (m_teamColorSend && m_gotResponse)
-		return new CalibrationFinished(m_robot, m_field, m_referee, 0);
+		return new CalibrationFinished(m_robot, m_field, m_referee, m_logger, 0);
 
 	return 0;
 }

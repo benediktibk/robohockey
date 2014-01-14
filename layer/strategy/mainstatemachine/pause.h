@@ -6,6 +6,10 @@
 
 namespace RoboHockey
 {
+namespace Common
+{
+	class Logger;
+}
 namespace Layer
 {
 namespace Strategy
@@ -16,7 +20,7 @@ namespace MainStateMachine
 			public Common::State
 	{
 	public:
-		Pause(Autonomous::Robot &robot, Autonomous::Field &field, Common::Referee &referee);
+		Pause(Autonomous::Robot &robot, Autonomous::Field &field, Common::Referee &referee, RoboHockey::Common::Logger &logger);
 
 		virtual State* nextState();
 		virtual std::string getName();

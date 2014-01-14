@@ -6,6 +6,10 @@
 
 namespace RoboHockey
 {
+namespace Common
+{
+	class Logger;
+}
 namespace Layer
 {
 namespace Strategy
@@ -21,7 +25,7 @@ class HideEnemyPucks :
 		public Common::State
 	{
 	public:
-		HideEnemyPucks(Autonomous::Robot &robot, Autonomous::Field &field, Common::Referee &referee);
+		HideEnemyPucks(Autonomous::Robot &robot, Autonomous::Field &field, Common::Referee &referee, RoboHockey::Common::Logger &logger);
 		virtual ~HideEnemyPucks();
 
 		virtual State* nextState();

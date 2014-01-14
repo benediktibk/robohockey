@@ -6,6 +6,10 @@
 
 namespace RoboHockey
 {
+namespace Common
+{
+	class Logger;
+}
 namespace Layer
 {
 namespace Strategy
@@ -16,7 +20,7 @@ namespace MainStateMachine
 			public Common::State
 	{
 	public:
-		Calibrate(Autonomous::Robot &robot, Autonomous::Field &field, Common::Referee &referee);
+		Calibrate(Autonomous::Robot &robot, Autonomous::Field &field, Common::Referee &referee, RoboHockey::Common::Logger &logger);
 		virtual ~Calibrate();
 
 		virtual State* nextState();

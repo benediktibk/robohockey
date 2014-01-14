@@ -8,7 +8,9 @@
 #include "layer/strategy/mainstatemachine/initialstate.h"
 #include "layer/autonomous/robotmock.h"
 #include "layer/autonomous/fieldmock.h"
+#include "common/loggermock.h"
 
+using namespace RoboHockey::Common;
 using namespace RoboHockey::Layer::Strategy::Common;
 using namespace RoboHockey::Layer::Strategy::MainStateMachine;
 using namespace RoboHockey::Layer::Autonomous;
@@ -18,14 +20,15 @@ void CalibrateTest::nextState_gameStart_achieveGoals()
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	Calibrate Calibrate(robot, field, referee);
+	LoggerMock logger;
+	Calibrate calibrate(robot, field, referee, logger);
 	referee.setGameStart(true);
 	referee.setDetectionStart(false);
 	referee.setGameOver(false);
 	referee.setStopMovement(false);
 	State *state;
 
-	state = Calibrate.nextState();
+	state = calibrate.nextState();
 
 	AchieveGoals *stateCasted = dynamic_cast<AchieveGoals*>(state);
 	CPPUNIT_ASSERT(stateCasted != 0);
@@ -37,14 +40,15 @@ void CalibrateTest::nextState_detectionStart_notAchieveGoals()
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	Calibrate Calibrate(robot, field, referee);
+	LoggerMock logger;
+	Calibrate calibrate(robot, field, referee, logger);
 	referee.setGameStart(false);
 	referee.setDetectionStart(true);
 	referee.setGameOver(false);
 	referee.setStopMovement(false);
 	State *state;
 
-	state = Calibrate.nextState();
+	state = calibrate.nextState();
 
 	AchieveGoals *stateCasted = dynamic_cast<AchieveGoals*>(state);
 	CPPUNIT_ASSERT(stateCasted == 0);
@@ -56,14 +60,15 @@ void CalibrateTest::nextState_gameStartAndStopMovement_notInitialState()
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	Calibrate Calibrate(robot, field, referee);
+	LoggerMock logger;
+	Calibrate calibrate(robot, field, referee, logger);
 	referee.setGameStart(true);
 	referee.setDetectionStart(false);
 	referee.setGameOver(false);
 	referee.setStopMovement(true);
 	State *state;
 
-	state = Calibrate.nextState();
+	state = calibrate.nextState();
 
 	InitialState *stateCasted = dynamic_cast<InitialState*>(state);
 	CPPUNIT_ASSERT(stateCasted == 0);
@@ -75,14 +80,15 @@ void CalibrateTest::nextState_gameOverAndStopMovement_pause()
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	Calibrate Calibrate(robot, field, referee);
+	LoggerMock logger;
+	Calibrate calibrate(robot, field, referee, logger);
 	referee.setGameStart(false);
 	referee.setDetectionStart(false);
 	referee.setGameOver(true);
 	referee.setStopMovement(true);
 	State *state;
 
-	state = Calibrate.nextState();
+	state = calibrate.nextState();
 
 	Pause *stateCasted = dynamic_cast<Pause*>(state);
 	CPPUNIT_ASSERT(stateCasted != 0);
@@ -94,14 +100,15 @@ void CalibrateTest::nextState_gameStartAndGameOver_notInitialState()
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	Calibrate Calibrate(robot, field, referee);
+	LoggerMock logger;
+	Calibrate calibrate(robot, field, referee, logger);
 	referee.setGameStart(true);
 	referee.setDetectionStart(false);
 	referee.setGameOver(true);
 	referee.setStopMovement(false);
 	State *state;
 
-	state = Calibrate.nextState();
+	state = calibrate.nextState();
 
 	InitialState *stateCasted = dynamic_cast<InitialState*>(state);
 	CPPUNIT_ASSERT(stateCasted == 0);
@@ -113,14 +120,15 @@ void CalibrateTest::nextState_detectionStart_notPause()
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	Calibrate Calibrate(robot, field, referee);
+	LoggerMock logger;
+	Calibrate calibrate(robot, field, referee, logger);
 	referee.setGameStart(false);
 	referee.setDetectionStart(true);
 	referee.setGameOver(false);
 	referee.setStopMovement(false);
 	State *state;
 
-	state = Calibrate.nextState();
+	state = calibrate.nextState();
 
 	Pause *stateCasted = dynamic_cast<Pause*>(state);
 	CPPUNIT_ASSERT(stateCasted == 0);
@@ -131,14 +139,15 @@ void CalibrateTest::nextState_detectionStartAndGameStart_AchieveGoals()
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	Calibrate Calibrate(robot, field, referee);
+	LoggerMock logger;
+	Calibrate calibrate(robot, field, referee, logger);
 	referee.setGameStart(true);
 	referee.setDetectionStart(true);
 	referee.setGameOver(false);
 	referee.setStopMovement(false);
 	State *state;
 
-	state = Calibrate.nextState();
+	state = calibrate.nextState();
 
 	AchieveGoals *stateCasted = dynamic_cast<AchieveGoals*>(state);
 	CPPUNIT_ASSERT(stateCasted != 0);
@@ -150,7 +159,8 @@ void CalibrateTest::nextState_GameStartAndGameOver_notCalibrate()
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	Calibrate calibrate(robot, field, referee);
+	LoggerMock logger;
+	Calibrate calibrate(robot, field, referee, logger);
 	referee.setGameStart(true);
 	referee.setDetectionStart(false);
 	referee.setGameOver(true);
@@ -169,14 +179,15 @@ void CalibrateTest::nextState_stopMovement_pause()
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	Calibrate Calibrate(robot, field, referee);
+	LoggerMock logger;
+	Calibrate calibrate(robot, field, referee, logger);
 	referee.setGameStart(false);
 	referee.setDetectionStart(false);
 	referee.setGameOver(false);
 	referee.setStopMovement(true);
 	State *state;
 
-	state = Calibrate.nextState();
+	state = calibrate.nextState();
 
 	Pause *stateCasted = dynamic_cast<Pause*>(state);
 	CPPUNIT_ASSERT(stateCasted != 0);
@@ -188,14 +199,15 @@ void CalibrateTest::nextState_gameOver_pause()
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	Calibrate Calibrate(robot, field, referee);
+	LoggerMock logger;
+	Calibrate calibrate(robot, field, referee, logger);
 	referee.setGameStart(false);
 	referee.setDetectionStart(false);
 	referee.setGameOver(true);
 	referee.setStopMovement(false);
 	State *state;
 
-	state = Calibrate.nextState();
+	state = calibrate.nextState();
 
 	Pause *stateCasted = dynamic_cast<Pause*>(state);
 	CPPUNIT_ASSERT(stateCasted != 0);

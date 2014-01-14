@@ -8,6 +8,7 @@
 #include "layer/autonomous/fieldmock.h"
 #include "common/angle.h"
 #include "common/compare.h"
+#include "common/loggermock.h"
 #include <vector>
 
 using namespace std;
@@ -21,7 +22,8 @@ void TurnAngleTest::nextState_targetReached_detectField()
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	TurnAngle turnAngleState(robot, field, referee, Angle::getThreeQuarterRotation(), list<pair<unsigned int, RobotPosition> >());
+	LoggerMock logger;
+	TurnAngle turnAngleState(robot, field, referee, logger, Angle::getThreeQuarterRotation(), list<pair<unsigned int, RobotPosition> >());
 	turnAngleState.update();
 	robot.setReachedTarget(true);
 
@@ -37,7 +39,8 @@ void TurnAngleTest::nextState_targetNotReached_NULL()
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	TurnAngle turnAngleState(robot, field, referee, Angle::getThreeQuarterRotation(), list<pair<unsigned int, RobotPosition> >());
+	LoggerMock logger;
+	TurnAngle turnAngleState(robot, field, referee, logger, Angle::getThreeQuarterRotation(), list<pair<unsigned int, RobotPosition> >());
 	turnAngleState.update();
 	robot.setReachedTarget(false);
 
@@ -52,7 +55,8 @@ void TurnAngleTest::update_quarterRotation_robotGetsCorrectTarget()
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	TurnAngle turnAngleState(robot, field, referee, Angle::getQuarterRotation(), list<pair<unsigned int, RobotPosition> >());
+	LoggerMock logger;
+	TurnAngle turnAngleState(robot, field, referee, logger, Angle::getQuarterRotation(), list<pair<unsigned int, RobotPosition> >());
 
 	turnAngleState.update();
 
@@ -67,7 +71,8 @@ void TurnAngleTest::update_halfRotation_robotGetsCorrectTarget()
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	TurnAngle turnAngleState(robot, field, referee, Angle::getHalfRotation(), list<pair<unsigned int, RobotPosition> >());
+	LoggerMock logger;
+	TurnAngle turnAngleState(robot, field, referee, logger, Angle::getHalfRotation(), list<pair<unsigned int, RobotPosition> >());
 
 	turnAngleState.update();
 

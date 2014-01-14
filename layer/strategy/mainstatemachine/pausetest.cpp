@@ -8,8 +8,9 @@
 #include "layer/autonomous/robotmock.h"
 #include "layer/strategy/common/refereemock.h"
 #include "layer/strategy/common/statemock.h"
+#include "common/loggermock.h"
 
-
+using namespace RoboHockey::Common;
 using namespace RoboHockey::Layer::Strategy::MainStateMachine;
 using namespace RoboHockey::Layer::Strategy::Common;
 using namespace RoboHockey::Layer::Autonomous;
@@ -20,7 +21,8 @@ void PauseTest::nextState_detectionStart_Calibrate()
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	Pause pause(robot, field, referee);
+	LoggerMock logger;
+	Pause pause(robot, field, referee, logger);
 	referee.setDetectionStart(true);
 	referee.setGameStart(false);
 	State *state;
@@ -37,7 +39,8 @@ void PauseTest::nextState_gameStart_AchieveGoals()
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	Pause pause(robot, field, referee);
+	LoggerMock logger;
+	Pause pause(robot, field, referee, logger);
 	referee.setDetectionStart(false);
 	referee.setGameStart(true);
 	State *state;
@@ -54,7 +57,8 @@ void PauseTest::nextState_achieveGoals2_AchieveGoals()
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	Pause pause(robot, field, referee);
+	LoggerMock logger;
+	Pause pause(robot, field, referee, logger);
 	referee.setDetectionStart(false);
 	referee.setGameStart(false);
 	referee.setStopMovement(false);
@@ -73,7 +77,8 @@ void PauseTest::nextState_gameOver_Pause()
 {   RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	Pause pause(robot, field, referee);
+	LoggerMock logger;
+	Pause pause(robot, field, referee, logger);
 	referee.setDetectionStart(false);
 	referee.setGameStart(false);
 	referee.setStopMovement(false);
@@ -91,7 +96,8 @@ void PauseTest::nextState_stopMovement_Pause()
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	Pause pause(robot, field, referee);
+	LoggerMock logger;
+	Pause pause(robot, field, referee, logger);
 	referee.setDetectionStart(false);
 	referee.setGameStart(false);
 	referee.setStopMovement(true);

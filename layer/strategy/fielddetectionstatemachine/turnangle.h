@@ -9,6 +9,7 @@ namespace RoboHockey
 {
 namespace Common
 {
+	class Logger;
 	class Angle;
 }
 namespace Layer
@@ -21,7 +22,8 @@ namespace FieldDetectionStateMachine
 			public Common::State
 	{
 	public:
-		TurnAngle(Autonomous::Robot &robot, Autonomous::Field &field, Common::Referee &referee, RoboHockey::Common::Angle angle,
+		TurnAngle(Autonomous::Robot &robot, Autonomous::Field &field, Common::Referee &referee, RoboHockey::Common::Logger &logger,
+				  RoboHockey::Common::Angle angle,
 				  std::list<std::pair<unsigned int, RoboHockey::Common::RobotPosition> > calibratedPositions);
 
 		virtual State* nextState();

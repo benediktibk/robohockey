@@ -3,7 +3,9 @@
 #include "layer/autonomous/fieldmock.h"
 #include "layer/autonomous/robotmock.h"
 #include "layer/strategy/common/refereemock.h"
+#include "common/loggermock.h"
 
+using namespace RoboHockey::Common;
 using namespace RoboHockey::Layer::Strategy::Common;
 using namespace RoboHockey::Layer::Autonomous;
 
@@ -12,7 +14,8 @@ void StateTest::update_updateAlwaysAndCalledThreeTimes_updateInternalWasCalledTh
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	StateMock state(robot, field, referee, false);
+	LoggerMock logger;
+	StateMock state(robot, field, referee, logger, false);
 
 	state.update();
 	state.update();
@@ -26,7 +29,8 @@ void StateTest::update_updateOnlyOnceAndCalledFourTimes_updateInternalWasCalledO
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	StateMock state(robot, field, referee, true);
+	LoggerMock logger;
+	StateMock state(robot, field, referee, logger, true);
 
 	state.update();
 	state.update();

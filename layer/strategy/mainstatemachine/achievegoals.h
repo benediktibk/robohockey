@@ -6,6 +6,10 @@
 
 namespace RoboHockey
 {
+namespace Common
+{
+	class Logger;
+}
 namespace Layer
 {
 namespace Strategy
@@ -21,7 +25,7 @@ namespace MainStateMachine
 			public Common::State
 	{
 	public:
-		AchieveGoals(Autonomous::Robot &robot, Autonomous::Field &field, Common::Referee &referee);
+		AchieveGoals(Autonomous::Robot &robot, Autonomous::Field &field, Common::Referee &referee, RoboHockey::Common::Logger &logger);
 		virtual ~AchieveGoals();
 
 		virtual State* nextState();

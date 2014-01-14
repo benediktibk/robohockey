@@ -10,6 +10,7 @@ namespace RoboHockey
 {
 namespace Common
 {
+	class Logger;
 	class WatchImpl;
 	class SegFaultStackTracePrinter;
 }
@@ -60,6 +61,7 @@ namespace Main
 		Layer::Autonomous::Robot& getRobot();
 		Layer::Autonomous::Field& getField();
 		Layer::Strategy::Common::Referee& getReferee();
+		Common::Logger& getLogger();
 
 	private:
 		void printTimeInMs(const std::string &message, double time) const;
@@ -68,6 +70,7 @@ namespace Main
 		Layer::Autonomous::Robot *m_robot;
 		Layer::Autonomous::Field *m_field;
 		Layer::Strategy::Common::Referee *m_referee;
+		Common::Logger *m_logger;
 		Common::WatchImpl *m_watch;
 		QTimer *m_timer;
 		const double m_loopTimeMaximum;

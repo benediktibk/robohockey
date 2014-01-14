@@ -7,6 +7,10 @@
 
 namespace RoboHockey
 {
+namespace Common
+{
+	class Logger;
+}
 namespace Layer
 {
 namespace Strategy
@@ -17,7 +21,7 @@ namespace FieldDetectionStateMachine
 			public Common::State
 	{
 	public:
-		DetectField(Autonomous::Robot &robot, Autonomous::Field &field, Common::Referee &referee,
+		DetectField(Autonomous::Robot &robot, Autonomous::Field &field, Common::Referee &referee, RoboHockey::Common::Logger &logger,
 					std::list<std::pair<unsigned int, RoboHockey::Common::RobotPosition> > previousCalibrationResults);
 
 		virtual State* nextState();

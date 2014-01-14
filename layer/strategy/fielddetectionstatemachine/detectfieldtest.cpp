@@ -7,6 +7,7 @@
 #include "layer/strategy/common/drivetostate.h"
 #include "layer/autonomous/robotmock.h"
 #include "layer/autonomous/fieldmock.h"
+#include "common/loggermock.h"
 
 using namespace std;
 using namespace RoboHockey::Layer::Strategy::Common;
@@ -19,7 +20,8 @@ void DetectFieldTest::nextState_notCalibrated3Tries_turnAngle()
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	DetectField detectFieldState(robot, field, referee, list<pair<unsigned int, RobotPosition> >());
+	LoggerMock logger;
+	DetectField detectFieldState(robot, field, referee, logger, list<pair<unsigned int, RobotPosition> >());
 	field.setCalibrationReturn(false);
 	detectFieldState.update();
 	detectFieldState.update();
@@ -37,7 +39,8 @@ void DetectFieldTest::nextState_notCalibrated1Try_NULL()
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	DetectField detectFieldState(robot, field, referee, list<pair<unsigned int, RobotPosition> >());
+	LoggerMock logger;
+	DetectField detectFieldState(robot, field, referee, logger, list<pair<unsigned int, RobotPosition> >());
 	field.setCalibrationReturn(false);
 	detectFieldState.update();
 
@@ -52,11 +55,12 @@ void DetectFieldTest::nextState_calibrated_driveTo()
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
+	LoggerMock logger;
 	list<pair<unsigned int, RobotPosition> > calibratedData;
 	calibratedData.push_back(pair<unsigned int, RobotPosition>(3, RobotPosition(Point(), Angle())));
 	calibratedData.push_back(pair<unsigned int, RobotPosition>(3, RobotPosition(Point(), Angle())));
 	calibratedData.push_back(pair<unsigned int, RobotPosition>(3, RobotPosition(Point(), Angle())));
-	DetectField detectFieldState(robot, field, referee, calibratedData);
+	DetectField detectFieldState(robot, field, referee, logger, calibratedData);
 	field.setCalibrationReturnPosition(RobotPosition(Point(1,2), Angle::getEighthRotation()));
 	detectFieldState.update();
 
@@ -72,11 +76,12 @@ void DetectFieldTest::nextState_calibratedOnSecondTry_driveTo()
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
+	LoggerMock logger;
 	list<pair<unsigned int, RobotPosition> > calibratedData;
 	calibratedData.push_back(pair<unsigned int, RobotPosition>(3, RobotPosition(Point(), Angle())));
 	calibratedData.push_back(pair<unsigned int, RobotPosition>(3, RobotPosition(Point(), Angle())));
 	calibratedData.push_back(pair<unsigned int, RobotPosition>(3, RobotPosition(Point(), Angle())));
-	DetectField detectFieldState(robot, field, referee, calibratedData);
+	DetectField detectFieldState(robot, field, referee, logger, calibratedData);
 	detectFieldState.update();
 
 	State *state = detectFieldState.nextState();
@@ -98,11 +103,12 @@ void DetectFieldTest::nextState_calibrationSuccessfulButTooFewCalibrationResults
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
+	LoggerMock logger;
 	list<pair<unsigned int, RobotPosition> > calibratedData;
 	calibratedData.push_back(pair<unsigned int, RobotPosition>(3, RobotPosition(Point(), Angle())));
 	calibratedData.push_back(pair<unsigned int, RobotPosition>(3, RobotPosition(Point(), Angle())));
 
-	DetectField detectFieldState(robot, field, referee, calibratedData);
+	DetectField detectFieldState(robot, field, referee, logger, calibratedData);
 
 	detectFieldState.update();
 
