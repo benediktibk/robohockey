@@ -603,12 +603,15 @@ bool FieldImpl::isPuckOfColorInFront(FieldColor color) const
 	if(objects.empty())
 		return false;
 
-	Angle angleBetweenRobotAndObject(m_position->getPosition(), objects.front().getCircle().getCenter());
-	Compare compare(Angle::getQuarterRotation().getValueBetweenMinusPiAndPi());
+	for(vector<FieldObject>::const_iterator i = objects.begin(); i != objects.end(); ++i)
+	{
+		Angle angleBetweenRobotAndObject(m_position->getPosition(), (*i).getCircle().getCenter());
+		Compare compare(Angle::getQuarterRotation().getValueBetweenMinusPiAndPi());
 
-	if(objects.front().getObstacle().getDistanceTo(m_position->getPosition()) < 0.5 &&
+		if((*i).getObstacle().getDistanceTo(m_position->getPosition()) < 0.5 &&
 			compare.isFuzzyEqual(m_position->getOrientation(), angleBetweenRobotAndObject))
-		return true;
+			return true;
+	}
 
 	return false;
 }
