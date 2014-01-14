@@ -127,6 +127,9 @@ namespace Autonomous
 		CPPUNIT_TEST(isPuckOfColorInFront_puckInFront_resultIsTrue);
 		CPPUNIT_TEST(isPuckOfColorInFront_puckAlmostInFront_resultIsTrue);
 		CPPUNIT_TEST(isPuckOfColorInFront_puckAlmostInFrontAndOnePuckLeft_resultIsTrue);
+		CPPUNIT_TEST(isPuckcolorDetected_noPucksInSector_resultIsTrue);
+		CPPUNIT_TEST(isPuckcolorDetected_twoPucksWithColor_resultIsTrue);
+		CPPUNIT_TEST(isPuckcolorDetected_twoPucksWithColorAndOneWithout_resultIsFlase);
 		CPPUNIT_TEST_SUITE_END();
 
 	public:
@@ -237,6 +240,9 @@ namespace Autonomous
 		void isPuckOfColorInFront_puckInFront_resultIsTrue();
 		void isPuckOfColorInFront_puckAlmostInFront_resultIsTrue();
 		void isPuckOfColorInFront_puckAlmostInFrontAndOnePuckLeft_resultIsTrue();
+		void isPuckcolorDetected_noPucksInSector_resultIsTrue();
+		void isPuckcolorDetected_twoPucksWithColor_resultIsTrue();
+		void isPuckcolorDetected_twoPucksWithColorAndOneWithout_resultIsFlase();
 
 	private:
 		void updateFieldForObjectsToAppear(FieldImpl &field);
