@@ -102,6 +102,7 @@ namespace Autonomous
 
 		std::vector<Common::Point> *getPointsOfObjectsWithDiameterAndColor(double diameter, Common::FieldColor color);
 		std::vector<FieldObject> getObjectsWithColor(Common::FieldColor color) const;
+		std::vector<FieldObject> getObjectsInVisibleSector(Common::Angle angle, double distance);
 
 		std::vector<FieldObject> moveAllFieldObjectsInVisibleAreaToTemporaryVector(double range);
 		std::vector<FieldObject> getAllPartlyVisibleObjects() const;

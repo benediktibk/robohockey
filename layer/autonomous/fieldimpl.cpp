@@ -1004,6 +1004,23 @@ vector<FieldObject> FieldImpl::getObjectsWithColor(FieldColor color) const
 	return result;
 }
 
+std::vector<FieldObject> FieldImpl::getObjectsInVisibleSector(Angle angle, double distance)
+{
+	vector<FieldObject> result;
+	Compare compare(angle.getValueBetweenMinusPiAndPi());
+
+	for (vector<FieldObject>::const_iterator i = m_usefulFieldObjects.begin(); i != m_usefulFieldObjects.end(); ++i)
+	{
+		Angle angleBetweenRobotAndObject(m_position->getPosition(), (*i).getCircle().getCenter());
+
+		if((*i).getObstacle().getDistanceTo(m_position->getPosition()) < distance &&
+			compare.isFuzzyEqual(m_position->getOrientation(), angleBetweenRobotAndObject))
+			result.push_back(*i);
+	}
+
+	return result;
+}
+
 vector<FieldObject> FieldImpl::moveAllFieldObjectsInVisibleAreaToTemporaryVector(double range)
 {
 	vector<FieldObject> visibleObjects;
