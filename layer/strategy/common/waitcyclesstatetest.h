@@ -19,12 +19,14 @@ namespace Common
 		CPPUNIT_TEST(nextState_didntWaitEnoughCycles_resultIs0);
 		CPPUNIT_TEST(nextState_didWaitEnoughCycles_resultIsStateAfterWaitCycles);
 		CPPUNIT_TEST(nextState_detectAllObjects_resultIsIsStateAfterWaitCycles);
+		CPPUNIT_TEST(nextState_shouldWaitTheWholeTime_resultIsIsStateAfterWaitCycles);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
 		void nextState_didntWaitEnoughCycles_resultIs0();
 		void nextState_didWaitEnoughCycles_resultIsStateAfterWaitCycles();
 		void nextState_detectAllObjects_resultIsIsStateAfterWaitCycles();
+		void nextState_shouldWaitTheWholeTime_resultIsIsStateAfterWaitCycles();
 	
 };
 }

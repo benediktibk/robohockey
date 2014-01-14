@@ -20,7 +20,7 @@ namespace Common
 	{
 	public:
 		WaitCyclesState(Autonomous::Robot &robot, Autonomous::Field &field, Common::Referee &referee, RoboHockey::Common::Logger &logger,
-				  State *stateAfterWaitCycles, unsigned int cycles);
+				  State *stateAfterWaitCycles, unsigned int cycles, bool shoudwaitTheWholeTime);
 		virtual ~WaitCyclesState();
 
 		virtual State* nextState();
@@ -33,6 +33,7 @@ namespace Common
 		State *m_stateAfterWaitCycles;
 		unsigned int m_cycles;
 		unsigned int m_updateCounter;
+		bool m_shouldWaitTheWholeTime;
 
 	};
 }

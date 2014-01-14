@@ -25,7 +25,7 @@ State* DriveToCollectPuckState::nextState()
 		return new DriveToState(
 					m_robot, m_field, m_referee, m_logger, m_puckTargetFetcher.getPositionsToCollectPuck(),
 					new WaitCyclesState(m_robot, m_field, m_referee, m_logger,
-							new VerifyPuckState(m_robot, m_field, m_referee, m_logger, m_puckTargetFetcher), 15),
+							new VerifyPuckState(m_robot, m_field, m_referee, m_logger, m_puckTargetFetcher), 15, false),
 					new InitialState(m_robot, m_field, m_referee, m_logger, m_puckTargetFetcher));
 }
 

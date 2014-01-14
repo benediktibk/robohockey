@@ -8,11 +8,12 @@ using namespace RoboHockey::Common;
 using namespace RoboHockey::Layer::Strategy::Common;
 using namespace RoboHockey::Layer::Autonomous;
 
-WaitCyclesState::WaitCyclesState(Robot &robot, Field &field, Referee &referee, Logger &logger, State *stateAfterWaitCycles, unsigned int cycles) :
+WaitCyclesState::WaitCyclesState(Robot &robot, Field &field, Referee &referee, Logger &logger, State *stateAfterWaitCycles, unsigned int cycles, bool shoudwaitTheWholeTime) :
 	State(robot, field, referee, logger, false),
 	m_stateAfterWaitCycles(stateAfterWaitCycles),
 	m_cycles(cycles),
-	m_updateCounter(0)
+	m_updateCounter(0),
+	m_shouldWaitTheWholeTime(shoudwaitTheWholeTime)
 { }
 
 WaitCyclesState::~WaitCyclesState()
@@ -24,8 +25,11 @@ WaitCyclesState::~WaitCyclesState()
 State *WaitCyclesState::nextState()
 {
 	State *result = 0;
+	bool shoudWait = false;
+	if(!m_shouldWaitTheWholeTime)
+		shoudWait = m_field.isPuckcolorDetected();
 
-	if(m_updateCounter >= m_cycles || m_field.isPuckcolorDetected())
+	if(m_updateCounter >= m_cycles || shoudWait)
 	{
 		result = m_stateAfterWaitCycles;
 		m_stateAfterWaitCycles = 0;

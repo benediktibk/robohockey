@@ -17,7 +17,7 @@ void WaitCyclesStateTest::nextState_didntWaitEnoughCycles_resultIs0()
 	RefereeMock referee;
 	LoggerMock logger;
 	State *stateAfterWaitCycles = new StateMock(robot, field, referee, logger);
-	WaitCyclesState waitState(robot, field, referee, logger, stateAfterWaitCycles, 10);
+	WaitCyclesState waitState(robot, field, referee, logger, stateAfterWaitCycles, 10, false);
 	waitState.update();
 	waitState.update();
 	waitState.update();
@@ -35,7 +35,7 @@ void WaitCyclesStateTest::nextState_didWaitEnoughCycles_resultIsStateAfterWaitCy
 	RefereeMock referee;
 	LoggerMock logger;
 	State *stateAfterWaitCycles = new StateMock(robot, field, referee, logger);
-	WaitCyclesState waitState(robot, field, referee, logger, stateAfterWaitCycles, 5);
+	WaitCyclesState waitState(robot, field, referee, logger, stateAfterWaitCycles, 5, false);
 
 	waitState.update();
 	waitState.update();
@@ -56,11 +56,33 @@ void WaitCyclesStateTest::nextState_detectAllObjects_resultIsIsStateAfterWaitCyc
 	RefereeMock referee;
 	LoggerMock logger;
 	State *stateAfterWaitCycles = new StateMock(robot, field, referee, logger);
-	WaitCyclesState waitState(robot, field, referee, logger, stateAfterWaitCycles, 10);
+	WaitCyclesState waitState(robot, field, referee, logger, stateAfterWaitCycles, 10, false);
 
 	waitState.update();
 	waitState.update();
 	field.setIsPuckcolorDetected(true);
+	waitState.update();
+
+	State *state = waitState.nextState();
+
+	CPPUNIT_ASSERT(state == stateAfterWaitCycles);
+	delete state;
+}
+
+void WaitCyclesStateTest::nextState_shouldWaitTheWholeTime_resultIsIsStateAfterWaitCycles()
+{
+	RobotMock robot;
+	FieldMock field;
+	RefereeMock referee;
+	LoggerMock logger;
+	State *stateAfterWaitCycles = new StateMock(robot, field, referee, logger);
+	WaitCyclesState waitState(robot, field, referee, logger, stateAfterWaitCycles, 5, true);
+
+	waitState.update();
+	waitState.update();
+	field.setIsPuckcolorDetected(true);
+	waitState.update();
+	waitState.update();
 	waitState.update();
 
 	State *state = waitState.nextState();
