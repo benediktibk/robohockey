@@ -20,11 +20,11 @@ LeavePuckState::LeavePuckState(Robot &robot, Field &field, Referee &referee, Rob
 State* LeavePuckState::nextState()
 {
 	if(m_robot.cantReachTarget())
-		return new InitialState(m_robot, m_field, m_referee, m_puckTargetFetcher);
+		return new InitialState(m_robot, m_field, m_referee, m_logger, m_puckTargetFetcher);
 	else if(m_robot.reachedTarget() && m_puckTargetFetcher.getNumberOfKnownPucksNotInEnemyThird() == 0)
-		return new FindPuckState(m_robot, m_field, m_referee, m_puckTargetFetcher);
+		return new FindPuckState(m_robot, m_field, m_referee, m_logger, m_puckTargetFetcher);
 	else if(m_robot.reachedTarget() && m_puckTargetFetcher.getNumberOfKnownPucksNotInEnemyThird() != 0)
-		return new DriveToCollectPuckState(m_robot, m_field, m_referee, m_puckTargetFetcher);
+		return new DriveToCollectPuckState(m_robot, m_field, m_referee, m_logger, m_puckTargetFetcher);
 	else
 		return 0;
 

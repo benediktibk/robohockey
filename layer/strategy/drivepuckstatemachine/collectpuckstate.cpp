@@ -25,9 +25,9 @@ State* CollectPuckState::nextState()
 			m_field.getObjectsWithColorOrderdByDistance(m_puckTargetFetcher.getColorOfTargetPucks());
 
 	if(m_robot.isPuckCollected())
-		return new DrivePuckToPositionState(m_robot, m_field, m_referee, m_puckTargetFetcher);
+		return new DrivePuckToPositionState(m_robot, m_field, m_referee, m_logger, m_puckTargetFetcher);
 	else if(m_robot.cantReachTarget() || !m_robot.isPuckCollectable() || targetPositions.empty())
-		return new DriveToCollectPuckState(m_robot, m_field, m_referee, m_puckTargetFetcher);
+		return new DriveToCollectPuckState(m_robot, m_field, m_referee, m_logger, m_puckTargetFetcher);
 	else
 		return 0;
 }

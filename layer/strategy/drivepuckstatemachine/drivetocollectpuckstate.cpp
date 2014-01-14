@@ -20,13 +20,13 @@ DriveToCollectPuckState::DriveToCollectPuckState(Robot &robot, Field &field, Ref
 State* DriveToCollectPuckState::nextState()
 {
 	if(m_puckTargetFetcher.getNumberOfKnownPucksNotInEnemyThird() == 0)
-		return new FindPuckState(m_robot, m_field, m_referee, m_puckTargetFetcher);
+		return new FindPuckState(m_robot, m_field, m_referee, m_logger, m_puckTargetFetcher);
 	else
 		return new DriveToState(
-					m_robot, m_field, m_referee, m_puckTargetFetcher.getPositionsToCollectPuck(),
-					new WaitCyclesState(m_robot, m_field, m_referee,
-							new VerifyPuckState(m_robot, m_field, m_referee, m_puckTargetFetcher), 5),
-					new InitialState(m_robot, m_field, m_referee, m_puckTargetFetcher));
+					m_robot, m_field, m_referee, m_logger, m_puckTargetFetcher.getPositionsToCollectPuck(),
+					new WaitCyclesState(m_robot, m_field, m_referee, m_logger,
+							new VerifyPuckState(m_robot, m_field, m_referee, m_logger, m_puckTargetFetcher), 5),
+					new InitialState(m_robot, m_field, m_referee, m_logger, m_puckTargetFetcher));
 }
 
 std::string DriveToCollectPuckState::getName()

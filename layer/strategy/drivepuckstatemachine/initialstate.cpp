@@ -17,11 +17,11 @@ InitialState::InitialState(Robot &robot, Field &field, Referee &referee, RoboHoc
 State* InitialState::nextState()
 {
 	if(m_robot.isPuckCollected())
-		return new LeavePuckState(m_robot, m_field, m_referee, m_puckTargetFetcher, false);
+		return new LeavePuckState(m_robot, m_field, m_referee, m_logger, m_puckTargetFetcher, false);
 	if(m_puckTargetFetcher.getNumberOfKnownPucksNotInTarget() > 0)
-		return new DriveToCollectPuckState(m_robot, m_field, m_referee, m_puckTargetFetcher);
+		return new DriveToCollectPuckState(m_robot, m_field, m_referee, m_logger, m_puckTargetFetcher);
 	else
-		return new FindPuckState(m_robot, m_field, m_referee, m_puckTargetFetcher);
+		return new FindPuckState(m_robot, m_field, m_referee, m_logger, m_puckTargetFetcher);
 }
 
 std::string InitialState::getName()

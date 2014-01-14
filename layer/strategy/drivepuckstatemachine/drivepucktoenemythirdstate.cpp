@@ -20,11 +20,11 @@ State *DrivePuckToEnemyThirdState::nextState()
 {
 	if(m_robot.isPuckCollected())
 		return new DriveToState(
-					m_robot, m_field, m_referee, m_field.getTargetsInEnemyThird(),
-					new LeavePuckState(m_robot, m_field, m_referee, m_puckTargetFetcher, false),
-					new LeavePuckState(m_robot, m_field, m_referee, m_puckTargetFetcher, false));
+					m_robot, m_field, m_referee, m_logger, m_field.getTargetsInEnemyThird(),
+					new LeavePuckState(m_robot, m_field, m_referee, m_logger, m_puckTargetFetcher, false),
+					new LeavePuckState(m_robot, m_field, m_referee, m_logger, m_puckTargetFetcher, false));
 	else
-		return new DriveToCollectPuckState(m_robot, m_field, m_referee, m_puckTargetFetcher);
+		return new DriveToCollectPuckState(m_robot, m_field, m_referee, m_logger, m_puckTargetFetcher);
 }
 
 std::string DrivePuckToEnemyThirdState::getName()
