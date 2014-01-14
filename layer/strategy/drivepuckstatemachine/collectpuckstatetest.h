@@ -21,6 +21,7 @@ namespace DrivePuckStateMachine
 		CPPUNIT_TEST(nextState_canReachTarget_nextStatedIs0);
 		CPPUNIT_TEST(nextState_puckIsNotCollectable_nextStateIsDriveToCollectPuckState);
 		CPPUNIT_TEST(nextState_puckIsCollectableButNoTargetIsLeft_nextStateIsDriveToCollectPuckState);
+		CPPUNIT_TEST(nextState_puckCollectableAndStuckAtObstacle_nextStateIsDriveToCollectPuckState);
 		CPPUNIT_TEST(update_targetLostButPuckCollectable_runThrough);
 		CPPUNIT_TEST_SUITE_END();
 
@@ -30,6 +31,7 @@ namespace DrivePuckStateMachine
 		void nextState_canReachTarget_nextStatedIs0();
 		void nextState_puckIsNotCollectable_nextStateIsDriveToCollectPuckState();
 		void nextState_puckIsCollectableButNoTargetIsLeft_nextStateIsDriveToCollectPuckState();
+		void nextState_puckCollectableAndStuckAtObstacle_nextStateIsDriveToCollectPuckState();
 		void update_targetLostButPuckCollectable_runThrough();
 };
 }

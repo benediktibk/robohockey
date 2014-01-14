@@ -105,6 +105,27 @@ void CollectPuckStateTest::nextState_puckIsCollectableButNoTargetIsLeft_nextStat
 	delete state;
 }
 
+void CollectPuckStateTest::nextState_puckCollectableAndStuckAtObstacle_nextStateIsDriveToCollectPuckState()
+{
+	RobotMock robot;
+	FieldMock field;
+	RefereeMock referee;
+	LoggerMock logger;
+	ColorDependentPuckTargetFetcherMock puckTargetFetcher;
+	CollectPuckState collectPuckState(robot, field, referee, logger, puckTargetFetcher);
+	robot.setPuckCollectable(true);
+	robot.setStuckAtObstacle(true);
+	vector<FieldObject> fieldObjects;
+	fieldObjects.push_back(FieldObject(Circle(), FieldColorBlue, 2));
+	field.setObjectsWithColorOrderedByDistance(fieldObjects);
+
+	State *state = collectPuckState.nextState();
+
+	DriveToCollectPuckState *stateCasted = dynamic_cast<DriveToCollectPuckState*>(state);
+	CPPUNIT_ASSERT(stateCasted != 0);
+	delete state;
+}
+
 void CollectPuckStateTest::update_targetLostButPuckCollectable_runThrough()
 {
 	RobotMock robot;
