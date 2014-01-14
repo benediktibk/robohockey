@@ -1896,7 +1896,6 @@ void FieldTest::getNumberOfObjectsWithColor_3YellowAnd2GreenAnd1UnknownObject_co
 	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorGreen, Point(3, 1.8)));
 	m_camera->setAllObjects(cameraObjects);
 
-
 	updateFieldForObjectsToAppear();
 
 	CPPUNIT_ASSERT_EQUAL((unsigned int)0, m_field->getNumberOfObjectsWithColor(FieldColorBlue));
