@@ -54,6 +54,24 @@ bool Compare::isFuzzyEqual(const RobotPosition &one, const RobotPosition &two) c
 			isFuzzyEqual(one.getOrientation(), two.getOrientation());
 }
 
+bool Compare::isFuzzyEqual(const list<RobotPosition> &one, const list<RobotPosition> &two) const
+{
+	size_t size1, size2;
+	size1 = one.size();
+	size2 = two.size();
+	list<RobotPosition>::const_iterator j = two.begin();
+	if(size1 != size2)
+		return false;
+	for(list<RobotPosition>::const_iterator i = one.begin(); i != one.end(); ++i, ++j)
+	{
+		const RobotPosition &robotPosition1 = *i;
+		const RobotPosition &robotPosition2 = *j;
+		if(!isFuzzyEqual(robotPosition1, robotPosition2))
+			return false;
+	}
+	return true;
+}
+
 bool Compare::isFuzzyGreater(double value1, double value2) const
 {
 	if(value1 + m_epsilon > value2)
