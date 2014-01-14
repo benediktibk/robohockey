@@ -74,7 +74,7 @@ void RobotTest::goTo_orientationToTargetCorrect_engineGotAtLeastOneCallToGoToStr
 	CPPUNIT_ASSERT(m_engine->getCallsToGoToStraight() > 0);
 }
 
-void RobotTest::goTo_orientationToTargetCorrect_isNotRotating()
+void RobotTest::goTo_orientationToTargetCorrect_isRotating()
 {
 	m_odometry->setCurrentPosition(RobotPosition(Point(0, 0), 0));
 
@@ -86,7 +86,7 @@ void RobotTest::goTo_orientationToTargetCorrect_isNotRotating()
 	m_robot->updateSensorData();
 	m_robot->updateActuators(*m_field);
 
-	CPPUNIT_ASSERT(!m_robot->isRotating());
+	CPPUNIT_ASSERT(m_robot->isRotating());
 }
 
 void RobotTest::goTo_orientationToTargetCompletelyWrong_engineGotNoCallToGoToStraight()

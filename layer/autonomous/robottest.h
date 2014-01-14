@@ -36,7 +36,7 @@ namespace Autonomous
 		CPPUNIT_TEST_SUITE(RobotTest);
 		CPPUNIT_TEST(goTo_positionDifferentToCurrentOne_engineGotAtLeastOneCallToGoToStraightOrTurnTo);
 		CPPUNIT_TEST(goTo_orientationToTargetCorrect_engineGotAtLeastOneCallToGoToStraight);
-		CPPUNIT_TEST(goTo_orientationToTargetCorrect_isNotRotating);
+		CPPUNIT_TEST(goTo_orientationToTargetCorrect_isRotating);
 		CPPUNIT_TEST(goTo_orientationToTargetCompletelyWrong_engineGotNoCallToGoToStraight);
 		CPPUNIT_TEST(goTo_orientationToTargetCompletelyWrong_engineGotAtLeastOneCallToTurnTo);
 		CPPUNIT_TEST(goTo_orientationToTargetCompletelyWrong_isRotating);
@@ -154,7 +154,7 @@ namespace Autonomous
 	private:
 		void goTo_positionDifferentToCurrentOne_engineGotAtLeastOneCallToGoToStraightOrTurnTo();
 		void goTo_orientationToTargetCorrect_engineGotAtLeastOneCallToGoToStraight();
-		void goTo_orientationToTargetCorrect_isNotRotating();
+		void goTo_orientationToTargetCorrect_isRotating();
 		void goTo_orientationToTargetCompletelyWrong_engineGotNoCallToGoToStraight();
 		void goTo_orientationToTargetCompletelyWrong_engineGotAtLeastOneCallToTurnTo();
 		void goTo_orientationToTargetCompletelyWrong_isRotating();
