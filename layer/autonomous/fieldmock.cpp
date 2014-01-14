@@ -12,6 +12,7 @@ FieldMock::FieldMock() :
 	m_hiddenPucks(0),
 	m_calibrated(false),
 	m_isPuckOfColorInFront(false),
+	m_isPuckcolorDetected(false),
 	m_teamColor(FieldColorUnknown)
 {
 	m_objectsWithColorOrderedByDistance.push_back(FieldObject(Circle(), FieldColorBlue, 2));
@@ -88,6 +89,11 @@ void FieldMock::setIsPuckOfColorInFront(bool value)
 	m_isPuckOfColorInFront = value;
 }
 
+void FieldMock::setIsPuckcolorDetected(bool value)
+{
+	m_isPuckcolorDetected = value;
+}
+
 void FieldMock::setCalibrationReturnPosition(RobotPosition newOrigin)
 {
 	m_newOrigin = newOrigin;
@@ -127,6 +133,11 @@ std::vector<RobotPosition> FieldMock::getTargetsForWaitingPhase() const
 bool FieldMock::isPuckOfColorInFront(FieldColor /*color*/) const
 {
 	return m_isPuckOfColorInFront;
+}
+
+bool FieldMock::isPuckcolorDetected() const
+{
+	return m_isPuckcolorDetected;
 }
 
 bool FieldMock::isCalibrated() const

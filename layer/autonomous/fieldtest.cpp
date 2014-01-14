@@ -2025,6 +2025,61 @@ void FieldTest::isPuckOfColorInFront_puckAlmostInFrontAndOnePuckLeft_resultIsTru
 	CPPUNIT_ASSERT(m_field->isPuckOfColorInFront(FieldColorYellow));
 }
 
+void FieldTest::isPuckcolorDetected_noPucksInSector_resultIsTrue()
+{
+	m_odometry->setCurrentPosition(RobotPosition(Point(1,1), Angle::getHalfRotation()));
+	DataAnalysis::LidarObjects lidarObjects;
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(3, 1), 0.1));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(0.5, 1), 0.1));
+	m_lidar->setAllObjects(lidarObjects);
+	DataAnalysis::CameraObjects cameraObjects;
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(3, 1)));
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(0.5, 1)));
+	m_camera->setAllObjects(cameraObjects);
+
+	updateFieldForObjectsToAppear();
+	m_odometry->setCurrentPosition(RobotPosition(Point(1,1), 0));
+	updateFieldForObjectsToAppear();
+
+	CPPUNIT_ASSERT(m_field->isPuckcolorDetected());
+}
+
+void FieldTest::isPuckcolorDetected_twoPucksWithColor_resultIsTrue()
+{
+	m_odometry->setCurrentPosition(RobotPosition(Point(1,1), 0));
+	DataAnalysis::LidarObjects lidarObjects;
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1.8, 1), 0.1));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1.5, 1.2), 0.1));
+	m_lidar->setAllObjects(lidarObjects);
+	DataAnalysis::CameraObjects cameraObjects;
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(1.8, 1)));
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorBlue, Point(1.5, 1.2)));
+	m_camera->setAllObjects(cameraObjects);
+
+	updateFieldForObjectsToAppear();
+
+	CPPUNIT_ASSERT(m_field->isPuckcolorDetected());
+}
+
+void FieldTest::isPuckcolorDetected_twoPucksWithColorAndOneWithout_resultIsFlase()
+{
+	m_odometry->setCurrentPosition(RobotPosition(Point(1,1), 0));
+	DataAnalysis::LidarObjects lidarObjects;
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1.8, 1), 0.1));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1.5, 1.2), 0.1));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1.3, 0.8), 0.1));
+	m_lidar->setAllObjects(lidarObjects);
+	DataAnalysis::CameraObjects cameraObjects;
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(1.8, 1)));
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorBlue, Point(1.5, 1.2)));
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorUnknown, Point(1.3, 0.8)));
+	m_camera->setAllObjects(cameraObjects);
+
+	updateFieldForObjectsToAppear();
+
+	CPPUNIT_ASSERT(!m_field->isPuckcolorDetected());
+}
+
 void FieldTest::updateFieldForObjectsToAppear(FieldImpl &field)
 {
 	field.update();
