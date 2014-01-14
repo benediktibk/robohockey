@@ -158,7 +158,9 @@ void CameraTest::getAllCameraObjects_yellowPuck_cameraObjectPositonIs0p6And0p1()
 	CameraImpl camera(hardwareCamera);
 
 	Compare compare(0.06);
-	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(0.66, 0.1), camera.getAllCameraObjects(RobotPosition(Point(0, 0), 0)).front().getPosition()));
+	const CameraObjects cameraObjects = camera.getAllCameraObjects(RobotPosition(Point(0, 0), 0));
+	CPPUNIT_ASSERT(cameraObjects.getObjectCount() > 0);
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(0.66, 0.1), cameraObjects.front().getPosition()));
 }
 
 void CameraTest::getAllCameraObjects_yellowPuckTwice_cameraObjectPositonOfRightObjectIs0p6And0p0()
@@ -167,7 +169,9 @@ void CameraTest::getAllCameraObjects_yellowPuckTwice_cameraObjectPositonOfRightO
 	CameraImpl camera(hardwareCamera);
 
 	Compare compare(0.05);
-	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(0.66, 0.0), camera.getAllCameraObjects(RobotPosition(Point(0, 0), 0)).front().getPosition()));
+	CameraObjects cameraObjects = camera.getAllCameraObjects(RobotPosition(Point(0, 0), 0));
+	CPPUNIT_ASSERT(cameraObjects.getObjectCount() > 0);
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(0.66, 0.0), cameraObjects.front().getPosition()));
 }
 
 void CameraTest::getAllCameraObjects_yellowPuckTwice_cameraObjectPositonOfLeftObjectIs0p7And0p2()
@@ -176,7 +180,9 @@ void CameraTest::getAllCameraObjects_yellowPuckTwice_cameraObjectPositonOfLeftOb
 	CameraImpl camera(hardwareCamera);
 
 	Compare compare(0.06);
-	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(0.76, 0.2), camera.getAllCameraObjects(RobotPosition(Point(0, 0), 0)).back().getPosition()));
+	CameraObjects cameraObjects = camera.getAllCameraObjects(RobotPosition(Point(0, 0), 0));
+	CPPUNIT_ASSERT(cameraObjects.getObjectCount() > 0);
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(0.76, 0.2), cameraObjects.back().getPosition()));
 }
 
 void CameraTest::getAllCameraObjects_bluePuck_cameraObjectPositonIs0p5AndMinus0p1()

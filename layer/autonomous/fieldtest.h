@@ -75,6 +75,7 @@ namespace Autonomous
 		CPPUNIT_TEST(update_collectedPuckAndMovedForward_oneFieldObject);
 		CPPUNIT_TEST(update_rotatingAndObjectALittleBitDistanceMoved_onlyFieldObjectStaysTheSame);
 		CPPUNIT_TEST(update_rotatingAndObjectVeryClose_onlyFieldObjectIsUpdated);
+		CPPUNIT_TEST(update_changingData_noColoredObjectsAreLost);
 		CPPUNIT_TEST(calibratePosition_noValidPattern_false);
 		CPPUNIT_TEST(calibratePosition_validPattern_true);
 		CPPUNIT_TEST(calibratePosition_noValidPattern_noTransformation);
@@ -191,6 +192,7 @@ namespace Autonomous
 		void update_collectedPuckAndMovedForward_oneFieldObject();
 		void update_rotatingAndObjectALittleBitDistanceMoved_onlyFieldObjectStaysTheSame();
 		void update_rotatingAndObjectVeryClose_onlyFieldObjectIsUpdated();
+		void update_changingData_noColoredObjectsAreLost();
 		void calibratePosition_noValidPattern_false();
 		void calibratePosition_validPattern_true();
 		void calibratePosition_noValidPattern_noTransformation();

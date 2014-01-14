@@ -55,92 +55,29 @@ add_custom_target(
 )
 endif(DOXYGEN_FOUND)
 
+FILE(GLOB TESTFILES_LOOSING_PUCK_1_TXT ${CMAKE_CURRENT_SOURCE_DIR}/resources/testfiles/loosing_puck_1/*.txt)
+FILE(GLOB TESTFILES_LOOSING_PUCK_1_PNG ${CMAKE_CURRENT_SOURCE_DIR}/resources/testfiles/loosing_puck_1/*.png)
+FILE(GLOB TESTFILES_TXT ${CMAKE_CURRENT_SOURCE_DIR}/resources/testfiles/*.txt)
+FILE(GLOB TESTFILES_PNG ${CMAKE_CURRENT_SOURCE_DIR}/resources/testfiles/*.png)
+
 set(TESTFILES
-	lidar_1.txt
-	lidar_2.txt
-	lidar_3.txt
-	lidar_4.txt
-	lidar_5.txt
-	lidar_6.txt
-	lidar_7.txt
-	lidar_8.txt
-	lidar_9.txt
-	lidar_10.txt
-	lidar_11.txt
-	lidar_12.txt
-	lidar_13.txt
-	lidar_14.txt
-	lidar_15.txt
-	lidar_16.txt
-	lidar_17.txt
-	lidar_18.txt
-	lidar_19.txt
-	lidar_20.txt
-	lidar_21.txt
-	lidar_22.txt
-	lidar_23.txt
-	lidar_24.txt
-	lidar_25.txt
-	lidar_26.txt
-	lidar_27.txt
-	lidar_28.txt
-	lidar_29.txt
-	lidar_30.txt
-	lidar_31.txt
-	lidar_32.txt
-	lidar_33.txt
-	lidar_34.txt
-	lidar_35.txt
-	lidar_36.txt
-	lidar_37.txt
-	lidar_38.txt
-	lidar_39.txt
-	lidar_40.txt
-	lidar_wall.txt
-	lidar_moving_1_previous.txt
-	lidar_moving_1_current.txt
-	lidar_moving_2_previous.txt
-	lidar_moving_2_current.txt
-	lidar_moving_3_previous.txt
-	lidar_moving_3_current.txt
-	sonar_1.txt
-	sonar_2.txt
-	sonar_3.txt
-	sonar_4.txt
-	sonar_5.txt
-	sonar_6.txt
-	blue_goal.png
-	blue_puck.png
-	nothing.png
-	yellow_and_blue_puck.png
-	yellow_goal.png
-	yellow_puck.png
-	yellow_puck_twice.png
-	yellow_goal_1.png
-	green_borderstone.png
-	green_borderstone_1.png
-	green_borderstone_triple.png
-	green_borderstone_triple_1.png
-	yellow_and_blue_puck_and_green_borderstone.png
-	yellow_puck_twice_and_green_borderstone.png
-	yellow_puck_twice_and_green_borderstone_1.png
-	camera_22_11.png
-	lidar_detect1.txt
-	lidar_detect2.txt
-	lidar_detect3.txt
-	yellow_puck_collected_left.png
-	yellow_puck_collected_right.png
-	yellow_puck_collected_left_2.png
-	yellow_puck_collected_right_2.png
-	yellow_puck_collected_in_blue_goal_2.png
-	yellow_puck_collected_in_blue_goal.png
-	blue_puck_collected_left.png
-	blue_puck_collected_right.png
-	blue_puck_collected_in_yellow_goal.png
+	${TESTFILES_TXT}
+	${TESTFILES_PNG}
+)
+
+set(TESTFILES_LOOSING_PUCK
+	${TESTFILES_LOOSING_PUCK_1_TXT}
+	${TESTFILES_LOOSING_PUCK_1_PNG}
 )
 
 foreach(file ${TESTFILES})
 	file(	COPY
-			${CMAKE_CURRENT_SOURCE_DIR}/resources/testfiles/${file}
+			${file}
 			DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/main/bin/resources/testfiles/)
+endforeach()
+
+foreach(file ${TESTFILES_LOOSING_PUCK})
+	file(	COPY
+			${file}
+			DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/main/bin/resources/testfiles/loosing_puck_1)
 endforeach()
