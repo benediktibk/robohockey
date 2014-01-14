@@ -5,6 +5,10 @@
 
 namespace RoboHockey
 {
+namespace Common
+{
+	class Logger;
+}
 namespace Layer
 {
 namespace Strategy
@@ -15,8 +19,8 @@ namespace Common
 			public State
 	{
 	public:
-		StateMock(Autonomous::Robot &robot, Autonomous::Field &field, Referee &referee);
-		StateMock(Autonomous::Robot &robot, Autonomous::Field &field, Referee &referee, bool callUpdateOnlyOnce);
+		StateMock(Autonomous::Robot &robot, Autonomous::Field &field, Referee &referee, RoboHockey::Common::Logger &logger);
+		StateMock(Autonomous::Robot &robot, Autonomous::Field &field, Referee &referee, RoboHockey::Common::Logger &logger, bool callUpdateOnlyOnce);
 
 		virtual State* nextState();
 		virtual std::string getName();

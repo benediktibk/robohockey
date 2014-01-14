@@ -10,8 +10,8 @@ using namespace RoboHockey::Layer::Strategy::Common;
 using namespace RoboHockey::Layer::Strategy::MainStateMachine;
 using namespace RoboHockey::Layer::Autonomous;
 
-AchieveGoals::AchieveGoals(Robot &robot, Field &field, Referee &referee) :
-	State(robot, field, referee, false)
+AchieveGoals::AchieveGoals(Robot &robot, Field &field, Referee &referee, RoboHockey::Common::Logger &logger) :
+	State(robot, field, referee, logger, false)
 {
 	m_puckTargetFetcher = new ColorDependentPuckTargetFetcherToAchiveGoals(m_field);
 	State *initialState = new DrivePuckStateMachine::InitialState(robot, field, referee, *m_puckTargetFetcher);

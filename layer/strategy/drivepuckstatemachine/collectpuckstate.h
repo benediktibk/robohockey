@@ -6,6 +6,10 @@
 
 namespace RoboHockey
 {
+namespace Common
+{
+	class Logger;
+}
 namespace Layer
 {
 namespace Strategy
@@ -16,7 +20,7 @@ namespace DrivePuckStateMachine
 			public Common::State
 	{
 	public:
-		CollectPuckState(Autonomous::Robot &robot, Autonomous::Field &field, Common::Referee &referee, const Common::ColorDependentPuckTargetFetcher &puckTargetFetcher);
+		CollectPuckState(Autonomous::Robot &robot, Autonomous::Field &field, Common::Referee &referee, RoboHockey::Common::Logger &logger, const Common::ColorDependentPuckTargetFetcher &puckTargetFetcher);
 
 		virtual State* nextState();
 		virtual std::string getName();

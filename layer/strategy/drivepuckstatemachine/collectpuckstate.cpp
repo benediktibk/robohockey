@@ -9,12 +9,13 @@
 #include <assert.h>
 
 using namespace std;
+using namespace RoboHockey::Common;
 using namespace RoboHockey::Layer::Strategy::Common;
 using namespace RoboHockey::Layer::Strategy::DrivePuckStateMachine;
 using namespace RoboHockey::Layer::Autonomous;
 
-CollectPuckState::CollectPuckState(Robot &robot, Field &field, Referee &referee, const ColorDependentPuckTargetFetcher &puckTargetFetcher) :
-	State(robot, field, referee, true),
+CollectPuckState::CollectPuckState(Robot &robot, Field &field, Referee &referee, Logger &logger, const ColorDependentPuckTargetFetcher &puckTargetFetcher) :
+	State(robot, field, referee, logger, true),
 	m_puckTargetFetcher(puckTargetFetcher)
 { }
 

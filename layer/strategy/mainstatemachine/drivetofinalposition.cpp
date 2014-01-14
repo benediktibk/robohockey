@@ -10,8 +10,8 @@ using namespace RoboHockey::Layer::Strategy::Common;
 using namespace RoboHockey::Layer::Strategy::MainStateMachine;
 using namespace RoboHockey::Layer::Autonomous;
 
-DriveToFinalPosition::DriveToFinalPosition(Robot &robot, Field &field, Referee &referee) :
-	State(robot, field, referee, true)
+DriveToFinalPosition::DriveToFinalPosition(Robot &robot, Field &field, Referee &referee, RoboHockey::Common::Logger &logger) :
+	State(robot, field, referee, logger, true)
 { }
 
 State *DriveToFinalPosition::nextState()

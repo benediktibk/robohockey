@@ -8,8 +8,8 @@ using namespace RoboHockey::Layer::Strategy::Common;
 using namespace RoboHockey::Layer::Strategy::MainStateMachine;
 using namespace RoboHockey::Layer::Autonomous;
 
-Calibrate::Calibrate(Robot &robot, Field &field, Referee &referee) :
-	State(robot, field, referee, false)
+Calibrate::Calibrate(Robot &robot, Field &field, Referee &referee, RoboHockey::Common::Logger &logger) :
+	State(robot, field, referee, logger, false)
 {
 	State *initialState = new FieldDetectionStateMachine::InitialState(robot, field, referee);
 	m_fieldDetectionStateMachine = new StateMachine(initialState, robot, field, referee);

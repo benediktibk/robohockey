@@ -9,6 +9,7 @@ namespace RoboHockey
 {
 namespace Common
 {
+	class Logger;
 	class Angle;
 }
 namespace Layer

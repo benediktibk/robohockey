@@ -7,8 +7,8 @@ using namespace RoboHockey::Layer::Strategy::MainStateMachine;
 using namespace RoboHockey::Layer::Autonomous;
 using namespace std;
 
-InitialState::InitialState(Robot &robot, Field &field, Referee &referee) :
-	State(robot, field, referee, false)
+InitialState::InitialState(Robot &robot, Field &field, Referee &referee, RoboHockey::Common::Logger &logger) :
+	State(robot, field, referee, logger, false)
 { }
 
 State* InitialState::nextState()

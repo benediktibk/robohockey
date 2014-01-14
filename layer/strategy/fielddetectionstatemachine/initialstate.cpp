@@ -6,8 +6,8 @@ using namespace RoboHockey::Layer::Strategy::Common;
 using namespace RoboHockey::Layer::Strategy::FieldDetectionStateMachine;
 using namespace RoboHockey::Layer::Autonomous;
 
-InitialState::InitialState(Robot &robot, Field &field, Referee &referee) :
-	State(robot, field, referee, false)
+InitialState::InitialState(Robot &robot, Field &field, Referee &referee, RoboHockey::Common::Logger &logger) :
+	State(robot, field, referee, logger, false)
 { }
 
 State* InitialState::nextState()

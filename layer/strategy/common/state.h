@@ -5,6 +5,10 @@
 
 namespace RoboHockey
 {
+namespace Common
+{
+	class Logger;
+}
 namespace Layer
 {
 namespace Autonomous
@@ -22,7 +26,7 @@ namespace Common
 	class State
 	{
 	public:
-		State(Autonomous::Robot &robot, Autonomous::Field &field, Referee &referee, bool callUpdateOnlyOnce);
+		State(Autonomous::Robot &robot, Autonomous::Field &field, Referee &referee, RoboHockey::Common::Logger &logger, bool callUpdateOnlyOnce);
 		virtual ~State();
 
 		virtual State* nextState() = 0;
@@ -37,6 +41,7 @@ namespace Common
 		Autonomous::Robot &m_robot;
 		Autonomous::Field &m_field;
 		Referee &m_referee;
+		RoboHockey::Common::Logger &m_logger;
 
 	private:
 		bool m_callUpdateOnlyOnce;

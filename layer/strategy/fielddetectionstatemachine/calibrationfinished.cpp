@@ -10,8 +10,8 @@ using namespace RoboHockey::Common;
 using namespace RoboHockey::Layer::Strategy::Common;
 using namespace RoboHockey::Layer::Strategy::FieldDetectionStateMachine;
 
-CalibrationFinished::CalibrationFinished(Autonomous::Robot &robot, Autonomous::Field &field, Common::Referee &referee, unsigned int reachedTargets) :
-	State(robot, field, referee, false),
+CalibrationFinished::CalibrationFinished(Autonomous::Robot &robot, Autonomous::Field &field, Common::Referee &referee, Logger &logger, unsigned int reachedTargets) :
+	State(robot, field, referee, logger, false),
 	m_reachedTargets(reachedTargets)
 { }
 

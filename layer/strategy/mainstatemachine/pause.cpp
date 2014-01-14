@@ -9,8 +9,8 @@ using namespace RoboHockey::Layer::Strategy::MainStateMachine;
 using namespace RoboHockey::Layer::Autonomous;
 using namespace std;
 
-Pause::Pause(Robot &robot, Field &field, Referee &referee) :
-	State(robot, field, referee, true)
+Pause::Pause(Robot &robot, Field &field, Referee &referee, RoboHockey::Common::Logger &logger) :
+	State(robot, field, referee, logger, true)
 {}
 
 State* Pause::nextState()
