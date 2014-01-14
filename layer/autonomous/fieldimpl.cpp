@@ -599,7 +599,7 @@ vector<RobotPosition> FieldImpl::getTargetsForWaitingPhase() const
 
 bool FieldImpl::isPuckOfColorInFront(FieldColor color) const
 {
-	vector<FieldObject> objects = getObjectsInVisibleSector(Angle::getQuarterRotation(), 0.5);
+	vector<FieldObject> objects = getObjectsInVisibleSector(Angle::getHalfRotation()/3, 0.5);
 	if(objects.empty())
 		return false;
 
@@ -614,7 +614,7 @@ bool FieldImpl::isPuckOfColorInFront(FieldColor color) const
 
 bool FieldImpl::isPuckcolorDetected() const
 {
-	vector<FieldObject> objects = getObjectsInVisibleSector(Angle::getQuarterRotation(), 1);
+	vector<FieldObject> objects = getObjectsInVisibleSector(Angle::getHalfRotation()/3, 1);
 
 	for(vector<FieldObject>::const_iterator i = objects.begin(); i != objects.end(); ++i)
 	{
