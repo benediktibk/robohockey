@@ -2,19 +2,50 @@
 #include <iostream>
 #include <ctime>
 #include <boost/filesystem.hpp>
+#include <assert.h>
+#include <iomanip>
+#include <sstream>
 
 using namespace std;
+using namespace boost;
 using namespace RoboHockey::Common;
 
 LoggerImpl::LoggerImpl() :
 	m_consoleOutputEnabled(true),
 	m_logWritingEnabled(true)
 {
-	boost::filesystem::create_directory("log");
-	m_globalLogFile.open("log/0_global.txt", ios_base::out | ios_base::trunc);
-	m_stateChangesLogFile.open("log/1_stateChanges.txt", ios_base::out | ios_base::trunc);
-	m_fieldLogFile.open("log/2_field.txt", ios_base::out | ios_base::trunc);
-	m_fieldDetectionLogFile.open("log/3_fieldDetection.txt", ios_base::out | ios_base::trunc);
+	string folder = "log";
+
+	for (int i = 0; i <= 999; ++i)
+	{
+		stringstream currentStringStream;
+		currentStringStream << folder << setw(3) << setfill('0') << i ;
+
+		if(!filesystem::exists(currentStringStream.str()))
+		{
+			filesystem::create_directory(currentStringStream.str());
+			folder = currentStringStream.str();
+			break;
+		}
+
+	}
+
+	string globalLogFile = folder;
+	globalLogFile.append("/0_global.txt");
+
+	string stateChangesLogFile = folder;
+	stateChangesLogFile.append("/1_stateChanges.txt");
+
+	string fieldLogFile = folder;
+	fieldLogFile.append("/2_field.txt");
+
+	string fieldDetectionLogFile = folder;
+	fieldDetectionLogFile.append("/3_fieldDetection.txt");
+
+	m_globalLogFile.open(globalLogFile.c_str(), ios_base::out | ios_base::trunc);
+	m_stateChangesLogFile.open(stateChangesLogFile.c_str(), ios_base::out | ios_base::trunc);
+	m_fieldLogFile.open(fieldLogFile.c_str(), ios_base::out | ios_base::trunc);
+	m_fieldDetectionLogFile.open(fieldDetectionLogFile.c_str(), ios_base::out | ios_base::trunc);
 
 
 	initLogFiles();
@@ -30,25 +61,27 @@ LoggerImpl::~LoggerImpl()
 	m_fieldDetectionLogFile.close();
 }
 
-void LoggerImpl::logToConsole(const string &message)
+void LoggerImpl::logToConsoleAndGlobalLogFile(const string &message)
 {
 	if (m_consoleOutputEnabled)
 		cout << message << endl;
+	logToGlobalLogFile(message);
 }
 
-void LoggerImpl::logErrorToConsole(const string &message)
+void LoggerImpl::logErrorToConsoleAndWriteToGlobalLogFile(const string &message)
 {
 	if (m_consoleOutputEnabled)
 		cerr << message << endl;
+	logToGlobalLogFile(message);
 }
 
-void LoggerImpl::writeToGlobalLogFile(const string &message)
+void LoggerImpl::logToGlobalLogFile(const string &message)
 {
 	if (m_logWritingEnabled)
 		m_globalLogFile << message << endl;
 }
 
-void LoggerImpl::writeToLogFileOfType(LogFileType logType, const string &message)
+void LoggerImpl::logToLogFileOfType(LogFileType logType, const string &message)
 {
 	if (m_logWritingEnabled)
 	{
@@ -113,7 +146,7 @@ void LoggerImpl::initLogFiles()
 	for (int i = LogFileTypeGlobal; i <= LogFileTypeFieldDetection; i++)
 	{
 		LogFileType currentLogFile = static_cast<LogFileType>(i);
-		writeToLogFileOfType(currentLogFile, message);
+		logToLogFileOfType(currentLogFile, message);
 	}
 
 }
@@ -138,7 +171,7 @@ void LoggerImpl::closeLogFiles()
 	for (int i = LogFileTypeGlobal; i <= LogFileTypeFieldDetection; ++i)
 	{
 		LogFileType currentLogFile = static_cast<LogFileType>(i);
-		writeToLogFileOfType(currentLogFile, message);
+		logToLogFileOfType(currentLogFile, message);
 	}
 }
 

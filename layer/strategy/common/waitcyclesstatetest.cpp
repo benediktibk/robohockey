@@ -4,7 +4,9 @@
 #include "layer/strategy/common/refereemock.h"
 #include "layer/autonomous/robotmock.h"
 #include "layer/autonomous/fieldmock.h"
+#include "common/loggermock.h"
 
+using namespace RoboHockey::Common;
 using namespace RoboHockey::Layer::Strategy::Common;
 using namespace RoboHockey::Layer::Autonomous;
 
@@ -13,8 +15,9 @@ void WaitCyclesStateTest::nextState_didntWaitEnoughCycles_resultIs0()
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	State *stateAfterWaitCycles = new StateMock(robot, field, referee);
-	WaitCyclesState waitState(robot, field, referee, stateAfterWaitCycles, 10);
+	LoggerMock logger;
+	State *stateAfterWaitCycles = new StateMock(robot, field, referee, logger);
+	WaitCyclesState waitState(robot, field, referee, logger, stateAfterWaitCycles, 10);
 	waitState.update();
 	waitState.update();
 	waitState.update();
@@ -30,8 +33,9 @@ void WaitCyclesStateTest::nextState_didWaitEnoughCycles_resultIsStateAfterWaitCy
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	State *stateAfterWaitCycles = new StateMock(robot, field, referee);
-	WaitCyclesState waitState(robot, field, referee, stateAfterWaitCycles, 5);
+	LoggerMock logger;
+	State *stateAfterWaitCycles = new StateMock(robot, field, referee, logger);
+	WaitCyclesState waitState(robot, field, referee, logger, stateAfterWaitCycles, 5);
 
 	waitState.update();
 	waitState.update();
@@ -50,8 +54,9 @@ void WaitCyclesStateTest::nextState_detectAllObjects_resultIsIsStateAfterWaitCyc
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	State *stateAfterWaitCycles = new StateMock(robot, field, referee);
-	WaitCyclesState waitState(robot, field, referee, stateAfterWaitCycles, 10);
+	LoggerMock logger;
+	State *stateAfterWaitCycles = new StateMock(robot, field, referee, logger);
+	WaitCyclesState waitState(robot, field, referee, logger, stateAfterWaitCycles, 10);
 
 	waitState.update();
 	waitState.update();

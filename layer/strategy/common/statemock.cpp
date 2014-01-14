@@ -1,17 +1,18 @@
 #include "layer/strategy/common/statemock.h"
 
+using namespace RoboHockey::Common;
 using namespace RoboHockey::Layer::Strategy::Common;
 using namespace RoboHockey::Layer::Autonomous;
 
-StateMock::StateMock(Robot &robot, Field &field, Referee &referee) :
-	State(robot, field, referee, false),
+StateMock::StateMock(Robot &robot, Field &field, Referee &referee, Logger &logger) :
+	State(robot, field, referee, logger, false),
 	m_callsToNextState(0),
 	m_callsToUpdate(0),
 	m_nextState(0)
 { }
 
-StateMock::StateMock(Robot &robot, Field &field, Referee &referee, bool callUpdateOnlyOnce) :
-	State(robot, field, referee, callUpdateOnlyOnce),
+StateMock::StateMock(Robot &robot, Field &field, Referee &referee, Logger &logger, bool callUpdateOnlyOnce) :
+	State(robot, field, referee, logger, callUpdateOnlyOnce),
 	m_callsToNextState(0),
 	m_callsToUpdate(0),
 	m_nextState(0)

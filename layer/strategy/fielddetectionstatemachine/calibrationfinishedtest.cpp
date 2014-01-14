@@ -7,7 +7,9 @@
 #include "layer/strategy/common/waitcyclesstate.h"
 #include "layer/autonomous/robotmock.h"
 #include "layer/autonomous/fieldmock.h"
+#include "common/loggermock.h"
 
+using namespace RoboHockey::Common;
 using namespace RoboHockey::Layer::Autonomous;
 using namespace RoboHockey::Layer::Strategy::Common;
 using namespace RoboHockey::Layer::Strategy::FieldDetectionStateMachine;
@@ -17,7 +19,8 @@ void CalibrationFinishedTest::nextState_3TargetsReached_NULL()
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	CalibrationFinished calibrationFinishedState(robot, field, referee, 3);
+	LoggerMock logger;
+	CalibrationFinished calibrationFinishedState(robot, field, referee, logger, 3);
 
 	calibrationFinishedState.update();
 
@@ -31,7 +34,8 @@ void CalibrationFinishedTest::nextState_0TargetsReached_WaitState()
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	CalibrationFinished calibrationFinishedState(robot, field, referee, 0);
+	LoggerMock logger;
+	CalibrationFinished calibrationFinishedState(robot, field, referee, logger, 0);
 
 	calibrationFinishedState.update();
 
@@ -48,7 +52,8 @@ void CalibrationFinishedTest::nextState_1TargetsReached_WaitState()
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	CalibrationFinished calibrationFinishedState(robot, field, referee, 1);
+	LoggerMock logger;
+	CalibrationFinished calibrationFinishedState(robot, field, referee, logger, 1);
 
 	calibrationFinishedState.update();
 

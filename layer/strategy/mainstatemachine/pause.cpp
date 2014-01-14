@@ -9,18 +9,18 @@ using namespace RoboHockey::Layer::Strategy::MainStateMachine;
 using namespace RoboHockey::Layer::Autonomous;
 using namespace std;
 
-Pause::Pause(Robot &robot, Field &field, Referee &referee) :
-	State(robot, field, referee, true)
+Pause::Pause(Robot &robot, Field &field, Referee &referee, RoboHockey::Common::Logger &logger) :
+	State(robot, field, referee, logger, true)
 {}
 
 State* Pause::nextState()
 {
 	if(m_referee.gameStart())
-		return new AchieveGoals(m_robot, m_field, m_referee);
+		return new AchieveGoals(m_robot, m_field, m_referee, m_logger);
 	else if(m_referee.detectionStart())
-		return new Calibrate(m_robot, m_field, m_referee);
+		return new Calibrate(m_robot, m_field, m_referee, m_logger);
 	else if(m_field.getNumberOfAchievedGoals() < 3 && not m_referee.stopMovement() && not m_referee.gameOver())
-		return new AchieveGoals(m_robot, m_field, m_referee);
+		return new AchieveGoals(m_robot, m_field, m_referee, m_logger);
 	else
 		return 0;
 }

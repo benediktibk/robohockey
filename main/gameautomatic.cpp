@@ -6,6 +6,7 @@
 #include "layer/autonomous/field.h"
 #include "layer/autonomous/robot.h"
 #include "common/console.h"
+#include "common/logger.h"
 #include <iostream>
 
 using namespace std;
@@ -23,7 +24,7 @@ GameAutomatic::GameAutomatic(int argc, char **argv) :
 	m_model(new Model()),
 	m_controller(new Controller(*m_model))
 {
-	InitialState *initialState = new InitialState(getRobot(), getField(), getReferee());
+	InitialState *initialState = new InitialState(getRobot(), getField(), getReferee(), getLogger());
 	m_stateMachine = new StateMachine(initialState, getRobot(), getField(), getReferee());
 
 	cout << "starting the robot" << endl;
@@ -57,7 +58,7 @@ void GameAutomatic::executeRobotControl()
 	if(m_oldString != m_stateMachine->getNameOfCurrentState())
 	{
 		m_oldString = m_stateMachine->getNameOfCurrentState();
-		cout << "current state: " << m_stateMachine->getNameOfCurrentState() << endl;
+		getLogger().logToConsoleAndGlobalLogFile("current state: " + m_stateMachine->getNameOfCurrentState());
 	}
 
 	if (guiEnabled() && logMessagesEnabled())

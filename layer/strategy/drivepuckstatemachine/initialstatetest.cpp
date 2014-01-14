@@ -9,7 +9,9 @@
 #include "layer/autonomous/robotmock.h"
 #include "layer/autonomous/fieldmock.h"
 #include "layer/strategy/common/colordependentpucktargetfetchermock.h"
+#include "common/loggermock.h"
 
+using namespace RoboHockey::Common;
 using namespace RoboHockey::Layer::Strategy::Common;
 using namespace RoboHockey::Layer::Strategy::DrivePuckStateMachine;
 using namespace RoboHockey::Layer::Autonomous;
@@ -19,9 +21,10 @@ void InitialStateTest::nextState_puckCollected_nextStateIsLeavePuck()
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
+	LoggerMock logger;
 	ColorDependentPuckTargetFetcherMock puckTargetFetcher;
 	robot.setPuckCollected(true);
-	InitialState initialState(robot, field, referee, puckTargetFetcher);
+	InitialState initialState(robot, field, referee, logger, puckTargetFetcher);
 	State *state;
 	state = initialState.nextState();
 	LeavePuckState *stateCasted = dynamic_cast<LeavePuckState*>(state);
@@ -35,8 +38,9 @@ void InitialStateTest::nextState_numberOfKnownPucksIs0_nextStateIsFindPuck()
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
+	LoggerMock logger;
 	ColorDependentPuckTargetFetcherMock puckTargetFetcher;
-	InitialState initialState(robot, field, referee, puckTargetFetcher);
+	InitialState initialState(robot, field, referee, logger, puckTargetFetcher);
 	State *state;
 	state = initialState.nextState();
 	FindPuckState *stateCasted = dynamic_cast<FindPuckState*>(state);
@@ -50,9 +54,10 @@ void InitialStateTest::nextState_numberOfKnownPucksIs2_nextStateIsDriveToCollect
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
+	LoggerMock logger;
 	ColorDependentPuckTargetFetcherMock puckTargetFetcher;
-	puckTargetFetcher.setNumberOfKnownPucksNotInTarget(2);
-	InitialState initialState(robot, field, referee, puckTargetFetcher);
+	puckTargetFetcher.setNumberOfKnownPucksNotInEnemyThird(2);
+	InitialState initialState(robot, field, referee, logger, puckTargetFetcher);
 	State *state;
 	state = initialState.nextState();
 	DriveToCollectPuckState *stateCasted = dynamic_cast<DriveToCollectPuckState*>(state);

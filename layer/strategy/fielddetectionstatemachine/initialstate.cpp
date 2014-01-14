@@ -6,13 +6,13 @@ using namespace RoboHockey::Layer::Strategy::Common;
 using namespace RoboHockey::Layer::Strategy::FieldDetectionStateMachine;
 using namespace RoboHockey::Layer::Autonomous;
 
-InitialState::InitialState(Robot &robot, Field &field, Referee &referee) :
-	State(robot, field, referee, false)
+InitialState::InitialState(Robot &robot, Field &field, Referee &referee, RoboHockey::Common::Logger &logger) :
+	State(robot, field, referee, logger, false)
 { }
 
 State* InitialState::nextState()
 {
-	return new DetectField(m_robot, m_field, m_referee, std::list<std::pair<unsigned int, RoboHockey::Common::RobotPosition> >() );
+	return new DetectField(m_robot, m_field, m_referee, m_logger, std::list<std::pair<unsigned int, RoboHockey::Common::RobotPosition> >() );
 }
 
 std::string InitialState::getName()

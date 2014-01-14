@@ -8,10 +8,10 @@ using namespace RoboHockey::Layer::Strategy::Common;
 using namespace RoboHockey::Layer::Strategy::MainStateMachine;
 using namespace RoboHockey::Layer::Autonomous;
 
-Calibrate::Calibrate(Robot &robot, Field &field, Referee &referee) :
-	State(robot, field, referee, false)
+Calibrate::Calibrate(Robot &robot, Field &field, Referee &referee, RoboHockey::Common::Logger &logger) :
+	State(robot, field, referee, logger, false)
 {
-	State *initialState = new FieldDetectionStateMachine::InitialState(robot, field, referee);
+	State *initialState = new FieldDetectionStateMachine::InitialState(robot, field, referee, logger);
 	m_fieldDetectionStateMachine = new StateMachine(initialState, robot, field, referee);
 }
 
@@ -25,11 +25,11 @@ State* Calibrate::nextState()
 {
 	if(m_referee.gameStart())
 	{
-		return new AchieveGoals(m_robot, m_field, m_referee);
+		return new AchieveGoals(m_robot, m_field, m_referee, m_logger);
 	}
 	else if(m_referee.stopMovement() || m_referee.gameOver())
 	{
-		return new Pause(m_robot, m_field, m_referee);
+		return new Pause(m_robot, m_field, m_referee, m_logger);
 	}
 	return 0;
 }

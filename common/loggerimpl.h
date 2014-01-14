@@ -13,12 +13,12 @@ class LoggerImpl :
 
 	public:
 		LoggerImpl();
-		~LoggerImpl();
+		virtual ~LoggerImpl();
 
-		virtual void logToConsole(const std::string &message);
-		virtual void logErrorToConsole(const std::string &message);
-		virtual void writeToGlobalLogFile(const std::string &message);
-		virtual void writeToLogFileOfType(LogFileType logType, const std::string &message);
+		virtual void logToConsoleAndGlobalLogFile(const std::string &message);
+		virtual void logErrorToConsoleAndWriteToGlobalLogFile(const std::string &message);
+		virtual void logToGlobalLogFile(const std::string &message);
+		virtual void logToLogFileOfType(LogFileType logType, const std::string &message);
 
 		virtual void enableConsoleOutput();
 		virtual void disableConsoleOutput();

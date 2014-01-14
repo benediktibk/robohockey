@@ -7,6 +7,7 @@
 #include "layer/strategy/common/drivetostate.h"
 #include "layer/autonomous/robotmock.h"
 #include "layer/autonomous/fieldmock.h"
+#include "common/loggermock.h"
 
 using namespace RoboHockey::Common;
 using namespace RoboHockey::Layer::Strategy::Common;
@@ -19,7 +20,8 @@ void CheckGoalColorTest::nextState_successfulColorCheckNoResponse_NULL()
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	CheckGoalColor checkGoalColorState(robot, field, referee);
+	LoggerMock logger;
+	CheckGoalColor checkGoalColorState(robot, field, referee, logger);
 
 	field.setTrueTeamColor(FieldColorYellow);
 	referee.setTrueColorOfTeam(FieldColorUnknown);
@@ -36,7 +38,8 @@ void CheckGoalColorTest::nextState_unsuccessfulColorCheck_NULL()
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	CheckGoalColor checkGoalColorState(robot, field, referee);
+	LoggerMock logger;
+	CheckGoalColor checkGoalColorState(robot, field, referee, logger);
 
 	field.setTrueTeamColor(FieldColorUnknown);
 	checkGoalColorState.update();
@@ -53,7 +56,8 @@ void CheckGoalColorTest::nextState_successfulColorCheckGotResponse_calibrationFi
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	CheckGoalColor checkGoalColorState(robot, field, referee);
+	LoggerMock logger;
+	CheckGoalColor checkGoalColorState(robot, field, referee, logger);
 
 	field.setTrueTeamColor(FieldColorYellow);
 	referee.setTrueColorOfTeam(FieldColorUnknown);
@@ -78,7 +82,8 @@ void CheckGoalColorTest::nextState_unsuccessfulChecks_guessesAfter5Tries()
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	CheckGoalColor checkGoalColorState(robot, field, referee);
+	LoggerMock logger;
+	CheckGoalColor checkGoalColorState(robot, field, referee, logger);
 
 	field.setTrueTeamColor(FieldColorUnknown);
 	checkGoalColorState.update();

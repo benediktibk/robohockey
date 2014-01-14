@@ -5,6 +5,10 @@
 
 namespace RoboHockey
 {
+namespace Common
+{
+	class Logger;
+}
 namespace Layer
 {
 namespace Strategy
@@ -15,7 +19,7 @@ namespace Common
 			public State
 	{
 	public:
-		WaitCyclesState(Autonomous::Robot &robot, Autonomous::Field &field, Common::Referee &referee,
+		WaitCyclesState(Autonomous::Robot &robot, Autonomous::Field &field, Common::Referee &referee, RoboHockey::Common::Logger &logger,
 				  State *stateAfterWaitCycles, unsigned int cycles);
 		virtual ~WaitCyclesState();
 

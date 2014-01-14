@@ -7,14 +7,14 @@ using namespace RoboHockey::Layer::Strategy::MainStateMachine;
 using namespace RoboHockey::Layer::Autonomous;
 using namespace std;
 
-InitialState::InitialState(Robot &robot, Field &field, Referee &referee) :
-	State(robot, field, referee, false)
+InitialState::InitialState(Robot &robot, Field &field, Referee &referee, RoboHockey::Common::Logger &logger) :
+	State(robot, field, referee, logger, false)
 { }
 
 State* InitialState::nextState()
 {
 	if(m_referee.detectionStart())
-		return new Calibrate(m_robot, m_field, m_referee);
+		return new Calibrate(m_robot, m_field, m_referee, m_logger);
 	else
 		return 0;
 }

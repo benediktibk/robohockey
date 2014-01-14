@@ -9,12 +9,13 @@
 #include <assert.h>
 
 using namespace std;
+using namespace RoboHockey::Common;
 using namespace RoboHockey::Layer::Strategy::Common;
 using namespace RoboHockey::Layer::Strategy::DrivePuckStateMachine;
 using namespace RoboHockey::Layer::Autonomous;
 
-CollectPuckState::CollectPuckState(Robot &robot, Field &field, Referee &referee, const ColorDependentPuckTargetFetcher &puckTargetFetcher) :
-	State(robot, field, referee, true),
+CollectPuckState::CollectPuckState(Robot &robot, Field &field, Referee &referee, Logger &logger, const ColorDependentPuckTargetFetcher &puckTargetFetcher) :
+	State(robot, field, referee, logger, true),
 	m_puckTargetFetcher(puckTargetFetcher)
 { }
 
@@ -24,9 +25,9 @@ State* CollectPuckState::nextState()
 			m_field.getObjectsWithColorOrderdByDistance(m_puckTargetFetcher.getColorOfTargetPucks());
 
 	if(m_robot.isPuckCollected())
-		return new DrivePuckToPositionState(m_robot, m_field, m_referee, m_puckTargetFetcher);
+		return new DrivePuckToPositionState(m_robot, m_field, m_referee, m_logger, m_puckTargetFetcher);
 	else if(m_robot.cantReachTarget() || !m_robot.isPuckCollectable() || targetPositions.empty())
-		return new DriveToCollectPuckState(m_robot, m_field, m_referee, m_puckTargetFetcher);
+		return new DriveToCollectPuckState(m_robot, m_field, m_referee, m_logger, m_puckTargetFetcher);
 	else
 		return 0;
 }

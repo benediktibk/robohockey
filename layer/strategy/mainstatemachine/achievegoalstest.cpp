@@ -7,7 +7,9 @@
 #include "layer/strategy/mainstatemachine/hideenemypucks.h"
 #include "layer/autonomous/robotmock.h"
 #include "layer/autonomous/fieldmock.h"
+#include "common/loggermock.h"
 
+using namespace RoboHockey::Common;
 using namespace RoboHockey::Layer::Strategy::Common;
 using namespace RoboHockey::Layer::Strategy::MainStateMachine;
 using namespace RoboHockey::Layer::Autonomous;
@@ -17,7 +19,8 @@ void AchieveGoalsTest::nextState_stopMovement_pause()
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	AchieveGoals achieveGoals(robot, field, referee);
+	LoggerMock logger;
+	AchieveGoals achieveGoals(robot, field, referee, logger);
 	referee.setStopMovement(true);
 	referee.setDetectionStart(false);
 	field.setAchievedGoals(0);
@@ -37,7 +40,8 @@ void AchieveGoalsTest::nextState_gameOver_pause()
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	AchieveGoals achieveGoals(robot, field, referee);
+	LoggerMock logger;
+	AchieveGoals achieveGoals(robot, field, referee, logger);
 	referee.setStopMovement(false);
 	referee.setDetectionStart(false);
 	field.setAchievedGoals(0);
@@ -57,7 +61,8 @@ void AchieveGoalsTest::nextState_achievedGoals3_hideEnemyPucks()
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	AchieveGoals achieveGoals(robot, field, referee);
+	LoggerMock logger;
+	AchieveGoals achieveGoals(robot, field, referee, logger);
 	referee.setStopMovement(false);
 	referee.setDetectionStart(false);
 	field.setAchievedGoals(3);
@@ -77,7 +82,8 @@ void AchieveGoalsTest::nextState_achievedGoals1_notHideEnemyPucks()
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	AchieveGoals achieveGoals(robot, field, referee);
+	LoggerMock logger;
+	AchieveGoals achieveGoals(robot, field, referee, logger);
 	referee.setStopMovement(false);
 	referee.setDetectionStart(false);
 	field.setAchievedGoals(1);
@@ -96,7 +102,8 @@ void AchieveGoalsTest::nextState_achievedGoals1_notPause()
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	AchieveGoals achieveGoals(robot, field, referee);
+	LoggerMock logger;
+	AchieveGoals achieveGoals(robot, field, referee, logger);
 	referee.setStopMovement(false);
 	referee.setDetectionStart(false);
 	field.setAchievedGoals(1);
@@ -115,7 +122,8 @@ void AchieveGoalsTest::nextState_achievedGoals1_AchieveGoals()
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	AchieveGoals achieveGoals(robot, field, referee);
+	LoggerMock logger;
+	AchieveGoals achieveGoals(robot, field, referee, logger);
 	referee.setStopMovement(false);
 	referee.setDetectionStart(false);
 	field.setAchievedGoals(1);

@@ -7,6 +7,7 @@
 #include "layer/autonomous/fieldmock.h"
 #include "common/point.h"
 #include "common/robotposition.h"
+#include "common/loggermock.h"
 
 using namespace RoboHockey::Common;
 using namespace RoboHockey::Layer::Strategy::Common;
@@ -18,11 +19,12 @@ void DriveToStateTest::nextState_didntReachedTarget_NULL()
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	State *stateAfterTargetReached = new StateMock(robot, field, referee);
-	State *stateAfterTargetUnreachable = new StateMock(robot, field, referee);
+	LoggerMock logger;
+	State *stateAfterTargetReached = new StateMock(robot, field, referee, logger);
+	State *stateAfterTargetUnreachable = new StateMock(robot, field, referee, logger);
 	list<RobotPosition> targetList;
 	targetList.push_back(RobotPosition());
-	DriveToState driveToState(robot, field, referee, targetList, stateAfterTargetReached, stateAfterTargetUnreachable);
+	DriveToState driveToState(robot, field, referee, logger, targetList, stateAfterTargetReached, stateAfterTargetUnreachable);
 	driveToState.update();
 	robot.setReachedTarget(false);
 	robot.setStuckAtObstacle(false);
@@ -37,11 +39,12 @@ void DriveToStateTest::nextState_reachedTarget_stateAfterReachedTarget()
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	State *stateAfterTargetReached = new StateMock(robot, field, referee);
-	State *stateAfterTargetUnreachable = new StateMock(robot, field, referee);
+	LoggerMock logger;
+	State *stateAfterTargetReached = new StateMock(robot, field, referee, logger);
+	State *stateAfterTargetUnreachable = new StateMock(robot, field, referee, logger);
 	list<RobotPosition> targetList;
 	targetList.push_back(RobotPosition());
-	DriveToState driveToState(robot, field, referee, targetList, stateAfterTargetReached, stateAfterTargetUnreachable);
+	DriveToState driveToState(robot, field, referee, logger, targetList, stateAfterTargetReached, stateAfterTargetUnreachable);
 	driveToState.update();
 	robot.setReachedTarget(true);
 	robot.setStuckAtObstacle(false);
@@ -57,11 +60,12 @@ void DriveToStateTest::nextState_cantReachTarget_stateAfterCantReachTarget()
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	State *stateAfterTargetReached = new StateMock(robot, field, referee);
-	State *stateAfterTargetUnreachable = new StateMock(robot, field, referee);
+	LoggerMock logger;
+	State *stateAfterTargetReached = new StateMock(robot, field, referee, logger);
+	State *stateAfterTargetUnreachable = new StateMock(robot, field, referee, logger);
 	list<RobotPosition> targetList;
 	targetList.push_back(RobotPosition());
-	DriveToState driveToState(robot, field, referee, targetList, stateAfterTargetReached, stateAfterTargetUnreachable);
+	DriveToState driveToState(robot, field, referee, logger, targetList, stateAfterTargetReached, stateAfterTargetUnreachable);
 	driveToState.update();
 	robot.setReachedTarget(true);
 	robot.setStuckAtObstacle(false);
@@ -78,11 +82,12 @@ void DriveToStateTest::nextState_stuckAtObstacle_stateAfterCantReachTarget()
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	State *stateAfterTargetReached = new StateMock(robot, field, referee);
-	State *stateAfterTargetUnreachable = new StateMock(robot, field, referee);
+	LoggerMock logger;
+	State *stateAfterTargetReached = new StateMock(robot, field, referee, logger);
+	State *stateAfterTargetUnreachable = new StateMock(robot, field, referee, logger);
 	list<RobotPosition> targetList;
 	targetList.push_back(RobotPosition());
-	DriveToState driveToState(robot, field, referee, targetList, stateAfterTargetReached, stateAfterTargetUnreachable);
+	DriveToState driveToState(robot, field, referee, logger, targetList, stateAfterTargetReached, stateAfterTargetUnreachable);
 	driveToState.update();
 	robot.setReachedTarget(true);
 	robot.setStuckAtObstacle(true);

@@ -7,6 +7,10 @@
 
 namespace RoboHockey
 {
+namespace Common
+{
+	class Logger;
+}
 namespace Layer
 {
 namespace Strategy
@@ -17,7 +21,7 @@ namespace Common
 			public State
 	{
 	public:
-		DriveToState(Autonomous::Robot &robot, Autonomous::Field &field, Common::Referee &referee,
+		DriveToState(Autonomous::Robot &robot, Autonomous::Field &field, Common::Referee &referee, RoboHockey::Common::Logger &logger,
 				std::list<RoboHockey::Common::RobotPosition> targetList,
 				State *stateAfterTargetReached, State *stateAfterTargetUnreachable);
 		virtual ~DriveToState();

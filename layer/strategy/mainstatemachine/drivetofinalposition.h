@@ -6,6 +6,10 @@
 
 namespace RoboHockey
 {
+namespace Common
+{
+	class Logger;
+}
 namespace Layer
 {
 namespace Strategy
@@ -16,7 +20,7 @@ class DriveToFinalPosition:
 		public Common::State
 	{
 	public:
-		DriveToFinalPosition(Autonomous::Robot &robot, Autonomous::Field &field, Common::Referee &referee);
+		DriveToFinalPosition(Autonomous::Robot &robot, Autonomous::Field &field, Common::Referee &referee, RoboHockey::Common::Logger &logger);
 
 		virtual State* nextState();
 		virtual std::string getName();

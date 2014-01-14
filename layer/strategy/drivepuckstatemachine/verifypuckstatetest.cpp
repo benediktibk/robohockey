@@ -8,7 +8,9 @@
 #include "layer/autonomous/robotmock.h"
 #include "layer/autonomous/fieldmock.h"
 #include "layer/strategy/common/colordependentpucktargetfetchermock.h"
+#include "common/loggermock.h"
 
+using namespace RoboHockey::Common;
 using namespace RoboHockey::Layer::Strategy::Common;
 using namespace RoboHockey::Layer::Strategy::DrivePuckStateMachine;
 using namespace RoboHockey::Layer::Autonomous;
@@ -19,10 +21,11 @@ void VerifyPuckStateTest::nextState_correctPuckIsCollectable_nextStateIsCollectP
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
+	LoggerMock logger;
 	ColorDependentPuckTargetFetcherMock puckTargetFetcher;
 	robot.setPuckCollectable(true);
 	field.setIsPuckOfColorInFront(true);
-	VerifyPuckState verifyPuckState(robot, field, referee, puckTargetFetcher);
+	VerifyPuckState verifyPuckState(robot, field, referee, logger, puckTargetFetcher);
 	State *state;
 	state = verifyPuckState.nextState();
 	CollectPuckState *stateCasted = dynamic_cast<CollectPuckState*>(state);
@@ -36,9 +39,10 @@ void VerifyPuckStateTest::nextState_wrongPuckIsCollectable_nextStateIsDriveToCol
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
+	LoggerMock logger;
 	ColorDependentPuckTargetFetcherMock puckTargetFetcher;
 	robot.setPuckCollectable(true);
-	VerifyPuckState verifyPuckState(robot, field, referee, puckTargetFetcher);
+	VerifyPuckState verifyPuckState(robot, field, referee, logger, puckTargetFetcher);
 	State *state;
 	state = verifyPuckState.nextState();
 	DriveToCollectPuckState *stateCasted = dynamic_cast<DriveToCollectPuckState*>(state);
@@ -52,9 +56,10 @@ void VerifyPuckStateTest::nextState_correctPuckIsNotCollectable_nextStateIsDrive
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
+	LoggerMock logger;
 	ColorDependentPuckTargetFetcherMock puckTargetFetcher;
 	field.setIsPuckOfColorInFront(true);
-	VerifyPuckState verifyPuckState(robot, field, referee, puckTargetFetcher);
+	VerifyPuckState verifyPuckState(robot, field, referee, logger, puckTargetFetcher);
 	State *state;
 	state = verifyPuckState.nextState();
 	DriveToCollectPuckState *stateCasted = dynamic_cast<DriveToCollectPuckState*>(state);

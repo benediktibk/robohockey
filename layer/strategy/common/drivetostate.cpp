@@ -10,11 +10,10 @@ using namespace RoboHockey::Common;
 using namespace RoboHockey::Layer::Strategy::Common;
 using namespace RoboHockey::Layer::Autonomous;
 
-DriveToState::DriveToState(
-		Autonomous::Robot &robot, Autonomous::Field &field, Common::Referee &referee,
+DriveToState::DriveToState(Autonomous::Robot &robot, Autonomous::Field &field, Common::Referee &referee, Logger &logger,
 		list<RobotPosition> targetList,
 		State *stateAfterTargetReached, State *stateAfterTargetUnreachable) :
-	State(robot, field, referee, true),
+	State(robot, field, referee, logger, true),
 	m_target(targetList),
 	m_stateAfterTargetReached(stateAfterTargetReached),
 	m_stateAfterTargetUnreachable(stateAfterTargetUnreachable)

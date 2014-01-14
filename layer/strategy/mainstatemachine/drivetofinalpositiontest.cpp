@@ -8,8 +8,9 @@
 #include "layer/strategy/mainstatemachine/achievegoals.h"
 #include "layer/autonomous/robotmock.h"
 #include "layer/autonomous/fieldmock.h"
+#include "common/loggermock.h"
 
-
+using namespace RoboHockey::Common;
 using namespace RoboHockey::Layer::Strategy::Common;
 using namespace RoboHockey::Layer::Strategy::MainStateMachine;
 using namespace RoboHockey::Layer::Autonomous;
@@ -19,7 +20,8 @@ void DriveToFinalPositionTest::nextState_stopMovement_Pause()
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	DriveToFinalPosition driveToFinalPosition(robot, field, referee);
+	LoggerMock logger;
+	DriveToFinalPosition driveToFinalPosition(robot, field, referee, logger);
 	field.setAchievedGoals(3);
 	field.setEnemyHiddenPucks(3);
 	referee.setStopMovement(true);
@@ -37,7 +39,8 @@ void DriveToFinalPositionTest::nextState_gameOver_Pause()
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	DriveToFinalPosition driveToFinalPosition(robot, field, referee);
+	LoggerMock logger;
+	DriveToFinalPosition driveToFinalPosition(robot, field, referee, logger);
 	field.setAchievedGoals(3);
 	field.setEnemyHiddenPucks(3);
 	referee.setStopMovement(false);
@@ -56,7 +59,8 @@ void DriveToFinalPositionTest::nextState_achieveGoals2_AchieveGoals()
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	DriveToFinalPosition driveToFinalPosition(robot, field, referee);
+	LoggerMock logger;
+	DriveToFinalPosition driveToFinalPosition(robot, field, referee, logger);
 	field.setAchievedGoals(2);
 	field.setEnemyHiddenPucks(3);
 	referee.setStopMovement(false);
@@ -75,7 +79,8 @@ void DriveToFinalPositionTest::nextState_notAllEnemyPucksHidden_HideEnemyPucks()
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	DriveToFinalPosition driveToFinalPosition(robot, field, referee);
+	LoggerMock logger;
+	DriveToFinalPosition driveToFinalPosition(robot, field, referee, logger);
 	field.setAchievedGoals(3);
 	field.setEnemyHiddenPucks(2);
 	robot.setReachedTarget(false);
@@ -95,7 +100,8 @@ void DriveToFinalPositionTest::nextState_notAllEnemyPucksHidden_DriveToFinalPosi
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	DriveToFinalPosition driveToFinalPosition(robot, field, referee);
+	LoggerMock logger;
+	DriveToFinalPosition driveToFinalPosition(robot, field, referee, logger);
 	field.setAchievedGoals(3);
 	field.setEnemyHiddenPucks(3);
 	robot.setReachedTarget(false);

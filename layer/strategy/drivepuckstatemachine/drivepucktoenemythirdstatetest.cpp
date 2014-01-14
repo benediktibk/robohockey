@@ -8,7 +8,9 @@
 #include "layer/strategy/common/colordependentpucktargetfetchermock.h"
 #include "layer/strategy/drivepuckstatemachine/leavepuckstate.h"
 #include "layer/strategy/drivepuckstatemachine/drivetocollectpuckstate.h"
+#include "common/loggermock.h"
 
+using namespace RoboHockey::Common;
 using namespace RoboHockey::Layer::Strategy::Common;
 using namespace RoboHockey::Layer::Strategy::DrivePuckStateMachine;
 using namespace RoboHockey::Layer::Autonomous;
@@ -18,10 +20,11 @@ void DrivePuckToEnemyThirdStateTest::nextState_reachedTarget_nextStateIsLeavePuc
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
+	LoggerMock logger;
 	ColorDependentPuckTargetFetcherMock puckTargetFetcher;
 	robot.setReachedTarget(true);
 	robot.setPuckCollected(true);
-	DrivePuckToEnemyThirdState driveToEnemyThirdState(robot, field, referee, puckTargetFetcher);
+	DrivePuckToEnemyThirdState driveToEnemyThirdState(robot, field, referee, logger, puckTargetFetcher);
 	State *driveToState;
 	driveToState = driveToEnemyThirdState.nextState();
 	State *state;
@@ -38,10 +41,11 @@ void DrivePuckToEnemyThirdStateTest::nextState_cantReachTarget_nextStateLeavePuc
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
+	LoggerMock logger;
 	ColorDependentPuckTargetFetcherMock puckTargetFetcher;
 	robot.setCantReachedTarget(true);
 	robot.setPuckCollected(true);
-	DrivePuckToEnemyThirdState driveToEnemyThirdState(robot, field, referee, puckTargetFetcher);
+	DrivePuckToEnemyThirdState driveToEnemyThirdState(robot, field, referee, logger, puckTargetFetcher);
 	State *driveToState;
 	driveToState = driveToEnemyThirdState.nextState();
 	State *state;
@@ -58,9 +62,10 @@ void DrivePuckToEnemyThirdStateTest::nextState_canReachTarget_nextStateIs0()
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
+	LoggerMock logger;
 	ColorDependentPuckTargetFetcherMock puckTargetFetcher;
 	robot.setPuckCollected(true);
-	DrivePuckToEnemyThirdState driveToEnemyThirdState(robot, field, referee, puckTargetFetcher);
+	DrivePuckToEnemyThirdState driveToEnemyThirdState(robot, field, referee, logger, puckTargetFetcher);
 	State *driveToState;
 	driveToState = driveToEnemyThirdState.nextState();
 	State *state;
@@ -75,9 +80,10 @@ void DrivePuckToEnemyThirdStateTest::nextState_puckIsNotCollected_nextStateIsDri
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
+	LoggerMock logger;
 	ColorDependentPuckTargetFetcherMock puckTargetFetcher;
 	puckTargetFetcher.setNumberOfKnownPucksNotInTarget(2);
-	DrivePuckToEnemyThirdState driveToEnemyThirdState(robot, field, referee, puckTargetFetcher);
+	DrivePuckToEnemyThirdState driveToEnemyThirdState(robot, field, referee, logger, puckTargetFetcher);
 	State *state;
 	state = driveToEnemyThirdState.nextState();
 	DriveToCollectPuckState *stateCasted = dynamic_cast<DriveToCollectPuckState*>(state);

@@ -6,7 +6,9 @@
 #include "layer/strategy/common/refereemock.h"
 #include "layer/autonomous/robotmock.h"
 #include "layer/autonomous/fieldmock.h"
+#include "common/loggermock.h"
 
+using namespace RoboHockey::Common;
 using namespace RoboHockey::Layer::Strategy::Common;
 using namespace RoboHockey::Layer::Strategy::FieldDetectionStateMachine;
 using namespace RoboHockey::Layer::Autonomous;
@@ -16,7 +18,8 @@ void InitialStateTest::nextState_always_detectFieldState()
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	InitialState initialState(robot, field, referee);
+	LoggerMock logger;
+	InitialState initialState(robot, field, referee, logger);
 
 	State *state = initialState.nextState();
 
