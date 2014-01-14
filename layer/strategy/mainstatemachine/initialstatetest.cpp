@@ -6,7 +6,9 @@
 #include "layer/strategy/mainstatemachine/calibrate.h"
 #include "layer/autonomous/robotmock.h"
 #include "layer/autonomous/fieldmock.h"
+#include "common/loggermock.h"
 
+using namespace RoboHockey::Common;
 using namespace RoboHockey::Layer::Strategy::Common;
 using namespace RoboHockey::Layer::Strategy::MainStateMachine;
 using namespace RoboHockey::Layer::Autonomous;
@@ -16,7 +18,8 @@ void InitialStateTest::nextState_detectionStart_calibrate()
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	InitialState initialState(robot, field, referee);
+	LoggerMock logger;
+	InitialState initialState(robot, field, referee, logger);
 	referee.setDetectionStart(true);
 	referee.setGameStart(true);
 	State *state;
@@ -33,7 +36,8 @@ void InitialStateTest::nextState_gameStartAndNotDetectionStart_notCalibrate()
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	InitialState initialState(robot, field, referee);
+	LoggerMock logger;
+	InitialState initialState(robot, field, referee, logger);
 	referee.setDetectionStart(false);
 	referee.setGameStart(true);
 	State *state;
