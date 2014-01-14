@@ -44,3 +44,22 @@ void WaitCyclesStateTest::nextState_didWaitEnoughCycles_resultIsStateAfterWaitCy
 	CPPUNIT_ASSERT(state == stateAfterWaitCycles);
 	delete state;
 }
+
+void WaitCyclesStateTest::nextState_detectAllObjects_resultIsIsStateAfterWaitCycles()
+{
+	RobotMock robot;
+	FieldMock field;
+	RefereeMock referee;
+	State *stateAfterWaitCycles = new StateMock(robot, field, referee);
+	WaitCyclesState waitState(robot, field, referee, stateAfterWaitCycles, 10);
+
+	waitState.update();
+	waitState.update();
+	field.setIsPuckcolorDetected(true);
+	waitState.update();
+
+	State *state = waitState.nextState();
+
+	CPPUNIT_ASSERT(state == stateAfterWaitCycles);
+	delete state;
+}
