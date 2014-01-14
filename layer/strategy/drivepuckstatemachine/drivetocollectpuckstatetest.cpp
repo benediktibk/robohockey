@@ -43,16 +43,12 @@ void DriveToCollectPuckStateTest::nextState_reachedTarget_nextStateIsVerifyPuckS
 	ColorDependentPuckTargetFetcherMock puckTargetFetcher;
 	puckTargetFetcher.setNumberOfKnownPucksNotInEnemyThird(2);
 	robot.setReachedTarget(true);
+	field.setIsPuckcolorDetected(true);
 	DriveToCollectPuckState driveToCollectPuckState(robot, field, referee, logger, puckTargetFetcher);
 	State *driveToState;
 	driveToState = driveToCollectPuckState.nextState();
 	State *waitState;
 	waitState = driveToState->nextState();
-	waitState->update();
-	waitState->update();
-	waitState->update();
-	waitState->update();
-	waitState->update();
 	State *state;
 	state = waitState->nextState();
 	VerifyPuckState *stateCasted = dynamic_cast<VerifyPuckState*>(state);

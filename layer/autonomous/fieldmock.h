@@ -47,6 +47,7 @@ namespace Autonomous
 		virtual void transformFieldToNewOrigin(const Common::RobotPosition newOrigin);
 		virtual std::vector<Common::RobotPosition> getTargetsForWaitingPhase() const;
 		virtual bool isPuckOfColorInFront(Common::FieldColor color) const;
+		virtual bool isPuckcolorDetected() const;
 
 		void setAchievedGoals(unsigned int goalsAchieved);
 		void setEnemyHiddenPucks(unsigned int getNumberOfHiddenPucks);
@@ -57,6 +58,7 @@ namespace Autonomous
 		void setNegativeCoordinatesOutside(bool value);
 		void setCalibrationReturn(bool value);
 		void setIsPuckOfColorInFront(bool value);
+		void setIsPuckcolorDetected(bool value);
 		void setCalibrationReturnPosition(Common::RobotPosition newOrigin);
 		void setObjectsWithColorOrderedByDistance(const std::vector<FieldObject> &objects);
 
@@ -70,6 +72,7 @@ namespace Autonomous
 		unsigned int m_hiddenPucks;
 		bool m_calibrated;
 		bool m_isPuckOfColorInFront;
+		bool m_isPuckcolorDetected;
 		Common::FieldColor m_teamColor;
 		Common::RobotPosition m_newOrigin;
 		std::vector<FieldObject> m_objectsWithColorOrderedByDistance;

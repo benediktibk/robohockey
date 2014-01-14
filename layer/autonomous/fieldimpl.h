@@ -62,7 +62,7 @@ namespace Autonomous
 		virtual std::list<Common::RobotPosition> getTargetsForGoalDetection() const;
 		virtual std::list<Common::RobotPosition> getTargetsForScoringGoals() const;
 		virtual std::list<Common::RobotPosition> getTargetsForFinalPosition() const;
-		virtual std::list<Common::RobotPosition> getTargetsForSearchingPucks() const;
+		virtual std::list<Common::RobotPosition>		getTargetsForSearchingPucks() const;
 		virtual std::list<Common::RobotPosition> getTargetsForHidingEnemyPucks() const;
 		virtual std::list<Common::RobotPosition> getTargetsForCollectingOnePuck(Common::FieldColor puckColor) const;
 		virtual std::list<Common::RobotPosition> getTargetsForCollectingOnePuckNotInEnemyThird(Common::FieldColor puckColor) const;
@@ -72,6 +72,7 @@ namespace Autonomous
 		virtual void transformFieldToNewOrigin(const Common::RobotPosition newOrigin);
 		virtual std::vector<Common::RobotPosition> getTargetsForWaitingPhase() const;
 		virtual bool isPuckOfColorInFront(Common::FieldColor color) const;
+		virtual bool isPuckcolorDetected() const;
 
 		double getRangeOfViewArea() const;
 		Common::Angle getAngleOfViewArea() const;
@@ -102,6 +103,7 @@ namespace Autonomous
 
 		std::vector<Common::Point> *getPointsOfObjectsWithDiameterAndColor(double diameter, Common::FieldColor color);
 		std::vector<FieldObject> getObjectsWithColor(Common::FieldColor color) const;
+		std::vector<FieldObject> getObjectsInVisibleSector(Common::Angle angle, double distance) const;
 
 		std::vector<FieldObject> moveAllFieldObjectsInVisibleAreaToTemporaryVector(double range);
 		std::vector<FieldObject> getAllPartlyVisibleObjects() const;

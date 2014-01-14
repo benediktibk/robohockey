@@ -599,21 +599,30 @@ vector<RobotPosition> FieldImpl::getTargetsForWaitingPhase() const
 
 bool FieldImpl::isPuckOfColorInFront(FieldColor color) const
 {
-	vector<FieldObject> objects = getObjectsWithColorOrderdByDistance(color);
+	vector<FieldObject> objects = getObjectsInVisibleSector(Angle::getQuarterRotation(), 0.5);
 	if(objects.empty())
 		return false;
 
 	for(vector<FieldObject>::const_iterator i = objects.begin(); i != objects.end(); ++i)
 	{
-		Angle angleBetweenRobotAndObject(m_position->getPosition(), (*i).getCircle().getCenter());
-		Compare compare(Angle::getQuarterRotation().getValueBetweenMinusPiAndPi());
-
-		if((*i).getObstacle().getDistanceTo(m_position->getPosition()) < 0.5 &&
-			compare.isFuzzyEqual(m_position->getOrientation(), angleBetweenRobotAndObject))
+		if((*i).getColor() == color)
 			return true;
 	}
 
 	return false;
+}
+
+bool FieldImpl::isPuckcolorDetected() const
+{
+	vector<FieldObject> objects = getObjectsInVisibleSector(Angle::getQuarterRotation(), 1);
+
+	for(vector<FieldObject>::const_iterator i = objects.begin(); i != objects.end(); ++i)
+	{
+		if((*i).getColor() == FieldColorUnknown)
+			return false;
+	}
+
+	return true;
 }
 
 double FieldImpl::getRangeOfViewArea() const
@@ -1000,6 +1009,23 @@ vector<FieldObject> FieldImpl::getObjectsWithColor(FieldColor color) const
 	for (vector<FieldObject>::const_iterator i = m_usefulFieldObjects.begin(); i != m_usefulFieldObjects.end(); ++i)
 		if (i->getColor() == color)
 			result.push_back(*i);
+
+	return result;
+}
+
+std::vector<FieldObject> FieldImpl::getObjectsInVisibleSector(Angle angle, double distance) const
+{
+	vector<FieldObject> result;
+	Compare compare(angle.getValueBetweenMinusPiAndPi());
+
+	for (vector<FieldObject>::const_iterator i = m_usefulFieldObjects.begin(); i != m_usefulFieldObjects.end(); ++i)
+	{
+		Angle angleBetweenRobotAndObject(m_position->getPosition(), (*i).getCircle().getCenter());
+
+		if((*i).getObstacle().getDistanceTo(m_position->getPosition()) < distance &&
+			compare.isFuzzyEqual(m_position->getOrientation(), angleBetweenRobotAndObject))
+			result.push_back(*i);
+	}
 
 	return result;
 }

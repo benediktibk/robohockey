@@ -20,7 +20,7 @@ State *FindPuckState::nextState()
 	return new DriveToState(
 				m_robot, m_field, m_referee, m_logger, m_field.getTargetsForSearchingPucks(),
 				new WaitCyclesState(m_robot, m_field, m_referee, m_logger,
-					new VerifyPuckState(m_robot, m_field, m_referee, m_logger, m_puckTargetFetcher), 10),
+					new VerifyPuckState(m_robot, m_field, m_referee, m_logger, m_puckTargetFetcher), 15),
 				new FindPuckState(m_robot, m_field, m_referee, m_logger, m_puckTargetFetcher));
 }
 

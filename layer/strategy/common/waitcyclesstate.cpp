@@ -1,4 +1,5 @@
 #include "layer/strategy/common/waitcyclesstate.h"
+#include "layer/autonomous/field.h"
 
 using namespace std;
 using namespace RoboHockey::Common;
@@ -22,7 +23,7 @@ State *WaitCyclesState::nextState()
 {
 	State *result = 0;
 
-	if(m_updateCounter >= m_cycles)
+	if(m_updateCounter >= m_cycles || m_field.isPuckcolorDetected())
 	{
 		result = m_stateAfterWaitCycles;
 		m_stateAfterWaitCycles = 0;

@@ -108,10 +108,12 @@ namespace Autonomous
 		CPPUNIT_TEST(getTargetsForFinalPosition_always_numberOfPositionsBigger1);
 		CPPUNIT_TEST(getTargetsForSearchingPucks_always_numberOfPositionsBigger5);
 		CPPUNIT_TEST(getTargetsForSearchingPucks_twoObjectsWithUnknownColor_numberOfPositions33);
+		CPPUNIT_TEST(getTargetsForSearchingPucks_threeObjectsWithUnknownColor_numberOfPositions43);
 		CPPUNIT_TEST(getTargetsForSearchingPucks_threeObjectsWithUnknownColorNotInField_numberOfPositions10);
 		CPPUNIT_TEST(getTargetsForSearchungPucks_fourObjectsWithUnknownColorAndOneObjectWithKnownColorAndTwoPucksWithUnknownColorNotInField_numberOfPositions33);
 		CPPUNIT_TEST(getTargetsInEnemyThird_always_numberOfPositionsBiggerThan4);
 		CPPUNIT_TEST(getTargetsForWaitingPhase_always_numberOfPositionsBiggerThan2);
+		CPPUNIT_TEST(getTargetsForHiddingEnemyPucks_always_numberOfPositionsBiggerThan8);
 		CPPUNIT_TEST(detectTeamColorWithGoalInFront_yellowMuchBiggerBlue_teamYellow);
 		CPPUNIT_TEST(detectTeamColorWithGoalInFront_yellowMuchSmallerBlue_teamBlue);
 		CPPUNIT_TEST(detectTeamColorWithGoalInFront_yellowAndBlueEqual_teamNotUnknown);
@@ -128,6 +130,9 @@ namespace Autonomous
 		CPPUNIT_TEST(isPuckOfColorInFront_puckInFront_resultIsTrue);
 		CPPUNIT_TEST(isPuckOfColorInFront_puckAlmostInFront_resultIsTrue);
 		CPPUNIT_TEST(isPuckOfColorInFront_puckAlmostInFrontAndOnePuckLeft_resultIsTrue);
+		CPPUNIT_TEST(isPuckcolorDetected_noPucksInSector_resultIsTrue);
+		CPPUNIT_TEST(isPuckcolorDetected_twoPucksWithColor_resultIsTrue);
+		CPPUNIT_TEST(isPuckcolorDetected_twoPucksWithColorAndOneWithout_resultIsFlase);
 		CPPUNIT_TEST_SUITE_END();
 
 	public:
@@ -219,10 +224,12 @@ namespace Autonomous
 		void getTargetsForFinalPosition_always_numberOfPositionsBigger1();
 		void getTargetsForSearchingPucks_always_numberOfPositionsBigger5();
 		void getTargetsForSearchingPucks_twoObjectsWithUnknownColor_numberOfPositions33();
+		void getTargetsForSearchingPucks_threeObjectsWithUnknownColor_numberOfPositions43();
 		void getTargetsForSearchingPucks_threeObjectsWithUnknownColorNotInField_numberOfPositions10();
 		void getTargetsForSearchungPucks_fourObjectsWithUnknownColorAndOneObjectWithKnownColorAndTwoPucksWithUnknownColorNotInField_numberOfPositions33();
 		void getTargetsInEnemyThird_always_numberOfPositionsBiggerThan4();
 		void getTargetsForWaitingPhase_always_numberOfPositionsBiggerThan2();
+		void getTargetsForHiddingEnemyPucks_always_numberOfPositionsBiggerThan8();
 		void detectTeamColorWithGoalInFront_yellowMuchBiggerBlue_teamYellow();
 		void detectTeamColorWithGoalInFront_yellowMuchSmallerBlue_teamBlue();
 		void detectTeamColorWithGoalInFront_yellowAndBlueEqual_teamNotUnknown();
@@ -239,6 +246,9 @@ namespace Autonomous
 		void isPuckOfColorInFront_puckInFront_resultIsTrue();
 		void isPuckOfColorInFront_puckAlmostInFront_resultIsTrue();
 		void isPuckOfColorInFront_puckAlmostInFrontAndOnePuckLeft_resultIsTrue();
+		void isPuckcolorDetected_noPucksInSector_resultIsTrue();
+		void isPuckcolorDetected_twoPucksWithColor_resultIsTrue();
+		void isPuckcolorDetected_twoPucksWithColorAndOneWithout_resultIsFlase();
 
 	private:
 		void updateFieldForObjectsToAppear(FieldImpl &field);
