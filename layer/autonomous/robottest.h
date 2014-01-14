@@ -145,6 +145,14 @@ namespace Autonomous
 		CPPUNIT_TEST(calculateFinalSpeedForGoingStraight_eighthRotation_greaterThan0);
 		CPPUNIT_TEST(calculateFinalSpeedForGoingStraight_zeroAngleButOnlyShortDistanceLeft_smallerThan05);
 		CPPUNIT_TEST(calculateFinalSpeedForGoingStraight_smallAngle_betweenZeroAnd05);
+		CPPUNIT_TEST(isMoving_drivingStraightPart_true);
+		CPPUNIT_TEST(isMoving_drivingTurningPart_true);
+		CPPUNIT_TEST(isMoving_turningTo_true);
+		CPPUNIT_TEST(isMoving_waitingAndEngineSaysNotMoving_false);
+		CPPUNIT_TEST(isMoving_waitingAndEngineSaysMoving_true);
+		CPPUNIT_TEST(isMoving_turnAround_true);
+		CPPUNIT_TEST(isMoving_leavingPuck_true);
+		CPPUNIT_TEST(isMoving_collectingPuck_true);
 		CPPUNIT_TEST_SUITE_END();
 
 	public:
@@ -263,6 +271,14 @@ namespace Autonomous
 		void calculateFinalSpeedForGoingStraight_eighthRotation_greaterThan0();
 		void calculateFinalSpeedForGoingStraight_zeroAngleButOnlyShortDistanceLeft_smallerThan05();
 		void calculateFinalSpeedForGoingStraight_smallAngle_betweenZeroAnd05();
+		void isMoving_drivingStraightPart_true();
+		void isMoving_drivingTurningPart_true();
+		void isMoving_turningTo_true();
+		void isMoving_waitingAndEngineSaysNotMoving_false();
+		void isMoving_waitingAndEngineSaysMoving_true();
+		void isMoving_turnAround_true();
+		void isMoving_leavingPuck_true();
+		void isMoving_collectingPuck_true();
 
 	private:
 		RouterMock *m_routerMock;

@@ -51,6 +51,7 @@ namespace DataAnalysis
 		const Common::Point& getLastTarget() const;
 		double getLastFinalSpeed() const;
 		void setSpeedForGoingStraight(double value);
+		void setIsMoving(bool value);
 
 	private:
 		unsigned int m_callsToGoToStraight;
@@ -69,6 +70,7 @@ namespace DataAnalysis
 		Common::Point m_lastTarget;
 		double m_lastFinalSpeed;
 		double m_speedForGoingStraight;
+		bool m_isMoving;
 	};
 }
 }
