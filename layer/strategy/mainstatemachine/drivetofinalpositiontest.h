@@ -20,6 +20,7 @@ class DriveToFinalPositionTest :
         CPPUNIT_TEST(nextState_achieveGoals2_AchieveGoals);
         CPPUNIT_TEST(nextState_gameOver_Pause);
         CPPUNIT_TEST(nextState_notAllEnemyPucksHidden_HideEnemyPucks);
+		CPPUNIT_TEST(nextState_notAllEnemyPucksHidden_DriveToFinalPosition);
         CPPUNIT_TEST_SUITE_END();
 
     private:
@@ -27,6 +28,7 @@ class DriveToFinalPositionTest :
         void nextState_gameOver_Pause();
         void nextState_achieveGoals2_AchieveGoals();
         void nextState_notAllEnemyPucksHidden_HideEnemyPucks();
+		void nextState_notAllEnemyPucksHidden_DriveToFinalPosition();
     };
 }
 }
