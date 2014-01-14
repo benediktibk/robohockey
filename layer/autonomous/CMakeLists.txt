@@ -11,6 +11,7 @@ set(LAYER_AUTONOMOUS_SRC
 	routelengthcompare.cpp
 	routingobstacle.cpp
 	routingresult.cpp
+	sensordataplayer.cpp
 )
 
 set(LAYER_AUTONOMOUS_TEST_SRC
