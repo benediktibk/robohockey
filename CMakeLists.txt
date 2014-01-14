@@ -16,11 +16,6 @@ include_directories(
 	.
 )
 
-add_subdirectory(common)
-add_subdirectory(layer)
-add_subdirectory(main)
-add_subdirectory(extern)
-
 add_custom_target(
 		checkIncludeGuards ALL
 		COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/checkIncludeGuards.sh
@@ -81,3 +76,8 @@ foreach(file ${TESTFILES_LOOSING_PUCK})
 			${file}
 			DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/main/bin/resources/testfiles/loosing_puck_1)
 endforeach()
+
+add_subdirectory(common)
+add_subdirectory(layer)
+add_subdirectory(main)
+add_subdirectory(extern)
