@@ -27,13 +27,13 @@ State* DetectField::nextState()
 	if (!m_successful && m_numberOfTries < 3)
 		return 0;
 	else if (!m_successful || ((size_t) 4 > m_calibrationResults.size()))
-		return new TurnAngle(m_robot, m_field, m_referee, Angle::getQuarterRotation(), m_calibrationResults);
+		return new TurnAngle(m_robot, m_field, m_referee, m_logger,  Angle::getQuarterRotation(), m_calibrationResults);
 	else if (m_field.isCalibrated())
 		//! @todo use different state if DriveTo can't reach target!
 	{
-		return new DriveToState(m_robot, m_field, m_referee, m_field.getTargetsForGoalDetection(),
-						   new CheckGoalColor(m_robot, m_field, m_referee),
-						   new CheckGoalColor(m_robot, m_field, m_referee));
+		return new DriveToState(m_robot, m_field, m_referee, m_logger, m_field.getTargetsForGoalDetection(),
+						   new CheckGoalColor(m_robot, m_field, m_referee, m_logger),
+						   new CheckGoalColor(m_robot, m_field, m_referee, m_logger));
 	}
 	else
 		return 0;

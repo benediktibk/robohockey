@@ -9,7 +9,9 @@
 #include "layer/autonomous/robotmock.h"
 #include "layer/autonomous/fieldmock.h"
 #include "layer/strategy/common/colordependentpucktargetfetchermock.h"
+#include "common/loggermock.h"
 
+using namespace RoboHockey::Common;
 using namespace RoboHockey::Layer::Strategy::Common;
 using namespace RoboHockey::Layer::Strategy::DrivePuckStateMachine;
 using namespace RoboHockey::Layer::Autonomous;
@@ -19,9 +21,10 @@ void LeavePuckStateTest::nextState_cantReachTarget_nextStateIsInitialState()
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
+	LoggerMock logger;
 	ColorDependentPuckTargetFetcherMock puckTargetFetcher;
 	robot.setCantReachedTarget(true);
-	LeavePuckState leavePuckState(robot, field, referee, puckTargetFetcher, false);
+	LeavePuckState leavePuckState(robot, field, referee, logger, puckTargetFetcher, false);
 	State *state;
 	state = leavePuckState.nextState();
 	InitialState *stateCasted = dynamic_cast<InitialState*>(state);
@@ -35,9 +38,10 @@ void LeavePuckStateTest::nextState_reachedTargetAndNumberOfKnownPucksIs0_nextSta
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
+	LoggerMock logger;
 	ColorDependentPuckTargetFetcherMock puckTargetFetcher;
 	robot.setReachedTarget(true);
-	LeavePuckState leavePuckState(robot, field, referee, puckTargetFetcher, false);
+	LeavePuckState leavePuckState(robot, field, referee, logger, puckTargetFetcher, false);
 	State *state;
 	state = leavePuckState.nextState();
 	FindPuckState *stateCasted = dynamic_cast<FindPuckState*>(state);
@@ -51,10 +55,11 @@ void LeavePuckStateTest::nextState_reachedTargetAndNumberOfKnownPucksIsNot0_next
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
+	LoggerMock logger;
 	ColorDependentPuckTargetFetcherMock puckTargetFetcher;
 	robot.setReachedTarget(true);
 	puckTargetFetcher.setNumberOfKnownPucksNotInEnemyThird(2);
-	LeavePuckState leavePuckState(robot, field, referee, puckTargetFetcher, false);
+	LeavePuckState leavePuckState(robot, field, referee, logger, puckTargetFetcher, false);
 
 	State *state = leavePuckState.nextState();
 
@@ -68,10 +73,11 @@ void LeavePuckStateTest::update_shouldReportGoal_oneGoalReported()
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
+	LoggerMock logger;
 	ColorDependentPuckTargetFetcherMock puckTargetFetcher;
 	robot.setReachedTarget(true);
 	puckTargetFetcher.setNumberOfKnownPucksNotInTarget(2);
-	LeavePuckState leavePuckState(robot, field, referee, puckTargetFetcher, true);
+	LeavePuckState leavePuckState(robot, field, referee, logger, puckTargetFetcher, true);
 
 	leavePuckState.update();
 
@@ -83,10 +89,11 @@ void LeavePuckStateTest::update_shouldNotReportGoal_noGoalReported()
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
+	LoggerMock logger;
 	ColorDependentPuckTargetFetcherMock puckTargetFetcher;
 	robot.setReachedTarget(true);
 	puckTargetFetcher.setNumberOfKnownPucksNotInTarget(2);
-	LeavePuckState leavePuckState(robot, field, referee, puckTargetFetcher, false);
+	LeavePuckState leavePuckState(robot, field, referee, logger, puckTargetFetcher, false);
 
 	leavePuckState.update();
 

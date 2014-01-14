@@ -21,7 +21,7 @@ CheckGoalColor::CheckGoalColor(Robot &robot, Field &field, Referee &referee, Log
 State* CheckGoalColor::nextState()
 {
 	if (m_teamColorSend && m_gotResponse)
-		return new CalibrationFinished(m_robot, m_field, m_referee, 0);
+		return new CalibrationFinished(m_robot, m_field, m_referee, m_logger, 0);
 
 	return 0;
 }
