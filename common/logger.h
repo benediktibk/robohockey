@@ -20,7 +20,7 @@ class Logger
 		};
 
 	public:
-
+		virtual ~Logger() { }
 		virtual void logToConsole(const std::string &message) = 0;
 		virtual void logErrorToConsole(const std::string &message) = 0;
 		virtual void writeToGlobalLogFile(const std::string &message) = 0;
