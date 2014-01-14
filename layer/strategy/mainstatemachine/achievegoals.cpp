@@ -14,7 +14,7 @@ AchieveGoals::AchieveGoals(Robot &robot, Field &field, Referee &referee, RoboHoc
 	State(robot, field, referee, logger, false)
 {
 	m_puckTargetFetcher = new ColorDependentPuckTargetFetcherToAchiveGoals(m_field);
-	State *initialState = new DrivePuckStateMachine::InitialState(robot, field, referee, *m_puckTargetFetcher);
+	State *initialState = new DrivePuckStateMachine::InitialState(robot, field, referee, logger, *m_puckTargetFetcher);
 	m_puckTargetFetcherStateMachine = new StateMachine(initialState, robot, field, referee);
 }
 
@@ -29,11 +29,11 @@ AchieveGoals::~AchieveGoals()
 State* AchieveGoals::nextState()
 {
 	if(m_referee.stopMovement() || m_referee.gameOver())
-		return new Pause(m_robot, m_field, m_referee);
+		return new Pause(m_robot, m_field, m_referee, m_logger);
 	else if(m_field.getNumberOfAchievedGoals() < 3)
 		return 0;
 	else
-		return new HideEnemyPucks(m_robot, m_field, m_referee);
+		return new HideEnemyPucks(m_robot, m_field, m_referee, m_logger);
 }
 
 std::string AchieveGoals::getName()

@@ -17,13 +17,13 @@ DriveToFinalPosition::DriveToFinalPosition(Robot &robot, Field &field, Referee &
 State *DriveToFinalPosition::nextState()
 {
 	if(m_referee.stopMovement() || m_referee.gameOver())
-		return new Pause(m_robot, m_field, m_referee);
+		return new Pause(m_robot, m_field, m_referee, m_logger);
 	else if(m_field.getNumberOfAchievedGoals() < 3)
-		return new AchieveGoals(m_robot, m_field, m_referee);
+		return new AchieveGoals(m_robot, m_field, m_referee, m_logger);
 	else if(m_robot.reachedTarget())
-		return new Pause(m_robot, m_field, m_referee);
+		return new Pause(m_robot, m_field, m_referee, m_logger);
 	else if(m_field.getNumberOfHiddenPucks() < 3 && m_field.getNumberOfAchievedGoals() >= 3)
-		return new HideEnemyPucks(m_robot, m_field, m_referee);
+		return new HideEnemyPucks(m_robot, m_field, m_referee, m_logger);
 	else
 		return 0;
 }

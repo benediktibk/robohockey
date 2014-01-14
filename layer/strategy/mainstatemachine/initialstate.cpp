@@ -14,7 +14,7 @@ InitialState::InitialState(Robot &robot, Field &field, Referee &referee, RoboHoc
 State* InitialState::nextState()
 {
 	if(m_referee.detectionStart())
-		return new Calibrate(m_robot, m_field, m_referee);
+		return new Calibrate(m_robot, m_field, m_referee, m_logger);
 	else
 		return 0;
 }

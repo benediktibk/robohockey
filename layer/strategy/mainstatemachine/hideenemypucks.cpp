@@ -15,7 +15,7 @@ HideEnemyPucks::HideEnemyPucks(Autonomous::Robot &robot, Autonomous::Field &fiel
 	State(robot, field, referee, logger, false)
 {
 	m_puckTargetFetcher = new ColorDependentPuckTargetFetcherToHidePucks(m_field);
-	State *initialState = new DrivePuckStateMachine::InitialState(robot, field, referee, *m_puckTargetFetcher);
+	State *initialState = new DrivePuckStateMachine::InitialState(robot, field, referee, logger, *m_puckTargetFetcher);
 	m_puckTargetFetcherStateMachine = new StateMachine(initialState, robot, field, referee);
 }
 
@@ -30,11 +30,11 @@ HideEnemyPucks::~HideEnemyPucks()
 State* HideEnemyPucks::nextState()
 {
 	if(m_referee.gameOver() || m_referee.stopMovement())
-		return new Pause(m_robot, m_field, m_referee);
+		return new Pause(m_robot, m_field, m_referee, m_logger);
 	else if(m_field.getNumberOfAchievedGoals() < 3 && m_robot.reachedTarget())
-		return new AchieveGoals(m_robot, m_field, m_referee);
+		return new AchieveGoals(m_robot, m_field, m_referee, m_logger);
 	else if(m_field.getNumberOfHiddenPucks() >= 3 && m_field.getNumberOfAchievedGoals() >=3 && m_robot.reachedTarget())
-		return new DriveToFinalPosition(m_robot, m_field, m_referee);
+		return new DriveToFinalPosition(m_robot, m_field, m_referee, m_logger);
 	else
 		return 0;
 }
