@@ -61,16 +61,18 @@ LoggerImpl::~LoggerImpl()
 	m_fieldDetectionLogFile.close();
 }
 
-void LoggerImpl::logToConsole(const string &message)
+void LoggerImpl::logToConsoleAndGlobalLogFile(const string &message)
 {
 	if (m_consoleOutputEnabled)
 		cout << message << endl;
+	writeToGlobalLogFile(message);
 }
 
-void LoggerImpl::logErrorToConsole(const string &message)
+void LoggerImpl::logErrorToConsoleAndWriteToGlobalLogFile(const string &message)
 {
 	if (m_consoleOutputEnabled)
 		cerr << message << endl;
+	writeToGlobalLogFile(message);
 }
 
 void LoggerImpl::writeToGlobalLogFile(const string &message)
