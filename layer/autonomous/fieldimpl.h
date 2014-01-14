@@ -72,6 +72,7 @@ namespace Autonomous
 		virtual void transformFieldToNewOrigin(const Common::RobotPosition newOrigin);
 		virtual std::vector<Common::RobotPosition> getTargetsForWaitingPhase() const;
 		virtual bool isPuckOfColorInFront(Common::FieldColor color) const;
+		virtual bool isPuckcolorDetected() const;
 
 		double getRangeOfViewArea() const;
 		Common::Angle getAngleOfViewArea() const;
