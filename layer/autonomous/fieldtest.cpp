@@ -1741,6 +1741,11 @@ void FieldTest::getTargetsInEnemyThird_always_numberOfPositionsBiggerThan4()
 	CPPUNIT_ASSERT((size_t) 4 < m_field->getTargetsInEnemyThird().size());
 }
 
+void FieldTest::getTargetsForWaitingPhase_always_numberOfPositionsBiggerThan2()
+{
+	CPPUNIT_ASSERT((size_t) 2 < m_field->getTargetsForWaitingPhase().size());
+}
+
 void FieldTest::detectTeamColorWithGoalInFront_yellowMuchBiggerBlue_teamYellow()
 {
 	m_camera->setProbabilityForYellowGoal(0.82);

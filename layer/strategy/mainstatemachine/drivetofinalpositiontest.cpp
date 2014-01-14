@@ -89,3 +89,23 @@ void DriveToFinalPositionTest::nextState_notAllEnemyPucksHidden_HideEnemyPucks()
 	CPPUNIT_ASSERT(stateCasted != 0);
 	delete state;
 }
+
+void DriveToFinalPositionTest::nextState_notAllEnemyPucksHidden_DriveToFinalPosition()
+{
+	RobotMock robot;
+	FieldMock field;
+	RefereeMock referee;
+	DriveToFinalPosition driveToFinalPosition(robot, field, referee);
+	field.setAchievedGoals(3);
+	field.setEnemyHiddenPucks(3);
+	robot.setReachedTarget(false);
+	referee.setStopMovement(false);
+	referee.setGameOver(false);
+	State *state;
+
+	state = driveToFinalPosition.nextState();
+
+	CPPUNIT_ASSERT(state == 0);
+
+	delete state;
+}
