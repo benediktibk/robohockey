@@ -32,7 +32,7 @@ State *WaitCyclesState::nextState()
 		stringstream stream("wait for ");
 		stream << m_updateCounter;
 		stream << " cycles";
-		m_logger.logToConsole(stream.str());
+		m_logger.logToConsoleAndGlobalLogFile(stream.str());
 	}
 
 	return result;
