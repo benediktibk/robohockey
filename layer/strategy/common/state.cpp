@@ -1,5 +1,7 @@
 #include "layer/strategy/common/state.h"
+#include "common/logger.h"
 
+using namespace RoboHockey::Common;
 using namespace RoboHockey::Layer::Strategy::Common;
 using namespace RoboHockey::Layer::Autonomous;
 
@@ -18,7 +20,10 @@ State::~State()
 void State::update()
 {
 	if (!(m_updateAlreadyCalled && m_callUpdateOnlyOnce))
+	{
+		m_logger.logToLogFileOfType(Logger::LogFileTypeStateChanges, "Updating State: " + getName());
 		updateInternal();
+	}
 
 	m_updateAlreadyCalled = true;
 }

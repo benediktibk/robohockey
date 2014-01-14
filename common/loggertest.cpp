@@ -11,8 +11,8 @@ void LoggerTest::write_someText_someText()
 	logger.enableConsoleOutput();
 	logger.enableLogWriting();
 
-	logger.writeToGlobalLogFile("some Text");
-	logger.writeToLogFileOfType(Logger::LogFileTypeField, "some other test.");
+	logger.logToGlobalLogFile("some Text");
+	logger.logToLogFileOfType(Logger::LogFileTypeField, "some other test.");
 
 	CPPUNIT_ASSERT(true);
 }
