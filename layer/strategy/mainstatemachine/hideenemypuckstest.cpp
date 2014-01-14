@@ -8,7 +8,9 @@
 #include "layer/strategy/mainstatemachine/drivetofinalposition.h"
 #include "layer/autonomous/robotmock.h"
 #include "layer/autonomous/fieldmock.h"
+#include "common/loggermock.h"
 
+using namespace RoboHockey::Common;
 using namespace RoboHockey::Layer::Strategy::Common;
 using namespace RoboHockey::Layer::Strategy::MainStateMachine;
 using namespace RoboHockey::Layer::Autonomous;
@@ -18,7 +20,8 @@ void HideEnemyPucksTest::nextState_notAllEnemyPucksHidden_notAchieveGoals()
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	HideEnemyPucks hideEnemyPucks(robot, field, referee);
+	LoggerMock logger;
+	HideEnemyPucks hideEnemyPucks(robot, field, referee, logger);
 	field.setAchievedGoals(3);
 	State *state;
 
@@ -33,7 +36,8 @@ void HideEnemyPucksTest::nextState_stopMovement_Pause()
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	HideEnemyPucks hideEnemyPucks(robot, field, referee);
+	LoggerMock logger;
+	HideEnemyPucks hideEnemyPucks(robot, field, referee, logger);
 	referee.setGameOver(false);
 	referee.setStopMovement(true);
 	field.setAchievedGoals(3);
@@ -52,7 +56,8 @@ void HideEnemyPucksTest::nextState_gameOver_Pause()
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	HideEnemyPucks hideEnemyPucks(robot, field, referee);
+	LoggerMock logger;
+	HideEnemyPucks hideEnemyPucks(robot, field, referee, logger);
 	referee.setGameOver(true);
 	referee.setStopMovement(false);
 	field.setAchievedGoals(3);
@@ -71,7 +76,8 @@ void HideEnemyPucksTest::nextState_allEnemyPucksHidden_DriveToFinalPosition()
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	HideEnemyPucks hideEnemyPucks(robot, field, referee);
+	LoggerMock logger;
+	HideEnemyPucks hideEnemyPucks(robot, field, referee, logger);
 	referee.setGameOver(false);
 	referee.setStopMovement(false);
 	field.setAchievedGoals(3);
@@ -91,7 +97,8 @@ void HideEnemyPucksTest::nextState_achievedGoals2_AchieveGoals()
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	HideEnemyPucks hideEnemyPucks(robot, field, referee);
+	LoggerMock logger;
+	HideEnemyPucks hideEnemyPucks(robot, field, referee, logger);
 	referee.setGameOver(false);
 	referee.setStopMovement(false);
 	field.setAchievedGoals(2);
@@ -111,7 +118,8 @@ void HideEnemyPucksTest::nextState_nextState_hideEnemyPucks()
 	RobotMock robot;
 	FieldMock field;
 	RefereeMock referee;
-	HideEnemyPucks hideEnemyPucks(robot, field, referee);
+	LoggerMock logger;
+	HideEnemyPucks hideEnemyPucks(robot, field, referee, logger);
 	referee.setGameOver(false);
 	referee.setStopMovement(false);
 	field.setAchievedGoals(2);
