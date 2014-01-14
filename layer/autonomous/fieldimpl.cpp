@@ -604,10 +604,8 @@ bool FieldImpl::isPuckOfColorInFront(FieldColor color) const
 		return false;
 
 	for(vector<FieldObject>::const_iterator i = objects.begin(); i != objects.end(); ++i)
-	{
 		if((*i).getColor() == color)
 			return true;
-	}
 
 	return false;
 }
@@ -617,10 +615,8 @@ bool FieldImpl::isPuckcolorDetected() const
 	vector<FieldObject> objects = getObjectsInVisibleSector(Angle::getHalfRotation()/3, 1);
 
 	for(vector<FieldObject>::const_iterator i = objects.begin(); i != objects.end(); ++i)
-	{
 		if((*i).getColor() == FieldColorUnknown)
 			return false;
-	}
 
 	return true;
 }
