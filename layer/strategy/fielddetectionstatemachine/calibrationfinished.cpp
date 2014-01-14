@@ -23,10 +23,10 @@ State* CalibrationFinished::nextState()
 	std::list<RobotPosition> targetList;
 	targetList.push_back(m_field.getTargetsForWaitingPhase()[m_reachedTargets]);
 
-	return new WaitCyclesState(m_robot, m_field, m_referee,
-					new DriveToState(m_robot, m_field, m_referee, targetList,
-					   new CalibrationFinished(m_robot, m_field, m_referee, m_reachedTargets +1),
-					   new CalibrationFinished(m_robot, m_field, m_referee, m_reachedTargets +1)), 10);
+	return new WaitCyclesState(m_robot, m_field, m_referee, m_logger,
+					new DriveToState(m_robot, m_field, m_referee, m_logger, targetList,
+					   new CalibrationFinished(m_robot, m_field, m_referee, m_logger, m_reachedTargets +1),
+					   new CalibrationFinished(m_robot, m_field, m_referee, m_logger, m_reachedTargets +1)), 10);
 }
 
 std::string CalibrationFinished::getName()
