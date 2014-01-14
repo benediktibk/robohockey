@@ -50,7 +50,9 @@ void SensorDataRecorder::recordCurrentValues()
 	odometry.writeDataToFile(odometryFileName.str());
 	engine.writeDataToFile(engineFileName.str());
 
-	fstream roundCount("roundcount.txt", ios::out | ios::trunc);
+	stringstream roundCountFileName;
+	roundCountFileName << m_path << "/roundcount.txt";
+	fstream roundCount(roundCountFileName.str().c_str(), ios::out | ios::trunc);
 	roundCount << m_roundCount;
 	roundCount.close();
 	++m_roundCount;
