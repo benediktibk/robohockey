@@ -314,6 +314,43 @@ list<RobotPosition> FieldImpl::getTargetsForSearchingPucks() const
 	return unknownTargetsInNeutralSector;
 }
 
+list<Point> FieldImpl::getTargetsForTurningToUnknownObjects() const
+{
+	list<Point> pointsToTurnToInNeutralSector;
+	list<Point> pointsToTurnToInFieldSector;
+	Point currentPoint;
+
+	Rectangle neutralSector(Point(5.0/3.0, 0.1), Point(10.0/3.0, 2.9));
+	Rectangle fieldSector(Point(0.1, 0.1), Point(4.9, 2.9));
+
+	RandomDecision decider(0.5);
+	vector<FieldObject> interchangedFieldObjects = getObjectsWithColorOrderdByDistance(FieldColorUnknown);
+	random_shuffle(interchangedFieldObjects.begin(), interchangedFieldObjects.end());
+
+	for (vector<FieldObject>::const_iterator i = interchangedFieldObjects.begin(); i != interchangedFieldObjects.end(); ++i)
+	{
+		const FieldObject &fieldObject = *i;
+		currentPoint = fieldObject.getCircle().getCenter();
+		if(neutralSector.isInside(currentPoint, 0.01))
+		{
+			if(decider.decide())
+				pointsToTurnToInNeutralSector.push_back(currentPoint);
+			else
+				pointsToTurnToInNeutralSector.push_front(currentPoint);
+		}
+		else if(fieldSector.isInside(currentPoint, 0.01))
+		{
+			if(decider.decide())
+				pointsToTurnToInFieldSector.push_back(currentPoint);
+			else
+				pointsToTurnToInFieldSector.push_front(currentPoint);
+		}
+	}
+	pointsToTurnToInNeutralSector.splice(pointsToTurnToInNeutralSector.end(), pointsToTurnToInFieldSector);
+
+	return pointsToTurnToInNeutralSector;
+}
+
 list<RobotPosition> FieldImpl::getTargetsForHidingEnemyPucks() const
 {
 	list<RobotPosition> targets;
