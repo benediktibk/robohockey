@@ -6,6 +6,7 @@
 #include "layer/autonomous/field.h"
 #include "layer/autonomous/robot.h"
 #include "common/console.h"
+#include "common/logger.h"
 #include <iostream>
 
 using namespace std;
@@ -57,7 +58,7 @@ void GameAutomatic::executeRobotControl()
 	if(m_oldString != m_stateMachine->getNameOfCurrentState())
 	{
 		m_oldString = m_stateMachine->getNameOfCurrentState();
-		cout << "current state: " << m_stateMachine->getNameOfCurrentState() << endl;
+		getLogger().logToConsoleAndGlobalLogFile("current state: " + m_stateMachine->getNameOfCurrentState());
 	}
 
 	if (guiEnabled() && logMessagesEnabled())
