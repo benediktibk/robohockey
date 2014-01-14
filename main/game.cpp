@@ -135,7 +135,7 @@ void Game::logToConsole(const string &message)
 		m_logger->logToConsoleAndGlobalLogFile(message);
 	}
 	else
-		m_logger->writeToGlobalLogFile(message);
+		m_logger->logToGlobalLogFile(message);
 }
 
 void Game::execute()

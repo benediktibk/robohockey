@@ -21,7 +21,7 @@ void State::update()
 {
 	if (!(m_updateAlreadyCalled && m_callUpdateOnlyOnce))
 	{
-		m_logger.writeToLogFileOfType(Logger::LogFileTypeStateChanges, "Updating State: " + getName());
+		m_logger.logToLogFileOfType(Logger::LogFileTypeStateChanges, "Updating State: " + getName());
 		updateInternal();
 	}
 

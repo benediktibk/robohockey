@@ -15,8 +15,8 @@ class LoggerMock :
 
 		virtual void logToConsoleAndGlobalLogFile(const std::string &message);
 		virtual void logErrorToConsoleAndWriteToGlobalLogFile(const std::string &message);
-		virtual void writeToGlobalLogFile(const std::string &message);
-		virtual void writeToLogFileOfType(LogFileType logType, const std::string &message);
+		virtual void logToGlobalLogFile(const std::string &message);
+		virtual void logToLogFileOfType(LogFileType logType, const std::string &message);
 
 		virtual void enableConsoleOutput();
 		virtual void disableConsoleOutput();

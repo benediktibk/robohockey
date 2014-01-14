@@ -23,8 +23,8 @@ class Logger
 		virtual ~Logger() { }
 		virtual void logToConsoleAndGlobalLogFile(const std::string &message) = 0;
 		virtual void logErrorToConsoleAndWriteToGlobalLogFile(const std::string &message) = 0;
-		virtual void writeToGlobalLogFile(const std::string &message) = 0;
-		virtual void writeToLogFileOfType(LogFileType logType, const std::string &message) = 0;
+		virtual void logToGlobalLogFile(const std::string &message) = 0;
+		virtual void logToLogFileOfType(LogFileType logType, const std::string &message) = 0;
 
 		virtual void enableConsoleOutput() = 0;
 		virtual void disableConsoleOutput() = 0;

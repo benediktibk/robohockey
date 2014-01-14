@@ -13,11 +13,11 @@ void LoggerMock::logErrorToConsoleAndWriteToGlobalLogFile(const std::string &)
 {
 }
 
-void LoggerMock::writeToGlobalLogFile(const std::string &)
+void LoggerMock::logToGlobalLogFile(const std::string &)
 {
 }
 
-void LoggerMock::writeToLogFileOfType(Logger::LogFileType , const std::string &)
+void LoggerMock::logToLogFileOfType(Logger::LogFileType , const std::string &)
 {
 }
 

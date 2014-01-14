@@ -65,23 +65,23 @@ void LoggerImpl::logToConsoleAndGlobalLogFile(const string &message)
 {
 	if (m_consoleOutputEnabled)
 		cout << message << endl;
-	writeToGlobalLogFile(message);
+	logToGlobalLogFile(message);
 }
 
 void LoggerImpl::logErrorToConsoleAndWriteToGlobalLogFile(const string &message)
 {
 	if (m_consoleOutputEnabled)
 		cerr << message << endl;
-	writeToGlobalLogFile(message);
+	logToGlobalLogFile(message);
 }
 
-void LoggerImpl::writeToGlobalLogFile(const string &message)
+void LoggerImpl::logToGlobalLogFile(const string &message)
 {
 	if (m_logWritingEnabled)
 		m_globalLogFile << message << endl;
 }
 
-void LoggerImpl::writeToLogFileOfType(LogFileType logType, const string &message)
+void LoggerImpl::logToLogFileOfType(LogFileType logType, const string &message)
 {
 	if (m_logWritingEnabled)
 	{
@@ -146,7 +146,7 @@ void LoggerImpl::initLogFiles()
 	for (int i = LogFileTypeGlobal; i <= LogFileTypeFieldDetection; i++)
 	{
 		LogFileType currentLogFile = static_cast<LogFileType>(i);
-		writeToLogFileOfType(currentLogFile, message);
+		logToLogFileOfType(currentLogFile, message);
 	}
 
 }
@@ -171,7 +171,7 @@ void LoggerImpl::closeLogFiles()
 	for (int i = LogFileTypeGlobal; i <= LogFileTypeFieldDetection; ++i)
 	{
 		LogFileType currentLogFile = static_cast<LogFileType>(i);
-		writeToLogFileOfType(currentLogFile, message);
+		logToLogFileOfType(currentLogFile, message);
 	}
 }
 
