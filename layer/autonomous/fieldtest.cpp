@@ -1977,6 +1977,26 @@ void FieldTest::isPuckOfColorInFront_puckAlmostInFront_resultIsTrue()
 	CPPUNIT_ASSERT(m_field->isPuckOfColorInFront(FieldColorYellow));
 }
 
+void FieldTest::isPuckOfColorInFront_puckAlmostInFrontAndOnePuckLeft_resultIsTrue()
+{
+	m_field->setTrueTeamColor(FieldColorYellow);
+	m_odometry->setCurrentPosition(RobotPosition(Point(1,1), Angle::getHalfRotation()));
+	DataAnalysis::LidarObjects lidarObjects;
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1.4, 1.1), 0.1));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1.3, 1), 0.1));
+	m_lidar->setAllObjects(lidarObjects);
+	DataAnalysis::CameraObjects cameraObjects;
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(1.4, 1.1)));
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(1.3, 1)));
+	m_camera->setAllObjects(cameraObjects);
+
+	updateFieldForObjectsToAppear();
+	m_odometry->setCurrentPosition(RobotPosition(Point(1,1), 0));
+	updateFieldForObjectsToAppear();
+
+	CPPUNIT_ASSERT(m_field->isPuckOfColorInFront(FieldColorYellow));
+}
+
 void FieldTest::updateFieldForObjectsToAppear(FieldImpl &field)
 {
 	field.update();
