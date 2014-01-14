@@ -23,7 +23,7 @@ SensorDataRecorder::SensorDataRecorder(const Robot &robot, const string &path) :
 	filesystem::create_directory(m_path);
 }
 
-void SensorDataRecorder::recordCurrentValues()
+void SensorDataRecorder::recordCurrentValues(bool recordCamera)
 {
 	const Lidar &lidar = m_robot.getLidar();
 	const Camera &camera = m_robot.getCamera();
@@ -42,7 +42,7 @@ void SensorDataRecorder::recordCurrentValues()
 	odometryFileName << m_path << "/odometry_" << m_roundCount << ".txt";
 	engineFileName << m_path << "/engine_" << m_roundCount << ".txt";
 
-	if (!engine.isMoving() && camera.isValid())
+	if (recordCamera && camera.isValid())
 		camera.writeDataToFile(cameraFileName.str());
 
 	lidar.writeDataToFile(lidarFileName.str());
@@ -50,7 +50,9 @@ void SensorDataRecorder::recordCurrentValues()
 	odometry.writeDataToFile(odometryFileName.str());
 	engine.writeDataToFile(engineFileName.str());
 
-	fstream roundCount("roundcount.txt", ios::out | ios::trunc);
+	stringstream roundCountFileName;
+	roundCountFileName << m_path << "/roundcount.txt";
+	fstream roundCount(roundCountFileName.str().c_str(), ios::out | ios::trunc);
 	roundCount << m_roundCount;
 	roundCount.close();
 	++m_roundCount;

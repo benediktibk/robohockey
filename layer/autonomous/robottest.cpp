@@ -74,7 +74,7 @@ void RobotTest::goTo_orientationToTargetCorrect_engineGotAtLeastOneCallToGoToStr
 	CPPUNIT_ASSERT(m_engine->getCallsToGoToStraight() > 0);
 }
 
-void RobotTest::goTo_orientationToTargetCorrect_isNotRotating()
+void RobotTest::goTo_orientationToTargetCorrect_isRotating()
 {
 	m_odometry->setCurrentPosition(RobotPosition(Point(0, 0), 0));
 
@@ -86,7 +86,7 @@ void RobotTest::goTo_orientationToTargetCorrect_isNotRotating()
 	m_robot->updateSensorData();
 	m_robot->updateActuators(*m_field);
 
-	CPPUNIT_ASSERT(!m_robot->isRotating());
+	CPPUNIT_ASSERT(m_robot->isRotating());
 }
 
 void RobotTest::goTo_orientationToTargetCompletelyWrong_engineGotNoCallToGoToStraight()
@@ -1801,4 +1801,80 @@ void RobotTest::calculateFinalSpeedForGoingStraight_smallAngle_betweenZeroAnd05(
 
 	CPPUNIT_ASSERT(finalSpeed > 0);
 	CPPUNIT_ASSERT(finalSpeed < 0.5);
+}
+
+void RobotTest::isMoving_drivingStraightPart_true()
+{
+	list<RobotPosition> targets;
+	targets.push_back(RobotPosition(Point(10, 0), Angle(1)));
+
+	m_robot->updateSensorData();
+	m_robot->goTo(targets);
+	m_robot->updateActuators(*m_field);
+	m_engine->setReachedTarget(true);
+	m_robot->updateSensorData();
+	m_robot->updateActuators(*m_field);
+
+	CPPUNIT_ASSERT(m_robot->isMoving());
+}
+
+void RobotTest::isMoving_drivingTurningPart_true()
+{
+	list<RobotPosition> targets;
+	targets.push_back(RobotPosition(Point(10, 0), Angle(1)));
+	m_engine->setIsMoving(false);
+
+	m_robot->goTo(targets);
+
+	CPPUNIT_ASSERT(m_robot->isMoving());
+}
+
+void RobotTest::isMoving_turningTo_true()
+{
+	m_engine->setIsMoving(false);
+
+	m_robot->turnTo(Point(1, 1));
+
+	CPPUNIT_ASSERT(m_robot->isMoving());
+}
+
+void RobotTest::isMoving_waitingAndEngineSaysNotMoving_false()
+{
+	m_engine->setIsMoving(false);
+
+	CPPUNIT_ASSERT(!m_robot->isMoving());
+}
+
+void RobotTest::isMoving_waitingAndEngineSaysMoving_true()
+{
+	m_engine->setIsMoving(true);
+
+	CPPUNIT_ASSERT(m_robot->isMoving());
+}
+
+void RobotTest::isMoving_turnAround_true()
+{
+	m_engine->setIsMoving(false);
+
+	m_robot->turnAround();
+
+	CPPUNIT_ASSERT(m_robot->isMoving());
+}
+
+void RobotTest::isMoving_leavingPuck_true()
+{
+	m_engine->setIsMoving(false);
+
+	m_robot->leaveCollectedPuck();
+
+	CPPUNIT_ASSERT(m_robot->isMoving());
+}
+
+void RobotTest::isMoving_collectingPuck_true()
+{
+	m_engine->setIsMoving(false);
+
+	m_robot->collectPuckInFront(Point(1, 0));
+
+	CPPUNIT_ASSERT(m_robot->isMoving());
 }

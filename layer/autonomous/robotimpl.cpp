@@ -467,7 +467,22 @@ void RobotImpl::leaveCollectedPuck()
 
 bool RobotImpl::isMoving() const
 {
-	return m_dataAnalyser->getEngine().isMoving();
+	const DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
+	switch(m_state)
+	{
+	case RobotStateWaiting:
+		return engine.isMoving();
+	case RobotStateDrivingStraightPart:
+	case RobotStateDrivingTurningPart:
+	case RobotStateTurnAround:
+	case RobotStateTurnTo:
+	case RobotStateLeavingPuck:
+	case RobotStateCollectingPuck:
+		return true;
+	}
+
+	assert(false);
+	return true;
 }
 
 void RobotImpl::turnAround()
@@ -526,7 +541,7 @@ bool RobotImpl::isRotating() const
 	case RobotStateWaiting:
 		return false;
 	case RobotStateDrivingStraightPart:
-		return false;
+		return true;
 	case RobotStateDrivingTurningPart:
 		return true;
 	case RobotStateTurnAround:

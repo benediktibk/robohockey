@@ -15,7 +15,7 @@ namespace Hardware
 	{
 	public:
 		CameraMock();
-		CameraMock(std::string filename);
+		CameraMock(const std::string &filename);
 		~CameraMock();
 
 		virtual cv::Mat getFrame() const;
@@ -23,11 +23,10 @@ namespace Hardware
 		virtual void writeDataToFile(const std::string &fileName) const;
 
 		void readDataFromFile(const std::string &fileName);
-		void invalidatePicture();
+		void setBlackPicture();
 
 	private:
 		cv::Mat *m_testpicture;
-		bool m_pictureValid;
 	};
 }
 }
