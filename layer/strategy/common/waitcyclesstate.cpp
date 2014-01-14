@@ -1,5 +1,7 @@
 #include "layer/strategy/common/waitcyclesstate.h"
 #include "layer/autonomous/field.h"
+#include "common/logger.h"
+#include <sstream>
 
 using namespace std;
 using namespace RoboHockey::Common;
@@ -27,6 +29,10 @@ State *WaitCyclesState::nextState()
 	{
 		result = m_stateAfterWaitCycles;
 		m_stateAfterWaitCycles = 0;
+		stringstream stream("wait for ");
+		stream << m_updateCounter;
+		stream << " cycles";
+		m_logger.logToConsole(stream.str());
 	}
 
 	return result;

@@ -120,3 +120,8 @@ SonarMock &RobotMock::getSonarMock()
 {
 	return m_sonar;
 }
+
+CameraMock &RobotMock::getCameraMock()
+{
+	return m_camera;
+}

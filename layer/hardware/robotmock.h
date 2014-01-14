@@ -43,6 +43,7 @@ namespace Hardware
 		OdometryMock& getOdometryMock();
 		LidarMock& getLidarMock();
 		SonarMock& getSonarMock();
+		CameraMock& getCameraMock();
 
 	private:
 		unsigned int m_callsToGetSonar;

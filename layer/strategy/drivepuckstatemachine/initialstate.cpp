@@ -18,7 +18,7 @@ State* InitialState::nextState()
 {
 	if(m_robot.isPuckCollected())
 		return new LeavePuckState(m_robot, m_field, m_referee, m_logger, m_puckTargetFetcher, false);
-	if(m_puckTargetFetcher.getNumberOfKnownPucksNotInTarget() > 0)
+	if(m_puckTargetFetcher.getNumberOfKnownPucksNotInEnemyThird() > 0)
 		return new DriveToCollectPuckState(m_robot, m_field, m_referee, m_logger, m_puckTargetFetcher);
 	else
 		return new FindPuckState(m_robot, m_field, m_referee, m_logger, m_puckTargetFetcher);
