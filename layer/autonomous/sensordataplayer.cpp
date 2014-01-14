@@ -110,7 +110,9 @@ void SensorDataPlayer::loadNextRound(unsigned int roundCount)
 	odometry.readDataFromFile(odometryFileName.str());
 	engine.readDataFromFile(engineFileName.str());
 	sonar.readDataFromFile(sonarFileName.str());
+	m_robot->updateSensorData();
 	m_field->update();
+	m_robot->updateActuators(*m_field);
 
 	m_oldBlueObjectCount = m_blueObjectCount;
 	m_oldGreenObjectCount = m_greenObjectCount;
