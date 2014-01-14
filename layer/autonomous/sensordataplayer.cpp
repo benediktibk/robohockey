@@ -25,7 +25,13 @@ SensorDataPlayer::SensorDataPlayer(const string &path) :
 	m_robot(new Autonomous::RobotImpl(m_dataAnalyser, new RouterImpl(0.38), m_watch)),
 	m_field(new FieldImpl(
 				m_dataAnalyser->getOdometry(), m_dataAnalyser->getLidar(),
-				m_dataAnalyser->getCamera(), *m_robot))
+				m_dataAnalyser->getCamera(), *m_robot)),
+	m_oldBlueObjectCount(0),
+	m_oldYellowObjectCount(0),
+	m_oldGreenObjectCount(0),
+	m_blueObjectCount(0),
+	m_yellowObjectCount(0),
+	m_greenObjectCount(0)
 {
 	string roundCountFileName = m_path + "/roundcount.txt";
 	assert(filesystem::exists(roundCountFileName));
@@ -56,6 +62,28 @@ unsigned int SensorDataPlayer::getMaximumRoundCount() const
 	return m_maximumRoundCount;
 }
 
+bool SensorDataPlayer::countOfColoredObjectsDecreased() const
+{
+	return	m_oldBlueObjectCount > m_blueObjectCount ||
+			m_oldYellowObjectCount > m_yellowObjectCount ||
+			m_oldGreenObjectCount > m_oldGreenObjectCount;
+}
+
+unsigned int SensorDataPlayer::getBlueObjectCount() const
+{
+	return m_blueObjectCount;
+}
+
+unsigned int SensorDataPlayer::getYellowObjectCount() const
+{
+	return m_yellowObjectCount;
+}
+
+unsigned int SensorDataPlayer::getGreenObjectCount() const
+{
+	return m_greenObjectCount;
+}
+
 void SensorDataPlayer::loadNextRound(unsigned int roundCount)
 {
 	Hardware::CameraMock &camera = m_hardwareRobot->getCameraMock();
@@ -64,7 +92,7 @@ void SensorDataPlayer::loadNextRound(unsigned int roundCount)
 	Hardware::EngineMock &engine = m_hardwareRobot->getEngineMock();
 	Hardware::SonarMock &sonar = m_hardwareRobot->getSonarMock();
 
-	camera.invalidatePicture();
+	camera.setBlackPicture();
 	stringstream cameraFileName;
 	stringstream lidarFileName;
 	stringstream sonarFileName;
@@ -82,4 +110,14 @@ void SensorDataPlayer::loadNextRound(unsigned int roundCount)
 	odometry.readDataFromFile(odometryFileName.str());
 	engine.readDataFromFile(engineFileName.str());
 	sonar.readDataFromFile(sonarFileName.str());
+	m_robot->updateSensorData();
+	m_field->update();
+	m_robot->updateActuators(*m_field);
+
+	m_oldBlueObjectCount = m_blueObjectCount;
+	m_oldGreenObjectCount = m_greenObjectCount;
+	m_oldYellowObjectCount = m_yellowObjectCount;
+	m_blueObjectCount = m_field->getNumberOfObjectsWithColor(FieldColorBlue);
+	m_yellowObjectCount = m_field->getNumberOfObjectsWithColor(FieldColorYellow);
+	m_greenObjectCount = m_field->getNumberOfObjectsWithColor(FieldColorGreen);
 }

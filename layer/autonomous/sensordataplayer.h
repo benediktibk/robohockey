@@ -35,6 +35,10 @@ namespace Autonomous
 
 		void loadNextRound();
 		unsigned int getMaximumRoundCount() const;
+		bool countOfColoredObjectsDecreased() const;
+		unsigned int getBlueObjectCount() const;
+		unsigned int getYellowObjectCount() const;
+		unsigned int getGreenObjectCount() const;
 
 	private:
 		void loadNextRound(unsigned int roundCount);
@@ -48,6 +52,12 @@ namespace Autonomous
 		DataAnalysis::DataAnalyser *m_dataAnalyser;
 		Robot *m_robot;
 		Field *m_field;
+		unsigned int m_oldBlueObjectCount;
+		unsigned int m_oldYellowObjectCount;
+		unsigned int m_oldGreenObjectCount;
+		unsigned int m_blueObjectCount;
+		unsigned int m_yellowObjectCount;
+		unsigned int m_greenObjectCount;
 	};
 }
 }

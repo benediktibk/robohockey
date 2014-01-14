@@ -33,8 +33,8 @@ unsigned int OdometryMock::getCallsToSetCurrentPosition() const
 void OdometryMock::readDataFromFile(const string &fileName)
 {
 	fstream file(fileName.c_str(), ios::in);
-	string content;
-	file >> content;
-	m_currentPosition.read(content);
+	stringstream content;
+	content << file.rdbuf();
+	m_currentPosition.read(content.str());
 	file.close();
 }

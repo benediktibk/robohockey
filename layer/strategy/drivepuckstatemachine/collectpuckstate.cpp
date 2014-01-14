@@ -26,7 +26,7 @@ State* CollectPuckState::nextState()
 
 	if(m_robot.isPuckCollected())
 		return new DrivePuckToPositionState(m_robot, m_field, m_referee, m_logger, m_puckTargetFetcher);
-	else if(m_robot.cantReachTarget() || !m_robot.isPuckCollectable() || targetPositions.empty())
+	else if(m_robot.cantReachTarget() || !m_robot.isPuckCollectable() || targetPositions.empty() || m_robot.stuckAtObstacle())
 		return new DriveToCollectPuckState(m_robot, m_field, m_referee, m_logger, m_puckTargetFetcher);
 	else
 		return 0;

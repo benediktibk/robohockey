@@ -1,6 +1,7 @@
 #include "layer/autonomous/fieldtest.h"
 #include "layer/autonomous/fieldimpl.h"
 #include "layer/autonomous/robotmock.h"
+#include "layer/autonomous/sensordataplayer.h"
 #include "layer/dataanalysis/odometrymock.h"
 #include "layer/dataanalysis/lidarmock.h"
 #include "layer/dataanalysis/cameramock.h"
@@ -1136,6 +1137,20 @@ void FieldTest::update_rotatingAndObjectVeryClose_onlyFieldObjectIsUpdated()
 	CPPUNIT_ASSERT(!compare.isFuzzyEqual(Circle(Point(1, 0), 0.04), fieldObject.getCircle()));
 }
 
+void FieldTest::update_changingData_noColoredObjectsAreLost()
+{
+	SensorDataPlayer sensorDataPlayer("resources/testfiles/loosing_puck_1");
+
+	for (unsigned int round = 0; round < sensorDataPlayer.getMaximumRoundCount(); ++round)
+	{
+		sensorDataPlayer.loadNextRound();
+		if (sensorDataPlayer.countOfColoredObjectsDecreased())
+			CPPUNIT_ASSERT(false);
+	}
+
+	CPPUNIT_ASSERT(sensorDataPlayer.getBlueObjectCount() > 0);
+}
+
 void FieldTest::calibratePosition_noValidPattern_false()
 {
 	DataAnalysis::LidarObjects lidarObjects;
@@ -1881,7 +1896,6 @@ void FieldTest::getNumberOfObjectsWithColor_3YellowAnd2GreenAnd1UnknownObject_co
 	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorGreen, Point(2, 1.8)));
 	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorGreen, Point(3, 1.8)));
 	m_camera->setAllObjects(cameraObjects);
-
 
 	updateFieldForObjectsToAppear();
 

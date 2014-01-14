@@ -155,7 +155,7 @@ void Game::execute()
 	m_robot->updateSensorData();
 
 	if (m_sensorDataRecorder != 0)
-		m_sensorDataRecorder->recordCurrentValues();
+		m_sensorDataRecorder->recordCurrentValues(m_robot->isMoving());
 
 	double timeForSensorUpdate = watch.getTimeAndRestart();
 
