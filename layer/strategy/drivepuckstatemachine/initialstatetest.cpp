@@ -56,7 +56,7 @@ void InitialStateTest::nextState_numberOfKnownPucksIs2_nextStateIsDriveToCollect
 	RefereeMock referee;
 	LoggerMock logger;
 	ColorDependentPuckTargetFetcherMock puckTargetFetcher;
-	puckTargetFetcher.setNumberOfKnownPucksNotInTarget(2);
+	puckTargetFetcher.setNumberOfKnownPucksNotInEnemyThird(2);
 	InitialState initialState(robot, field, referee, logger, puckTargetFetcher);
 	State *state;
 	state = initialState.nextState();

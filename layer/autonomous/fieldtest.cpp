@@ -1685,6 +1685,33 @@ void FieldTest::getTargetsForScoringGoals_always_numberOfPositionsBigger4()
 	CPPUNIT_ASSERT((size_t) 4 < m_field->getTargetsForScoringGoals().size());
 }
 
+void FieldTest::getTargetsForScoringGoals_always_numberOfPositionsBigger5()
+{
+	m_field->increaseNumberOfEstimatedGoals();
+
+	CPPUNIT_ASSERT((size_t) 5 < m_field->getTargetsForScoringGoals().size());
+}
+
+void FieldTest::getTargetsForScoringGoals_always_numberOfPositionsBigger6()
+{
+	m_field->increaseNumberOfEstimatedGoals();
+	m_field->increaseNumberOfEstimatedGoals();
+
+	CPPUNIT_ASSERT((size_t) 5 < m_field->getTargetsForScoringGoals().size());
+}
+
+void FieldTest::getTargetsForScoringGoals_forEstimatedGoalsAre0AndEstimatedGoalsAre3_positionsAreEqual()
+{
+	list<RobotPosition> estimated0, estimated3;
+	estimated0 = m_field->getTargetsForScoringGoals();
+	m_field->increaseNumberOfEstimatedGoals();
+	m_field->increaseNumberOfEstimatedGoals();
+	m_field->increaseNumberOfEstimatedGoals();
+	estimated3 = m_field->getTargetsForScoringGoals();
+
+
+}
+
 void FieldTest::getTargetsForFinalPosition_always_numberOfPositionsBigger1()
 {
 	CPPUNIT_ASSERT((size_t) 1 < m_field->getTargetsForFinalPosition().size());

@@ -5,19 +5,19 @@ using namespace RoboHockey::Common;
 LoggerMock::LoggerMock()
 { }
 
-void LoggerMock::logToConsole(const std::string &)
+void LoggerMock::logToConsoleAndGlobalLogFile(const std::string &)
 {
 }
 
-void LoggerMock::logErrorToConsole(const std::string &)
+void LoggerMock::logErrorToConsoleAndWriteToGlobalLogFile(const std::string &)
 {
 }
 
-void LoggerMock::writeToGlobalLogFile(const std::string &)
+void LoggerMock::logToGlobalLogFile(const std::string &)
 {
 }
 
-void LoggerMock::writeToLogFileOfType(Logger::LogFileType , const std::string &)
+void LoggerMock::logToLogFileOfType(Logger::LogFileType , const std::string &)
 {
 }
 

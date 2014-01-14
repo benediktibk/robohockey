@@ -1,5 +1,7 @@
 #include "common/comparetest.h"
 #include "common/compare.h"
+#include "common/angle.h"
+#include "common/robotposition.h"
 
 using namespace RoboHockey::Common;
 using namespace std;
@@ -61,6 +63,30 @@ void CompareTest::isFuzzyEqual_twoDifferentVectors_false()
 	two.push_back(2);
 
 	CPPUNIT_ASSERT(!compare.isFuzzyEqual(one, two));
+}
+
+void CompareTest::isFuzzyEqual_towListsWithRobotPositions_true()
+{
+	Compare compare(0.1);
+	list<RobotPosition> list1, list2;
+	list1.push_back(RobotPosition(Point(1, 2), Angle::getEighthRotation()));
+	list1.push_back(RobotPosition(Point(1, 2.5), Angle::getEighthRotation()));
+	list2.push_back(RobotPosition(Point(1, 2), Angle::getEighthRotation()));
+	list2.push_back(RobotPosition(Point(1, 2.5), Angle::getEighthRotation()));
+
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(list1, list2));
+}
+
+void CompareTest::isFuzzyEqual_twoListsWithRobotPositions_false()
+{
+	Compare compare(0.1);
+	list<RobotPosition> list1, list2;
+	list1.push_back(RobotPosition(Point(1, 2), Angle::getEighthRotation()));
+	list1.push_back(RobotPosition(Point(1, 2.5), Angle::getEighthRotation()));
+	list2.push_back(RobotPosition(Point(1, 3), Angle::getEighthRotation()));
+	list2.push_back(RobotPosition(Point(1, 2.5), Angle::getEighthRotation()));
+
+	CPPUNIT_ASSERT(!compare.isFuzzyEqual(list1, list2));
 }
 
 void CompareTest::isFuzzyGreater_towAndTwoPointOneAndEpsilonZeroPointTwo_resultIsFuzzyGreater()
