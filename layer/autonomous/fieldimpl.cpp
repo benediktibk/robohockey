@@ -9,6 +9,7 @@
 #include "common/compare.h"
 #include "common/robotposition.h"
 #include "common/randomdecision.h"
+#include "common/circle.h"
 #include <math.h>
 #include <algorithm>
 
@@ -316,39 +317,65 @@ list<RobotPosition> FieldImpl::getTargetsForSearchingPucks() const
 
 list<Point> FieldImpl::getTargetsForTurningToUnknownObjects() const
 {
-	list<Point> pointsToTurnToInNeutralSector;
-	list<Point> pointsToTurnToInFieldSector;
+	list<Point> pointsToTurnTo;
 	Point currentPoint;
-
-	Rectangle neutralSector(Point(5.0/3.0, 0.1), Point(10.0/3.0, 2.9));
+	Circle circle(m_robot->getCurrentPosition().getPosition(), 1);
 	Rectangle fieldSector(Point(0.1, 0.1), Point(4.9, 2.9));
+	vector<FieldObject> fieldObjects = getObjectsWithColorOrderdByDistance(FieldColorUnknown);
+	vector<Point> pointInRange;
+	vector<double> angles;
+	double angleConverted;
+	int z=0, comp = 0;
 
-	RandomDecision decider(0.5);
-	vector<FieldObject> interchangedFieldObjects = getObjectsWithColorOrderdByDistance(FieldColorUnknown);
-	random_shuffle(interchangedFieldObjects.begin(), interchangedFieldObjects.end());
-
-	for (vector<FieldObject>::const_iterator i = interchangedFieldObjects.begin(); i != interchangedFieldObjects.end(); ++i)
+	for (vector<FieldObject>::const_iterator i = fieldObjects.begin(); i != fieldObjects.end(); ++i)
 	{
 		const FieldObject &fieldObject = *i;
 		currentPoint = fieldObject.getCircle().getCenter();
-		if(neutralSector.isInside(currentPoint, 0.01))
+		if(fieldSector.isInside(currentPoint, 0.01), circle.isInside(currentPoint))
 		{
-			if(decider.decide())
-				pointsToTurnToInNeutralSector.push_back(currentPoint);
-			else
-				pointsToTurnToInNeutralSector.push_front(currentPoint);
-		}
-		else if(fieldSector.isInside(currentPoint, 0.01))
-		{
-			if(decider.decide())
-				pointsToTurnToInFieldSector.push_back(currentPoint);
-			else
-				pointsToTurnToInFieldSector.push_front(currentPoint);
+			pointInRange.push_back(currentPoint);
+			Angle angle(m_robot->getCurrentPosition().getPosition(), currentPoint);
+			angleConverted = angle.getValueBetweenZeroAndTwoPi() - m_robot->getCurrentPosition().getOrientation().getValueBetweenZeroAndTwoPi();
+
+			if(angleConverted < 0)
+				angleConverted = angleConverted + (2 * M_PI);
+
+			angles.push_back(angleConverted);
 		}
 	}
-	pointsToTurnToInNeutralSector.splice(pointsToTurnToInNeutralSector.end(), pointsToTurnToInFieldSector);
 
-	return pointsToTurnToInNeutralSector;
+	double anglesToSort[angles.size()];
+	vector<Point>::const_iterator iteratorArray[angles.size()];
+
+	for(vector<double>::const_iterator i = angles.begin(); i != angles.end(); ++i)
+	{
+		const double &angleForArray = *i;
+		anglesToSort[z] = angleForArray;
+		++z;
+	}
+
+	vector<Point>::const_iterator iterate;
+
+	for(size_t i=0; i < angles.size(); ++i)
+	{
+		comp = 0;
+		iterate = pointInRange.begin();
+		for(size_t j=0; j < angles.size(); ++j)
+		{
+			if(anglesToSort[i] > anglesToSort[j])
+				++comp;
+				++iterate;
+		}
+		iteratorArray[comp] = iterate;
+	}
+
+	for(size_t i=0; i < angles.size(); ++i)
+	{
+		const Point &point = *iteratorArray[i];
+		pointsToTurnTo.push_back(point);
+	}
+
+	return pointsToTurnTo;
 }
 
 list<RobotPosition> FieldImpl::getTargetsForHidingEnemyPucks() const
