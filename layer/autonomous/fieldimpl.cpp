@@ -754,9 +754,8 @@ void FieldImpl::tryToMergeDoubledFieldObjects()
 					color = secondObject.getColor();
 
 				FieldObject mergedObject(Circle(center, diameter), color, m_seenTresholdForFieldObjects, seen, shouldBeSeen, notSeen);
-				m_fieldObjects.erase(i);
+				*i = mergedObject;
 				m_fieldObjects.erase(j);
-				m_fieldObjects.push_back(mergedObject);
 
 				changed = true;
 			}
