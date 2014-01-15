@@ -1702,6 +1702,7 @@ void FieldTest::getTargetsForScoringGoals_always_numberOfPositionsBigger6()
 
 void FieldTest::getTargetsForScoringGoals_forEstimatedGoalsAre0AndEstimatedGoalsAre3_positionsAreEqual()
 {
+	Compare compare(0.1);
 	list<RobotPosition> estimated0, estimated3;
 	estimated0 = m_field->getTargetsForScoringGoals();
 	m_field->increaseNumberOfEstimatedGoals();
@@ -1709,7 +1710,7 @@ void FieldTest::getTargetsForScoringGoals_forEstimatedGoalsAre0AndEstimatedGoals
 	m_field->increaseNumberOfEstimatedGoals();
 	estimated3 = m_field->getTargetsForScoringGoals();
 
-
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(estimated0, estimated3));
 }
 
 void FieldTest::getTargetsForFinalPosition_always_numberOfPositionsBigger1()
@@ -1895,7 +1896,6 @@ void FieldTest::getNumberOfObjectsWithColor_3YellowAnd2GreenAnd1UnknownObject_co
 	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorGreen, Point(2, 1.8)));
 	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorGreen, Point(3, 1.8)));
 	m_camera->setAllObjects(cameraObjects);
-
 
 	updateFieldForObjectsToAppear();
 
