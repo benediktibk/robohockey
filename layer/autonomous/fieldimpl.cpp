@@ -25,6 +25,7 @@ FieldImpl::FieldImpl(DataAnalysis::Odometry &odometry, const DataAnalysis::Lidar
 	m_lidar(&lidar),
 	m_camera(&camera),
 	m_robot(&autonomousRobot),
+	m_fieldDetector(new FieldDetector),
 	m_position(new RobotPosition(m_odometry->getCurrentPosition())),
 	m_fieldState(FieldStateUnknownPosition),
 	m_teamColor(FieldColorUnknown),
@@ -35,6 +36,9 @@ FieldImpl::~FieldImpl()
 {
 	delete m_position;
 	m_position = 0;
+
+	delete m_fieldDetector;
+	m_fieldDetector = 0;
 
 	m_fieldObjects.clear();
 }
@@ -627,18 +631,17 @@ RobotPosition FieldImpl::getNewOriginFromFieldDetection(unsigned int &outNumberO
 {
 	outNumberOfBorderstones = 0;
 	vector<Point> *input = getPointsOfObjectsWithDiameterAndColor(0.06, FieldColorGreen);
-	FieldDetector detector;
 
-	bool result = detector.tryToDetectField(m_position->getPosition(), *input);
+	bool result = m_fieldDetector->tryToDetectField(m_position->getPosition(), *input);
 
 	Point newOrigin;
 	double rotation = 0.0;
 
 	if (result)
 	{
-		newOrigin = detector.getNewOrigin();
-		rotation = detector.getRotation();
-		outNumberOfBorderstones = detector.getNumberOfBorderStonesInRow();
+		newOrigin = m_fieldDetector->getNewOrigin();
+		rotation = m_fieldDetector->getRotation();
+		outNumberOfBorderstones = m_fieldDetector->getNumberOfBorderStonesInRow();
 	}
 
 	delete input;

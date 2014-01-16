@@ -25,7 +25,7 @@ namespace Autonomous
 		Common::Point getNewOrigin();
 		double getRotation();
 		unsigned int getNumberOfBorderStonesInRow();
-		bool doesConfirmedResultExist();
+		bool hasConfirmedResult();
 
 	private:
 		bool tryToFigureOutNewOrigin(BorderStone &root, const Common::Point &currentPosition);

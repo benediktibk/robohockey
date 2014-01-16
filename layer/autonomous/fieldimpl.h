@@ -29,6 +29,7 @@ namespace Autonomous
 {
 	class FieldObject;
 	class Robot;
+	class FieldDetector;
 
 	class FieldImpl :
 			public Field
@@ -120,6 +121,7 @@ namespace Autonomous
 		const DataAnalysis::Lidar *m_lidar;
 		DataAnalysis::Camera *m_camera;
 		const Robot *m_robot;
+		FieldDetector *m_fieldDetector;
 
 		Common::RobotPosition *m_position;
 		std::vector<FieldObject> m_fieldObjects;

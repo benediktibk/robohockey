@@ -289,7 +289,7 @@ FieldDetectionResult &FieldDetector::getBestDetectionResult()
 
 }
 
-bool FieldDetector::doesConfirmedResultExist()
+bool FieldDetector::hasConfirmedResult()
 {
 	for (list<FieldDetectionResult>::iterator it = m_detectionResults.begin(); it != m_detectionResults.end(); ++it)
 	{
