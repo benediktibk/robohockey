@@ -21,6 +21,8 @@ namespace DataAnalysis
 		SonarImpl(Hardware::Sonar &sonar);
 
 		virtual bool isObstacleDirectInFront(double speed) const;
+		virtual double getLeftFrontValue() const;
+		virtual double getRightFrontValue() const;
 
 	private:
 		Hardware::Sonar &m_sonar;

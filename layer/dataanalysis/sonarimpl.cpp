@@ -10,8 +10,8 @@ SonarImpl::SonarImpl(Hardware::Sonar &sonar) :
 
 bool SonarImpl::isObstacleDirectInFront(double speed) const
 {
-	const double leftFrontValue = m_sonar.getDistanceForSensor(3);
-	const double rightFrontValue = m_sonar.getDistanceForSensor(4);
+	const double leftFrontValue = getLeftFrontValue();
+	const double rightFrontValue = getRightFrontValue();
 	const double distanceOfSensorsToMiddleOfRobot = 0.15;
 	const double minimumDistanceToObstacle = 0.8 - distanceOfSensorsToMiddleOfRobot;
 	const double timeToStop = 0.2;
@@ -23,4 +23,14 @@ bool SonarImpl::isObstacleDirectInFront(double speed) const
 		return false;
 	else
 		return	leftFrontValue < totalDistance && rightFrontValue < totalDistance;
+}
+
+double SonarImpl::getLeftFrontValue() const
+{
+	return m_sonar.getDistanceForSensor(4);
+}
+
+double SonarImpl::getRightFrontValue() const
+{
+	return m_sonar.getDistanceForSensor(3);
 }

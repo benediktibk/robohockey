@@ -15,6 +15,7 @@
 #include "common/logger.h"
 #include <math.h>
 #include <assert.h>
+#include <sstream>
 
 using namespace RoboHockey::Common;
 using namespace RoboHockey::Layer::Autonomous;
@@ -433,7 +434,12 @@ void RobotImpl::updateActuators(const Field &field)
 		if (lidar.isObstacleInFront(speed))
 			m_logger.logToConsoleAndGlobalLogFile("lidar detected collision");
 		if (sonar.isObstacleDirectInFront(speed))
-			m_logger.logToConsoleAndGlobalLogFile("sonar detected collision");
+		{
+			stringstream message;
+			message << "sonar detected collision: (left, right) = (";
+			message << sonar.getLeftFrontValue() << ", " << sonar.getRightFrontValue() << ")";
+			m_logger.logToConsoleAndGlobalLogFile(message.str());
+		}
 	}
 }
 
