@@ -12,6 +12,7 @@ namespace Common
 {
 	class Point;
 	class RobotPosition;
+	class Logger;
 }
 
 namespace Layer
@@ -40,7 +41,8 @@ namespace Autonomous
 						};
 
 	public:
-		FieldImpl(DataAnalysis::Odometry &odometry, const DataAnalysis::Lidar &lidar, DataAnalysis::Camera &camera, Robot &autonomousRobot);
+		FieldImpl(DataAnalysis::Odometry &odometry, const DataAnalysis::Lidar &lidar, DataAnalysis::Camera &camera,
+				  Robot &autonomousRobot, Common::Logger &logger);
 		virtual ~FieldImpl();
 
 		virtual void update();
@@ -114,6 +116,7 @@ namespace Autonomous
 		void removeAllFieldObjectsOutsideOfField();
 
 	private:
+		Common::Logger &m_logger;
 		const unsigned int m_seenTresholdForFieldObjects;
 		const double m_maximumDistanceToDeleteFieldObject;
 		const Common::Angle m_maximumAngleToDeleteFieldObject;

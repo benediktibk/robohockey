@@ -10,6 +10,7 @@
 #include "common/robotposition.h"
 #include "common/randomdecision.h"
 #include "common/circle.h"
+#include "common/logger.h"
 #include <math.h>
 #include <algorithm>
 
@@ -17,7 +18,8 @@ using namespace std;
 using namespace RoboHockey::Common;
 using namespace RoboHockey::Layer::Autonomous;
 
-FieldImpl::FieldImpl(DataAnalysis::Odometry &odometry, const DataAnalysis::Lidar &lidar, DataAnalysis::Camera &camera, Robot &autonomousRobot):
+FieldImpl::FieldImpl(DataAnalysis::Odometry &odometry, const DataAnalysis::Lidar &lidar, DataAnalysis::Camera &camera, Robot &autonomousRobot, Logger &logger):
+	m_logger(logger),
 	m_seenTresholdForFieldObjects(5),
 	m_maximumDistanceToDeleteFieldObject(2.5),
 	m_maximumAngleToDeleteFieldObject(Angle::getQuarterRotation()),

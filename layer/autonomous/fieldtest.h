@@ -6,6 +6,10 @@
 
 namespace RoboHockey
 {
+namespace Common
+{
+	class LoggerMock;
+}
 namespace Layer
 {
 namespace DataAnalysis
@@ -276,6 +280,7 @@ namespace Autonomous
 		DataAnalysis::OdometryMock *m_odometry;
 		RobotMock *m_robot;
 		FieldImpl *m_field;
+		Common::LoggerMock *m_logger;
 	};
 }
 }
