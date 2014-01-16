@@ -33,7 +33,7 @@ State *FindPuckTurnToState::nextState()
 
 std::string FindPuckTurnToState::getName()
 {
-	return "FindPuck";
+	return "FindPuckTurnTo";
 }
 
 void FindPuckTurnToState::updateInternal()
