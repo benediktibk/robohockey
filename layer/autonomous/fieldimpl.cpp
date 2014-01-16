@@ -715,9 +715,7 @@ Angle FieldImpl::getAngleOfViewArea() const
 
 Angle FieldImpl::calculateRelativeAngleOfObject(const Circle &circle) const
 {
-	const Point &ownPosition = m_position->getPosition();
-	const Angle &ownOrientation = m_position->getOrientation();
-	return Angle(ownPosition, circle.getCenter()) - ownOrientation;
+	return m_position->getRelativeOrientationTo(circle.getCenter());
 }
 
 void FieldImpl::updateWithLidarData(double range)
