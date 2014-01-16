@@ -28,6 +28,7 @@ RobotImpl::RobotImpl(DataAnalysis::DataAnalyser *dataAnalyser, Router *router, W
 	m_maximumDistanceToCollectPuck(0.75),
 	m_maximumAngleToCollectPuck(10.0/180*M_PI),
 	m_timeout(50),
+	m_maximumAngleForSmoothTurn(Angle::getHalfRotation()/3),
 	m_dataAnalyser(dataAnalyser),
 	m_router(router),
 	m_watch(watch),
@@ -581,12 +582,11 @@ double RobotImpl::calculateFinalSpeedForGoingStraight(
 {
 	Angle angle = Angle::getHalfRotation() - Angle(next, current, nextButOne);
 	angle.abs();
-	const Angle maximumAngle = Angle::getHalfRotation()/3;
 
-	if (angle.getValueBetweenZeroAndTwoPi() > maximumAngle.getValueBetweenZeroAndTwoPi())
+	if (angle.getValueBetweenZeroAndTwoPi() > m_maximumAngleForSmoothTurn.getValueBetweenZeroAndTwoPi())
 		return 0;
 
-	Angle angleDifference = maximumAngle - angle;
+	Angle angleDifference = m_maximumAngleForSmoothTurn - angle;
 	double speedFromAngle = angleDifference.getValueBetweenZeroAndTwoPi()*0.2;
 	double distanceLeft = next.distanceTo(nextButOne);
 	const DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();

@@ -95,6 +95,7 @@ namespace Autonomous
 		const double m_maximumDistanceToCollectPuck;
 		const Common::Angle m_maximumAngleToCollectPuck;
 		const double m_timeout;
+		const Common::Angle m_maximumAngleForSmoothTurn;
 		DataAnalysis::DataAnalyser *m_dataAnalyser;
 		Router *m_router;
 		Common::Watch *m_watch;
