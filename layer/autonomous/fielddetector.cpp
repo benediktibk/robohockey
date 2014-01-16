@@ -41,9 +41,6 @@ bool FieldDetector::tryToDetectField()
 		if (numberOfFoundBorderStones > 2)
 		{
 				result = tryToFigureOutNewOrigin(root) || result;
-
-//				if (result)
-//					return true;
 		}
 
 	}
@@ -194,11 +191,14 @@ bool FieldDetector::tryToFigureOutNewOrigin(BorderStone &root)
 	Point currentPositionInNewCoordinates = m_currentPosition - possibleNewOrigin;
 	currentPositionInNewCoordinates.rotate(rotation);
 
+	bool isOpposite = false;
+
 	if (currentPositionInNewCoordinates.getY() < 0)
 	{
 		Point oppositeOrigin = Point(0,-1* distancesChecker.getStandardFieldDistance(BorderStoneFieldDistanceD));
 		oppositeOrigin.rotate(Angle( -1* rotation));
 		possibleNewOrigin = possibleNewOrigin + oppositeOrigin;
+		isOpposite = true;
 	}
 
 	currentPositionInNewCoordinates = m_currentPosition - possibleNewOrigin;
@@ -216,7 +216,16 @@ bool FieldDetector::tryToFigureOutNewOrigin(BorderStone &root)
 		m_maxBorderstonesArranged = root.getNumberOfChildrenRecursive() + 1;
 	}
 
-	return true;
+	RobotPosition newOrigin(possibleNewOrigin, Angle(rotation));
+
+	if (isResultAlreadyKnown(newOrigin))
+		getDetectionResultWithNewOrigin(newOrigin).confirmDetectionResultWithPosition(newOrigin, root.getNumberOfChildrenRecursive() + 1, isOpposite);
+	else
+	{
+		m_detectionResults.push_back(FieldDetectionResult(newOrigin));
+	}
+
+	return doesConfirmedResultExist();
 }
 
 
@@ -259,4 +268,15 @@ FieldDetectionResult &FieldDetector::getDetectionResultWithNewOrigin(RobotPositi
 	}
 
 	return m_detectionResults.back();
+}
+
+bool FieldDetector::doesConfirmedResultExist()
+{
+	for (list<FieldDetectionResult>::iterator it = m_detectionResults.begin(); it != m_detectionResults.end(); ++it)
+	{
+		if ((*it).isConfirmedByBothSides())
+			return true;
+	}
+
+	return false;
 }

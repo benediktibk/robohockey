@@ -32,6 +32,7 @@ namespace Autonomous
 		std::vector<Common::Point> orderBorderstonesByDistanceToRoot(BorderStone &borderstone, Common::Point &root);
 		bool isResultAlreadyKnown(Common::RobotPosition &newOrigin);
 		FieldDetectionResult& getDetectionResultWithNewOrigin(Common::RobotPosition &newOrigin);
+		bool doesConfirmedResultExist();
 
 	private:
 		const Common::Point m_currentPosition;
