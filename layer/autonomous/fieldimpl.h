@@ -117,10 +117,10 @@ namespace Autonomous
 		const unsigned int m_seenTresholdForFieldObjects;
 		const double m_maximumDistanceToDeleteFieldObject;
 		const Common::Angle m_maximumAngleToDeleteFieldObject;
-		DataAnalysis::Odometry *m_odometry;
-		const DataAnalysis::Lidar *m_lidar;
-		DataAnalysis::Camera *m_camera;
-		const Robot *m_robot;
+		DataAnalysis::Odometry &m_odometry;
+		const DataAnalysis::Lidar &m_lidar;
+		DataAnalysis::Camera &m_camera;
+		const Robot &m_robot;
 		FieldDetector *m_fieldDetector;
 
 		Common::RobotPosition *m_position;
