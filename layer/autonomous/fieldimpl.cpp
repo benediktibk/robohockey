@@ -321,7 +321,7 @@ list<Point> FieldImpl::getTargetsForTurningToUnknownObjects() const
 	Circle currentCircle;
 	Point currentPoint;
 	Point pointToInsert;
-	Circle circle(m_robot->getCurrentPosition().getPosition(), 1);
+	Circle circle(m_position->getPosition(), 2);
 	Rectangle fieldSector(Point(0.1, 0.1), Point(4.9, 2.9));
 	vector<FieldObject> fieldObjects = getObjectsWithColorOrderdByDistance(FieldColorUnknown);
 	map<double, Point> pointsToSort;
