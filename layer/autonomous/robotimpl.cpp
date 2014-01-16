@@ -419,6 +419,11 @@ double RobotImpl::calculateNextFinalSpeedForGoingStraight() const
 					m_currentRoute->getThirdPoint());
 }
 
+bool RobotImpl::orientationDifferenceSmallEnoughForSmoothTurn(const Angle &angle) const
+{
+	return fabs(angle.getValueBetweenMinusPiAndPi()) < m_maximumAngleForSmoothTurn.getValueBetweenZeroAndTwoPi();
+}
+
 void RobotImpl::updateActuators(const Field &field)
 {
 	detectCollisions();
@@ -583,7 +588,7 @@ double RobotImpl::calculateFinalSpeedForGoingStraight(
 	Angle angle = Angle::getHalfRotation() - Angle(next, current, nextButOne);
 	angle.abs();
 
-	if (angle.getValueBetweenZeroAndTwoPi() > m_maximumAngleForSmoothTurn.getValueBetweenZeroAndTwoPi())
+	if (!orientationDifferenceSmallEnoughForSmoothTurn(angle))
 		return 0;
 
 	Angle angleDifference = m_maximumAngleForSmoothTurn - angle;
