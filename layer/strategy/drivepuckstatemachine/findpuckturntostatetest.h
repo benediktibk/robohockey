@@ -18,17 +18,13 @@ namespace DrivePuckStateMachine
 		CPPUNIT_TEST_SUITE(FindPuckTurnToStateTest);
 		CPPUNIT_TEST(nextState_foundPuck_nextStateIsVerifyPuckState);
 		CPPUNIT_TEST(nextState_emptyTargetListAndTargetReached_nextStateIsFindPuckState);
-		CPPUNIT_TEST(nextState_emptyTargetListAndTargetNotReached_nextStateIsFindPuckTurnToState);
 		CPPUNIT_TEST(nextState_targetList_nextStateIsFindPuckTurnToState);
-		CPPUNIT_TEST(nextState_emptyTargetListAndTargetNotReachedAndReachedTargetAfterUpdate_nextStateIsFindPuckState);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
 		void nextState_foundPuck_nextStateIsVerifyPuckState();
 		void nextState_emptyTargetListAndTargetReached_nextStateIsFindPuckState();
-		void nextState_emptyTargetListAndTargetNotReached_nextStateIsFindPuckTurnToState();
 		void nextState_targetList_nextStateIsFindPuckTurnToState();
-		void nextState_emptyTargetListAndTargetNotReachedAndReachedTargetAfterUpdate_nextStateIsFindPuckState();
 
 };
 }

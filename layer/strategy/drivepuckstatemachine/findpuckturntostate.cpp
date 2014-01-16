@@ -6,6 +6,7 @@
 #include "layer/autonomous/robot.h"
 #include "layer/autonomous/field.h"
 #include "layer/strategy/common/waitcyclesstate.h"
+#include <assert.h>
 
 using namespace RoboHockey::Layer::Strategy::Common;
 using namespace RoboHockey::Layer::Strategy::DrivePuckStateMachine;
@@ -17,7 +18,9 @@ FindPuckTurnToState::FindPuckTurnToState(Robot &robot, Field &field, Referee &re
 	State(robot, field, referee, logger, true),
 	m_puckTargetFetcher(puckTargetFetcher),
 	m_target(targetList)
-{ }
+{
+	assert(!m_target.empty());
+}
 
 State *FindPuckTurnToState::nextState()
 {
