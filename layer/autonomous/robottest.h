@@ -61,7 +61,7 @@ namespace Autonomous
 		CPPUNIT_TEST(goTo_hardObstacleAtStart_engineGotCallToTurnToTarget);
 		CPPUNIT_TEST(goTo_hardObstacleMovedALittleBitIntoTheRoute_engineGotNoAdditionalCalls);
 		CPPUNIT_TEST(goTo_puckCollectedButLostInBetween_newRouteStillConsideringThePuck);
-		CPPUNIT_TEST(goTo_positionInsideHardObstacle_cantReachTarget);
+		CPPUNIT_TEST(goTo_positionInsideHardObstacle_canReachTarget);
 		CPPUNIT_TEST(goTo_positionInsideSoftObstacle_canReachTarget);
 		CPPUNIT_TEST(goTo_firstPointNearlyReachedAndSmallTurnNecessary_lastSpeedIsBig);
 		CPPUNIT_TEST(goTo_firstPointReachedAndSmallTurnNecessary_noCallsToTurnToTarget);
@@ -195,7 +195,7 @@ namespace Autonomous
 		void goTo_hardObstacleAtStart_engineGotCallToTurnToTarget();
 		void goTo_hardObstacleMovedALittleBitIntoTheRoute_engineGotNoAdditionalCalls();
 		void goTo_puckCollectedButLostInBetween_newRouteStillConsideringThePuck();
-		void goTo_positionInsideHardObstacle_cantReachTarget();
+		void goTo_positionInsideHardObstacle_canReachTarget();
 		void goTo_positionInsideSoftObstacle_canReachTarget();
 		void goTo_firstPointNearlyReachedAndSmallTurnNecessary_lastSpeedIsBig();
 		void goTo_firstPointReachedAndSmallTurnNecessary_noCallsToTurnToTarget();

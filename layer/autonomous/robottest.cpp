@@ -411,6 +411,7 @@ void RobotTest::goTo_surroundedByHardObstacles_cantReachTarget()
 	obstacles.push_back(Circle(Point(2, 1.5), 1));
 	obstacles.push_back(Circle(Point(2, 0.5), 1));
 	m_field->setHardObstacles(obstacles);
+	m_field->setHardAndVisibleObstacles(obstacles);
 
 	robot.updateSensorData();
 	m_targets.push_back(RobotPosition(Point(10, 10), Angle(0)));
@@ -639,11 +640,10 @@ void RobotTest::goTo_puckCollectedButLostInBetween_newRouteStillConsideringThePu
 	CPPUNIT_ASSERT(routePoints.size() > 2);
 }
 
-void RobotTest::goTo_positionInsideHardObstacle_cantReachTarget()
+void RobotTest::goTo_positionInsideHardObstacle_canReachTarget()
 {
 	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
 	DataAnalysis::Odometry &odometry = dataAnalyser->getOdometry();
-	DataAnalysis::EngineMock &engine = dataAnalyser->getEngineMock();
 	odometry.setCurrentPosition(RobotPosition(Point(0, 0), Angle(0)));
 	RobotImpl robot(dataAnalyser, new RouterImpl(0.5), new WatchMock(), *m_logger);
 	m_targets.push_back(RobotPosition(Point(5, 5), Angle(0)));
@@ -651,13 +651,12 @@ void RobotTest::goTo_positionInsideHardObstacle_cantReachTarget()
 	obstacles.push_back(Circle(Point(5, 5), 1));
 
 	m_field->setHardObstacles(obstacles);
+	m_field->setHardAndVisibleObstacles(obstacles);
 	robot.updateSensorData();
 	robot.goTo(m_targets);
 	robot.updateActuators(*m_field);
 
-	CPPUNIT_ASSERT(engine.getCallsToGoToStraight() == 0);
-	CPPUNIT_ASSERT(engine.getCallsToTurnToTarget() == 0);
-	CPPUNIT_ASSERT(robot.cantReachTarget());
+	CPPUNIT_ASSERT(!robot.cantReachTarget());
 }
 
 void RobotTest::goTo_positionInsideSoftObstacle_canReachTarget()
@@ -1239,6 +1238,7 @@ void RobotTest::cantReachTarget_currentTargetSuddenlyNotPossible_true()
 	vector<Circle> obstacles;
 	obstacles.push_back(Circle(Point(10, 0), 2));
 	m_field->setHardObstacles(obstacles);
+	m_field->setHardAndVisibleObstacles(obstacles);
 	m_robot->updateSensorData();
 	m_robot->updateActuators(*m_field);
 
@@ -1247,10 +1247,11 @@ void RobotTest::cantReachTarget_currentTargetSuddenlyNotPossible_true()
 
 void RobotTest::cantReachTarget_notPossibleAnymoreDuringDriving_true()
 {
-	m_engine->setReachedTarget(false);
+	m_engine->setReachedTarget(true);
 	vector<Circle> obstacles;
 	obstacles.push_back(Circle(Point(10, 0), 2));
 	m_field->setHardObstacles(obstacles);
+	m_field->setHardAndVisibleObstacles(obstacles);
 
 	m_robot->updateSensorData();
 	m_targets.push_back(RobotPosition(Point(10, 0), 0));
@@ -1284,7 +1285,9 @@ void RobotTest::cantReachTarget_updateTwiceCalled_true()
 	vector<Circle> obstacles;
 	obstacles.push_back(Circle(Point(10, 0), 2));
 	m_field->setHardObstacles(obstacles);
+	m_field->setHardAndVisibleObstacles(obstacles);
 
+	m_engine->setReachedTarget(true);
 	m_robot->updateSensorData();
 	m_targets.push_back(RobotPosition(Point(10, 0), 0));
 	m_robot->goTo(m_targets);
