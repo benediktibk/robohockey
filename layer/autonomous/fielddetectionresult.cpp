@@ -5,12 +5,14 @@ using namespace std;
 using namespace RoboHockey::Common;
 using namespace RoboHockey::Layer::Autonomous;
 
-FieldDetectionResult::FieldDetectionResult(RobotPosition &position):
+FieldDetectionResult::FieldDetectionResult(Common::RobotPosition &position, unsigned int numberOfStones, bool onOppositeSide):
 	m_newOrigin(position),
 	m_compare(0.1),
 	m_confirmedPositionsThisSide(0),
 	m_confirmedPositionsOppositeSide(0)
-{ }
+{
+	confirmDetectionResultWithPosition(position, numberOfStones, onOppositeSide);
+}
 
 RobotPosition FieldDetectionResult::getTransformationDestination() const
 {

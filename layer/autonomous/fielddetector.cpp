@@ -50,12 +50,12 @@ bool FieldDetector::tryToDetectField(const Common::Point &currentPosition, std::
 
 Point FieldDetector::getNewOrigin()
 {
-	return m_newOrigin;
+	return getBestDetectionResult().getTransformationDestination().getPosition();
 }
 
 double FieldDetector::getRotation()
 {
-	return m_rotation;
+	return getBestDetectionResult().getTransformationDestination().getOrientation().getValueBetweenMinusPiAndPi();
 }
 
 unsigned int FieldDetector::getNumberOfBorderStonesInRow()
@@ -220,7 +220,7 @@ bool FieldDetector::tryToFigureOutNewOrigin(BorderStone &root, const Point &curr
 		getDetectionResultWithNewOrigin(newOrigin).confirmDetectionResultWithPosition(newOrigin, root.getNumberOfChildrenRecursive() + 1, isOpposite);
 	else
 	{
-		m_detectionResults.push_back(FieldDetectionResult(newOrigin));
+		m_detectionResults.push_back(FieldDetectionResult(newOrigin, root.getNumberOfChildrenRecursive() + 1, isOpposite));
 	}
 
 	return true;
@@ -266,6 +266,27 @@ FieldDetectionResult &FieldDetector::getDetectionResultWithNewOrigin(RobotPositi
 	}
 
 	return m_detectionResults.back();
+}
+
+FieldDetectionResult &FieldDetector::getBestDetectionResult()
+{
+	unsigned int highestValue = 0;
+
+	for (list<FieldDetectionResult>::iterator it = m_detectionResults.begin(); it != m_detectionResults.end(); ++it)
+	{
+		if ((*it).isConfirmedByBothSides())
+			return *it;
+		highestValue = max(highestValue, (*it).getNumberOfBorderStones());
+	}
+
+	for (list<FieldDetectionResult>::iterator it = m_detectionResults.begin(); it != m_detectionResults.end(); ++it)
+	{
+		if ((*it).getNumberOfBorderStones() == highestValue)
+			return *it;
+	}
+
+	return m_detectionResults.back();
+
 }
 
 bool FieldDetector::doesConfirmedResultExist()
