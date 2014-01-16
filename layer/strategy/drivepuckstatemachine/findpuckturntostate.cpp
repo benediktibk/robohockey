@@ -38,6 +38,9 @@ std::string FindPuckTurnToState::getName()
 
 void FindPuckTurnToState::updateInternal()
 {
-	m_robot.turnTo(m_target.front());
-	m_target.pop_front();
+	if(!m_target.empty())
+	{
+		m_robot.turnTo(m_target.front());
+		m_target.pop_front();
+	}
 }
