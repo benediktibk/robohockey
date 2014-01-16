@@ -8,7 +8,7 @@ SonarImpl::SonarImpl(Hardware::Sonar &sonar) :
 	m_sonar(sonar)
 { }
 
-bool SonarImpl::isObstacleDirectInFront(double speed)
+bool SonarImpl::isObstacleDirectInFront(double speed) const
 {
 	const double leftFrontValue = m_sonar.getDistanceForSensor(3);
 	const double rightFrontValue = m_sonar.getDistanceForSensor(4);

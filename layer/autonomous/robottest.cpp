@@ -1004,6 +1004,34 @@ void RobotTest::updateActuators_tryingToTackleObstacle_targetNotReached()
 	CPPUNIT_ASSERT(!m_robot->reachedTarget());
 }
 
+void RobotTest::updateActuators_tryingToTackleObstacleFromSonar_lastMessageContainssonar()
+{
+	m_engine->setTryingToTackleObstacle(true);
+	m_targets.push_back(RobotPosition(Point(10, 0), 0));
+	m_robot->goTo(m_targets);
+	m_sonar->setIsObstacleDirectInFront(true);
+
+	m_robot->updateSensorData();
+	m_robot->updateActuators(*m_field);
+
+	const string &message = m_logger->getLastMessage();
+	CPPUNIT_ASSERT(message.find("sonar") != string::npos);
+}
+
+void RobotTest::updateActuators_tryingToTackleObstacleFromLidar_lastMessageContainslidar()
+{
+	m_engine->setTryingToTackleObstacle(true);
+	m_targets.push_back(RobotPosition(Point(10, 0), 0));
+	m_robot->goTo(m_targets);
+	m_lidar->setObstacleInFront(true);
+
+	m_robot->updateSensorData();
+	m_robot->updateActuators(*m_field);
+
+	const string &message = m_logger->getLastMessage();
+	CPPUNIT_ASSERT(message.find("lidar") != string::npos);
+}
+
 void RobotTest::updateSensorData_noObstacleDirectInFront_engineGotNoCallToLockForwardMovement()
 {
 	m_sonar->setIsObstacleDirectInFront(false);

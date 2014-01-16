@@ -12,6 +12,7 @@
 #include "common/watch.h"
 #include "common/stopwatch.h"
 #include "common/timesmoothedboolean.h"
+#include "common/logger.h"
 #include <math.h>
 #include <assert.h>
 
@@ -424,7 +425,16 @@ void RobotImpl::updateActuators(const Field &field)
 
 	DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
 	if (engine.tryingToTackleObstacle())
+	{
+		const DataAnalysis::Lidar &lidar = m_dataAnalyser->getLidar();
+		const DataAnalysis::Sonar &sonar = m_dataAnalyser->getSonar();
+		double speed = engine.getCurrentSpeed();
 		m_tryingToTackleObstacle = true;
+		if (lidar.isObstacleInFront(speed))
+			m_logger.logToConsoleAndGlobalLogFile("lidar detected collision");
+		if (sonar.isObstacleDirectInFront(speed))
+			m_logger.logToConsoleAndGlobalLogFile("sonar detected collision");
+	}
 }
 
 void RobotImpl::updateSensorData()
