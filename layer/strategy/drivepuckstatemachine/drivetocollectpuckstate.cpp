@@ -1,5 +1,5 @@
 #include "layer/strategy/drivepuckstatemachine/drivetocollectpuckstate.h"
-#include "layer/strategy/drivepuckstatemachine/findpuckstate.h"
+#include "layer/strategy/drivepuckstatemachine/findpuckturntostate.h"
 #include "layer/strategy/drivepuckstatemachine/initialstate.h"
 #include "layer/strategy/drivepuckstatemachine/verifypuckstate.h"
 #include "layer/strategy/common/waitcyclesstate.h"
@@ -20,7 +20,7 @@ DriveToCollectPuckState::DriveToCollectPuckState(Robot &robot, Field &field, Ref
 State* DriveToCollectPuckState::nextState()
 {
 	if(m_puckTargetFetcher.getNumberOfKnownPucksNotInEnemyThird() == 0)
-		return new FindPuckState(m_robot, m_field, m_referee, m_logger, m_puckTargetFetcher);
+		return new FindPuckTurnToState(m_robot, m_field, m_referee, m_logger, m_puckTargetFetcher, m_field.getTargetsForTurningToUnknownObjects());
 	else
 		return new DriveToState(
 					m_robot, m_field, m_referee, m_logger, m_puckTargetFetcher.getPositionsToCollectPuck(),

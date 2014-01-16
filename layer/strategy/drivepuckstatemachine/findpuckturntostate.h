@@ -9,6 +9,7 @@ namespace RoboHockey
 namespace Common
 {
 	class Logger;
+	class Point;
 }
 namespace Layer
 {
@@ -21,7 +22,7 @@ namespace DrivePuckStateMachine
 	{
 	public:
 		FindPuckTurnToState(Autonomous::Robot &robot, Autonomous::Field &field, Common::Referee &referee, RoboHockey::Common::Logger &logger,
-				const Common::ColorDependentPuckTargetFetcher &puckTargetFetcher, std::list<RoboHockey::Common::RobotPosition> targetList);
+				const Common::ColorDependentPuckTargetFetcher &puckTargetFetcher, std::list<RoboHockey::Common::Point> targetList);
 
 		virtual State* nextState();
 		virtual std::string getName();
@@ -31,7 +32,7 @@ namespace DrivePuckStateMachine
 
 	private:
 		const Common::ColorDependentPuckTargetFetcher &m_puckTargetFetcher;
-		std::list<RoboHockey::Common::RobotPosition> m_target;
+		std::list<RoboHockey::Common::Point> m_target;
 
 };
 }

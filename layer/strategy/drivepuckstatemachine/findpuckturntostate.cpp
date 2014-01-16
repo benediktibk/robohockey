@@ -13,7 +13,7 @@ using namespace RoboHockey::Layer::Autonomous;
 
 FindPuckTurnToState::FindPuckTurnToState(Robot &robot, Field &field, Referee &referee, RoboHockey::Common::Logger &logger,
 										 const ColorDependentPuckTargetFetcher &puckTargetFetcher,
-										 std::list<RoboHockey::Common::RobotPosition> targetList):
+										 std::list<RoboHockey::Common::Point> targetList):
 	State(robot, field, referee, logger, true),
 	m_puckTargetFetcher(puckTargetFetcher),
 	m_target(targetList)

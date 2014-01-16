@@ -1,6 +1,6 @@
 #include "layer/strategy/drivepuckstatemachine/initialstatetest.h"
 #include "layer/strategy/drivepuckstatemachine/initialstate.h"
-#include "layer/strategy/drivepuckstatemachine/findpuckstate.h"
+#include "layer/strategy/drivepuckstatemachine/findpuckturntostate.h"
 #include "layer/strategy/drivepuckstatemachine/leavepuckstate.h"
 #include "layer/strategy/drivepuckstatemachine/drivetocollectpuckstate.h"
 #include "layer/strategy/common/statemachine.h"
@@ -33,7 +33,7 @@ void InitialStateTest::nextState_puckCollected_nextStateIsLeavePuck()
 	delete state;
 }
 
-void InitialStateTest::nextState_numberOfKnownPucksIs0_nextStateIsFindPuck()
+void InitialStateTest::nextState_numberOfKnownPucksIs0_nextStateIsFindPuckTurnTo()
 {
 	RobotMock robot;
 	FieldMock field;
@@ -43,7 +43,7 @@ void InitialStateTest::nextState_numberOfKnownPucksIs0_nextStateIsFindPuck()
 	InitialState initialState(robot, field, referee, logger, puckTargetFetcher);
 	State *state;
 	state = initialState.nextState();
-	FindPuckState *stateCasted = dynamic_cast<FindPuckState*>(state);
+	FindPuckTurnToState *stateCasted = dynamic_cast<FindPuckTurnToState*>(state);
 
 	CPPUNIT_ASSERT(stateCasted != 0);
 	delete state;

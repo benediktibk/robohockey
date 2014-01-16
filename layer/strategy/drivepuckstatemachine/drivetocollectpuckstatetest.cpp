@@ -1,6 +1,6 @@
 #include "layer/strategy/drivepuckstatemachine/drivetocollectpuckstatetest.h"
 #include "layer/strategy/drivepuckstatemachine/drivetocollectpuckstate.h"
-#include "layer/strategy/drivepuckstatemachine/findpuckstate.h"
+#include "layer/strategy/drivepuckstatemachine/findpuckturntostate.h"
 #include "layer/strategy/drivepuckstatemachine/initialstate.h"
 #include "layer/strategy/drivepuckstatemachine/verifypuckstate.h"
 #include "layer/strategy/common/waitcyclesstate.h"
@@ -18,7 +18,7 @@ using namespace RoboHockey::Layer::Strategy::Common;
 using namespace RoboHockey::Layer::Strategy::DrivePuckStateMachine;
 using namespace RoboHockey::Layer::Autonomous;
 
-void DriveToCollectPuckStateTest::nextState_numberOfKnownPucksIs0_nextStateIsFindPuckState()
+void DriveToCollectPuckStateTest::nextState_numberOfKnownPucksIs0_nextStateIsFindPuckTurnToState()
 {
 	RobotMock robot;
 	FieldMock field;
@@ -28,7 +28,7 @@ void DriveToCollectPuckStateTest::nextState_numberOfKnownPucksIs0_nextStateIsFin
 	DriveToCollectPuckState driveToCollectPuckState(robot, field, referee, logger, puckTargetFetcher);
 	State *state;
 	state = driveToCollectPuckState.nextState();
-	FindPuckState *stateCasted = dynamic_cast<FindPuckState*>(state);
+	FindPuckTurnToState *stateCasted = dynamic_cast<FindPuckTurnToState*>(state);
 
 	CPPUNIT_ASSERT(stateCasted != 0);
 	delete state;

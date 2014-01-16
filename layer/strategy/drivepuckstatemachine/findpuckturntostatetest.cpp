@@ -28,8 +28,8 @@ void FindPuckTurnToStateTest::nextState_foundPuck_nextStateIsVerifyPuckState()
 	ColorDependentPuckTargetFetcherMock puckTargetFetcher;
 	puckTargetFetcher.setNumberOfKnownPucksNotInEnemyThird(1);
 	field.setIsPuckcolorDetected(true);
-	list<RobotPosition> targetList;
-	targetList.push_back(RobotPosition());
+	list<Point> targetList;
+	targetList.push_back(Point());
 	FindPuckTurnToState findPuckTurnToState(robot, field, referee, logger, puckTargetFetcher, targetList);
 	State *waitState;
 	waitState = findPuckTurnToState.nextState();
@@ -50,7 +50,7 @@ void FindPuckTurnToStateTest::nextState_emptyTargetListAndTargetReached_nextStat
 	LoggerMock logger;
 	ColorDependentPuckTargetFetcherMock puckTargetFetcher;
 	robot.setReachedTarget(true);
-	list<RobotPosition> targetList;
+	list<Point> targetList;
 	FindPuckTurnToState findPuckTurnToState(robot, field, referee, logger, puckTargetFetcher, targetList);
 	State *state;
 	state = findPuckTurnToState.nextState();
@@ -68,7 +68,7 @@ void FindPuckTurnToStateTest::nextState_emptyTargetListAndTargetNotReached_nextS
 	LoggerMock logger;
 	ColorDependentPuckTargetFetcherMock puckTargetFetcher;
 	field.setIsPuckcolorDetected(true);
-	list<RobotPosition> targetList;
+	list<Point> targetList;
 	FindPuckTurnToState findPuckTurnToState(robot, field, referee, logger, puckTargetFetcher, targetList);
 	State *waitState;
 	waitState = findPuckTurnToState.nextState();
@@ -90,8 +90,8 @@ void FindPuckTurnToStateTest::nextState_targetList_nextStateIsFindPuckTurnToStat
 	ColorDependentPuckTargetFetcherMock puckTargetFetcher;
 	field.setIsPuckcolorDetected(true);
 	robot.setReachedTarget(true);
-	list<RobotPosition> targetList;
-	targetList.push_back(RobotPosition());
+	list<Point> targetList;
+	targetList.push_back(Point());
 	FindPuckTurnToState findPuckTurnToState(robot, field, referee, logger, puckTargetFetcher, targetList);
 	State *waitState;
 	waitState = findPuckTurnToState.nextState();

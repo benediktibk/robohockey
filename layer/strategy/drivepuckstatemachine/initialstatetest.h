@@ -17,13 +17,13 @@ namespace DrivePuckStateMachine
 	{
 		CPPUNIT_TEST_SUITE(InitialStateTest);
 		CPPUNIT_TEST(nextState_puckCollected_nextStateIsLeavePuck);
-		CPPUNIT_TEST(nextState_numberOfKnownPucksIs0_nextStateIsFindPuck);
+		CPPUNIT_TEST(nextState_numberOfKnownPucksIs0_nextStateIsFindPuckTurnTo);
 		CPPUNIT_TEST(nextState_numberOfKnownPucksIs2_nextStateIsDriveToCollectPuck);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
 		void nextState_puckCollected_nextStateIsLeavePuck();
-		void nextState_numberOfKnownPucksIs0_nextStateIsFindPuck();
+		void nextState_numberOfKnownPucksIs0_nextStateIsFindPuckTurnTo();
 		void nextState_numberOfKnownPucksIs2_nextStateIsDriveToCollectPuck();
 
 	};
