@@ -9,6 +9,7 @@
 #include "common/compare.h"
 #include "common/robotposition.h"
 #include "common/watchmock.h"
+#include "common/loggermock.h"
 
 using namespace std;
 using namespace RoboHockey::Common;
@@ -19,13 +20,14 @@ void RobotTest::setUp()
 {
 	m_routerMock = new RouterMock();
 	m_watchMock = new WatchMock();
+	m_logger = new LoggerMock();
 	m_dataAnalyser = new DataAnalysis::DataAnalyserMock();
 	m_odometry = &(m_dataAnalyser->getOdometryMock());
 	m_engine = &(m_dataAnalyser->getEngineMock());
 	m_sonar = &(m_dataAnalyser->getSonarMock());
 	m_lidar = &(m_dataAnalyser->getLidarMock());
 	m_targets.clear();
-	m_robot = new RobotImpl(m_dataAnalyser, m_routerMock, m_watchMock);
+	m_robot = new RobotImpl(m_dataAnalyser, m_routerMock, m_watchMock, *m_logger);
 	m_field = new FieldMock;
 }
 
@@ -42,6 +44,8 @@ void RobotTest::tearDown()
 	m_engine = 0;
 	m_sonar = 0;
 	m_lidar = 0;
+	delete m_logger;
+	m_logger = 0;
 }
 
 void RobotTest::goTo_positionDifferentToCurrentOne_engineGotAtLeastOneCallToGoToStraightOrTurnTo()
@@ -373,7 +377,7 @@ void RobotTest::goTo_surroundedBySoftObstacles_canReachTarget()
 	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
 	DataAnalysis::Odometry &odometry = m_dataAnalyser->getOdometry();
 	WatchMock *watch = new WatchMock();
-	RobotImpl robot(dataAnalyser, new RouterImpl(0.5), watch);
+	RobotImpl robot(dataAnalyser, new RouterImpl(0.5), watch, *m_logger);
 	odometry.setCurrentPosition(RobotPosition(Point(0.5, 0.5), 0));
 	m_field->setNegativeCoordinatesOutside(true);
 	vector<Circle> obstacles;
@@ -396,7 +400,7 @@ void RobotTest::goTo_surroundedByHardObstacles_cantReachTarget()
 	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
 	DataAnalysis::Odometry &odometry = m_dataAnalyser->getOdometry();
 	WatchMock *watch = new WatchMock();
-	RobotImpl robot(dataAnalyser, new RouterImpl(0.5), watch);
+	RobotImpl robot(dataAnalyser, new RouterImpl(0.5), watch, *m_logger);
 	odometry.setCurrentPosition(RobotPosition(Point(0.5, 0.5), 0));
 	m_field->setNegativeCoordinatesOutside(true);
 	vector<Circle> obstacles;
@@ -419,7 +423,7 @@ void RobotTest::goTo_finalOrientationNotPossible_canReachTarget()
 	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
 	DataAnalysis::Odometry &odometry = dataAnalyser->getOdometry();
 	odometry.setCurrentPosition(RobotPosition(Point(0, 0), Angle(0)));
-	RobotImpl robot(dataAnalyser, new RouterImpl(0.5), new WatchMock());
+	RobotImpl robot(dataAnalyser, new RouterImpl(0.5), new WatchMock(), *m_logger);
 	m_field->setNegativeCoordinatesOutside(false);
 	vector<Circle> obstacles;
 	obstacles.push_back(Circle(Point(10, 1), 1));
@@ -440,7 +444,7 @@ void RobotTest::goTo_twoTargetsAndFirstOnePossible_canReachFirstTarget()
 	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
 	DataAnalysis::Odometry &odometry = dataAnalyser->getOdometry();
 	odometry.setCurrentPosition(RobotPosition(Point(0, 0), Angle(0)));
-	RobotImpl robot(dataAnalyser, new RouterImpl(0.5), new WatchMock());
+	RobotImpl robot(dataAnalyser, new RouterImpl(0.5), new WatchMock(), *m_logger);
 	m_field->setNegativeCoordinatesOutside(false);
 
 	m_robot->updateSensorData();
@@ -461,7 +465,7 @@ void RobotTest::goTo_twoTargetsAndOnlySecondOnePossible_canReachSecondTarget()
 	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
 	DataAnalysis::Odometry &odometry = dataAnalyser->getOdometry();
 	odometry.setCurrentPosition(RobotPosition(Point(0, 0), Angle(0)));
-	RobotImpl robot(dataAnalyser, new RouterImpl(0.5), new WatchMock());
+	RobotImpl robot(dataAnalyser, new RouterImpl(0.5), new WatchMock(), *m_logger);
 	m_field->setNegativeCoordinatesOutside(false);
 	vector<Circle> obstacles;
 	obstacles.push_back(Circle(Point(10, 0), 1));
@@ -486,7 +490,7 @@ void RobotTest::goTo_minuteWaited_cantReachTarget()
 	DataAnalysis::Odometry &odometry = dataAnalyser->getOdometry();
 	odometry.setCurrentPosition(RobotPosition(Point(0, 0), Angle(0)));
 	WatchMock *watch = new WatchMock();
-	RobotImpl robot(dataAnalyser, new RouterImpl(0.5), watch);
+	RobotImpl robot(dataAnalyser, new RouterImpl(0.5), watch, *m_logger);
 
 	robot.updateSensorData();
 	m_targets.push_back(RobotPosition(Point(10, 0), 0));
@@ -505,7 +509,7 @@ void RobotTest::goTo_obstacleSuddenlyAppearedDuringDriving_engineGotCallToTurnTo
 	DataAnalysis::Odometry &odometry = dataAnalyser->getOdometry();
 	DataAnalysis::EngineMock &engine = dataAnalyser->getEngineMock();
 	odometry.setCurrentPosition(RobotPosition(Point(0, 0), Angle(0)));
-	RobotImpl robot(dataAnalyser, new RouterImpl(0.5), new WatchMock());
+	RobotImpl robot(dataAnalyser, new RouterImpl(0.5), new WatchMock(), *m_logger);
 	vector<Circle> obstacles;
 	obstacles.push_back(Circle(Point(5, 0), 1));
 
@@ -536,7 +540,7 @@ void RobotTest::goTo_obstacleSuddenlyAppearedDuringTurning_engineGotCallToTurnTo
 	DataAnalysis::Odometry &odometry = dataAnalyser->getOdometry();
 	DataAnalysis::EngineMock &engine = dataAnalyser->getEngineMock();
 	odometry.setCurrentPosition(RobotPosition(Point(0, 0), Angle::getQuarterRotation()));
-	RobotImpl robot(dataAnalyser, new RouterImpl(0.5), new WatchMock());
+	RobotImpl robot(dataAnalyser, new RouterImpl(0.5), new WatchMock(), *m_logger);
 	vector<Circle> obstacles;
 	obstacles.push_back(Circle(Point(5, 0), 1));
 
@@ -565,7 +569,7 @@ void RobotTest::goTo_hardObstacleAtStart_engineGotCallToGoToStraight()
 	DataAnalysis::Odometry &odometry = dataAnalyser->getOdometry();
 	DataAnalysis::EngineMock &engine = dataAnalyser->getEngineMock();
 	odometry.setCurrentPosition(RobotPosition(Point(0, 0), Angle::getQuarterRotation()));
-	RobotImpl robot(dataAnalyser, new RouterImpl(0.5), new WatchMock());
+	RobotImpl robot(dataAnalyser, new RouterImpl(0.5), new WatchMock(), *m_logger);
 	vector<Circle> obstacles;
 	obstacles.push_back(Circle(Point(0.8, 0), 2));
 	m_field->setHardObstacles(obstacles);
@@ -595,7 +599,7 @@ void RobotTest::goTo_hardObstacleMovedALittleBitIntoTheRoute_engineGotNoAddition
 	DataAnalysis::Odometry &odometry = dataAnalyser->getOdometry();
 	DataAnalysis::EngineMock &engine = dataAnalyser->getEngineMock();
 	odometry.setCurrentPosition(RobotPosition(Point(0, 1), Angle::getQuarterRotation()));
-	RobotImpl robot(dataAnalyser, new RouterImpl(0.5), new WatchMock());
+	RobotImpl robot(dataAnalyser, new RouterImpl(0.5), new WatchMock(), *m_logger);
 	vector<Circle> obstacles;
 	obstacles.push_back(Circle(Point(7, 1), 1));
 	m_field->setHardObstacles(obstacles);
@@ -631,7 +635,7 @@ void RobotTest::goTo_puckCollectedButLostInBetween_newRouteStillConsideringThePu
 	DataAnalysis::LidarMock &lidar = dataAnalyser->getLidarMock();
 	odometry.setCurrentPosition(RobotPosition(Point(0, 0), 0));
 	WatchMock *watch = new WatchMock();
-	RobotImpl robot(dataAnalyser, new RouterImpl(0.5), watch);
+	RobotImpl robot(dataAnalyser, new RouterImpl(0.5), watch, *m_logger);
 	m_targets.push_back(RobotPosition(Point(5, 0), Angle::getHalfRotation()));
 	m_targets.push_back(RobotPosition(Point(-5, 0), Angle(0)));
 	vector<Circle> obstacles;
@@ -657,7 +661,7 @@ void RobotTest::goTo_positionInsideHardObstacle_cantReachTarget()
 	DataAnalysis::Odometry &odometry = dataAnalyser->getOdometry();
 	DataAnalysis::EngineMock &engine = dataAnalyser->getEngineMock();
 	odometry.setCurrentPosition(RobotPosition(Point(0, 0), Angle(0)));
-	RobotImpl robot(dataAnalyser, new RouterImpl(0.5), new WatchMock());
+	RobotImpl robot(dataAnalyser, new RouterImpl(0.5), new WatchMock(), *m_logger);
 	m_targets.push_back(RobotPosition(Point(5, 5), Angle(0)));
 	vector<Circle> obstacles;
 	obstacles.push_back(Circle(Point(5, 5), 1));
@@ -677,7 +681,7 @@ void RobotTest::goTo_positionInsideSoftObstacle_canReachTarget()
 	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
 	DataAnalysis::Odometry &odometry = dataAnalyser->getOdometry();
 	odometry.setCurrentPosition(RobotPosition(Point(0, 0), Angle(0)));
-	RobotImpl robot(dataAnalyser, new RouterImpl(0.5), new WatchMock());
+	RobotImpl robot(dataAnalyser, new RouterImpl(0.5), new WatchMock(), *m_logger);
 	m_targets.push_back(RobotPosition(Point(5, 5), Angle(0)));
 	vector<Circle> obstacles;
 	obstacles.push_back(Circle(Point(5, 5), 1));
@@ -1368,7 +1372,7 @@ void RobotTest::collectPuckInFront_puckAhead_notStuckAtObstacle()
 	lidar.readDataFromFile("resources/testfiles/lidar_34.txt");
 	sonar.readDataFromFile("resources/testfiles/sonar_3.txt");
 	DataAnalysis::DataAnalyser *dataAnalyser = new DataAnalysis::DataAnalyserImpl(hardwareRobot);
-	RobotImpl robot(dataAnalyser, new RouterMock(), new WatchMock());
+	RobotImpl robot(dataAnalyser, new RouterMock(), new WatchMock(), *m_logger);
 
 	robot.updateSensorData();
 	robot.collectPuckInFront(Point(0.4, 0));
@@ -1385,7 +1389,7 @@ void RobotTest::collectPuckInFront_puckAheadAndStartedToMove_notStuckAtObstacle(
 	lidar.readDataFromFile("resources/testfiles/lidar_34.txt");
 	sonar.readDataFromFile("resources/testfiles/sonar_3.txt");
 	DataAnalysis::DataAnalyser *dataAnalyser = new DataAnalysis::DataAnalyserImpl(hardwareRobot);
-	RobotImpl robot(dataAnalyser, new RouterMock(), new WatchMock());
+	RobotImpl robot(dataAnalyser, new RouterMock(), new WatchMock(), *m_logger);
 
 	robot.updateSensorData();
 	robot.collectPuckInFront(Point(0.4, 0));
@@ -1404,7 +1408,7 @@ void RobotTest::collectPuckInFront_puckAheadAndAlreadyUpdatedTheEngine_notStuckA
 	lidar.readDataFromFile("resources/testfiles/lidar_34.txt");
 	sonar.readDataFromFile("resources/testfiles/sonar_3.txt");
 	DataAnalysis::DataAnalyser *dataAnalyser = new DataAnalysis::DataAnalyserImpl(hardwareRobot);
-	RobotImpl robot(dataAnalyser, new RouterMock(), new WatchMock());
+	RobotImpl robot(dataAnalyser, new RouterMock(), new WatchMock(), *m_logger);
 
 	robot.updateSensorData();
 	robot.updateActuators(*m_field);

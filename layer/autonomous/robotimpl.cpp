@@ -20,7 +20,8 @@ using namespace RoboHockey::Layer::Autonomous;
 using namespace RoboHockey::Layer;
 using namespace std;
 
-RobotImpl::RobotImpl(DataAnalysis::DataAnalyser *dataAnalyser, Router *router, Watch *watch) :
+RobotImpl::RobotImpl(DataAnalysis::DataAnalyser *dataAnalyser, Router *router, Watch *watch, Common::Logger &logger) :
+	m_logger(logger),
 	m_robotWidth(0.38),
 	m_maximumDistanceToCollectPuck(0.75),
 	m_maximumAngleToCollectPuck(10.0/180*M_PI),
@@ -681,7 +682,8 @@ bool RobotImpl::isRouteFeasible(const vector<Circle> &obstacles) const
 			!m_currentRoute->intersectsWith(obstacles);
 }
 
-RobotImpl::RobotImpl(const RobotImpl &) :
+RobotImpl::RobotImpl(const RobotImpl &rhs) :
+	m_logger(rhs.m_logger),
 	m_robotWidth(0),
 	m_maximumDistanceToCollectPuck(0),
 	m_maximumAngleToCollectPuck(0),

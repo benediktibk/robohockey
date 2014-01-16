@@ -11,6 +11,7 @@ namespace RoboHockey
 namespace Common
 {
 	class WatchMock;
+	class LoggerMock;
 }
 
 namespace Layer
@@ -287,6 +288,7 @@ namespace Autonomous
 	private:
 		RouterMock *m_routerMock;
 		Common::WatchMock *m_watchMock;
+		Common::LoggerMock *m_logger;
 		std::list<Common::RobotPosition> m_targets;
 		DataAnalysis::DataAnalyserMock *m_dataAnalyser;
 		DataAnalysis::OdometryMock *m_odometry;
