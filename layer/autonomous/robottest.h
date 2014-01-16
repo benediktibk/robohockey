@@ -70,6 +70,7 @@ namespace Autonomous
 		CPPUNIT_TEST(goTo_orientationDifferenceSmall_engineGotOnlyCallToGoToStraight);
 		CPPUNIT_TEST(goTo_noUpdateOfActuators_engineGotCallToStop);
 		CPPUNIT_TEST(goTo_finalPointReached_engineGotCallToTurnToFinalOrientation);
+		CPPUNIT_TEST(goTo_hardNotVisibleObstacleAtEnd_canReachTarget);
 		CPPUNIT_TEST(stuckAtObstacle_tryingToTackleObstacle_true);
 		CPPUNIT_TEST(stuckAtObstacle_notTryingToTackleObstacle_false);
 		CPPUNIT_TEST(stuckAtObstacle_updateCalledTwiceAfterStuckAtObstacle_true);
@@ -203,6 +204,7 @@ namespace Autonomous
 		void goTo_orientationDifferenceSmall_engineGotOnlyCallToGoToStraight();
 		void goTo_noUpdateOfActuators_engineGotCallToStop();
 		void goTo_finalPointReached_engineGotCallToTurnToFinalOrientation();
+		void goTo_hardNotVisibleObstacleAtEnd_canReachTarget();
 		void stuckAtObstacle_tryingToTackleObstacle_true();
 		void stuckAtObstacle_notTryingToTackleObstacle_false();
 		void stuckAtObstacle_updateCalledTwiceAfterStuckAtObstacle_true();

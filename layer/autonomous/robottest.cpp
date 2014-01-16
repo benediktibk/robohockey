@@ -816,6 +816,31 @@ void RobotTest::goTo_finalPointReached_engineGotCallToTurnToFinalOrientation()
 	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(10, 11), m_engine->getLastTarget()));
 }
 
+void RobotTest::goTo_hardNotVisibleObstacleAtEnd_canReachTarget()
+{
+	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
+	DataAnalysis::Odometry &odometry = dataAnalyser->getOdometry();
+	odometry.setCurrentPosition(RobotPosition(Point(0, 0), Angle(0)));
+	DataAnalysis::EngineMock &engine = dataAnalyser->getEngineMock();
+	RobotImpl robot(dataAnalyser, new RouterImpl(0.5), new WatchMock(), *m_logger);
+	m_targets.push_back(RobotPosition(Point(10, 0), Angle(0)));
+	vector<Circle> obstacles;
+	obstacles.push_back(Circle(Point(10, 0), 0.3));
+
+	m_field->setHardObstacles(obstacles);
+	engine.setReachedTarget(true);
+	robot.updateSensorData();
+	robot.goTo(m_targets);
+	robot.updateActuators(*m_field);
+	engine.resetCounters();
+	engine.setReachedTarget(false);
+	robot.updateSensorData();
+	robot.updateActuators(*m_field);
+
+	CPPUNIT_ASSERT(!robot.cantReachTarget());
+	CPPUNIT_ASSERT_EQUAL((unsigned int)0, engine.getCallsToStop());
+}
+
 void RobotTest::stuckAtObstacle_tryingToTackleObstacle_true()
 {
 	m_engine->setTryingToTackleObstacle(true);
