@@ -16,7 +16,7 @@ using namespace RoboHockey::Layer::Strategy::Common;
 using namespace RoboHockey::Layer::Strategy::DrivePuckStateMachine;
 using namespace RoboHockey::Layer::Autonomous;
 
-void InitialStateTest::nextState_puckCollected_nextStateIsLeavePuck()
+void InitialStateTest::nextState_puckCollected_nextStateIsLeavePuckState()
 {
 	RobotMock robot;
 	FieldMock field;
@@ -33,7 +33,7 @@ void InitialStateTest::nextState_puckCollected_nextStateIsLeavePuck()
 	delete state;
 }
 
-void InitialStateTest::nextState_numberOfKnownPucksIs0_nextStateIsFindPuckTurnTo()
+void InitialStateTest::nextState_numberOfKnownPucksIs0_nextStateIsFindPuckTurnToState()
 {
 	RobotMock robot;
 	FieldMock field;
@@ -49,7 +49,7 @@ void InitialStateTest::nextState_numberOfKnownPucksIs0_nextStateIsFindPuckTurnTo
 	delete state;
 }
 
-void InitialStateTest::nextState_numberOfKnownPucksIs2_nextStateIsDriveToCollectPuck()
+void InitialStateTest::nextState_numberOfKnownPucksIs2_nextStateIsDriveToCollectPuckState()
 {
 	RobotMock robot;
 	FieldMock field;
