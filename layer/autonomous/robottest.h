@@ -56,9 +56,9 @@ namespace Autonomous
 		CPPUNIT_TEST(goTo_twoTargetsAndFirstOnePossible_canReachFirstTarget);
 		CPPUNIT_TEST(goTo_twoTargetsAndOnlySecondOnePossible_canReachSecondTarget);
 		CPPUNIT_TEST(goTo_minuteWaited_cantReachTarget);
-		CPPUNIT_TEST(goTo_obstacleSuddenlyAppearedDuringDriving_engineGotCallToTurnTowardsNewRoute);
-		CPPUNIT_TEST(goTo_obstacleSuddenlyAppearedDuringTurning_engineGotCallToTurnTowardsNewRoute);
-		CPPUNIT_TEST(goTo_hardObstacleAtStart_engineGotCallToGoToStraight);
+		CPPUNIT_TEST(goTo_obstacleSuddenlyAppearedDuringDriving_engineGotCallToStop);
+		CPPUNIT_TEST(goTo_obstacleSuddenlyAppearedDuringTurning_engineGotCallToStop);
+		CPPUNIT_TEST(goTo_hardObstacleAtStart_engineGotCallToTurnToTarget);
 		CPPUNIT_TEST(goTo_hardObstacleMovedALittleBitIntoTheRoute_engineGotNoAdditionalCalls);
 		CPPUNIT_TEST(goTo_puckCollectedButLostInBetween_newRouteStillConsideringThePuck);
 		CPPUNIT_TEST(goTo_positionInsideHardObstacle_cantReachTarget);
@@ -68,6 +68,7 @@ namespace Autonomous
 		CPPUNIT_TEST(goTo_firstPointReachedAndSmallTurnNecessary_engineGotCorrectNextTarget);
 		CPPUNIT_TEST(goTo_orientationDifferenceZero_engineGotOnlyCallToGoToStraight);
 		CPPUNIT_TEST(goTo_orientationDifferenceSmall_engineGotOnlyCallToGoToStraight);
+		CPPUNIT_TEST(goTo_noUpdateOfActuators_engineGotCallToStop);
 		CPPUNIT_TEST(stuckAtObstacle_tryingToTackleObstacle_true);
 		CPPUNIT_TEST(stuckAtObstacle_notTryingToTackleObstacle_false);
 		CPPUNIT_TEST(stuckAtObstacle_updateCalledTwiceAfterStuckAtObstacle_true);
@@ -85,7 +86,6 @@ namespace Autonomous
 		CPPUNIT_TEST(turnToTarget_validPoint_engineGotAtLeastOneCallToTurnToTarget);
 		CPPUNIT_TEST(turnToTarget_orientationReached_reachedTarget);
 		CPPUNIT_TEST(turnToTarget_minuteWaited_cantReachTarget);
-		CPPUNIT_TEST(updateActuators_notTryingToTackleObstacle_engineGotNoCallToStop);
 		CPPUNIT_TEST(updateActuators_tryingToTackleObstacle_engineGotAtLeastOneCallToStop);
 		CPPUNIT_TEST(updateActuators_tryingToTackleObstacle_targetNotReached);
 		CPPUNIT_TEST(updateActuators_tryingToTackleObstacleFromSonar_lastMessageContainssonar);
@@ -188,9 +188,9 @@ namespace Autonomous
 		void goTo_twoTargetsAndFirstOnePossible_canReachFirstTarget();
 		void goTo_twoTargetsAndOnlySecondOnePossible_canReachSecondTarget();
 		void goTo_minuteWaited_cantReachTarget();
-		void goTo_obstacleSuddenlyAppearedDuringDriving_engineGotCallToTurnTowardsNewRoute();
-		void goTo_obstacleSuddenlyAppearedDuringTurning_engineGotCallToTurnTowardsNewRoute();
-		void goTo_hardObstacleAtStart_engineGotCallToGoToStraight();
+		void goTo_obstacleSuddenlyAppearedDuringDriving_engineGotCallToStop();
+		void goTo_obstacleSuddenlyAppearedDuringTurning_engineGotCallToStop();
+		void goTo_hardObstacleAtStart_engineGotCallToTurnToTarget();
 		void goTo_hardObstacleMovedALittleBitIntoTheRoute_engineGotNoAdditionalCalls();
 		void goTo_puckCollectedButLostInBetween_newRouteStillConsideringThePuck();
 		void goTo_positionInsideHardObstacle_cantReachTarget();
@@ -200,6 +200,7 @@ namespace Autonomous
 		void goTo_firstPointReachedAndSmallTurnNecessary_engineGotCorrectNextTarget();
 		void goTo_orientationDifferenceZero_engineGotOnlyCallToGoToStraight();
 		void goTo_orientationDifferenceSmall_engineGotOnlyCallToGoToStraight();
+		void goTo_noUpdateOfActuators_engineGotCallToStop();
 		void stuckAtObstacle_tryingToTackleObstacle_true();
 		void stuckAtObstacle_notTryingToTackleObstacle_false();
 		void stuckAtObstacle_updateCalledTwiceAfterStuckAtObstacle_true();
@@ -217,7 +218,6 @@ namespace Autonomous
 		void turnToTarget_validPoint_engineGotAtLeastOneCallToTurnToTarget();
 		void turnToTarget_orientationReached_reachedTarget();
 		void turnToTarget_minuteWaited_cantReachTarget();
-		void updateActuators_notTryingToTackleObstacle_engineGotNoCallToStop();
 		void updateActuators_tryingToTackleObstacle_engineGotAtLeastOneCallToStop();
 		void updateActuators_tryingToTackleObstacle_targetNotReached();
 		void updateActuators_tryingToTackleObstacleFromSonar_lastMessageContainssonar();

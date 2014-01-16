@@ -52,6 +52,7 @@ void RobotTest::goTo_positionDifferentToCurrentOne_engineGotAtLeastOneCallToGoTo
 {
 	m_odometry->setCurrentPosition(RobotPosition(Point(2, 3), 1));
 
+	m_engine->setReachedTarget(true);
 	m_robot->updateSensorData();
 	m_targets.push_back(RobotPosition(Point(5, 4), 0));
 	m_robot->goTo(m_targets);
@@ -64,7 +65,7 @@ void RobotTest::goTo_orientationToTargetCorrect_engineGotAtLeastOneCallToGoToStr
 {
 	m_odometry->setCurrentPosition(RobotPosition(Point(0, 0), 0));
 
-	m_engine->setReachedTarget(false);
+	m_engine->setReachedTarget(true);
 	m_robot->updateSensorData();
 	m_targets.push_back(RobotPosition(Point(1, 0), 0));
 	m_robot->goTo(m_targets);
@@ -133,11 +134,12 @@ void RobotTest::goTo_orientationReachedAfterSomeTime_notReachedTarget()
 {
 	m_odometry->setCurrentPosition(RobotPosition(Point(0, 0), 0));
 
-	m_engine->setReachedTarget(false);
+	m_engine->setReachedTarget(true);
 	m_robot->updateSensorData();
 	m_targets.push_back(RobotPosition(Point(-1, 0), Angle::getHalfRotation()));
 	m_robot->goTo(m_targets);
 	m_robot->updateActuators(*m_field);
+	m_engine->setReachedTarget(false);
 	m_robot->updateSensorData();
 	m_robot->updateActuators(*m_field);
 	m_engine->setReachedTarget(true);
@@ -203,9 +205,9 @@ void RobotTest::goTo_firstPointReached_notReachedTarget()
 	m_odometry->setCurrentPosition(RobotPosition(Point(0, 0), 0));
 
 	m_routerMock->setChessMode(true);
-	m_engine->setReachedTarget(false);
+	m_engine->setReachedTarget(true);
 	m_robot->updateSensorData();
-	m_targets.push_back(RobotPosition(Point(1, 1), Angle::getEighthRotation()));
+	m_targets.push_back(RobotPosition(Point(1, 10), Angle(tan(10/1))));
 	m_robot->goTo(m_targets);
 	m_robot->updateActuators(*m_field);
 	m_engine->setReachedTarget(true);
@@ -213,7 +215,7 @@ void RobotTest::goTo_firstPointReached_notReachedTarget()
 	m_odometry->setCurrentPosition(RobotPosition(Point(0, 0), Angle::getQuarterRotation()));
 	m_robot->updateSensorData();
 	m_robot->updateActuators(*m_field);
-	m_odometry->setCurrentPosition(RobotPosition(Point(0, 1), Angle::getQuarterRotation()));
+	m_odometry->setCurrentPosition(RobotPosition(Point(0, 10), Angle::getQuarterRotation()));
 	m_engine->setReachedTarget(true);
 	m_engine->setIsGoingStraight(false);
 	m_robot->updateSensorData();
@@ -227,9 +229,9 @@ void RobotTest::goTo_firstPointReached_engineGotOneCallToTurnTo()
 	m_odometry->setCurrentPosition(RobotPosition(Point(0, 0), 0));
 
 	m_routerMock->setChessMode(true);
-	m_engine->setReachedTarget(false);
+	m_engine->setReachedTarget(true);
 	m_robot->updateSensorData();
-	m_targets.push_back(RobotPosition(Point(1, 1), Angle::getEighthRotation()));
+	m_targets.push_back(RobotPosition(Point(1, 10), Angle(tan(10/1))));
 	m_robot->goTo(m_targets);
 	m_robot->updateActuators(*m_field);
 	m_engine->setReachedTarget(true);
@@ -237,7 +239,7 @@ void RobotTest::goTo_firstPointReached_engineGotOneCallToTurnTo()
 	m_odometry->setCurrentPosition(RobotPosition(Point(0, 0), Angle::getQuarterRotation()));
 	m_robot->updateSensorData();
 	m_robot->updateActuators(*m_field);
-	m_odometry->setCurrentPosition(RobotPosition(Point(0, 1), Angle::getQuarterRotation()));
+	m_odometry->setCurrentPosition(RobotPosition(Point(0, 10), Angle::getQuarterRotation()));
 	m_engine->setReachedTarget(true);
 	m_engine->setIsGoingStraight(false);
 	m_engine->resetCounters();
@@ -278,9 +280,9 @@ void RobotTest::goTo_firstPointAndRotationReached_engineGotOneCallToGoToStraight
 	m_odometry->setCurrentPosition(RobotPosition(Point(0, 0), 0));
 
 	m_routerMock->setChessMode(true);
-	m_engine->setReachedTarget(false);
+	m_engine->setReachedTarget(true);
 	m_robot->updateSensorData();
-	m_targets.push_back(RobotPosition(Point(1, 1), Angle::getEighthRotation()));
+	m_targets.push_back(RobotPosition(Point(1, 10), Angle(tan(10/1))));
 	m_robot->goTo(m_targets);
 	m_robot->updateActuators(*m_field);
 	m_engine->setReachedTarget(true);
@@ -288,12 +290,12 @@ void RobotTest::goTo_firstPointAndRotationReached_engineGotOneCallToGoToStraight
 	m_odometry->setCurrentPosition(RobotPosition(Point(0, 0), Angle::getQuarterRotation()));
 	m_robot->updateSensorData();
 	m_robot->updateActuators(*m_field);
-	m_odometry->setCurrentPosition(RobotPosition(Point(0, 1), Angle::getQuarterRotation()));
+	m_odometry->setCurrentPosition(RobotPosition(Point(0, 10), Angle::getQuarterRotation()));
 	m_engine->setReachedTarget(true);
 	m_engine->setIsGoingStraight(false);
 	m_robot->updateSensorData();
 	m_robot->updateActuators(*m_field);
-	m_odometry->setCurrentPosition(RobotPosition(Point(0, 1), 0));
+	m_odometry->setCurrentPosition(RobotPosition(Point(0, 10), 0));
 	m_engine->setReachedTarget(true);
 	m_engine->setIsGoingStraight(false);
 	m_engine->resetCounters();
@@ -302,28 +304,28 @@ void RobotTest::goTo_firstPointAndRotationReached_engineGotOneCallToGoToStraight
 
 	Compare compare(0.00001);
 	CPPUNIT_ASSERT(m_engine->getCallsToGoToStraight() > 0);
-	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(1, 1), m_engine->getLastTarget()));
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(1, 10), m_engine->getLastTarget()));
 }
 
 void RobotTest::goTo_finalPointReached_engineGotOneCallToTurnTo()
 {
 	m_odometry->setCurrentPosition(RobotPosition(Point(0, 0), 0));
 
-	m_engine->setReachedTarget(false);
+	m_engine->setReachedTarget(true);
 	m_robot->updateSensorData();
-	m_targets.push_back(RobotPosition(Point(1, 1), Angle::getQuarterRotation()));
+	m_targets.push_back(RobotPosition(Point(1, 10), Angle::getQuarterRotation()));
 	m_robot->goTo(m_targets);
 	m_robot->updateActuators(*m_field);
 	m_engine->setIsGoingStraight(false);
 	m_engine->setReachedTarget(true);
-	m_odometry->setCurrentPosition(RobotPosition(Point(0, 0), Angle::getEighthRotation()));
+	m_odometry->setCurrentPosition(RobotPosition(Point(0, 0), Angle(tan(10/1))));
 	m_robot->updateSensorData();
 	m_robot->updateActuators(*m_field);
 	m_engine->setReachedTarget(false);
 	m_engine->setIsGoingStraight(true);
 	m_robot->updateSensorData();
 	m_robot->updateActuators(*m_field);
-	m_odometry->setCurrentPosition(RobotPosition(Point(1, 1), Angle::getEighthRotation()));
+	m_odometry->setCurrentPosition(RobotPosition(Point(1, 10), Angle::getQuarterRotation()));
 	m_engine->setReachedTarget(true);
 	m_engine->setIsGoingStraight(false);
 	m_engine->resetCounters();
@@ -503,7 +505,7 @@ void RobotTest::goTo_minuteWaited_cantReachTarget()
 	CPPUNIT_ASSERT(robot.cantReachTarget());
 }
 
-void RobotTest::goTo_obstacleSuddenlyAppearedDuringDriving_engineGotCallToTurnTowardsNewRoute()
+void RobotTest::goTo_obstacleSuddenlyAppearedDuringDriving_engineGotCallToStop()
 {
 	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
 	DataAnalysis::Odometry &odometry = dataAnalyser->getOdometry();
@@ -513,10 +515,12 @@ void RobotTest::goTo_obstacleSuddenlyAppearedDuringDriving_engineGotCallToTurnTo
 	vector<Circle> obstacles;
 	obstacles.push_back(Circle(Point(5, 0), 1));
 
+	engine.setReachedTarget(true);
 	robot.updateSensorData();
 	m_targets.push_back(RobotPosition(Point(10, 0), 0));
 	robot.goTo(m_targets);
 	robot.updateActuators(*m_field);
+	engine.setReachedTarget(false);
 	robot.updateSensorData();
 	robot.updateActuators(*m_field);
 	m_field->setHardObstacles(obstacles);
@@ -525,16 +529,10 @@ void RobotTest::goTo_obstacleSuddenlyAppearedDuringDriving_engineGotCallToTurnTo
 	robot.updateActuators(*m_field);
 
 	CPPUNIT_ASSERT(!robot.cantReachTarget());
-	CPPUNIT_ASSERT_EQUAL((unsigned int)1, engine.getCallsToTurnToTarget());
-	CPPUNIT_ASSERT_EQUAL((unsigned int)0, engine.getCallsToGoToStraight());
-	list<Point> routePoints = robot.getAllRoutePoints();
-	CPPUNIT_ASSERT(routePoints.size() >= 3);
-	const Point &nextPoint = *(++routePoints.begin());
-	Compare compare(0.001);
-	CPPUNIT_ASSERT(compare.isFuzzyEqual(nextPoint, engine.getLastTarget()));
+	CPPUNIT_ASSERT_EQUAL((unsigned int)1, engine.getCallsToStop());
 }
 
-void RobotTest::goTo_obstacleSuddenlyAppearedDuringTurning_engineGotCallToTurnTowardsNewRoute()
+void RobotTest::goTo_obstacleSuddenlyAppearedDuringTurning_engineGotCallToStop()
 {
 	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
 	DataAnalysis::Odometry &odometry = dataAnalyser->getOdometry();
@@ -554,16 +552,10 @@ void RobotTest::goTo_obstacleSuddenlyAppearedDuringTurning_engineGotCallToTurnTo
 	robot.updateActuators(*m_field);
 
 	CPPUNIT_ASSERT(!robot.cantReachTarget());
-	CPPUNIT_ASSERT_EQUAL((unsigned int)1, engine.getCallsToTurnToTarget());
-	CPPUNIT_ASSERT_EQUAL((unsigned int)0, engine.getCallsToGoToStraight());
-	list<Point> routePoints = robot.getAllRoutePoints();
-	CPPUNIT_ASSERT(routePoints.size() >= 3);
-	const Point &nextPoint = *(++routePoints.begin());
-	Compare compare(0.001);
-	CPPUNIT_ASSERT(compare.isFuzzyEqual(nextPoint, engine.getLastTarget()));
+	CPPUNIT_ASSERT_EQUAL((unsigned int)1, engine.getCallsToStop());
 }
 
-void RobotTest::goTo_hardObstacleAtStart_engineGotCallToGoToStraight()
+void RobotTest::goTo_hardObstacleAtStart_engineGotCallToTurnToTarget()
 {
 	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
 	DataAnalysis::Odometry &odometry = dataAnalyser->getOdometry();
@@ -574,23 +566,15 @@ void RobotTest::goTo_hardObstacleAtStart_engineGotCallToGoToStraight()
 	obstacles.push_back(Circle(Point(0.8, 0), 2));
 	m_field->setHardObstacles(obstacles);
 
+	engine.setReachedTarget(true);
 	robot.updateSensorData();
 	m_targets.push_back(RobotPosition(Point(10, 0), 0));
 	robot.goTo(m_targets);
 	robot.updateActuators(*m_field);
-	engine.setReachedTarget(true);
-	engine.setIsGoingStraight(false);
-	engine.resetCounters();
-	robot.updateSensorData();
-	robot.updateActuators(*m_field);
-	engine.setReachedTarget(false);
-	engine.setIsGoingStraight(true);
-	robot.updateSensorData();
-	robot.updateActuators(*m_field);
 
 	CPPUNIT_ASSERT(!robot.cantReachTarget());
-	CPPUNIT_ASSERT_EQUAL((unsigned int)0, engine.getCallsToTurnToTarget());
-	CPPUNIT_ASSERT_EQUAL((unsigned int)1, engine.getCallsToGoToStraight());
+	CPPUNIT_ASSERT_EQUAL((unsigned int)1, engine.getCallsToTurnToTarget());
+	CPPUNIT_ASSERT_EQUAL((unsigned int)0, engine.getCallsToGoToStraight());
 }
 
 void RobotTest::goTo_hardObstacleMovedALittleBitIntoTheRoute_engineGotNoAdditionalCalls()
@@ -699,13 +683,13 @@ void RobotTest::goTo_firstPointNearlyReachedAndSmallTurnNecessary_lastSpeedIsBig
 	m_routerMock->setRoute(Point(0, 0), Point(5, 0), Point(7, 0.1));
 	m_targets.push_back(RobotPosition(Point(7, 0.1), Angle(0)));
 
-	m_engine->setReachedTarget(false);
+	m_engine->setReachedTarget(true);
 	m_engine->setSpeedForGoingStraight(1);
 	m_odometry->setCurrentPosition(RobotPosition(Point(0, 0), Angle(0)));
 	m_robot->updateSensorData();
 	m_robot->goTo(m_targets);
 	m_robot->updateActuators(*m_field);
-	m_engine->setReachedTarget(true);
+	m_engine->setReachedTarget(false);
 	m_robot->updateSensorData();
 	m_robot->updateActuators(*m_field);
 	m_engine->setReachedTarget(false);
@@ -746,13 +730,13 @@ void RobotTest::goTo_firstPointReachedAndSmallTurnNecessary_engineGotCorrectNext
 	m_routerMock->setRoute(Point(0, 0), Point(5, 0), Point(7, 0.1));
 	m_targets.push_back(RobotPosition(Point(7, 0.1), Angle(0)));
 
-	m_engine->setReachedTarget(false);
+	m_engine->setReachedTarget(true);
 	m_engine->setSpeedForGoingStraight(1);
 	m_odometry->setCurrentPosition(RobotPosition(Point(0, 0), Angle(0)));
 	m_robot->updateSensorData();
 	m_robot->goTo(m_targets);
 	m_robot->updateActuators(*m_field);
-	m_engine->setReachedTarget(true);
+	m_engine->setReachedTarget(false);
 	m_engine->resetCounters();
 	m_robot->updateSensorData();
 	m_robot->updateActuators(*m_field);
@@ -772,11 +756,25 @@ void RobotTest::goTo_orientationDifferenceZero_engineGotOnlyCallToGoToStraight()
 {
 	m_targets.push_back(RobotPosition(Point(-10, 0), Angle(0)));
 
-	m_engine->setReachedTarget(false);
+	m_engine->setReachedTarget(true);
 	m_odometry->setCurrentPosition(RobotPosition(Point(0, 0), Angle::getHalfRotation()));
 	m_robot->updateSensorData();
 	m_robot->goTo(m_targets);
 	m_robot->updateActuators(*m_field);
+
+	CPPUNIT_ASSERT_EQUAL((unsigned int)0, m_engine->getCallsToTurnToTarget());
+	CPPUNIT_ASSERT_EQUAL((unsigned int)1, m_engine->getCallsToGoToStraight());
+	const Point &lastTarget = m_engine->getLastTarget();
+	Compare compare(0.001);
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(-10, 0), lastTarget));
+}
+
+void RobotTest::goTo_orientationDifferenceSmall_engineGotOnlyCallToGoToStraight()
+{
+	m_targets.push_back(RobotPosition(Point(-10, 0.1), Angle(0)));
+
+	m_engine->setReachedTarget(true);
+	m_odometry->setCurrentPosition(RobotPosition(Point(0, 0), Angle::getHalfRotation()));
 	m_robot->updateSensorData();
 	m_robot->goTo(m_targets);
 	m_robot->updateActuators(*m_field);
@@ -788,24 +786,15 @@ void RobotTest::goTo_orientationDifferenceZero_engineGotOnlyCallToGoToStraight()
 	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(-10, 0.1), lastTarget));
 }
 
-void RobotTest::goTo_orientationDifferenceSmall_engineGotOnlyCallToGoToStraight()
+void RobotTest::goTo_noUpdateOfActuators_engineGotCallToStop()
 {
-	m_targets.push_back(RobotPosition(Point(-10, 0.1), Angle(0)));
+	m_targets.push_back(RobotPosition(Point(10, 0), Angle(0)));
 
 	m_engine->setReachedTarget(false);
-	m_odometry->setCurrentPosition(RobotPosition(Point(0, 0), Angle::getHalfRotation()));
 	m_robot->updateSensorData();
 	m_robot->goTo(m_targets);
-	m_robot->updateActuators(*m_field);
-	m_robot->updateSensorData();
-	m_robot->goTo(m_targets);
-	m_robot->updateActuators(*m_field);
 
-	CPPUNIT_ASSERT_EQUAL((unsigned int)0, m_engine->getCallsToTurnToTarget());
-	CPPUNIT_ASSERT_EQUAL((unsigned int)1, m_engine->getCallsToGoToStraight());
-	const Point &lastTarget = m_engine->getLastTarget();
-	Compare compare(0.001);
-	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(-10, 0.1), lastTarget));
+	CPPUNIT_ASSERT_EQUAL((unsigned int)1, m_engine->getCallsToStop());
 }
 
 void RobotTest::stuckAtObstacle_tryingToTackleObstacle_true()
@@ -1003,19 +992,6 @@ void RobotTest::turnToTarget_minuteWaited_cantReachTarget()
 	m_robot->updateActuators(*m_field);
 
 	CPPUNIT_ASSERT(m_robot->cantReachTarget());
-}
-
-void RobotTest::updateActuators_notTryingToTackleObstacle_engineGotNoCallToStop()
-{
-	m_engine->setTryingToTackleObstacle(false);
-	m_engine->setReachedTarget(false);
-	m_targets.push_back(RobotPosition(Point(10, 0), 0));
-	m_robot->goTo(m_targets);
-
-	m_robot->updateSensorData();
-	m_robot->updateActuators(*m_field);
-
-	CPPUNIT_ASSERT(m_engine->getCallsToStop() == 0);
 }
 
 void RobotTest::updateActuators_tryingToTackleObstacle_engineGotAtLeastOneCallToStop()
@@ -1819,12 +1795,14 @@ void RobotTest::isRotating_turningPartOfGoTo_true()
 void RobotTest::isRotating_drivingPartOfGoToAndTurningFast_true()
 {
 	list<RobotPosition> targets;
-	targets.push_back(RobotPosition(Point(10, 0), Angle(1)));
+	targets.push_back(RobotPosition(Point(0, 10), Angle(1)));
 
+	m_engine->setReachedTarget(true);
 	m_robot->updateSensorData();
 	m_robot->goTo(targets);
 	m_robot->updateActuators(*m_field);
 	m_engine->setReachedTarget(true);
+	m_odometry->setCurrentPosition(RobotPosition(Point(0, 0), Angle::getQuarterRotation()));
 	m_robot->updateSensorData();
 	m_robot->updateActuators(*m_field);
 	m_engine->setCurrentRotationSpeed(10);
@@ -1835,12 +1813,14 @@ void RobotTest::isRotating_drivingPartOfGoToAndTurningFast_true()
 void RobotTest::isRotating_drivingPartOfGoToAndTurningSlow_true()
 {
 	list<RobotPosition> targets;
-	targets.push_back(RobotPosition(Point(10, 0), Angle(1)));
+	targets.push_back(RobotPosition(Point(0, 10), Angle(1)));
 
+	m_engine->setReachedTarget(true);
 	m_robot->updateSensorData();
 	m_robot->goTo(targets);
 	m_robot->updateActuators(*m_field);
 	m_engine->setReachedTarget(true);
+	m_odometry->setCurrentPosition(RobotPosition(Point(0, 0), Angle::getQuarterRotation()));
 	m_robot->updateSensorData();
 	m_robot->updateActuators(*m_field);
 	m_engine->setCurrentRotationSpeed(0.05);
@@ -1906,12 +1886,14 @@ void RobotTest::calculateFinalSpeedForGoingStraight_smallAngle_betweenZeroAnd05(
 void RobotTest::isMoving_drivingStraightPart_true()
 {
 	list<RobotPosition> targets;
-	targets.push_back(RobotPosition(Point(10, 0), Angle(1)));
+	targets.push_back(RobotPosition(Point(0, 10), Angle(1)));
 
+	m_engine->setReachedTarget(true);
 	m_robot->updateSensorData();
 	m_robot->goTo(targets);
 	m_robot->updateActuators(*m_field);
 	m_engine->setReachedTarget(true);
+	m_odometry->setCurrentPosition(RobotPosition(Point(0, 0), Angle::getQuarterRotation()));
 	m_robot->updateSensorData();
 	m_robot->updateActuators(*m_field);
 
@@ -1921,7 +1903,7 @@ void RobotTest::isMoving_drivingStraightPart_true()
 void RobotTest::isMoving_drivingTurningPart_true()
 {
 	list<RobotPosition> targets;
-	targets.push_back(RobotPosition(Point(10, 0), Angle(1)));
+	targets.push_back(RobotPosition(Point(0, 10), Angle(1)));
 	m_engine->setIsMoving(false);
 
 	m_robot->goTo(targets);

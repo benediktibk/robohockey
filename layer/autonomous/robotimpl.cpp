@@ -62,6 +62,8 @@ void RobotImpl::goTo(const list<RobotPosition> &possibleTargets)
 {
 	assert(possibleTargets.size() > 0);
 	clearRoute();
+	DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
+	engine.stop();
 	changeIntoState(RobotStateDrivingTurningPart);
 	m_possibleTargets = possibleTargets;
 	m_currentTarget = m_possibleTargets.front();
@@ -84,12 +86,40 @@ bool RobotImpl::reachedTarget()
 	return m_state == RobotStateWaiting && !m_cantReachTarget;
 }
 
-void RobotImpl::updateEngineForDrivingStraightPart(const Field &field)
+void RobotImpl::updateEngineForDrivingStraightPart()
+{
+	DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
+
+	if (engine.reachedTarget())
+	{
+		double finalSpeed = calculateNextFinalSpeedForGoingStraight();
+		const Common::Point &target = m_currentRoute->getSecondPoint();
+		engine.goToStraight(target, finalSpeed);
+	}
+}
+
+void RobotImpl::updateEngineForDrivingTurningPart()
+{
+	DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
+
+	if (engine.reachedTarget())
+	{
+		Point target;
+
+		if (m_currentRoute->getPointCount() >= 2)
+			target = m_currentRoute->getSecondPoint();
+		else
+			 target = m_currentRoute->getLastPoint();
+
+		engine.turnToTarget(target);
+	}
+}
+
+void RobotImpl::updateDrivingState(const Field &field)
 {
 	if (checkTimeout())
 		return;
 
-	DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
 	bool routeChanged = updateRoute(field);
 
 	//! If there is no route at this point we can't reach the target.
@@ -99,76 +129,32 @@ void RobotImpl::updateEngineForDrivingStraightPart(const Field &field)
 		return;
 	}
 
-	if (routeChanged)
-	{
-		changeIntoState(RobotStateDrivingTurningPart);
-		engine.turnToTarget(m_currentRoute->getSecondPoint());
-	}
-	else if (engine.reachedTarget())
-	{
-		m_currentRoute->removeFirstPoint();
-		const Compare compare(0.001);
-
-		if (m_currentRoute->getPointCount() == 1)
-		{
-			if (compare.isFuzzyEqual(m_finalSpeed, 0))
-			{
-				const Angle &finalOrientation = m_currentTarget.getOrientation();
-				Point smallStep(1, 0);
-				smallStep.rotate(finalOrientation);
-				engine.turnToTarget(getCurrentPosition().getPosition() + smallStep);
-				changeIntoState(RobotStateDrivingTurningPart);
-			}
-			else
-			{
-				changeIntoState(RobotStateDrivingStraightPart);
-				m_finalSpeed = calculateNextFinalSpeedForGoingStraight();
-				engine.goToStraight(m_currentRoute->getFirstPoint(), m_finalSpeed);
-			}
-		}
-		else
-		{
-			if (compare.isFuzzyEqual(m_finalSpeed, 0))
-			{
-				changeIntoState(RobotStateDrivingTurningPart);
-				engine.turnToTarget(m_currentRoute->getSecondPoint());
-			}
-			else
-			{
-				changeIntoState(RobotStateDrivingStraightPart);
-				m_finalSpeed = calculateNextFinalSpeedForGoingStraight();
-				engine.goToStraight(m_currentRoute->getSecondPoint(), m_finalSpeed);
-			}
-		}
-	}
-}
-
-void RobotImpl::updateEngineForDrivingTurningPart(const Field &field)
-{
-	if (checkTimeout())
-		return;
-
 	DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
-	bool routeChanged = updateRoute(field);
 
-	if (m_currentRoute == 0)
+	if (engine.reachedTarget() && m_state == RobotStateDrivingStraightPart)
+		m_currentRoute->removeFirstPoint();
+	else if (engine.reachedTarget() && m_currentRoute->getPointCount() < 2)
 	{
-		m_cantReachTarget = true;
+		stop();
 		return;
 	}
 
-	if (m_stateChanged || routeChanged)
-		engine.turnToTarget(m_currentRoute->getSecondPoint());
-	else if (engine.reachedTarget())
+	if (routeChanged)
+		engine.stop();
+
+	if (routeChanged || engine.reachedTarget())
 	{
-		if (m_currentRoute->getPointCount() > 1)
-		{
-			changeIntoState(RobotStateDrivingStraightPart);
-			m_finalSpeed = calculateNextFinalSpeedForGoingStraight();
-			engine.goToStraight(m_currentRoute->getSecondPoint(), m_finalSpeed);
-		}
+		if (m_currentRoute->getPointCount() == 1)
+			changeIntoState(RobotStateDrivingTurningPart);
 		else
-			changeIntoState(RobotStateWaiting);
+		{
+			const Point &nextTarget = getNextTarget();
+
+			if (isOrientationDifferenceSmallEnoughForSmoothTurn(nextTarget))
+				changeIntoState(RobotStateDrivingStraightPart);
+			else
+				changeIntoState(RobotStateDrivingTurningPart);
+		}
 	}
 }
 
@@ -281,10 +267,9 @@ void RobotImpl::updateEngine(const Field &field)
 	switch(m_state)
 	{
 	case RobotStateDrivingStraightPart:
-		updateEngineForDrivingStraightPart(field);
-		break;
 	case RobotStateDrivingTurningPart:
-		updateEngineForDrivingTurningPart(field);
+		updateDrivingState(field);
+		updateEngineForDriving();
 		break;
 	case RobotStateWaiting:
 		updateEngineForWaiting();
@@ -300,6 +285,36 @@ void RobotImpl::updateEngine(const Field &field)
 		break;
 	case RobotStateTurnTo:
 		updateEngineForTurnTo();
+		break;
+	}
+}
+
+void RobotImpl::updateEngineForDriving()
+{
+	DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
+
+	if (m_cantReachTarget)
+	{
+		engine.stop();
+		return;
+	}
+
+	switch(m_state)
+	{
+	case RobotStateDrivingStraightPart:
+		updateEngineForDrivingStraightPart();
+		break;
+	case RobotStateDrivingTurningPart:
+		updateEngineForDrivingTurningPart();
+		break;
+	case RobotStateWaiting:
+		engine.stop();
+		break;
+	case RobotStateCollectingPuck:
+	case RobotStateLeavingPuck:
+	case RobotStateTurnAround:
+	case RobotStateTurnTo:
+		assert(false);
 		break;
 	}
 }
@@ -424,9 +439,15 @@ bool RobotImpl::isOrientationDifferenceSmallEnoughForSmoothTurn(const Angle &ang
 	return fabs(angle.getValueBetweenMinusPiAndPi()) < m_maximumAngleForSmoothTurn.getValueBetweenZeroAndTwoPi();
 }
 
-Angle RobotImpl::isOrientationDifferenceSmallEnoughForSmoothTurn(const Point &point) const
+bool RobotImpl::isOrientationDifferenceSmallEnoughForSmoothTurn(const Point &point) const
 {
-	return getCurrentPosition().getRelativeOrientationTo(point);
+	return isOrientationDifferenceSmallEnoughForSmoothTurn(getCurrentPosition().getRelativeOrientationTo(point));
+}
+
+const Point &RobotImpl::getNextTarget() const
+{
+	assert(m_currentRoute->getPointCount() >= 2);
+	return m_currentRoute->getLastPoint();
 }
 
 void RobotImpl::updateActuators(const Field &field)

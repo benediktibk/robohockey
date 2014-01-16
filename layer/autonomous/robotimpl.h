@@ -68,8 +68,10 @@ namespace Autonomous
 		bool updateRoute(const Field &field);
 		bool isRouteFeasible(const std::vector<Common::Circle> &obstacles) const;
 		void updateEngine(const Field &field);
-		void updateEngineForDrivingStraightPart(const Field &field);
-		void updateEngineForDrivingTurningPart(const Field &field);
+		void updateEngineForDriving();
+		void updateEngineForDrivingStraightPart();
+		void updateEngineForDrivingTurningPart();
+		void updateDrivingState(const Field &field);
 		void updateEngineForWaiting();
 		void updateEngineForCollectingPuck();
 		void updateEngineForLeavingPuck();
@@ -84,7 +86,8 @@ namespace Autonomous
 		std::vector<Common::Circle> growObstacles(const std::vector<Common::Circle> &obstacles) const;
 		double calculateNextFinalSpeedForGoingStraight() const;
 		bool isOrientationDifferenceSmallEnoughForSmoothTurn(const Common::Angle &angle) const;
-		Common::Angle isOrientationDifferenceSmallEnoughForSmoothTurn(const Common::Point &point) const;
+		bool isOrientationDifferenceSmallEnoughForSmoothTurn(const Common::Point &point) const;
+		const Common::Point& getNextTarget() const;
 
 	private:
 		// forbid copies
