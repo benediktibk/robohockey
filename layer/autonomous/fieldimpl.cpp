@@ -25,6 +25,7 @@ FieldImpl::FieldImpl(DataAnalysis::Odometry &odometry, const DataAnalysis::Lidar
 	m_lidar(&lidar),
 	m_camera(&camera),
 	m_robot(&autonomousRobot),
+	m_fieldDetector(new FieldDetector),
 	m_position(new RobotPosition(m_odometry->getCurrentPosition())),
 	m_fieldState(FieldStateUnknownPosition),
 	m_teamColor(FieldColorUnknown),
@@ -35,6 +36,9 @@ FieldImpl::~FieldImpl()
 {
 	delete m_position;
 	m_position = 0;
+
+	delete m_fieldDetector;
+	m_fieldDetector = 0;
 
 	m_fieldObjects.clear();
 }
@@ -101,7 +105,7 @@ unsigned int FieldImpl::getNumberOfObjectsWithColor(FieldColor color) const
 bool FieldImpl::calibratePosition()
 {
 	unsigned int numberOfBorderStones;
-	RobotPosition newOrigin = getNewOriginFromFieldDetection(numberOfBorderStones);
+	RobotPosition newOrigin = getNewOriginFromFieldDetection(numberOfBorderStones, false);
 
 	bool result = !(newOrigin.getPosition() == Point::zero()) || !(newOrigin.getOrientation().getValueBetweenMinusPiAndPi() == 0.0);
 
@@ -593,22 +597,21 @@ void FieldImpl::setTrueTeamColor(FieldColor trueTeamColor)
 	m_teamColor = trueTeamColor;
 }
 
-RobotPosition FieldImpl::getNewOriginFromFieldDetection(unsigned int &outNumberOfBorderstones)
+RobotPosition FieldImpl::getNewOriginFromFieldDetection(unsigned int &outNumberOfBorderstones, bool onlyAcceptConfirmedResults)
 {
 	outNumberOfBorderstones = 0;
 	vector<Point> *input = getPointsOfObjectsWithDiameterAndColor(0.06, FieldColorGreen);
-	FieldDetector detector(m_position->getPosition(), *input);
 
-	bool result = detector.tryToDetectField();
+	bool result = m_fieldDetector->tryToDetectField(m_position->getPosition(), *input);
 
 	Point newOrigin;
 	double rotation = 0.0;
 
-	if (result)
+	if (result && ((onlyAcceptConfirmedResults && m_fieldDetector->hasConfirmedResult()) || !onlyAcceptConfirmedResults))
 	{
-		newOrigin = detector.getNewOrigin();
-		rotation = detector.getRotation();
-		outNumberOfBorderstones = detector.getNumberOfBorderStonesInRow();
+		newOrigin = m_fieldDetector->getNewOrigin();
+		rotation = m_fieldDetector->getRotation();
+		outNumberOfBorderstones = m_fieldDetector->getNumberOfBorderStonesInRow();
 	}
 
 	delete input;
