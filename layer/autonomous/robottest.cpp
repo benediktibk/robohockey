@@ -74,21 +74,6 @@ void RobotTest::goTo_orientationToTargetCorrect_engineGotAtLeastOneCallToGoToStr
 	CPPUNIT_ASSERT(m_engine->getCallsToGoToStraight() > 0);
 }
 
-void RobotTest::goTo_orientationToTargetCorrect_isRotating()
-{
-	m_odometry->setCurrentPosition(RobotPosition(Point(0, 0), 0));
-
-	m_engine->setReachedTarget(true);
-	m_robot->updateSensorData();
-	m_targets.push_back(RobotPosition(Point(1, 0), 0));
-	m_robot->goTo(m_targets);
-	m_robot->updateActuators(*m_field);
-	m_robot->updateSensorData();
-	m_robot->updateActuators(*m_field);
-
-	CPPUNIT_ASSERT(m_robot->isRotating());
-}
-
 void RobotTest::goTo_orientationToTargetCompletelyWrong_engineGotNoCallToGoToStraight()
 {
 	m_odometry->setCurrentPosition(RobotPosition(Point(0, 0), 0));
@@ -1744,6 +1729,49 @@ void RobotTest::isRotating_leavingPuck_false()
 	m_robot->updateSensorData();
 	m_robot->leaveCollectedPuck();
 	m_robot->updateActuators(*m_field);
+
+	CPPUNIT_ASSERT(!m_robot->isRotating());
+}
+
+void RobotTest::isRotating_turningPartOfGoTo_true()
+{
+	list<RobotPosition> targets;
+	targets.push_back(RobotPosition(Point(10, 0), Angle(1)));
+	m_engine->setIsMoving(false);
+
+	m_robot->goTo(targets);
+
+	CPPUNIT_ASSERT(m_robot->isRotating());
+}
+
+void RobotTest::isRotating_drivingPartOfGoToAndTurningFast_true()
+{
+	list<RobotPosition> targets;
+	targets.push_back(RobotPosition(Point(10, 0), Angle(1)));
+
+	m_robot->updateSensorData();
+	m_robot->goTo(targets);
+	m_robot->updateActuators(*m_field);
+	m_engine->setReachedTarget(true);
+	m_robot->updateSensorData();
+	m_robot->updateActuators(*m_field);
+	m_engine->setCurrentRotationSpeed(10);
+
+	CPPUNIT_ASSERT(m_robot->isRotating());
+}
+
+void RobotTest::isRotating_drivingPartOfGoToAndTurningSlow_true()
+{
+	list<RobotPosition> targets;
+	targets.push_back(RobotPosition(Point(10, 0), Angle(1)));
+
+	m_robot->updateSensorData();
+	m_robot->goTo(targets);
+	m_robot->updateActuators(*m_field);
+	m_engine->setReachedTarget(true);
+	m_robot->updateSensorData();
+	m_robot->updateActuators(*m_field);
+	m_engine->setCurrentRotationSpeed(0.05);
 
 	CPPUNIT_ASSERT(!m_robot->isRotating());
 }

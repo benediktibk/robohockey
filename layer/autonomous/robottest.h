@@ -36,7 +36,6 @@ namespace Autonomous
 		CPPUNIT_TEST_SUITE(RobotTest);
 		CPPUNIT_TEST(goTo_positionDifferentToCurrentOne_engineGotAtLeastOneCallToGoToStraightOrTurnTo);
 		CPPUNIT_TEST(goTo_orientationToTargetCorrect_engineGotAtLeastOneCallToGoToStraight);
-		CPPUNIT_TEST(goTo_orientationToTargetCorrect_isRotating);
 		CPPUNIT_TEST(goTo_orientationToTargetCompletelyWrong_engineGotNoCallToGoToStraight);
 		CPPUNIT_TEST(goTo_orientationToTargetCompletelyWrong_engineGotAtLeastOneCallToTurnTo);
 		CPPUNIT_TEST(goTo_orientationToTargetCompletelyWrong_isRotating);
@@ -139,6 +138,9 @@ namespace Autonomous
 		CPPUNIT_TEST(isRotating_firstPhaseOfCollectingPuck_true);
 		CPPUNIT_TEST(isRotating_secondPhaseOfCollectingPuck_false);
 		CPPUNIT_TEST(isRotating_leavingPuck_false);
+		CPPUNIT_TEST(isRotating_turningPartOfGoTo_true);
+		CPPUNIT_TEST(isRotating_drivingPartOfGoToAndTurningFast_true);
+		CPPUNIT_TEST(isRotating_drivingPartOfGoToAndTurningSlow_true);
 		CPPUNIT_TEST(calculateFinalSpeedForGoingStraight_obtuseAngle_0);
 		CPPUNIT_TEST(calculateFinalSpeedForGoingStraight_quarterRotation_0);
 		CPPUNIT_TEST(calculateFinalSpeedForGoingStraight_zeroAngle_valueBig);
@@ -162,7 +164,6 @@ namespace Autonomous
 	private:
 		void goTo_positionDifferentToCurrentOne_engineGotAtLeastOneCallToGoToStraightOrTurnTo();
 		void goTo_orientationToTargetCorrect_engineGotAtLeastOneCallToGoToStraight();
-		void goTo_orientationToTargetCorrect_isRotating();
 		void goTo_orientationToTargetCompletelyWrong_engineGotNoCallToGoToStraight();
 		void goTo_orientationToTargetCompletelyWrong_engineGotAtLeastOneCallToTurnTo();
 		void goTo_orientationToTargetCompletelyWrong_isRotating();
@@ -265,6 +266,9 @@ namespace Autonomous
 		void isRotating_firstPhaseOfCollectingPuck_true();
 		void isRotating_secondPhaseOfCollectingPuck_false();
 		void isRotating_leavingPuck_false();
+		void isRotating_turningPartOfGoTo_true();
+		void isRotating_drivingPartOfGoToAndTurningFast_true();
+		void isRotating_drivingPartOfGoToAndTurningSlow_true();
 		void calculateFinalSpeedForGoingStraight_obtuseAngle_0();
 		void calculateFinalSpeedForGoingStraight_quarterRotation_0();
 		void calculateFinalSpeedForGoingStraight_zeroAngle_valueBig();

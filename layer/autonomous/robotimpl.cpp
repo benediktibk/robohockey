@@ -536,12 +536,13 @@ bool RobotImpl::isCollectingPuck() const
 
 bool RobotImpl::isRotating() const
 {
+	const DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
 	switch (m_state)
 	{
 	case RobotStateWaiting:
 		return false;
 	case RobotStateDrivingStraightPart:
-		return true;
+		return fabs(engine.getCurrentRotationSpeed()) > 0.2;
 	case RobotStateDrivingTurningPart:
 		return true;
 	case RobotStateTurnAround:
