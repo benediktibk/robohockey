@@ -891,3 +891,7 @@ resources/testfiles/loosing_puck_1/camera_3.png
 resources/testfiles/loosing_puck_1/camera_2.png
 resources/testfiles/loosing_puck_1/camera_1.png
 resources/testfiles/loosing_puck_1/camera_0.png
+layer/strategy/drivepuckstatemachine/findpuckturntostatetest.h
+layer/strategy/drivepuckstatemachine/findpuckturntostate.h
+layer/strategy/drivepuckstatemachine/findpuckturntostatetest.cpp
+layer/strategy/drivepuckstatemachine/findpuckturntostate.cpp

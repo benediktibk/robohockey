@@ -1,8 +1,8 @@
 #include "layer/strategy/drivepuckstatemachine/initialstate.h"
-#include "layer/strategy/drivepuckstatemachine/findpuckstate.h"
+#include "layer/strategy/drivepuckstatemachine/findpuckturntostate.h"
 #include "layer/strategy/drivepuckstatemachine/drivetocollectpuckstate.h"
 #include "layer/strategy/drivepuckstatemachine/leavepuckstate.h"
-#include "layer/strategy/common/referee.h"
+#include "layer/autonomous/field.h"
 #include "layer/autonomous/robot.h"
 
 using namespace RoboHockey::Layer::Strategy::Common;
@@ -21,7 +21,7 @@ State* InitialState::nextState()
 	if(m_puckTargetFetcher.getNumberOfKnownPucksNotInEnemyThird() > 0)
 		return new DriveToCollectPuckState(m_robot, m_field, m_referee, m_logger, m_puckTargetFetcher);
 	else
-		return new FindPuckState(m_robot, m_field, m_referee, m_logger, m_puckTargetFetcher);
+		return new FindPuckTurnToState(m_robot, m_field, m_referee, m_logger, m_puckTargetFetcher, m_field.getTargetsForTurningToUnknownObjects());
 }
 
 std::string InitialState::getName()
