@@ -21,7 +21,7 @@ namespace DrivePuckStateMachine
 	{
 	public:
 		FindPuckTurnToState(Autonomous::Robot &robot, Autonomous::Field &field, Common::Referee &referee, RoboHockey::Common::Logger &logger,
-					  const Common::ColorDependentPuckTargetFetcher &puckTargetFetcher);
+				const Common::ColorDependentPuckTargetFetcher &puckTargetFetcher, std::list<RoboHockey::Common::RobotPosition> targetList);
 
 		virtual State* nextState();
 		virtual std::string getName();
@@ -31,6 +31,7 @@ namespace DrivePuckStateMachine
 
 	private:
 		const Common::ColorDependentPuckTargetFetcher &m_puckTargetFetcher;
+		std::list<RoboHockey::Common::RobotPosition> m_target;
 
 };
 }
