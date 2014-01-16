@@ -257,5 +257,24 @@ vector<Point> FieldDetector::orderBorderstonesByDistanceToRoot(BorderStone &bord
 	return result;
 }
 
+bool FieldDetector::isResultAlreadyKnown(RobotPosition &newOrigin)
+{
+	for (list<FieldDetectionResult>::const_iterator it = m_detectionResults.begin(); it != m_detectionResults.end(); ++it)
+	{
+		if ((*it).isEqualDetectionResult(newOrigin))
+			return true;
+	}
 
+	return false;
+}
 
+FieldDetectionResult &FieldDetector::getDetectionResultWithNewOrigin(RobotPosition &newOrigin)
+{
+	for (list<FieldDetectionResult>::iterator it = m_detectionResults.begin(); it != m_detectionResults.end(); ++it)
+	{
+		if ((*it).isEqualDetectionResult(newOrigin))
+			return *it;
+	}
+
+	return m_detectionResults.back();
+}
