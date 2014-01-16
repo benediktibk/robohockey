@@ -17,8 +17,8 @@ void FieldDetectorTest::tryToDetectField_4validFieldPoints_true()
 	testPoints.push_back(Point(1,2.666));
 	testPoints.push_back(Point(1,3.916));
 
-	FieldDetector fieldDetector(Point(), testPoints);
-	bool result = fieldDetector.tryToDetectField();
+	FieldDetector fieldDetector;
+	bool result = fieldDetector.tryToDetectField(Point(), testPoints);
 
 	CPPUNIT_ASSERT(result);
 }
@@ -32,8 +32,8 @@ void FieldDetectorTest::tryToDetectField_4validFieldPoints_correctNewOrigin()
 	testPoints.push_back(Point(1,2.666));
 	testPoints.push_back(Point(1,3.916));
 
-	FieldDetector fieldDetector(Point(), testPoints);
-	bool result = fieldDetector.tryToDetectField();
+	FieldDetector fieldDetector;
+	bool result = fieldDetector.tryToDetectField(Point(), testPoints);
 
 	CPPUNIT_ASSERT(result);
 	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(1,1-(1.25+0.416)), fieldDetector.getNewOrigin()));
@@ -47,8 +47,8 @@ void FieldDetectorTest::tryToDetectField_4validFieldPoints_correctRotation()
 	testPoints.push_back(Point(1,2.666));
 	testPoints.push_back(Point(1,3.916));
 
-	FieldDetector fieldDetector(Point(), testPoints);
-	bool result = fieldDetector.tryToDetectField();
+	FieldDetector fieldDetector;
+	bool result = fieldDetector.tryToDetectField(Point(), testPoints);
 
 	CPPUNIT_ASSERT(result);
 	CPPUNIT_ASSERT_DOUBLES_EQUAL(-0.5*M_PI, fieldDetector.getRotation(), 0.001);
@@ -62,8 +62,8 @@ void FieldDetectorTest::tryToDetectField_5invalidPoints_false()
 	testPoints.push_back(Point(2,2.666));
 	testPoints.push_back(Point(1,3.916));
 
-	FieldDetector fieldDetector(Point(), testPoints);
-	bool result = fieldDetector.tryToDetectField();
+	FieldDetector fieldDetector;
+	bool result = fieldDetector.tryToDetectField(Point(), testPoints);
 
 	CPPUNIT_ASSERT(!result);
 }
@@ -80,8 +80,8 @@ void FieldDetectorTest::tryToDetectField_7validPoints_true()
 	testPoints.push_back(Point(1,3.916));
 	testPoints.push_back(Point(1,4.333));
 
-	FieldDetector fieldDetector(Point(), testPoints);
-	bool result = fieldDetector.tryToDetectField();
+	FieldDetector fieldDetector;
+	bool result = fieldDetector.tryToDetectField(Point(), testPoints);
 
 	CPPUNIT_ASSERT(result);
 	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(1,1-(1.25+0.416)), fieldDetector.getNewOrigin()));
@@ -99,8 +99,8 @@ void FieldDetectorTest::tryToDetectField_7validPointsOpposite_true()
 	testPoints.push_back(Point(-2,3.916));
 	testPoints.push_back(Point(-2,4.333));
 
-	FieldDetector fieldDetector(Point(), testPoints);
-	bool result = fieldDetector.tryToDetectField();
+	FieldDetector fieldDetector;
+	bool result = fieldDetector.tryToDetectField(Point(), testPoints);
 
 	CPPUNIT_ASSERT(result);
 	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(1,1-(1.25+0.416)), fieldDetector.getNewOrigin()));
@@ -114,8 +114,8 @@ void FieldDetectorTest::tryToDetectField_3pointsFar_correctNewOrigin()
 	testPoints.push_back(Point(1,3.916));
 	testPoints.push_back(Point(1,4.333));
 
-	FieldDetector fieldDetector(Point(), testPoints);
-	bool result = fieldDetector.tryToDetectField();
+	FieldDetector fieldDetector;
+	bool result = fieldDetector.tryToDetectField(Point(), testPoints);
 
 	CPPUNIT_ASSERT(result);
 	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(1,1-(1.25+0.416)), fieldDetector.getNewOrigin()));
@@ -129,8 +129,8 @@ void FieldDetectorTest::tryToDetectField_3pointsFarMixed_correctNewOrigin()
 	testPoints.push_back(Point(1,2.666));
 	testPoints.push_back(Point(1,4.333));
 
-	FieldDetector fieldDetector(Point(), testPoints);
-	bool result = fieldDetector.tryToDetectField();
+	FieldDetector fieldDetector;
+	bool result = fieldDetector.tryToDetectField(Point(), testPoints);
 
 	CPPUNIT_ASSERT(result);
 	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(1,1-(1.25+0.416)), fieldDetector.getNewOrigin()));
@@ -145,8 +145,8 @@ void FieldDetectorTest::tryToDetectField_3pointsFarMid_correctNewOrigin()
 	testPoints.push_back(Point(1,2.666));
 	testPoints.push_back(Point(1,3.916));
 
-	FieldDetector fieldDetector(Point(), testPoints);
-	bool result = fieldDetector.tryToDetectField();
+	FieldDetector fieldDetector;
+	bool result = fieldDetector.tryToDetectField(Point(), testPoints);
 
 	CPPUNIT_ASSERT(result);
 	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(1,1-(1.25+0.416)), fieldDetector.getNewOrigin()));
@@ -161,8 +161,8 @@ void FieldDetectorTest::tryToDetectField_3pointsFarMidMixed_correctNewOrigin()
 	testPoints.push_back(Point(1,3.916));
 	testPoints.push_back(Point(1,2.666));
 
-	FieldDetector fieldDetector(Point(), testPoints);
-	bool result = fieldDetector.tryToDetectField();
+	FieldDetector fieldDetector;
+	bool result = fieldDetector.tryToDetectField(Point(), testPoints);
 
 	CPPUNIT_ASSERT(result);
 	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(1,1-(1.25+0.416)), fieldDetector.getNewOrigin()));
@@ -177,8 +177,8 @@ void FieldDetectorTest::tryToDetectField_3pointsMid_correctNewOrigin()
 	testPoints.push_back(Point(1,1.833));
 	testPoints.push_back(Point(1,2.666));
 
-	FieldDetector fieldDetector(Point(), testPoints);
-	bool result = fieldDetector.tryToDetectField();
+	FieldDetector fieldDetector;
+	bool result = fieldDetector.tryToDetectField(Point(), testPoints);
 
 	CPPUNIT_ASSERT(result);
 	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(1,1-(1.25+0.416)), fieldDetector.getNewOrigin()));
@@ -193,8 +193,8 @@ void FieldDetectorTest::tryToDetectField_3pointsMidMixed_correctNewOrigin()
 	testPoints.push_back(Point(1,1));
 	testPoints.push_back(Point(1,2.666));
 
-	FieldDetector fieldDetector(Point(), testPoints);
-	bool result = fieldDetector.tryToDetectField();
+	FieldDetector fieldDetector;
+	bool result = fieldDetector.tryToDetectField(Point(), testPoints);
 
 	CPPUNIT_ASSERT(result);
 	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(1,1-(1.25+0.416)), fieldDetector.getNewOrigin()));
@@ -208,8 +208,9 @@ void FieldDetectorTest::tryToDetectField_3pointsNear_correctNewOrigin()
 	testPoints.push_back(Point(1,-0.25));
 	testPoints.push_back(Point(1,1.833));
 	testPoints.push_back(Point(1,1));
-	FieldDetector fieldDetector(Point(), testPoints);
-	bool result = fieldDetector.tryToDetectField();
+
+	FieldDetector fieldDetector;
+	bool result = fieldDetector.tryToDetectField(Point(), testPoints);
 
 	CPPUNIT_ASSERT(result);
 	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(1,1-(1.25+0.416)), fieldDetector.getNewOrigin()));
@@ -223,8 +224,8 @@ void FieldDetectorTest::tryToDetectField_3pointsNearMixed_correctNewOrigin()
 	testPoints.push_back(Point(1,-0.25));
 	testPoints.push_back(Point(1,1));
 
-	FieldDetector fieldDetector(Point(), testPoints);
-	bool result = fieldDetector.tryToDetectField();
+	FieldDetector fieldDetector;
+	bool result = fieldDetector.tryToDetectField(Point(), testPoints);
 
 	CPPUNIT_ASSERT(result);
 	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(1,1-(1.25+0.416)), fieldDetector.getNewOrigin()));
@@ -239,8 +240,8 @@ void FieldDetectorTest::tryToDetectField_3pointsNearMidMixed_correctNewOrigin()
 	testPoints.push_back(Point(1,-0.25));
 	testPoints.push_back(Point(1,1.833));
 
-	FieldDetector fieldDetector(Point(), testPoints);
-	bool result = fieldDetector.tryToDetectField();
+	FieldDetector fieldDetector;
+	bool result = fieldDetector.tryToDetectField(Point(), testPoints);
 
 	CPPUNIT_ASSERT(result);
 	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(1,1-(1.25+0.416)), fieldDetector.getNewOrigin()));
@@ -254,8 +255,8 @@ void FieldDetectorTest::tryToDetectField_3pointsNearNearMixed_correctNewOrigin()
 	testPoints.push_back(Point(1,-0.666));
 	testPoints.push_back(Point(1,1));
 
-	FieldDetector fieldDetector(Point(), testPoints);
-	bool result = fieldDetector.tryToDetectField();
+	FieldDetector fieldDetector;
+	bool result = fieldDetector.tryToDetectField(Point(), testPoints);
 
 	CPPUNIT_ASSERT(result);
 	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(1,1-(1.25+0.416)), fieldDetector.getNewOrigin()));
@@ -268,8 +269,9 @@ void FieldDetectorTest::tryToDetectField_3pointsNearMixedMid_correctNewOrigin()
 	testPoints.push_back(Point(1,1));
 	testPoints.push_back(Point(1,1.833));
 	testPoints.push_back(Point(1,-0.25));
-	FieldDetector fieldDetector(Point(), testPoints);
-	bool result = fieldDetector.tryToDetectField();
+
+	FieldDetector fieldDetector;
+	bool result = fieldDetector.tryToDetectField(Point(), testPoints);
 
 	CPPUNIT_ASSERT(result);
 	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(1,1-(1.25+0.416)), fieldDetector.getNewOrigin()));
@@ -281,8 +283,9 @@ void FieldDetectorTest::tryToDetectField_3pointsCorrectDistanceButWrongArragemen
 	testPoints.push_back(Point(1,1));
 	testPoints.push_back(Point(1,-0.25));
 	testPoints.push_back(Point(1,1.75));
-	FieldDetector fieldDetector(Point(), testPoints);
-	bool result = fieldDetector.tryToDetectField();
+
+	FieldDetector fieldDetector;
+	bool result = fieldDetector.tryToDetectField(Point(), testPoints);
 
 	CPPUNIT_ASSERT(!result);
 }

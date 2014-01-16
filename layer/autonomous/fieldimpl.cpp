@@ -627,9 +627,9 @@ RobotPosition FieldImpl::getNewOriginFromFieldDetection(unsigned int &outNumberO
 {
 	outNumberOfBorderstones = 0;
 	vector<Point> *input = getPointsOfObjectsWithDiameterAndColor(0.06, FieldColorGreen);
-	FieldDetector detector(m_position->getPosition(), *input);
+	FieldDetector detector;
 
-	bool result = detector.tryToDetectField();
+	bool result = detector.tryToDetectField(m_position->getPosition(), *input);
 
 	Point newOrigin;
 	double rotation = 0.0;
