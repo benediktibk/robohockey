@@ -640,7 +640,7 @@ void RobotTest::goTo_puckCollectedButLostInBetween_newRouteStillConsideringThePu
 	CPPUNIT_ASSERT(routePoints.size() > 2);
 }
 
-void RobotTest::goTo_positionInsideHardObstacle_canReachTarget()
+void RobotTest::goTo_positionInsideHardObstacle_cantReachTarget()
 {
 	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
 	DataAnalysis::Odometry &odometry = dataAnalyser->getOdometry();
@@ -656,7 +656,7 @@ void RobotTest::goTo_positionInsideHardObstacle_canReachTarget()
 	robot.goTo(m_targets);
 	robot.updateActuators(*m_field);
 
-	CPPUNIT_ASSERT(!robot.cantReachTarget());
+	CPPUNIT_ASSERT(robot.cantReachTarget());
 }
 
 void RobotTest::goTo_positionInsideSoftObstacle_canReachTarget()

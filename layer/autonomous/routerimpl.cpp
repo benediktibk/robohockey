@@ -133,7 +133,7 @@ vector<Circle> RouterImpl::filterObstacles(
 		if (startCircle.overlapsWith(obstacle))
 		{
 			double distanceToCenter = startCircle.getDistanceTo(center);
-			double diameter = distanceToCenter*2*0.99;
+			double diameter = distanceToCenter*2*0.95;
 			obstacle.setDiameter(diameter);
 		}
 
