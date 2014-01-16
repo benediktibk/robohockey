@@ -1067,14 +1067,12 @@ vector<FieldObject> FieldImpl::moveAllFieldObjectsInVisibleAreaToTemporaryVector
 	vector<FieldObject> invisibleObjects;
 	invisibleObjects.reserve(m_fieldObjects.size());
 	visibleObjects.reserve(m_fieldObjects.size());
-	const RobotPosition &ownPosition = m_odometry.getCurrentPosition();
 
 	for (vector<FieldObject>::const_iterator i = m_fieldObjects.begin(); i != m_fieldObjects.end(); ++i)
 	{
 		const FieldObject &fieldObject = *i;
-		bool canBeSeen = m_lidar.canBeSeen(fieldObject.getCircle(), ownPosition);
 
-		if (canBeSeen && isInViewArea(fieldObject, range))
+		if (canBeSeen(fieldObject) && isInViewArea(fieldObject, range))
 			visibleObjects.push_back(fieldObject);
 		else
 			invisibleObjects.push_back(fieldObject);
@@ -1097,6 +1095,16 @@ bool FieldImpl::isInViewArea(const FieldObject &object, double range) const
 	return distance < range && angle.getValueBetweenZeroAndTwoPi() < maximumAngle.getValueBetweenZeroAndTwoPi();
 }
 
+bool FieldImpl::canBeSeen(const FieldObject &object) const
+{
+	return m_lidar.canBeSeen(object.getCircle(), *m_position);;
+}
+
+bool FieldImpl::canBeSeenPartly(const FieldObject &object) const
+{
+	return m_lidar.canBeSeenPartly(object.getCircle(), *m_position);
+}
+
 vector<FieldObject> FieldImpl::getAllPartlyVisibleObjects() const
 {
 	vector<FieldObject> result;
@@ -1104,7 +1112,7 @@ vector<FieldObject> FieldImpl::getAllPartlyVisibleObjects() const
 	for (vector<FieldObject>::const_iterator i = m_fieldObjects.begin(); i != m_fieldObjects.end(); ++i)
 	{
 		const FieldObject &object = *i;
-		if (m_lidar.canBeSeenPartly(object.getCircle(), *m_position))
+		if (canBeSeenPartly(object))
 			result.push_back(object);
 	}
 
@@ -1117,7 +1125,7 @@ void FieldImpl::updateAllNotVisibleObjects()
 	{
 		FieldObject &object = *i;
 
-		if (!m_lidar.canBeSeenPartly(object.getCircle(), *m_position))
+		if (!canBeSeenPartly(object))
 			object.cantBeSeen();
 	}
 }
