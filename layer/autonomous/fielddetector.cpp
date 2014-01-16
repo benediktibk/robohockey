@@ -55,27 +55,11 @@ bool FieldDetector::tryToDetectField()
 
 Point FieldDetector::getNewOrigin()
 {
-	assert(m_newOrigins.size() != (size_t) 0);
-
-	Point medianPoint;
-
-	for (vector<RobotPosition>::const_iterator it = m_newOrigins.begin(); it != m_newOrigins.end(); ++it)
-		medianPoint = medianPoint + (*it).getPosition() * 1.0/(double) m_newOrigins.size();
-
-//	return medianPoint;
 	return m_newOrigin;
 }
 
 double FieldDetector::getRotation()
 {
-	assert(m_newOrigins.size() != (size_t) 0);
-
-	Angle medianRotation;
-
-	for (vector<RobotPosition>::const_iterator it = m_newOrigins.begin(); it != m_newOrigins.end(); ++it)
-		medianRotation = medianRotation + (*it).getOrientation() * 1.0/(double) m_newOrigins.size();
-
-//	return medianRotation.getValueBetweenMinusPiAndPi();
 	return m_rotation;
 }
 
@@ -224,8 +208,6 @@ bool FieldDetector::tryToFigureOutNewOrigin(BorderStone &root)
 	{
 		return false;
 	}
-
-	m_newOrigins.push_back( RobotPosition( possibleNewOrigin, rotation) );
 
 	if (root.getNumberOfChildrenRecursive() + 1 > m_maxBorderstonesArranged)
 	{

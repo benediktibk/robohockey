@@ -39,7 +39,6 @@ namespace Autonomous
 		BorderStoneDistances m_distanceChecker;
 		Common::Point m_newOrigin;
 		double m_rotation;
-		std::vector<Common::RobotPosition> m_newOrigins;
 		unsigned int m_maxBorderstonesArranged;
 		double m_epsilonBorderStone;
 		std::list<FieldDetectionResult> m_detectionResults;
