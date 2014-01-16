@@ -110,6 +110,7 @@ namespace Autonomous
 		std::vector<FieldObject> getObjectsInVisibleSector(Common::Angle angle, double distance) const;
 
 		std::vector<FieldObject> moveAllFieldObjectsInVisibleAreaToTemporaryVector(double range);
+		bool isInViewArea(const FieldObject &object, double range) const;
 		std::vector<FieldObject> getAllPartlyVisibleObjects() const;
 		void updateAllNotVisibleObjects();
 		bool isPointFuzzyInsideField(const Common::Point &point, double epsilon) const;
