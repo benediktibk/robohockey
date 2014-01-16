@@ -5,7 +5,8 @@ using namespace std;
 using namespace RoboHockey::Common;
 using namespace RoboHockey::Layer::Autonomous;
 
-FieldDetectionResult::FieldDetectionResult():
+FieldDetectionResult::FieldDetectionResult(RobotPosition &position):
+	m_newOrigin(position),
 	m_compare(0.1)
 {
 	m_confirmedPositionsThisSide.reserve(7);

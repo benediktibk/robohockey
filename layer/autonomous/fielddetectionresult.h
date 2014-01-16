@@ -14,7 +14,7 @@ namespace Autonomous
 class FieldDetectionResult
 	{
 	public:
-		FieldDetectionResult();
+		FieldDetectionResult(Common::RobotPosition &position);
 
 		Common::RobotPosition getTransformationDestination() const;
 		bool isEqualDetectionResult(Common::RobotPosition &position) const;
