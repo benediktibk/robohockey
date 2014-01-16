@@ -488,7 +488,6 @@ common/stopwatchtest.h
 common/stopwatch.h
 common/stopwatchtest.cpp
 common/stopwatch.cpp
-testrunner.supp
 common/segfaultstacktraceprinter.h
 common/segfaultstacktraceprinter.cpp
 common/loggertest.h
