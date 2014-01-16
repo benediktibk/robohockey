@@ -21,6 +21,7 @@ class FieldDetectionResult
 
 		void confirmDetectionResultWithPosition(Common::RobotPosition &position, unsigned int numberOfStones, bool onOppositeSide);
 		bool isConfirmedByBothSides() const;
+		unsigned int getNumberOfBorderStones() const;
 
 	private:
 		Common::RobotPosition m_newOrigin;

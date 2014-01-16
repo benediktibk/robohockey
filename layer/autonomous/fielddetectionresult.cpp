@@ -26,15 +26,20 @@ void FieldDetectionResult::confirmDetectionResultWithPosition(RobotPosition &pos
 {
 	if (m_compare.isFuzzyEqual(position, m_newOrigin))
 	{
-		if (!onOppositeSide)
-			m_confirmedPositionsThisSide += numberOfStones;
-		else
-			m_confirmedPositionsOppositeSide += numberOfStones;
+		if (!onOppositeSide && m_confirmedPositionsThisSide < numberOfStones)
+			m_confirmedPositionsThisSide = numberOfStones;
+		else if (onOppositeSide && m_confirmedPositionsOppositeSide < numberOfStones)
+			m_confirmedPositionsOppositeSide = numberOfStones;
 	}
 }
 
 bool FieldDetectionResult::isConfirmedByBothSides() const
 {
 	return m_confirmedPositionsThisSide > (unsigned int) 2 && m_confirmedPositionsOppositeSide > (unsigned int) 2;
+}
+
+unsigned int FieldDetectionResult::getNumberOfBorderStones() const
+{
+	return m_confirmedPositionsThisSide + m_confirmedPositionsOppositeSide;
 }
 
