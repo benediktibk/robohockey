@@ -1855,7 +1855,7 @@ void FieldTest::getNewOriginFromFieldDetection_realWorldExample1_correctNewOrigi
 
 	updateFieldForObjectsToAppear(field);
 	unsigned int numberOfBorderStones;
-	RobotPosition resultOrigin = field.getNewOriginFromFieldDetection(numberOfBorderStones);
+	RobotPosition resultOrigin = field.getNewOriginFromFieldDetection(numberOfBorderStones, false);
 	cout << "\nNumber Of Stones: " << numberOfBorderStones << "\nFound Origin: " << resultOrigin << endl;
 
 	Compare compare(0.5);

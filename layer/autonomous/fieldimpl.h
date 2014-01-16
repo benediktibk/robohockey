@@ -70,7 +70,7 @@ namespace Autonomous
 		virtual std::list<Common::RobotPosition> getTargetsForCollectingOnePuckNotInEnemyThird(Common::FieldColor puckColor) const;
 		virtual std::list<Common::RobotPosition> getTargetsInEnemyThird() const;
 		virtual void setTrueTeamColor(Common::FieldColor trueTeamColor);
-		virtual Common::RobotPosition getNewOriginFromFieldDetection(unsigned int &outNumberOfBorderstones);
+		virtual Common::RobotPosition getNewOriginFromFieldDetection(unsigned int &outNumberOfBorderstones, bool onlyAcceptConfirmedResults);
 		virtual void transformFieldToNewOrigin(const Common::RobotPosition newOrigin);
 		virtual std::vector<Common::RobotPosition> getTargetsForWaitingPhase() const;
 		virtual bool isPuckOfColorInFront(Common::FieldColor color) const;

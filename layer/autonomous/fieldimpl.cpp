@@ -105,7 +105,7 @@ unsigned int FieldImpl::getNumberOfObjectsWithColor(FieldColor color) const
 bool FieldImpl::calibratePosition()
 {
 	unsigned int numberOfBorderStones;
-	RobotPosition newOrigin = getNewOriginFromFieldDetection(numberOfBorderStones);
+	RobotPosition newOrigin = getNewOriginFromFieldDetection(numberOfBorderStones, false);
 
 	bool result = !(newOrigin.getPosition() == Point::zero()) || !(newOrigin.getOrientation().getValueBetweenMinusPiAndPi() == 0.0);
 
@@ -627,7 +627,7 @@ void FieldImpl::setTrueTeamColor(FieldColor trueTeamColor)
 	m_teamColor = trueTeamColor;
 }
 
-RobotPosition FieldImpl::getNewOriginFromFieldDetection(unsigned int &outNumberOfBorderstones)
+RobotPosition FieldImpl::getNewOriginFromFieldDetection(unsigned int &outNumberOfBorderstones, bool onlyAcceptConfirmedResults)
 {
 	outNumberOfBorderstones = 0;
 	vector<Point> *input = getPointsOfObjectsWithDiameterAndColor(0.06, FieldColorGreen);
@@ -637,7 +637,7 @@ RobotPosition FieldImpl::getNewOriginFromFieldDetection(unsigned int &outNumberO
 	Point newOrigin;
 	double rotation = 0.0;
 
-	if (result)
+	if (result && ((onlyAcceptConfirmedResults && m_fieldDetector->hasConfirmedResult()) || !onlyAcceptConfirmedResults))
 	{
 		newOrigin = m_fieldDetector->getNewOrigin();
 		rotation = m_fieldDetector->getRotation();
