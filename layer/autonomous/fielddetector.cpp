@@ -223,7 +223,7 @@ bool FieldDetector::tryToFigureOutNewOrigin(BorderStone &root, const Point &curr
 		m_detectionResults.push_back(FieldDetectionResult(newOrigin));
 	}
 
-	return doesConfirmedResultExist();
+	return true;
 }
 
 
