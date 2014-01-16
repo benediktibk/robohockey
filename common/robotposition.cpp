@@ -97,6 +97,11 @@ void RobotPosition::read(const string &data)
 	m_orientation = Angle(angle);
 }
 
+Angle RobotPosition::getRelativeOrientationTo(const Point &point) const
+{
+	return Angle(m_position, point) - m_orientation;
+}
+
 ostream &operator<<(ostream &stream, const RobotPosition &point)
 {
 	const Point &position = point.getPosition();

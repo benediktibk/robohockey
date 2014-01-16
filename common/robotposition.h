@@ -21,6 +21,7 @@ namespace Common
 		const Point& getPosition() const;
 		double distanceTo(const RobotPosition &point) const;
 		void read(const std::string &data);
+		Angle getRelativeOrientationTo(const Point &point) const;
 
 		bool operator ==(const RobotPosition &position) const;
 		RobotPosition operator*(double value) const;

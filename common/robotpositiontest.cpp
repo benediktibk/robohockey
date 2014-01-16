@@ -133,6 +133,17 @@ void RobotPositionTest::read_validString_correctValues()
 	CPPUNIT_ASSERT_DOUBLES_EQUAL(1.1, destination.getOrientation().getValueBetweenMinusPiAndPi(), 0.0001);
 }
 
+void RobotPositionTest::getRelativeOrientationTo_lookingUpAndTargetInFourthQuarter_correctValue()
+{
+	RobotPosition source(Point(1, 2), Angle::getQuarterRotation());
+	Point point(2, 1);
+
+	Angle result = source.getRelativeOrientationTo(point);
+
+	Compare compare(0.0001);
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(Angle::getEighthRotation()*(-3), result));
+}
+
 void RobotPositionTest::constructor_orientationIsPi_orientationIsPi()
 {
 	RobotPosition position(Point(10, 23), Angle(M_PI));

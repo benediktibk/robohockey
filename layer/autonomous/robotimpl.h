@@ -83,7 +83,8 @@ namespace Autonomous
 		std::vector<Common::Circle> shrinkObstacles(const std::vector<Common::Circle> &obstacles) const;
 		std::vector<Common::Circle> growObstacles(const std::vector<Common::Circle> &obstacles) const;
 		double calculateNextFinalSpeedForGoingStraight() const;
-		bool orientationDifferenceSmallEnoughForSmoothTurn(const Common::Angle &angle) const;
+		bool isOrientationDifferenceSmallEnoughForSmoothTurn(const Common::Angle &angle) const;
+		Common::Angle isOrientationDifferenceSmallEnoughForSmoothTurn(const Common::Point &point) const;
 
 	private:
 		// forbid copies
