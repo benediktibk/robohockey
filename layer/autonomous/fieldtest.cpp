@@ -1833,6 +1833,48 @@ void FieldTest::getTargetsForTurningToUnknownObjects_twoUnknownObjectsInRange_tw
 	CPPUNIT_ASSERT_EQUAL((size_t)2, m_field->getTargetsForTurningToUnknownObjects().size());
 }
 
+void FieldTest::getTargetsForTurningToUnknownObjects_threeUnknownObjectsInRange_threePositionsInList()
+{
+	m_odometry->setCurrentPosition(RobotPosition(Point(0,1), 0.8));
+	m_field->update();
+	DataAnalysis::LidarObjects lidarObjects;
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(0.5, 1.1), 0.1));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(0.3, 1.5), 0.1));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(0.8, 1), 0.1));
+	m_lidar->setAllObjects(lidarObjects);
+	DataAnalysis::CameraObjects cameraObjects;
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorUnknown, Point(0.5, 1.1)));
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorUnknown, Point(0.3, 1.5)));
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorUnknown, Point(0.8, 1)));
+
+	m_camera->setAllObjects(cameraObjects);
+
+	updateFieldForObjectsToAppear();
+
+	CPPUNIT_ASSERT_EQUAL((size_t)3, m_field->getTargetsForTurningToUnknownObjects().size());
+}
+
+void FieldTest::getTargetsForTurningToUnknownObjects_zeroUnknownObjectsInRange_zeroPositionsInList()
+{
+	m_odometry->setCurrentPosition(RobotPosition(Point(3,3), 0.8));
+	m_field->update();
+	DataAnalysis::LidarObjects lidarObjects;
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(0.5, 1.1), 0.1));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(0.3, 1.5), 0.1));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(0.8, 1), 0.1));
+	m_lidar->setAllObjects(lidarObjects);
+	DataAnalysis::CameraObjects cameraObjects;
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorUnknown, Point(0.5, 1.1)));
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorUnknown, Point(0.3, 1.5)));
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorUnknown, Point(0.8, 1)));
+
+	m_camera->setAllObjects(cameraObjects);
+
+	updateFieldForObjectsToAppear();
+
+	CPPUNIT_ASSERT_EQUAL((size_t)0, m_field->getTargetsForTurningToUnknownObjects().size());
+}
+
 void FieldTest::detectTeamColorWithGoalInFront_yellowMuchBiggerBlue_teamYellow()
 {
 	m_camera->setProbabilityForYellowGoal(0.82);
