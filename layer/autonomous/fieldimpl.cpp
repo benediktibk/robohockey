@@ -85,6 +85,11 @@ const vector<Circle> &FieldImpl::getAllHardObstacles() const
 	return m_hardObstacles;
 }
 
+const vector<Circle> &FieldImpl::getAllHardAndVisibleObstacles() const
+{
+	return m_hardAndVisibleObstacles;
+}
+
 vector<FieldObject> FieldImpl::getObjectsWithColorOrderdByDistance(FieldColor color) const
 {
 	vector<FieldObject> result = getObjectsWithColor(color);
@@ -852,8 +857,10 @@ void FieldImpl::updateObstacles()
 {
 	m_softObstacles.clear();
 	m_hardObstacles.clear();
+	m_hardAndVisibleObstacles.clear();
 	m_softObstacles.reserve(m_usefulFieldObjects.size());
 	m_hardObstacles.reserve(m_usefulFieldObjects.size());
+	m_hardAndVisibleObstacles.reserve(m_usefulFieldObjects.size());
 
 	for (vector<FieldObject>::const_iterator i = m_usefulFieldObjects.begin(); i != m_usefulFieldObjects.end(); ++i)
 	{
@@ -861,7 +868,12 @@ void FieldImpl::updateObstacles()
 		Circle obstacle = fieldObject.getObstacle();
 
 		if (fieldObject.isHardObstacle())
+		{
 			m_hardObstacles.push_back(obstacle);
+
+			if (canBeSeenPartly(fieldObject) && isInViewArea(fieldObject, getRangeOfViewArea()))
+				m_hardAndVisibleObstacles.push_back(obstacle);
+		}
 		else
 			m_softObstacles.push_back(obstacle);
 	}

@@ -22,6 +22,7 @@ namespace Autonomous
 		virtual const std::vector<FieldObject>& getAllFieldObjects() const;
 		virtual const std::vector<Common::Circle>& getAllSoftObstacles() const;
 		virtual const std::vector<Common::Circle>& getAllHardObstacles() const;
+		virtual const std::vector<Common::Circle>& getAllHardAndVisibleObstacles() const;
 		virtual std::vector<FieldObject> getObjectsWithColorOrderdByDistance(Common::FieldColor color) const;
 		virtual unsigned int getNumberOfObjectsWithColor(Common::FieldColor color) const;
 		virtual unsigned int getNumberOfAchievedGoals() const;
@@ -57,6 +58,7 @@ namespace Autonomous
 		void setFieldObjects(const std::vector<FieldObject> &objects);
 		void setSoftObstacles(const std::vector<Common::Circle> &obstacles);
 		void setHardObstacles(const std::vector<Common::Circle> &obstacles);
+		void setHardAndVisibleObstacles(const std::vector<Common::Circle> &obstacles);
 		void setNegativeCoordinatesOutside(bool value);
 		void setCalibrationReturn(bool value);
 		void setIsPuckOfColorInFront(bool value);
@@ -69,6 +71,7 @@ namespace Autonomous
 		std::vector<FieldObject> m_objects;
 		std::vector<Common::Circle> m_softObstacles;
 		std::vector<Common::Circle> m_hardObstacles;
+		std::vector<Common::Circle> m_hardAndVisibleObstacles;
 		unsigned int m_achievedGoals;
 		unsigned int m_pucksInEnemyThird;
 		bool m_negativeCoordinatesOutside;

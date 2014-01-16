@@ -49,6 +49,7 @@ namespace Autonomous
 		virtual const std::vector<FieldObject>& getAllFieldObjects() const;
 		virtual const std::vector<Common::Circle>& getAllSoftObstacles() const;
 		virtual const std::vector<Common::Circle>& getAllHardObstacles() const;
+		virtual const std::vector<Common::Circle>& getAllHardAndVisibleObstacles() const;
 		virtual std::vector<FieldObject> getObjectsWithColorOrderdByDistance(Common::FieldColor color) const;
 		virtual unsigned int getNumberOfObjectsWithColor(Common::FieldColor color) const;
 		virtual bool calibratePosition();
@@ -134,6 +135,7 @@ namespace Autonomous
 		std::vector<FieldObject> m_usefulFieldObjects;
 		std::vector<Common::Circle> m_softObstacles;
 		std::vector<Common::Circle> m_hardObstacles;
+		std::vector<Common::Circle> m_hardAndVisibleObstacles;
 		FieldState m_fieldState;
 		unsigned int m_achievedGoals;
 		unsigned int m_puckInEnemyThird;

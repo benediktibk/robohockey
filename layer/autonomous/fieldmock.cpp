@@ -36,6 +36,11 @@ const vector<Circle> &FieldMock::getAllHardObstacles() const
 	return m_hardObstacles;
 }
 
+const std::vector<Circle> &FieldMock::getAllHardAndVisibleObstacles() const
+{
+	return m_hardAndVisibleObstacles;
+}
+
 vector<FieldObject> FieldMock::getObjectsWithColorOrderdByDistance(FieldColor) const
 {
 	return m_objectsWithColorOrderedByDistance;
@@ -69,9 +74,14 @@ void FieldMock::setSoftObstacles(const vector<Circle> &obstacles)
 	m_softObstacles = obstacles;
 }
 
-void FieldMock::setHardObstacles(const std::vector<Circle> &obstacles)
+void FieldMock::setHardObstacles(const vector<Circle> &obstacles)
 {
 	m_hardObstacles = obstacles;
+}
+
+void FieldMock::setHardAndVisibleObstacles(const vector<Circle> &obstacles)
+{
+	m_hardAndVisibleObstacles = obstacles;
 }
 
 void FieldMock::setNegativeCoordinatesOutside(bool value)
@@ -99,12 +109,12 @@ void FieldMock::setCalibrationReturnPosition(RobotPosition newOrigin)
 	m_newOrigin = newOrigin;
 }
 
-void FieldMock::setObjectsWithColorOrderedByDistance(const std::vector<FieldObject> &objects)
+void FieldMock::setObjectsWithColorOrderedByDistance(const vector<FieldObject> &objects)
 {
 	m_objectsWithColorOrderedByDistance = objects;
 }
 
-void FieldMock::setTargetsForTurningToUnknownObjects(const std::list<Point> &targets)
+void FieldMock::setTargetsForTurningToUnknownObjects(const list<Point> &targets)
 {
 	m_pointsForTurning = targets;
 }

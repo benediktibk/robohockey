@@ -107,6 +107,10 @@ namespace Autonomous
 		CPPUNIT_TEST(getAllHardObstacles_oneSmallObstacleWithUnknownColor_resultSizeIs0);
 		CPPUNIT_TEST(getAllHardObstacles_oneBigObstacleDisappeared_resultSizeIs0);
 		CPPUNIT_TEST(getAllHardObstacles_fairlyBigObject_diameterIs08);
+		CPPUNIT_TEST(getAllHardAndVisibleObstacles_hardObstacleWhichCantBeSeen_resultSizeIs0);
+		CPPUNIT_TEST(getAllHardAndVisibleObstacles_visibleSoftObstacle_resultSizeIs0);
+		CPPUNIT_TEST(getAllHardAndVisibleObstacles_visibleButTooDistantHardObstacle_resultSizeIs0);
+		CPPUNIT_TEST(getAllHardAndVisibleObstacles_hardAndVisibleObstacle_resultSizeIs1);
 		CPPUNIT_TEST(getEnemyTeamColor_OwnTeamColorYellow_blue);
 		CPPUNIT_TEST(getEnemyTeamColor_OwnTeamColorBlue_yellow);
 		CPPUNIT_TEST(getTargetsForScoringGoals_always_numberOfPositionsBigger4);
@@ -230,6 +234,10 @@ namespace Autonomous
 		void getAllHardObstacles_oneSmallObstacleWithUnknownColor_resultSizeIs0();
 		void getAllHardObstacles_oneBigObstacleDisappeared_resultSizeIs0();
 		void getAllHardObstacles_fairlyBigObject_diameterIs08();
+		void getAllHardAndVisibleObstacles_hardObstacleWhichCantBeSeen_resultSizeIs0();
+		void getAllHardAndVisibleObstacles_visibleSoftObstacle_resultSizeIs0();
+		void getAllHardAndVisibleObstacles_visibleButTooDistantHardObstacle_resultSizeIs0();
+		void getAllHardAndVisibleObstacles_hardAndVisibleObstacle_resultSizeIs1();
 		void getEnemyTeamColor_OwnTeamColorYellow_blue();
 		void getEnemyTeamColor_OwnTeamColorBlue_yellow();
 		void getTargetsForScoringGoals_always_numberOfPositionsBigger4();

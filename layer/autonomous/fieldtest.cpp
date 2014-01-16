@@ -1670,6 +1670,66 @@ void FieldTest::getAllHardObstacles_fairlyBigObject_diameterIs08()
 	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(1, 0), object.getCenter()));
 }
 
+void FieldTest::getAllHardAndVisibleObstacles_hardObstacleWhichCantBeSeen_resultSizeIs0()
+{
+	RobotPosition ownPosition(Point(0, 0), 0);
+	m_odometry->setCurrentPosition(ownPosition);
+	DataAnalysis::LidarObjects lidarObjects;
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 0), 0.3));
+	m_lidar->setAllObjects(lidarObjects);
+
+	m_lidar->setCanBeSeenPartly(false);
+	updateFieldForObjectsToAppear();
+	vector<Circle> obstacles = m_field->getAllHardAndVisibleObstacles();
+
+	CPPUNIT_ASSERT_EQUAL((size_t)0, obstacles.size());
+}
+
+void FieldTest::getAllHardAndVisibleObstacles_visibleSoftObstacle_resultSizeIs0()
+{
+	RobotPosition ownPosition(Point(0, 0), 0);
+	m_odometry->setCurrentPosition(ownPosition);
+	DataAnalysis::LidarObjects lidarObjects;
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 0), 0.03));
+	m_lidar->setAllObjects(lidarObjects);
+
+	m_lidar->setCanBeSeenPartly(true);
+	updateFieldForObjectsToAppear();
+	vector<Circle> obstacles = m_field->getAllHardAndVisibleObstacles();
+
+	CPPUNIT_ASSERT_EQUAL((size_t)0, obstacles.size());
+}
+
+void FieldTest::getAllHardAndVisibleObstacles_visibleButTooDistantHardObstacle_resultSizeIs0()
+{
+	RobotPosition ownPosition(Point(0, 0), 0);
+	m_odometry->setCurrentPosition(ownPosition);
+	DataAnalysis::LidarObjects lidarObjects;
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(10, 0), 0.3));
+	m_lidar->setAllObjects(lidarObjects);
+
+	m_lidar->setCanBeSeenPartly(true);
+	updateFieldForObjectsToAppear();
+	vector<Circle> obstacles = m_field->getAllHardAndVisibleObstacles();
+
+	CPPUNIT_ASSERT_EQUAL((size_t)0, obstacles.size());
+}
+
+void FieldTest::getAllHardAndVisibleObstacles_hardAndVisibleObstacle_resultSizeIs1()
+{
+	RobotPosition ownPosition(Point(0, 0), 0);
+	m_odometry->setCurrentPosition(ownPosition);
+	DataAnalysis::LidarObjects lidarObjects;
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 0), 0.3));
+	m_lidar->setAllObjects(lidarObjects);
+
+	m_lidar->setCanBeSeenPartly(true);
+	updateFieldForObjectsToAppear();
+	vector<Circle> obstacles = m_field->getAllHardAndVisibleObstacles();
+
+	CPPUNIT_ASSERT_EQUAL((size_t)1, obstacles.size());
+}
+
 void FieldTest::getEnemyTeamColor_OwnTeamColorYellow_blue()
 {
 	m_field->setTrueTeamColor(FieldColorYellow);
