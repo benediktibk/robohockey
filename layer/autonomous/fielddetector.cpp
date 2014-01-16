@@ -12,7 +12,8 @@ using namespace std;
 using namespace RoboHockey::Common;
 using namespace RoboHockey::Layer::Autonomous;
 
-FieldDetector::FieldDetector():
+FieldDetector::FieldDetector(Logger &logger):
+	m_logger(logger),
 	m_distanceChecker(0.05),
 	m_maxBorderstonesArranged(2),
 	m_epsilonBorderStone(0.07)

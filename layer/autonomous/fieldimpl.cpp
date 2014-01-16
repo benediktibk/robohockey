@@ -27,7 +27,7 @@ FieldImpl::FieldImpl(DataAnalysis::Odometry &odometry, const DataAnalysis::Lidar
 	m_lidar(&lidar),
 	m_camera(&camera),
 	m_robot(&autonomousRobot),
-	m_fieldDetector(new FieldDetector),
+	m_fieldDetector(new FieldDetector(m_logger)),
 	m_position(new RobotPosition(m_odometry->getCurrentPosition())),
 	m_fieldState(FieldStateUnknownPosition),
 	m_teamColor(FieldColorUnknown),

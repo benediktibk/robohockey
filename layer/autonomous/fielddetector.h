@@ -10,6 +10,10 @@
 
 namespace RoboHockey
 {
+namespace Common
+{
+	class Logger;
+}
 namespace Layer
 {
 namespace Autonomous
@@ -19,7 +23,7 @@ namespace Autonomous
 	class FieldDetector
 	{
 	public:
-		FieldDetector();
+		FieldDetector(Common::Logger &logger);
 
 		bool tryToDetectField(const Common::Point &currentPosition, std::vector<Common::Point> &pointsOfObjects);
 		Common::Point getNewOrigin();
@@ -36,6 +40,7 @@ namespace Autonomous
 		FieldDetectionResult& getBestDetectionResult();
 
 	private:
+		Common::Logger &m_logger;
 		const Common::Point m_currentPosition;
 		std::vector<Common::Point> m_points;
 		BorderStoneDistances m_distanceChecker;
