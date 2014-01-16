@@ -781,8 +781,8 @@ void RobotTest::goTo_orientationDifferenceZero_engineGotOnlyCallToGoToStraight()
 	m_robot->goTo(m_targets);
 	m_robot->updateActuators(*m_field);
 
-	CPPUNIT_ASSERT_EQUAL((unsigned int)1, m_engine->getCallsToGoToStraight());
 	CPPUNIT_ASSERT_EQUAL((unsigned int)0, m_engine->getCallsToTurnToTarget());
+	CPPUNIT_ASSERT_EQUAL((unsigned int)1, m_engine->getCallsToGoToStraight());
 	const Point &lastTarget = m_engine->getLastTarget();
 	Compare compare(0.001);
 	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(-10, 0.1), lastTarget));
@@ -801,8 +801,8 @@ void RobotTest::goTo_orientationDifferenceSmall_engineGotOnlyCallToGoToStraight(
 	m_robot->goTo(m_targets);
 	m_robot->updateActuators(*m_field);
 
-	CPPUNIT_ASSERT_EQUAL((unsigned int)1, m_engine->getCallsToGoToStraight());
 	CPPUNIT_ASSERT_EQUAL((unsigned int)0, m_engine->getCallsToTurnToTarget());
+	CPPUNIT_ASSERT_EQUAL((unsigned int)1, m_engine->getCallsToGoToStraight());
 	const Point &lastTarget = m_engine->getLastTarget();
 	Compare compare(0.001);
 	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(-10, 0.1), lastTarget));
