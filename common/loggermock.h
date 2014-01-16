@@ -7,7 +7,7 @@ namespace RoboHockey
 {
 namespace Common
 {
-class LoggerMock :
+	class LoggerMock :
 		public Logger
 	{
 	public:
@@ -22,7 +22,11 @@ class LoggerMock :
 		virtual void disableConsoleOutput();
 		virtual void enableLogWriting();
 		virtual void disableLogWriting();
-		
+
+		const std::string getLastMessage() const;
+
+	private:
+		std::string m_lastMessage;
 	};
 }
 }

@@ -8,7 +8,8 @@ LidarMock::LidarMock() :
 	m_puckCollected(false),
 	m_puckCollectable(false),
 	m_canBeSeen(true),
-	m_canBeSeenPartly(true)
+	m_canBeSeenPartly(true),
+	m_obstacleInFront(false)
 { }
 
 LidarObjects LidarMock::getAllObjects(const RobotPosition &) const
@@ -18,7 +19,7 @@ LidarObjects LidarMock::getAllObjects(const RobotPosition &) const
 
 bool LidarMock::isObstacleInFront(double) const
 {
-	return false;
+	return m_obstacleInFront;
 }
 
 void LidarMock::updateSensorData()
@@ -77,4 +78,9 @@ void LidarMock::setCanBeSeen(bool value)
 void LidarMock::setCanBeSeenPartly(bool value)
 {
 	m_canBeSeenPartly = value;
+}
+
+void LidarMock::setObstacleInFront(bool value)
+{
+	m_obstacleInFront = value;
 }

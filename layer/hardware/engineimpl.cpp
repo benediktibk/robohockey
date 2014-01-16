@@ -48,6 +48,11 @@ double EngineImpl::getSpeed() const
 	return m_engine->GetXSpeed();
 }
 
+double EngineImpl::getRotationSpeed() const
+{
+	return m_engine->GetYawSpeed();
+}
+
 void EngineImpl::setEnabled(bool value)
 {
 	if (m_enabled != value)

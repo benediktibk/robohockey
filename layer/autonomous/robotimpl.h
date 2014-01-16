@@ -13,6 +13,7 @@ namespace Common
 	class Watch;
 	class StopWatch;
 	class TimeSmoothedBoolean;
+	class Logger;
 }
 
 namespace Layer
@@ -32,7 +33,7 @@ namespace Autonomous
 			public Robot
 	{
 	public:
-		RobotImpl(DataAnalysis::DataAnalyser *dataAnalyser, Router *router, Common::Watch *watch);
+		RobotImpl(DataAnalysis::DataAnalyser *dataAnalyser, Router *router, Common::Watch *watch, Common::Logger &logger);
 		virtual ~RobotImpl();
 
 		virtual void goTo(const std::list<Common::RobotPosition> &possibleTargets);
@@ -89,6 +90,7 @@ namespace Autonomous
 		void operator=(const RobotImpl &robot);
 
 	private:
+		Common::Logger &m_logger;
 		const double m_robotWidth;
 		const double m_maximumDistanceToCollectPuck;
 		const Common::Angle m_maximumAngleToCollectPuck;

@@ -30,6 +30,7 @@ namespace DataAnalysis
 		void setPuckCollectable(bool value);
 		void setCanBeSeen(bool value);
 		void setCanBeSeenPartly(bool value);
+		void setObstacleInFront(bool value);
 
 	private:
 		LidarObjects m_objects;
@@ -37,6 +38,7 @@ namespace DataAnalysis
 		bool m_puckCollectable;
 		bool m_canBeSeen;
 		bool m_canBeSeenPartly;
+		bool m_obstacleInFront;
 	};
 }
 }

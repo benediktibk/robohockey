@@ -757,3 +757,13 @@ void EngineTest::updateSpeedAndRotation_tryingToTackleObstacle_motorIsDisabled()
 	CPPUNIT_ASSERT_EQUAL((unsigned int)1, hardwareEngine.getCallsToSetEnabled());
 	CPPUNIT_ASSERT(!hardwareEngine.getEnabled());
 }
+
+void EngineTest::getCurrentRotationSpeed_speedSet2_2()
+{
+	Hardware::EngineMock hardwareEngine;
+	Hardware::OdometryMock hardwareOdometry;
+	EngineImpl engine(hardwareEngine, hardwareOdometry);
+	hardwareEngine.setRotationSpeed(2);
+
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(2, engine.getCurrentRotationSpeed(), 0.0001);
+}

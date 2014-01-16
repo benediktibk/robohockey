@@ -17,6 +17,7 @@ namespace Hardware
 		virtual void setSpeed(double magnitude, double rotation) = 0;
 		virtual bool isMoving() const = 0;
 		virtual double getSpeed() const = 0;
+		virtual double getRotationSpeed() const = 0;
 		virtual void setEnabled(bool value) = 0;
 		virtual void writeDataToFile(const std::string &fileName) const = 0;
 		virtual void updateSensorData() = 0;

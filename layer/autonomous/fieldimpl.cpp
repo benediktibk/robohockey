@@ -318,61 +318,31 @@ list<RobotPosition> FieldImpl::getTargetsForSearchingPucks() const
 list<Point> FieldImpl::getTargetsForTurningToUnknownObjects() const
 {
 	list<Point> pointsToTurnTo;
+	Circle currentCircle;
 	Point currentPoint;
+	Point pointToInsert;
 	Circle circle(m_robot->getCurrentPosition().getPosition(), 1);
 	Rectangle fieldSector(Point(0.1, 0.1), Point(4.9, 2.9));
 	vector<FieldObject> fieldObjects = getObjectsWithColorOrderdByDistance(FieldColorUnknown);
-	vector<Point> pointInRange;
-	vector<double> angles;
-	double angleConverted;
-	int z=0, comp = 0;
+	map<double, Point> pointsToSort;
 
 	for (vector<FieldObject>::const_iterator i = fieldObjects.begin(); i != fieldObjects.end(); ++i)
 	{
 		const FieldObject &fieldObject = *i;
+		currentCircle = fieldObject.getCircle();
 		currentPoint = fieldObject.getCircle().getCenter();
+
 		if(fieldSector.isInside(currentPoint, 0.01), circle.isInside(currentPoint))
 		{
-			pointInRange.push_back(currentPoint);
-			Angle angle(m_robot->getCurrentPosition().getPosition(), currentPoint);
-			angleConverted = angle.getValueBetweenZeroAndTwoPi() - m_robot->getCurrentPosition().getOrientation().getValueBetweenZeroAndTwoPi();
-
-			if(angleConverted < 0)
-				angleConverted = angleConverted + (2 * M_PI);
-
-			angles.push_back(angleConverted);
+			pointsToSort.insert(pair<double, Point>(calculateRelativeAngleOfObject(currentCircle).getValueBetweenZeroAndTwoPi(), currentPoint));
 		}
 	}
 
-	double anglesToSort[angles.size()];
-	vector<Point>::const_iterator iteratorArray[angles.size()];
-
-	for(vector<double>::const_iterator i = angles.begin(); i != angles.end(); ++i)
+	for(map<double, Point>::const_iterator i = pointsToSort.begin(); i != pointsToSort.end(); ++i)
 	{
-		const double &angleForArray = *i;
-		anglesToSort[z] = angleForArray;
-		++z;
-	}
-
-	vector<Point>::const_iterator iterate;
-
-	for(size_t i=0; i < angles.size(); ++i)
-	{
-		comp = 0;
-		iterate = pointInRange.begin();
-		for(size_t j=0; j < angles.size(); ++j)
-		{
-			if(anglesToSort[i] > anglesToSort[j])
-				++comp;
-				++iterate;
-		}
-		iteratorArray[comp] = iterate;
-	}
-
-	for(size_t i=0; i < angles.size(); ++i)
-	{
-		const Point &point = *iteratorArray[i];
-		pointsToTurnTo.push_back(point);
+		const pair<double, Point> &elements = *i;
+		pointToInsert = elements.second;
+		pointsToTurnTo.push_back(pointToInsert);
 	}
 
 	return pointsToTurnTo;

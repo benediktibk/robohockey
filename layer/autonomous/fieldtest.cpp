@@ -1812,6 +1812,27 @@ void FieldTest::getTargetsForHiddingEnemyPucks_always_numberOfPositionsBiggerTha
 	CPPUNIT_ASSERT((size_t) 8 < m_field->getTargetsForHidingEnemyPucks().size());
 }
 
+void FieldTest::getTargetsForTurningToUnknownObjects_twoUnknownObjectsInRange_twoPositionsInList()
+{
+	m_odometry->setCurrentPosition(RobotPosition(Point(1,1), 0.4));
+	m_field->update();
+	DataAnalysis::LidarObjects lidarObjects;
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1.2, 1.1), 0.1));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1.3, 1.5), 0.1));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(3, 0), 0.1));
+	m_lidar->setAllObjects(lidarObjects);
+	DataAnalysis::CameraObjects cameraObjects;
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorUnknown, Point(1.2, 1.1)));
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorUnknown, Point(1.3, 1.5)));
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorUnknown, Point(3, 0)));
+
+	m_camera->setAllObjects(cameraObjects);
+
+	updateFieldForObjectsToAppear();
+
+	CPPUNIT_ASSERT_EQUAL((size_t)2, m_field->getTargetsForTurningToUnknownObjects().size());
+}
+
 void FieldTest::detectTeamColorWithGoalInFront_yellowMuchBiggerBlue_teamYellow()
 {
 	m_camera->setProbabilityForYellowGoal(0.82);

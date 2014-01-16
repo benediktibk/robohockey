@@ -49,6 +49,7 @@ namespace DataAnalysis
 		virtual Common::Point getCurrentTarget() const;
 		virtual bool isMoving() const;
 		virtual double getCurrentSpeed() const;
+		virtual double getCurrentRotationSpeed() const;
 		virtual void updateSensorData();
 		virtual bool isGoingStraight() const;
 		virtual double calculateSpeedForGoingStraight(double distance) const;
