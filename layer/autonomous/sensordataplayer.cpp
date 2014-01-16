@@ -5,6 +5,7 @@
 #include "layer/autonomous/robotimpl.h"
 #include "layer/autonomous/routerimpl.h"
 #include "common/watchmock.h"
+#include "common/loggermock.h"
 #include <boost/filesystem.hpp>
 #include <assert.h>
 #include <fstream>
@@ -20,9 +21,10 @@ SensorDataPlayer::SensorDataPlayer(const string &path) :
 	m_maximumRoundCount(0),
 	m_roundCount(0),
 	m_watch(new WatchMock()),
+	m_logger(new LoggerMock()),
 	m_hardwareRobot(new Hardware::RobotMock()),
 	m_dataAnalyser(new DataAnalysis::DataAnalyserImpl(m_hardwareRobot)),
-	m_robot(new Autonomous::RobotImpl(m_dataAnalyser, new RouterImpl(0.38), m_watch)),
+	m_robot(new Autonomous::RobotImpl(m_dataAnalyser, new RouterImpl(0.38), m_watch, *m_logger)),
 	m_field(new FieldImpl(
 				m_dataAnalyser->getOdometry(), m_dataAnalyser->getLidar(),
 				m_dataAnalyser->getCamera(), *m_robot)),
@@ -49,6 +51,8 @@ SensorDataPlayer::~SensorDataPlayer()
 	m_dataAnalyser = 0;
 	m_hardwareRobot = 0;
 	m_watch = 0;
+	delete m_logger;
+	m_logger = 0;
 }
 
 void SensorDataPlayer::loadNextRound()

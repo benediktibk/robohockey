@@ -11,6 +11,7 @@ namespace RoboHockey
 namespace Common
 {
 	class WatchMock;
+	class LoggerMock;
 }
 
 namespace Layer
@@ -85,6 +86,8 @@ namespace Autonomous
 		CPPUNIT_TEST(updateActuators_notTryingToTackleObstacle_engineGotNoCallToStop);
 		CPPUNIT_TEST(updateActuators_tryingToTackleObstacle_engineGotAtLeastOneCallToStop);
 		CPPUNIT_TEST(updateActuators_tryingToTackleObstacle_targetNotReached);
+		CPPUNIT_TEST(updateActuators_tryingToTackleObstacleFromSonar_lastMessageContainssonar);
+		CPPUNIT_TEST(updateActuators_tryingToTackleObstacleFromLidar_lastMessageContainslidar);
 		CPPUNIT_TEST(updateSensorData_noObstacleDirectInFront_engineGotNoCallToLockForwardMovement);
 		CPPUNIT_TEST(updateSensorData_noObstacleDirectInFront_engineGotAtLeastOneCallToUnlockForwardMovement);
 		CPPUNIT_TEST(updateSensorData_obstacleDirectInFront_engineGotAtLeastOneCallToLockForwardMovement);
@@ -213,6 +216,8 @@ namespace Autonomous
 		void updateActuators_notTryingToTackleObstacle_engineGotNoCallToStop();
 		void updateActuators_tryingToTackleObstacle_engineGotAtLeastOneCallToStop();
 		void updateActuators_tryingToTackleObstacle_targetNotReached();
+		void updateActuators_tryingToTackleObstacleFromSonar_lastMessageContainssonar();
+		void updateActuators_tryingToTackleObstacleFromLidar_lastMessageContainslidar();
 		void updateSensorData_noObstacleDirectInFront_engineGotNoCallToLockForwardMovement();
 		void updateSensorData_noObstacleDirectInFront_engineGotAtLeastOneCallToUnlockForwardMovement();
 		void updateSensorData_obstacleDirectInFront_engineGotAtLeastOneCallToLockForwardMovement();
@@ -287,6 +292,7 @@ namespace Autonomous
 	private:
 		RouterMock *m_routerMock;
 		Common::WatchMock *m_watchMock;
+		Common::LoggerMock *m_logger;
 		std::list<Common::RobotPosition> m_targets;
 		DataAnalysis::DataAnalyserMock *m_dataAnalyser;
 		DataAnalysis::OdometryMock *m_odometry;

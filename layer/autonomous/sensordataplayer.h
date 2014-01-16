@@ -8,6 +8,7 @@ namespace RoboHockey
 namespace Common
 {
 	class WatchMock;
+	class LoggerMock;
 }
 
 namespace Layer
@@ -48,6 +49,7 @@ namespace Autonomous
 		unsigned int m_maximumRoundCount;
 		unsigned int m_roundCount;
 		Common::WatchMock *m_watch;
+		Common::LoggerMock *m_logger;
 		Hardware::RobotMock *m_hardwareRobot;
 		DataAnalysis::DataAnalyser *m_dataAnalyser;
 		Robot *m_robot;

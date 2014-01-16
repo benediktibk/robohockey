@@ -68,16 +68,15 @@ Game::Game(int argc, char **argv) :
 		cout << "##### recording to  : " << parser.recordingPath() << endl;
 	cout << "##### ---------------------------" << endl;
 
+	m_logger = new Common::LoggerImpl();
 	Hardware::Robot *hardwareRobot = new Hardware::RobotImpl(playerServer);
 	DataAnalysis::DataAnalyser *dataAnalyser = new DataAnalysis::DataAnalyserImpl(hardwareRobot);
 	Autonomous::Router *router = new Autonomous::RouterImpl(0.38);
-	m_robot = new Autonomous::RobotImpl(dataAnalyser, router, new Common::WatchImpl());
+	m_robot = new Autonomous::RobotImpl(dataAnalyser, router, new Common::WatchImpl(), *m_logger);
 	m_field = new Autonomous::FieldImpl(
 				dataAnalyser->getOdometry(), dataAnalyser->getLidar(),
 				dataAnalyser->getCamera(), *m_robot);
 	m_referee = new Strategy::Common::RefereeImpl(angelinaServer);
-
-	m_logger = new Common::LoggerImpl();
 
 	if (parser.enableRecorder())
 		m_sensorDataRecorder = new Hardware::SensorDataRecorder(*hardwareRobot, parser.recordingPath());
