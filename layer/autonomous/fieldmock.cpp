@@ -214,6 +214,11 @@ list<RobotPosition> FieldMock::getTargetsInEnemyThird() const
 	return list<RobotPosition> ();
 }
 
+list<Point> FieldMock::getTargetsForTurningToUnknownObjects() const
+{
+	return list<Point> ();
+}
+
 unsigned int FieldMock::getNumberOfAchievedGoals() const
 {
 	return m_achievedGoals;

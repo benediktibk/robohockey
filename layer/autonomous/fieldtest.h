@@ -118,6 +118,7 @@ namespace Autonomous
 		CPPUNIT_TEST(getTargetsInEnemyThird_always_numberOfPositionsBiggerThan4);
 		CPPUNIT_TEST(getTargetsForWaitingPhase_always_numberOfPositionsBiggerThan2);
 		CPPUNIT_TEST(getTargetsForHiddingEnemyPucks_always_numberOfPositionsBiggerThan8);
+		CPPUNIT_TEST(getTargetsForTurningToUnknownObjects_twoUnknownObjectsInRange_twoPositionsInList);
 		CPPUNIT_TEST(detectTeamColorWithGoalInFront_yellowMuchBiggerBlue_teamYellow);
 		CPPUNIT_TEST(detectTeamColorWithGoalInFront_yellowMuchSmallerBlue_teamBlue);
 		CPPUNIT_TEST(detectTeamColorWithGoalInFront_yellowAndBlueEqual_teamNotUnknown);
@@ -238,6 +239,7 @@ namespace Autonomous
 		void getTargetsInEnemyThird_always_numberOfPositionsBiggerThan4();
 		void getTargetsForWaitingPhase_always_numberOfPositionsBiggerThan2();
 		void getTargetsForHiddingEnemyPucks_always_numberOfPositionsBiggerThan8();
+		void getTargetsForTurningToUnknownObjects_twoUnknownObjectsInRange_twoPositionsInList();
 		void detectTeamColorWithGoalInFront_yellowMuchBiggerBlue_teamYellow();
 		void detectTeamColorWithGoalInFront_yellowMuchSmallerBlue_teamBlue();
 		void detectTeamColorWithGoalInFront_yellowAndBlueEqual_teamNotUnknown();
