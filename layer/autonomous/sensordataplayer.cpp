@@ -27,7 +27,7 @@ SensorDataPlayer::SensorDataPlayer(const string &path) :
 	m_robot(new Autonomous::RobotImpl(m_dataAnalyser, new RouterImpl(0.38), m_watch, *m_logger)),
 	m_field(new FieldImpl(
 				m_dataAnalyser->getOdometry(), m_dataAnalyser->getLidar(),
-				m_dataAnalyser->getCamera(), *m_robot)),
+				m_dataAnalyser->getCamera(), *m_robot, *m_logger)),
 	m_oldBlueObjectCount(0),
 	m_oldYellowObjectCount(0),
 	m_oldGreenObjectCount(0),

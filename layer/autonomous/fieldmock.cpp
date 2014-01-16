@@ -104,12 +104,17 @@ void FieldMock::setObjectsWithColorOrderedByDistance(const std::vector<FieldObje
 	m_objectsWithColorOrderedByDistance = objects;
 }
 
+void FieldMock::setTargetsForTurningToUnknownObjects(const std::list<Point> &targets)
+{
+	m_pointsForTurning = targets;
+}
+
 void FieldMock::setTrueTeamColor(FieldColor teamColor)
 {
 	m_teamColor = teamColor;
 }
 
-RobotPosition FieldMock::getNewOriginFromFieldDetection(unsigned int &outNumberOfBorderStones)
+RobotPosition FieldMock::getNewOriginFromFieldDetection(unsigned int &outNumberOfBorderStones, bool)
 {
 	outNumberOfBorderStones = 0;
 	return m_newOrigin;
@@ -212,6 +217,11 @@ list<RobotPosition> FieldMock::getTargetsForCollectingOnePuckNotInEnemyThird(Fie
 list<RobotPosition> FieldMock::getTargetsInEnemyThird() const
 {
 	return list<RobotPosition> ();
+}
+
+list<Point> FieldMock::getTargetsForTurningToUnknownObjects() const
+{
+	return m_pointsForTurning;
 }
 
 unsigned int FieldMock::getNumberOfAchievedGoals() const

@@ -10,6 +10,7 @@
 #include "layer/hardware/robotmock.h"
 #include "common/compare.h"
 #include "common/robotposition.h"
+#include "common/loggermock.h"
 
 using namespace RoboHockey::Common;
 using namespace RoboHockey::Layer;
@@ -22,7 +23,8 @@ void FieldTest::setUp()
 	m_lidar = new DataAnalysis::LidarMock();
 	m_odometry = new DataAnalysis::OdometryMock();
 	m_robot = new RobotMock();
-	m_field = new FieldImpl(*m_odometry, *m_lidar, *m_camera, *m_robot);
+	m_logger = new LoggerMock();
+	m_field = new FieldImpl(*m_odometry, *m_lidar, *m_camera, *m_robot, *m_logger);
 }
 
 void FieldTest::tearDown()
@@ -37,6 +39,8 @@ void FieldTest::tearDown()
 	m_odometry = 0;
 	delete m_robot;
 	m_robot = 0;
+	delete m_logger;
+	m_logger = 0;
 }
 
 void FieldTest::update_noLidarObjects_noFieldObjects()
@@ -777,7 +781,7 @@ void FieldTest::update_objectsInFieldRobotOn00_correctlyUpdated()
 {
 	Hardware::LidarMock hardwareLidarMock(6);
 	DataAnalysis::LidarImpl lidar(hardwareLidarMock);
-	FieldImpl field(*m_odometry, lidar, *m_camera, *m_robot);
+	FieldImpl field(*m_odometry, lidar, *m_camera, *m_robot, *m_logger);
 
 	hardwareLidarMock.setValueForAngle(0, 5);
 	hardwareLidarMock.setValueForAngle(360, 5);
@@ -808,7 +812,7 @@ void FieldTest::update_objectsInFieldRobotOn1And2_correctlyUpdated()
 {
 	Hardware::LidarMock hardwareLidarMock(6);
 	DataAnalysis::LidarImpl lidar(hardwareLidarMock);
-	FieldImpl field(*m_odometry, lidar, *m_camera, *m_robot);
+	FieldImpl field(*m_odometry, lidar, *m_camera, *m_robot, *m_logger);
 
 	m_odometry->setCurrentPosition(RobotPosition(Point(1, 2), Angle()));
 
@@ -842,7 +846,7 @@ void FieldTest::update_movingAndLidarDataChanges_fieldObjectCountDoesntChange()
 {
 	Hardware::LidarMock hardwareLidarMock(6);
 	DataAnalysis::LidarImpl lidar(hardwareLidarMock);
-	FieldImpl field(*m_odometry, lidar, *m_camera, *m_robot);
+	FieldImpl field(*m_odometry, lidar, *m_camera, *m_robot, *m_logger);
 
 	m_odometry->setCurrentPosition(RobotPosition(Point(0, 0), Angle(0)));
 	hardwareLidarMock.readDataFromFile("resources/testfiles/lidar_moving_1_previous.txt");
@@ -865,7 +869,7 @@ void FieldTest::update_movingAndLidatDataChangesSecondVersion_fieldObjectCountDo
 {
 	Hardware::LidarMock hardwareLidarMock(6);
 	DataAnalysis::LidarImpl lidar(hardwareLidarMock);
-	FieldImpl field(*m_odometry, lidar, *m_camera, *m_robot);
+	FieldImpl field(*m_odometry, lidar, *m_camera, *m_robot, *m_logger);
 
 	m_odometry->setCurrentPosition(RobotPosition(Point(0, 0), Angle(0)));
 	hardwareLidarMock.readDataFromFile("resources/testfiles/lidar_moving_2_previous.txt");
@@ -888,7 +892,7 @@ void FieldTest::update_movingAndLidarDataChangesThirdVersion_fieldObjectCountDoe
 {
 	Hardware::LidarMock hardwareLidarMock(6);
 	DataAnalysis::LidarImpl lidar(hardwareLidarMock);
-	FieldImpl field(*m_odometry, lidar, *m_camera, *m_robot);
+	FieldImpl field(*m_odometry, lidar, *m_camera, *m_robot, *m_logger);
 
 	m_odometry->setCurrentPosition(RobotPosition(Point(0, 0), Angle(0)));
 	hardwareLidarMock.readDataFromFile("resources/testfiles/lidar_moving_3_previous.txt");
@@ -911,7 +915,7 @@ void FieldTest::update_enemyRobotInFront_oneFieldObject()
 {
 	Hardware::LidarMock hardwareLidarMock(6);
 	DataAnalysis::LidarImpl lidar(hardwareLidarMock);
-	FieldImpl field(*m_odometry, lidar, *m_camera, *m_robot);
+	FieldImpl field(*m_odometry, lidar, *m_camera, *m_robot, *m_logger);
 	m_odometry->setCurrentPosition(RobotPosition(Point(0, 0), Angle(0)));
 	hardwareLidarMock.readDataFromFile("resources/testfiles/lidar_40.txt");
 
@@ -926,7 +930,7 @@ void FieldTest::update_enemyRobotInFront_oneHardObstacle()
 {
 	Hardware::LidarMock hardwareLidarMock(6);
 	DataAnalysis::LidarImpl lidar(hardwareLidarMock);
-	FieldImpl field(*m_odometry, lidar, *m_camera, *m_robot);
+	FieldImpl field(*m_odometry, lidar, *m_camera, *m_robot, *m_logger);
 	m_odometry->setCurrentPosition(RobotPosition(Point(0, 0), Angle(0)));
 	hardwareLidarMock.readDataFromFile("resources/testfiles/lidar_40.txt");
 
@@ -1282,7 +1286,7 @@ void FieldTest::calibratePosition_realWorldExample_positionIsCorrect()
 	Hardware::RobotMock *hardwareRobot = new Hardware::RobotMock();
 	DataAnalysis::DataAnalyserImpl dataAnalyser(hardwareRobot);
 	Autonomous::RobotMock autonomousRobot;
-	FieldImpl field(dataAnalyser.getOdometry(), dataAnalyser.getLidar(), dataAnalyser.getCamera(), autonomousRobot);
+	FieldImpl field(dataAnalyser.getOdometry(), dataAnalyser.getLidar(), dataAnalyser.getCamera(), autonomousRobot, *m_logger);
 	Hardware::OdometryMock &odometry = hardwareRobot->getOdometryMock();
 	Hardware::LidarMock &lidar = hardwareRobot->getLidarMock();
 	lidar.readDataFromFile("resources/testfiles/lidar_35.txt");
@@ -1812,6 +1816,69 @@ void FieldTest::getTargetsForHiddingEnemyPucks_always_numberOfPositionsBiggerTha
 	CPPUNIT_ASSERT((size_t) 8 < m_field->getTargetsForHidingEnemyPucks().size());
 }
 
+void FieldTest::getTargetsForTurningToUnknownObjects_twoUnknownObjectsInRange_twoPositionsInList()
+{
+	m_odometry->setCurrentPosition(RobotPosition(Point(1,1), 0.4));
+	m_field->update();
+	DataAnalysis::LidarObjects lidarObjects;
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1.2, 1.1), 0.1));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1.3, 1.5), 0.1));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(3, 0), 0.1));
+	m_lidar->setAllObjects(lidarObjects);
+	DataAnalysis::CameraObjects cameraObjects;
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorUnknown, Point(1.2, 1.1)));
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorUnknown, Point(1.3, 1.5)));
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorUnknown, Point(3, 0)));
+
+	m_camera->setAllObjects(cameraObjects);
+
+	updateFieldForObjectsToAppear();
+
+	CPPUNIT_ASSERT_EQUAL((size_t)2, m_field->getTargetsForTurningToUnknownObjects().size());
+}
+
+void FieldTest::getTargetsForTurningToUnknownObjects_threeUnknownObjectsInRange_threePositionsInList()
+{
+	m_odometry->setCurrentPosition(RobotPosition(Point(0,1), 0.8));
+	m_field->update();
+	DataAnalysis::LidarObjects lidarObjects;
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(0.5, 1.1), 0.1));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(0.3, 1.5), 0.1));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(0.8, 1), 0.1));
+	m_lidar->setAllObjects(lidarObjects);
+	DataAnalysis::CameraObjects cameraObjects;
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorUnknown, Point(0.5, 1.1)));
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorUnknown, Point(0.3, 1.5)));
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorUnknown, Point(0.8, 1)));
+
+	m_camera->setAllObjects(cameraObjects);
+
+	updateFieldForObjectsToAppear();
+
+	CPPUNIT_ASSERT_EQUAL((size_t)3, m_field->getTargetsForTurningToUnknownObjects().size());
+}
+
+void FieldTest::getTargetsForTurningToUnknownObjects_zeroUnknownObjectsInRange_zeroPositionsInList()
+{
+	m_odometry->setCurrentPosition(RobotPosition(Point(3,3), 0.8));
+	m_field->update();
+	DataAnalysis::LidarObjects lidarObjects;
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(0.5, 1.1), 0.1));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(0.3, 1.5), 0.1));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(0.8, 1), 0.1));
+	m_lidar->setAllObjects(lidarObjects);
+	DataAnalysis::CameraObjects cameraObjects;
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorUnknown, Point(0.5, 1.1)));
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorUnknown, Point(0.3, 1.5)));
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorUnknown, Point(0.8, 1)));
+
+	m_camera->setAllObjects(cameraObjects);
+
+	updateFieldForObjectsToAppear();
+
+	CPPUNIT_ASSERT_EQUAL((size_t)0, m_field->getTargetsForTurningToUnknownObjects().size());
+}
+
 void FieldTest::detectTeamColorWithGoalInFront_yellowMuchBiggerBlue_teamYellow()
 {
 	m_camera->setProbabilityForYellowGoal(0.82);
@@ -1848,14 +1915,14 @@ void FieldTest::getNewOriginFromFieldDetection_realWorldExample1_correctNewOrigi
 	Hardware::RobotMock *hardwareRobot = new Hardware::RobotMock();
 	DataAnalysis::DataAnalyserImpl dataAnalyser(hardwareRobot);
 	Autonomous::RobotMock autonomousRobot;
-	FieldImpl field(dataAnalyser.getOdometry(), dataAnalyser.getLidar(), dataAnalyser.getCamera(), autonomousRobot);
+	FieldImpl field(dataAnalyser.getOdometry(), dataAnalyser.getLidar(), dataAnalyser.getCamera(), autonomousRobot, *m_logger);
 	Hardware::LidarMock &lidar = hardwareRobot->getLidarMock();
 	lidar.readDataFromFile("resources/testfiles/lidar_detect3.txt");
 	dataAnalyser.updateSensorData();
 
 	updateFieldForObjectsToAppear(field);
 	unsigned int numberOfBorderStones;
-	RobotPosition resultOrigin = field.getNewOriginFromFieldDetection(numberOfBorderStones);
+	RobotPosition resultOrigin = field.getNewOriginFromFieldDetection(numberOfBorderStones, false);
 	cout << "\nNumber Of Stones: " << numberOfBorderStones << "\nFound Origin: " << resultOrigin << endl;
 
 	Compare compare(0.5);

@@ -12,6 +12,7 @@ namespace Common
 {
 	class Point;
 	class RobotPosition;
+	class Logger;
 }
 
 namespace Layer
@@ -29,6 +30,7 @@ namespace Autonomous
 {
 	class FieldObject;
 	class Robot;
+	class FieldDetector;
 
 	class FieldImpl :
 			public Field
@@ -39,7 +41,8 @@ namespace Autonomous
 						};
 
 	public:
-		FieldImpl(DataAnalysis::Odometry &odometry, const DataAnalysis::Lidar &lidar, DataAnalysis::Camera &camera, Robot &autonomousRobot);
+		FieldImpl(DataAnalysis::Odometry &odometry, const DataAnalysis::Lidar &lidar, DataAnalysis::Camera &camera,
+				  Robot &autonomousRobot, Common::Logger &logger);
 		virtual ~FieldImpl();
 
 		virtual void update();
@@ -69,7 +72,7 @@ namespace Autonomous
 		virtual std::list<Common::RobotPosition> getTargetsForCollectingOnePuckNotInEnemyThird(Common::FieldColor puckColor) const;
 		virtual std::list<Common::RobotPosition> getTargetsInEnemyThird() const;
 		virtual void setTrueTeamColor(Common::FieldColor trueTeamColor);
-		virtual Common::RobotPosition getNewOriginFromFieldDetection(unsigned int &outNumberOfBorderstones);
+		virtual Common::RobotPosition getNewOriginFromFieldDetection(unsigned int &outNumberOfBorderstones, bool onlyAcceptConfirmedResults);
 		virtual void transformFieldToNewOrigin(const Common::RobotPosition newOrigin);
 		virtual std::vector<Common::RobotPosition> getTargetsForWaitingPhase() const;
 		virtual bool isPuckOfColorInFront(Common::FieldColor color) const;
@@ -113,13 +116,15 @@ namespace Autonomous
 		void removeAllFieldObjectsOutsideOfField();
 
 	private:
+		Common::Logger &m_logger;
 		const unsigned int m_seenTresholdForFieldObjects;
 		const double m_maximumDistanceToDeleteFieldObject;
 		const Common::Angle m_maximumAngleToDeleteFieldObject;
-		DataAnalysis::Odometry *m_odometry;
-		const DataAnalysis::Lidar *m_lidar;
-		DataAnalysis::Camera *m_camera;
-		const Robot *m_robot;
+		DataAnalysis::Odometry &m_odometry;
+		const DataAnalysis::Lidar &m_lidar;
+		DataAnalysis::Camera &m_camera;
+		const Robot &m_robot;
+		FieldDetector *m_fieldDetector;
 
 		Common::RobotPosition *m_position;
 		std::vector<FieldObject> m_fieldObjects;

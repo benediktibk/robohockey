@@ -43,7 +43,7 @@ namespace Autonomous
 		virtual Common::FieldColor getEnemyTeamColor() const = 0;
 		virtual void detectTeamColorWithGoalInFront() = 0;
 		virtual void setTrueTeamColor(Common::FieldColor trueTeamColor) = 0;
-		virtual Common::RobotPosition getNewOriginFromFieldDetection(unsigned int &outNumberOfBorderstones) = 0;
+		virtual Common::RobotPosition getNewOriginFromFieldDetection(unsigned int &outNumberOfBorderstones, bool onlyAcceptConfirmedResults) = 0;
 		virtual void transformFieldToNewOrigin(const Common::RobotPosition newOrigin) = 0;
 		virtual bool isPuckOfColorInFront(Common::FieldColor color) const = 0;
 		virtual bool isPuckcolorDetected() const = 0;
@@ -57,6 +57,7 @@ namespace Autonomous
 		virtual std::list<Common::RobotPosition> getTargetsForCollectingOnePuckNotInEnemyThird(Common::FieldColor puckColor) const = 0;
 		virtual std::vector<Common::RobotPosition> getTargetsForWaitingPhase() const = 0;
 		virtual std::list<Common::RobotPosition> getTargetsInEnemyThird() const = 0;
+		virtual std::list<Common::Point> getTargetsForTurningToUnknownObjects()  const = 0;
 	};
 }
 }

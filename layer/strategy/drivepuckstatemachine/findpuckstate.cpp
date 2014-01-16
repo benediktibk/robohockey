@@ -30,5 +30,4 @@ std::string FindPuckState::getName()
 }
 
 void FindPuckState::updateInternal()
-{
-}
+{ }

@@ -47,7 +47,7 @@ string DetectField::getName()
 void DetectField::updateInternal()
 {
 	unsigned int numberOfStones = 0;
-	RobotPosition result = m_field.getNewOriginFromFieldDetection(numberOfStones);
+	RobotPosition result = m_field.getNewOriginFromFieldDetection(numberOfStones, true);
 
 	if (!(result == RobotPosition()))
 	{

@@ -6,10 +6,16 @@
 
 namespace RoboHockey
 {
+namespace Common
+{
+	class Compare;
+	class LoggerMock;
+}
 namespace Layer
 {
 namespace Autonomous
 {
+	class FieldDetector;
 	class FieldDetectorTest :
 			public CPPUNIT_NS::TestFixture
 	{
@@ -34,6 +40,10 @@ namespace Autonomous
 		CPPUNIT_TEST(tryToDetectField_3pointsCorrectDistanceButWrongArragement_false);
 		CPPUNIT_TEST_SUITE_END();
 
+	public:
+		void setUp();
+		void tearDown();
+
 	private:
 		void tryToDetectField_4validFieldPoints_true();
 		void tryToDetectField_4validFieldPoints_correctNewOrigin();
@@ -54,7 +64,9 @@ namespace Autonomous
 		void tryToDetectField_3pointsNearMixedMid_correctNewOrigin();
 		void tryToDetectField_3pointsCorrectDistanceButWrongArragement_false();
 
-
+	private:
+		Common::LoggerMock *m_logger;
+		FieldDetector *m_fieldDetector;
 	};
 }
 }

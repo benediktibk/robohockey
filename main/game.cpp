@@ -75,7 +75,7 @@ Game::Game(int argc, char **argv) :
 	m_robot = new Autonomous::RobotImpl(dataAnalyser, router, new Common::WatchImpl(), *m_logger);
 	m_field = new Autonomous::FieldImpl(
 				dataAnalyser->getOdometry(), dataAnalyser->getLidar(),
-				dataAnalyser->getCamera(), *m_robot);
+				dataAnalyser->getCamera(), *m_robot, *m_logger);
 	m_referee = new Strategy::Common::RefereeImpl(angelinaServer);
 
 	if (parser.enableRecorder())

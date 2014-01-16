@@ -1,7 +1,7 @@
 #include "layer/strategy/drivepuckstatemachine/leavepuckstate.h"
 #include "layer/strategy/drivepuckstatemachine/initialstate.h"
 #include "layer/strategy/drivepuckstatemachine/drivetocollectpuckstate.h"
-#include "layer/strategy/drivepuckstatemachine/findpuckstate.h"
+#include "layer/strategy/drivepuckstatemachine/findpuckturntostate.h"
 #include "common/robotposition.h"
 #include "layer/strategy/common/referee.h"
 #include "layer/autonomous/robot.h"
@@ -22,7 +22,7 @@ State* LeavePuckState::nextState()
 	if(m_robot.cantReachTarget())
 		return new InitialState(m_robot, m_field, m_referee, m_logger, m_puckTargetFetcher);
 	else if(m_robot.reachedTarget() && m_puckTargetFetcher.getNumberOfKnownPucksNotInEnemyThird() == 0)
-		return new FindPuckState(m_robot, m_field, m_referee, m_logger, m_puckTargetFetcher);
+		return new FindPuckTurnToState(m_robot, m_field, m_referee, m_logger, m_puckTargetFetcher, m_field.getTargetsForTurningToUnknownObjects());
 	else if(m_robot.reachedTarget() && m_puckTargetFetcher.getNumberOfKnownPucksNotInEnemyThird() != 0)
 		return new DriveToCollectPuckState(m_robot, m_field, m_referee, m_logger, m_puckTargetFetcher);
 	else

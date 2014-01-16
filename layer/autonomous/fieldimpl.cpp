@@ -10,6 +10,7 @@
 #include "common/robotposition.h"
 #include "common/randomdecision.h"
 #include "common/circle.h"
+#include "common/logger.h"
 #include <math.h>
 #include <algorithm>
 
@@ -17,15 +18,17 @@ using namespace std;
 using namespace RoboHockey::Common;
 using namespace RoboHockey::Layer::Autonomous;
 
-FieldImpl::FieldImpl(DataAnalysis::Odometry &odometry, const DataAnalysis::Lidar &lidar, DataAnalysis::Camera &camera, Robot &autonomousRobot):
+FieldImpl::FieldImpl(DataAnalysis::Odometry &odometry, const DataAnalysis::Lidar &lidar, DataAnalysis::Camera &camera, Robot &autonomousRobot, Logger &logger):
+	m_logger(logger),
 	m_seenTresholdForFieldObjects(5),
 	m_maximumDistanceToDeleteFieldObject(2.5),
 	m_maximumAngleToDeleteFieldObject(Angle::getQuarterRotation()),
-	m_odometry(&odometry),
-	m_lidar(&lidar),
-	m_camera(&camera),
-	m_robot(&autonomousRobot),
-	m_position(new RobotPosition(m_odometry->getCurrentPosition())),
+	m_odometry(odometry),
+	m_lidar(lidar),
+	m_camera(camera),
+	m_robot(autonomousRobot),
+	m_fieldDetector(new FieldDetector(m_logger)),
+	m_position(new RobotPosition(m_odometry.getCurrentPosition())),
 	m_fieldState(FieldStateUnknownPosition),
 	m_teamColor(FieldColorUnknown),
 	m_estimatedAchievedGoals(0)
@@ -36,6 +39,9 @@ FieldImpl::~FieldImpl()
 	delete m_position;
 	m_position = 0;
 
+	delete m_fieldDetector;
+	m_fieldDetector = 0;
+
 	m_fieldObjects.clear();
 }
 
@@ -43,10 +49,10 @@ void FieldImpl::update()
 {
 	updateWithOdometryData();
 
-	if (!m_robot->isRotating())
+	if (!m_robot.isRotating())
 	{
 		updateWithLidarData(getRangeOfViewArea());
-		if (!m_robot->isMoving())
+		if (!m_robot.isMoving())
 			updateWithCameraData();
 	}
 	else
@@ -56,7 +62,7 @@ void FieldImpl::update()
 	removeNotExistingFieldObjects();
 	updateUsefulFieldObjects();
 
-	if (!m_robot->isRotating())
+	if (!m_robot.isRotating())
 		updateObstacles();
 
 	updateAchievedGoals();
@@ -101,7 +107,7 @@ unsigned int FieldImpl::getNumberOfObjectsWithColor(FieldColor color) const
 bool FieldImpl::calibratePosition()
 {
 	unsigned int numberOfBorderStones;
-	RobotPosition newOrigin = getNewOriginFromFieldDetection(numberOfBorderStones);
+	RobotPosition newOrigin = getNewOriginFromFieldDetection(numberOfBorderStones, false);
 
 	bool result = !(newOrigin.getPosition() == Point::zero()) || !(newOrigin.getOrientation().getValueBetweenMinusPiAndPi() == 0.0);
 
@@ -163,8 +169,8 @@ void FieldImpl::detectTeamColorWithGoalInFront()
 {
 	assert(m_teamColor == FieldColorUnknown);
 
-	double blueGoal = m_camera->getProbabilityForBlueGoal();
-	double yellowGoal = m_camera->getProbabilityForYellowGoal();
+	double blueGoal = m_camera.getProbabilityForBlueGoal();
+	double yellowGoal = m_camera.getProbabilityForYellowGoal();
 	Compare compare(0.1);
 
 	//! The field should not make a strategic decision, therefore it does not decide on the team color if it is not clear.
@@ -318,61 +324,31 @@ list<RobotPosition> FieldImpl::getTargetsForSearchingPucks() const
 list<Point> FieldImpl::getTargetsForTurningToUnknownObjects() const
 {
 	list<Point> pointsToTurnTo;
+	Circle currentCircle;
 	Point currentPoint;
-	Circle circle(m_robot->getCurrentPosition().getPosition(), 1);
+	Point pointToInsert;
+	Circle circle(m_position->getPosition(), 2);
 	Rectangle fieldSector(Point(0.1, 0.1), Point(4.9, 2.9));
 	vector<FieldObject> fieldObjects = getObjectsWithColorOrderdByDistance(FieldColorUnknown);
-	vector<Point> pointInRange;
-	vector<double> angles;
-	double angleConverted;
-	int z=0, comp = 0;
+	map<double, Point> pointsToSort;
 
 	for (vector<FieldObject>::const_iterator i = fieldObjects.begin(); i != fieldObjects.end(); ++i)
 	{
 		const FieldObject &fieldObject = *i;
+		currentCircle = fieldObject.getCircle();
 		currentPoint = fieldObject.getCircle().getCenter();
+
 		if(fieldSector.isInside(currentPoint, 0.01), circle.isInside(currentPoint))
 		{
-			pointInRange.push_back(currentPoint);
-			Angle angle(m_robot->getCurrentPosition().getPosition(), currentPoint);
-			angleConverted = angle.getValueBetweenZeroAndTwoPi() - m_robot->getCurrentPosition().getOrientation().getValueBetweenZeroAndTwoPi();
-
-			if(angleConverted < 0)
-				angleConverted = angleConverted + (2 * M_PI);
-
-			angles.push_back(angleConverted);
+			pointsToSort.insert(pair<double, Point>(calculateRelativeAngleOfObject(currentCircle).getValueBetweenZeroAndTwoPi(), currentPoint));
 		}
 	}
 
-	double anglesToSort[angles.size()];
-	vector<Point>::const_iterator iteratorArray[angles.size()];
-
-	for(vector<double>::const_iterator i = angles.begin(); i != angles.end(); ++i)
+	for(map<double, Point>::const_iterator i = pointsToSort.begin(); i != pointsToSort.end(); ++i)
 	{
-		const double &angleForArray = *i;
-		anglesToSort[z] = angleForArray;
-		++z;
-	}
-
-	vector<Point>::const_iterator iterate;
-
-	for(size_t i=0; i < angles.size(); ++i)
-	{
-		comp = 0;
-		iterate = pointInRange.begin();
-		for(size_t j=0; j < angles.size(); ++j)
-		{
-			if(anglesToSort[i] > anglesToSort[j])
-				++comp;
-				++iterate;
-		}
-		iteratorArray[comp] = iterate;
-	}
-
-	for(size_t i=0; i < angles.size(); ++i)
-	{
-		const Point &point = *iteratorArray[i];
-		pointsToTurnTo.push_back(point);
+		const pair<double, Point> &elements = *i;
+		pointToInsert = elements.second;
+		pointsToTurnTo.push_back(pointToInsert);
 	}
 
 	return pointsToTurnTo;
@@ -623,22 +599,21 @@ void FieldImpl::setTrueTeamColor(FieldColor trueTeamColor)
 	m_teamColor = trueTeamColor;
 }
 
-RobotPosition FieldImpl::getNewOriginFromFieldDetection(unsigned int &outNumberOfBorderstones)
+RobotPosition FieldImpl::getNewOriginFromFieldDetection(unsigned int &outNumberOfBorderstones, bool onlyAcceptConfirmedResults)
 {
 	outNumberOfBorderstones = 0;
 	vector<Point> *input = getPointsOfObjectsWithDiameterAndColor(0.06, FieldColorGreen);
-	FieldDetector detector(m_position->getPosition(), *input);
 
-	bool result = detector.tryToDetectField();
+	bool result = m_fieldDetector->tryToDetectField(m_position->getPosition(), *input);
 
 	Point newOrigin;
 	double rotation = 0.0;
 
-	if (result)
+	if (result && ((onlyAcceptConfirmedResults && m_fieldDetector->hasConfirmedResult()) || !onlyAcceptConfirmedResults))
 	{
-		newOrigin = detector.getNewOrigin();
-		rotation = detector.getRotation();
-		outNumberOfBorderstones = detector.getNumberOfBorderStonesInRow();
+		newOrigin = m_fieldDetector->getNewOrigin();
+		rotation = m_fieldDetector->getRotation();
+		outNumberOfBorderstones = m_fieldDetector->getNumberOfBorderStonesInRow();
 	}
 
 	delete input;
@@ -720,7 +695,7 @@ Angle FieldImpl::calculateRelativeAngleOfObject(const Circle &circle) const
 
 void FieldImpl::updateWithLidarData(double range)
 {
-	const DataAnalysis::LidarObjects &lidarObjects =  m_lidar->getAllObjects(*m_position);
+	const DataAnalysis::LidarObjects &lidarObjects =  m_lidar.getAllObjects(*m_position);
 	const vector<DataAnalysis::LidarObject> &objectsInRange = lidarObjects.getObjectsWithDistanceBelow(*m_position, range);
 
 	vector<FieldObject> inVisibleArea = moveAllFieldObjectsInVisibleAreaToTemporaryVector(range);
@@ -821,12 +796,12 @@ void FieldImpl::tryToMergeDoubledFieldObjects()
 
 void FieldImpl::updateWithOdometryData()
 {
-	*m_position = m_odometry->getCurrentPosition();
+	*m_position = m_odometry.getCurrentPosition();
 }
 
 void FieldImpl::updateWithCameraData()
 {
-	const DataAnalysis::CameraObjects &allCameraObjects = m_camera->getAllCameraObjects(*m_position);
+	const DataAnalysis::CameraObjects &allCameraObjects = m_camera.getAllCameraObjects(*m_position);
 
 	if (m_fieldObjects.size() == 0 || allCameraObjects.getObjectCount() == 0)
 		return;
@@ -1008,8 +983,8 @@ void FieldImpl::moveCoordinateSystem(const Point &newOrigin)
 	Point newCenter =  m_position->getPosition() - newOrigin;
 	m_position->setPosition(newCenter);
 
-	m_odometry->setCurrentPosition(*m_position);
-	assert(*m_position == m_odometry->getCurrentPosition());
+	m_odometry.setCurrentPosition(*m_position);
+	assert(*m_position == m_odometry.getCurrentPosition());
 
 	m_fieldObjects.clear();
 	m_fieldObjects = newSystem;
@@ -1039,8 +1014,8 @@ void FieldImpl::rotateCoordinateSystem(const Angle &rotation)
 	m_position->setPosition(ownPosition);
 	m_position->setOrientation(ownOrientation);
 
-	m_odometry->setCurrentPosition(*m_position);
-	assert(*m_position == m_odometry->getCurrentPosition());
+	m_odometry.setCurrentPosition(*m_position);
+	assert(*m_position == m_odometry.getCurrentPosition());
 
 	m_fieldObjects.clear();
 	m_fieldObjects = newSystem;
@@ -1092,7 +1067,7 @@ vector<FieldObject> FieldImpl::moveAllFieldObjectsInVisibleAreaToTemporaryVector
 	vector<FieldObject> invisibleObjects;
 	invisibleObjects.reserve(m_fieldObjects.size());
 	visibleObjects.reserve(m_fieldObjects.size());
-	const RobotPosition &ownPosition = m_odometry->getCurrentPosition();
+	const RobotPosition &ownPosition = m_odometry.getCurrentPosition();
 	const Point &positionOnly = ownPosition.getPosition();
 	const Angle maximumAngle = getAngleOfViewArea();
 
@@ -1100,7 +1075,7 @@ vector<FieldObject> FieldImpl::moveAllFieldObjectsInVisibleAreaToTemporaryVector
 	{
 		const FieldObject &fieldObject = *i;
 		const Circle &circle = fieldObject.getCircle();
-		bool canBeSeen = m_lidar->canBeSeen(circle, ownPosition);
+		bool canBeSeen = m_lidar.canBeSeen(circle, ownPosition);
 		double distance = positionOnly.distanceTo(circle.getCenter());
 		Angle angle = calculateRelativeAngleOfObject(circle);
 		angle.abs();
@@ -1122,7 +1097,7 @@ vector<FieldObject> FieldImpl::getAllPartlyVisibleObjects() const
 	for (vector<FieldObject>::const_iterator i = m_fieldObjects.begin(); i != m_fieldObjects.end(); ++i)
 	{
 		const FieldObject &object = *i;
-		if (m_lidar->canBeSeenPartly(object.getCircle(), *m_position))
+		if (m_lidar.canBeSeenPartly(object.getCircle(), *m_position))
 			result.push_back(object);
 	}
 
@@ -1135,7 +1110,7 @@ void FieldImpl::updateAllNotVisibleObjects()
 	{
 		FieldObject &object = *i;
 
-		if (!m_lidar->canBeSeenPartly(object.getCircle(), *m_position))
+		if (!m_lidar.canBeSeenPartly(object.getCircle(), *m_position))
 			object.cantBeSeen();
 	}
 }

@@ -12,23 +12,22 @@ using namespace std;
 using namespace RoboHockey::Common;
 using namespace RoboHockey::Layer::Autonomous;
 
-FieldDetector::FieldDetector(const Point &currentPosition, vector<Point> &pointsOfObjects):
-	m_currentPosition(currentPosition),
-	m_points(pointsOfObjects),
+FieldDetector::FieldDetector(Logger &logger):
+	m_logger(logger),
 	m_distanceChecker(0.05),
 	m_maxBorderstonesArranged(2),
 	m_epsilonBorderStone(0.07)
 { }
 
-bool FieldDetector::tryToDetectField()
+bool FieldDetector::tryToDetectField(const Common::Point &currentPosition, std::vector<Common::Point> &pointsOfObjects)
 {
 	vector<Point*> currentPoints;
 	bool result = false;
 
-	for (vector<Point>::iterator i = m_points.begin(); i != m_points.end(); ++i)
+	for (vector<Point>::iterator i = pointsOfObjects.begin(); i != pointsOfObjects.end(); ++i)
 	{
 		currentPoints.clear();
-		for (vector<Point>::iterator iter = m_points.begin(); iter != m_points.end(); ++iter)
+		for (vector<Point>::iterator iter = pointsOfObjects.begin(); iter != pointsOfObjects.end(); ++iter)
 			if(i != iter)
 				currentPoints.push_back(&(*iter));
 
@@ -40,10 +39,7 @@ bool FieldDetector::tryToDetectField()
 
 		if (numberOfFoundBorderStones > 2)
 		{
-				result = tryToFigureOutNewOrigin(root) || result;
-
-//				if (result)
-//					return true;
+				result = tryToFigureOutNewOrigin(root, currentPosition) || result;
 		}
 
 	}
@@ -55,28 +51,12 @@ bool FieldDetector::tryToDetectField()
 
 Point FieldDetector::getNewOrigin()
 {
-	assert(m_newOrigins.size() != (size_t) 0);
-
-	Point medianPoint;
-
-	for (vector<RobotPosition>::const_iterator it = m_newOrigins.begin(); it != m_newOrigins.end(); ++it)
-		medianPoint = medianPoint + (*it).getPosition() * 1.0/(double) m_newOrigins.size();
-
-//	return medianPoint;
-	return m_newOrigin;
+	return getBestDetectionResult().getTransformationDestination().getPosition();
 }
 
 double FieldDetector::getRotation()
 {
-	assert(m_newOrigins.size() != (size_t) 0);
-
-	Angle medianRotation;
-
-	for (vector<RobotPosition>::const_iterator it = m_newOrigins.begin(); it != m_newOrigins.end(); ++it)
-		medianRotation = medianRotation + (*it).getOrientation() * 1.0/(double) m_newOrigins.size();
-
-//	return medianRotation.getValueBetweenMinusPiAndPi();
-	return m_rotation;
+	return getBestDetectionResult().getTransformationDestination().getOrientation().getValueBetweenMinusPiAndPi();
 }
 
 unsigned int FieldDetector::getNumberOfBorderStonesInRow()
@@ -87,7 +67,7 @@ unsigned int FieldDetector::getNumberOfBorderStonesInRow()
 	return m_maxBorderstonesArranged;
 }
 
-bool FieldDetector::tryToFigureOutNewOrigin(BorderStone &root)
+bool FieldDetector::tryToFigureOutNewOrigin(BorderStone &root, const Point &currentPosition)
 {
 	Rectangle fieldGround(Point(0,0), Point(5,3));
 	BorderStoneDistances &distancesChecker = m_distanceChecker;
@@ -207,17 +187,20 @@ bool FieldDetector::tryToFigureOutNewOrigin(BorderStone &root)
 		rotation = -1.0 * angle.getValueBetweenMinusPiAndPi();
 	}
 
-	Point currentPositionInNewCoordinates = m_currentPosition - possibleNewOrigin;
+	Point currentPositionInNewCoordinates = currentPosition - possibleNewOrigin;
 	currentPositionInNewCoordinates.rotate(rotation);
+
+	bool isOpposite = false;
 
 	if (currentPositionInNewCoordinates.getY() < 0)
 	{
 		Point oppositeOrigin = Point(0,-1* distancesChecker.getStandardFieldDistance(BorderStoneFieldDistanceD));
 		oppositeOrigin.rotate(Angle( -1* rotation));
 		possibleNewOrigin = possibleNewOrigin + oppositeOrigin;
+		isOpposite = true;
 	}
 
-	currentPositionInNewCoordinates = m_currentPosition - possibleNewOrigin;
+	currentPositionInNewCoordinates = currentPosition - possibleNewOrigin;
 	currentPositionInNewCoordinates.rotate(rotation);
 
 	if (!fieldGround.isInside(currentPositionInNewCoordinates, Compare(0.1)) || !verifyNewOriginWithRoot(possibleNewOrigin, rotation, root))
@@ -225,13 +208,20 @@ bool FieldDetector::tryToFigureOutNewOrigin(BorderStone &root)
 		return false;
 	}
 
-	m_newOrigins.push_back( RobotPosition( possibleNewOrigin, rotation) );
-
 	if (root.getNumberOfChildrenRecursive() + 1 > m_maxBorderstonesArranged)
 	{
 		m_rotation = rotation;
 		m_newOrigin = possibleNewOrigin;
 		m_maxBorderstonesArranged = root.getNumberOfChildrenRecursive() + 1;
+	}
+
+	RobotPosition newOrigin(possibleNewOrigin, Angle(rotation));
+
+	if (isResultAlreadyKnown(newOrigin))
+		getDetectionResultWithNewOrigin(newOrigin).confirmDetectionResultWithPosition(newOrigin, root.getNumberOfChildrenRecursive() + 1, isOpposite);
+	else
+	{
+		m_detectionResults.push_back(FieldDetectionResult(newOrigin, root.getNumberOfChildrenRecursive() + 1, isOpposite));
 	}
 
 	return true;
@@ -257,5 +247,56 @@ vector<Point> FieldDetector::orderBorderstonesByDistanceToRoot(BorderStone &bord
 	return result;
 }
 
+bool FieldDetector::isResultAlreadyKnown(RobotPosition &newOrigin)
+{
+	for (list<FieldDetectionResult>::const_iterator it = m_detectionResults.begin(); it != m_detectionResults.end(); ++it)
+	{
+		if ((*it).isEqualDetectionResult(newOrigin))
+			return true;
+	}
 
+	return false;
+}
 
+FieldDetectionResult &FieldDetector::getDetectionResultWithNewOrigin(RobotPosition &newOrigin)
+{
+	for (list<FieldDetectionResult>::iterator it = m_detectionResults.begin(); it != m_detectionResults.end(); ++it)
+	{
+		if ((*it).isEqualDetectionResult(newOrigin))
+			return *it;
+	}
+
+	return m_detectionResults.back();
+}
+
+FieldDetectionResult &FieldDetector::getBestDetectionResult()
+{
+	unsigned int highestValue = 0;
+
+	for (list<FieldDetectionResult>::iterator it = m_detectionResults.begin(); it != m_detectionResults.end(); ++it)
+	{
+		if ((*it).isConfirmedByBothSides())
+			return *it;
+		highestValue = max(highestValue, (*it).getNumberOfBorderStones());
+	}
+
+	for (list<FieldDetectionResult>::iterator it = m_detectionResults.begin(); it != m_detectionResults.end(); ++it)
+	{
+		if ((*it).getNumberOfBorderStones() == highestValue)
+			return *it;
+	}
+
+	return m_detectionResults.back();
+
+}
+
+bool FieldDetector::hasConfirmedResult()
+{
+	for (list<FieldDetectionResult>::iterator it = m_detectionResults.begin(); it != m_detectionResults.end(); ++it)
+	{
+		if ((*it).isConfirmedByBothSides())
+			return true;
+	}
+
+	return false;
+}
