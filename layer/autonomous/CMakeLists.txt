@@ -12,6 +12,7 @@ set(LAYER_AUTONOMOUS_SRC
 	routingobstacle.cpp
 	routingresult.cpp
 	sensordataplayer.cpp
+	fielddetectionresult.cpp
 )
 
 set(LAYER_AUTONOMOUS_TEST_SRC
@@ -30,6 +31,7 @@ set(LAYER_AUTONOMOUS_TEST_SRC
 	routelengthcomparetest.cpp
 	routingobstacletest.cpp
 	routingresulttest.cpp
+	fielddetectionresulttest.cpp
 )
 
 add_library(layerautonomous ${LAYER_AUTONOMOUS_SRC})
