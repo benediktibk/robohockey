@@ -66,6 +66,8 @@ namespace Autonomous
 		CPPUNIT_TEST(goTo_firstPointNearlyReachedAndSmallTurnNecessary_lastSpeedIsBig);
 		CPPUNIT_TEST(goTo_firstPointReachedAndSmallTurnNecessary_noCallsToTurnToTarget);
 		CPPUNIT_TEST(goTo_firstPointReachedAndSmallTurnNecessary_engineGotCorrectNextTarget);
+		CPPUNIT_TEST(goTo_orientationDifferenceZero_engineGotOnlyCallToGoToStraight);
+		CPPUNIT_TEST(goTo_orientationDifferenceSmall_engineGotOnlyCallToGoToStraight);
 		CPPUNIT_TEST(stuckAtObstacle_tryingToTackleObstacle_true);
 		CPPUNIT_TEST(stuckAtObstacle_notTryingToTackleObstacle_false);
 		CPPUNIT_TEST(stuckAtObstacle_updateCalledTwiceAfterStuckAtObstacle_true);
@@ -196,6 +198,8 @@ namespace Autonomous
 		void goTo_firstPointNearlyReachedAndSmallTurnNecessary_lastSpeedIsBig();
 		void goTo_firstPointReachedAndSmallTurnNecessary_noCallsToTurnToTarget();
 		void goTo_firstPointReachedAndSmallTurnNecessary_engineGotCorrectNextTarget();
+		void goTo_orientationDifferenceZero_engineGotOnlyCallToGoToStraight();
+		void goTo_orientationDifferenceSmall_engineGotOnlyCallToGoToStraight();
 		void stuckAtObstacle_tryingToTackleObstacle_true();
 		void stuckAtObstacle_notTryingToTackleObstacle_false();
 		void stuckAtObstacle_updateCalledTwiceAfterStuckAtObstacle_true();
