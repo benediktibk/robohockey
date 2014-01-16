@@ -19,14 +19,14 @@ class FieldDetectionResult
 		Common::RobotPosition getTransformationDestination() const;
 		bool isEqualDetectionResult(Common::RobotPosition &position) const;
 
-		void confirmDetectionResultWithPosition(Common::RobotPosition &position);
+		void confirmDetectionResultWithPosition(Common::RobotPosition &position, unsigned int numberOfStones, bool onOppositeSide);
 		bool isConfirmedByBothSides() const;
 
 	private:
 		Common::RobotPosition m_newOrigin;
 		Common::Compare m_compare;
-		std::vector<Common::Point> m_confirmedPositionsThisSide;
-		std::vector<Common::Point> m_confirmedPositionsOppositeSide;
+		unsigned int m_confirmedPositionsThisSide;
+		unsigned int m_confirmedPositionsOppositeSide;
 
 	};
 }
