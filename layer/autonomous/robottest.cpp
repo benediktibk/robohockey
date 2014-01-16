@@ -254,9 +254,9 @@ void RobotTest::goTo_firstPointReached_lastArgumentOfTurnToIsTargetPoint()
 	m_odometry->setCurrentPosition(RobotPosition(Point(0, 0), 0));
 
 	m_routerMock->setChessMode(true);
-	m_engine->setReachedTarget(false);
+	m_engine->setReachedTarget(true);
 	m_robot->updateSensorData();
-	m_targets.push_back(RobotPosition(Point(1, 1), Angle::getEighthRotation()));
+	m_targets.push_back(RobotPosition(Point(1, 10), Angle(0)));
 	m_robot->goTo(m_targets);
 	m_robot->updateActuators(*m_field);
 	m_engine->setReachedTarget(true);
@@ -264,7 +264,7 @@ void RobotTest::goTo_firstPointReached_lastArgumentOfTurnToIsTargetPoint()
 	m_odometry->setCurrentPosition(RobotPosition(Point(0, 0), Angle::getQuarterRotation()));
 	m_robot->updateSensorData();
 	m_robot->updateActuators(*m_field);
-	m_odometry->setCurrentPosition(RobotPosition(Point(0, 1), Angle::getQuarterRotation()));
+	m_odometry->setCurrentPosition(RobotPosition(Point(0, 10), Angle::getQuarterRotation()));
 	m_engine->setReachedTarget(true);
 	m_engine->setIsGoingStraight(false);
 	m_engine->resetCounters();
@@ -272,7 +272,7 @@ void RobotTest::goTo_firstPointReached_lastArgumentOfTurnToIsTargetPoint()
 	m_robot->updateActuators(*m_field);
 
 	Compare compare(0.00001);
-	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(1, 1), m_engine->getLastTarget()));
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(1, 10), m_engine->getLastTarget()));
 }
 
 void RobotTest::goTo_firstPointAndRotationReached_engineGotOneCallToGoToStraight()

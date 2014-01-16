@@ -109,7 +109,11 @@ void RobotImpl::updateEngineForDrivingTurningPart()
 		if (m_currentRoute->getPointCount() >= 2)
 			target = m_currentRoute->getSecondPoint();
 		else
-			 target = m_currentRoute->getLastPoint();
+		{
+			target = Point(1, 0);
+			target.rotate(m_currentTarget.getOrientation());
+			target = target + getCurrentPosition().getPosition();
+		}
 
 		engine.turnToTarget(target);
 	}
