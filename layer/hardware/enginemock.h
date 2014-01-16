@@ -18,6 +18,7 @@ namespace Hardware
 		virtual void setSpeed(double magnitude, double rotation);
 		virtual bool isMoving() const;
 		virtual double getSpeed() const;
+		virtual double getRotationSpeed() const;
 		virtual void setEnabled(bool value);
 		virtual void writeDataToFile(const std::string &fileName) const;
 		virtual void updateSensorData();
@@ -29,6 +30,7 @@ namespace Hardware
 		double getLastRotation() const;
 		void setIsMoving(bool value);
 		void readDataFromFile(const std::string &fileName);
+		void setRotationSpeed(double value);
 
 	private:
 		unsigned int m_callsToSetSpeed;
@@ -38,6 +40,7 @@ namespace Hardware
 		bool m_enabled;
 		bool m_isMoving;
 		double m_speed;
+		double m_rotationSpeed;
 	};
 }
 }

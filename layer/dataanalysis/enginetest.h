@@ -61,6 +61,7 @@ namespace DataAnalysis
 		CPPUNIT_TEST(updateSpeedAndRotation_forwardMovementLockedAndCalledTwiceAndNotTryingToTackleObstacle_motorIsEnabled);
 		CPPUNIT_TEST(updateSpeedAndRotation_forwardMovementUnlockedAndCalledTwice_motorIsEnabled);
 		CPPUNIT_TEST(updateSpeedAndRotation_tryingToTackleObstacle_motorIsDisabled);
+		CPPUNIT_TEST(getCurrentRotationSpeed_speedSet2_2);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
@@ -111,6 +112,7 @@ namespace DataAnalysis
 		void updateSpeedAndRotation_forwardMovementLockedAndCalledTwiceAndNotTryingToTackleObstacle_motorIsEnabled();
 		void updateSpeedAndRotation_forwardMovementUnlockedAndCalledTwice_motorIsEnabled();
 		void updateSpeedAndRotation_tryingToTackleObstacle_motorIsDisabled();
+		void getCurrentRotationSpeed_speedSet2_2();
 	};
 }
 }

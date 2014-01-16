@@ -135,6 +135,11 @@ double EngineImpl::getCurrentSpeed() const
 	return (m_engine.getSpeed() + m_desiredSpeed)/2;
 }
 
+double EngineImpl::getCurrentRotationSpeed() const
+{
+	return m_engine.getRotationSpeed();
+}
+
 void EngineImpl::updateSensorData()
 {
 	m_isMoving = m_engine.isMoving();

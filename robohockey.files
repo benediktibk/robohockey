@@ -877,3 +877,7 @@ layer/autonomous/fielddetectionresulttest.h
 layer/autonomous/fielddetectionresult.h
 layer/autonomous/fielddetectionresulttest.cpp
 layer/autonomous/fielddetectionresult.cpp
+layer/strategy/drivepuckstatemachine/findpuckturntostatetest.h
+layer/strategy/drivepuckstatemachine/findpuckturntostate.h
+layer/strategy/drivepuckstatemachine/findpuckturntostatetest.cpp
+layer/strategy/drivepuckstatemachine/findpuckturntostate.cpp

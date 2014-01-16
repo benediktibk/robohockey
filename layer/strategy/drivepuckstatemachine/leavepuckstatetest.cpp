@@ -1,6 +1,6 @@
 #include "layer/strategy/drivepuckstatemachine/leavepuckstatetest.h"
 #include "layer/strategy/drivepuckstatemachine/leavepuckstate.h"
-#include "layer/strategy/drivepuckstatemachine/findpuckstate.h"
+#include "layer/strategy/drivepuckstatemachine/findpuckturntostate.h"
 #include "layer/strategy/drivepuckstatemachine/initialstate.h"
 #include "layer/strategy/drivepuckstatemachine/drivetocollectpuckstate.h"
 #include "layer/strategy/common/statemachine.h"
@@ -44,7 +44,7 @@ void LeavePuckStateTest::nextState_reachedTargetAndNumberOfKnownPucksIs0_nextSta
 	LeavePuckState leavePuckState(robot, field, referee, logger, puckTargetFetcher, false);
 	State *state;
 	state = leavePuckState.nextState();
-	FindPuckState *stateCasted = dynamic_cast<FindPuckState*>(state);
+	FindPuckTurnToState *stateCasted = dynamic_cast<FindPuckTurnToState*>(state);
 
 	CPPUNIT_ASSERT(stateCasted != 0);
 	delete state;

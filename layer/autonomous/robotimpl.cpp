@@ -12,15 +12,18 @@
 #include "common/watch.h"
 #include "common/stopwatch.h"
 #include "common/timesmoothedboolean.h"
+#include "common/logger.h"
 #include <math.h>
 #include <assert.h>
+#include <sstream>
 
 using namespace RoboHockey::Common;
 using namespace RoboHockey::Layer::Autonomous;
 using namespace RoboHockey::Layer;
 using namespace std;
 
-RobotImpl::RobotImpl(DataAnalysis::DataAnalyser *dataAnalyser, Router *router, Watch *watch) :
+RobotImpl::RobotImpl(DataAnalysis::DataAnalyser *dataAnalyser, Router *router, Watch *watch, Common::Logger &logger) :
+	m_logger(logger),
 	m_robotWidth(0.38),
 	m_maximumDistanceToCollectPuck(0.75),
 	m_maximumAngleToCollectPuck(10.0/180*M_PI),
@@ -423,7 +426,21 @@ void RobotImpl::updateActuators(const Field &field)
 
 	DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
 	if (engine.tryingToTackleObstacle())
+	{
+		const DataAnalysis::Lidar &lidar = m_dataAnalyser->getLidar();
+		const DataAnalysis::Sonar &sonar = m_dataAnalyser->getSonar();
+		double speed = engine.getCurrentSpeed();
 		m_tryingToTackleObstacle = true;
+		if (lidar.isObstacleInFront(speed))
+			m_logger.logToConsoleAndGlobalLogFile("lidar detected collision");
+		if (sonar.isObstacleDirectInFront(speed))
+		{
+			stringstream message;
+			message << "sonar detected collision: (left, right) = (";
+			message << sonar.getLeftFrontValue() << ", " << sonar.getRightFrontValue() << ")";
+			m_logger.logToConsoleAndGlobalLogFile(message.str());
+		}
+	}
 }
 
 void RobotImpl::updateSensorData()
@@ -536,12 +553,13 @@ bool RobotImpl::isCollectingPuck() const
 
 bool RobotImpl::isRotating() const
 {
+	const DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
 	switch (m_state)
 	{
 	case RobotStateWaiting:
 		return false;
 	case RobotStateDrivingStraightPart:
-		return true;
+		return fabs(engine.getCurrentRotationSpeed()) > 0.2;
 	case RobotStateDrivingTurningPart:
 		return true;
 	case RobotStateTurnAround:
@@ -680,7 +698,8 @@ bool RobotImpl::isRouteFeasible(const vector<Circle> &obstacles) const
 			!m_currentRoute->intersectsWith(obstacles);
 }
 
-RobotImpl::RobotImpl(const RobotImpl &) :
+RobotImpl::RobotImpl(const RobotImpl &rhs) :
+	m_logger(rhs.m_logger),
 	m_robotWidth(0),
 	m_maximumDistanceToCollectPuck(0),
 	m_maximumAngleToCollectPuck(0),

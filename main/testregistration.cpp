@@ -69,6 +69,7 @@
 #include "layer/strategy/drivepuckstatemachine/drivepucktoenemythirdstatetest.h"
 #include "main/inputargumentparsertest.h"
 #include "layer/strategy/drivepuckstatemachine/verifypuckstatetest.h"
+#include "layer/strategy/drivepuckstatemachine/findpuckturntostatetest.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Common::CompareTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Common::WatchTest);
@@ -141,4 +142,5 @@ CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Strategy::DrivePuckStateMachi
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Strategy::DrivePuckStateMachine::DrivePuckToEnemyThirdStateTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Main::InputArgumentParserTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Strategy::DrivePuckStateMachine::VerifyPuckStateTest);
+CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Strategy::DrivePuckStateMachine::FindPuckTurnToStateTest);
 

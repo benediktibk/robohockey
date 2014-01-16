@@ -3,6 +3,7 @@
 
 #include "layer/autonomous/field.h"
 #include "common/robotposition.h"
+#include "common/point.h"
 
 namespace RoboHockey
 {
@@ -42,6 +43,7 @@ namespace Autonomous
 		virtual std::list<Common::RobotPosition> getTargetsForCollectingOnePuck(Common::FieldColor puckColor) const;
 		virtual std::list<Common::RobotPosition> getTargetsForCollectingOnePuckNotInEnemyThird(Common::FieldColor puckColor) const;
 		virtual std::list<Common::RobotPosition> getTargetsInEnemyThird() const;
+		virtual std::list<Common::Point> getTargetsForTurningToUnknownObjects()  const;
 		virtual void setTrueTeamColor(Common::FieldColor);
 		virtual Common::RobotPosition getNewOriginFromFieldDetection(unsigned int &outNumberOfBorderstones, bool onlyAcceptConfirmedResults);
 		virtual void transformFieldToNewOrigin(const Common::RobotPosition newOrigin);

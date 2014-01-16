@@ -64,6 +64,11 @@ void EngineMock::readDataFromFile(const string &fileName)
 	file.close();
 }
 
+void EngineMock::setRotationSpeed(double value)
+{
+	m_rotationSpeed = value;
+}
+
 bool EngineMock::isMoving() const
 {
 	return m_isMoving;
@@ -72,6 +77,11 @@ bool EngineMock::isMoving() const
 double EngineMock::getSpeed() const
 {
 	return m_speed;
+}
+
+double EngineMock::getRotationSpeed() const
+{
+	return m_rotationSpeed;
 }
 
 void EngineMock::setEnabled(bool value)
