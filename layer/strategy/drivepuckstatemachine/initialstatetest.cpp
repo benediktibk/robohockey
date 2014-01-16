@@ -10,11 +10,13 @@
 #include "layer/autonomous/fieldmock.h"
 #include "layer/strategy/common/colordependentpucktargetfetchermock.h"
 #include "common/loggermock.h"
+#include <list>
 
 using namespace RoboHockey::Common;
 using namespace RoboHockey::Layer::Strategy::Common;
 using namespace RoboHockey::Layer::Strategy::DrivePuckStateMachine;
 using namespace RoboHockey::Layer::Autonomous;
+using namespace std;
 
 void InitialStateTest::nextState_puckCollected_nextStateIsLeavePuckState()
 {
@@ -40,6 +42,9 @@ void InitialStateTest::nextState_numberOfKnownPucksIs0_nextStateIsFindPuckTurnTo
 	RefereeMock referee;
 	LoggerMock logger;
 	ColorDependentPuckTargetFetcherMock puckTargetFetcher;
+	list<Point> targets;
+	targets.push_back(Point());
+	field.setTargetsForTurningToUnknownObjects(targets);
 	InitialState initialState(robot, field, referee, logger, puckTargetFetcher);
 	State *state;
 	state = initialState.nextState();

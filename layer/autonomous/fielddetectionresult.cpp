@@ -7,7 +7,6 @@ using namespace RoboHockey::Layer::Autonomous;
 
 FieldDetectionResult::FieldDetectionResult(Common::RobotPosition &position, unsigned int numberOfStones, bool onOppositeSide):
 	m_newOrigin(position),
-	m_compare(0.1),
 	m_confirmedPositionsThisSide(0),
 	m_confirmedPositionsOppositeSide(0)
 {
@@ -21,12 +20,15 @@ RobotPosition FieldDetectionResult::getTransformationDestination() const
 
 bool FieldDetectionResult::isEqualDetectionResult(RobotPosition &position) const
 {
-	return m_compare.isFuzzyEqual(position, m_newOrigin);
+	Compare angleCompare(0.5);
+	Compare pointCompare(0.12);
+	return pointCompare.isFuzzyEqual(position.getPosition(), m_newOrigin.getPosition())
+			&& angleCompare.isFuzzyEqual(position.getOrientation(), m_newOrigin.getOrientation());
 }
 
 void FieldDetectionResult::confirmDetectionResultWithPosition(RobotPosition &position, unsigned int numberOfStones, bool onOppositeSide)
 {
-	if (m_compare.isFuzzyEqual(position, m_newOrigin))
+	if (isEqualDetectionResult(position))
 	{
 		if (!onOppositeSide && m_confirmedPositionsThisSide < numberOfStones)
 			m_confirmedPositionsThisSide = numberOfStones;

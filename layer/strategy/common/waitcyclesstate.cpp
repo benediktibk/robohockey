@@ -2,6 +2,7 @@
 #include "layer/autonomous/field.h"
 #include "common/logger.h"
 #include <sstream>
+#include <assert.h>
 
 using namespace std;
 using namespace RoboHockey::Common;
@@ -24,6 +25,8 @@ WaitCyclesState::~WaitCyclesState()
 
 State *WaitCyclesState::nextState()
 {
+	assert(m_stateAfterWaitCycles != 0);
+
 	State *result = 0;
 	bool shoudWait = false;
 	if(!m_shouldWaitTheWholeTime)

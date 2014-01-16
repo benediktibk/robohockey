@@ -43,7 +43,7 @@ namespace Autonomous
 		virtual std::list<Common::RobotPosition> getTargetsForCollectingOnePuck(Common::FieldColor puckColor) const;
 		virtual std::list<Common::RobotPosition> getTargetsForCollectingOnePuckNotInEnemyThird(Common::FieldColor puckColor) const;
 		virtual std::list<Common::RobotPosition> getTargetsInEnemyThird() const;
-		virtual std::list<Common::Point> getTargetsForTurningToUnknownObjects()  const;
+		virtual std::list<Common::Point> getTargetsForTurningToUnknownObjects() const;
 		virtual void setTrueTeamColor(Common::FieldColor);
 		virtual Common::RobotPosition getNewOriginFromFieldDetection(unsigned int &outNumberOfBorderstones, bool onlyAcceptConfirmedResults);
 		virtual void transformFieldToNewOrigin(const Common::RobotPosition newOrigin);
@@ -63,6 +63,7 @@ namespace Autonomous
 		void setIsPuckcolorDetected(bool value);
 		void setCalibrationReturnPosition(Common::RobotPosition newOrigin);
 		void setObjectsWithColorOrderedByDistance(const std::vector<FieldObject> &objects);
+		void setTargetsForTurningToUnknownObjects(const std::list<Common::Point> &targets);
 
 	private:
 		std::vector<FieldObject> m_objects;
@@ -78,6 +79,7 @@ namespace Autonomous
 		Common::FieldColor m_teamColor;
 		Common::RobotPosition m_newOrigin;
 		std::vector<FieldObject> m_objectsWithColorOrderedByDistance;
+		std::list<Common::Point> m_pointsForTurning;
 	};
 }
 }

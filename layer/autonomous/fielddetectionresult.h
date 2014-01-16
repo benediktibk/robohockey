@@ -1,7 +1,6 @@
 #ifndef ROBOHOCKEY_LAYER_AUTONOMOUS_FIELDDETECTIONRESULT_H
 #define ROBOHOCKEY_LAYER_AUTONOMOUS_FIELDDETECTIONRESULT_H
 
-#include "common/compare.h"
 #include "common/robotposition.h"
 #include <vector>
 
@@ -25,7 +24,6 @@ class FieldDetectionResult
 
 	private:
 		Common::RobotPosition m_newOrigin;
-		Common::Compare m_compare;
 		unsigned int m_confirmedPositionsThisSide;
 		unsigned int m_confirmedPositionsOppositeSide;
 

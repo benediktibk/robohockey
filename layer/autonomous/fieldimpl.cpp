@@ -23,12 +23,12 @@ FieldImpl::FieldImpl(DataAnalysis::Odometry &odometry, const DataAnalysis::Lidar
 	m_seenTresholdForFieldObjects(5),
 	m_maximumDistanceToDeleteFieldObject(2.5),
 	m_maximumAngleToDeleteFieldObject(Angle::getQuarterRotation()),
-	m_odometry(&odometry),
-	m_lidar(&lidar),
-	m_camera(&camera),
-	m_robot(&autonomousRobot),
+	m_odometry(odometry),
+	m_lidar(lidar),
+	m_camera(camera),
+	m_robot(autonomousRobot),
 	m_fieldDetector(new FieldDetector(m_logger)),
-	m_position(new RobotPosition(m_odometry->getCurrentPosition())),
+	m_position(new RobotPosition(m_odometry.getCurrentPosition())),
 	m_fieldState(FieldStateUnknownPosition),
 	m_teamColor(FieldColorUnknown),
 	m_estimatedAchievedGoals(0)
@@ -49,10 +49,10 @@ void FieldImpl::update()
 {
 	updateWithOdometryData();
 
-	if (!m_robot->isRotating())
+	if (!m_robot.isRotating())
 	{
 		updateWithLidarData(getRangeOfViewArea());
-		if (!m_robot->isMoving())
+		if (!m_robot.isMoving())
 			updateWithCameraData();
 	}
 	else
@@ -62,7 +62,7 @@ void FieldImpl::update()
 	removeNotExistingFieldObjects();
 	updateUsefulFieldObjects();
 
-	if (!m_robot->isRotating())
+	if (!m_robot.isRotating())
 		updateObstacles();
 
 	updateAchievedGoals();
@@ -169,8 +169,8 @@ void FieldImpl::detectTeamColorWithGoalInFront()
 {
 	assert(m_teamColor == FieldColorUnknown);
 
-	double blueGoal = m_camera->getProbabilityForBlueGoal();
-	double yellowGoal = m_camera->getProbabilityForYellowGoal();
+	double blueGoal = m_camera.getProbabilityForBlueGoal();
+	double yellowGoal = m_camera.getProbabilityForYellowGoal();
 	Compare compare(0.1);
 
 	//! The field should not make a strategic decision, therefore it does not decide on the team color if it is not clear.
@@ -697,7 +697,7 @@ Angle FieldImpl::calculateRelativeAngleOfObject(const Circle &circle) const
 
 void FieldImpl::updateWithLidarData(double range)
 {
-	const DataAnalysis::LidarObjects &lidarObjects =  m_lidar->getAllObjects(*m_position);
+	const DataAnalysis::LidarObjects &lidarObjects =  m_lidar.getAllObjects(*m_position);
 	const vector<DataAnalysis::LidarObject> &objectsInRange = lidarObjects.getObjectsWithDistanceBelow(*m_position, range);
 
 	vector<FieldObject> inVisibleArea = moveAllFieldObjectsInVisibleAreaToTemporaryVector(range);
@@ -798,12 +798,12 @@ void FieldImpl::tryToMergeDoubledFieldObjects()
 
 void FieldImpl::updateWithOdometryData()
 {
-	*m_position = m_odometry->getCurrentPosition();
+	*m_position = m_odometry.getCurrentPosition();
 }
 
 void FieldImpl::updateWithCameraData()
 {
-	const DataAnalysis::CameraObjects &allCameraObjects = m_camera->getAllCameraObjects(*m_position);
+	const DataAnalysis::CameraObjects &allCameraObjects = m_camera.getAllCameraObjects(*m_position);
 
 	if (m_fieldObjects.size() == 0 || allCameraObjects.getObjectCount() == 0)
 		return;
@@ -985,8 +985,8 @@ void FieldImpl::moveCoordinateSystem(const Point &newOrigin)
 	Point newCenter =  m_position->getPosition() - newOrigin;
 	m_position->setPosition(newCenter);
 
-	m_odometry->setCurrentPosition(*m_position);
-	assert(*m_position == m_odometry->getCurrentPosition());
+	m_odometry.setCurrentPosition(*m_position);
+	assert(*m_position == m_odometry.getCurrentPosition());
 
 	m_fieldObjects.clear();
 	m_fieldObjects = newSystem;
@@ -1016,8 +1016,8 @@ void FieldImpl::rotateCoordinateSystem(const Angle &rotation)
 	m_position->setPosition(ownPosition);
 	m_position->setOrientation(ownOrientation);
 
-	m_odometry->setCurrentPosition(*m_position);
-	assert(*m_position == m_odometry->getCurrentPosition());
+	m_odometry.setCurrentPosition(*m_position);
+	assert(*m_position == m_odometry.getCurrentPosition());
 
 	m_fieldObjects.clear();
 	m_fieldObjects = newSystem;
@@ -1069,7 +1069,7 @@ vector<FieldObject> FieldImpl::moveAllFieldObjectsInVisibleAreaToTemporaryVector
 	vector<FieldObject> invisibleObjects;
 	invisibleObjects.reserve(m_fieldObjects.size());
 	visibleObjects.reserve(m_fieldObjects.size());
-	const RobotPosition &ownPosition = m_odometry->getCurrentPosition();
+	const RobotPosition &ownPosition = m_odometry.getCurrentPosition();
 	const Point &positionOnly = ownPosition.getPosition();
 	const Angle maximumAngle = getAngleOfViewArea();
 
@@ -1077,7 +1077,7 @@ vector<FieldObject> FieldImpl::moveAllFieldObjectsInVisibleAreaToTemporaryVector
 	{
 		const FieldObject &fieldObject = *i;
 		const Circle &circle = fieldObject.getCircle();
-		bool canBeSeen = m_lidar->canBeSeen(circle, ownPosition);
+		bool canBeSeen = m_lidar.canBeSeen(circle, ownPosition);
 		double distance = positionOnly.distanceTo(circle.getCenter());
 		Angle angle = calculateRelativeAngleOfObject(circle);
 		angle.abs();
@@ -1099,7 +1099,7 @@ vector<FieldObject> FieldImpl::getAllPartlyVisibleObjects() const
 	for (vector<FieldObject>::const_iterator i = m_fieldObjects.begin(); i != m_fieldObjects.end(); ++i)
 	{
 		const FieldObject &object = *i;
-		if (m_lidar->canBeSeenPartly(object.getCircle(), *m_position))
+		if (m_lidar.canBeSeenPartly(object.getCircle(), *m_position))
 			result.push_back(object);
 	}
 
@@ -1112,7 +1112,7 @@ void FieldImpl::updateAllNotVisibleObjects()
 	{
 		FieldObject &object = *i;
 
-		if (!m_lidar->canBeSeenPartly(object.getCircle(), *m_position))
+		if (!m_lidar.canBeSeenPartly(object.getCircle(), *m_position))
 			object.cantBeSeen();
 	}
 }
