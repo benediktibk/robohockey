@@ -19,15 +19,15 @@ namespace Autonomous
 	class FieldDetector
 	{
 	public:
-		FieldDetector(const Common::Point &currentPosition, std::vector<Common::Point> &pointsOfObjects);
+		FieldDetector();
 
-		bool tryToDetectField();
+		bool tryToDetectField(const Common::Point &currentPosition, std::vector<Common::Point> &pointsOfObjects);
 		Common::Point getNewOrigin();
 		double getRotation();
 		unsigned int getNumberOfBorderStonesInRow();
 
 	private:
-		bool tryToFigureOutNewOrigin(BorderStone &root);
+		bool tryToFigureOutNewOrigin(BorderStone &root, const Common::Point &currentPosition);
 		bool verifyNewOriginWithRoot(Common::Point &newOrigin, double rotation, BorderStone &root);
 		std::vector<Common::Point> orderBorderstonesByDistanceToRoot(BorderStone &borderstone, Common::Point &root);
 		bool isResultAlreadyKnown(Common::RobotPosition &newOrigin);

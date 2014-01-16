@@ -12,23 +12,21 @@ using namespace std;
 using namespace RoboHockey::Common;
 using namespace RoboHockey::Layer::Autonomous;
 
-FieldDetector::FieldDetector(const Point &currentPosition, vector<Point> &pointsOfObjects):
-	m_currentPosition(currentPosition),
-	m_points(pointsOfObjects),
+FieldDetector::FieldDetector():
 	m_distanceChecker(0.05),
 	m_maxBorderstonesArranged(2),
 	m_epsilonBorderStone(0.07)
 { }
 
-bool FieldDetector::tryToDetectField()
+bool FieldDetector::tryToDetectField(const Common::Point &currentPosition, std::vector<Common::Point> &pointsOfObjects)
 {
 	vector<Point*> currentPoints;
 	bool result = false;
 
-	for (vector<Point>::iterator i = m_points.begin(); i != m_points.end(); ++i)
+	for (vector<Point>::iterator i = pointsOfObjects.begin(); i != pointsOfObjects.end(); ++i)
 	{
 		currentPoints.clear();
-		for (vector<Point>::iterator iter = m_points.begin(); iter != m_points.end(); ++iter)
+		for (vector<Point>::iterator iter = pointsOfObjects.begin(); iter != pointsOfObjects.end(); ++iter)
 			if(i != iter)
 				currentPoints.push_back(&(*iter));
 
@@ -40,7 +38,7 @@ bool FieldDetector::tryToDetectField()
 
 		if (numberOfFoundBorderStones > 2)
 		{
-				result = tryToFigureOutNewOrigin(root) || result;
+				result = tryToFigureOutNewOrigin(root, currentPosition) || result;
 		}
 
 	}
@@ -68,7 +66,7 @@ unsigned int FieldDetector::getNumberOfBorderStonesInRow()
 	return m_maxBorderstonesArranged;
 }
 
-bool FieldDetector::tryToFigureOutNewOrigin(BorderStone &root)
+bool FieldDetector::tryToFigureOutNewOrigin(BorderStone &root, const Point &currentPosition)
 {
 	Rectangle fieldGround(Point(0,0), Point(5,3));
 	BorderStoneDistances &distancesChecker = m_distanceChecker;
@@ -188,7 +186,7 @@ bool FieldDetector::tryToFigureOutNewOrigin(BorderStone &root)
 		rotation = -1.0 * angle.getValueBetweenMinusPiAndPi();
 	}
 
-	Point currentPositionInNewCoordinates = m_currentPosition - possibleNewOrigin;
+	Point currentPositionInNewCoordinates = currentPosition - possibleNewOrigin;
 	currentPositionInNewCoordinates.rotate(rotation);
 
 	bool isOpposite = false;
@@ -201,7 +199,7 @@ bool FieldDetector::tryToFigureOutNewOrigin(BorderStone &root)
 		isOpposite = true;
 	}
 
-	currentPositionInNewCoordinates = m_currentPosition - possibleNewOrigin;
+	currentPositionInNewCoordinates = currentPosition - possibleNewOrigin;
 	currentPositionInNewCoordinates.rotate(rotation);
 
 	if (!fieldGround.isInside(currentPositionInNewCoordinates, Compare(0.1)) || !verifyNewOriginWithRoot(possibleNewOrigin, rotation, root))
