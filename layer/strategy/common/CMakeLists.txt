@@ -18,7 +18,6 @@ set(LAYER_STRATEGY_COMMON_TEST_SRC
 	statemachinetest.cpp
 	refereemock.cpp
 	drivetostatetest.cpp
-	colordependentpucktargetfetchertest.cpp
 	colordependentpucktargetfetchertoachivegoalstest.cpp
 	colordependentpucktargetfetchertohidepuckstest.cpp
 	statetest.cpp
