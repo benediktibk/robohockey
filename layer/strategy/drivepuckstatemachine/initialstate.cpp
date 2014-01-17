@@ -30,4 +30,4 @@ std::string InitialState::getName()
 }
 
 void InitialState::updateInternal()
-{}
+{ }

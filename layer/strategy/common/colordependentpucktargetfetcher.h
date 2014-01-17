@@ -19,6 +19,7 @@ namespace Common
 	class ColorDependentPuckTargetFetcher
 	{
 		public:
+			ColorDependentPuckTargetFetcher();
 			virtual ~ColorDependentPuckTargetFetcher() { }
 
 			virtual std::list<RoboHockey::Common::RobotPosition> getTargetPositions() const = 0;
@@ -28,8 +29,14 @@ namespace Common
 			virtual unsigned int getNumberOfKnownPucksNotInEnemyThird() const = 0;
 			virtual bool isAchievingGoals() const = 0;
 			virtual bool isCantReachTargetLimitReached() const;
+			virtual void resetCantReachTargetCounter();
+			virtual void increaseCantReachTargetCounter();
+
+		private:
+			unsigned int m_cantReachTargetCounter;
+
 		};
-	}
+}
 }
 }
 }
