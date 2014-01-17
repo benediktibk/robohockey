@@ -115,7 +115,58 @@ void FieldDetectionResultTest::confirmDetectionResultWithPosition_pointGoodAndOn
 
 	CPPUNIT_ASSERT(detectionResult.isConfirmedByBothSides());
 	CPPUNIT_ASSERT(oldNumberOfBorderStones < detectionResult.getNumberOfBorderStones());
+}
 
+void FieldDetectionResultTest::isConfirmedByBothSides_init_FALSE()
+{
+	RobotPosition position(Point(-2.3,0.74), Angle::getEighthRotation() * (-1));
+	FieldDetectionResult detectionResult(position, 3, false);
+
+	CPPUNIT_ASSERT(!detectionResult.isConfirmedByBothSides());
+}
+
+void FieldDetectionResultTest::isConfirmedByBothSides_confirmFromSameSideOpposite_FALSE()
+{
+	RobotPosition position(Point(-2.3,0.74), Angle::getEighthRotation() * (-1));
+	FieldDetectionResult detectionResult(position, 3, true);
+
+	RobotPosition testPosition(Point(-2.2,0.69), Angle::getEighthRotation() *(-1));
+	detectionResult.confirmDetectionResultWithPosition(testPosition, 4, true);
+
+	CPPUNIT_ASSERT(!detectionResult.isConfirmedByBothSides());
+}
+
+void FieldDetectionResultTest::isConfirmedByBothSides_confirmFromSameSideNear_FALSE()
+{
+	RobotPosition position(Point(-2.3,0.74), Angle::getEighthRotation() * (-1));
+	FieldDetectionResult detectionResult(position, 3, false);
+
+	RobotPosition testPosition(Point(-2.2,0.69), Angle::getEighthRotation() *(-1));
+	detectionResult.confirmDetectionResultWithPosition(testPosition, 3, false);
+
+	CPPUNIT_ASSERT(!detectionResult.isConfirmedByBothSides());
+}
+
+void FieldDetectionResultTest::isConfirmedByBothSides_confirmFromOtherSideOpposite_TRUE()
+{
+	RobotPosition position(Point(-2.3,0.74), Angle::getEighthRotation() * (-1));
+	FieldDetectionResult detectionResult(position, 3, false);
+
+	RobotPosition testPosition(Point(-2.2,0.69), Angle::getEighthRotation() *(-1));
+	detectionResult.confirmDetectionResultWithPosition(testPosition, 3, true);
+
+	CPPUNIT_ASSERT(detectionResult.isConfirmedByBothSides());
+}
+
+void FieldDetectionResultTest::isConfirmedByBothSides_confirmFromOtherSideNear_TRUE()
+{
+	RobotPosition position(Point(-2.3,0.74), Angle::getEighthRotation() * (-1));
+	FieldDetectionResult detectionResult(position, 3, true);
+
+	RobotPosition testPosition(Point(-2.2,0.69), Angle::getEighthRotation() *(-1));
+	detectionResult.confirmDetectionResultWithPosition(testPosition, 3, false);
+
+	CPPUNIT_ASSERT(detectionResult.isConfirmedByBothSides());
 }
 
 
