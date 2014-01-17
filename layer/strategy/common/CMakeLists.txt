@@ -7,6 +7,7 @@ set(LAYER_STRATEGY_COMMON_SRC
 	statemachine.cpp
 	refereeimpl.cpp
 	drivetostate.cpp
+	colordependentpucktargetfetcher.cpp
 	colordependentpucktargetfetchertoachivegoals.cpp
 	colordependentpucktargetfetchertohidepucks.cpp
 	waitcyclesstate.cpp
@@ -17,6 +18,7 @@ set(LAYER_STRATEGY_COMMON_TEST_SRC
 	statemachinetest.cpp
 	refereemock.cpp
 	drivetostatetest.cpp
+	colordependentpucktargetfetchertest.cpp
 	colordependentpucktargetfetchertoachivegoalstest.cpp
 	colordependentpucktargetfetchertohidepuckstest.cpp
 	statetest.cpp

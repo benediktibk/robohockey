@@ -27,6 +27,7 @@ namespace Common
 			virtual unsigned int getNumberOfKnownPucksNotInTarget() const = 0;
 			virtual unsigned int getNumberOfKnownPucksNotInEnemyThird() const = 0;
 			virtual bool isAchievingGoals() const = 0;
+			virtual bool isCantReachTargetLimitReached() const;
 		};
 	}
 }
