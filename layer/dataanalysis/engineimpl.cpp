@@ -255,7 +255,7 @@ void EngineImpl::driveAndTurn(const RobotPosition &currentPosition)
 		magnitude = min(magnitude, 0.1);
 		break;
 	case EngineStateDrivingSlowlyBack:
-		magnitude = -min(magnitude, 0.1);
+		magnitude = -min(magnitude, 0.3);
 		break;
 	case EngineStateDriving:
 	case EngineStateRotating:
