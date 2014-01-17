@@ -62,12 +62,10 @@ void FieldDetectionResultTest::isEqualDetectionResult_pointFuzzyEqual_TRUE()
 
 void FieldDetectionResultTest::isEqualDetectionResult_pointGoodOrientationCritical_TRUE()
 {
-	RobotPosition position(Point(-0.2,2.4), Angle::getThreeQuarterRotation());
+	RobotPosition position(Point(-0.2,2.4), Angle::getHalfRotation());
 	FieldDetectionResult detectionResult(position, 3, true);
 
-	RobotPosition testPosition(Point(-0.18,2.3), Angle::getThreeQuarterRotation() + Angle::getEighthRotation() * 0.2);
-
-//	cout << "Angledifference: " << (position.getOrientation() - testPosition.getOrientation()).getValueBetweenMinusPiAndPi() << endl;
+	RobotPosition testPosition(Point(-0.18,2.3), Angle::getHalfRotation() + Angle::getEighthRotation() * 0.2);
 	CPPUNIT_ASSERT(detectionResult.isEqualDetectionResult(testPosition));
 }
 
