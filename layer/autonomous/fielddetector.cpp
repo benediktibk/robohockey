@@ -3,10 +3,12 @@
 #include "common/angle.h"
 #include "common/rectangle.h"
 #include "common/pointdistancecompare.h"
+#include "common/logger.h"
 #include <iostream>
 #include <math.h>
 #include <assert.h>
 #include <algorithm>
+#include <sstream>
 
 using namespace std;
 using namespace RoboHockey::Common;
@@ -44,7 +46,7 @@ bool FieldDetector::tryToDetectField(const Common::Point &currentPosition, std::
 
 	}
 
-
+	logCurrentCalibrationResults();
 	return result;
 }
 
@@ -287,6 +289,31 @@ FieldDetectionResult &FieldDetector::getBestDetectionResult()
 	}
 
 	return m_detectionResults.back();
+
+}
+
+void FieldDetector::logCurrentCalibrationResults()
+{
+	m_logger.logToLogFileOfType(Logger::LogFileTypeFieldDetection, "BEGIN: Calibration Results");
+
+	unsigned int counter = 0;
+	for (list<FieldDetectionResult>::iterator it = m_detectionResults.begin(); it != m_detectionResults.end(); ++it)
+	{
+		string confirmed;
+		if ((*it).isConfirmedByBothSides())
+			confirmed = "TRUE";
+		else
+			confirmed = "FALSE";
+
+		stringstream message;
+		message << "result #" << counter << ":\n\tOrigin: " << (*it).getTransformationDestination()
+				<< "\n\tNumber Borderstones: " << (*it).getNumberOfBorderStones()
+				<< "\n\tConfirmed: " << confirmed << endl;
+
+		m_logger.logToLogFileOfType(Logger::LogFileTypeFieldDetection, message.str());
+	}
+
+	m_logger.logToLogFileOfType(Logger::LogFileTypeFieldDetection, "END: Calibration Results");
 
 }
 
