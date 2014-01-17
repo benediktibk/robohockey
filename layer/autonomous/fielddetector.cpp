@@ -308,7 +308,7 @@ void FieldDetector::logCurrentCalibrationResults()
 		stringstream message;
 		message << "\tresult #" << counter << ":\n\tOrigin: " << (*it).getTransformationDestination()
 				<< "\n\tNumber Borderstones: " << (*it).getNumberOfBorderStones()
-				<< " (Near: " << (*it).numberOfOppositeStones() << ", Far: " << (*it).numberOfOppositeStones() << ")"
+				<< " (Near: " << (*it).numberOfNearStones() << ", Far: " << (*it).numberOfOppositeStones() << ")"
 				<< "\n\tConfirmed: " << confirmed << endl;
 
 		m_logger.logToLogFileOfType(Logger::LogFileTypeFieldDetection, message.str());
