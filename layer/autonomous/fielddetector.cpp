@@ -311,6 +311,7 @@ void FieldDetector::logCurrentCalibrationResults()
 				<< "\n\tConfirmed: " << confirmed << endl;
 
 		m_logger.logToLogFileOfType(Logger::LogFileTypeFieldDetection, message.str());
+		counter++;
 	}
 
 	m_logger.logToLogFileOfType(Logger::LogFileTypeFieldDetection, "END: Calibration Results");
