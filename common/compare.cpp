@@ -13,20 +13,13 @@ Compare::Compare(double epsilon) :
 
 bool Compare::isFuzzyEqual(double value1, double value2) const
 {
-	if(fabs(value1 - value2) < m_epsilon)
-		return true;
-	else
-		return false;
+	return fabs(value1 - value2) < m_epsilon;
 }
 
 bool Compare::isFuzzyEqual(const Angle &one, const Angle &two) const
 {
-	if(isFuzzyEqual(one.getValueBetweenMinusPiAndPi(), two.getValueBetweenMinusPiAndPi()))
-		return true;
-	else if(isFuzzyEqual(one.getValueBetweenZeroAndTwoPi(), two.getValueBetweenZeroAndTwoPi()))
-		return true;
-	else
-		return false;
+	return isFuzzyEqual(one.getValueBetweenMinusPiAndPi(), two.getValueBetweenMinusPiAndPi()) ||
+		isFuzzyEqual(one.getValueBetweenZeroAndTwoPi(), two.getValueBetweenZeroAndTwoPi());
 }
 
 bool Compare::isFuzzyEqual(const vector<double> &one, const vector<double> &two) const
@@ -74,32 +67,20 @@ bool Compare::isFuzzyEqual(const list<RobotPosition> &one, const list<RobotPosit
 
 bool Compare::isFuzzyGreater(double value1, double value2) const
 {
-	if(value1 + m_epsilon > value2)
-		return true;
-	else
-		return false;
+	return value1 + m_epsilon > value2;
 }
 
 bool Compare::isFuzzySmaller(double value1, double value2) const
 {
-	if(value1 < m_epsilon + value2)
-		return true;
-	else
-		return false;
+	return value1 < m_epsilon + value2;
 }
 
 bool Compare::isStrictFuzzyGreater(double value1, double value2) const
 {
-	if(value1 > m_epsilon + value2)
-		return true;
-	else
-		return false;
+	return value1 > m_epsilon + value2;
 }
 
 bool Compare::isStrictFuzzySmaller(double value1, double value2) const
 {
-	if(value1 + m_epsilon < value2)
-		return true;
-	else
-		return false;
+	return value1 + m_epsilon < value2;
 }
