@@ -47,13 +47,13 @@ unsigned int FieldDetectionResult::getNumberOfBorderStones() const
 	return m_confirmedPositionsThisSide + m_confirmedPositionsOppositeSide;
 }
 
-bool FieldDetectionResult::hasNearStones()
+unsigned int FieldDetectionResult::numberOfNearStones()
 {
-	return m_confirmedPositionsThisSide > (unsigned int) 0;
+	return m_confirmedPositionsThisSide;
 }
 
-bool FieldDetectionResult::hasOppositeStones()
+unsigned int FieldDetectionResult::numberOfOppositeStones()
 {
-	return m_confirmedPositionsOppositeSide > (unsigned int) 0;
+	return m_confirmedPositionsOppositeSide;
 }
 
