@@ -13,7 +13,7 @@ using namespace RoboHockey::Layer::Strategy::DrivePuckStateMachine;
 using namespace RoboHockey::Layer::Autonomous;
 
 FindPuckTurnToState::FindPuckTurnToState(Robot &robot, Field &field, Referee &referee, RoboHockey::Common::Logger &logger,
-										 const ColorDependentPuckTargetFetcher &puckTargetFetcher,
+										 ColorDependentPuckTargetFetcher &puckTargetFetcher,
 										 std::list<RoboHockey::Common::Point> targetList):
 	State(robot, field, referee, logger, true),
 	m_puckTargetFetcher(puckTargetFetcher),
@@ -24,7 +24,7 @@ FindPuckTurnToState::FindPuckTurnToState(Robot &robot, Field &field, Referee &re
 
 State *FindPuckTurnToState::nextState()
 {
-	if(m_puckTargetFetcher.getNumberOfKnownPucksNotInEnemyThird() > 0)
+	if(m_puckTargetFetcher.getNumberOfKnownPucksNotInEnemyThird() > 0 && !m_puckTargetFetcher.isCantReachTargetLimitReached())
 		return new WaitCyclesState(m_robot, m_field, m_referee, m_logger,
 								   new VerifyPuckState(m_robot, m_field, m_referee, m_logger, m_puckTargetFetcher), 15, false);
 	else if(m_target.empty() && m_robot.reachedTarget())
