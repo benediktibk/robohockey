@@ -20,6 +20,8 @@ namespace Common
 	CPPUNIT_TEST(isFuzzyEqual_towListsWithRobotPositions_true);
 	CPPUNIT_TEST(isFuzzyEqual_twoListsWithRobotPositions_false);
 	CPPUNIT_TEST(isFuzzyEqual_towListsWithRobotPositionsInDiffrentOrder_true);
+	CPPUNIT_TEST(isFuzzyEqual_twoAnglesNearPi_true);
+	CPPUNIT_TEST(isFuzzyEqual_twoAnglesNearZero_true);
 	CPPUNIT_TEST(isFuzzyGreater_towAndTwoPointOneAndEpsilonZeroPointTwo_resultIsFuzzyGreater);
 	CPPUNIT_TEST(isFuzzySmaller_towAndTwoPointOneAndEpsilonZeroPointTwo_resultIsFuzzySmaller);
 	CPPUNIT_TEST(isStrictFuzzyGreater_twoPointOneAndTwoAndEpsilonZeroPointZeroFife_resultIsStrictFuzzyGreater);
@@ -36,6 +38,8 @@ namespace Common
 		void isFuzzyEqual_towListsWithRobotPositions_true();
 		void isFuzzyEqual_twoListsWithRobotPositions_false();
 		void isFuzzyEqual_towListsWithRobotPositionsInDiffrentOrder_true();
+		void isFuzzyEqual_twoAnglesNearPi_true();
+		void isFuzzyEqual_twoAnglesNearZero_true();
 		void isFuzzyGreater_towAndTwoPointOneAndEpsilonZeroPointTwo_resultIsFuzzyGreater();
 		void isFuzzySmaller_towAndTwoPointOneAndEpsilonZeroPointTwo_resultIsFuzzySmaller();
 		void isStrictFuzzyGreater_twoPointOneAndTwoAndEpsilonZeroPointZeroFife_resultIsStrictFuzzyGreater();
