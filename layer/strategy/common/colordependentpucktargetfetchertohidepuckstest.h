@@ -19,12 +19,16 @@ namespace Common
 		CPPUNIT_TEST(getColorOfTargetPucks_ownColorIsYellow_resultIsBlue);
 		CPPUNIT_TEST(getNumberOfKnownPucksNotInTarget_oneKnownPuck_resultIs1);
 		CPPUNIT_TEST(getNumberOfKnownPucksNotInTarget_threePucksOnePuckHidden_resultIs2);
+		CPPUNIT_TEST(isCantReachedTargetLimitReached_limitNotReached_false);
+		CPPUNIT_TEST(isCantReachedTargetLimitReached_limitReached_true);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
 		void getColorOfTargetPucks_ownColorIsYellow_resultIsBlue();
 		void getNumberOfKnownPucksNotInTarget_oneKnownPuck_resultIs1();
 		void getNumberOfKnownPucksNotInTarget_threePucksOnePuckHidden_resultIs2();
+		void isCantReachedTargetLimitReached_limitNotReached_false();
+		void isCantReachedTargetLimitReached_limitReached_true();
 
 	};
 }

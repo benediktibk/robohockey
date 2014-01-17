@@ -881,3 +881,4 @@ layer/strategy/drivepuckstatemachine/findpuckturntostatetest.h
 layer/strategy/drivepuckstatemachine/findpuckturntostate.h
 layer/strategy/drivepuckstatemachine/findpuckturntostatetest.cpp
 layer/strategy/drivepuckstatemachine/findpuckturntostate.cpp
+layer/strategy/common/colordependentpucktargetfetcher.cpp

@@ -20,6 +20,8 @@ namespace Common
 		CPPUNIT_TEST(getNumberOfKnownPucksNotInTarget_oneKnownPuck_resultIs1);
 		CPPUNIT_TEST(getNumberOfKnownPucksNotInTarget_threePucksOneInGoal_resultIs2);
 		CPPUNIT_TEST(getNumberOfKnownPucksNotInEnemyThird_threePucksOneInGoal_resultIs2);
+		CPPUNIT_TEST(isCantReachedTargetLimitReached_limitNotReached_false);
+		CPPUNIT_TEST(isCantReachedTargetLimitReached_limitReached_true);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
@@ -27,6 +29,8 @@ namespace Common
 		void getNumberOfKnownPucksNotInTarget_oneKnownPuck_resultIs1();
 		void getNumberOfKnownPucksNotInTarget_threePucksOneInGoal_resultIs2();
 		void getNumberOfKnownPucksNotInEnemyThird_threePucksOneInGoal_resultIs2();
+		void isCantReachedTargetLimitReached_limitNotReached_false();
+		void isCantReachedTargetLimitReached_limitReached_true();
 	};
 }
 }
