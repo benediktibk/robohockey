@@ -46,7 +46,7 @@ bool FieldDetector::tryToDetectField(const Common::Point &currentPosition, std::
 
 	}
 
-
+	logCurrentCalibrationResults();
 	return result;
 }
 
