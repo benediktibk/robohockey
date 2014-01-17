@@ -2019,7 +2019,6 @@ void FieldTest::detectTeamColorWithGoalInFront_yellowAndBlueEqual_teamNotUnknown
 
 void FieldTest::getNewOriginFromFieldDetection_realWorldExample1_correctNewOrigin()
 {
-	//! @todo Test
 	Hardware::RobotMock *hardwareRobot = new Hardware::RobotMock();
 	DataAnalysis::DataAnalyserImpl dataAnalyser(hardwareRobot);
 	Autonomous::RobotMock autonomousRobot;
