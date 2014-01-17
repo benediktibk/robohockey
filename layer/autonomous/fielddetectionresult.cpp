@@ -21,7 +21,7 @@ RobotPosition FieldDetectionResult::getTransformationDestination() const
 bool FieldDetectionResult::isEqualDetectionResult(RobotPosition &position) const
 {
 	Compare angleCompare(0.5);
-	Compare pointCompare(0.12);
+	Compare pointCompare(0.3);
 	return pointCompare.isFuzzyEqual(position.getPosition(), m_newOrigin.getPosition())
 			&& angleCompare.isFuzzyEqual(position.getOrientation(), m_newOrigin.getOrientation());
 }
@@ -45,5 +45,15 @@ bool FieldDetectionResult::isConfirmedByBothSides() const
 unsigned int FieldDetectionResult::getNumberOfBorderStones() const
 {
 	return m_confirmedPositionsThisSide + m_confirmedPositionsOppositeSide;
+}
+
+unsigned int FieldDetectionResult::numberOfNearStones()
+{
+	return m_confirmedPositionsThisSide;
+}
+
+unsigned int FieldDetectionResult::numberOfOppositeStones()
+{
+	return m_confirmedPositionsOppositeSide;
 }
 
