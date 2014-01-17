@@ -21,6 +21,9 @@ class FieldDetectionResultTest :
 		CPPUNIT_TEST(isEqualDetectionResult_pointFarButEqualOrientation_FALSE);
 		CPPUNIT_TEST(isEqualDetectionResult_pointFuzzyEqual_TRUE);
 		CPPUNIT_TEST(isEqualDetectionResult_pointGoodOrientationCritical_TRUE);
+		CPPUNIT_TEST(confirmDetectionResultWithPosition_pointNotGood_noChangesInCounters);
+		CPPUNIT_TEST(confirmDetectionResultWithPosition_pointGoodAndOnSameSide_notConfirmedButCounterIncreased);
+		CPPUNIT_TEST(confirmDetectionResultWithPosition_pointGoodAndOnOtherSide_confirmedAndCounterIncreased);
 		CPPUNIT_TEST_SUITE_END();
 	private:
 		
@@ -31,6 +34,9 @@ class FieldDetectionResultTest :
 		void isEqualDetectionResult_pointFarButEqualOrientation_FALSE();
 		void isEqualDetectionResult_pointFuzzyEqual_TRUE();
 		void isEqualDetectionResult_pointGoodOrientationCritical_TRUE();
+		void confirmDetectionResultWithPosition_pointNotGood_noChangesInCounters();
+		void confirmDetectionResultWithPosition_pointGoodAndOnSameSide_notConfirmedButCounterIncreased();
+		void confirmDetectionResultWithPosition_pointGoodAndOnOtherSide_confirmedAndCounterIncreased();
 
 	};
 }

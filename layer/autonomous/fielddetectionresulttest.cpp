@@ -69,4 +69,53 @@ void FieldDetectionResultTest::isEqualDetectionResult_pointGoodOrientationCritic
 	CPPUNIT_ASSERT(detectionResult.isEqualDetectionResult(testPosition));
 }
 
+void FieldDetectionResultTest::confirmDetectionResultWithPosition_pointNotGood_noChangesInCounters()
+{
+	RobotPosition position(Point(3,1.54), Angle::getQuarterRotation());
+	FieldDetectionResult detectionResult(position, 3, false);
+
+	RobotPosition testPosition(Point(1,2), Angle::getFullRotation() *(-1));
+	CPPUNIT_ASSERT(!detectionResult.isEqualDetectionResult(testPosition));
+
+	unsigned int oldNumberOfBorderStones = detectionResult.getNumberOfBorderStones();
+
+	detectionResult.confirmDetectionResultWithPosition(testPosition, 3, true);
+
+	CPPUNIT_ASSERT(!detectionResult.isConfirmedByBothSides());
+	CPPUNIT_ASSERT_EQUAL(oldNumberOfBorderStones, detectionResult.getNumberOfBorderStones());
+}
+
+void FieldDetectionResultTest::confirmDetectionResultWithPosition_pointGoodAndOnSameSide_notConfirmedButCounterIncreased()
+{
+	RobotPosition position(Point(3,1.54), Angle::getQuarterRotation() * (-1));
+	FieldDetectionResult detectionResult(position, 3, false);
+
+	RobotPosition testPosition(Point(3.04,1.6), Angle::getQuarterRotation() *(-1));
+	CPPUNIT_ASSERT(detectionResult.isEqualDetectionResult(testPosition));
+
+	unsigned int oldNumberOfBorderStones = detectionResult.getNumberOfBorderStones();
+
+	detectionResult.confirmDetectionResultWithPosition(testPosition, 4, false);
+
+	CPPUNIT_ASSERT(!detectionResult.isConfirmedByBothSides());
+	CPPUNIT_ASSERT(oldNumberOfBorderStones < detectionResult.getNumberOfBorderStones());
+}
+
+void FieldDetectionResultTest::confirmDetectionResultWithPosition_pointGoodAndOnOtherSide_confirmedAndCounterIncreased()
+{
+	RobotPosition position(Point(-2.3,0.74), Angle::getEighthRotation() * (-1));
+	FieldDetectionResult detectionResult(position, 3, false);
+
+	RobotPosition testPosition(Point(-2.2,0.69), Angle::getEighthRotation() *(-1));
+	CPPUNIT_ASSERT(detectionResult.isEqualDetectionResult(testPosition));
+
+	unsigned int oldNumberOfBorderStones = detectionResult.getNumberOfBorderStones();
+
+	detectionResult.confirmDetectionResultWithPosition(testPosition, 3, true);
+
+	CPPUNIT_ASSERT(detectionResult.isConfirmedByBothSides());
+	CPPUNIT_ASSERT(oldNumberOfBorderStones < detectionResult.getNumberOfBorderStones());
+
+}
+
 
