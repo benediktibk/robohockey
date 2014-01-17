@@ -238,11 +238,11 @@ void EngineImpl::driveAndTurn(const RobotPosition &currentPosition)
 		return;
 	}
 
-	double orientationAmplification = 2.0/3;
+	double orientationAmplification = 2;
 	double rotationSpeed = orientationAmplification*orthogonalError;
 	double magnitude = calculateSpeedForGoingStraight(forwardError) + m_finalSpeed;
 
-	double magnitudeModification = 1 - fabs(rotationSpeed/2);
+	double magnitudeModification = 1 - fabs(rotationSpeed);
 	if (magnitudeModification > 1)
 		magnitudeModification = 1;
 	else if (magnitudeModification < 0)
@@ -255,7 +255,7 @@ void EngineImpl::driveAndTurn(const RobotPosition &currentPosition)
 		magnitude = min(magnitude, 0.1);
 		break;
 	case EngineStateDrivingSlowlyBack:
-		magnitude = -min(magnitude, 0.1);
+		magnitude = -min(magnitude, 0.3);
 		break;
 	case EngineStateDriving:
 	case EngineStateRotating:

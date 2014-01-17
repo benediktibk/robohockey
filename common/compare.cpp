@@ -21,7 +21,12 @@ bool Compare::isFuzzyEqual(double value1, double value2) const
 
 bool Compare::isFuzzyEqual(const Angle &one, const Angle &two) const
 {
-	return isFuzzyEqual(one.getValueBetweenMinusPiAndPi(), two.getValueBetweenMinusPiAndPi());
+	if(isFuzzyEqual(one.getValueBetweenMinusPiAndPi(), two.getValueBetweenMinusPiAndPi()))
+		return true;
+	else if(isFuzzyEqual(one.getValueBetweenZeroAndTwoPi(), two.getValueBetweenZeroAndTwoPi()))
+		return true;
+	else
+		return false;
 }
 
 bool Compare::isFuzzyEqual(const vector<double> &one, const vector<double> &two) const
