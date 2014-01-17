@@ -118,6 +118,8 @@ namespace Autonomous
 		CPPUNIT_TEST(getTargetsForScoringGoals_always_numberOfPositionsBigger5);
 		CPPUNIT_TEST(getTargetsForScoringGoals_always_numberOfPositionsBigger6);
 		CPPUNIT_TEST(getTargetsForScoringGoals_forEstimatedGoalsAre0AndEstimatedGoalsAre3_positionsAreEqual);
+		CPPUNIT_TEST(getTargetsForScoringGoals_forEstimatedGoalsAre1AndEstimatedGoalsAre4_positionsAreEqual);
+		CPPUNIT_TEST(getTargetsForScoringGoals_forEstimatedGoalsAre2AndEstimatedGoalsAre5_positionsAreEqual);
 		CPPUNIT_TEST(getTargetsForFinalPosition_always_numberOfPositionsBigger1);
 		CPPUNIT_TEST(getTargetsForSearchingPucks_always_numberOfPositionsBigger5);
 		CPPUNIT_TEST(getTargetsForSearchingPucks_twoObjectsWithUnknownColor_numberOfPositions33);
@@ -246,6 +248,8 @@ namespace Autonomous
 		void getTargetsForScoringGoals_always_numberOfPositionsBigger5();
 		void getTargetsForScoringGoals_always_numberOfPositionsBigger6();
 		void getTargetsForScoringGoals_forEstimatedGoalsAre0AndEstimatedGoalsAre3_positionsAreEqual();
+		void getTargetsForScoringGoals_forEstimatedGoalsAre1AndEstimatedGoalsAre4_positionsAreEqual();
+		void getTargetsForScoringGoals_forEstimatedGoalsAre2AndEstimatedGoalsAre5_positionsAreEqual();
 		void getTargetsForFinalPosition_always_numberOfPositionsBigger1();
 		void getTargetsForSearchingPucks_always_numberOfPositionsBigger5();
 		void getTargetsForSearchingPucks_twoObjectsWithUnknownColor_numberOfPositions33();

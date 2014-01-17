@@ -1796,6 +1796,35 @@ void FieldTest::getTargetsForScoringGoals_forEstimatedGoalsAre0AndEstimatedGoals
 	CPPUNIT_ASSERT(compare.isFuzzyEqual(estimated0, estimated3));
 }
 
+void FieldTest::getTargetsForScoringGoals_forEstimatedGoalsAre1AndEstimatedGoalsAre4_positionsAreEqual()
+{
+	Compare compare(0.1);
+	list<RobotPosition> estimated1, estimated4;
+	m_field->increaseNumberOfEstimatedGoals();
+	estimated1 = m_field->getTargetsForScoringGoals();
+	m_field->increaseNumberOfEstimatedGoals();
+	m_field->increaseNumberOfEstimatedGoals();
+	m_field->increaseNumberOfEstimatedGoals();
+	estimated4 = m_field->getTargetsForScoringGoals();
+
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(estimated1, estimated4));
+}
+
+void FieldTest::getTargetsForScoringGoals_forEstimatedGoalsAre2AndEstimatedGoalsAre5_positionsAreEqual()
+{
+	Compare compare(0.1);
+	list<RobotPosition> estimated2, estimated5;
+	m_field->increaseNumberOfEstimatedGoals();
+	m_field->increaseNumberOfEstimatedGoals();
+	estimated2 = m_field->getTargetsForScoringGoals();
+	m_field->increaseNumberOfEstimatedGoals();
+	m_field->increaseNumberOfEstimatedGoals();
+	m_field->increaseNumberOfEstimatedGoals();
+	estimated5 = m_field->getTargetsForScoringGoals();
+
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(estimated2, estimated5));
+}
+
 void FieldTest::getTargetsForFinalPosition_always_numberOfPositionsBigger1()
 {
 	CPPUNIT_ASSERT((size_t) 1 < m_field->getTargetsForFinalPosition().size());
