@@ -16,6 +16,7 @@
 #include "common/timesmoothedbooleantest.h"
 #include "common/stopwatchtest.h"
 #include "common/loggertest.h"
+#include "common/pidcontrollertest.h"
 #include "layer/dataanalysis/dataanalysertest.h"
 #include "layer/dataanalysis/cameratest.h"
 #include "layer/dataanalysis/enginetest.h"
@@ -48,6 +49,7 @@
 #include "layer/strategy/common/colordependentpucktargetfetchertoachivegoalstest.h"
 #include "layer/strategy/common/colordependentpucktargetfetchertohidepuckstest.h"
 #include "layer/strategy/common/statetest.h"
+#include "layer/strategy/common/waitcyclesstatetest.h"
 #include "layer/strategy/mainstatemachine/initialstatetest.h"
 #include "layer/strategy/mainstatemachine/calibratetest.h"
 #include "layer/strategy/mainstatemachine/achievegoalstest.h"
@@ -65,11 +67,10 @@
 #include "layer/strategy/drivepuckstatemachine/drivepucktopositionstatetest.h"
 #include "layer/strategy/drivepuckstatemachine/drivetocollectpuckstatetest.h"
 #include "layer/strategy/drivepuckstatemachine/leavepuckstatetest.h"
-#include "layer/strategy/common/waitcyclesstatetest.h"
 #include "layer/strategy/drivepuckstatemachine/drivepucktoenemythirdstatetest.h"
-#include "main/inputargumentparsertest.h"
 #include "layer/strategy/drivepuckstatemachine/verifypuckstatetest.h"
 #include "layer/strategy/drivepuckstatemachine/findpuckturntostatetest.h"
+#include "main/inputargumentparsertest.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Common::CompareTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Common::WatchTest);
@@ -89,6 +90,7 @@ CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Common::PointDistanceCompareTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Common::TimeSmoothedBooleanTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Common::StopWatchTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Common::LoggerTest);
+CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Common::PIDControllerTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::DataAnalysis::DataAnalyserTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::DataAnalysis::CameraTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::DataAnalysis::EngineTest);
@@ -140,7 +142,7 @@ CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Strategy::DrivePuckStateMachi
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Strategy::DrivePuckStateMachine::DriveToCollectPuckStateTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Strategy::DrivePuckStateMachine::LeavePuckStateTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Strategy::DrivePuckStateMachine::DrivePuckToEnemyThirdStateTest);
-CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Main::InputArgumentParserTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Strategy::DrivePuckStateMachine::VerifyPuckStateTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Strategy::DrivePuckStateMachine::FindPuckTurnToStateTest);
+CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Main::InputArgumentParserTest);
 

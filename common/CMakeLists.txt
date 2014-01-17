@@ -18,6 +18,7 @@ set(COMMON_SRC
 	stopwatch.cpp
 	segfaultstacktraceprinter.cpp
 	loggerimpl.cpp
+	pidcontroller.cpp
 )
 
 set(COMMON_TEST_SRC
@@ -41,6 +42,7 @@ set(COMMON_TEST_SRC
 	stopwatchtest.cpp
 	loggertest.cpp
 	loggermock.cpp
+	pidcontrollertest.cpp
 )
 
 add_library(common ${COMMON_SRC})
