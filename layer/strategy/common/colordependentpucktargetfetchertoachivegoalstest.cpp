@@ -57,4 +57,35 @@ void ColorDependentPuckTargetFetcherToAchiveGoalsTest::getNumberOfKnownPucksNotI
 	CPPUNIT_ASSERT_EQUAL((unsigned int)2, puckTargetFetcher.getNumberOfKnownPucksNotInEnemyThird());
 }
 
+void ColorDependentPuckTargetFetcherToAchiveGoalsTest::isCantReachedTargetLimitReached_limitNotReached_false()
+{
+	FieldMock field;
+	ColorDependentPuckTargetFetcherToAchiveGoals puckTargetFetcher(field);
+
+	puckTargetFetcher.increaseCantReachTargetCounter();
+	puckTargetFetcher.increaseCantReachTargetCounter();
+	puckTargetFetcher.increaseCantReachTargetCounter();
+
+	CPPUNIT_ASSERT(!puckTargetFetcher.isCantReachTargetLimitReached());
+}
+
+void ColorDependentPuckTargetFetcherToAchiveGoalsTest::isCantReachedTargetLimitReached_limitReached_true()
+{
+	FieldMock field;
+	ColorDependentPuckTargetFetcherToAchiveGoals puckTargetFetcher(field);
+
+	puckTargetFetcher.increaseCantReachTargetCounter();
+	puckTargetFetcher.increaseCantReachTargetCounter();
+	puckTargetFetcher.increaseCantReachTargetCounter();
+	puckTargetFetcher.increaseCantReachTargetCounter();
+	puckTargetFetcher.increaseCantReachTargetCounter();
+	puckTargetFetcher.increaseCantReachTargetCounter();
+	puckTargetFetcher.increaseCantReachTargetCounter();
+	puckTargetFetcher.increaseCantReachTargetCounter();
+	puckTargetFetcher.increaseCantReachTargetCounter();
+	puckTargetFetcher.increaseCantReachTargetCounter();
+
+	CPPUNIT_ASSERT(puckTargetFetcher.isCantReachTargetLimitReached());
+}
+
 

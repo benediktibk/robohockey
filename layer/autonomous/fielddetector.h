@@ -38,6 +38,7 @@ namespace Autonomous
 		bool isResultAlreadyKnown(Common::RobotPosition &newOrigin);
 		FieldDetectionResult& getDetectionResultWithNewOrigin(Common::RobotPosition &newOrigin);
 		FieldDetectionResult& getBestDetectionResult();
+		void logCurrentCalibrationResults();
 
 	private:
 		Common::Logger &m_logger;

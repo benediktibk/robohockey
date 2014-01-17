@@ -101,6 +101,24 @@ void CompareTest::isFuzzyEqual_towListsWithRobotPositionsInDiffrentOrder_true()
 	CPPUNIT_ASSERT(!compare.isFuzzyEqual(list1, list2));
 }
 
+void CompareTest::isFuzzyEqual_twoAnglesNearPi_true()
+{
+	Compare compare(0.4);
+	Angle one = Angle::convertFromDegreeToRadiant(179);
+	Angle two = Angle::convertFromDegreeToRadiant(181);
+
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(one, two));
+}
+
+void CompareTest::isFuzzyEqual_twoAnglesNearZero_true()
+{
+	Compare compare(0.4);
+	Angle one = Angle::convertFromDegreeToRadiant(1);
+	Angle two = Angle::convertFromDegreeToRadiant(359);
+
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(one, two));
+}
+
 void CompareTest::isFuzzyGreater_towAndTwoPointOneAndEpsilonZeroPointTwo_resultIsFuzzyGreater()
 {
 	Compare compare(0.2);
