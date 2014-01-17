@@ -114,11 +114,6 @@ RobotPosition RobotMock::getCurrentPosition() const
 	return RobotPosition();
 }
 
-Point RobotMock::getCurrentTarget() const
-{
-	return Point();
-}
-
 bool RobotMock::cantReachTarget() const
 {
 	return m_cantReachTarget;

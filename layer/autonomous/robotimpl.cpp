@@ -550,12 +550,6 @@ RobotPosition RobotImpl::getCurrentPosition() const
 	return odometry.getCurrentPosition();
 }
 
-Point RobotImpl::getCurrentTarget() const
-{
-	DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
-	return engine.getCurrentTarget();
-}
-
 std::list<Point> RobotImpl::getAllRoutePoints() const
 {
 	if (m_currentRoute == 0)
