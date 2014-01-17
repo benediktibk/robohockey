@@ -29,17 +29,20 @@ namespace Common
 			virtual unsigned int getNumberOfKnownPucksNotInTarget() const;
 			virtual unsigned int getNumberOfKnownPucksNotInEnemyThird() const;
 			virtual bool isAchievingGoals() const;
+			virtual bool isCantReachTargetLimitReached() const;
 
 			void setNumberOfKnownPucksNotInTarget(unsigned int value);
 			void setNumberOfKnownPucksNotInEnemyThird(unsigned int value);
 			void setTargetPositions(const std::list<RoboHockey::Common::RobotPosition> &positions);
 			void setIsAchievingGoals(bool value);
+			void setCantReachTargetLimit(bool value);
 
 		private:
 			unsigned int m_numberOfKnownPucksNotInTarget;
 			unsigned int m_numberOfKnownPucksNotInEnemyThird;
 			std::list<RoboHockey::Common::RobotPosition> m_targetPositions;
 			bool m_isAchievingGoals;
+			bool m_cantReachTargetLimit;
 		};
 	}
 }

@@ -21,6 +21,14 @@ class FieldDetectionResultTest :
 		CPPUNIT_TEST(isEqualDetectionResult_pointFarButEqualOrientation_FALSE);
 		CPPUNIT_TEST(isEqualDetectionResult_pointFuzzyEqual_TRUE);
 		CPPUNIT_TEST(isEqualDetectionResult_pointGoodOrientationCritical_TRUE);
+		CPPUNIT_TEST(confirmDetectionResultWithPosition_pointNotGood_noChangesInCounters);
+		CPPUNIT_TEST(confirmDetectionResultWithPosition_pointGoodAndOnSameSide_notConfirmedButCounterIncreased);
+		CPPUNIT_TEST(confirmDetectionResultWithPosition_pointGoodAndOnOtherSide_confirmedAndCounterIncreased);
+		CPPUNIT_TEST(isConfirmedByBothSides_init_FALSE);
+		CPPUNIT_TEST(isConfirmedByBothSides_confirmFromSameSideOpposite_FALSE);
+		CPPUNIT_TEST(isConfirmedByBothSides_confirmFromSameSideNear_FALSE);
+		CPPUNIT_TEST(isConfirmedByBothSides_confirmFromOtherSideOpposite_TRUE);
+		CPPUNIT_TEST(isConfirmedByBothSides_confirmFromOtherSideNear_TRUE);
 		CPPUNIT_TEST_SUITE_END();
 	private:
 		
@@ -31,6 +39,14 @@ class FieldDetectionResultTest :
 		void isEqualDetectionResult_pointFarButEqualOrientation_FALSE();
 		void isEqualDetectionResult_pointFuzzyEqual_TRUE();
 		void isEqualDetectionResult_pointGoodOrientationCritical_TRUE();
+		void confirmDetectionResultWithPosition_pointNotGood_noChangesInCounters();
+		void confirmDetectionResultWithPosition_pointGoodAndOnSameSide_notConfirmedButCounterIncreased();
+		void confirmDetectionResultWithPosition_pointGoodAndOnOtherSide_confirmedAndCounterIncreased();
+		void isConfirmedByBothSides_init_FALSE();
+		void isConfirmedByBothSides_confirmFromSameSideOpposite_FALSE();
+		void isConfirmedByBothSides_confirmFromSameSideNear_FALSE();
+		void isConfirmedByBothSides_confirmFromOtherSideOpposite_TRUE();
+		void isConfirmedByBothSides_confirmFromOtherSideNear_TRUE();
 
 	};
 }

@@ -238,7 +238,7 @@ void EngineImpl::driveAndTurn(const RobotPosition &currentPosition)
 		return;
 	}
 
-	double orientationAmplification = 2;
+	double orientationAmplification = 2.0/3;
 	double rotationSpeed = orientationAmplification*orthogonalError;
 	double magnitude = calculateSpeedForGoingStraight(forwardError) + m_finalSpeed;
 

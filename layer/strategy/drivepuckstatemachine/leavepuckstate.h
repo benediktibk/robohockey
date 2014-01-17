@@ -21,7 +21,7 @@ namespace DrivePuckStateMachine
 	{
 	public:
 		LeavePuckState(Autonomous::Robot &robot, Autonomous::Field &field, Common::Referee &referee, RoboHockey::Common::Logger &logger,
-					   const Common::ColorDependentPuckTargetFetcher &puckTargetFetcher, bool shouldIncreaseGoalCount);
+					   Common::ColorDependentPuckTargetFetcher &puckTargetFetcher, bool shouldIncreaseGoalCount);
 
 		virtual State* nextState();
 		virtual std::string getName();
@@ -30,7 +30,7 @@ namespace DrivePuckStateMachine
 		virtual void updateInternal();
 
 	private:
-		const Common::ColorDependentPuckTargetFetcher &m_puckTargetFetcher;
+		Common::ColorDependentPuckTargetFetcher &m_puckTargetFetcher;
 		const bool m_shouldIncreaseGoalCount;
 };
 }

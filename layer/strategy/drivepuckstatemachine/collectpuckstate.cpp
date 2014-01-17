@@ -14,7 +14,7 @@ using namespace RoboHockey::Layer::Strategy::Common;
 using namespace RoboHockey::Layer::Strategy::DrivePuckStateMachine;
 using namespace RoboHockey::Layer::Autonomous;
 
-CollectPuckState::CollectPuckState(Robot &robot, Field &field, Referee &referee, Logger &logger, const ColorDependentPuckTargetFetcher &puckTargetFetcher) :
+CollectPuckState::CollectPuckState(Robot &robot, Field &field, Referee &referee, Logger &logger, ColorDependentPuckTargetFetcher &puckTargetFetcher) :
 	State(robot, field, referee, logger, true),
 	m_puckTargetFetcher(puckTargetFetcher)
 { }

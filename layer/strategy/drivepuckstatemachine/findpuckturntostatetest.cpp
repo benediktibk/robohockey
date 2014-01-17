@@ -84,3 +84,47 @@ void FindPuckTurnToStateTest::nextState_targetList_nextStateIsFindPuckTurnToStat
 	delete state;
 	delete waitState;
 }
+
+void FindPuckTurnToStateTest::nextState_foundPuckAndLimitReachedAndEmptyTargetListAndTargetReached_nextStateIsFindPuckState()
+{
+	RobotMock robot;
+	FieldMock field;
+	RefereeMock referee;
+	LoggerMock logger;
+	ColorDependentPuckTargetFetcherMock puckTargetFetcher;
+	robot.setReachedTarget(true);
+	puckTargetFetcher.setCantReachTargetLimit(true);
+	puckTargetFetcher.setNumberOfKnownPucksNotInEnemyThird(1);
+	list<Point> targetList;
+	targetList.push_back(Point());
+	FindPuckTurnToState findPuckTurnToState(robot, field, referee, logger, puckTargetFetcher, targetList);
+	findPuckTurnToState.update();
+	State *state;
+	state = findPuckTurnToState.nextState();
+	FindPuckState *stateCasted = dynamic_cast<FindPuckState*>(state);
+
+	CPPUNIT_ASSERT(stateCasted != 0);
+	delete state;
+}
+
+void FindPuckTurnToStateTest::nextState_emptyTargetListAndTargetNotReached_nextStateIsFindPuckTurnToState()
+{
+	RobotMock robot;
+	FieldMock field;
+	RefereeMock referee;
+	LoggerMock logger;
+	ColorDependentPuckTargetFetcherMock puckTargetFetcher;
+	field.setIsPuckcolorDetected(true);
+	list<Point> targetList;
+	FindPuckTurnToState findPuckTurnToState(robot, field, referee, logger, puckTargetFetcher, targetList);
+	State *waitState;
+	waitState = findPuckTurnToState.nextState();
+	State *state;
+	state = waitState->nextState();
+	FindPuckTurnToState *stateCasted = dynamic_cast<FindPuckTurnToState*>(state);
+
+	CPPUNIT_ASSERT(stateCasted != 0);
+	delete state;
+	delete waitState;
+}
+
