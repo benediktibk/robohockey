@@ -23,9 +23,10 @@ EngineImpl::EngineImpl(Hardware::Engine &engine, Hardware::Odometry &odometry, c
 	m_desiredSpeed(0),
 	m_isMoving(false),
 	m_startedMovement(false),
-	m_controllerTurnOnly(new PIDController(0, 0, 0, watch)),
-	m_controllerDriveAndTurnRotation(new PIDController(0, 0, 0, watch)),
-	m_controllerDriveAndTurnSpeed(new PIDController(0, 0, 0, watch))
+	m_distanceAmplification(0.7),
+	m_controllerTurnOnly(new PIDController(0.7, 0, 0, watch)),
+	m_controllerDriveAndTurnRotation(new PIDController(2, 0, 0, watch)),
+	m_controllerDriveAndTurnSpeed(new PIDController(m_distanceAmplification, 0, 0, watch))
 { }
 
 EngineImpl::~EngineImpl()
@@ -154,8 +155,7 @@ bool EngineImpl::isGoingStraight() const
 
 double EngineImpl::calculateSpeedForGoingStraight(double distance) const
 {
-	double distanceAmplification = 0.7;
-	return distanceAmplification*distance;
+	return m_distanceAmplification*distance;
 }
 
 const Point &EngineImpl::getStartPosition() const
@@ -194,9 +194,9 @@ void EngineImpl::updateSpeedAndRotationForRotating()
 void EngineImpl::turnOnly(const Angle &targetOrientation, const Angle &currentOrientation)
 {
 	Angle orientationDifference = targetOrientation - currentOrientation;
-	double amplification = 0.7;
 	m_tryingToTackleObstacle = false;
-	setSpeed(0, orientationDifference.getValueBetweenMinusPiAndPi()*amplification);
+	double rotationSpeed = m_controllerTurnOnly->evaluate(orientationDifference.getValueBetweenMinusPiAndPi());
+	setSpeed(0, rotationSpeed);
 }
 
 void EngineImpl::driveAndTurn(const RobotPosition &currentPosition)
@@ -218,9 +218,8 @@ void EngineImpl::driveAndTurn(const RobotPosition &currentPosition)
 		return;
 	}
 
-	double orientationAmplification = 2;
-	double rotationSpeed = orientationAmplification*orthogonalError;
-	double magnitude = calculateSpeedForGoingStraight(forwardError) + m_finalSpeed;
+	double rotationSpeed = m_controllerDriveAndTurnRotation->evaluate(orthogonalError);
+	double magnitude = m_controllerDriveAndTurnSpeed->evaluate(forwardError) + m_finalSpeed;
 
 	double magnitudeModification = 1 - fabs(rotationSpeed);
 	if (magnitudeModification > 1)
@@ -267,6 +266,9 @@ void EngineImpl::switchIntoState(EngineState state)
 	m_startPosition = currentRobotPosition.getPosition();
 	m_tryingToTackleObstacle = false;
 	m_finalSpeed = 0;
+	m_controllerDriveAndTurnRotation->resetTo(0);
+	m_controllerDriveAndTurnSpeed->resetTo(0);
+	m_controllerTurnOnly->resetTo(0);
 
 	if (m_engineState != state)
 		m_startedMovement = false;
