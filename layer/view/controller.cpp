@@ -161,7 +161,6 @@ Point Controller::calculatePositionInReal(const QPointF &point)
 
 void Controller::on_turnAround_clicked()
 {
-	m_model.setTurnAround(true);
 }
 
 void Controller::on_turnToButton_clicked()

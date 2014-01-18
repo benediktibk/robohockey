@@ -10,7 +10,6 @@ Model::Model() :
 	m_stuckAtObstacle(false),
 	m_reachedTarget(false),
 	m_isMoving(false),
-	m_turnAround(false),
 	m_stop(false),
 	m_turn(false),
 	m_collectPuck(false),
@@ -25,14 +24,14 @@ Model::Model() :
 {}
 
 void Model::setData(const vector<FieldObject> &fieldObjects,
-        const std::list<Common::Point> &routeList,
+		const std::list<Common::Point> &routeList,
 		bool stuckAtObstacle, bool reachedTarget,
 		const RobotPosition &currentPosition, const Point &currentTarget,
 		bool isMoving, bool cantReachTarget, bool isPuckCollected, bool isPuckCollectable,
 		bool closestPuckPositionValid, const Point &closestPuckPosition, bool isRotating)
 {
 	m_fieldObjects = fieldObjects;
-    m_routeList = routeList;
+	m_routeList = routeList;
 	m_stuckAtObstacle = stuckAtObstacle;
 	m_reachedTarget = reachedTarget;
 	m_currentPosition = currentPosition;
@@ -50,12 +49,12 @@ void Model::setData(const vector<FieldObject> &fieldObjects,
 
 const vector<FieldObject> &Model::getAllFieldObjects() const
 {
-    return m_fieldObjects;
+	return m_fieldObjects;
 }
 
 const list<Point> &Model::getAllRoutePoints()
 {
-    return m_routeList;
+	return m_routeList;
 }
 
 const vector<Point> &Model::getAllTargetPoints() const
@@ -82,11 +81,6 @@ bool Model::reachedTarget() const
 bool Model::isMoving() const
 {
 	return m_isMoving;
-}
-
-void Model::setTurnAround(bool value)
-{
-	m_turnAround = value;
 }
 
 void Model::turnToPoint(double turnToX, double turnToY)
@@ -189,11 +183,6 @@ void Model::setPuckColor(FieldColor color)
 bool Model::isRotating() const
 {
 	return m_isRotating;
-}
-
-bool Model::getTurnAround()
-{
-	return m_turnAround;
 }
 
 const RobotPosition &Model::getCurrentPosition() const

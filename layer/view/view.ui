@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>868</width>
-    <height>521</height>
+    <height>541</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -418,43 +418,14 @@
       </item>
       <item>
        <layout class="QGridLayout" name="actionsLayout">
-        <item row="4" column="1">
-         <widget class="QRadioButton" name="yellowPuckButton">
+        <item row="3" column="0">
+         <widget class="QPushButton" name="leavePuckInFront">
           <property name="text">
-           <string>yellow</string>
+           <string>leave puck in front</string>
           </property>
          </widget>
         </item>
-        <item row="0" column="1">
-         <widget class="QPushButton" name="calibratePosition">
-          <property name="enabled">
-           <bool>true</bool>
-          </property>
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="text">
-           <string>calibrate position</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="1">
-         <widget class="QPushButton" name="turnAround">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="text">
-           <string>turn around</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="0">
+        <item row="0" column="0">
          <widget class="QPushButton" name="stop">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
@@ -467,24 +438,7 @@
           </property>
          </widget>
         </item>
-        <item row="3" column="1">
-         <widget class="QRadioButton" name="bluePuckButton">
-          <property name="text">
-           <string>blue</string>
-          </property>
-          <property name="checked">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-        <item row="5" column="1">
-         <widget class="QRadioButton" name="anyPuckButton">
-          <property name="text">
-           <string>any</string>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="0">
+        <item row="2" column="0">
          <widget class="QPushButton" name="collectPuckInFront">
           <property name="enabled">
            <bool>true</bool>
@@ -501,19 +455,42 @@
          </widget>
         </item>
         <item row="4" column="0">
-         <widget class="QPushButton" name="leavePuckInFront">
+         <widget class="QPushButton" name="calibratePosition">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
           <property name="text">
-           <string>leave puck in front</string>
+           <string>calibrate position</string>
           </property>
          </widget>
         </item>
-        <item row="0" column="0">
-         <widget class="QPushButton" name="pushButton">
-          <property name="enabled">
-           <bool>false</bool>
-          </property>
+        <item row="0" column="1">
+         <widget class="QRadioButton" name="bluePuckButton">
           <property name="text">
-           <string/>
+           <string>blue</string>
+          </property>
+          <property name="checked">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1">
+         <widget class="QRadioButton" name="yellowPuckButton">
+          <property name="text">
+           <string>yellow</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="1">
+         <widget class="QRadioButton" name="anyPuckButton">
+          <property name="text">
+           <string>any</string>
           </property>
          </widget>
         </item>
