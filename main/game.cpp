@@ -30,7 +30,7 @@ Game::Game(int argc, char **argv) :
 	m_referee(0),
 	m_logger(0),
 	m_watch(new Common::WatchImpl()),
-	m_stopWatch(new Common::StopWatch(*m_watch)),
+	m_globalStopWatch(new Common::StopWatch(*m_watch)),
 	m_timer(new QTimer()),
 	m_loopTimeMaximum(0.2),
 	m_loopTimeWeight(0.1),
@@ -85,7 +85,7 @@ Game::Game(int argc, char **argv) :
 
 	connect(m_timer, SIGNAL(timeout()), this, SLOT(execute()));
 
-	m_stopWatch->getTimeAndRestart();
+	m_globalStopWatch->getTimeAndRestart();
 	m_timer->start(0);
 	m_referee->reportReady();
 }
@@ -94,8 +94,8 @@ Game::~Game()
 {
 	delete m_sensorDataRecorder;
 	m_sensorDataRecorder = 0;
-	delete m_stopWatch;
-	m_stopWatch = 0;
+	delete m_globalStopWatch;
+	m_globalStopWatch = 0;
 	delete m_watch;
 	m_watch = 0;
 	delete m_field;
@@ -144,7 +144,7 @@ void Game::logToConsole(const string &message)
 void Game::execute()
 {
 	assert(m_valid);
-	StopWatch stopWatch(*m_watch);
+	StopWatch localStopWatch(*m_watch);
 
 	/*!
 	 * Unfortunately disabling the engine is very slow, this seems
@@ -160,24 +160,24 @@ void Game::execute()
 	if (m_sensorDataRecorder != 0)
 		m_sensorDataRecorder->recordCurrentValues(m_robot->isMoving());
 
-	double timeForSensorUpdate = stopWatch.getTimeAndRestart();
+	double timeForSensorUpdate = localStopWatch.getTimeAndRestart();
 
 	m_field->update();
 	double blueObjectCountNew = m_field->getNumberOfObjectsWithColor(FieldColorBlue);
 	double yellowObjectCountNew = m_field->getNumberOfObjectsWithColor(FieldColorYellow);
 	double greenObjectCountNew = m_field->getNumberOfObjectsWithColor(FieldColorGreen);
-	double timeForFieldUpdate = stopWatch.getTimeAndRestart();
+	double timeForFieldUpdate = localStopWatch.getTimeAndRestart();
 
 	executeRobotControl();
-	double timeForLogic = stopWatch.getTimeAndRestart();
+	double timeForLogic = localStopWatch.getTimeAndRestart();
 
 	m_robot->updateActuators(*m_field);
 	m_referee->tellEgoPos(m_robot->getCurrentPosition().getPosition());
 	m_referee->sendAlive();
-	double timeForActuatorUpdate = stopWatch.getTimeAndRestart();
+	double timeForActuatorUpdate = localStopWatch.getTimeAndRestart();
 	bool isMovingAfterwards = m_robot->isMoving();
 
-	double timeDifference = m_stopWatch->getTimeAndRestart();
+	double timeDifference = m_globalStopWatch->getTimeAndRestart();
 	double timeForEventProcessing =
 			timeDifference -
 			(timeForActuatorUpdate + timeForFieldUpdate + timeForLogic + timeForSensorUpdate);

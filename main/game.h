@@ -73,7 +73,7 @@ namespace Main
 		Layer::Strategy::Common::Referee *m_referee;
 		Common::Logger *m_logger;
 		Common::WatchImpl *m_watch;
-		Common::StopWatch *m_stopWatch;
+		Common::StopWatch *m_globalStopWatch;
 		QTimer *m_timer;
 		const double m_loopTimeMaximum;
 		const double m_loopTimeWeight;
