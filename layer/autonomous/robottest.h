@@ -76,7 +76,6 @@ namespace Autonomous
 		CPPUNIT_TEST(stuckAtObstacle_updateCalledTwiceAfterStuckAtObstacle_true);
 		CPPUNIT_TEST(stuckAtObstacle_newTargetSet_false);
 		CPPUNIT_TEST(stuckAtObstacle_collectPuckInFrontCalled_false);
-		CPPUNIT_TEST(stuckAtObstacle_turnAroundCalled_false);
 		CPPUNIT_TEST(stuckAtObstacle_leavePuckCalled_false);
 		CPPUNIT_TEST(stuckAtObstacle_turnToCalled_false);
 		CPPUNIT_TEST(reachedTarget_engineSaysNotReached_false);
@@ -96,9 +95,6 @@ namespace Autonomous
 		CPPUNIT_TEST(updateSensorData_noObstacleDirectInFront_engineGotAtLeastOneCallToUnlockForwardMovement);
 		CPPUNIT_TEST(updateSensorData_obstacleDirectInFront_engineGotAtLeastOneCallToLockForwardMovement);
 		CPPUNIT_TEST(updateSensorData_0bstacleDirectInFront_engineGotNoCallToUnlockForwardMovement);
-		CPPUNIT_TEST(turnAround_empty_engineGotAtLeastOneCallToTurnAround);
-		CPPUNIT_TEST(turnAround_turnAroundDone_reachedTarget);
-		CPPUNIT_TEST(turnAround_minuteWaited_cantReachTarget);
 		CPPUNIT_TEST(getCurrentPosition_position3And4InOdometry_3And4);
 		CPPUNIT_TEST(reachedTarget_nearlyHitTargetButTookSomeAdditionalWayToStop_false);
 		CPPUNIT_TEST(cantReachTarget_calledDirectAfterConstructor_false);
@@ -109,7 +105,6 @@ namespace Autonomous
 		CPPUNIT_TEST(cantReachTarget_updateTwiceCalled_true);
 		CPPUNIT_TEST(cantReachTarget_newTargetSet_false);
 		CPPUNIT_TEST(cantReachTarget_collectPuckInFrontCalled_false);
-		CPPUNIT_TEST(cantReachTarget_turnAroundCalled_false);
 		CPPUNIT_TEST(cantReachTarget_turnToCalled_false);
 		CPPUNIT_TEST(cantReachTarget_leavePuckCalled_false);
 		CPPUNIT_TEST(cantReachTarget_stuckAtObstacle_true);
@@ -141,7 +136,6 @@ namespace Autonomous
 		CPPUNIT_TEST(leaveCollectedPuck_minuteWaited_cantReachTarget);
 		CPPUNIT_TEST(isRotating_waiting_false);
 		CPPUNIT_TEST(isRotating_turnTo_true);
-		CPPUNIT_TEST(isRotating_turnAround_true);
 		CPPUNIT_TEST(isRotating_firstPhaseOfCollectingPuck_true);
 		CPPUNIT_TEST(isRotating_secondPhaseOfCollectingPuck_false);
 		CPPUNIT_TEST(isRotating_leavingPuck_false);
@@ -159,7 +153,6 @@ namespace Autonomous
 		CPPUNIT_TEST(isMoving_turningTo_true);
 		CPPUNIT_TEST(isMoving_waitingAndEngineSaysNotMoving_false);
 		CPPUNIT_TEST(isMoving_waitingAndEngineSaysMoving_true);
-		CPPUNIT_TEST(isMoving_turnAround_true);
 		CPPUNIT_TEST(isMoving_leavingPuck_true);
 		CPPUNIT_TEST(isMoving_collectingPuck_true);
 		CPPUNIT_TEST_SUITE_END();
@@ -210,7 +203,6 @@ namespace Autonomous
 		void stuckAtObstacle_updateCalledTwiceAfterStuckAtObstacle_true();
 		void stuckAtObstacle_newTargetSet_false();
 		void stuckAtObstacle_collectPuckInFrontCalled_false();
-		void stuckAtObstacle_turnAroundCalled_false();
 		void stuckAtObstacle_leavePuckCalled_false();
 		void stuckAtObstacle_turnToCalled_false();
 		void reachedTarget_engineSaysNotReached_false();
@@ -230,9 +222,6 @@ namespace Autonomous
 		void updateSensorData_noObstacleDirectInFront_engineGotAtLeastOneCallToUnlockForwardMovement();
 		void updateSensorData_obstacleDirectInFront_engineGotAtLeastOneCallToLockForwardMovement();
 		void updateSensorData_0bstacleDirectInFront_engineGotNoCallToUnlockForwardMovement();
-		void turnAround_empty_engineGotAtLeastOneCallToTurnAround();
-		void turnAround_turnAroundDone_reachedTarget();
-		void turnAround_minuteWaited_cantReachTarget();
 		void getCurrentPosition_position3And4InOdometry_3And4();
 		void reachedTarget_nearlyHitTargetButTookSomeAdditionalWayToStop_false();
 		void cantReachTarget_calledDirectAfterConstructor_false();
@@ -243,7 +232,6 @@ namespace Autonomous
 		void cantReachTarget_updateTwiceCalled_true();
 		void cantReachTarget_newTargetSet_false();
 		void cantReachTarget_collectPuckInFrontCalled_false();
-		void cantReachTarget_turnAroundCalled_false();
 		void cantReachTarget_turnToCalled_false();
 		void cantReachTarget_leavePuckCalled_false();
 		void cantReachTarget_stuckAtObstacle_true();
@@ -275,7 +263,6 @@ namespace Autonomous
 		void leaveCollectedPuck_minuteWaited_cantReachTarget();
 		void isRotating_waiting_false();
 		void isRotating_turnTo_true();
-		void isRotating_turnAround_true();
 		void isRotating_firstPhaseOfCollectingPuck_true();
 		void isRotating_secondPhaseOfCollectingPuck_false();
 		void isRotating_leavingPuck_false();
@@ -293,7 +280,6 @@ namespace Autonomous
 		void isMoving_turningTo_true();
 		void isMoving_waitingAndEngineSaysNotMoving_false();
 		void isMoving_waitingAndEngineSaysMoving_true();
-		void isMoving_turnAround_true();
 		void isMoving_leavingPuck_true();
 		void isMoving_collectingPuck_true();
 

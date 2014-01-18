@@ -47,7 +47,6 @@ namespace Autonomous
 		virtual void updatePuckPosition(const Common::Point &puckPosition);
 		virtual void leaveCollectedPuck();
 		virtual bool isMoving() const;
-		virtual void turnAround();
 		virtual Common::RobotPosition getCurrentPosition() const;
 		virtual std::list<Common::Point> getAllRoutePoints() const;
 		virtual bool cantReachTarget() const;
@@ -74,7 +73,6 @@ namespace Autonomous
 		void updateEngineForWaiting();
 		void updateEngineForCollectingPuck();
 		void updateEngineForLeavingPuck();
-		void updateEngineForTurnAround();
 		void updateEngineForTurnTo();
 		void detectCollisions();
 		bool enableCollisionDetectionWithSonar() const;

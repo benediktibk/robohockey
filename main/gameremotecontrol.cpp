@@ -91,12 +91,6 @@ void GameRemoteControl::executeRobotControl()
 	}
 	else
 	{
-		if(m_model->getTurnAround())
-		{
-			robot.turnAround();
-			m_model->setTurnAround(false);
-		}
-
 		if(m_model->getTurnTo())
 		{
 			Point turnToPoint;

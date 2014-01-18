@@ -37,7 +37,6 @@ namespace Autonomous
 		virtual void updatePuckPosition(const Common::Point &puckPosition) = 0;
 		virtual void leaveCollectedPuck() = 0;
 		virtual bool isMoving() const = 0;
-		virtual void turnAround() = 0;
 		virtual Common::RobotPosition getCurrentPosition() const = 0;
 		virtual std::list<Common::Point> getAllRoutePoints() const = 0;
 		virtual bool cantReachTarget() const = 0;

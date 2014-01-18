@@ -232,19 +232,6 @@ void RobotImpl::updateEngineForLeavingPuck()
 		changeIntoState(RobotStateWaiting);
 }
 
-void RobotImpl::updateEngineForTurnAround()
-{
-	if (checkTimeout())
-		return;
-
-	DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
-
-	if (m_stateChanged)
-		engine.turnAround();
-	else if (engine.reachedTarget())
-		changeIntoState(RobotStateWaiting);
-}
-
 void RobotImpl::updateEngineForTurnTo()
 {
 	if (checkTimeout())
@@ -283,9 +270,6 @@ void RobotImpl::updateEngine(const Field &field)
 	case RobotStateLeavingPuck:
 		updateEngineForLeavingPuck();
 		break;
-	case RobotStateTurnAround:
-		updateEngineForTurnAround();
-		break;
 	case RobotStateTurnTo:
 		updateEngineForTurnTo();
 		break;
@@ -315,7 +299,6 @@ void RobotImpl::updateEngineForDriving()
 		break;
 	case RobotStateCollectingPuck:
 	case RobotStateLeavingPuck:
-	case RobotStateTurnAround:
 	case RobotStateTurnTo:
 		assert(false);
 		break;
@@ -352,7 +335,6 @@ bool RobotImpl::enableCollisionDetectionWithSonar() const
 	case RobotStateDrivingTurningPart:
 	case RobotStateLeavingPuck:
 	case RobotStateTurnTo:
-	case RobotStateTurnAround:
 		result = true;
 		break;
 	}
@@ -526,7 +508,6 @@ bool RobotImpl::isMoving() const
 		return engine.isMoving();
 	case RobotStateDrivingStraightPart:
 	case RobotStateDrivingTurningPart:
-	case RobotStateTurnAround:
 	case RobotStateTurnTo:
 	case RobotStateLeavingPuck:
 	case RobotStateCollectingPuck:
@@ -535,11 +516,6 @@ bool RobotImpl::isMoving() const
 
 	assert(false);
 	return true;
-}
-
-void RobotImpl::turnAround()
-{
-	changeIntoState(RobotStateTurnAround);
 }
 
 RobotPosition RobotImpl::getCurrentPosition() const
@@ -590,8 +566,6 @@ bool RobotImpl::isRotating() const
 	case RobotStateDrivingStraightPart:
 		return fabs(engine.getCurrentRotationSpeed()) > 0.2;
 	case RobotStateDrivingTurningPart:
-		return true;
-	case RobotStateTurnAround:
 		return true;
 	case RobotStateTurnTo:
 		return true;

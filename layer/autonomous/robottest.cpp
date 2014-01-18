@@ -898,20 +898,6 @@ void RobotTest::stuckAtObstacle_collectPuckInFrontCalled_false()
 	CPPUNIT_ASSERT(!m_robot->stuckAtObstacle());
 }
 
-void RobotTest::stuckAtObstacle_turnAroundCalled_false()
-{
-	m_engine->setTryingToTackleObstacle(true);
-
-	m_robot->updateSensorData();
-	m_robot->updateActuators(*m_field);
-	m_engine->setTryingToTackleObstacle(false);
-	m_robot->updateSensorData();
-	m_robot->turnAround();
-	m_robot->updateActuators(*m_field);
-
-	CPPUNIT_ASSERT(!m_robot->stuckAtObstacle());
-}
-
 void RobotTest::stuckAtObstacle_leavePuckCalled_false()
 {
 	m_engine->setTryingToTackleObstacle(true);
@@ -1133,44 +1119,6 @@ void RobotTest::updateSensorData_0bstacleDirectInFront_engineGotNoCallToUnlockFo
 	CPPUNIT_ASSERT(m_engine->getCallsToUnlockForwardMovement() == 0);
 }
 
-void RobotTest::turnAround_empty_engineGotAtLeastOneCallToTurnAround()
-{
-	m_robot->updateSensorData();
-	m_robot->turnAround();
-	m_robot->updateActuators(*m_field);
-
-	CPPUNIT_ASSERT(m_engine->getCallsToTurnAround() > 0);
-}
-
-void RobotTest::turnAround_turnAroundDone_reachedTarget()
-{
-	m_robot->updateSensorData();
-	m_robot->turnAround();
-	m_robot->updateActuators(*m_field);
-	m_odometry->setCurrentPosition(RobotPosition(Point(), 9*M_PI/8));
-	m_robot->updateSensorData();
-	m_robot->updateActuators(*m_field);
-	m_odometry->setCurrentPosition(RobotPosition(Point(), 0));
-	m_robot->updateSensorData();
-	m_robot->updateActuators(*m_field);
-
-	CPPUNIT_ASSERT(m_robot->reachedTarget());
-}
-
-void RobotTest::turnAround_minuteWaited_cantReachTarget()
-{
-	m_odometry->setCurrentPosition(RobotPosition(Point(0, 0), Angle(0)));
-
-	m_robot->updateSensorData();
-	m_robot->turnAround();
-	m_robot->updateActuators(*m_field);
-	m_watchMock->setTime(60);
-	m_robot->updateSensorData();
-	m_robot->updateActuators(*m_field);
-
-	CPPUNIT_ASSERT(m_robot->cantReachTarget());
-}
-
 void RobotTest::getCurrentPosition_position3And4InOdometry_3And4()
 {
 	m_odometry->setCurrentPosition(RobotPosition(Point(3, 4), 2));
@@ -1328,23 +1276,6 @@ void RobotTest::cantReachTarget_collectPuckInFrontCalled_false()
 	m_lidar->setPuckCollectable(true);
 	m_robot->updateSensorData();
 	m_robot->collectPuckInFront(Point(0.4, 0));
-	m_robot->updateActuators(*m_field);
-
-	CPPUNIT_ASSERT(!m_robot->cantReachTarget());
-}
-
-void RobotTest::cantReachTarget_turnAroundCalled_false()
-{
-	vector<Circle> obstacles;
-	obstacles.push_back(Circle(Point(10, 0), 2));
-	m_field->setSoftObstacles(obstacles);
-
-	m_robot->updateSensorData();
-	m_targets.push_back(RobotPosition(Point(10, 0), 0));
-	m_robot->goTo(m_targets);
-	m_robot->updateActuators(*m_field);
-	m_robot->updateSensorData();
-	m_robot->turnAround();
 	m_robot->updateActuators(*m_field);
 
 	CPPUNIT_ASSERT(!m_robot->cantReachTarget());
@@ -1780,16 +1711,6 @@ void RobotTest::isRotating_turnTo_true()
 	CPPUNIT_ASSERT(m_robot->isRotating());
 }
 
-void RobotTest::isRotating_turnAround_true()
-{
-	m_odometry->setCurrentPosition(RobotPosition(Point(0, 0), 0));
-	m_robot->updateSensorData();
-	m_robot->turnAround();
-	m_robot->updateActuators(*m_field);
-
-	CPPUNIT_ASSERT(m_robot->isRotating());
-}
-
 void RobotTest::isRotating_firstPhaseOfCollectingPuck_true()
 {
 	m_lidar->setPuckCollectable(false);
@@ -1975,15 +1896,6 @@ void RobotTest::isMoving_waitingAndEngineSaysNotMoving_false()
 void RobotTest::isMoving_waitingAndEngineSaysMoving_true()
 {
 	m_engine->setIsMoving(true);
-
-	CPPUNIT_ASSERT(m_robot->isMoving());
-}
-
-void RobotTest::isMoving_turnAround_true()
-{
-	m_engine->setIsMoving(false);
-
-	m_robot->turnAround();
 
 	CPPUNIT_ASSERT(m_robot->isMoving());
 }
