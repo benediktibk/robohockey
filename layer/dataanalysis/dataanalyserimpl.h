@@ -5,6 +5,10 @@
 
 namespace RoboHockey
 {
+namespace Common
+{
+	class Watch;
+}
 namespace Layer
 {
 namespace Hardware
@@ -18,7 +22,7 @@ namespace DataAnalysis
 			public DataAnalyser
 	{
 	public:
-		DataAnalyserImpl(Hardware::Robot *robot);
+		DataAnalyserImpl(Hardware::Robot *robot, const Common::Watch &watch);
 		virtual ~DataAnalyserImpl();
 
 		virtual Sonar& getSonar();

@@ -13,6 +13,7 @@ namespace Common
 	class Logger;
 	class WatchImpl;
 	class SegFaultStackTracePrinter;
+	class StopWatch;
 }
 
 namespace Layer
@@ -72,6 +73,7 @@ namespace Main
 		Layer::Strategy::Common::Referee *m_referee;
 		Common::Logger *m_logger;
 		Common::WatchImpl *m_watch;
+		Common::StopWatch *m_stopWatch;
 		QTimer *m_timer;
 		const double m_loopTimeMaximum;
 		const double m_loopTimeWeight;

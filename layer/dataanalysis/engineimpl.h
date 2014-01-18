@@ -7,6 +7,12 @@
 
 namespace RoboHockey
 {
+namespace Common
+{
+	class Watch;
+	class PIDController;
+}
+
 namespace Layer
 {
 namespace Hardware
@@ -32,7 +38,7 @@ namespace DataAnalysis
 						 };
 
 	public:
-		EngineImpl(Hardware::Engine &engine, Hardware::Odometry &odometry);
+		EngineImpl(Hardware::Engine &engine, Hardware::Odometry &odometry, const Common::Watch &watch);
 		virtual ~EngineImpl();
 
 		virtual void goToStraight(const Common::Point &position, double finalSpeed);
@@ -81,6 +87,9 @@ namespace DataAnalysis
 		bool m_isMoving;
 		bool m_startedMovement;
 		double m_finalSpeed;
+		Common::PIDController *m_controllerTurnOnly;
+		Common::PIDController *m_controllerDriveAndTurnRotation;
+		Common::PIDController *m_controllerDriveAndTurnSpeed;
 	};
 }
 }

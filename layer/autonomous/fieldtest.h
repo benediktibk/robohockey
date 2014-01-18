@@ -9,6 +9,7 @@ namespace RoboHockey
 namespace Common
 {
 	class LoggerMock;
+	class WatchMock;
 }
 namespace Layer
 {
@@ -295,6 +296,7 @@ namespace Autonomous
 		RobotMock *m_robot;
 		FieldImpl *m_field;
 		Common::LoggerMock *m_logger;
+		Common::WatchMock *m_watchMock;
 	};
 }
 }

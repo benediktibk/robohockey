@@ -4,6 +4,7 @@
 #include "layer/hardware/odometry.h"
 #include "common/compare.h"
 #include "common/robotposition.h"
+#include "common/pidcontroller.h"
 #include <math.h>
 #include <algorithm>
 
@@ -12,7 +13,7 @@ using namespace RoboHockey::Layer;
 using namespace RoboHockey::Layer::DataAnalysis;
 using namespace std;
 
-EngineImpl::EngineImpl(Hardware::Engine &engine, Hardware::Odometry &odometry) :
+EngineImpl::EngineImpl(Hardware::Engine &engine, Hardware::Odometry &odometry, const Watch &watch) :
 	m_engine(engine),
 	m_odometry(odometry),
 	m_engineState(EngineStateStopped),
@@ -21,13 +22,22 @@ EngineImpl::EngineImpl(Hardware::Engine &engine, Hardware::Odometry &odometry) :
 	m_speedTresholder(new SpeedTresholder()),
 	m_desiredSpeed(0),
 	m_isMoving(false),
-	m_startedMovement(false)
+	m_startedMovement(false),
+	m_controllerTurnOnly(new PIDController(0, 0, 0, watch)),
+	m_controllerDriveAndTurnRotation(new PIDController(0, 0, 0, watch)),
+	m_controllerDriveAndTurnSpeed(new PIDController(0, 0, 0, watch))
 { }
 
 EngineImpl::~EngineImpl()
 {
 	delete m_speedTresholder;
 	m_speedTresholder = 0;
+	delete m_controllerTurnOnly;
+	m_controllerTurnOnly = 0;
+	delete m_controllerDriveAndTurnRotation;
+	m_controllerDriveAndTurnRotation = 0;
+	delete m_controllerDriveAndTurnSpeed;
+	m_controllerDriveAndTurnSpeed = 0;
 }
 
 void EngineImpl::goToStraight(const Common::Point &position, double finalSpeed)

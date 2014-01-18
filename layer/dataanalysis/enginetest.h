@@ -6,10 +6,23 @@
 
 namespace RoboHockey
 {
+namespace Common
+{
+	class WatchMock;
+}
+
 namespace Layer
 {
+namespace Hardware
+{
+	class EngineMock;
+	class OdometryMock;
+}
+
 namespace DataAnalysis
 {
+	class EngineImpl;
+
 	class EngineTest :
 			public CPPUNIT_NS::TestFixture
 	{
@@ -64,6 +77,10 @@ namespace DataAnalysis
 		CPPUNIT_TEST(getCurrentRotationSpeed_speedSet2_2);
 		CPPUNIT_TEST_SUITE_END();
 
+	public:
+		virtual void setUp();
+		virtual void tearDown();
+
 	private:
 		void goToStraight_currentPositionDifferentToTarget_atLeastOneCallToSetSpeed();
 		void goToStraight_lookingRightButHaveToGoLeftUp_lastRotationIsLeft();
@@ -113,6 +130,12 @@ namespace DataAnalysis
 		void updateSpeedAndRotation_forwardMovementUnlockedAndCalledTwice_motorIsEnabled();
 		void updateSpeedAndRotation_tryingToTackleObstacle_motorIsDisabled();
 		void getCurrentRotationSpeed_speedSet2_2();
+
+	private:
+		Common::WatchMock *m_watch;
+		Hardware::EngineMock *m_hardwareEngine;
+		Hardware::OdometryMock *m_hardwareOdometry;
+		EngineImpl *m_engine;
 	};
 }
 }

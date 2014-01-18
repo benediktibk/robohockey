@@ -3,6 +3,7 @@
 #include "common/watchimpl.h"
 #include "common/segfaultstacktraceprinter.h"
 #include "common/loggerimpl.h"
+#include "common/stopwatch.h"
 #include "layer/dataanalysis/dataanalyserimpl.h"
 #include "layer/hardware/robotimpl.h"
 #include "layer/hardware/sensordatarecorder.h"
@@ -29,6 +30,7 @@ Game::Game(int argc, char **argv) :
 	m_referee(0),
 	m_logger(0),
 	m_watch(new Common::WatchImpl()),
+	m_stopWatch(new Common::StopWatch(*m_watch)),
 	m_timer(new QTimer()),
 	m_loopTimeMaximum(0.2),
 	m_loopTimeWeight(0.1),
@@ -70,9 +72,9 @@ Game::Game(int argc, char **argv) :
 
 	m_logger = new Common::LoggerImpl();
 	Hardware::Robot *hardwareRobot = new Hardware::RobotImpl(playerServer);
-	DataAnalysis::DataAnalyser *dataAnalyser = new DataAnalysis::DataAnalyserImpl(hardwareRobot);
+	DataAnalysis::DataAnalyser *dataAnalyser = new DataAnalysis::DataAnalyserImpl(hardwareRobot, *m_watch);
 	Autonomous::Router *router = new Autonomous::RouterImpl(0.38);
-	m_robot = new Autonomous::RobotImpl(dataAnalyser, router, new Common::WatchImpl(), *m_logger);
+	m_robot = new Autonomous::RobotImpl(dataAnalyser, router, *m_watch, *m_logger);
 	m_field = new Autonomous::FieldImpl(
 				dataAnalyser->getOdometry(), dataAnalyser->getLidar(),
 				dataAnalyser->getCamera(), *m_robot, *m_logger);
@@ -83,7 +85,7 @@ Game::Game(int argc, char **argv) :
 
 	connect(m_timer, SIGNAL(timeout()), this, SLOT(execute()));
 
-	m_watch->getTimeAndRestart();
+	m_stopWatch->getTimeAndRestart();
 	m_timer->start(0);
 	m_referee->reportReady();
 }
@@ -92,6 +94,8 @@ Game::~Game()
 {
 	delete m_sensorDataRecorder;
 	m_sensorDataRecorder = 0;
+	delete m_stopWatch;
+	m_stopWatch = 0;
 	delete m_watch;
 	m_watch = 0;
 	delete m_field;
@@ -140,7 +144,7 @@ void Game::logToConsole(const string &message)
 void Game::execute()
 {
 	assert(m_valid);
-	WatchImpl watch;
+	StopWatch stopWatch(*m_watch);
 
 	/*!
 	 * Unfortunately disabling the engine is very slow, this seems
@@ -156,24 +160,24 @@ void Game::execute()
 	if (m_sensorDataRecorder != 0)
 		m_sensorDataRecorder->recordCurrentValues(m_robot->isMoving());
 
-	double timeForSensorUpdate = watch.getTimeAndRestart();
+	double timeForSensorUpdate = stopWatch.getTimeAndRestart();
 
 	m_field->update();
 	double blueObjectCountNew = m_field->getNumberOfObjectsWithColor(FieldColorBlue);
 	double yellowObjectCountNew = m_field->getNumberOfObjectsWithColor(FieldColorYellow);
 	double greenObjectCountNew = m_field->getNumberOfObjectsWithColor(FieldColorGreen);
-	double timeForFieldUpdate = watch.getTimeAndRestart();
+	double timeForFieldUpdate = stopWatch.getTimeAndRestart();
 
 	executeRobotControl();
-	double timeForLogic = watch.getTimeAndRestart();
+	double timeForLogic = stopWatch.getTimeAndRestart();
 
 	m_robot->updateActuators(*m_field);
 	m_referee->tellEgoPos(m_robot->getCurrentPosition().getPosition());
 	m_referee->sendAlive();
-	double timeForActuatorUpdate = watch.getTimeAndRestart();
+	double timeForActuatorUpdate = stopWatch.getTimeAndRestart();
 	bool isMovingAfterwards = m_robot->isMoving();
 
-	double timeDifference = m_watch->getTimeAndRestart();
+	double timeDifference = m_stopWatch->getTimeAndRestart();
 	double timeForEventProcessing =
 			timeDifference -
 			(timeForActuatorUpdate + timeForFieldUpdate + timeForLogic + timeForSensorUpdate);

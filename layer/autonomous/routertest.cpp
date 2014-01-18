@@ -11,6 +11,7 @@
 #include "common/line.h"
 #include "common/signum.h"
 #include "common/pathintersectpoints.h"
+#include "common/stopwatch.h"
 #include <assert.h>
 
 using namespace std;
@@ -320,8 +321,9 @@ void RouterTest::calculateRoute_severalObjectsAndOneOnTheWay_calculationIsNotToo
 	RobotPosition end(Point(3, 2), 0);
 
 	WatchImpl watch;
+	StopWatch stopWatch(watch);
 	Route route = router.calculateRoute(start, end, field, Angle::getHalfRotation(), 0.1, false, m_noObstacles, obstacles);
-	double time = watch.getTimeAndRestart();
+	double time = stopWatch.getTimeAndRestart();
 
 	CPPUNIT_ASSERT(route.isValid());
 	CPPUNIT_ASSERT(!route.intersectsWith(obstacles));

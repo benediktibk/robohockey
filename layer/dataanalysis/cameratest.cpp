@@ -3,6 +3,7 @@
 #include "layer/hardware/cameramock.h"
 #include "common/compare.h"
 #include "common/watchimpl.h"
+#include "common/stopwatch.h"
 
 using namespace RoboHockey::Layer;
 using namespace RoboHockey::Layer::DataAnalysis;
@@ -251,10 +252,11 @@ void CameraTest::getAllCameraObjects_realWorldExampleData_timeIsBelow100ms()
 	Hardware::CameraMock hardwareCamera("yellow_puck_twice");
 	CameraImpl camera(hardwareCamera);
 	WatchImpl watch;
+	StopWatch stopWatch(watch);
 
-	watch.getTimeAndRestart();
+	stopWatch.getTimeAndRestart();
 	camera.getAllCameraObjects(RobotPosition(Point(1,1), Angle::getQuarterRotation()));
-	double time = watch.getTimeAndRestart();
+	double time = stopWatch.getTimeAndRestart();
 
 	CPPUNIT_ASSERT(time < 0.1);
 }

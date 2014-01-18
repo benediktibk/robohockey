@@ -23,8 +23,8 @@ SensorDataPlayer::SensorDataPlayer(const string &path) :
 	m_watch(new WatchMock()),
 	m_logger(new LoggerMock()),
 	m_hardwareRobot(new Hardware::RobotMock()),
-	m_dataAnalyser(new DataAnalysis::DataAnalyserImpl(m_hardwareRobot)),
-	m_robot(new Autonomous::RobotImpl(m_dataAnalyser, new RouterImpl(0.38), m_watch, *m_logger)),
+	m_dataAnalyser(new DataAnalysis::DataAnalyserImpl(m_hardwareRobot, *m_watch)),
+	m_robot(new Autonomous::RobotImpl(m_dataAnalyser, new RouterImpl(0.38), *m_watch, *m_logger)),
 	m_field(new FieldImpl(
 				m_dataAnalyser->getOdometry(), m_dataAnalyser->getLidar(),
 				m_dataAnalyser->getCamera(), *m_robot, *m_logger)),
@@ -53,6 +53,8 @@ SensorDataPlayer::~SensorDataPlayer()
 	m_watch = 0;
 	delete m_logger;
 	m_logger = 0;
+	delete m_watch;
+	m_watch = 0;
 }
 
 void SensorDataPlayer::loadNextRound()

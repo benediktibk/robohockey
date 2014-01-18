@@ -33,7 +33,7 @@ namespace Autonomous
 			public Robot
 	{
 	public:
-		RobotImpl(DataAnalysis::DataAnalyser *dataAnalyser, Router *router, Common::Watch *watch, Common::Logger &logger);
+		RobotImpl(DataAnalysis::DataAnalyser *dataAnalyser, Router *router, const Common::Watch &watch, Common::Logger &logger);
 		virtual ~RobotImpl();
 
 		virtual void goTo(const std::list<Common::RobotPosition> &possibleTargets);
@@ -102,7 +102,7 @@ namespace Autonomous
 		const Common::Angle m_maximumAngleForSmoothTurn;
 		DataAnalysis::DataAnalyser *m_dataAnalyser;
 		Router *m_router;
-		Common::Watch *m_watch;
+		const Common::Watch &m_watch;
 		Common::StopWatch *m_watchDog;
 		bool m_tryingToTackleObstacle;
 		bool m_cantReachTarget;

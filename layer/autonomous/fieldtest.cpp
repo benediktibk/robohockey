@@ -11,6 +11,7 @@
 #include "common/compare.h"
 #include "common/robotposition.h"
 #include "common/loggermock.h"
+#include "common/watchmock.h"
 
 using namespace RoboHockey::Common;
 using namespace RoboHockey::Layer;
@@ -25,6 +26,7 @@ void FieldTest::setUp()
 	m_robot = new RobotMock();
 	m_logger = new LoggerMock();
 	m_field = new FieldImpl(*m_odometry, *m_lidar, *m_camera, *m_robot, *m_logger);
+	m_watchMock = new WatchMock();
 }
 
 void FieldTest::tearDown()
@@ -41,6 +43,8 @@ void FieldTest::tearDown()
 	m_robot = 0;
 	delete m_logger;
 	m_logger = 0;
+	delete m_watchMock;
+	m_watchMock = 0;
 }
 
 void FieldTest::update_noLidarObjects_noFieldObjects()
@@ -1284,7 +1288,7 @@ void FieldTest::calibratePosition_validPattern_correctTransformation()
 void FieldTest::calibratePosition_realWorldExample_positionIsCorrect()
 {
 	Hardware::RobotMock *hardwareRobot = new Hardware::RobotMock();
-	DataAnalysis::DataAnalyserImpl dataAnalyser(hardwareRobot);
+	DataAnalysis::DataAnalyserImpl dataAnalyser(hardwareRobot, *m_watchMock);
 	Autonomous::RobotMock autonomousRobot;
 	FieldImpl field(dataAnalyser.getOdometry(), dataAnalyser.getLidar(), dataAnalyser.getCamera(), autonomousRobot, *m_logger);
 	Hardware::OdometryMock &odometry = hardwareRobot->getOdometryMock();
@@ -2020,7 +2024,7 @@ void FieldTest::detectTeamColorWithGoalInFront_yellowAndBlueEqual_teamNotUnknown
 void FieldTest::getNewOriginFromFieldDetection_realWorldExample1_correctNewOrigin()
 {
 	Hardware::RobotMock *hardwareRobot = new Hardware::RobotMock();
-	DataAnalysis::DataAnalyserImpl dataAnalyser(hardwareRobot);
+	DataAnalysis::DataAnalyserImpl dataAnalyser(hardwareRobot, *m_watchMock);
 	Autonomous::RobotMock autonomousRobot;
 	FieldImpl field(dataAnalyser.getOdometry(), dataAnalyser.getLidar(), dataAnalyser.getCamera(), autonomousRobot, *m_logger);
 	Hardware::LidarMock &lidar = hardwareRobot->getLidarMock();

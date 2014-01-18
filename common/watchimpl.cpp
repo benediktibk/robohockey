@@ -5,21 +5,13 @@
 using namespace RoboHockey::Common;
 
 WatchImpl::WatchImpl() :
-	m_lastTime(getCurrentAbsoluteTime())
+	m_initialTime(getCurrentAbsoluteTime())
 { }
-
-double WatchImpl::getTimeAndRestart()
-{
-	double totalTime = getCurrentAbsoluteTime();
-	double timeDifference = totalTime - m_lastTime;
-	m_lastTime = totalTime;
-	return timeDifference;
-}
 
 double WatchImpl::getTime() const
 {
 	double totalTime = getCurrentAbsoluteTime();
-	double timeDifference = totalTime - m_lastTime;
+	double timeDifference = totalTime - m_initialTime;
 	return timeDifference;
 }
 

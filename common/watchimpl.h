@@ -13,14 +13,13 @@ namespace Common
 	public:
 		WatchImpl();
 
-		virtual double getTimeAndRestart();
 		virtual double getTime() const;
 
 	private:
 		double getCurrentAbsoluteTime() const;
 
 	private:
-		double m_lastTime;
+		double m_initialTime;
 	};
 }
 }

@@ -2,9 +2,11 @@
 #include "layer/dataanalysis/sonar.h"
 #include "layer/dataanalysis/lidar.h"
 #include "layer/hardware/robotimpl.h"
+#include "common/watchimpl.h"
 #include <iostream>
 #include <stdio.h>
 
+using namespace RoboHockey::Common;
 using namespace RoboHockey::Layer;
 using namespace RoboHockey::Layer::DataAnalysis;
 using namespace std;
@@ -15,7 +17,8 @@ int main(int argc, char **argv)
 		return 1;
 
 	Hardware::Robot *hardwareRobot = new Hardware::RobotImpl(argv[1]);
-	DataAnalyserImpl dataAnalyser(hardwareRobot);
+	WatchImpl watch;
+	DataAnalyserImpl dataAnalyser(hardwareRobot, watch);
 	const Lidar &lidar = dataAnalyser.getLidar();
 	Sonar &sonar = dataAnalyser.getSonar();
 	Hardware::Sonar &hardwareSonar = hardwareRobot->getSonar();

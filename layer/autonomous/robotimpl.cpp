@@ -22,7 +22,7 @@ using namespace RoboHockey::Layer::Autonomous;
 using namespace RoboHockey::Layer;
 using namespace std;
 
-RobotImpl::RobotImpl(DataAnalysis::DataAnalyser *dataAnalyser, Router *router, Watch *watch, Common::Logger &logger) :
+RobotImpl::RobotImpl(DataAnalysis::DataAnalyser *dataAnalyser, Router *router, const Watch &watch, Common::Logger &logger) :
 	m_logger(logger),
 	m_robotWidth(0.38),
 	m_maximumDistanceToCollectPuck(0.75),
@@ -32,7 +32,7 @@ RobotImpl::RobotImpl(DataAnalysis::DataAnalyser *dataAnalyser, Router *router, W
 	m_dataAnalyser(dataAnalyser),
 	m_router(router),
 	m_watch(watch),
-	m_watchDog(new StopWatch(*watch)),
+	m_watchDog(new StopWatch(watch)),
 	m_tryingToTackleObstacle(false),
 	m_cantReachTarget(false),
 	m_currentRoute(0),
@@ -41,7 +41,7 @@ RobotImpl::RobotImpl(DataAnalysis::DataAnalyser *dataAnalyser, Router *router, W
 	m_ignoringSoftObstacles(false),
 	m_ignoringNotVisibleObstacle(false),
 	m_carryingPuck(false),
-	m_puckCollected(new TimeSmoothedBoolean(*m_watch, false, 0.2))
+	m_puckCollected(new TimeSmoothedBoolean(m_watch, false, 0.2))
 { }
 
 RobotImpl::~RobotImpl()
@@ -54,8 +54,6 @@ RobotImpl::~RobotImpl()
 	m_watchDog = 0;
 	delete m_puckCollected;
 	m_puckCollected = 0;
-	delete m_watch;
-	m_watch = 0;
 	clearRoute();
 }
 
@@ -756,7 +754,8 @@ RobotImpl::RobotImpl(const RobotImpl &rhs) :
 	m_robotWidth(0),
 	m_maximumDistanceToCollectPuck(0),
 	m_maximumAngleToCollectPuck(0),
-	m_timeout(0)
+	m_timeout(0),
+	m_watch(rhs.m_watch)
 { }
 
 void RobotImpl::operator=(const RobotImpl &)
