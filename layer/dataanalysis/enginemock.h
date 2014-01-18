@@ -21,7 +21,6 @@ namespace DataAnalysis
 		virtual void goToStraightSlowlyBack(const Common::Point &targetPosition);
 		virtual void updateSpeedAndRotation();
 		virtual void stop();
-		virtual void turnAround();
 		virtual void turnToTarget(const Common::Point &position);
 		virtual void lockForwardMovement();
 		virtual void unlockForwardMovement();
@@ -42,7 +41,6 @@ namespace DataAnalysis
 		unsigned int getCallsToUpdateSpeedAndMagnitude() const;
 		unsigned int getCallsToTryingToTackleObstacle() const;
 		unsigned int getCallsToTurnToTarget() const;
-		unsigned int getCallsToTurnAround() const;
 		unsigned int getCallsToLockForwardMovement() const;
 		unsigned int getCallsToUnlockForwardMovement() const;
 		void setTryingToTackleObstacle(bool value);
@@ -63,7 +61,6 @@ namespace DataAnalysis
 		unsigned int m_callsToUpdateSpeedAndMagnitude;
 		unsigned int m_callsToTryingToTackleObstacle;
 		unsigned int m_callsToTurnToTarget;
-		unsigned int m_callsToTurnAround;
 		unsigned int m_callsToLockForwardMovement;
 		unsigned int m_callsToUnlockForwardMovement;
 		bool m_tryingToTackleObstacle;

@@ -208,26 +208,6 @@ void EngineTest::stop_movingSomewhere_lastRotationIsZero()
 	CPPUNIT_ASSERT(m_hardwareEngine->getLastRotation() == 0);
 }
 
-void EngineTest::turnAround_empty_lastMagnitudeIsZero()
-{
-	m_hardwareOdometry->setCurrentPosition(RobotPosition(Point(0, 0), 0));
-
-	m_engine->turnAround();
-	m_engine->updateSpeedAndRotation();
-
-	CPPUNIT_ASSERT(m_hardwareEngine->getLastMagnitude() == 0);
-}
-
-void EngineTest::turnAround_empty_lastRotationIsNotZero()
-{
-	m_hardwareOdometry->setCurrentPosition(RobotPosition(Point(0, 0), 0));
-
-	m_engine->turnAround();
-	m_engine->updateSpeedAndRotation();
-
-	CPPUNIT_ASSERT(fabs(m_hardwareEngine->getLastRotation()) > 0.1);
-}
-
 void EngineTest::turnToTarget_differentToStartOrientation_lastMagnitudeIsZero()
 {
 	m_hardwareOdometry->setCurrentPosition(RobotPosition(Point(0, 0), 0));
@@ -333,19 +313,6 @@ void EngineTest::tryingToTackleObstacle_drivingForwardAndForwardMovementNotLocke
 	CPPUNIT_ASSERT(!m_engine->tryingToTackleObstacle());
 }
 
-void EngineTest::tryingToTackleObstacle_turningAroundAndForwardMovementLocked_false()
-{
-	m_hardwareOdometry->setCurrentPosition(RobotPosition(Point(0, 0), 0));
-	m_engine->lockForwardMovement();
-	m_engine->goToStraight(Point(10, 0), 0);
-	m_engine->updateSpeedAndRotation();
-
-	m_engine->turnAround();
-	m_engine->updateSpeedAndRotation();
-
-	CPPUNIT_ASSERT(!m_engine->tryingToTackleObstacle());
-}
-
 void EngineTest::tryingToTackleObstacle_turningToTargetAndForwardMovementLocked_false()
 {
 	m_hardwareOdometry->setCurrentPosition(RobotPosition(Point(0, 0), 0));
@@ -383,67 +350,6 @@ void EngineTest::tryingToTackleObstacle_stoppedAndForwardMovementLocked_false()
 	m_engine->updateSpeedAndRotation();
 
 	CPPUNIT_ASSERT(!m_engine->tryingToTackleObstacle());
-}
-
-void EngineTest::turnAround_turnedNotAHalfYet_lastRotationIsGreaterThanZero()
-{
-	m_hardwareOdometry->setCurrentPosition(RobotPosition(Point(0, 0), 0));
-
-	m_engine->turnAround();
-	m_engine->updateSpeedAndRotation();
-	m_hardwareOdometry->setCurrentPosition(RobotPosition(Point(0, 0), 0.1));
-	m_engine->updateSpeedAndRotation();
-
-	CPPUNIT_ASSERT(m_hardwareEngine->getLastRotation() > 0.1);
-}
-
-void EngineTest::turnAround_turnedMoreThanAHalft_lastRotationIsGreaterThanZero()
-{
-	m_hardwareOdometry->setCurrentPosition(RobotPosition(Point(0, 0), 0));
-
-	m_engine->turnAround();
-	m_engine->updateSpeedAndRotation();
-	m_hardwareOdometry->setCurrentPosition(RobotPosition(Point(0, 0), 0.1));
-	m_engine->updateSpeedAndRotation();
-	m_hardwareOdometry->setCurrentPosition(RobotPosition(Point(0, 0), 3.5));
-	m_engine->updateSpeedAndRotation();
-
-	CPPUNIT_ASSERT(m_hardwareEngine->getLastRotation() > 0.1);
-}
-
-void EngineTest::turnAround_turnedNearlyFull_lastRotationIsGreaterThanZero()
-{
-	m_hardwareOdometry->setCurrentPosition(RobotPosition(Point(0, 0), 0));
-
-	m_engine->turnAround();
-	m_engine->updateSpeedAndRotation();
-	m_hardwareOdometry->setCurrentPosition(RobotPosition(Point(0, 0), 0.1));
-	m_engine->updateSpeedAndRotation();
-	m_hardwareOdometry->setCurrentPosition(RobotPosition(Point(0, 0), 3.5));
-	m_engine->updateSpeedAndRotation();
-	m_hardwareOdometry->setCurrentPosition(RobotPosition(Point(0, 0), 1.9*M_PI));
-	m_engine->updateSpeedAndRotation();
-
-	CPPUNIT_ASSERT(m_hardwareEngine->getLastRotation() > 0.01);
-}
-
-void EngineTest::turnAround_turnedMoreThanOnce_lastRotationIsZero()
-{
-	m_hardwareOdometry->setCurrentPosition(RobotPosition(Point(0, 0), 0));
-
-	m_engine->turnAround();
-	m_engine->updateSpeedAndRotation();
-	m_hardwareOdometry->setCurrentPosition(RobotPosition(Point(0, 0), 0.1));
-	m_engine->updateSpeedAndRotation();
-	m_hardwareOdometry->setCurrentPosition(RobotPosition(Point(0, 0), 3.5));
-	m_engine->updateSpeedAndRotation();
-	m_hardwareOdometry->setCurrentPosition(RobotPosition(Point(0, 0), 1.9*M_PI));
-	m_engine->updateSpeedAndRotation();
-	m_hardwareOdometry->setCurrentPosition(RobotPosition(Point(0, 0), 0.1));
-	m_engine->updateSpeedAndRotation();
-	m_engine->updateSpeedAndRotation();
-
-	CPPUNIT_ASSERT(m_hardwareEngine->getLastRotation() == 0);
 }
 
 void EngineTest::goToStraight_validTargetPosition_startPositionIsCorrect()

@@ -22,7 +22,6 @@ namespace DataAnalysis
 		virtual void goToStraightSlowlyBack(const Common::Point &targetPosition) = 0;
 		virtual void stop() = 0;
 		virtual void updateSpeedAndRotation() = 0;
-		virtual void turnAround() = 0;
 		virtual void turnToTarget(const Common::Point &position) = 0;
 		virtual void lockForwardMovement() = 0;
 		virtual void unlockForwardMovement() = 0;

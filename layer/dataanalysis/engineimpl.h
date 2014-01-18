@@ -30,7 +30,6 @@ namespace DataAnalysis
 	{
 	private:
 		enum EngineState { EngineStateStopped,
-						   EngineStateTurnAround,
 						   EngineStateDriving,
 						   EngineStateRotating,
 						   EngineStateDrivingSlowly,
@@ -46,7 +45,6 @@ namespace DataAnalysis
 		virtual void goToStraightSlowlyBack(const Common::Point &position);
 		virtual void updateSpeedAndRotation();
 		virtual void stop();
-		virtual void turnAround();
 		virtual void turnToTarget(const Common::Point &position);
 		virtual void lockForwardMovement();
 		virtual void unlockForwardMovement();
@@ -64,7 +62,6 @@ namespace DataAnalysis
 
 	private:
 		void updateSpeedAndRotationForStopped();
-		void updateSpeedAndRotationForTurnAround();
 		void updateSpeedAndRotationForDriving();
 		void updateSpeedAndRotationForRotating();
 		void turnOnly(const Common::Angle &targetOrientation, const Common::Angle &currentOrientation);
@@ -79,7 +76,6 @@ namespace DataAnalysis
 		Common::Point m_startPosition;
 		EngineState m_engineState;
 		Common::Angle m_startOrientation;
-		bool m_oneHalfTurnDone;
 		bool m_forwardMovementLocked;
 		bool m_tryingToTackleObstacle;
 		SpeedTresholder *m_speedTresholder;

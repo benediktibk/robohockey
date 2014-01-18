@@ -83,9 +83,6 @@ void EngineImpl::updateSpeedAndRotation()
 	case EngineStateDrivingSlowlyBack:
 		updateSpeedAndRotationForDriving();
 		break;
-	case EngineStateTurnAround:
-		updateSpeedAndRotationForTurnAround();
-		break;
 	case EngineStateRotating:
 		updateSpeedAndRotationForRotating();
 		break;
@@ -97,11 +94,6 @@ void EngineImpl::updateSpeedAndRotation()
 void EngineImpl::stop()
 {
 	switchIntoState(EngineStateStopped);
-}
-
-void EngineImpl::turnAround()
-{
-	switchIntoState(EngineStateTurnAround);
 }
 
 void EngineImpl::turnToTarget(const Point &position)
@@ -177,28 +169,6 @@ void EngineImpl::updateSpeedAndRotationForStopped()
 	setSpeed(0, 0);
 }
 
-void EngineImpl::updateSpeedAndRotationForTurnAround()
-{
-	RobotPosition currentRobotPosition = m_odometry.getCurrentPosition();
-	Angle currentOrientation = currentRobotPosition.getOrientation();
-	Angle orientationDifference = currentOrientation - m_startOrientation;
-
-	if (orientationDifference.getValueBetweenMinusPiAndPi() < 0)
-		m_oneHalfTurnDone = true;
-
-	Compare angleCompare(0.1);
-
-	if (m_oneHalfTurnDone && angleCompare.isFuzzyEqual(orientationDifference.getValueBetweenMinusPiAndPi(), 0))
-	{
-		stop();
-		return;
-	}
-
-	double orientationDifferenceToTarget = min(M_PI/3, 2*M_PI - orientationDifference.getValueBetweenZeroAndTwoPi());
-	m_tryingToTackleObstacle = false;
-	setSpeed(0, orientationDifferenceToTarget);
-}
-
 void EngineImpl::updateSpeedAndRotationForDriving()
 {
 	RobotPosition currentPosition = m_odometry.getCurrentPosition();
@@ -270,7 +240,6 @@ void EngineImpl::driveAndTurn(const RobotPosition &currentPosition)
 	case EngineStateDriving:
 	case EngineStateRotating:
 	case EngineStateStopped:
-	case EngineStateTurnAround:
 		break;
 	}
 
@@ -297,7 +266,6 @@ void EngineImpl::switchIntoState(EngineState state)
 	RobotPosition currentRobotPosition = m_odometry.getCurrentPosition();
 	m_startPosition = currentRobotPosition.getPosition();
 	m_tryingToTackleObstacle = false;
-	m_oneHalfTurnDone = false;
 	m_finalSpeed = 0;
 
 	if (m_engineState != state)

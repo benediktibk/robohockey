@@ -45,11 +45,6 @@ void EngineMock::stop()
 	++m_callsToStop;
 }
 
-void EngineMock::turnAround()
-{
-	++m_callsToTurnAround;
-}
-
 void EngineMock::turnToTarget(const Point &target)
 {
 	++m_callsToTurnToTarget;
@@ -145,11 +140,6 @@ unsigned int EngineMock::getCallsToTurnToTarget() const
 	return m_callsToTurnToTarget;
 }
 
-unsigned int EngineMock::getCallsToTurnAround() const
-{
-	return m_callsToTurnAround;
-}
-
 unsigned int EngineMock::getCallsToLockForwardMovement() const
 {
 	return m_callsToLockForwardMovement;
@@ -184,7 +174,6 @@ void EngineMock::resetCounters()
 	m_callsToUpdateSpeedAndMagnitude = 0;
 	m_callsToTryingToTackleObstacle = 0;
 	m_callsToTurnToTarget = 0;
-	m_callsToTurnAround = 0;
 	m_callsToLockForwardMovement = 0;
 	m_callsToUnlockForwardMovement = 0;
 }
