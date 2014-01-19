@@ -38,7 +38,6 @@ void RobotTest::tearDown()
 	delete m_robot;
 	m_robot = 0;
 	m_routerMock = 0;
-	m_watchMock = 0;
 	m_dataAnalyser = 0;
 	m_odometry = 0;
 	m_engine = 0;

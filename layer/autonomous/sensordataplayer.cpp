@@ -50,7 +50,6 @@ SensorDataPlayer::~SensorDataPlayer()
 	m_robot = 0;
 	m_dataAnalyser = 0;
 	m_hardwareRobot = 0;
-	m_watch = 0;
 	delete m_logger;
 	m_logger = 0;
 	delete m_watch;
