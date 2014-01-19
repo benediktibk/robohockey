@@ -91,7 +91,7 @@ void InputArgumentParser::parse(const vector<string> &arguments)
 	bool foundPlayer = false;
 	bool foundRecordingPath = false;
 
-	while (argumentsLeft.size() > 0)
+	while (!argumentsLeft.empty())
 	{
 		const string firstArgument = argumentsLeft.front();
 
