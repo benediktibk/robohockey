@@ -71,7 +71,7 @@ bool SensorDataPlayer::countOfColoredObjectsDecreased() const
 {
 	return	m_oldBlueObjectCount > m_blueObjectCount ||
 			m_oldYellowObjectCount > m_yellowObjectCount ||
-			m_oldGreenObjectCount > m_oldGreenObjectCount;
+			m_oldGreenObjectCount > m_greenObjectCount;
 }
 
 unsigned int SensorDataPlayer::getBlueObjectCount() const
