@@ -84,6 +84,7 @@ namespace Autonomous
 		std::vector<Common::Circle> shrinkObstacles(const std::vector<Common::Circle> &obstacles) const;
 		std::vector<Common::Circle> growObstacles(const std::vector<Common::Circle> &obstacles) const;
 		const Common::Point& getNextTarget() const;
+		void log(const std::string &message);
 
 	private:
 		// forbid copies

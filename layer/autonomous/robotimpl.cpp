@@ -94,6 +94,9 @@ void RobotImpl::updateEngineForDrivingStraightPart()
 	{
 		const Common::Point &target = m_currentRoute->getSecondPoint();
 		engine.goToStraight(target);
+		stringstream message;
+		message << "setting new target for driving straight: " << target;
+		log(message.str());
 	}
 }
 
@@ -106,15 +109,22 @@ void RobotImpl::updateEngineForDrivingTurningPart()
 		Point target;
 
 		if (m_currentRoute->getPointCount() >= 2)
+		{
 			target = m_currentRoute->getSecondPoint();
+			log("this is not the final rotation");
+		}
 		else
 		{
 			target = Point(1, 0);
 			target.rotate(m_currentTarget.getOrientation());
-			target = target + getCurrentPosition().getPosition();
+			target = target + m_currentTarget.getPosition();
+			log("this is the final rotation");
 		}
 
 		engine.turnToTarget(target);
+		stringstream message;
+		message << "setting new target for turning to: " << target;
+		log(message.str());
 	}
 }
 
@@ -135,28 +145,44 @@ void RobotImpl::updateDrivingState(const Field &field)
 	DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
 
 	if (engine.reachedTarget() && m_state == RobotStateDrivingStraightPart)
+	{
 		m_currentRoute->removeFirstPoint();
+		log("target between reached, removing first point");
+	}
 	else if (engine.reachedTarget() && m_currentRoute->getPointCount() < 2)
 	{
 		stop();
+		log("final target reached");
 		return;
 	}
 
 	if (routeChanged)
+	{
 		engine.stop();
+		log("route changed, must stop");
+	}
 
 	if (routeChanged || engine.reachedTarget())
 	{
 		if (m_currentRoute->getPointCount() == 1)
+		{
 			changeIntoState(RobotStateDrivingTurningPart);
+			log("switching into the turning part of driving");
+		}
 		else
 		{
 			const Point &nextTarget = getNextTarget();
 
 			if (isOrientationDifferenceSmallEnoughForSmoothTurn(nextTarget))
+			{
+				log("switching into the straight part of driving");
 				changeIntoState(RobotStateDrivingStraightPart);
+			}
 			else
+			{
+				log("switching into the turning part of driving");
 				changeIntoState(RobotStateDrivingTurningPart);
+			}
 		}
 	}
 }
@@ -427,6 +453,11 @@ const Point &RobotImpl::getNextTarget() const
 {
 	assert(m_currentRoute->getPointCount() >= 2);
 	return m_currentRoute->getLastPoint();
+}
+
+void RobotImpl::log(const string &message)
+{
+	m_logger.logToLogFileOfType(Logger::LogFileTypeRobot, message);
 }
 
 void RobotImpl::updateActuators(const Field &field)
