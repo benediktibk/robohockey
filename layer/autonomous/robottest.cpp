@@ -810,6 +810,26 @@ void RobotTest::goTo_tookAVeryLongTime_cantReachTarget()
 	CPPUNIT_ASSERT(m_robot->cantReachTarget());
 }
 
+void RobotTest::goTo_sonarDetectsObstacleButSonarDistabled_engineGotNoCallToLockForwardMovement()
+{
+	DataAnalysis::DataAnalyserMock *dataAnalyser = new DataAnalysis::DataAnalyserMock();
+	RobotImpl robot(dataAnalyser, new RouterMock(), *m_watchMock, *m_logger, false);
+	const DataAnalysis::EngineMock &engine = dataAnalyser->getEngineMock();
+	DataAnalysis::SonarMock &sonar = dataAnalyser->getSonarMock();
+	list<RobotPosition> targets;
+	targets.push_back(RobotPosition(Point(10, 0), Angle(0)));
+
+	robot.updateSensorData();
+	robot.goTo(targets);
+	robot.updateActuators(*m_field);
+	sonar.setIsObstacleDirectInFront(true);
+	robot.updateSensorData();
+	robot.updateActuators(*m_field);
+
+	CPPUNIT_ASSERT_EQUAL((unsigned int)0, engine.getCallsToLockForwardMovement());
+	CPPUNIT_ASSERT(!robot.stuckAtObstacle());
+}
+
 void RobotTest::stuckAtObstacle_tryingToTackleObstacle_true()
 {
 	m_engine->setTryingToTackleObstacle(true);
