@@ -7,8 +7,6 @@ using namespace RoboHockey::Layer::DataAnalysis;
 EngineMock::EngineMock() :
 	m_tryingToTackleObstacle(false),
 	m_reachedTarget(true),
-	m_isGoingStraight(false),
-	m_speedForGoingStraight(0),
 	m_isMoving(true),
 	m_rotationSpeed(0),
 	m_speed(0)
@@ -94,16 +92,6 @@ double EngineMock::getCurrentRotationSpeed() const
 void EngineMock::updateSensorData()
 { }
 
-bool EngineMock::isGoingStraight() const
-{
-	return m_isGoingStraight;
-}
-
-double EngineMock::calculateSpeedForGoingStraight(double) const
-{
-	return m_speedForGoingStraight;
-}
-
 unsigned int EngineMock::getCallsToGoToStraight() const
 {
 	return m_callsToGoToStraight;
@@ -159,11 +147,6 @@ void EngineMock::setReachedTarget(bool value)
 	m_reachedTarget = value;
 }
 
-void EngineMock::setIsGoingStraight(bool value)
-{
-	m_isGoingStraight = value;
-}
-
 void EngineMock::resetCounters()
 {
 	m_callsToGoToStraight = 0;
@@ -180,11 +163,6 @@ void EngineMock::resetCounters()
 const Point &EngineMock::getLastTarget() const
 {
 	return m_lastTarget;
-}
-
-void EngineMock::setSpeedForGoingStraight(double value)
-{
-	m_speedForGoingStraight = value;
 }
 
 void EngineMock::setIsMoving(bool value)

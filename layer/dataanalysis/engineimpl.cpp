@@ -147,16 +147,6 @@ void EngineImpl::updateSensorData()
 	m_isMoving = m_engine.isMoving();
 }
 
-bool EngineImpl::isGoingStraight() const
-{
-	return m_engineState == EngineStateDriving;
-}
-
-double EngineImpl::calculateSpeedForGoingStraight(double distance) const
-{
-	return m_distanceAmplification*distance;
-}
-
 const Point &EngineImpl::getStartPosition() const
 {
 	return m_startPosition;
