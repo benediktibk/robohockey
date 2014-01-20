@@ -456,7 +456,7 @@ void RobotImpl::updateSensorData()
 	const DataAnalysis::Lidar &lidar = m_dataAnalyser->getLidar();
 	m_puckCollected->update(lidar.isPuckCollected());
 
-	if (m_currentRoute != 0 && m_currentRoute->isValid())
+	if (m_currentRoute != 0 && m_currentRoute->isValid() && m_currentRoute->getPointCount() > 1)
 	{
 		const RobotPosition position = getCurrentPosition();
 		m_currentRoute->replaceFirstPoint(position.getPosition());
