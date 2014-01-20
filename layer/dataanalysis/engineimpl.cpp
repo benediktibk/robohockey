@@ -23,10 +23,10 @@ EngineImpl::EngineImpl(Hardware::Engine &engine, Hardware::Odometry &odometry, c
 	m_desiredSpeed(0),
 	m_isMoving(false),
 	m_startedMovement(false),
-	m_distanceAmplification(0.7),
+	m_distanceAmplification(1),
 	m_controllerTurnOnly(new PIDController(0.7, 0, 0, watch)),
-	m_controllerDriveAndTurnRotation(new PIDController(2, 0, 0, watch)),
-	m_controllerDriveAndTurnSpeed(new PIDController(m_distanceAmplification, 0, 0, watch))
+	m_controllerDriveAndTurnRotation(new PIDController(1.5, 0, 0.1, watch)),
+	m_controllerDriveAndTurnSpeed(new PIDController(m_distanceAmplification, 0, 0.1, watch))
 { }
 
 EngineImpl::~EngineImpl()
@@ -41,11 +41,10 @@ EngineImpl::~EngineImpl()
 	m_controllerDriveAndTurnSpeed = 0;
 }
 
-void EngineImpl::goToStraight(const Common::Point &position, double finalSpeed)
+void EngineImpl::goToStraight(const Point &position)
 {
 	switchIntoState(EngineStateDriving);
 	m_target = position;
-	m_finalSpeed = finalSpeed;
 }
 
 void EngineImpl::goToStraightSlowly(const Point &position)
@@ -213,13 +212,13 @@ void EngineImpl::driveAndTurn(const RobotPosition &currentPosition)
 
 	if (positionCompare.isFuzzyEqual(forwardError, 0) || alpha.isObtuse())
 	{
-		setSpeed(m_finalSpeed, 0);
+		setSpeed(0, 0);
 		stop();
 		return;
 	}
 
 	double rotationSpeed = m_controllerDriveAndTurnRotation->evaluate(orthogonalError);
-	double magnitude = m_controllerDriveAndTurnSpeed->evaluate(forwardError) + m_finalSpeed;
+	double magnitude = max<double>(0, m_controllerDriveAndTurnSpeed->evaluate(forwardError));
 
 	double magnitudeModification = 1 - fabs(rotationSpeed);
 	if (magnitudeModification > 1)
@@ -265,7 +264,6 @@ void EngineImpl::switchIntoState(EngineState state)
 	RobotPosition currentRobotPosition = m_odometry.getCurrentPosition();
 	m_startPosition = currentRobotPosition.getPosition();
 	m_tryingToTackleObstacle = false;
-	m_finalSpeed = 0;
 	m_controllerDriveAndTurnRotation->resetTo(0);
 	m_controllerDriveAndTurnSpeed->resetTo(0);
 	m_controllerTurnOnly->resetTo(0);

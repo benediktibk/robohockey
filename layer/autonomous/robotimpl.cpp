@@ -91,9 +91,8 @@ void RobotImpl::updateEngineForDrivingStraightPart()
 
 	if (engine.reachedTarget())
 	{
-		double finalSpeed = calculateNextFinalSpeedForGoingStraight();
 		const Common::Point &target = m_currentRoute->getSecondPoint();
-		engine.goToStraight(target, finalSpeed);
+		engine.goToStraight(target);
 	}
 }
 
@@ -350,7 +349,6 @@ void RobotImpl::changeIntoState(RobotState state)
 	m_stateChanged = true;
 	m_rotationReached = false;
 	m_watchDog->getTimeAndRestart();
-	m_finalSpeed = 0;
 }
 
 bool RobotImpl::isCurrentTargetPuckCollectable() const
@@ -407,16 +405,6 @@ vector<Circle> RobotImpl::growObstacles(const vector<Circle> &obstacles) const
 	}
 
 	return result;
-}
-
-double RobotImpl::calculateNextFinalSpeedForGoingStraight() const
-{
-	if (m_currentRoute->getPointCount() <= 2)
-		return 0;
-	else
-		return calculateFinalSpeedForGoingStraight(
-					m_currentRoute->getFirstPoint(), m_currentRoute->getSecondPoint(),
-					m_currentRoute->getThirdPoint());
 }
 
 bool RobotImpl::isOrientationDifferenceSmallEnoughForSmoothTurn(const Angle &angle) const

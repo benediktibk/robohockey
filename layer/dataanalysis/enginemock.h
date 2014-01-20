@@ -16,7 +16,7 @@ namespace DataAnalysis
 	public:
 		EngineMock();
 
-		virtual void goToStraight(const Common::Point &position, double finalSpeed);
+		virtual void goToStraight(const Common::Point &position);
 		virtual void goToStraightSlowly(const Common::Point &targetPosition);
 		virtual void goToStraightSlowlyBack(const Common::Point &targetPosition);
 		virtual void updateSpeedAndRotation();
@@ -48,7 +48,6 @@ namespace DataAnalysis
 		void setIsGoingStraight(bool value);
 		void resetCounters();
 		const Common::Point& getLastTarget() const;
-		double getLastFinalSpeed() const;
 		void setSpeedForGoingStraight(double value);
 		void setIsMoving(bool value);
 		void setCurrentRotationSpeed(double value);
@@ -67,7 +66,6 @@ namespace DataAnalysis
 		bool m_reachedTarget;
 		bool m_isGoingStraight;
 		Common::Point m_lastTarget;
-		double m_lastFinalSpeed;
 		double m_speedForGoingStraight;
 		bool m_isMoving;
 		double m_rotationSpeed;

@@ -40,7 +40,7 @@ namespace DataAnalysis
 		EngineImpl(Hardware::Engine &engine, Hardware::Odometry &odometry, const Common::Watch &watch);
 		virtual ~EngineImpl();
 
-		virtual void goToStraight(const Common::Point &position, double finalSpeed);
+		virtual void goToStraight(const Common::Point &position);
 		virtual void goToStraightSlowly(const Common::Point &position);
 		virtual void goToStraightSlowlyBack(const Common::Point &position);
 		virtual void updateSpeedAndRotation();
@@ -82,7 +82,6 @@ namespace DataAnalysis
 		double m_desiredSpeed;
 		bool m_isMoving;
 		bool m_startedMovement;
-		double m_finalSpeed;
 		const double m_distanceAmplification;
 		Common::PIDController *m_controllerTurnOnly;
 		Common::PIDController *m_controllerDriveAndTurnRotation;

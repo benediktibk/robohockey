@@ -34,7 +34,7 @@ void EngineTest::goToStraight_currentPositionDifferentToTarget_atLeastOneCallToS
 {
 	m_hardwareOdometry->setCurrentPosition(RobotPosition(Point(1, 2), 0));
 
-	m_engine->goToStraight(Point(4, 20), 0);
+	m_engine->goToStraight(Point(4, 20));
 	m_engine->updateSpeedAndRotation();
 
 	CPPUNIT_ASSERT(m_hardwareEngine->getCallsToSetSpeed() > 0);
@@ -44,7 +44,7 @@ void EngineTest::goToStraight_lookingRightButHaveToGoLeftUp_lastRotationIsLeft()
 {
 	m_hardwareOdometry->setCurrentPosition(RobotPosition(Point(1, 1), 0));
 
-	m_engine->goToStraight(Point(0, 2), 0);
+	m_engine->goToStraight(Point(0, 2));
 	m_engine->updateSpeedAndRotation();
 
 	CPPUNIT_ASSERT(m_hardwareEngine->getLastRotation() > 0);
@@ -54,7 +54,7 @@ void EngineTest::goToStraight_lookingRightButHaveToGoDown_lastRotationIsRight()
 {
 	m_hardwareOdometry->setCurrentPosition(RobotPosition(Point(1, 1), 0));
 
-	m_engine->goToStraight(Point(1, -2), 0);
+	m_engine->goToStraight(Point(1, -2));
 	m_engine->updateSpeedAndRotation();
 
 	CPPUNIT_ASSERT(m_hardwareEngine->getCallsToSetSpeed() > 0);
@@ -65,7 +65,7 @@ void EngineTest::goToStraight_startOrientationCompletelyWrong_lastMagnitudeIsNot
 {
 	m_hardwareOdometry->setCurrentPosition(RobotPosition(Point(0, 0), 0));
 
-	m_engine->goToStraight(Point(-1, 0), 0);
+	m_engine->goToStraight(Point(-1, 0));
 	m_engine->updateSpeedAndRotation();
 
 	CPPUNIT_ASSERT(m_hardwareEngine->getCallsToSetSpeed() > 0);
@@ -76,7 +76,7 @@ void EngineTest::goToStraight_startOrientationCorrect_lastMagnitudeIsNotZero()
 {
 	m_hardwareOdometry->setCurrentPosition(RobotPosition(Point(0, 0), 0));
 
-	m_engine->goToStraight(Point(1, 0), 0);
+	m_engine->goToStraight(Point(1, 0));
 	m_engine->updateSpeedAndRotation();
 
 	CPPUNIT_ASSERT(m_hardwareEngine->getLastMagnitude() > 0.01);
@@ -86,7 +86,7 @@ void EngineTest::goToStraight_orientationReachedAfterSomeTime_lastMagnitudeIsNot
 {
 	m_hardwareOdometry->setCurrentPosition(RobotPosition(Point(0, 0), 0));
 
-	m_engine->goToStraight(Point(-1, 0), 0);
+	m_engine->goToStraight(Point(-1, 0));
 	m_engine->updateSpeedAndRotation();
 	m_hardwareOdometry->setCurrentPosition(RobotPosition(Point(0, 0), M_PI));
 	m_engine->updateSpeedAndRotation();
@@ -100,7 +100,7 @@ void EngineTest::goToStraight_stillMoving_lastSpeedsAreZero()
 
 	m_hardwareEngine->setIsMoving(true);
 	m_engine->updateSensorData();
-	m_engine->goToStraight(Point(1, 0), 0);
+	m_engine->goToStraight(Point(1, 0));
 	m_engine->updateSpeedAndRotation();
 
 	CPPUNIT_ASSERT_DOUBLES_EQUAL(0, m_hardwareEngine->getLastMagnitude(), 0.00001);
@@ -113,7 +113,7 @@ void EngineTest::goToStraight_movingFinishedFromPreviousMovement_lastSpeedIsNotZ
 
 	m_hardwareEngine->setIsMoving(true);
 	m_engine->updateSensorData();
-	m_engine->goToStraight(Point(1, 0), 0);
+	m_engine->goToStraight(Point(1, 0));
 	m_engine->updateSpeedAndRotation();
 	m_hardwareEngine->setIsMoving(false);
 	m_engine->updateSensorData();
@@ -128,7 +128,7 @@ void EngineTest::goToStraight_droveToFar_lastRotationAndMagnitudeIsZero()
 
 	m_hardwareEngine->setIsMoving(false);
 	m_engine->updateSensorData();
-	m_engine->goToStraight(Point(1, 0), 0.3);
+	m_engine->goToStraight(Point(1, 0));
 	m_engine->updateSpeedAndRotation();
 	m_hardwareEngine->setIsMoving(true);
 	m_engine->updateSensorData();
@@ -140,7 +140,7 @@ void EngineTest::goToStraight_droveToFar_lastRotationAndMagnitudeIsZero()
 	m_engine->updateSensorData();
 	m_engine->updateSpeedAndRotation();
 
-	CPPUNIT_ASSERT_DOUBLES_EQUAL(0.3, m_hardwareEngine->getLastMagnitude(), 0.000001);
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(0, m_hardwareEngine->getLastMagnitude(), 0.000001);
 	CPPUNIT_ASSERT_DOUBLES_EQUAL(0, m_hardwareEngine->getLastRotation(), 0.000001);
 }
 
@@ -150,7 +150,7 @@ void EngineTest::goToStraight_atEndAndFinalSpeed02_magnitudeIs02()
 
 	m_hardwareEngine->setIsMoving(false);
 	m_engine->updateSensorData();
-	m_engine->goToStraight(Point(1, 0), 0.2);
+	m_engine->goToStraight(Point(1, 0));
 	m_engine->updateSpeedAndRotation();
 	m_hardwareEngine->setIsMoving(true);
 	m_engine->updateSensorData();
@@ -159,7 +159,7 @@ void EngineTest::goToStraight_atEndAndFinalSpeed02_magnitudeIs02()
 	m_engine->updateSensorData();
 	m_engine->updateSpeedAndRotation();
 
-	CPPUNIT_ASSERT_DOUBLES_EQUAL(0.2, m_hardwareEngine->getLastMagnitude(), 0.001);
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(0, m_hardwareEngine->getLastMagnitude(), 0.001);
 	CPPUNIT_ASSERT_DOUBLES_EQUAL(0, m_hardwareEngine->getLastRotation(), 0.000001);
 }
 
@@ -169,7 +169,7 @@ void EngineTest::goToStraight_atEndAndOnceAgainCalled_magnitudeIsZero()
 
 	m_hardwareEngine->setIsMoving(false);
 	m_engine->updateSensorData();
-	m_engine->goToStraight(Point(1, 0), 0.2);
+	m_engine->goToStraight(Point(1, 0));
 	m_engine->updateSpeedAndRotation();
 	m_hardwareEngine->setIsMoving(true);
 	m_engine->updateSensorData();
@@ -187,7 +187,7 @@ void EngineTest::goToStraight_atEndAndOnceAgainCalled_magnitudeIsZero()
 void EngineTest::stop_movingSomewhere_lastMagnitudeIsZero()
 {
 	m_hardwareOdometry->setCurrentPosition(RobotPosition(Point(0, 0), 0));
-	m_engine->goToStraight(Point(1, 0), 0);
+	m_engine->goToStraight(Point(1, 0));
 	m_engine->updateSpeedAndRotation();
 
 	m_engine->stop();
@@ -199,7 +199,7 @@ void EngineTest::stop_movingSomewhere_lastMagnitudeIsZero()
 void EngineTest::stop_movingSomewhere_lastRotationIsZero()
 {
 	m_hardwareOdometry->setCurrentPosition(RobotPosition(Point(0, 0), 0));
-	m_engine->goToStraight(Point(-1, 0), 0);
+	m_engine->goToStraight(Point(-1, 0));
 	m_engine->updateSpeedAndRotation();
 
 	m_engine->stop();
@@ -257,7 +257,7 @@ void EngineTest::turnToTarget_twiceCalled_hardwareEngineGotNoCallToSlowDown()
 void EngineTest::lockForwardMovement_tryingToDriveForward_lastMagnitudeIsZero()
 {
 	m_hardwareOdometry->setCurrentPosition(RobotPosition(Point(0, 0), 0));
-	m_engine->goToStraight(Point(10, 0), 0);
+	m_engine->goToStraight(Point(10, 0));
 	m_engine->updateSpeedAndRotation();
 
 	m_engine->lockForwardMovement();
@@ -270,7 +270,7 @@ void EngineTest::unlockForwardMovement_tryingToDriveForward_lastMagnitudeIsNotZe
 {
 	m_hardwareOdometry->setCurrentPosition(RobotPosition(Point(0, 0), 0));
 	m_engine->lockForwardMovement();
-	m_engine->goToStraight(Point(10, 0), 0);
+	m_engine->goToStraight(Point(10, 0));
 	m_engine->updateSpeedAndRotation();
 
 	m_engine->unlockForwardMovement();
@@ -283,7 +283,7 @@ void EngineTest::unlockForwardMovement_tryingToDriveForward_notTryingToTackleObs
 {
 	m_hardwareOdometry->setCurrentPosition(RobotPosition(Point(0, 0), 0));
 	m_engine->lockForwardMovement();
-	m_engine->goToStraight(Point(10, 0), 0);
+	m_engine->goToStraight(Point(10, 0));
 	m_engine->updateSpeedAndRotation();
 
 	m_engine->unlockForwardMovement();
@@ -297,7 +297,7 @@ void EngineTest::tryingToTackleObstacle_drivingForwardAndForwardMovementLocked_t
 	m_hardwareOdometry->setCurrentPosition(RobotPosition(Point(0, 0), 0));
 
 	m_engine->lockForwardMovement();
-	m_engine->goToStraight(Point(10, 0), 0);
+	m_engine->goToStraight(Point(10, 0));
 	m_engine->updateSpeedAndRotation();
 
 	CPPUNIT_ASSERT(m_engine->tryingToTackleObstacle());
@@ -307,7 +307,7 @@ void EngineTest::tryingToTackleObstacle_drivingForwardAndForwardMovementNotLocke
 {
 	m_hardwareOdometry->setCurrentPosition(RobotPosition(Point(0, 0), 0));
 
-	m_engine->goToStraight(Point(10, 0), 0);
+	m_engine->goToStraight(Point(10, 0));
 	m_engine->updateSpeedAndRotation();
 
 	CPPUNIT_ASSERT(!m_engine->tryingToTackleObstacle());
@@ -317,7 +317,7 @@ void EngineTest::tryingToTackleObstacle_turningToTargetAndForwardMovementLocked_
 {
 	m_hardwareOdometry->setCurrentPosition(RobotPosition(Point(0, 0), 0));
 	m_engine->lockForwardMovement();
-	m_engine->goToStraight(Point(10, 0), 0);
+	m_engine->goToStraight(Point(10, 0));
 	m_engine->updateSpeedAndRotation();
 
 	m_engine->turnToTarget(Point(0, 1));
@@ -330,10 +330,10 @@ void EngineTest::tryingToTackleObstacle_turningToNewTargetAndForwardMovementLock
 {
 	m_hardwareOdometry->setCurrentPosition(RobotPosition(Point(0, 0), 0));
 	m_engine->lockForwardMovement();
-	m_engine->goToStraight(Point(10, 0), 0);
+	m_engine->goToStraight(Point(10, 0));
 	m_engine->updateSpeedAndRotation();
 
-	m_engine->goToStraight(Point(-1, 0), 0);
+	m_engine->goToStraight(Point(-1, 0));
 	m_engine->updateSpeedAndRotation();
 
 	CPPUNIT_ASSERT(m_engine->tryingToTackleObstacle());
@@ -343,7 +343,7 @@ void EngineTest::tryingToTackleObstacle_stoppedAndForwardMovementLocked_false()
 {
 	m_hardwareOdometry->setCurrentPosition(RobotPosition(Point(0, 0), 0));
 	m_engine->lockForwardMovement();
-	m_engine->goToStraight(Point(10, 0), 0);
+	m_engine->goToStraight(Point(10, 0));
 	m_engine->updateSpeedAndRotation();
 
 	m_engine->stop();
@@ -356,7 +356,7 @@ void EngineTest::goToStraight_validTargetPosition_startPositionIsCorrect()
 {
 	m_hardwareOdometry->setCurrentPosition(RobotPosition(Point(3, 5), 0));
 
-	m_engine->goToStraight(Point(6, 7), 0);
+	m_engine->goToStraight(Point(6, 7));
 
 	Compare compare(0.00001);
 	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(3, 5), m_engine->getStartPosition()));
@@ -366,7 +366,7 @@ void EngineTest::goToStraight_moveAwayFromStartPosition_startPositionIsCorrect()
 {
 	m_hardwareOdometry->setCurrentPosition(RobotPosition(Point(3, 5), 0));
 
-	m_engine->goToStraight(Point(6, 7), 0);
+	m_engine->goToStraight(Point(6, 7));
 	m_hardwareOdometry->setCurrentPosition(RobotPosition(Point(4, 5), 0));
 	m_engine->updateSpeedAndRotation();
 
@@ -378,7 +378,7 @@ void EngineTest::goToStraight_rotationDoneAndLittleBitLeftOfDirectConnection_las
 {
 	m_hardwareOdometry->setCurrentPosition(RobotPosition(Point(0, 0), 0));
 
-	m_engine->goToStraight(Point(5, 5), 0);
+	m_engine->goToStraight(Point(5, 5));
 	m_engine->updateSpeedAndRotation();
 	m_hardwareOdometry->setCurrentPosition(RobotPosition(Point(0, 0), 0));
 	m_engine->updateSpeedAndRotation();
@@ -387,15 +387,17 @@ void EngineTest::goToStraight_rotationDoneAndLittleBitLeftOfDirectConnection_las
 	m_hardwareOdometry->setCurrentPosition(RobotPosition(Point(1, 1.1), Angle::getQuarterRotation()/2));
 	m_engine->updateSpeedAndRotation();
 
-	CPPUNIT_ASSERT(m_hardwareEngine->getLastMagnitude() > 0);
-	CPPUNIT_ASSERT(m_hardwareEngine->getLastRotation() < 0);
+	double magnitude = m_hardwareEngine->getLastMagnitude();
+	CPPUNIT_ASSERT(magnitude >= 0);
+	double rotation = m_hardwareEngine->getLastRotation();
+	CPPUNIT_ASSERT(rotation < 0);
 }
 
 void EngineTest::goToStraight_rotationDoneAndLittleBitRightOfDirectConnection_lastRotationIsGreaterThanZero()
 {
 	m_hardwareOdometry->setCurrentPosition(RobotPosition(Point(0, 0), 0));
 
-	m_engine->goToStraight(Point(5, 5), 0);
+	m_engine->goToStraight(Point(5, 5));
 	m_engine->updateSpeedAndRotation();
 	m_hardwareOdometry->setCurrentPosition(RobotPosition(Point(0, 0), 0));
 	m_engine->updateSpeedAndRotation();
@@ -404,8 +406,10 @@ void EngineTest::goToStraight_rotationDoneAndLittleBitRightOfDirectConnection_la
 	m_hardwareOdometry->setCurrentPosition(RobotPosition(Point(1.1, 1), Angle::getQuarterRotation()/2));
 	m_engine->updateSpeedAndRotation();
 
-	CPPUNIT_ASSERT(m_hardwareEngine->getLastMagnitude() > 0);
-	CPPUNIT_ASSERT(m_hardwareEngine->getLastRotation() > 0);
+	double magnitude = m_hardwareEngine->getLastMagnitude();
+	CPPUNIT_ASSERT(magnitude >= 0);
+	double rotation = m_hardwareEngine->getLastRotation();
+	CPPUNIT_ASSERT(rotation > 0);
 }
 
 void EngineTest::goToStraightSlowly_currentPositionDifferentToTarget_atLeastOneCallToSetSpeed()
@@ -537,7 +541,7 @@ void EngineTest::updateSpeedAndRotation_tryingToTackleObstacle_motorIsDisabled()
 
 	m_engine->updateSensorData();
 	m_engine->lockForwardMovement();
-	m_engine->goToStraight(Point(1, 0), 0);
+	m_engine->goToStraight(Point(1, 0));
 	m_engine->updateSpeedAndRotation();
 
 	CPPUNIT_ASSERT_EQUAL((unsigned int)1, m_hardwareEngine->getCallsToSetEnabled());

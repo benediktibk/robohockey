@@ -674,30 +674,6 @@ void RobotTest::goTo_positionInsideSoftObstacle_canReachTarget()
 	CPPUNIT_ASSERT(!robot.cantReachTarget());
 }
 
-void RobotTest::goTo_firstPointNearlyReachedAndSmallTurnNecessary_lastSpeedIsBig()
-{
-	m_routerMock->setRoute(Point(0, 0), Point(5, 0), Point(7, 0.1));
-	m_targets.push_back(RobotPosition(Point(7, 0.1), Angle(0)));
-
-	m_engine->setReachedTarget(true);
-	m_engine->setSpeedForGoingStraight(1);
-	m_odometry->setCurrentPosition(RobotPosition(Point(0, 0), Angle(0)));
-	m_robot->updateSensorData();
-	m_robot->goTo(m_targets);
-	m_robot->updateActuators(*m_field);
-	m_engine->setReachedTarget(false);
-	m_robot->updateSensorData();
-	m_robot->updateActuators(*m_field);
-	m_engine->setReachedTarget(false);
-	m_odometry->setCurrentPosition(RobotPosition(Point(4.8, 0), Angle(0)));
-	m_robot->updateSensorData();
-	m_robot->updateActuators(*m_field);
-
-	double lastSpeed = m_engine->getLastFinalSpeed();
-	CPPUNIT_ASSERT(!m_robot->cantReachTarget());
-	CPPUNIT_ASSERT(lastSpeed > 0.1);
-}
-
 void RobotTest::goTo_firstPointReachedAndSmallTurnNecessary_noCallsToTurnToTarget()
 {
 	m_routerMock->setRoute(Point(0, 0), Point(5, 0), Point(7, 0.1));

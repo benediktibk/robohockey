@@ -81,7 +81,6 @@ namespace Autonomous
 		bool checkTimeout();
 		std::vector<Common::Circle> shrinkObstacles(const std::vector<Common::Circle> &obstacles) const;
 		std::vector<Common::Circle> growObstacles(const std::vector<Common::Circle> &obstacles) const;
-		double calculateNextFinalSpeedForGoingStraight() const;
 		bool isOrientationDifferenceSmallEnoughForSmoothTurn(const Common::Angle &angle) const;
 		bool isOrientationDifferenceSmallEnoughForSmoothTurn(const Common::Point &point) const;
 		const Common::Point& getNextTarget() const;
@@ -116,7 +115,6 @@ namespace Autonomous
 		bool m_ignoringNotVisibleObstacle;
 		bool m_carryingPuck;
 		Common::TimeSmoothedBoolean *m_puckCollected;
-		double m_finalSpeed;
 	};
 }
 }

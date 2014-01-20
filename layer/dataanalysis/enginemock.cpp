@@ -8,7 +8,6 @@ EngineMock::EngineMock() :
 	m_tryingToTackleObstacle(false),
 	m_reachedTarget(true),
 	m_isGoingStraight(false),
-	m_lastFinalSpeed(0),
 	m_speedForGoingStraight(0),
 	m_isMoving(true),
 	m_rotationSpeed(0)
@@ -16,11 +15,10 @@ EngineMock::EngineMock() :
 	resetCounters();
 }
 
-void EngineMock::goToStraight(const Point &target, double finalSpeed)
+void EngineMock::goToStraight(const Point &target)
 {
 	++m_callsToGoToStraight;
 	m_lastTarget = target;
-	m_lastFinalSpeed = finalSpeed;
 }
 
 void EngineMock::goToStraightSlowly(const Point &target)
@@ -181,11 +179,6 @@ void EngineMock::resetCounters()
 const Point &EngineMock::getLastTarget() const
 {
 	return m_lastTarget;
-}
-
-double EngineMock::getLastFinalSpeed() const
-{
-	return m_lastFinalSpeed;
 }
 
 void EngineMock::setSpeedForGoingStraight(double value)
