@@ -146,6 +146,24 @@ void CompareTest::isFuzzyEqual_twoAnglesWhichHave270DegreesDifference_false()
 	CPPUNIT_ASSERT(!compare.isFuzzyEqual(one, two));
 }
 
+void CompareTest::isFuzzyEqual_twoAngelsNear90Degrees_true()
+{
+	Compare compare(0.1);
+	Angle one = Angle::convertFromDegreeToRadiant(89);
+	Angle two = Angle::convertFromDegreeToRadiant(90.5);
+
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(one, two));
+}
+
+void CompareTest::isFuzzyEqual_twoAngelsNear270Degrees_true()
+{
+	Compare compare(0.1);
+	Angle one = Angle::convertFromDegreeToRadiant(269);
+	Angle two = Angle::convertFromDegreeToRadiant(270.5);
+
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(one, two));
+}
+
 void CompareTest::isFuzzyGreater_towAndTwoPointOneAndEpsilonZeroPointTwo_resultIsFuzzyGreater()
 {
 	Compare compare(0.2);

@@ -1811,6 +1811,14 @@ void FieldTest::getTargetsForScoringGoals_always_numberOfPositionsBigger6()
 	CPPUNIT_ASSERT((size_t) 5 < m_field->getTargetsForScoringGoals().size());
 }
 
+void FieldTest::getTargetsForScoringGoals_always_numberOfPositionsIs16()
+{
+	m_field->increaseNumberOfEstimatedGoals();
+	m_field->increaseNumberOfEstimatedGoals();
+
+	CPPUNIT_ASSERT_EQUAL((size_t)16, m_field->getTargetsForScoringGoals().size());
+}
+
 void FieldTest::getTargetsForScoringGoals_forEstimatedGoalsAre0AndEstimatedGoalsAre3_positionsAreEqual()
 {
 	Compare compare(0.1);
