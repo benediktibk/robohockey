@@ -20,6 +20,9 @@ void BorderStone::searchNeighbourBorderStones(std::vector<Point*> &candidates)
 
 	for (vector<Point*>::iterator i = candidates.begin(); i != candidates.end(); ++i)
 	{
+		if (getAllChildren().size() > (size_t) 0)
+			break;
+
 		if(m_distances.isDistanceStandardDistance(this->distanceTo(**i)))
 		{
 			BorderStoneFieldDistance currentFieldDistance = m_distances.getStandardDistanceType(this->distanceTo(**i));

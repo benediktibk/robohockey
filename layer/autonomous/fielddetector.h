@@ -30,6 +30,7 @@ namespace Autonomous
 		double getRotation();
 		unsigned int getNumberOfBorderStonesInRow();
 		bool hasConfirmedResult();
+		FieldDetectionResult& getBestDetectionResult();
 
 	private:
 		bool tryToFigureOutNewOrigin(BorderStone &root, const Common::Point &currentPosition);
@@ -37,7 +38,6 @@ namespace Autonomous
 		std::vector<Common::Point> orderBorderstonesByDistanceToRoot(BorderStone &borderstone, Common::Point &root);
 		bool isResultAlreadyKnown(Common::RobotPosition &newOrigin);
 		FieldDetectionResult& getDetectionResultWithNewOrigin(Common::RobotPosition &newOrigin);
-		FieldDetectionResult& getBestDetectionResult();
 		void logCurrentCalibrationResults();
 
 	private:
