@@ -209,7 +209,7 @@ void EngineImpl::driveAndTurn(const RobotPosition &currentPosition)
 	double rotationSpeed = m_controllerDriveAndTurnRotation->evaluate(orthogonalError);
 	double magnitude = max<double>(0, m_controllerDriveAndTurnSpeed->evaluate(forwardError));
 
-	double magnitudeModification = 1 - fabs(rotationSpeed);
+	double magnitudeModification = 1 - fabs(rotationSpeed*1.5);
 	if (magnitudeModification > 1)
 		magnitudeModification = 1;
 	else if (magnitudeModification < 0)
