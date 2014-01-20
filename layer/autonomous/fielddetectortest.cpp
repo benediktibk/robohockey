@@ -16,11 +16,11 @@ void FieldDetectorTest::tryToDetectField_4validFieldPoints_true()
 
 	vector<Point> testPoints;
 	testPoints.push_back(Point(1,1));
-	testPoints.push_back(Point(1,1.833));
+	testPoints.push_back(Point(1,1.417));
 	testPoints.push_back(Point(1,2.666));
-	testPoints.push_back(Point(1,3.916));
+	testPoints.push_back(Point(1,3.5));
 
-	bool result = m_fieldDetector->tryToDetectField(Point(), testPoints);
+	bool result = m_fieldDetector->tryToDetectField(Point(2,2), testPoints);
 
 	CPPUNIT_ASSERT(result);
 }
@@ -32,27 +32,25 @@ void FieldDetectorTest::tryToDetectField_4validFieldPoints_correctNewOrigin()
 
 	vector<Point> testPoints;
 	testPoints.push_back(Point(1,1));
-	testPoints.push_back(Point(1,1.833));
+	testPoints.push_back(Point(1,1.417));
 	testPoints.push_back(Point(1,2.666));
-	testPoints.push_back(Point(1,3.916));
+	testPoints.push_back(Point(1,3.5));
 
-	bool result = m_fieldDetector->tryToDetectField(Point(), testPoints);
+	bool result = m_fieldDetector->tryToDetectField(Point(0,2), testPoints);
 
 	CPPUNIT_ASSERT(result);
-	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(1,1-(1.25+0.416)), m_fieldDetector->getNewOrigin()));
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(1,1), m_fieldDetector->getNewOrigin()));
 }
 
 void FieldDetectorTest::tryToDetectField_4validFieldPoints_correctRotation()
 {
-
-
 	vector<Point> testPoints;
 	testPoints.push_back(Point(1,1));
-	testPoints.push_back(Point(1,1.833));
+	testPoints.push_back(Point(1,1.417));
 	testPoints.push_back(Point(1,2.666));
-	testPoints.push_back(Point(1,3.916));
+	testPoints.push_back(Point(1,3.5));
 
-	bool result = m_fieldDetector->tryToDetectField(Point(), testPoints);
+	bool result = m_fieldDetector->tryToDetectField(Point(2,2), testPoints);
 
 	CPPUNIT_ASSERT(result);
 	CPPUNIT_ASSERT_DOUBLES_EQUAL(-0.5*M_PI, m_fieldDetector->getRotation(), 0.001);

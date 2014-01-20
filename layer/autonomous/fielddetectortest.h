@@ -26,17 +26,7 @@ namespace Autonomous
 		CPPUNIT_TEST(tryToDetectField_5invalidPoints_false);
 		CPPUNIT_TEST(tryToDetectField_7validPoints_true);
 		CPPUNIT_TEST(tryToDetectField_7validPointsOpposite_true);
-		CPPUNIT_TEST(tryToDetectField_3pointsFar_correctNewOrigin);
-		CPPUNIT_TEST(tryToDetectField_3pointsFarMixed_correctNewOrigin);
-		CPPUNIT_TEST(tryToDetectField_3pointsFarMid_correctNewOrigin);
-		CPPUNIT_TEST(tryToDetectField_3pointsFarMidMixed_correctNewOrigin);
-		CPPUNIT_TEST(tryToDetectField_3pointsMid_correctNewOrigin);
-		CPPUNIT_TEST(tryToDetectField_3pointsMidMixed_correctNewOrigin);
-		CPPUNIT_TEST(tryToDetectField_3pointsNear_correctNewOrigin);
-		CPPUNIT_TEST(tryToDetectField_3pointsNearMixed_correctNewOrigin);
-		CPPUNIT_TEST(tryToDetectField_3pointsNearMidMixed_correctNewOrigin);
 		CPPUNIT_TEST(tryToDetectField_3pointsNearNearMixed_correctNewOrigin);
-		CPPUNIT_TEST(tryToDetectField_3pointsNearMixedMid_correctNewOrigin);
 		CPPUNIT_TEST(tryToDetectField_3pointsCorrectDistanceButWrongArragement_false);
 		CPPUNIT_TEST(tryToDetectField_6validPointsBothSide_true);
 		CPPUNIT_TEST_SUITE_END();
