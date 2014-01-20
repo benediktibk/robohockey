@@ -1837,3 +1837,24 @@ void RobotTest::isMoving_collectingPuck_true()
 
 	CPPUNIT_ASSERT(m_robot->isMoving());
 }
+
+void RobotTest::isOrientationDifferenceSmallEnoughForSmoothTurn_currentSpeedZeroAndEighthRotation_true()
+{
+	m_engine->setCurrentSpeed(0);
+
+	CPPUNIT_ASSERT(m_robot->isOrientationDifferenceSmallEnoughForSmoothTurn(Angle::getEighthRotation()));
+}
+
+void RobotTest::isOrientationDifferenceSmallEnoughForSmoothTurn_currentSpeedMaxAndEighthRotation_false()
+{
+	m_engine->setCurrentSpeed(0.5);
+
+	CPPUNIT_ASSERT(!m_robot->isOrientationDifferenceSmallEnoughForSmoothTurn(Angle::getEighthRotation()));
+}
+
+void RobotTest::isOrientationDifferenceSmallEnoughForSmoothTurn_currentSpeedMaxVerySmallRotation_true()
+{
+	m_engine->setCurrentSpeed(0.5);
+
+	CPPUNIT_ASSERT(m_robot->isOrientationDifferenceSmallEnoughForSmoothTurn(Angle::getEighthRotation()/3));
+}

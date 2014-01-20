@@ -31,7 +31,10 @@ namespace DataAnalysis
 		virtual double getCurrentSpeed() const;
 		virtual double getCurrentRotationSpeed() const;
 		virtual void updateSensorData();
+
+		//! @todo remove (unused)
 		virtual bool isGoingStraight() const;
+		//! @todo remove (unused)
 		virtual double calculateSpeedForGoingStraight(double distance) const;
 
 		unsigned int getCallsToGoToStraight() const;
@@ -51,6 +54,7 @@ namespace DataAnalysis
 		void setSpeedForGoingStraight(double value);
 		void setIsMoving(bool value);
 		void setCurrentRotationSpeed(double value);
+		void setCurrentSpeed(double value);
 
 	private:
 		unsigned int m_callsToGoToStraight;
@@ -69,6 +73,7 @@ namespace DataAnalysis
 		double m_speedForGoingStraight;
 		bool m_isMoving;
 		double m_rotationSpeed;
+		double m_speed;
 	};
 }
 }

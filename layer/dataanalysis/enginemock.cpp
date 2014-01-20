@@ -10,7 +10,8 @@ EngineMock::EngineMock() :
 	m_isGoingStraight(false),
 	m_speedForGoingStraight(0),
 	m_isMoving(true),
-	m_rotationSpeed(0)
+	m_rotationSpeed(0),
+	m_speed(0)
 {
 	resetCounters();
 }
@@ -82,7 +83,7 @@ bool EngineMock::isMoving() const
 
 double EngineMock::getCurrentSpeed() const
 {
-	return 0;
+	return m_speed;
 }
 
 double EngineMock::getCurrentRotationSpeed() const
@@ -194,6 +195,11 @@ void EngineMock::setIsMoving(bool value)
 void EngineMock::setCurrentRotationSpeed(double value)
 {
 	m_rotationSpeed = value;
+}
+
+void EngineMock::setCurrentSpeed(double value)
+{
+	m_speed = value;
 }
 
 

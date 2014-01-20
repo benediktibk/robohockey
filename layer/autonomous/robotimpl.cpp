@@ -409,7 +409,10 @@ vector<Circle> RobotImpl::growObstacles(const vector<Circle> &obstacles) const
 
 bool RobotImpl::isOrientationDifferenceSmallEnoughForSmoothTurn(const Angle &angle) const
 {
-	return fabs(angle.getValueBetweenMinusPiAndPi()) < m_maximumAngleForSmoothTurn.getValueBetweenZeroAndTwoPi();
+	const DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
+	double currentSpeed = engine.getCurrentSpeed();
+	double speedModification = 1 + fabs(currentSpeed);
+	return fabs(speedModification*angle.getValueBetweenMinusPiAndPi()) < m_maximumAngleForSmoothTurn.getValueBetweenZeroAndTwoPi();
 }
 
 bool RobotImpl::isOrientationDifferenceSmallEnoughForSmoothTurn(const Point &point) const
