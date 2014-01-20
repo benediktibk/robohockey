@@ -4,7 +4,7 @@
 using namespace RoboHockey::Layer::Autonomous;
 using namespace RoboHockey::Common;
 
-const double FieldObject::m_robotDiameterTreshold = 0.13;
+const double FieldObject::m_robotDiameterTreshold = 0.1;
 const double FieldObject::m_robotDiameterMaximum = 0.8;
 const double FieldObject::m_boundaryPostDiameter = 0.06;
 const double FieldObject::m_puckDiameter = 0.12;

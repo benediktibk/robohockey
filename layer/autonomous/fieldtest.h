@@ -89,6 +89,8 @@ namespace Autonomous
 		CPPUNIT_TEST(calibratePosition_validPattern_correctTransformation);
 		CPPUNIT_TEST(calibratePosition_realWorldExample_positionIsCorrect);
 		CPPUNIT_TEST(calibratePosition_validPattern_objectsOutsideFieldAreDeleted);
+		CPPUNIT_TEST(calibratePosition_goodRealWorldExample_positionIsCorrect);
+		CPPUNIT_TEST(calibratePosition_worstCaseRealWorldExample_positionIsCorrect);
 		CPPUNIT_TEST(getObjectsWithColorOrderedByDistance_oneObjectWithCorrectColorAndOneWithNoColor_resultSizeIsCorrect);
 		CPPUNIT_TEST(getObjectsWithColorOrderedByDistance_twoObjectsWithCorrectColorInAscendingOrder_orderIsCorrect);
 		CPPUNIT_TEST(getObjectsWithColorOrderedByDistance_twoObjectsWithCorrectColorInDescendingOrder_orderIsCorrect);
@@ -219,6 +221,8 @@ namespace Autonomous
 		void calibratePosition_validPattern_correctTransformation();
 		void calibratePosition_realWorldExample_positionIsCorrect();
 		void calibratePosition_validPattern_objectsOutsideFieldAreDeleted();
+		void calibratePosition_goodRealWorldExample_positionIsCorrect();
+		void calibratePosition_worstCaseRealWorldExample_positionIsCorrect();
 		void getObjectsWithColorOrderedByDistance_oneObjectWithCorrectColorAndOneWithNoColor_resultSizeIsCorrect();
 		void getObjectsWithColorOrderedByDistance_twoObjectsWithCorrectColorInAscendingOrder_orderIsCorrect();
 		void getObjectsWithColorOrderedByDistance_twoObjectsWithCorrectColorInDescendingOrder_orderIsCorrect();

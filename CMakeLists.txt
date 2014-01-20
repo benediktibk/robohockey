@@ -52,6 +52,10 @@ endif(DOXYGEN_FOUND)
 
 FILE(GLOB TESTFILES_LOOSING_PUCK_1_TXT ${CMAKE_CURRENT_SOURCE_DIR}/resources/testfiles/loosing_puck_1/*.txt)
 FILE(GLOB TESTFILES_LOOSING_PUCK_1_PNG ${CMAKE_CURRENT_SOURCE_DIR}/resources/testfiles/loosing_puck_1/*.png)
+FILE(GLOB TESTFILES_FIELD_DETECTION_PERFECT_TXT ${CMAKE_CURRENT_SOURCE_DIR}/resources/testfiles/field_detection_perfect/*.txt)
+FILE(GLOB TESTFILES_FIELD_DETECTION_PERFECT_PNG ${CMAKE_CURRENT_SOURCE_DIR}/resources/testfiles/field_detection_perfect/*.png)
+FILE(GLOB TESTFILES_FIELD_DETECTION_WORST_CASE_TXT ${CMAKE_CURRENT_SOURCE_DIR}/resources/testfiles/field_detection_worst_case/*.txt)
+FILE(GLOB TESTFILES_FIELD_DETECTION_WORST_CASE_PNG ${CMAKE_CURRENT_SOURCE_DIR}/resources/testfiles/field_detection_worst_case/*.png)
 FILE(GLOB TESTFILES_TXT ${CMAKE_CURRENT_SOURCE_DIR}/resources/testfiles/*.txt)
 FILE(GLOB TESTFILES_PNG ${CMAKE_CURRENT_SOURCE_DIR}/resources/testfiles/*.png)
 
@@ -65,6 +69,16 @@ set(TESTFILES_LOOSING_PUCK
 	${TESTFILES_LOOSING_PUCK_1_PNG}
 )
 
+set(TESTFILES_FIELD_DETECTION_PERFECT
+	${TESTFILES_FIELD_DETECTION_PERFECT_TXT}
+	${TESTFILES_FIELD_DETECTION_PERFECT_PNG}
+)
+
+set(TESTFILES_FIELD_DETECTION_WORST_CASE
+	${TESTFILES_FIELD_DETECTION_WORST_CASE_TXT}
+	${TESTFILES_FIELD_DETECTION_WORST_CASE_PNG}
+)
+
 foreach(file ${TESTFILES})
 	file(	COPY
 			${file}
@@ -75,6 +89,18 @@ foreach(file ${TESTFILES_LOOSING_PUCK})
 	file(	COPY
 			${file}
 			DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/main/bin/resources/testfiles/loosing_puck_1)
+endforeach()
+
+foreach(file ${TESTFILES_FIELD_DETECTION_PERFECT})
+	file(	COPY
+			${file}
+			DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/main/bin/resources/testfiles/field_detection_perfect)
+endforeach()
+
+foreach(file ${TESTFILES_FIELD_DETECTION_WORST_CASE})
+	file(	COPY
+			${file}
+			DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/main/bin/resources/testfiles/field_detection_worst_case)
 endforeach()
 
 add_subdirectory(common)

@@ -9,6 +9,7 @@ namespace Common
 {
 	class WatchMock;
 	class LoggerMock;
+	class Point;
 }
 
 namespace Layer
@@ -40,6 +41,8 @@ namespace Autonomous
 		unsigned int getBlueObjectCount() const;
 		unsigned int getYellowObjectCount() const;
 		unsigned int getGreenObjectCount() const;
+		Field &getField();
+		Common::Point getCurrentPosition() const;
 
 	private:
 		void loadNextRound(unsigned int roundCount);
