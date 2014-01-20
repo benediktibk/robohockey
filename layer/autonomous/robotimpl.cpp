@@ -151,38 +151,29 @@ void RobotImpl::updateDrivingState(const Field &field)
 	}
 	else if (engine.reachedTarget() && m_currentRoute->getPointCount() < 2)
 	{
-		stop();
 		log("final target reached");
+		stop();
 		return;
 	}
 
 	if (routeChanged)
 	{
-		engine.stop();
 		log("route changed, must stop");
+		engine.stop();
 	}
 
 	if (routeChanged || engine.reachedTarget())
 	{
 		if (m_currentRoute->getPointCount() == 1)
-		{
 			changeIntoState(RobotStateDrivingTurningPart);
-			log("switching into the turning part of driving");
-		}
 		else
 		{
 			const Point &nextTarget = getNextTarget();
 
 			if (isOrientationDifferenceSmallEnoughForSmoothTurn(nextTarget))
-			{
-				log("switching into the straight part of driving");
 				changeIntoState(RobotStateDrivingStraightPart);
-			}
 			else
-			{
-				log("switching into the turning part of driving");
 				changeIntoState(RobotStateDrivingTurningPart);
-			}
 		}
 	}
 }
@@ -370,6 +361,10 @@ bool RobotImpl::enableCollisionDetectionWithSonar() const
 
 void RobotImpl::changeIntoState(RobotState state)
 {
+	stringstream stateMessage;
+	stateMessage << "switching from state " << getCurrentState() << " into state " << getCurrentState();
+	log(stateMessage.str());
+
 	if (m_state == RobotStateWaiting)
 		m_watchDog->getTimeAndRestart();
 
@@ -378,6 +373,22 @@ void RobotImpl::changeIntoState(RobotState state)
 	m_state = state;
 	m_stateChanged = true;
 	m_rotationReached = false;
+
+	if (m_currentRoute == 0)
+		log("current route is invalid");
+	else
+	{
+		list<Point> points = m_currentRoute->getAllPoints();
+		stringstream routeMessage;
+		routeMessage << "current route is";
+		for(list<Point>::const_iterator i = points.begin(); i != points.end(); ++i)
+		{
+			const Point &point = *i;
+			routeMessage << endl << point;
+		}
+
+		log(routeMessage.str());
+	}
 }
 
 bool RobotImpl::isCurrentTargetPuckCollectable() const
