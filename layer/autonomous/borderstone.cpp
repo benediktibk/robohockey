@@ -22,19 +22,25 @@ void BorderStone::searchNeighbourBorderStones(std::vector<Point*> &candidates)
 	{
 		if(m_distances.isDistanceStandardDistance(this->distanceTo(**i)))
 		{
-			BorderStoneFieldDistance type = m_distances.getStandardDistanceType(this->distanceTo(**i));
+			BorderStoneFieldDistance currentFieldDistance = m_distances.getStandardDistanceType(this->distanceTo(**i));
 
-			double distanceDirect = m_father.distanceTo(**i);
-			double distanceViaThis = m_father.distanceTo(*this) + this->distanceTo(**i);
-//			double distanceHypotenuse = sqrt(m_father.distanceTo(*this) * m_father.distanceTo(*this) + this->distanceTo(**i) * this->distanceTo(**i));
-
-			if((compare.isFuzzyEqual(distanceDirect, distanceViaThis) && type != BorderStoneFieldDistanceD)
-//					|| (compare.isFuzzyEqual(distanceDirect, distanceHypotenuse) && type == BorderStoneFieldDistanceD)
-					)
+			if (	(m_distanceToFather == BorderStoneFieldDistanceRoot && currentFieldDistance == BorderStoneFieldDistanceA)
+					|| (m_distanceToFather == BorderStoneFieldDistanceA && currentFieldDistance == BorderStoneFieldDistanceB)
+					|| (m_distanceToFather == BorderStoneFieldDistanceB && currentFieldDistance == BorderStoneFieldDistanceC)
+					|| (m_distanceToFather == BorderStoneFieldDistanceC && currentFieldDistance == BorderStoneFieldDistanceC)
+				)
 			{
-				m_children.push_back(BorderStone(*this, type, m_distances, **i, m_epsilon));
-				candidates.erase(i);
-				--i;
+				BorderStoneFieldDistance type = m_distances.getStandardDistanceType(this->distanceTo(**i));
+
+				double distanceDirect = m_father.distanceTo(**i);
+				double distanceViaThis = m_father.distanceTo(*this) + this->distanceTo(**i);
+
+				if((compare.isFuzzyEqual(distanceDirect, distanceViaThis) && type != BorderStoneFieldDistanceD))
+				{
+					m_children.push_back(BorderStone(*this, type, m_distances, **i, m_epsilon));
+					candidates.erase(i);
+					--i;
+				}
 			}
 		}
 	}
