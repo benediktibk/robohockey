@@ -189,11 +189,9 @@ void RobotTest::goTo_targetPositionReached_reachedTarget()
 	m_robot->updateActuators(*m_field);
 	m_odometry->setCurrentPosition(RobotPosition(Point(0, 1), Angle::getQuarterRotation()));
 	m_engine->setReachedTarget(true);
-	m_engine->setIsGoingStraight(false);
 	m_robot->updateSensorData();
 	m_robot->updateActuators(*m_field);
 	m_engine->setReachedTarget(true);
-	m_engine->setIsGoingStraight(false);
 	m_odometry->setCurrentPosition(RobotPosition(Point(0, 1), Angle::getQuarterRotation()));
 	m_robot->updateSensorData();
 	m_robot->updateActuators(*m_field);
@@ -212,13 +210,11 @@ void RobotTest::goTo_firstPointReached_notReachedTarget()
 	m_robot->goTo(m_targets);
 	m_robot->updateActuators(*m_field);
 	m_engine->setReachedTarget(true);
-	m_engine->setIsGoingStraight(false);
 	m_odometry->setCurrentPosition(RobotPosition(Point(0, 0), Angle::getQuarterRotation()));
 	m_robot->updateSensorData();
 	m_robot->updateActuators(*m_field);
 	m_odometry->setCurrentPosition(RobotPosition(Point(0, 10), Angle::getQuarterRotation()));
 	m_engine->setReachedTarget(true);
-	m_engine->setIsGoingStraight(false);
 	m_robot->updateSensorData();
 	m_robot->updateActuators(*m_field);
 
@@ -236,13 +232,11 @@ void RobotTest::goTo_firstPointReached_engineGotOneCallToTurnTo()
 	m_robot->goTo(m_targets);
 	m_robot->updateActuators(*m_field);
 	m_engine->setReachedTarget(true);
-	m_engine->setIsGoingStraight(false);
 	m_odometry->setCurrentPosition(RobotPosition(Point(0, 0), Angle::getQuarterRotation()));
 	m_robot->updateSensorData();
 	m_robot->updateActuators(*m_field);
 	m_odometry->setCurrentPosition(RobotPosition(Point(0, 10), Angle::getQuarterRotation()));
 	m_engine->setReachedTarget(true);
-	m_engine->setIsGoingStraight(false);
 	m_engine->resetCounters();
 	m_robot->updateSensorData();
 	m_robot->updateActuators(*m_field);
@@ -261,13 +255,11 @@ void RobotTest::goTo_firstPointReached_lastArgumentOfTurnToIsTargetPoint()
 	m_robot->goTo(m_targets);
 	m_robot->updateActuators(*m_field);
 	m_engine->setReachedTarget(true);
-	m_engine->setIsGoingStraight(false);
 	m_odometry->setCurrentPosition(RobotPosition(Point(0, 0), Angle::getQuarterRotation()));
 	m_robot->updateSensorData();
 	m_robot->updateActuators(*m_field);
 	m_odometry->setCurrentPosition(RobotPosition(Point(0, 10), Angle::getQuarterRotation()));
 	m_engine->setReachedTarget(true);
-	m_engine->setIsGoingStraight(false);
 	m_engine->resetCounters();
 	m_robot->updateSensorData();
 	m_robot->updateActuators(*m_field);
@@ -287,18 +279,15 @@ void RobotTest::goTo_firstPointAndRotationReached_engineGotOneCallToGoToStraight
 	m_robot->goTo(m_targets);
 	m_robot->updateActuators(*m_field);
 	m_engine->setReachedTarget(true);
-	m_engine->setIsGoingStraight(false);
 	m_odometry->setCurrentPosition(RobotPosition(Point(0, 0), Angle::getQuarterRotation()));
 	m_robot->updateSensorData();
 	m_robot->updateActuators(*m_field);
 	m_odometry->setCurrentPosition(RobotPosition(Point(0, 10), Angle::getQuarterRotation()));
 	m_engine->setReachedTarget(true);
-	m_engine->setIsGoingStraight(false);
 	m_robot->updateSensorData();
 	m_robot->updateActuators(*m_field);
 	m_odometry->setCurrentPosition(RobotPosition(Point(0, 10), 0));
 	m_engine->setReachedTarget(true);
-	m_engine->setIsGoingStraight(false);
 	m_engine->resetCounters();
 	m_robot->updateSensorData();
 	m_robot->updateActuators(*m_field);
@@ -317,18 +306,15 @@ void RobotTest::goTo_finalPointReached_engineGotOneCallToTurnTo()
 	m_targets.push_back(RobotPosition(Point(1, 10), Angle::getQuarterRotation()));
 	m_robot->goTo(m_targets);
 	m_robot->updateActuators(*m_field);
-	m_engine->setIsGoingStraight(false);
 	m_engine->setReachedTarget(true);
 	m_odometry->setCurrentPosition(RobotPosition(Point(0, 0), Angle(tan(10/1))));
 	m_robot->updateSensorData();
 	m_robot->updateActuators(*m_field);
 	m_engine->setReachedTarget(false);
-	m_engine->setIsGoingStraight(true);
 	m_robot->updateSensorData();
 	m_robot->updateActuators(*m_field);
 	m_odometry->setCurrentPosition(RobotPosition(Point(1, 10), Angle::getQuarterRotation()));
 	m_engine->setReachedTarget(true);
-	m_engine->setIsGoingStraight(false);
 	m_engine->resetCounters();
 	m_robot->updateSensorData();
 	m_robot->updateActuators(*m_field);
@@ -345,28 +331,23 @@ void RobotTest::goTo_finalOrientationReached_engineGotOneCallToStop()
 	m_targets.push_back(RobotPosition(Point(1, 1), Angle::getQuarterRotation()));
 	m_robot->goTo(m_targets);
 	m_robot->updateActuators(*m_field);
-	m_engine->setIsGoingStraight(false);
 	m_engine->setReachedTarget(true);
 	m_odometry->setCurrentPosition(RobotPosition(Point(0, 0), Angle::getEighthRotation()));
 	m_robot->updateSensorData();
 	m_robot->updateActuators(*m_field);
 	m_engine->setReachedTarget(false);
-	m_engine->setIsGoingStraight(true);
 	m_robot->updateSensorData();
 	m_robot->updateActuators(*m_field);
 	m_odometry->setCurrentPosition(RobotPosition(Point(1, 1), Angle::getEighthRotation()));
 	m_engine->setReachedTarget(true);
-	m_engine->setIsGoingStraight(false);
 	m_robot->updateSensorData();
 	m_robot->updateActuators(*m_field);
 	m_odometry->setCurrentPosition(RobotPosition(Point(1, 1), Angle::getQuarterRotation()));
 	m_engine->setReachedTarget(true);
-	m_engine->setIsGoingStraight(false);
 	m_robot->updateSensorData();
 	m_robot->updateActuators(*m_field);
 	m_odometry->setCurrentPosition(RobotPosition(Point(1, 1), Angle::getQuarterRotation()));
 	m_engine->setReachedTarget(true);
-	m_engine->setIsGoingStraight(false);
 	m_engine->resetCounters();
 	m_robot->updateSensorData();
 	m_robot->updateActuators(*m_field);
@@ -593,11 +574,9 @@ void RobotTest::goTo_hardObstacleMovedALittleBitIntoTheRoute_engineGotNoAddition
 	robot.goTo(m_targets);
 	robot.updateActuators(*m_field);
 	engine.setReachedTarget(true);
-	engine.setIsGoingStraight(false);
 	robot.updateSensorData();
 	robot.updateActuators(*m_field);
 	engine.setReachedTarget(false);
-	engine.setIsGoingStraight(true);
 	robot.updateSensorData();
 	robot.updateActuators(*m_field);
 	engine.resetCounters();
@@ -680,7 +659,6 @@ void RobotTest::goTo_firstPointReachedAndSmallTurnNecessary_noCallsToTurnToTarge
 	m_targets.push_back(RobotPosition(Point(7, 0.1), Angle(0)));
 
 	m_engine->setReachedTarget(false);
-	m_engine->setSpeedForGoingStraight(1);
 	m_odometry->setCurrentPosition(RobotPosition(Point(0, 0), Angle(0)));
 	m_robot->updateSensorData();
 	m_robot->goTo(m_targets);
@@ -703,7 +681,6 @@ void RobotTest::goTo_firstPointReachedAndSmallTurnNecessary_engineGotCorrectNext
 	m_targets.push_back(RobotPosition(Point(7, 0.1), Angle(0)));
 
 	m_engine->setReachedTarget(true);
-	m_engine->setSpeedForGoingStraight(1);
 	m_odometry->setCurrentPosition(RobotPosition(Point(0, 0), Angle(0)));
 	m_robot->updateSensorData();
 	m_robot->goTo(m_targets);
@@ -1769,61 +1746,6 @@ void RobotTest::isRotating_drivingPartOfGoToAndTurningSlow_true()
 	CPPUNIT_ASSERT(!m_robot->isRotating());
 }
 
-void RobotTest::calculateFinalSpeedForGoingStraight_obtuseAngle_0()
-{
-	m_engine->setSpeedForGoingStraight(1);
-
-	double finalSpeed = m_robot->calculateFinalSpeedForGoingStraight(Point(0, 1), Point(0, 2), Point(-1, 1));
-
-	CPPUNIT_ASSERT_DOUBLES_EQUAL(0, finalSpeed, 0.0001);
-}
-
-void RobotTest::calculateFinalSpeedForGoingStraight_quarterRotation_0()
-{
-	m_engine->setSpeedForGoingStraight(1);
-
-	double finalSpeed = m_robot->calculateFinalSpeedForGoingStraight(Point(0, 1), Point(0, 2), Point(1, 2));
-
-	CPPUNIT_ASSERT_DOUBLES_EQUAL(0, finalSpeed, 0.0001);
-}
-
-void RobotTest::calculateFinalSpeedForGoingStraight_zeroAngle_valueBig()
-{
-	m_engine->setSpeedForGoingStraight(1);
-
-	double finalSpeed = m_robot->calculateFinalSpeedForGoingStraight(Point(0, 0), Point(1, 1), Point(2, 2));
-
-	CPPUNIT_ASSERT(finalSpeed >= 0.2);
-}
-
-void RobotTest::calculateFinalSpeedForGoingStraight_eighthRotation_greaterThan0()
-{
-	m_engine->setSpeedForGoingStraight(1);
-
-	double finalSpeed = m_robot->calculateFinalSpeedForGoingStraight(Point(0, 0), Point(-1, 0), Point(-2, -1));
-
-	CPPUNIT_ASSERT(finalSpeed > 0);
-}
-
-void RobotTest::calculateFinalSpeedForGoingStraight_zeroAngleButOnlyShortDistanceLeft_smallerThan05()
-{
-	m_engine->setSpeedForGoingStraight(0.1);
-
-	double finalSpeed = m_robot->calculateFinalSpeedForGoingStraight(Point(0, 0), Point(1, 1), Point(1.1, 1.1));
-
-	CPPUNIT_ASSERT_DOUBLES_EQUAL(0.1, finalSpeed, 0.0001);
-}
-
-void RobotTest::calculateFinalSpeedForGoingStraight_smallAngle_betweenZeroAnd05()
-{
-	m_engine->setSpeedForGoingStraight(0.1);
-
-	double finalSpeed = m_robot->calculateFinalSpeedForGoingStraight(Point(0, 0), Point(1, 1), Point(2, 2.1));
-
-	CPPUNIT_ASSERT(finalSpeed > 0);
-	CPPUNIT_ASSERT(finalSpeed < 0.5);
-}
-
 void RobotTest::isMoving_drivingStraightPart_true()
 {
 	list<RobotPosition> targets;
@@ -1891,4 +1813,25 @@ void RobotTest::isMoving_collectingPuck_true()
 	m_robot->collectPuckInFront(Point(1, 0));
 
 	CPPUNIT_ASSERT(m_robot->isMoving());
+}
+
+void RobotTest::isOrientationDifferenceSmallEnoughForSmoothTurn_currentSpeedZeroAndEighthRotation_true()
+{
+	m_engine->setCurrentSpeed(0);
+
+	CPPUNIT_ASSERT(m_robot->isOrientationDifferenceSmallEnoughForSmoothTurn(Angle::getEighthRotation()));
+}
+
+void RobotTest::isOrientationDifferenceSmallEnoughForSmoothTurn_currentSpeedMaxAndEighthRotation_false()
+{
+	m_engine->setCurrentSpeed(0.5);
+
+	CPPUNIT_ASSERT(!m_robot->isOrientationDifferenceSmallEnoughForSmoothTurn(Angle::getEighthRotation()));
+}
+
+void RobotTest::isOrientationDifferenceSmallEnoughForSmoothTurn_currentSpeedMaxVerySmallRotation_true()
+{
+	m_engine->setCurrentSpeed(0.5);
+
+	CPPUNIT_ASSERT(m_robot->isOrientationDifferenceSmallEnoughForSmoothTurn(Angle::getEighthRotation()/3));
 }

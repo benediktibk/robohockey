@@ -409,7 +409,10 @@ vector<Circle> RobotImpl::growObstacles(const vector<Circle> &obstacles) const
 
 bool RobotImpl::isOrientationDifferenceSmallEnoughForSmoothTurn(const Angle &angle) const
 {
-	return fabs(angle.getValueBetweenMinusPiAndPi()) < m_maximumAngleForSmoothTurn.getValueBetweenZeroAndTwoPi();
+	const DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
+	double currentSpeed = engine.getCurrentSpeed();
+	double speedModification = 1 + fabs(currentSpeed);
+	return fabs(speedModification*angle.getValueBetweenMinusPiAndPi()) < m_maximumAngleForSmoothTurn.getValueBetweenZeroAndTwoPi();
 }
 
 bool RobotImpl::isOrientationDifferenceSmallEnoughForSmoothTurn(const Point &point) const
@@ -565,23 +568,6 @@ bool RobotImpl::isRotating() const
 
 	assert(false);
 	return true;
-}
-
-double RobotImpl::calculateFinalSpeedForGoingStraight(
-		const Point &current, const Point &next, const Point &nextButOne) const
-{
-	Angle angle = Angle::getHalfRotation() - Angle(next, current, nextButOne);
-	angle.abs();
-
-	if (!isOrientationDifferenceSmallEnoughForSmoothTurn(angle))
-		return 0;
-
-	Angle angleDifference = m_maximumAngleForSmoothTurn - angle;
-	double speedFromAngle = angleDifference.getValueBetweenZeroAndTwoPi()*0.2;
-	double distanceLeft = next.distanceTo(nextButOne);
-	const DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
-	double speedFromDistance = engine.calculateSpeedForGoingStraight(distanceLeft);
-	return min(speedFromAngle, speedFromDistance);
 }
 
 void RobotImpl::clearRoute()

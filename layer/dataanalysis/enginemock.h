@@ -31,8 +31,6 @@ namespace DataAnalysis
 		virtual double getCurrentSpeed() const;
 		virtual double getCurrentRotationSpeed() const;
 		virtual void updateSensorData();
-		virtual bool isGoingStraight() const;
-		virtual double calculateSpeedForGoingStraight(double distance) const;
 
 		unsigned int getCallsToGoToStraight() const;
 		unsigned int getCallsToGoToStraightSlowly() const;
@@ -45,12 +43,11 @@ namespace DataAnalysis
 		unsigned int getCallsToUnlockForwardMovement() const;
 		void setTryingToTackleObstacle(bool value);
 		void setReachedTarget(bool value);
-		void setIsGoingStraight(bool value);
 		void resetCounters();
 		const Common::Point& getLastTarget() const;
-		void setSpeedForGoingStraight(double value);
 		void setIsMoving(bool value);
 		void setCurrentRotationSpeed(double value);
+		void setCurrentSpeed(double value);
 
 	private:
 		unsigned int m_callsToGoToStraight;
@@ -64,11 +61,10 @@ namespace DataAnalysis
 		unsigned int m_callsToUnlockForwardMovement;
 		bool m_tryingToTackleObstacle;
 		bool m_reachedTarget;
-		bool m_isGoingStraight;
 		Common::Point m_lastTarget;
-		double m_speedForGoingStraight;
 		bool m_isMoving;
 		double m_rotationSpeed;
+		double m_speed;
 	};
 }
 }

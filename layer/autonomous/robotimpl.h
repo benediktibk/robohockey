@@ -55,7 +55,8 @@ namespace Autonomous
 		virtual bool isCollectingPuck() const;
 		virtual bool isRotating() const;
 
-		double calculateFinalSpeedForGoingStraight(const Common::Point &current, const Common::Point &next, const Common::Point &nextButOne) const;
+		bool isOrientationDifferenceSmallEnoughForSmoothTurn(const Common::Angle &angle) const;
+		bool isOrientationDifferenceSmallEnoughForSmoothTurn(const Common::Point &point) const;
 
 	private:
 		void clearRoute();
@@ -81,8 +82,6 @@ namespace Autonomous
 		bool checkTimeout();
 		std::vector<Common::Circle> shrinkObstacles(const std::vector<Common::Circle> &obstacles) const;
 		std::vector<Common::Circle> growObstacles(const std::vector<Common::Circle> &obstacles) const;
-		bool isOrientationDifferenceSmallEnoughForSmoothTurn(const Common::Angle &angle) const;
-		bool isOrientationDifferenceSmallEnoughForSmoothTurn(const Common::Point &point) const;
 		const Common::Point& getNextTarget() const;
 
 	private:
