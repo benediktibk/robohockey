@@ -38,6 +38,7 @@ namespace Autonomous
 		CPPUNIT_TEST(tryToDetectField_3pointsNearNearMixed_correctNewOrigin);
 		CPPUNIT_TEST(tryToDetectField_3pointsNearMixedMid_correctNewOrigin);
 		CPPUNIT_TEST(tryToDetectField_3pointsCorrectDistanceButWrongArragement_false);
+		CPPUNIT_TEST(tryToDetectField_6validPointsBothSide_true);
 		CPPUNIT_TEST_SUITE_END();
 
 	public:
@@ -63,6 +64,7 @@ namespace Autonomous
 		void tryToDetectField_3pointsNearNearMixed_correctNewOrigin();
 		void tryToDetectField_3pointsNearMixedMid_correctNewOrigin();
 		void tryToDetectField_3pointsCorrectDistanceButWrongArragement_false();
+		void tryToDetectField_6validPointsBothSide_true();
 
 	private:
 		Common::LoggerMock *m_logger;

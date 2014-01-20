@@ -307,6 +307,24 @@ void FieldDetectorTest::tryToDetectField_3pointsCorrectDistanceButWrongArragemen
 	CPPUNIT_ASSERT(!result);
 }
 
+void FieldDetectorTest::tryToDetectField_6validPointsBothSide_true()
+{
+	BorderStoneDistances distances(0.1);
+
+	vector<Point> testPoints;
+	testPoints.push_back(Point(1,1));
+	testPoints.push_back(Point(1,1 + distances.getStandardFieldDistance(BorderStoneFieldDistanceA)));
+	testPoints.push_back(Point(1,1 + distances.getStandardFieldDistance(BorderStoneFieldDistanceA) + distances.getStandardFieldDistance(BorderStoneFieldDistanceB)));
+
+	testPoints.push_back(Point(-2,1));
+	testPoints.push_back(Point(-2,1 + distances.getStandardFieldDistance(BorderStoneFieldDistanceA)));
+	testPoints.push_back(Point(-2,1 + distances.getStandardFieldDistance(BorderStoneFieldDistanceA) + distances.getStandardFieldDistance(BorderStoneFieldDistanceB)));
+
+	bool result = m_fieldDetector->tryToDetectField(Point(0,2), testPoints);
+
+	CPPUNIT_ASSERT(result);
+}
+
 
 void FieldDetectorTest::setUp()
 {

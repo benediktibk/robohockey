@@ -37,7 +37,7 @@ void BorderStoneTest::getNumberOfChildrenRecursive_twoChildren_is2()
 	BorderStone borderstone(father, BorderStoneFieldDistanceRoot, distances, position, 0.05);
 
 	m_possibleChildren.push_back(new Point(0,distances.getStandardFieldDistance(BorderStoneFieldDistanceA)));
-	m_possibleChildren.push_back(new Point(0,-1.0* distances.getStandardFieldDistance(BorderStoneFieldDistanceB)));
+	m_possibleChildren.push_back(new Point(0,distances.getStandardFieldDistance(BorderStoneFieldDistanceA) + distances.getStandardFieldDistance(BorderStoneFieldDistanceB)));
 
 	borderstone.searchNeighbourBorderStones(m_possibleChildren);
 
@@ -85,11 +85,11 @@ void BorderStoneTest::getAllChildren_2validChildren_has2Entries()
 	Point position;
 	BorderStone borderstone(father, BorderStoneFieldDistanceRoot, distances, position, 0.05);
 	m_possibleChildren.push_back(new Point(0,distances.getStandardFieldDistance(BorderStoneFieldDistanceA)));
-	m_possibleChildren.push_back(new Point(0,-1.0* distances.getStandardFieldDistance(BorderStoneFieldDistanceB)));
+	m_possibleChildren.push_back(new Point(0,distances.getStandardFieldDistance(BorderStoneFieldDistanceA) + distances.getStandardFieldDistance(BorderStoneFieldDistanceB)));
 
 	borderstone.searchNeighbourBorderStones(m_possibleChildren);
 
-	CPPUNIT_ASSERT_EQUAL((size_t)2, borderstone.getAllChildren().size());
+	CPPUNIT_ASSERT_EQUAL((size_t)1, borderstone.getAllChildren().size());
 }
 
 void BorderStoneTest::getAllChildren_2validChildren_correctChildren()
@@ -103,8 +103,7 @@ void BorderStoneTest::getAllChildren_2validChildren_correctChildren()
 
 	borderstone.searchNeighbourBorderStones(m_possibleChildren);
 
-	CPPUNIT_ASSERT(borderstone.getAllChildren().front() == Point(0, distances.getStandardFieldDistance(BorderStoneFieldDistanceA))
-				   && borderstone.getAllChildren().back() == Point(0,-1* distances.getStandardFieldDistance(BorderStoneFieldDistanceB)));
+	CPPUNIT_ASSERT(borderstone.getAllChildren().front() == Point(0, distances.getStandardFieldDistance(BorderStoneFieldDistanceA)));
 }
 
 void BorderStoneTest::getPointsOfAllNodesInTree_2validChildren_has3Entries()
@@ -114,7 +113,7 @@ void BorderStoneTest::getPointsOfAllNodesInTree_2validChildren_has3Entries()
 	Point position;
 	BorderStone borderstone(father, BorderStoneFieldDistanceRoot, distances, position, 0.05);
 	m_possibleChildren.push_back(new Point(0,distances.getStandardFieldDistance(BorderStoneFieldDistanceA)));
-	m_possibleChildren.push_back(new Point(0,-1.0* distances.getStandardFieldDistance(BorderStoneFieldDistanceB)));
+	m_possibleChildren.push_back(new Point(0,distances.getStandardFieldDistance(BorderStoneFieldDistanceA) + distances.getStandardFieldDistance(BorderStoneFieldDistanceB)));
 
 	borderstone.searchNeighbourBorderStones(m_possibleChildren);
 
