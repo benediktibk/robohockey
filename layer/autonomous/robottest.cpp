@@ -795,10 +795,15 @@ void RobotTest::goTo_tookAVeryLongTime_cantReachTarget()
 	list<RobotPosition> targets;
 	targets.push_back(RobotPosition(Point(10, 0), Angle(0)));
 
+	m_odometry->setCurrentPosition(RobotPosition(Point(0, 0), Angle::getQuarterRotation()));
 	m_robot->updateSensorData();
 	m_robot->goTo(targets);
 	m_robot->updateActuators(*m_field);
-	m_watchMock->setTime(60);
+	m_odometry->setCurrentPosition(RobotPosition(Point(0, 0), Angle(0)));
+	m_watchMock->setTime(20);
+	m_robot->updateSensorData();
+	m_robot->updateActuators(*m_field);
+	m_watchMock->setTime(40);
 	m_robot->updateSensorData();
 	m_robot->updateActuators(*m_field);
 
