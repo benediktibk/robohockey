@@ -141,12 +141,6 @@ namespace Autonomous
 		CPPUNIT_TEST(isRotating_turningPartOfGoTo_true);
 		CPPUNIT_TEST(isRotating_drivingPartOfGoToAndTurningFast_true);
 		CPPUNIT_TEST(isRotating_drivingPartOfGoToAndTurningSlow_true);
-		CPPUNIT_TEST(calculateFinalSpeedForGoingStraight_obtuseAngle_0);
-		CPPUNIT_TEST(calculateFinalSpeedForGoingStraight_quarterRotation_0);
-		CPPUNIT_TEST(calculateFinalSpeedForGoingStraight_zeroAngle_valueBig);
-		CPPUNIT_TEST(calculateFinalSpeedForGoingStraight_eighthRotation_greaterThan0);
-		CPPUNIT_TEST(calculateFinalSpeedForGoingStraight_zeroAngleButOnlyShortDistanceLeft_smallerThan05);
-		CPPUNIT_TEST(calculateFinalSpeedForGoingStraight_smallAngle_betweenZeroAnd05);
 		CPPUNIT_TEST(isMoving_drivingStraightPart_true);
 		CPPUNIT_TEST(isMoving_drivingTurningPart_true);
 		CPPUNIT_TEST(isMoving_turningTo_true);

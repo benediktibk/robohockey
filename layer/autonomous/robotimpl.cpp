@@ -567,23 +567,6 @@ bool RobotImpl::isRotating() const
 	return true;
 }
 
-double RobotImpl::calculateFinalSpeedForGoingStraight(
-		const Point &current, const Point &next, const Point &nextButOne) const
-{
-	Angle angle = Angle::getHalfRotation() - Angle(next, current, nextButOne);
-	angle.abs();
-
-	if (!isOrientationDifferenceSmallEnoughForSmoothTurn(angle))
-		return 0;
-
-	Angle angleDifference = m_maximumAngleForSmoothTurn - angle;
-	double speedFromAngle = angleDifference.getValueBetweenZeroAndTwoPi()*0.2;
-	double distanceLeft = next.distanceTo(nextButOne);
-	const DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
-	double speedFromDistance = engine.calculateSpeedForGoingStraight(distanceLeft);
-	return min(speedFromAngle, speedFromDistance);
-}
-
 void RobotImpl::clearRoute()
 {
 	delete m_currentRoute;

@@ -1769,61 +1769,6 @@ void RobotTest::isRotating_drivingPartOfGoToAndTurningSlow_true()
 	CPPUNIT_ASSERT(!m_robot->isRotating());
 }
 
-void RobotTest::calculateFinalSpeedForGoingStraight_obtuseAngle_0()
-{
-	m_engine->setSpeedForGoingStraight(1);
-
-	double finalSpeed = m_robot->calculateFinalSpeedForGoingStraight(Point(0, 1), Point(0, 2), Point(-1, 1));
-
-	CPPUNIT_ASSERT_DOUBLES_EQUAL(0, finalSpeed, 0.0001);
-}
-
-void RobotTest::calculateFinalSpeedForGoingStraight_quarterRotation_0()
-{
-	m_engine->setSpeedForGoingStraight(1);
-
-	double finalSpeed = m_robot->calculateFinalSpeedForGoingStraight(Point(0, 1), Point(0, 2), Point(1, 2));
-
-	CPPUNIT_ASSERT_DOUBLES_EQUAL(0, finalSpeed, 0.0001);
-}
-
-void RobotTest::calculateFinalSpeedForGoingStraight_zeroAngle_valueBig()
-{
-	m_engine->setSpeedForGoingStraight(1);
-
-	double finalSpeed = m_robot->calculateFinalSpeedForGoingStraight(Point(0, 0), Point(1, 1), Point(2, 2));
-
-	CPPUNIT_ASSERT(finalSpeed >= 0.2);
-}
-
-void RobotTest::calculateFinalSpeedForGoingStraight_eighthRotation_greaterThan0()
-{
-	m_engine->setSpeedForGoingStraight(1);
-
-	double finalSpeed = m_robot->calculateFinalSpeedForGoingStraight(Point(0, 0), Point(-1, 0), Point(-2, -1));
-
-	CPPUNIT_ASSERT(finalSpeed > 0);
-}
-
-void RobotTest::calculateFinalSpeedForGoingStraight_zeroAngleButOnlyShortDistanceLeft_smallerThan05()
-{
-	m_engine->setSpeedForGoingStraight(0.1);
-
-	double finalSpeed = m_robot->calculateFinalSpeedForGoingStraight(Point(0, 0), Point(1, 1), Point(1.1, 1.1));
-
-	CPPUNIT_ASSERT_DOUBLES_EQUAL(0.1, finalSpeed, 0.0001);
-}
-
-void RobotTest::calculateFinalSpeedForGoingStraight_smallAngle_betweenZeroAnd05()
-{
-	m_engine->setSpeedForGoingStraight(0.1);
-
-	double finalSpeed = m_robot->calculateFinalSpeedForGoingStraight(Point(0, 0), Point(1, 1), Point(2, 2.1));
-
-	CPPUNIT_ASSERT(finalSpeed > 0);
-	CPPUNIT_ASSERT(finalSpeed < 0.5);
-}
-
 void RobotTest::isMoving_drivingStraightPart_true()
 {
 	list<RobotPosition> targets;
