@@ -61,7 +61,7 @@ bool LidarImpl::isObstacleInFront(double speed) const
 	{
 		const LidarInternalObject &object = **i;
 
-		if (object.getWidthInMeter() < 0.12)
+		if (object.getWidthInMeter() <= 0.13)
 			continue;
 
 		const Angle &objectOrientation = object.getOrientationRelativeToRobot();
