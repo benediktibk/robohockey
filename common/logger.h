@@ -16,7 +16,8 @@ class Logger
 			LogFileTypeGlobal,
 			LogFileTypeStateChanges,
 			LogFileTypeField,
-			LogFileTypeFieldDetection
+			LogFileTypeFieldDetection,
+			LogFileTypeRobot
 		};
 
 	public:

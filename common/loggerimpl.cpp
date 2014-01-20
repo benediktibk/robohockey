@@ -42,11 +42,14 @@ LoggerImpl::LoggerImpl() :
 	string fieldDetectionLogFile = folder;
 	fieldDetectionLogFile.append("/3_fieldDetection.txt");
 
+	string robotLogFile = folder;
+	robotLogFile.append("/4_robot.txt");
+
 	m_globalLogFile.open(globalLogFile.c_str(), ios_base::out | ios_base::trunc);
 	m_stateChangesLogFile.open(stateChangesLogFile.c_str(), ios_base::out | ios_base::trunc);
 	m_fieldLogFile.open(fieldLogFile.c_str(), ios_base::out | ios_base::trunc);
 	m_fieldDetectionLogFile.open(fieldDetectionLogFile.c_str(), ios_base::out | ios_base::trunc);
-
+	m_robotLogFile.open(robotLogFile.c_str(), ios_base::out | ios_base::trunc);
 
 	initLogFiles();
 }
@@ -102,6 +105,10 @@ void LoggerImpl::logToLogFileOfType(LogFileType logType, const string &message)
 		case LogFileTypeFieldDetection:
 			m_fieldDetectionLogFile << message << endl;
 			break;
+
+		case LogFileTypeRobot:
+			m_robotLogFile << message << endl;
+			break;
 		}
 	}
 }
@@ -143,7 +150,7 @@ void LoggerImpl::initLogFiles()
 	message += timestring;
 	message += "\n## STARTING ROBOT\n##\n";
 
-	for (int i = LogFileTypeGlobal; i <= LogFileTypeFieldDetection; i++)
+	for (int i = LogFileTypeGlobal; i <= LogFileTypeRobot; i++)
 	{
 		LogFileType currentLogFile = static_cast<LogFileType>(i);
 		logToLogFileOfType(currentLogFile, message);
@@ -168,7 +175,7 @@ void LoggerImpl::closeLogFiles()
 	message += "## QUITTING ROBOT\n## Closing Log: ";
 	message += timestring;
 
-	for (int i = LogFileTypeGlobal; i <= LogFileTypeFieldDetection; ++i)
+	for (int i = LogFileTypeGlobal; i <= LogFileTypeRobot; ++i)
 	{
 		LogFileType currentLogFile = static_cast<LogFileType>(i);
 		logToLogFileOfType(currentLogFile, message);

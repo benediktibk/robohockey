@@ -37,6 +37,7 @@ class LoggerImpl :
 		std::fstream m_stateChangesLogFile;
 		std::fstream m_fieldLogFile;
 		std::fstream m_fieldDetectionLogFile;
+		std::fstream m_robotLogFile;
 	};
 }
 }
