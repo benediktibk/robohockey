@@ -572,6 +572,28 @@ bool RobotImpl::isRotating() const
 	return true;
 }
 
+string RobotImpl::getCurrentState() const
+{
+	switch(m_state)
+	{
+	case RobotStateWaiting:
+		return string("Waiting");
+	case RobotStateDrivingStraightPart:
+		return string("DrivingStraight");
+	case RobotStateDrivingTurningPart:
+		return string("DrivingTurning");
+	case RobotStateTurnTo:
+		return string("TurnTo");
+	case RobotStateLeavingPuck:
+		return string("LeavingPuck");
+	case RobotStateCollectingPuck:
+		return string("CollectingPuck");
+	}
+
+	assert(false);
+	return string();
+}
+
 void RobotImpl::clearRoute()
 {
 	delete m_currentRoute;

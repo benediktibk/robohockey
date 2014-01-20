@@ -45,6 +45,7 @@ namespace Autonomous
 		virtual bool isPuckCollectable() const;
 		virtual bool isCollectingPuck() const;
 		virtual bool isRotating() const;
+		virtual std::string getCurrentState() const;
 
 		void setIsMoving(bool value);
 		void setIsRotating(bool value);

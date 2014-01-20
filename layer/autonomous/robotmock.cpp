@@ -136,6 +136,11 @@ bool RobotMock::isRotating() const
 	return m_isRotating;
 }
 
+string RobotMock::getCurrentState() const
+{
+	return string();
+}
+
 void RobotMock::setIsMoving(bool value)
 {
 	m_isMoving = value;
