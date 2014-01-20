@@ -1254,9 +1254,6 @@ void FieldTest::calibratePosition_validPattern_correctNumberOfFieldObjects()
 	m_field->calibratePosition();
 	updateFieldForObjectsToDisappear();
 
-	vector<FieldObject> fieldObjects = m_field->getAllFieldObjects();
-	vector<DataAnalysis::LidarObject> lidarObjectsVector = lidarObjects.getObjectsWithDistanceBelow(m_odometry->getCurrentPosition(), 10);
-
 	CPPUNIT_ASSERT(m_field->isCalibrated());
 }
 
