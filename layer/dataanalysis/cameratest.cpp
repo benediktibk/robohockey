@@ -380,3 +380,19 @@ void CameraTest::getProbabilityForCollectedBluePuck_yellowPuckCollectedInBlueGoa
 
 	CPPUNIT_ASSERT(camera.getProbabilityForCollectedBluePuck() < 0.1);
 }
+
+void CameraTest::getAllCameraObjects_realWorldTest_colorIsYellow()
+{
+	Hardware::CameraMock hardwareCamera("real_world_test");
+	CameraImpl camera(hardwareCamera);
+
+	CPPUNIT_ASSERT_EQUAL(FieldColorYellow, camera.getAllCameraObjects(RobotPosition()).front().getColor());
+}
+
+void CameraTest::getAllCameraObjects_realWorldTest_cameraObjectCountIs1()
+{
+	Hardware::CameraMock hardwareCamera("real_world_test");
+	CameraImpl camera(hardwareCamera);
+
+	CPPUNIT_ASSERT_EQUAL((size_t) 1, camera.getAllCameraObjects(RobotPosition()).getObjectCount());
+}

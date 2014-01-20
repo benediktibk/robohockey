@@ -58,6 +58,8 @@ namespace DataAnalysis
 		CPPUNIT_TEST(getProbabilityForCollectedBluePuck_yellowPuckCollectedRight_resultIsNear0);
 		CPPUNIT_TEST(getProbabilityForCollectedBluePuck_bluePuckCollectedInYellowGoal_resultIsOver80Percent);
 		CPPUNIT_TEST(getProbabilityForCollectedBluePuck_yellowPuckCollectedInBlueGoal_resultIsUnder10Percent);
+		CPPUNIT_TEST(getAllCameraObjects_realWorldTest_colorIsYellow);
+		CPPUNIT_TEST(getAllCameraObjects_realWorldTest_cameraObjectCountIs1);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
@@ -105,6 +107,8 @@ namespace DataAnalysis
 		void getProbabilityForCollectedBluePuck_yellowPuckCollectedRight_resultIsNear0();
 		void getProbabilityForCollectedBluePuck_bluePuckCollectedInYellowGoal_resultIsOver80Percent();
 		void getProbabilityForCollectedBluePuck_yellowPuckCollectedInBlueGoal_resultIsUnder10Percent();
+		void getAllCameraObjects_realWorldTest_colorIsYellow();
+		void getAllCameraObjects_realWorldTest_cameraObjectCountIs1();
 
 	};
 }

@@ -887,3 +887,4 @@ common/pidcontroller.h
 common/pidcontrollertest.cpp
 common/pidcontroller.cpp
 resources/testfiles/lidar_41.txt
+resources/testfiles/real_world_test.png
