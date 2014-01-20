@@ -11,7 +11,8 @@ InputArgumentParser::InputArgumentParser(const vector<string> &arguments) :
 	m_enableGui(false),
 	m_playerServer("localhost"),
 	m_angelinaServer("localhost"),
-	m_enableRecorder(false)
+	m_enableRecorder(false),
+	m_enableSonar(false)
 {
 	parse(arguments);
 }
@@ -45,6 +46,12 @@ const string &InputArgumentParser::recordingPath() const
 	assert(isValid());
 	assert(enableRecorder());
 	return m_recordingPath;
+}
+
+bool InputArgumentParser::enableSonar() const
+{
+	assert(isValid());
+	return m_enableSonar;
 }
 
 bool InputArgumentParser::isValid() const
@@ -90,6 +97,7 @@ void InputArgumentParser::parse(const vector<string> &arguments)
 	bool foundAngelina = false;
 	bool foundPlayer = false;
 	bool foundRecordingPath = false;
+	bool foundEnableSonar = false;
 
 	while (!argumentsLeft.empty())
 	{
@@ -145,6 +153,17 @@ void InputArgumentParser::parse(const vector<string> &arguments)
 			m_recordingPath = secondArgument;
 			m_enableRecorder = true;
 			foundRecordingPath = true;
+		}
+		else if (firstArgument == "--enableSonar")
+		{
+			if (foundEnableSonar)
+			{
+				m_isValid = false;
+				return;
+			}
+
+			m_enableSonar = true;
+			foundEnableSonar = true;
 		}
 		else
 		{

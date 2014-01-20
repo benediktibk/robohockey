@@ -18,6 +18,7 @@ class InputArgumentParser
 		const std::string& angelinaServer() const;
 		bool enableRecorder() const;
 		const std::string& recordingPath() const;
+		bool enableSonar() const;
 		bool isValid() const;
 		std::string usage() const;
 
@@ -33,6 +34,7 @@ class InputArgumentParser
 		std::string m_angelinaServer;
 		std::string m_recordingPath;
 		bool m_enableRecorder;
+		bool m_enableSonar;
 	};
 }
 }

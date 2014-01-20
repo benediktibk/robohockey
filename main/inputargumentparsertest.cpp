@@ -25,6 +25,7 @@ void InputArgumentParserTest::constructor_oneArgument_validAndSettingsCorrect()
 	CPPUNIT_ASSERT_EQUAL(string("localhost"), parser.playerServer());
 	CPPUNIT_ASSERT_EQUAL(string("localhost"), parser.angelinaServer());
 	CPPUNIT_ASSERT(!parser.enableRecorder());
+	CPPUNIT_ASSERT(!parser.enableSonar());
 }
 
 void InputArgumentParserTest::constructor_onlyEnableGui_validAndSettingsCorrect()
@@ -40,6 +41,7 @@ void InputArgumentParserTest::constructor_onlyEnableGui_validAndSettingsCorrect(
 	CPPUNIT_ASSERT_EQUAL(string("localhost"), parser.playerServer());
 	CPPUNIT_ASSERT_EQUAL(string("localhost"), parser.angelinaServer());
 	CPPUNIT_ASSERT(!parser.enableRecorder());
+	CPPUNIT_ASSERT(!parser.enableSonar());
 }
 
 void InputArgumentParserTest::constructor_onlyAngelinaServer_validAndSettingsCorrect()
@@ -56,6 +58,7 @@ void InputArgumentParserTest::constructor_onlyAngelinaServer_validAndSettingsCor
 	CPPUNIT_ASSERT_EQUAL(string("localhost"), parser.playerServer());
 	CPPUNIT_ASSERT_EQUAL(string("127.0.0.1"), parser.angelinaServer());
 	CPPUNIT_ASSERT(!parser.enableRecorder());
+	CPPUNIT_ASSERT(!parser.enableSonar());
 }
 
 void InputArgumentParserTest::constructor_onlyPlayerServer_validAndSettingsCorrect()
@@ -72,6 +75,7 @@ void InputArgumentParserTest::constructor_onlyPlayerServer_validAndSettingsCorre
 	CPPUNIT_ASSERT_EQUAL(string("localhost"), parser.angelinaServer());
 	CPPUNIT_ASSERT_EQUAL(string("127.0.0.1"), parser.playerServer());
 	CPPUNIT_ASSERT(!parser.enableRecorder());
+	CPPUNIT_ASSERT(!parser.enableSonar());
 }
 
 void InputArgumentParserTest::constructor_enableGuiTwice_invalid()
@@ -131,6 +135,7 @@ void InputArgumentParserTest::constructor_everythingSet_validAndSettingsCorrect(
 	CPPUNIT_ASSERT_EQUAL(string("127.0.0.2"), parser.angelinaServer());
 	CPPUNIT_ASSERT_EQUAL(string("127.0.0.1"), parser.playerServer());
 	CPPUNIT_ASSERT(!parser.enableRecorder());
+	CPPUNIT_ASSERT(!parser.enableSonar());
 }
 
 void InputArgumentParserTest::constructor_ipOfAngelinaMissing_invalid()
@@ -185,6 +190,7 @@ void InputArgumentParserTest::constructor_recordingPathSet_validAndSettingsCorre
 	CPPUNIT_ASSERT_EQUAL(string("localhost"), parser.angelinaServer());
 	CPPUNIT_ASSERT(parser.enableRecorder());
 	CPPUNIT_ASSERT_EQUAL(string("BLOB"), parser.recordingPath());
+	CPPUNIT_ASSERT(!parser.enableSonar());
 }
 
 void InputArgumentParserTest::constructor_recordingPathSetTwice_invalid()
@@ -195,6 +201,34 @@ void InputArgumentParserTest::constructor_recordingPathSetTwice_invalid()
 	arguments.push_back("BLOB");
 	arguments.push_back("--recordTo");
 	arguments.push_back("blob");
+
+	InputArgumentParser parser(arguments);
+
+	CPPUNIT_ASSERT(!parser.isValid());
+}
+
+void InputArgumentParserTest::constructor_enableSonarOnce_validAndSettingsCorrect()
+{
+	vector<string> arguments;
+	arguments.push_back("blub");
+	arguments.push_back("--enableSonar");
+
+	InputArgumentParser parser(arguments);
+
+	CPPUNIT_ASSERT(parser.isValid());
+	CPPUNIT_ASSERT(!parser.enableGui());
+	CPPUNIT_ASSERT_EQUAL(string("localhost"), parser.angelinaServer());
+	CPPUNIT_ASSERT_EQUAL(string("localhost"), parser.playerServer());
+	CPPUNIT_ASSERT(!parser.enableRecorder());
+	CPPUNIT_ASSERT(parser.enableSonar());
+}
+
+void InputArgumentParserTest::constructor_enableSonarTwice_invalid()
+{
+	vector<string> arguments;
+	arguments.push_back("blub");
+	arguments.push_back("--enableSonar");
+	arguments.push_back("--enableSonar");
 
 	InputArgumentParser parser(arguments);
 

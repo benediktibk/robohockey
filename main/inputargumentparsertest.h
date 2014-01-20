@@ -26,6 +26,8 @@ namespace Main
 		CPPUNIT_TEST(constructor_wrongArgument_invalid);
 		CPPUNIT_TEST(constructor_recordingPathSet_validAndSettingsCorrect);
 		CPPUNIT_TEST(constructor_recordingPathSetTwice_invalid);
+		CPPUNIT_TEST(constructor_enableSonarOnce_validAndSettingsCorrect);
+		CPPUNIT_TEST(constructor_enableSonarTwice_invalid);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
@@ -43,6 +45,8 @@ namespace Main
 		void constructor_wrongArgument_invalid();
 		void constructor_recordingPathSet_validAndSettingsCorrect();
 		void constructor_recordingPathSetTwice_invalid();
+		void constructor_enableSonarOnce_validAndSettingsCorrect();
+		void constructor_enableSonarTwice_invalid();
 	};
 }
 }
