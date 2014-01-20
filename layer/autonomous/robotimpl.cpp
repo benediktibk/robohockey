@@ -329,13 +329,13 @@ bool RobotImpl::enableCollisionDetectionWithSonar() const
 	{
 	case RobotStateWaiting:
 	case RobotStateCollectingPuck:
+	case RobotStateLeavingPuck:
 		result = false;
 		break;
 	case RobotStateDrivingStraightPart:
 	case RobotStateDrivingTurningPart:
-	case RobotStateLeavingPuck:
 	case RobotStateTurnTo:
-		result = true;
+		result = m_enableSonar;
 		break;
 	}
 
