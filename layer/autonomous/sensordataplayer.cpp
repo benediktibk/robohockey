@@ -89,6 +89,17 @@ unsigned int SensorDataPlayer::getGreenObjectCount() const
 	return m_greenObjectCount;
 }
 
+Field &SensorDataPlayer::getField()
+{
+	return *m_field;
+}
+
+Point SensorDataPlayer::getCurrentPosition() const
+{
+	const Hardware::OdometryMock &odometry = m_hardwareRobot->getOdometryMock();
+	return odometry.getCurrentPosition().getPosition();
+}
+
 void SensorDataPlayer::loadNextRound(unsigned int roundCount)
 {
 	Hardware::CameraMock &camera = m_hardwareRobot->getCameraMock();

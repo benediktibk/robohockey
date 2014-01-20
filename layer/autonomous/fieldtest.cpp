@@ -1330,6 +1330,34 @@ void FieldTest::calibratePosition_validPattern_objectsOutsideFieldAreDeleted()
 	CPPUNIT_ASSERT(m_field->isCalibrated());
 }
 
+void FieldTest::calibratePosition_goodRealWorldExample_positionIsCorrect()
+{
+	SensorDataPlayer sensorDataPlayer("resources/testfiles/field_detection_perfect");
+
+	for (unsigned int round = 0; round < sensorDataPlayer.getMaximumRoundCount(); ++round)
+		sensorDataPlayer.loadNextRound();
+
+	Field &field = sensorDataPlayer.getField();
+	CPPUNIT_ASSERT(field.calibratePosition());
+	Point position = sensorDataPlayer.getCurrentPosition();
+	Compare compare(0.2);
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(0.6, 1.5), position));
+}
+
+void FieldTest::calibratePosition_worstCaseRealWorldExample_positionIsCorrect()
+{
+	SensorDataPlayer sensorDataPlayer("resources/testfiles/field_detection_worst_case");
+
+	for (unsigned int round = 0; round < sensorDataPlayer.getMaximumRoundCount(); ++round)
+		sensorDataPlayer.loadNextRound();
+
+	Field &field = sensorDataPlayer.getField();
+	CPPUNIT_ASSERT(field.calibratePosition());
+	Point position = sensorDataPlayer.getCurrentPosition();
+	Compare compare(0.2);
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(0.6, 1.5), position));
+}
+
 void FieldTest::getObjectsWithColorOrderedByDistance_oneObjectWithCorrectColorAndOneWithNoColor_resultSizeIsCorrect()
 {
 	DataAnalysis::LidarObjects lidarObjects;
