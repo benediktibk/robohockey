@@ -80,9 +80,20 @@ bool FieldDetector::tryToFigureOutNewOrigin(BorderStone &root, const Point &curr
 	Point &last = stoneVector.back();
 
 	Point possibleNewOrigin = first;
+	Angle rotation = Angle() - Angle(first, last);
 
-	Angle rotation(first, last);
-	rotation = Angle() - rotation;
+	Point offset(2*distancesChecker.getStandardFieldDistance(BorderStoneFieldDistanceA)
+				 + 2*distancesChecker.getStandardFieldDistance(BorderStoneFieldDistanceB)
+				 + 2*distancesChecker.getStandardFieldDistance(BorderStoneFieldDistanceC)
+				 ,0);
+	offset.rotate(Angle() - rotation);
+	Point oppositeOrigin = possibleNewOrigin + offset;
+
+	if (currentPosition.distanceTo(oppositeOrigin) < currentPosition.distanceTo(possibleNewOrigin))
+	{
+		possibleNewOrigin = oppositeOrigin;
+		rotation = Angle() - Angle(possibleNewOrigin, last);
+	}
 
 	Point currentPositionInNewCoordinates = currentPosition - possibleNewOrigin;
 	currentPositionInNewCoordinates.rotate(rotation);

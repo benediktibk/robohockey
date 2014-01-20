@@ -31,6 +31,9 @@ namespace FieldDetectionStateMachine
 		virtual void updateInternal();
 
 	private:
+		void logCurrentSavedPositions();
+
+	private:
 		bool m_successful;
 		unsigned int m_numberOfTries;
 		std::list<std::pair<unsigned int, RoboHockey::Common::RobotPosition> > m_calibrationResults;

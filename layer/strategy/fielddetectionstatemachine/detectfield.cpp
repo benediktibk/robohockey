@@ -6,8 +6,10 @@
 #include "layer/autonomous/robot.h"
 #include "layer/autonomous/field.h"
 #include "common/angle.h"
+#include "common/logger.h"
 #include <boost/bind.hpp>
 #include <algorithm>
+#include <sstream>
 
 using namespace std;
 using namespace RoboHockey::Common;
@@ -59,11 +61,34 @@ void DetectField::updateInternal()
 		m_successful = true;
 	}
 
+	logCurrentSavedPositions();
+
 	m_numberOfTries++;
 
-	if ((size_t) 2 <= m_calibrationResults.size())
+	if ((size_t) 0 < m_calibrationResults.size())
 	{
+		stringstream message;
+		message << "Transforming to Position: " << m_calibrationResults.front().second;
+		m_logger.logToLogFileOfType(Logger::LogFileTypeStateChanges, message.str());
 		m_field.transformFieldToNewOrigin(m_calibrationResults.front().second);
 		m_successful = true;
 	}
+}
+
+void DetectField::logCurrentSavedPositions()
+{
+	m_logger.logToLogFileOfType(Logger::LogFileTypeFieldDetection, "BEGIN: Calibration Results");
+
+	unsigned int counter = 0;
+	for (list<pair<unsigned int, RobotPosition> >::iterator it = m_calibrationResults.begin(); it != m_calibrationResults.end(); ++it)
+	{
+		stringstream message;
+		message << "\tresult:\n\tOrigin: " << (*it).second << "\n\tNumber: " << (*it).first << endl;
+
+		m_logger.logToLogFileOfType(Logger::LogFileTypeFieldDetection, message.str());
+		counter++;
+	}
+
+	m_logger.logToLogFileOfType(Logger::LogFileTypeFieldDetection, "END: Calibration Results");
+
 }
