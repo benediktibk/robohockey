@@ -45,6 +45,7 @@ namespace DataAnalysis
 		CPPUNIT_TEST(getAllObjects_puckInFrontOfOtherRobot_puckIsDetetected);
 		CPPUNIT_TEST(getAllObjects_twoDataSetsWhereTheRobotDroveForward_sameObjectCount);
 		CPPUNIT_TEST(getAllObjects_enemyRobotInFront_objectCountIs1);
+		CPPUNIT_TEST(getAllObjects_twoPucksCloseTogether_objectCountIs2);
 		CPPUNIT_TEST(isObstacleInFront_noObstacleInFront_false);
 		CPPUNIT_TEST(isObstacleInFront_puckCollected_false);
 		CPPUNIT_TEST(isObstacleInFront_obstacleOnLeftSide_true);
@@ -55,6 +56,7 @@ namespace DataAnalysis
 		CPPUNIT_TEST(isObstacleInFront_robotFarDistance_false);
 		CPPUNIT_TEST(isObstacleInFront_robotAtTheSide_false);
 		CPPUNIT_TEST(isObstacleInFront_realWorldExample_false);
+		CPPUNIT_TEST(isObstacleInFront_twoPucksCloseTogether_false);
 		CPPUNIT_TEST(isPuckCollected_noPuckInCloseDistance_false);
 		CPPUNIT_TEST(isPuckCollected_closeEnough_true);
 		CPPUNIT_TEST(isPuckCollected_directInTheMiddle_true);
@@ -140,6 +142,7 @@ namespace DataAnalysis
 		void getAllObjects_puckInFrontOfOtherRobot_puckIsDetetected();
 		void getAllObjects_twoDataSetsWhereTheRobotDroveForward_sameObjectCount();
 		void getAllObjects_enemyRobotInFront_objectCountIs1();
+		void getAllObjects_twoPucksCloseTogether_objectCountIs2();
 		void isObstacleInFront_noObstacleInFront_false();
 		void isObstacleInFront_puckCollected_false();
 		void isObstacleInFront_obstacleOnLeftSide_true();
@@ -150,6 +153,7 @@ namespace DataAnalysis
 		void isObstacleInFront_robotFarDistance_false();
 		void isObstacleInFront_robotAtTheSide_false();
 		void isObstacleInFront_realWorldExample_false();
+		void isObstacleInFront_twoPucksCloseTogether_false();
 		void isPuckCollected_noPuckInCloseDistance_false();
 		void isPuckCollected_closeEnough_true();
 		void isPuckCollected_directInTheMiddle_true();

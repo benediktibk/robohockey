@@ -451,6 +451,20 @@ void LidarTest::getAllObjects_enemyRobotInFront_objectCountIs1()
 	CPPUNIT_ASSERT_EQUAL((size_t)1, objects.getObjectCount());
 }
 
+void LidarTest::getAllObjects_twoPucksCloseTogether_objectCountIs2()
+{
+	Hardware::LidarMock hardwareLidar;
+	LidarImpl lidar(hardwareLidar);
+	RobotPosition ownPosition(Point(0, 0), 0);
+	hardwareLidar.readDataFromFile("resources/testfiles/lidar_41.txt");
+
+	lidar.updateSensorData();
+	LidarObjects objects = lidar.getAllObjects(ownPosition);
+
+	vector<LidarObject> selectedObjects = objects.getObjectsWithDistanceBelow(ownPosition, 0.6);
+	CPPUNIT_ASSERT_EQUAL((size_t)2, selectedObjects.size());
+}
+
 void LidarTest::isObstacleInFront_noObstacleInFront_false()
 {
 	Hardware::LidarMock hardwareLidar;
@@ -552,6 +566,16 @@ void LidarTest::isObstacleInFront_realWorldExample_false()
 	lidar.updateSensorData();
 
 	CPPUNIT_ASSERT(!lidar.isObstacleInFront(0));
+}
+
+void LidarTest::isObstacleInFront_twoPucksCloseTogether_false()
+{
+	Hardware::LidarMock hardwareLidar;
+	hardwareLidar.readDataFromFile("resources/testfiles/lidar_41.txt");
+	LidarImpl lidar(hardwareLidar);
+	lidar.updateSensorData();
+
+	CPPUNIT_ASSERT(!lidar.isObstacleInFront(0.5));
 }
 
 void LidarTest::isPuckCollected_noPuckInCloseDistance_false()
