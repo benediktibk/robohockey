@@ -16,11 +16,12 @@ using namespace RoboHockey::Main;
 using namespace RoboHockey::Layer::View;
 using namespace RoboHockey::Layer::Strategy::Common;
 using namespace RoboHockey::Layer::Strategy::MainStateMachine;
+using namespace RoboHockey::Layer::Autonomous;
 
 GameAutomatic::GameAutomatic(int argc, char **argv) :
 	Game(argc, argv),
 	m_stateMachine(0),
-	m_oldString(""),
+	m_stateString(""),
 	m_model(new Model()),
 	m_controller(new Controller(*m_model))
 {
@@ -54,11 +55,21 @@ void GameAutomatic::executeRobotControl()
 {
 	m_stateMachine->update();
 	setLogMessagesEnabled(m_stateMachine->allowLogMessages());
+	Robot &robot = getRobot();
+	string stateString = m_stateMachine->getNameOfCurrentState();
+	string robotString = robot.getCurrentState();
+	Logger &logger = getLogger();
 
-	if(m_oldString != m_stateMachine->getNameOfCurrentState())
+	if(m_stateString != stateString)
 	{
-		m_oldString = m_stateMachine->getNameOfCurrentState();
-		getLogger().logToConsoleAndGlobalLogFile("current state: " + m_stateMachine->getNameOfCurrentState());
+		m_stateString = stateString;
+		logger.logToConsoleAndGlobalLogFile("current state: " + m_stateString);
+	}
+
+	if (m_robotString != robotString)
+	{
+		m_robotString = robotString;
+		logger.logToConsoleAndGlobalLogFile("robot does: " + m_robotString);
 	}
 
 	if (guiEnabled() && logMessagesEnabled())

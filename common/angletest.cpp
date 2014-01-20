@@ -231,3 +231,10 @@ void AngleTest::isObtuse_minusPiThreeQuarter_true()
 
 	CPPUNIT_ASSERT(angle.isObtuse());
 }
+
+void AngleTest::getHalfRotation_multiplyWith4per5_valueIs4Piper5()
+{
+	Angle angle = Angle::getHalfRotation() * (4.0/5);
+
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(4*M_PI/5, angle.getValueBetweenMinusPiAndPi(), 0.00001);
+}
