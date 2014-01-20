@@ -87,13 +87,6 @@ void DetectFieldTest::nextState_calibratedOnSecondTry_driveTo()
 	State *state = detectFieldState.nextState();
 
 	DriveToState *stateCasted = dynamic_cast<DriveToState*>(state);
-	CPPUNIT_ASSERT(stateCasted == 0);
-
-	field.setCalibrationReturnPosition(RobotPosition(Point(1,2), Angle::getEighthRotation()));
-	detectFieldState.update();
-
-	state = detectFieldState.nextState();
-	stateCasted = dynamic_cast<DriveToState*>(state);
 	CPPUNIT_ASSERT(stateCasted != 0);
 	delete state;
 }
@@ -115,13 +108,6 @@ void DetectFieldTest::nextState_calibrationSuccessfulButTooFewCalibrationResults
 	State *state;
 	state = detectFieldState.nextState();
 	DriveToState *stateCasted = dynamic_cast<DriveToState*>(state);
-	CPPUNIT_ASSERT(stateCasted == 0);
-
-	field.setCalibrationReturnPosition(RobotPosition(Point(1,2), Angle::getEighthRotation()));
-	detectFieldState.update();
-
-	state = detectFieldState.nextState();
-	stateCasted = dynamic_cast<DriveToState*>(state);
-	CPPUNIT_ASSERT(stateCasted == 0);
+	CPPUNIT_ASSERT(stateCasted != 0);
 	delete state;
 }
