@@ -54,6 +54,7 @@ namespace Autonomous
 		virtual bool isPuckCollectable() const;
 		virtual bool isCollectingPuck() const;
 		virtual bool isRotating() const;
+		virtual std::string getCurrentState() const;
 
 		bool isOrientationDifferenceSmallEnoughForSmoothTurn(const Common::Angle &angle) const;
 		bool isOrientationDifferenceSmallEnoughForSmoothTurn(const Common::Point &point) const;

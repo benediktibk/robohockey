@@ -120,6 +120,7 @@ namespace Autonomous
 		CPPUNIT_TEST(getTargetsForScoringGoals_always_numberOfPositionsBigger4);
 		CPPUNIT_TEST(getTargetsForScoringGoals_always_numberOfPositionsBigger5);
 		CPPUNIT_TEST(getTargetsForScoringGoals_always_numberOfPositionsBigger6);
+		CPPUNIT_TEST(getTargetsForScoringGoals_always_numberOfPositionsIs16);
 		CPPUNIT_TEST(getTargetsForScoringGoals_forEstimatedGoalsAre0AndEstimatedGoalsAre3_positionsAreEqual);
 		CPPUNIT_TEST(getTargetsForScoringGoals_forEstimatedGoalsAre1AndEstimatedGoalsAre4_positionsAreEqual);
 		CPPUNIT_TEST(getTargetsForScoringGoals_forEstimatedGoalsAre2AndEstimatedGoalsAre5_positionsAreEqual);
@@ -252,6 +253,7 @@ namespace Autonomous
 		void getTargetsForScoringGoals_always_numberOfPositionsBigger4();
 		void getTargetsForScoringGoals_always_numberOfPositionsBigger5();
 		void getTargetsForScoringGoals_always_numberOfPositionsBigger6();
+		void getTargetsForScoringGoals_always_numberOfPositionsIs16();
 		void getTargetsForScoringGoals_forEstimatedGoalsAre0AndEstimatedGoalsAre3_positionsAreEqual();
 		void getTargetsForScoringGoals_forEstimatedGoalsAre1AndEstimatedGoalsAre4_positionsAreEqual();
 		void getTargetsForScoringGoals_forEstimatedGoalsAre2AndEstimatedGoalsAre5_positionsAreEqual();

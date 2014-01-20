@@ -40,6 +40,7 @@ namespace Common
 		CPPUNIT_TEST(isObtuse_minusPiQuarter_false);
 		CPPUNIT_TEST(isObtuse_piThreeQuarter_true);
 		CPPUNIT_TEST(isObtuse_minusPiThreeQuarter_true);
+		CPPUNIT_TEST(getHalfRotation_multiplyWith4per5_valueIs4Piper5);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
@@ -71,6 +72,7 @@ namespace Common
 		void isObtuse_minusPiQuarter_false();
 		void isObtuse_piThreeQuarter_true();
 		void isObtuse_minusPiThreeQuarter_true();
+		void getHalfRotation_multiplyWith4per5_valueIs4Piper5();
 	};
 }
 }

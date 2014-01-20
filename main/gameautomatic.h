@@ -37,7 +37,8 @@ namespace Main
 
 	private:
 		Layer::Strategy::Common::StateMachine *m_stateMachine;
-		std::string m_oldString;
+		std::string m_stateString;
+		std::string m_robotString;
 		Layer::View::Model *m_model;
 		Layer::View::Controller *m_controller;
 	};
