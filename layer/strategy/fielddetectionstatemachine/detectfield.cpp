@@ -61,7 +61,7 @@ void DetectField::updateInternal()
 
 	m_numberOfTries++;
 
-	if ((size_t) 4 <= m_calibrationResults.size())
+	if ((size_t) 2 <= m_calibrationResults.size())
 	{
 		m_field.transformFieldToNewOrigin(m_calibrationResults.front().second);
 		m_successful = true;
