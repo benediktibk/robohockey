@@ -73,6 +73,7 @@ namespace Autonomous
 		CPPUNIT_TEST(goTo_tookAVeryLongTime_cantReachTarget);
 		CPPUNIT_TEST(goTo_sonarDetectsObstacleButSonarDistabled_engineGotNoCallToLockForwardMovement);
 		CPPUNIT_TEST(goTo_finalPointAndOrientationReached_reachedTarget);
+		CPPUNIT_TEST(goTo_droveALittleBitToFarToFinalPoint_reachedTarget);
 		CPPUNIT_TEST(stuckAtObstacle_tryingToTackleObstacle_true);
 		CPPUNIT_TEST(stuckAtObstacle_notTryingToTackleObstacle_false);
 		CPPUNIT_TEST(stuckAtObstacle_updateCalledTwiceAfterStuckAtObstacle_true);
@@ -199,6 +200,7 @@ namespace Autonomous
 		void goTo_tookAVeryLongTime_cantReachTarget();
 		void goTo_sonarDetectsObstacleButSonarDistabled_engineGotNoCallToLockForwardMovement();
 		void goTo_finalPointAndOrientationReached_reachedTarget();
+		void goTo_droveALittleBitToFarToFinalPoint_reachedTarget();
 		void stuckAtObstacle_tryingToTackleObstacle_true();
 		void stuckAtObstacle_notTryingToTackleObstacle_false();
 		void stuckAtObstacle_updateCalledTwiceAfterStuckAtObstacle_true();
