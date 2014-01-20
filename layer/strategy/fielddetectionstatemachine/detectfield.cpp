@@ -77,7 +77,7 @@ void DetectField::updateInternal()
 
 void DetectField::logCurrentSavedPositions()
 {
-	m_logger.logToLogFileOfType(Logger::LogFileTypeFieldDetection, "BEGIN: Calibration Results");
+	m_logger.logToLogFileOfType(Logger::LogFileTypeFieldDetection, "BEGIN: Saved State Data");
 
 	unsigned int counter = 0;
 	for (list<pair<unsigned int, RobotPosition> >::iterator it = m_calibrationResults.begin(); it != m_calibrationResults.end(); ++it)
@@ -89,6 +89,6 @@ void DetectField::logCurrentSavedPositions()
 		counter++;
 	}
 
-	m_logger.logToLogFileOfType(Logger::LogFileTypeFieldDetection, "END: Calibration Results");
+	m_logger.logToLogFileOfType(Logger::LogFileTypeFieldDetection, "END: Saved State Data");
 
 }
