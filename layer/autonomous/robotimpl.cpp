@@ -22,13 +22,14 @@ using namespace RoboHockey::Layer::Autonomous;
 using namespace RoboHockey::Layer;
 using namespace std;
 
-RobotImpl::RobotImpl(DataAnalysis::DataAnalyser *dataAnalyser, Router *router, const Watch &watch, Common::Logger &logger) :
+RobotImpl::RobotImpl(DataAnalysis::DataAnalyser *dataAnalyser, Router *router, const Watch &watch, Common::Logger &logger, bool enableSonar) :
 	m_logger(logger),
 	m_robotWidth(0.38),
 	m_maximumDistanceToCollectPuck(0.75),
 	m_maximumAngleToCollectPuck(10.0/180*M_PI),
 	m_timeout(30),
 	m_maximumAngleForSmoothTurn(Angle::getHalfRotation()/3),
+	m_enableSonar(enableSonar),
 	m_dataAnalyser(dataAnalyser),
 	m_router(router),
 	m_watch(watch),
@@ -727,6 +728,7 @@ RobotImpl::RobotImpl(const RobotImpl &rhs) :
 	m_maximumDistanceToCollectPuck(0),
 	m_maximumAngleToCollectPuck(0),
 	m_timeout(0),
+	m_enableSonar(false),
 	m_watch(rhs.m_watch)
 { }
 

@@ -56,6 +56,7 @@ Game::Game(int argc, char **argv) :
 	string playerServer = parser.playerServer();
 	string angelinaServer = parser.angelinaServer();
 	m_enableGui = parser.enableGui();
+	bool enableSonar = parser.enableSonar();
 
 	cout << "##### ---------------------------\n##### GAME START" << endl;
 	cout << "##### player ip     : " << playerServer << endl;
@@ -68,13 +69,19 @@ Game::Game(int argc, char **argv) :
 
 	if (parser.enableRecorder())
 		cout << "##### recording to  : " << parser.recordingPath() << endl;
+
+	if (enableSonar)
+		cout << "##### Sonar Enabled : " << "TRUE" << endl;
+	else
+		cout << "##### Sonar Enabled : " << "FALSE" << endl;
+
 	cout << "##### ---------------------------" << endl;
 
 	m_logger = new Common::LoggerImpl();
 	Hardware::Robot *hardwareRobot = new Hardware::RobotImpl(playerServer);
 	DataAnalysis::DataAnalyser *dataAnalyser = new DataAnalysis::DataAnalyserImpl(hardwareRobot, *m_watch);
 	Autonomous::Router *router = new Autonomous::RouterImpl(0.38);
-	m_robot = new Autonomous::RobotImpl(dataAnalyser, router, *m_watch, *m_logger);
+	m_robot = new Autonomous::RobotImpl(dataAnalyser, router, *m_watch, *m_logger, enableSonar);
 	m_field = new Autonomous::FieldImpl(
 				dataAnalyser->getOdometry(), dataAnalyser->getLidar(),
 				dataAnalyser->getCamera(), *m_robot, *m_logger);

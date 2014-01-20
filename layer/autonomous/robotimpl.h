@@ -33,7 +33,7 @@ namespace Autonomous
 			public Robot
 	{
 	public:
-		RobotImpl(DataAnalysis::DataAnalyser *dataAnalyser, Router *router, const Common::Watch &watch, Common::Logger &logger);
+		RobotImpl(DataAnalysis::DataAnalyser *dataAnalyser, Router *router, const Common::Watch &watch, Common::Logger &logger, bool enableSonar);
 		virtual ~RobotImpl();
 
 		virtual void goTo(const std::list<Common::RobotPosition> &possibleTargets);
@@ -97,6 +97,7 @@ namespace Autonomous
 		const Common::Angle m_maximumAngleToCollectPuck;
 		const double m_timeout;
 		const Common::Angle m_maximumAngleForSmoothTurn;
+		const bool m_enableSonar;
 		DataAnalysis::DataAnalyser *m_dataAnalyser;
 		Router *m_router;
 		const Common::Watch &m_watch;
