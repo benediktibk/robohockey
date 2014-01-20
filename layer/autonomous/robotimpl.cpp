@@ -27,7 +27,7 @@ RobotImpl::RobotImpl(DataAnalysis::DataAnalyser *dataAnalyser, Router *router, c
 	m_robotWidth(0.38),
 	m_maximumDistanceToCollectPuck(0.75),
 	m_maximumAngleToCollectPuck(10.0/180*M_PI),
-	m_timeout(50),
+	m_timeout(30),
 	m_maximumAngleForSmoothTurn(Angle::getHalfRotation()/3),
 	m_dataAnalyser(dataAnalyser),
 	m_router(router),
@@ -343,12 +343,14 @@ bool RobotImpl::enableCollisionDetectionWithSonar() const
 
 void RobotImpl::changeIntoState(RobotState state)
 {
+	if (m_state == RobotStateWaiting)
+		m_watchDog->getTimeAndRestart();
+
 	m_cantReachTarget = false;
 	m_tryingToTackleObstacle = false;
 	m_state = state;
 	m_stateChanged = true;
 	m_rotationReached = false;
-	m_watchDog->getTimeAndRestart();
 }
 
 bool RobotImpl::isCurrentTargetPuckCollectable() const

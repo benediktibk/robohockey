@@ -790,6 +790,21 @@ void RobotTest::goTo_hardNotVisibleObstacleAtEnd_canReachTarget()
 	CPPUNIT_ASSERT_EQUAL((unsigned int)0, engine.getCallsToStop());
 }
 
+void RobotTest::goTo_tookAVeryLongTime_cantReachTarget()
+{
+	list<RobotPosition> targets;
+	targets.push_back(RobotPosition(Point(10, 0), Angle(0)));
+
+	m_robot->updateSensorData();
+	m_robot->goTo(targets);
+	m_robot->updateActuators(*m_field);
+	m_watchMock->setTime(60);
+	m_robot->updateSensorData();
+	m_robot->updateActuators(*m_field);
+
+	CPPUNIT_ASSERT(m_robot->cantReachTarget());
+}
+
 void RobotTest::stuckAtObstacle_tryingToTackleObstacle_true()
 {
 	m_engine->setTryingToTackleObstacle(true);
