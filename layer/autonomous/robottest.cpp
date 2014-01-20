@@ -830,6 +830,25 @@ void RobotTest::goTo_sonarDetectsObstacleButSonarDistabled_engineGotNoCallToLock
 	CPPUNIT_ASSERT(!robot.stuckAtObstacle());
 }
 
+void RobotTest::goTo_finalPointAndOrientationReached_reachedTarget()
+{
+	list<RobotPosition> targets;
+	targets.push_back(RobotPosition(Point(10, 0), Angle(0)));
+
+	m_odometry->setCurrentPosition(RobotPosition(Point(0, 0), Angle(0)));
+	m_robot->updateSensorData();
+	m_robot->goTo(targets);
+	m_robot->updateActuators(*m_field);
+	m_robot->updateSensorData();
+	m_robot->updateActuators(*m_field);
+	m_odometry->setCurrentPosition(RobotPosition(Point(10, 0), Angle(0)));
+	m_robot->updateSensorData();
+	m_robot->updateActuators(*m_field);
+
+	CPPUNIT_ASSERT(m_robot->reachedTarget());
+	CPPUNIT_ASSERT(!m_robot->cantReachTarget());
+}
+
 void RobotTest::stuckAtObstacle_tryingToTackleObstacle_true()
 {
 	m_engine->setTryingToTackleObstacle(true);
