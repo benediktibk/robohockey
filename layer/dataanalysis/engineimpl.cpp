@@ -24,8 +24,8 @@ EngineImpl::EngineImpl(Hardware::Engine &engine, Hardware::Odometry &odometry, c
 	m_isMoving(false),
 	m_startedMovement(false),
 	m_controllerTurnOnly(new PIDController(0.7, 0, 0, watch)),
-	m_controllerDriveAndTurnRotation(new PIDController(1.5, 0, 0.1, watch)),
-	m_controllerDriveAndTurnSpeed(new PIDController(1, 0, 0.1, watch))
+	m_controllerDriveAndTurnRotation(new PIDController(1, 0, 0.02, watch)),
+	m_controllerDriveAndTurnSpeed(new PIDController(1, 0, 0.05, watch))
 { }
 
 EngineImpl::~EngineImpl()
@@ -209,7 +209,7 @@ void EngineImpl::driveAndTurn(const RobotPosition &currentPosition)
 	double rotationSpeed = m_controllerDriveAndTurnRotation->evaluate(orthogonalError);
 	double magnitude = max<double>(0, m_controllerDriveAndTurnSpeed->evaluate(forwardError));
 
-	double magnitudeModification = 1 - fabs(rotationSpeed);
+	double magnitudeModification = 1 - fabs(rotationSpeed*1.5);
 	if (magnitudeModification > 1)
 		magnitudeModification = 1;
 	else if (magnitudeModification < 0)
