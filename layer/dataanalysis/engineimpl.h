@@ -80,7 +80,6 @@ namespace DataAnalysis
 		double m_desiredSpeed;
 		bool m_isMoving;
 		bool m_startedMovement;
-		const double m_distanceAmplification;
 		Common::PIDController *m_controllerTurnOnly;
 		Common::PIDController *m_controllerDriveAndTurnRotation;
 		Common::PIDController *m_controllerDriveAndTurnSpeed;

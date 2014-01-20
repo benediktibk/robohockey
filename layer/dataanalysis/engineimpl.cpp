@@ -23,10 +23,9 @@ EngineImpl::EngineImpl(Hardware::Engine &engine, Hardware::Odometry &odometry, c
 	m_desiredSpeed(0),
 	m_isMoving(false),
 	m_startedMovement(false),
-	m_distanceAmplification(1),
 	m_controllerTurnOnly(new PIDController(0.7, 0, 0, watch)),
 	m_controllerDriveAndTurnRotation(new PIDController(1.5, 0, 0.1, watch)),
-	m_controllerDriveAndTurnSpeed(new PIDController(m_distanceAmplification, 0, 0.1, watch))
+	m_controllerDriveAndTurnSpeed(new PIDController(1, 0, 0.1, watch))
 { }
 
 EngineImpl::~EngineImpl()
