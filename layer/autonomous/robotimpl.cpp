@@ -254,12 +254,19 @@ void RobotImpl::updateEngineForTurnTo()
 
 void RobotImpl::updateEngine(const Field &field)
 {
+	DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
+
 	if (m_cantReachTarget || m_tryingToTackleObstacle)
 	{
-		DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
+		engine.stop();
+		log("stopping because cant reach target");
+		return;
+	}
+
+	if (m_tryingToTackleObstacle)
+	{
 		engine.stop();
 		log("stopping because would try to tackle obstacle");
-		return;
 	}
 
 	switch(m_state)
