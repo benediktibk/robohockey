@@ -1942,7 +1942,7 @@ void RobotTest::isOrientationDifferenceSmallEnoughForSmoothTurn_currentSpeedZero
 {
 	m_engine->setCurrentSpeed(0);
 
-	CPPUNIT_ASSERT(m_robot->isOrientationDifferenceSmallEnoughForSmoothTurn(Angle::getEighthRotation()/2));
+	CPPUNIT_ASSERT(m_robot->isOrientationDifferenceSmallEnoughForSmoothTurn(Angle::getEighthRotation()/10));
 }
 
 void RobotTest::isOrientationDifferenceSmallEnoughForSmoothTurn_currentSpeedMaxAndSmallRotation_false()
