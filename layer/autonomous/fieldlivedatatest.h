@@ -32,6 +32,7 @@ namespace Autonomous
 		CPPUNIT_TEST(update_changingData_noColoredObjectsAreLost);
 		CPPUNIT_TEST(calibratePosition_goodRealWorldExample_positionIsCorrect);
 		CPPUNIT_TEST(calibratePosition_worstCaseRealWorldExample_positionIsCorrect);
+		CPPUNIT_TEST(calibratePosition_anotherRealWorldExample_positionIsCorrect);
 		CPPUNIT_TEST_SUITE_END();
 
 	public:
@@ -42,6 +43,7 @@ namespace Autonomous
 		void update_changingData_noColoredObjectsAreLost();
 		void calibratePosition_goodRealWorldExample_positionIsCorrect();
 		void calibratePosition_worstCaseRealWorldExample_positionIsCorrect();
+		void calibratePosition_anotherRealWorldExample_positionIsCorrect();
 
 	private:
 		void updateFieldForObjectsToAppear(FieldImpl &field);

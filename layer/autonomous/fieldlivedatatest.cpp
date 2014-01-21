@@ -89,6 +89,20 @@ void FieldLiveDataTest::calibratePosition_worstCaseRealWorldExample_positionIsCo
 	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(0.6, 1.5), position));
 }
 
+void FieldLiveDataTest::calibratePosition_anotherRealWorldExample_positionIsCorrect()
+{
+	SensorDataPlayer sensorDataPlayer("resources/testfiles/field_detection_1");
+
+	for (unsigned int round = 0; round < sensorDataPlayer.getMaximumRoundCount(); ++round)
+		sensorDataPlayer.loadNextRound();
+
+	Field &field = sensorDataPlayer.getField();
+	CPPUNIT_ASSERT(field.calibratePosition());
+	Point position = sensorDataPlayer.getCurrentPosition();
+	Compare compare(0.3);
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(1.1, 0.4), position));
+}
+
 void FieldLiveDataTest::updateFieldForObjectsToAppear(FieldImpl &field)
 {
 	field.update();
