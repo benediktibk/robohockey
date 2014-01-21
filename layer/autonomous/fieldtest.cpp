@@ -1266,7 +1266,7 @@ void FieldTest::calibratePosition_validPattern_correctTransformation()
 void FieldTest::calibratePosition_realWorldExample_positionIsCorrect()
 {
 	Hardware::RobotMock *hardwareRobot = new Hardware::RobotMock();
-	DataAnalysis::DataAnalyserImpl dataAnalyser(hardwareRobot, *m_watchMock);
+	DataAnalysis::DataAnalyserImpl dataAnalyser(hardwareRobot, *m_watchMock, *m_logger);
 	Autonomous::RobotMock autonomousRobot;
 	FieldImpl field(dataAnalyser.getOdometry(), dataAnalyser.getLidar(), dataAnalyser.getCamera(), autonomousRobot, *m_logger);
 	Hardware::OdometryMock &odometry = hardwareRobot->getOdometryMock();
@@ -2014,7 +2014,7 @@ void FieldTest::detectTeamColorWithGoalInFront_yellowAndBlueEqual_teamNotUnknown
 void FieldTest::getNewOriginFromFieldDetection_realWorldExample1_correctNewOrigin()
 {
 	Hardware::RobotMock *hardwareRobot = new Hardware::RobotMock();
-	DataAnalysis::DataAnalyserImpl dataAnalyser(hardwareRobot, *m_watchMock);
+	DataAnalysis::DataAnalyserImpl dataAnalyser(hardwareRobot, *m_watchMock, *m_logger);
 	Autonomous::RobotMock autonomousRobot;
 	FieldImpl field(dataAnalyser.getOdometry(), dataAnalyser.getLidar(), dataAnalyser.getCamera(), autonomousRobot, *m_logger);
 	Hardware::LidarMock &lidar = hardwareRobot->getLidarMock();

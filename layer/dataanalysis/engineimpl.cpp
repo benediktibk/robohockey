@@ -5,17 +5,20 @@
 #include "common/compare.h"
 #include "common/robotposition.h"
 #include "common/pidcontroller.h"
+#include "common/logger.h"
 #include <math.h>
 #include <algorithm>
+#include <sstream>
 
 using namespace RoboHockey::Common;
 using namespace RoboHockey::Layer;
 using namespace RoboHockey::Layer::DataAnalysis;
 using namespace std;
 
-EngineImpl::EngineImpl(Hardware::Engine &engine, Hardware::Odometry &odometry, const Watch &watch) :
+EngineImpl::EngineImpl(Hardware::Engine &engine, Hardware::Odometry &odometry, const Watch &watch, Logger &logger) :
 	m_engine(engine),
 	m_odometry(odometry),
+	m_logger(logger),
 	m_engineState(EngineStateStopped),
 	m_forwardMovementLocked(false),
 	m_tryingToTackleObstacle(false),
@@ -172,6 +175,9 @@ void EngineImpl::updateSpeedAndRotationForRotating()
 
 	if (angleCompare.isFuzzyEqual(targetOrientation, currentOrientation))
 	{
+		stringstream message;
+		message << "engine reached target " << m_target << " for turning" << endl;
+		log(message.str());
 		stop();
 		return;
 	}
@@ -261,4 +267,9 @@ void EngineImpl::switchIntoState(EngineState state)
 		m_startedMovement = false;
 
 	m_engineState = state;
+}
+
+void EngineImpl::log(const string &message)
+{
+	m_logger.logToLogFileOfType(Logger::LogFileTypeRobot, message);
 }

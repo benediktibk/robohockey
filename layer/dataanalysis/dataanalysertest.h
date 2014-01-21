@@ -9,6 +9,7 @@ namespace RoboHockey
 namespace Common
 {
 	class WatchMock;
+	class LoggerMock;
 }
 
 namespace Layer
@@ -48,6 +49,7 @@ namespace DataAnalysis
 		Hardware::RobotMock *m_hardwareRobot;
 		DataAnalyserImpl *m_dataAnalyser;
 		Common::WatchMock *m_watch;
+		Common::LoggerMock *m_logger;
 	};
 }
 }

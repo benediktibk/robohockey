@@ -4,6 +4,7 @@
 #include "layer/hardware/odometrymock.h"
 #include "common/compare.h"
 #include "common/watchmock.h"
+#include "common/loggermock.h"
 #include <math.h>
 
 using namespace RoboHockey::Common;
@@ -13,9 +14,10 @@ using namespace RoboHockey::Layer::DataAnalysis;
 void EngineTest::setUp()
 {
 	m_watch = new WatchMock();
+	m_logger = new LoggerMock();
 	m_hardwareEngine = new Hardware::EngineMock();
 	m_hardwareOdometry = new Hardware::OdometryMock();
-	m_engine = new EngineImpl(*m_hardwareEngine, *m_hardwareOdometry, *m_watch);
+	m_engine = new EngineImpl(*m_hardwareEngine, *m_hardwareOdometry, *m_watch, *m_logger);
 }
 
 void EngineTest::tearDown()
@@ -28,6 +30,8 @@ void EngineTest::tearDown()
 	m_hardwareOdometry = 0;
 	delete m_watch;
 	m_watch = 0;
+	delete m_logger;
+	m_logger = 0;
 }
 
 void EngineTest::goToStraight_currentPositionDifferentToTarget_atLeastOneCallToSetSpeed()

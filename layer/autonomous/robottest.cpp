@@ -1450,7 +1450,7 @@ void RobotTest::collectPuckInFront_puckAhead_notStuckAtObstacle()
 	Hardware::SonarMock &sonar = hardwareRobot->getSonarMock();
 	lidar.readDataFromFile("resources/testfiles/lidar_34.txt");
 	sonar.readDataFromFile("resources/testfiles/sonar_3.txt");
-	DataAnalysis::DataAnalyser *dataAnalyser = new DataAnalysis::DataAnalyserImpl(hardwareRobot, *m_watchMock);
+	DataAnalysis::DataAnalyser *dataAnalyser = new DataAnalysis::DataAnalyserImpl(hardwareRobot, *m_watchMock, *m_logger);
 	RobotImpl robot(dataAnalyser, new RouterMock(), *m_watchMock, *m_logger, true);
 
 	robot.updateSensorData();
@@ -1467,7 +1467,7 @@ void RobotTest::collectPuckInFront_puckAheadAndStartedToMove_notStuckAtObstacle(
 	Hardware::SonarMock &sonar = hardwareRobot->getSonarMock();
 	lidar.readDataFromFile("resources/testfiles/lidar_34.txt");
 	sonar.readDataFromFile("resources/testfiles/sonar_3.txt");
-	DataAnalysis::DataAnalyser *dataAnalyser = new DataAnalysis::DataAnalyserImpl(hardwareRobot, *m_watchMock);
+	DataAnalysis::DataAnalyser *dataAnalyser = new DataAnalysis::DataAnalyserImpl(hardwareRobot, *m_watchMock, *m_logger);
 	RobotImpl robot(dataAnalyser, new RouterMock(), *m_watchMock, *m_logger, true);
 
 	robot.updateSensorData();
@@ -1486,7 +1486,7 @@ void RobotTest::collectPuckInFront_puckAheadAndAlreadyUpdatedTheEngine_notStuckA
 	Hardware::SonarMock &sonar = hardwareRobot->getSonarMock();
 	lidar.readDataFromFile("resources/testfiles/lidar_34.txt");
 	sonar.readDataFromFile("resources/testfiles/sonar_3.txt");
-	DataAnalysis::DataAnalyser *dataAnalyser = new DataAnalysis::DataAnalyserImpl(hardwareRobot, *m_watchMock);
+	DataAnalysis::DataAnalyser *dataAnalyser = new DataAnalysis::DataAnalyserImpl(hardwareRobot, *m_watchMock, *m_logger);
 	RobotImpl robot(dataAnalyser, new RouterMock(), *m_watchMock, *m_logger, true);
 
 	robot.updateSensorData();

@@ -79,7 +79,7 @@ Game::Game(int argc, char **argv) :
 
 	m_logger = new Common::LoggerImpl();
 	Hardware::Robot *hardwareRobot = new Hardware::RobotImpl(playerServer);
-	DataAnalysis::DataAnalyser *dataAnalyser = new DataAnalysis::DataAnalyserImpl(hardwareRobot, *m_watch);
+	DataAnalysis::DataAnalyser *dataAnalyser = new DataAnalysis::DataAnalyserImpl(hardwareRobot, *m_watch, *m_logger);
 	Autonomous::Router *router = new Autonomous::RouterImpl(0.38);
 	m_robot = new Autonomous::RobotImpl(dataAnalyser, router, *m_watch, *m_logger, enableSonar);
 	m_field = new Autonomous::FieldImpl(

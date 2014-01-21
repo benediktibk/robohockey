@@ -3,6 +3,7 @@
 #include "layer/dataanalysis/lidar.h"
 #include "layer/hardware/robotimpl.h"
 #include "common/watchimpl.h"
+#include "common/loggerimpl.h"
 #include <iostream>
 #include <stdio.h>
 
@@ -18,7 +19,8 @@ int main(int argc, char **argv)
 
 	Hardware::Robot *hardwareRobot = new Hardware::RobotImpl(argv[1]);
 	WatchImpl watch;
-	DataAnalyserImpl dataAnalyser(hardwareRobot, watch);
+	LoggerImpl logger;
+	DataAnalyserImpl dataAnalyser(hardwareRobot, watch, logger);
 	const Lidar &lidar = dataAnalyser.getLidar();
 	Sonar &sonar = dataAnalyser.getSonar();
 	Hardware::Sonar &hardwareSonar = hardwareRobot->getSonar();

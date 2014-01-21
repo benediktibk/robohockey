@@ -11,6 +11,7 @@ namespace Common
 {
 	class Watch;
 	class PIDController;
+	class Logger;
 }
 
 namespace Layer
@@ -37,7 +38,7 @@ namespace DataAnalysis
 						 };
 
 	public:
-		EngineImpl(Hardware::Engine &engine, Hardware::Odometry &odometry, const Common::Watch &watch);
+		EngineImpl(Hardware::Engine &engine, Hardware::Odometry &odometry, const Common::Watch &watch, Common::Logger &logger);
 		virtual ~EngineImpl();
 
 		virtual void goToStraight(const Common::Point &position);
@@ -66,10 +67,12 @@ namespace DataAnalysis
 		void driveAndTurn(const Common::RobotPosition &currentPosition);
 		void setSpeed(double magnitude, double rotationSpeed);
 		void switchIntoState(EngineState state);
+		void log(const std::string &message);
 
 	private:
 		Hardware::Engine &m_engine;
 		Hardware::Odometry &m_odometry;
+		Common::Logger &m_logger;
 		Common::Point m_target;
 		Common::Point m_startPosition;
 		EngineState m_engineState;

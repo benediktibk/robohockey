@@ -10,13 +10,13 @@
 using namespace RoboHockey::Layer;
 using namespace RoboHockey::Layer::DataAnalysis;
 
-DataAnalyserImpl::DataAnalyserImpl(Hardware::Robot *robot, const Common::Watch &watch) :
+DataAnalyserImpl::DataAnalyserImpl(Hardware::Robot *robot, const Common::Watch &watch, Common::Logger &logger) :
 	m_robot(robot),
 	m_sonar(new SonarImpl(m_robot->getSonar())),
 	m_lidar(new LidarImpl(m_robot->getLidar())),
 	m_camera(new CameraImpl(m_robot->getCamera())),
 	m_odometry(new OdometryImpl(m_robot->getOdometry())),
-	m_engine(new EngineImpl(m_robot->getEngine(), m_robot->getOdometry(), watch))
+	m_engine(new EngineImpl(m_robot->getEngine(), m_robot->getOdometry(), watch, logger))
 {
 	assert(m_robot != 0);
 }
