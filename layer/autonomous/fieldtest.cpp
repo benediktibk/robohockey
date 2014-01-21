@@ -1466,7 +1466,7 @@ void FieldTest::isPointInsideField_pointIsNearBorder_false()
 	m_field->calibratePosition();
 
 	CPPUNIT_ASSERT(m_field->isCalibrated());
-	CPPUNIT_ASSERT(!m_field->isPointInsideField(Point(1, 2.85)));
+	CPPUNIT_ASSERT(!m_field->isPointInsideField(Point(1, 2.78)));
 }
 
 void FieldTest::getTargetsForGoalDetection_correctPosition()
