@@ -386,5 +386,5 @@ void FieldObjectTest::getObstacle_big_enemyRobot()
 	Circle obstacle = object.getObstacle();
 
 	Compare compare(0.00001);
-	CPPUNIT_ASSERT(compare.isFuzzyEqual(Circle(Point(4, 3), 0.8), obstacle));
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(Circle(Point(4, 3), 1), obstacle));
 }
