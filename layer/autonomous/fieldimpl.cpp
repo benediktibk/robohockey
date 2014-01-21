@@ -670,7 +670,7 @@ double FieldImpl::getRangeOfViewArea() const
 	switch(m_fieldState)
 	{
 	case FieldStateCalibrated:
-		return 2;
+		return 3;
 	case FieldStateUnknownPosition:
 		return 6;
 	}
@@ -684,7 +684,7 @@ Angle FieldImpl::getAngleOfViewArea() const
 	switch(m_fieldState)
 	{
 	case FieldStateCalibrated:
-		return Angle::getEighthRotation();
+		return Angle::getHalfRotation()/3;
 	case FieldStateUnknownPosition:
 		return Angle::getQuarterRotation();
 	}
