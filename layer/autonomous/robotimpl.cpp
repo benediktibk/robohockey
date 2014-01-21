@@ -159,7 +159,8 @@ void RobotImpl::updateDrivingState(const Field &field)
 		{
 			const Point &nextTarget = getNextTarget();
 
-			if (isOrientationDifferenceSmallEnoughForSmoothTurn(nextTarget))
+			if (	isOrientationDifferenceSmallEnoughForSmoothTurn(nextTarget) ||
+					(m_state == RobotStateDrivingTurningPart && !routeChanged))
 				changeIntoState(RobotStateDrivingStraightPart);
 			else
 				changeIntoState(RobotStateDrivingTurningPart);

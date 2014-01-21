@@ -86,6 +86,7 @@ void RobotTest::goTo_orientationToTargetCompletelyWrong_engineGotNoCallToGoToStr
 {
 	m_odometry->setCurrentPosition(RobotPosition(Point(0, 0), 0));
 
+	m_engine->setReachedTarget(true);
 	m_robot->updateSensorData();
 	m_targets.push_back(RobotPosition(Point(-1, 0), Angle::getHalfRotation()));
 	m_robot->goTo(m_targets);
