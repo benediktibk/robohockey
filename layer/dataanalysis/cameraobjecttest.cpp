@@ -5,7 +5,6 @@ using namespace std;
 using namespace RoboHockey::Layer::DataAnalysis;
 using namespace RoboHockey::Common;
 
-
 void CameraObjectTest::getColorType_ColorTypeYellowGoal()
 {
 	CameraObject cameraobject(FieldColorYellow, Point(0,0));

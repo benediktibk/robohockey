@@ -670,7 +670,7 @@ double FieldImpl::getRangeOfViewArea() const
 	switch(m_fieldState)
 	{
 	case FieldStateCalibrated:
-		return 2;
+		return 3;
 	case FieldStateUnknownPosition:
 		return 6;
 	}
@@ -684,7 +684,7 @@ Angle FieldImpl::getAngleOfViewArea() const
 	switch(m_fieldState)
 	{
 	case FieldStateCalibrated:
-		return Angle::getEighthRotation();
+		return Angle::getHalfRotation()/3;
 	case FieldStateUnknownPosition:
 		return Angle::getQuarterRotation();
 	}
@@ -1147,7 +1147,7 @@ bool FieldImpl::isPointFuzzyInsideField(const Point &point, double epsilon) cons
 	if (m_fieldState != FieldStateCalibrated)
 		return true;
 
-	return ( point.getX() < (5.0 + epsilon) && point.getX() > (0 -epsilon) && point.getY() < (3.0 + epsilon) && point.getY() > (0.0 - epsilon));
+	return ( point.getX() < (5.0 + epsilon) && point.getX() > (0.0 -epsilon) && point.getY() < (2.75 + epsilon) && point.getY() > (0.25 - epsilon));
 }
 
 void FieldImpl::removeAllFieldObjectsOutsideOfField()

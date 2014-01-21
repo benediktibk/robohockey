@@ -3,7 +3,6 @@
 using namespace RoboHockey::Layer::DataAnalysis;
 using namespace RoboHockey::Common;
 
-
 CameraMock::CameraMock() :
 	m_probabilityForYellow(0),
 	m_probabilityForBlue(0),

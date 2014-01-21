@@ -95,6 +95,7 @@ namespace Autonomous
 		CPPUNIT_TEST(isPointInsideField_pointIsInside_true);
 		CPPUNIT_TEST(isPointInsideField_pointIsOutside_false);
 		CPPUNIT_TEST(isPointInsideField_pointIsUnderField_false);
+		CPPUNIT_TEST(isPointInsideField_pointIsNearBorder_false);
 		CPPUNIT_TEST(getTargetsForGoalDetection_correctPosition);
 		CPPUNIT_TEST(getAllSoftObstacles_oneBluePuck_resultSizeIs1);
 		CPPUNIT_TEST(getAllSoftObstacles_oneSmallObstacleWithUnknownColor_resultSizeIs1);
@@ -225,6 +226,7 @@ namespace Autonomous
 		void isPointInsideField_pointIsInside_true();
 		void isPointInsideField_pointIsOutside_false();
 		void isPointInsideField_pointIsUnderField_false();
+		void isPointInsideField_pointIsNearBorder_false();
 		void getTargetsForGoalDetection_correctPosition();
 		void getAllSoftObstacles_oneBluePuck_resultSizeIs1();
 		void getAllSoftObstacles_oneSmallObstacleWithUnknownColor_resultSizeIs1();

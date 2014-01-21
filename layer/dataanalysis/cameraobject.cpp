@@ -6,8 +6,7 @@ using namespace RoboHockey::Common;
 CameraObject::CameraObject(FieldColor color, const Point &position) :
 	m_color(color),
 	m_position(position)
-{
-}
+{ }
 
 Point CameraObject::getPosition() const
 {

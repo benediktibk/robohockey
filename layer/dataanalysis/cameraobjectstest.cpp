@@ -5,7 +5,6 @@ using namespace std;
 using namespace RoboHockey::Layer::DataAnalysis;
 using namespace RoboHockey::Common;
 
-
 void CameraObjectsTest::getObjectCount_add1Object_objectCountIs1()
 {
 	CameraObjects objects;
