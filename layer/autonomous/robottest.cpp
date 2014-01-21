@@ -370,21 +370,26 @@ void RobotTest::goTo_finalOrientationReached_engineGotOneCallToStop()
 	m_targets.push_back(RobotPosition(Point(1, 1), Angle::getQuarterRotation()));
 	m_robot->goTo(m_targets);
 	m_robot->updateActuators(*m_field);
+	CPPUNIT_ASSERT(m_robot->isInDrivingTurningPart());
 	m_engine->setReachedTarget(true);
 	m_odometry->setCurrentPosition(RobotPosition(Point(0, 0), Angle::getEighthRotation()));
 	m_robot->updateSensorData();
 	m_robot->updateActuators(*m_field);
+	CPPUNIT_ASSERT(m_robot->isInDrivingStraightPart());
 	m_engine->setReachedTarget(false);
 	m_robot->updateSensorData();
 	m_robot->updateActuators(*m_field);
+	CPPUNIT_ASSERT(m_robot->isInDrivingStraightPart());
 	m_odometry->setCurrentPosition(RobotPosition(Point(1, 1), Angle::getEighthRotation()));
 	m_engine->setReachedTarget(true);
 	m_robot->updateSensorData();
 	m_robot->updateActuators(*m_field);
+	CPPUNIT_ASSERT(m_robot->isInDrivingTurningPart());
 	m_odometry->setCurrentPosition(RobotPosition(Point(1, 1), Angle::getQuarterRotation()));
-	m_engine->setReachedTarget(true);
+	m_engine->setReachedTarget(false);
 	m_robot->updateSensorData();
 	m_robot->updateActuators(*m_field);
+	CPPUNIT_ASSERT(m_robot->isInDrivingTurningPart());
 	m_odometry->setCurrentPosition(RobotPosition(Point(1, 1), Angle::getQuarterRotation()));
 	m_engine->setReachedTarget(true);
 	m_engine->resetCounters();
@@ -539,13 +544,16 @@ void RobotTest::goTo_obstacleSuddenlyAppearedDuringDriving_engineGotCallToStop()
 	m_targets.push_back(RobotPosition(Point(10, 0), 0));
 	robot.goTo(m_targets);
 	robot.updateActuators(*m_field);
+	CPPUNIT_ASSERT(robot.isInDrivingStraightPart());
 	engine.setReachedTarget(false);
 	robot.updateSensorData();
 	robot.updateActuators(*m_field);
+	CPPUNIT_ASSERT(robot.isInDrivingStraightPart());
 	m_field->setHardObstacles(obstacles);
 	engine.resetCounters();
 	robot.updateSensorData();
 	robot.updateActuators(*m_field);
+	CPPUNIT_ASSERT(robot.isInDrivingStraightPart());
 
 	CPPUNIT_ASSERT(!robot.cantReachTarget());
 	CPPUNIT_ASSERT_EQUAL((unsigned int)1, engine.getCallsToStop());
@@ -565,10 +573,12 @@ void RobotTest::goTo_obstacleSuddenlyAppearedDuringTurning_engineGotCallToStop()
 	m_targets.push_back(RobotPosition(Point(10, 0), 0));
 	robot.goTo(m_targets);
 	robot.updateActuators(*m_field);
+	CPPUNIT_ASSERT(robot.isInDrivingTurningPart());
 	m_field->setHardObstacles(obstacles);
 	engine.resetCounters();
 	robot.updateSensorData();
 	robot.updateActuators(*m_field);
+	CPPUNIT_ASSERT(robot.isInDrivingTurningPart());
 
 	CPPUNIT_ASSERT(!robot.cantReachTarget());
 	CPPUNIT_ASSERT_EQUAL((unsigned int)1, engine.getCallsToStop());
@@ -590,6 +600,7 @@ void RobotTest::goTo_hardObstacleAtStart_engineGotCallToTurnToTarget()
 	m_targets.push_back(RobotPosition(Point(10, 0), 0));
 	robot.goTo(m_targets);
 	robot.updateActuators(*m_field);
+	CPPUNIT_ASSERT(robot.isInDrivingTurningPart());
 
 	CPPUNIT_ASSERT(!robot.cantReachTarget());
 	CPPUNIT_ASSERT_EQUAL((unsigned int)1, engine.getCallsToTurnToTarget());
