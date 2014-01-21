@@ -319,14 +319,14 @@ void Controller::updateObjects()
 	{
 		QGraphicsEllipseItem &currentItem = *(m_objectPositions[i]);
 		const FieldObject &currentObject = object[i];
-		const Circle &currentCircle = currentObject.getCircle();
+		const Circle &currentCircle = currentObject.getObstacle();
 		double diameter = currentCircle.getDiameter();
 		Point center = currentCircle.getCenter();
 		diameter = diameter * m_pixelPerMeter;
 		center = center * m_pixelPerMeter;
 		double centerX = center.getX();
 		double centerY = center.getY();
-		currentItem.setRect(centerX, -1.0 * centerY, diameter, diameter);
+		currentItem.setRect(centerX - diameter/2, -1.0 * centerY - diameter/2, diameter, diameter);
 
 		if (currentObject.getColor() == FieldColorBlue)
 			currentItem.setBrush(Qt::blue);

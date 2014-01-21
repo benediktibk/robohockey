@@ -80,7 +80,7 @@ add_library(maintest ${MAIN_TEST_SRC})
 
 add_executable(robot main.cpp)
 add_executable(testrunner testregistration.cpp maintestrunner.cpp)
-add_executable(livedatatestrunner testregistrationlivedata.cpp maintestrunnerlivedata.cpp)
+add_executable(livedatatestrunner testregistrationlivedata.cpp maintestrunner.cpp)
 add_executable(calibratecamera maincameracalibration.cpp)
 add_executable(datalogger maindatalogger.cpp)
 add_executable(remotecontrol mainremotecontrol.cpp)

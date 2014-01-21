@@ -85,6 +85,8 @@ namespace Autonomous
 		std::vector<Common::Circle> growObstacles(const std::vector<Common::Circle> &obstacles) const;
 		const Common::Point& getNextTarget() const;
 		void log(const std::string &message);
+		Common::Point getTargetForDrivingTurningPart();
+		bool isTargetForRotatingReached();
 
 	private:
 		// forbid copies

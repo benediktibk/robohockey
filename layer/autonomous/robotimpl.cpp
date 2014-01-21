@@ -109,21 +109,7 @@ void RobotImpl::updateEngineForDrivingTurningPart()
 
 	if (engine.reachedTarget())
 	{
-		Point target;
-
-		if (m_currentRoute->getPointCount() >= 2)
-		{
-			target = m_currentRoute->getSecondPoint();
-			log("this is not the final rotation");
-		}
-		else
-		{
-			target = Point(1, 0);
-			target.rotate(m_currentTarget.getOrientation());
-			target = target + m_currentTarget.getPosition();
-			log("this is the final rotation");
-		}
-
+		Point target = getTargetForDrivingTurningPart();
 		engine.turnToTarget(target);
 		stringstream message;
 		message << "setting new target for turning to: " << target;
@@ -175,7 +161,7 @@ void RobotImpl::updateDrivingState(const Field &field)
 
 			if (isOrientationDifferenceSmallEnoughForSmoothTurn(nextTarget))
 				changeIntoState(RobotStateDrivingStraightPart);
-			else
+			else if (!isTargetForRotatingReached())
 				changeIntoState(RobotStateDrivingTurningPart);
 		}
 	}
@@ -474,6 +460,38 @@ const Point &RobotImpl::getNextTarget() const
 void RobotImpl::log(const string &message)
 {
 	m_logger.logToLogFileOfType(Logger::LogFileTypeRobot, message);
+}
+
+Point RobotImpl::getTargetForDrivingTurningPart()
+{
+	Point target;
+	if (m_currentRoute->getPointCount() >= 2)
+	{
+		target = m_currentRoute->getSecondPoint();
+		log("fetching rotation; it is not the final rotation");
+	}
+	else
+	{
+		target = Point(1, 0);
+		target.rotate(m_currentTarget.getOrientation());
+		target = target + m_currentTarget.getPosition();
+		log("fetching rotation; it is the final rotation");
+	}
+
+	return target;
+}
+
+bool RobotImpl::isTargetForRotatingReached()
+{
+	DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
+
+	if (!engine.reachedTarget())
+		return false;
+
+	Point currentTarget = engine.getCurrentTarget();
+	Point nextTargetWouldBe = getTargetForDrivingTurningPart();
+	Compare compare(0.001);
+	return compare.isFuzzyEqual(currentTarget, nextTargetWouldBe);
 }
 
 void RobotImpl::updateActuators(const Field &field)
