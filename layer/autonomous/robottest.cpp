@@ -770,21 +770,21 @@ void RobotTest::goTo_noUpdateOfActuators_engineGotCallToStop()
 
 void RobotTest::goTo_finalPointReached_engineGotCallToTurnToFinalOrientation()
 {
-	m_targets.push_back(RobotPosition(Point(10, 10), Angle::getQuarterRotation()));
+	m_targets.push_back(RobotPosition(Point(10, 1), Angle::getQuarterRotation()));
 
 	m_engine->setReachedTarget(true);
 	m_robot->updateSensorData();
 	m_robot->goTo(m_targets);
 	m_robot->updateActuators(*m_field);
-	m_odometry->setCurrentPosition(RobotPosition(Point(10, 10), Angle::getEighthRotation()));
+	CPPUNIT_ASSERT(m_robot->isInDrivingStraightPart());
+	m_odometry->setCurrentPosition(RobotPosition(Point(10, 1), Angle::getEighthRotation()));
 	m_engine->setReachedTarget(true);
 	m_engine->resetCounters();
 	m_robot->updateSensorData();
 	m_robot->updateActuators(*m_field);
+	CPPUNIT_ASSERT(m_robot->isInDrivingTurningPart());
 
 	CPPUNIT_ASSERT_EQUAL((unsigned int)1, m_engine->getCallsToTurnToTarget());
-	Compare compare(0.0001);
-	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(10, 11), m_engine->getLastTarget()));
 }
 
 void RobotTest::goTo_hardNotVisibleObstacleAtEnd_canReachTarget()
@@ -1923,14 +1923,14 @@ void RobotTest::isMoving_collectingPuck_true()
 	CPPUNIT_ASSERT(m_robot->isMoving());
 }
 
-void RobotTest::isOrientationDifferenceSmallEnoughForSmoothTurn_currentSpeedZeroAndEighthRotation_true()
+void RobotTest::isOrientationDifferenceSmallEnoughForSmoothTurn_currentSpeedZeroAndSmallRotation_true()
 {
 	m_engine->setCurrentSpeed(0);
 
-	CPPUNIT_ASSERT(m_robot->isOrientationDifferenceSmallEnoughForSmoothTurn(Angle::getEighthRotation()));
+	CPPUNIT_ASSERT(m_robot->isOrientationDifferenceSmallEnoughForSmoothTurn(Angle::getEighthRotation()/2));
 }
 
-void RobotTest::isOrientationDifferenceSmallEnoughForSmoothTurn_currentSpeedMaxAndEighthRotation_false()
+void RobotTest::isOrientationDifferenceSmallEnoughForSmoothTurn_currentSpeedMaxAndSmallRotation_false()
 {
 	m_engine->setCurrentSpeed(0.5);
 

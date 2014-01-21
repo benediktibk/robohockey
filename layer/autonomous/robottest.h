@@ -152,8 +152,8 @@ namespace Autonomous
 		CPPUNIT_TEST(isMoving_waitingAndEngineSaysMoving_true);
 		CPPUNIT_TEST(isMoving_leavingPuck_true);
 		CPPUNIT_TEST(isMoving_collectingPuck_true);
-		CPPUNIT_TEST(isOrientationDifferenceSmallEnoughForSmoothTurn_currentSpeedZeroAndEighthRotation_true);
-		CPPUNIT_TEST(isOrientationDifferenceSmallEnoughForSmoothTurn_currentSpeedMaxAndEighthRotation_false);
+		CPPUNIT_TEST(isOrientationDifferenceSmallEnoughForSmoothTurn_currentSpeedZeroAndSmallRotation_true);
+		CPPUNIT_TEST(isOrientationDifferenceSmallEnoughForSmoothTurn_currentSpeedMaxAndSmallRotation_false);
 		CPPUNIT_TEST(isOrientationDifferenceSmallEnoughForSmoothTurn_currentSpeedMaxVerySmallRotation_true);
 		CPPUNIT_TEST_SUITE_END();
 
@@ -285,8 +285,8 @@ namespace Autonomous
 		void isMoving_waitingAndEngineSaysMoving_true();
 		void isMoving_leavingPuck_true();
 		void isMoving_collectingPuck_true();
-		void isOrientationDifferenceSmallEnoughForSmoothTurn_currentSpeedZeroAndEighthRotation_true();
-		void isOrientationDifferenceSmallEnoughForSmoothTurn_currentSpeedMaxAndEighthRotation_false();
+		void isOrientationDifferenceSmallEnoughForSmoothTurn_currentSpeedZeroAndSmallRotation_true();
+		void isOrientationDifferenceSmallEnoughForSmoothTurn_currentSpeedMaxAndSmallRotation_false();
 		void isOrientationDifferenceSmallEnoughForSmoothTurn_currentSpeedMaxVerySmallRotation_true();
 
 	private:
