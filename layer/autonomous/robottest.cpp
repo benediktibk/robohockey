@@ -71,9 +71,11 @@ void RobotTest::goTo_orientationToTargetCorrect_engineGotAtLeastOneCallToGoToStr
 	m_targets.push_back(RobotPosition(Point(1, 0), 0));
 	m_robot->goTo(m_targets);
 	m_robot->updateActuators(*m_field);
-	m_engine->setReachedTarget(true);
+	CPPUNIT_ASSERT(m_robot->isInDrivingStraightPart());
+	m_engine->setReachedTarget(false);
 	m_robot->updateSensorData();
 	m_robot->updateActuators(*m_field);
+	CPPUNIT_ASSERT(m_robot->isInDrivingStraightPart());
 	m_robot->updateSensorData();
 	m_robot->updateActuators(*m_field);
 
@@ -88,6 +90,7 @@ void RobotTest::goTo_orientationToTargetCompletelyWrong_engineGotNoCallToGoToStr
 	m_targets.push_back(RobotPosition(Point(-1, 0), Angle::getHalfRotation()));
 	m_robot->goTo(m_targets);
 	m_robot->updateActuators(*m_field);
+	CPPUNIT_ASSERT(m_robot->isInDrivingTurningPart());
 
 	CPPUNIT_ASSERT(m_engine->getCallsToGoToStraight() == 0);
 }
@@ -100,6 +103,7 @@ void RobotTest::goTo_orientationToTargetCompletelyWrong_engineGotAtLeastOneCallT
 	m_targets.push_back(RobotPosition(Point(-1, 0), Angle::getHalfRotation()));
 	m_robot->goTo(m_targets);
 	m_robot->updateActuators(*m_field);
+	CPPUNIT_ASSERT(m_robot->isInDrivingTurningPart());
 
 	CPPUNIT_ASSERT(m_engine->getCallsToTurnToTarget() > 0);
 }
@@ -112,6 +116,7 @@ void RobotTest::goTo_orientationToTargetCompletelyWrong_isRotating()
 	m_targets.push_back(RobotPosition(Point(-1, 0), Angle::getHalfRotation()));
 	m_robot->goTo(m_targets);
 	m_robot->updateActuators(*m_field);
+	CPPUNIT_ASSERT(m_robot->isInDrivingTurningPart());
 
 	CPPUNIT_ASSERT(m_robot->isRotating());
 }
@@ -124,9 +129,11 @@ void RobotTest::goTo_orientationToTargetCorrectAndUpdateCalledTwice_notReachedTa
 	m_targets.push_back(RobotPosition(Point(1, 0), Angle::getQuarterRotation()));
 	m_robot->goTo(m_targets);
 	m_robot->updateActuators(*m_field);
+	CPPUNIT_ASSERT(m_robot->isInDrivingStraightPart());
 	m_robot->updateSensorData();
 	m_engine->setReachedTarget(false);
 	m_robot->updateActuators(*m_field);
+	CPPUNIT_ASSERT(m_robot->isInDrivingStraightPart());
 
 	CPPUNIT_ASSERT(!m_robot->reachedTarget());
 }
@@ -140,13 +147,16 @@ void RobotTest::goTo_orientationReachedAfterSomeTime_notReachedTarget()
 	m_targets.push_back(RobotPosition(Point(-1, 0), Angle::getHalfRotation()));
 	m_robot->goTo(m_targets);
 	m_robot->updateActuators(*m_field);
+	CPPUNIT_ASSERT(m_robot->isInDrivingTurningPart());
 	m_engine->setReachedTarget(false);
 	m_robot->updateSensorData();
 	m_robot->updateActuators(*m_field);
+	CPPUNIT_ASSERT(m_robot->isInDrivingTurningPart());
 	m_engine->setReachedTarget(true);
 	m_odometry->setCurrentPosition(RobotPosition(Point(0, 0), Angle::getHalfRotation()));
 	m_robot->updateSensorData();
 	m_robot->updateActuators(*m_field);
+	CPPUNIT_ASSERT(m_robot->isInDrivingStraightPart());
 
 	CPPUNIT_ASSERT(!m_robot->reachedTarget());
 }
@@ -160,14 +170,19 @@ void RobotTest::goTo_lookingDownwardButHaveToGoUpAndOrientationReached_engineGot
 	m_targets.push_back(RobotPosition(Point(0, 1), Angle::getQuarterRotation()));
 	m_robot->goTo(m_targets);
 	m_robot->updateActuators(*m_field);
+	CPPUNIT_ASSERT(m_robot->isInDrivingTurningPart());
 	m_robot->updateSensorData();
 	m_robot->updateActuators(*m_field);
+	CPPUNIT_ASSERT(m_robot->isInDrivingTurningPart());
 	m_engine->setReachedTarget(true);
 	m_odometry->setCurrentPosition(RobotPosition(Point(0, 0), Angle::getQuarterRotation()));
 	m_robot->updateSensorData();
 	m_robot->updateActuators(*m_field);
+	CPPUNIT_ASSERT(m_robot->isInDrivingStraightPart());
+	m_engine->setReachedTarget(false);
 	m_robot->updateSensorData();
 	m_robot->updateActuators(*m_field);
+	CPPUNIT_ASSERT(m_robot->isInDrivingStraightPart());
 
 	CPPUNIT_ASSERT(m_engine->getCallsToGoToStraight() > 0);
 }
@@ -181,18 +196,24 @@ void RobotTest::goTo_targetPositionReached_reachedTarget()
 	m_targets.push_back(RobotPosition(Point(0, 1), Angle::getQuarterRotation()));
 	m_robot->goTo(m_targets);
 	m_robot->updateActuators(*m_field);
+	CPPUNIT_ASSERT(m_robot->isInDrivingTurningPart());
 	m_robot->updateSensorData();
 	m_robot->updateActuators(*m_field);
+	CPPUNIT_ASSERT(m_robot->isInDrivingTurningPart());
 	m_engine->setReachedTarget(true);
 	m_odometry->setCurrentPosition(RobotPosition(Point(0, 0), Angle::getQuarterRotation()));
 	m_robot->updateSensorData();
 	m_robot->updateActuators(*m_field);
-	m_odometry->setCurrentPosition(RobotPosition(Point(0, 1), Angle::getQuarterRotation()));
-	m_engine->setReachedTarget(true);
+	CPPUNIT_ASSERT(m_robot->isInDrivingStraightPart());
+	m_engine->setReachedTarget(false);
 	m_robot->updateSensorData();
 	m_robot->updateActuators(*m_field);
+	CPPUNIT_ASSERT(m_robot->isInDrivingStraightPart());
 	m_engine->setReachedTarget(true);
 	m_odometry->setCurrentPosition(RobotPosition(Point(0, 1), Angle::getQuarterRotation()));
+	m_robot->updateSensorData();
+	m_robot->updateActuators(*m_field);
+	CPPUNIT_ASSERT(m_robot->isInDrivingTurningPart());
 	m_robot->updateSensorData();
 	m_robot->updateActuators(*m_field);
 
