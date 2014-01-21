@@ -58,6 +58,8 @@ namespace Autonomous
 
 		bool isOrientationDifferenceSmallEnoughForSmoothTurn(const Common::Angle &angle) const;
 		bool isOrientationDifferenceSmallEnoughForSmoothTurn(const Common::Point &point) const;
+		bool isInDrivingTurningPart() const;
+		bool isInDrivingStraightPart() const;
 
 	private:
 		void clearRoute();
@@ -86,7 +88,6 @@ namespace Autonomous
 		const Common::Point& getNextTarget() const;
 		void log(const std::string &message);
 		Common::Point getTargetForDrivingTurningPart();
-		bool isTargetForRotatingReached();
 
 	private:
 		// forbid copies
