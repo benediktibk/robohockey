@@ -42,13 +42,11 @@ namespace View
 		bool isClosed() const;
 
 	private slots:
-		void on_turnAround_clicked();
 		void on_turnToButton_clicked();
 		void on_stop_clicked();
 		void on_collectPuckInFront_clicked();
 		void on_calibratePosition_clicked();
 		void on_leavePuckInFront_clicked();
-		void on_pushButton_clicked();
 		void puckColorChanged();
 
 	private slots:

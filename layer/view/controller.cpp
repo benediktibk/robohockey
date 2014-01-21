@@ -159,10 +159,6 @@ Point Controller::calculatePositionInReal(const QPointF &point)
 	return Point(point.x() / (double) m_pixelPerMeter, -1.0 * point.y() / (double) m_pixelPerMeter);
 }
 
-void Controller::on_turnAround_clicked()
-{
-}
-
 void Controller::on_turnToButton_clicked()
 {
 	QString textPosX;
@@ -234,11 +230,6 @@ void Controller::on_calibratePosition_clicked()
 void Controller::on_leavePuckInFront_clicked()
 {
 	m_model.setLeavePuckInFront(true);
-}
-
-void Controller::on_pushButton_clicked()
-{
-
 }
 
 void Controller::puckColorChanged()

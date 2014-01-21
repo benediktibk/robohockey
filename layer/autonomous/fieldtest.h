@@ -80,7 +80,6 @@ namespace Autonomous
 		CPPUNIT_TEST(update_collectedPuckAndMovedForward_oneFieldObject);
 		CPPUNIT_TEST(update_rotatingAndObjectALittleBitDistanceMoved_onlyFieldObjectStaysTheSame);
 		CPPUNIT_TEST(update_rotatingAndObjectVeryClose_onlyFieldObjectIsUpdated);
-		CPPUNIT_TEST(update_changingData_noColoredObjectsAreLost);
 		CPPUNIT_TEST(calibratePosition_noValidPattern_false);
 		CPPUNIT_TEST(calibratePosition_validPattern_true);
 		CPPUNIT_TEST(calibratePosition_noValidPattern_noTransformation);
@@ -89,8 +88,6 @@ namespace Autonomous
 		CPPUNIT_TEST(calibratePosition_validPattern_correctTransformation);
 		CPPUNIT_TEST(calibratePosition_realWorldExample_positionIsCorrect);
 		CPPUNIT_TEST(calibratePosition_validPattern_objectsOutsideFieldAreDeleted);
-		CPPUNIT_TEST(calibratePosition_goodRealWorldExample_positionIsCorrect);
-		CPPUNIT_TEST(calibratePosition_worstCaseRealWorldExample_positionIsCorrect);
 		CPPUNIT_TEST(getObjectsWithColorOrderedByDistance_oneObjectWithCorrectColorAndOneWithNoColor_resultSizeIsCorrect);
 		CPPUNIT_TEST(getObjectsWithColorOrderedByDistance_twoObjectsWithCorrectColorInAscendingOrder_orderIsCorrect);
 		CPPUNIT_TEST(getObjectsWithColorOrderedByDistance_twoObjectsWithCorrectColorInDescendingOrder_orderIsCorrect);
@@ -213,7 +210,6 @@ namespace Autonomous
 		void update_collectedPuckAndMovedForward_oneFieldObject();
 		void update_rotatingAndObjectALittleBitDistanceMoved_onlyFieldObjectStaysTheSame();
 		void update_rotatingAndObjectVeryClose_onlyFieldObjectIsUpdated();
-		void update_changingData_noColoredObjectsAreLost();
 		void calibratePosition_noValidPattern_false();
 		void calibratePosition_validPattern_true();
 		void calibratePosition_noValidPattern_noTransformation();
@@ -222,8 +218,6 @@ namespace Autonomous
 		void calibratePosition_validPattern_correctTransformation();
 		void calibratePosition_realWorldExample_positionIsCorrect();
 		void calibratePosition_validPattern_objectsOutsideFieldAreDeleted();
-		void calibratePosition_goodRealWorldExample_positionIsCorrect();
-		void calibratePosition_worstCaseRealWorldExample_positionIsCorrect();
 		void getObjectsWithColorOrderedByDistance_oneObjectWithCorrectColorAndOneWithNoColor_resultSizeIsCorrect();
 		void getObjectsWithColorOrderedByDistance_twoObjectsWithCorrectColorInAscendingOrder_orderIsCorrect();
 		void getObjectsWithColorOrderedByDistance_twoObjectsWithCorrectColorInDescendingOrder_orderIsCorrect();

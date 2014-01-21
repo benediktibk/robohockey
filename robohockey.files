@@ -2748,3 +2748,6 @@ resources/testfiles/field_detection_worst_case/camera_8.png
 resources/testfiles/field_detection_worst_case/camera_7.png
 resources/testfiles/field_detection_worst_case/camera_6.png
 resources/testfiles/field_detection_worst_case/camera_5.png
+main/testregistrationlivedata.cpp
+layer/autonomous/fieldlivedatatest.h
+layer/autonomous/fieldlivedatatest.cpp
