@@ -1450,6 +1450,25 @@ void FieldTest::isPointInsideField_pointIsUnderField_false()
 	CPPUNIT_ASSERT(!m_field->isPointInsideField(Point(-1,-3)));
 }
 
+void FieldTest::isPointInsideField_pointIsNearBorder_false()
+{
+	DataAnalysis::LidarObjects lidarObjects;
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 1), 0.06));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 1.417), 0.06));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 2.666), 0.06));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 3.5), 0.06));
+	m_lidar->setAllObjects(lidarObjects);
+	m_odometry->setCurrentPosition(RobotPosition(Point(0,2), Angle()));
+
+	m_lidar->setCanBeSeen(true);
+	m_lidar->setCanBeSeenPartly(true);
+	updateFieldForObjectsToAppear();
+	m_field->calibratePosition();
+
+	CPPUNIT_ASSERT(m_field->isCalibrated());
+	CPPUNIT_ASSERT(!m_field->isPointInsideField(Point(1, 2.85)));
+}
+
 void FieldTest::getTargetsForGoalDetection_correctPosition()
 {
 	CPPUNIT_ASSERT_EQUAL(RobotPosition(Point(1.17333333333, 1.5), Angle::getHalfRotation()), m_field->getTargetsForGoalDetection().front());

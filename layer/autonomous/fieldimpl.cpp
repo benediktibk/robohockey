@@ -1147,7 +1147,7 @@ bool FieldImpl::isPointFuzzyInsideField(const Point &point, double epsilon) cons
 	if (m_fieldState != FieldStateCalibrated)
 		return true;
 
-	return ( point.getX() < (5.0 + epsilon) && point.getX() > (0 -epsilon) && point.getY() < (3.0 + epsilon) && point.getY() > (0.0 - epsilon));
+	return ( point.getX() < (5.0 + epsilon) && point.getX() > (0.0 -epsilon) && point.getY() < (2.8 + epsilon) && point.getY() > (0.2 - epsilon));
 }
 
 void FieldImpl::removeAllFieldObjectsOutsideOfField()
