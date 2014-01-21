@@ -189,7 +189,7 @@ void EngineImpl::turnOnly(const Angle &targetOrientation, const Angle &currentOr
 
 void EngineImpl::driveAndTurn(const RobotPosition &currentPosition)
 {
-	Compare positionCompare(0.02);
+	Compare positionCompare(0.01);
 	const Point &currentPositionPoint = currentPosition.getPosition();
 	Angle alpha = Angle(m_target, currentPositionPoint, m_startPosition);
 	Angle ownOrientation = currentPosition.getOrientation();
