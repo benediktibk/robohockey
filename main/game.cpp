@@ -85,7 +85,7 @@ Game::Game(int argc, char **argv) :
 	m_field = new Autonomous::FieldImpl(
 				dataAnalyser->getOdometry(), dataAnalyser->getLidar(),
 				dataAnalyser->getCamera(), *m_robot, *m_logger);
-	m_referee = new Strategy::Common::RefereeImpl(angelinaServer);
+	m_referee = new Strategy::Common::RefereeImpl(angelinaServer, *m_logger);
 
 	if (parser.enableRecorder())
 		m_sensorDataRecorder = new Hardware::SensorDataRecorder(*hardwareRobot, parser.recordingPath());

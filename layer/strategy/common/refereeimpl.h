@@ -15,6 +15,11 @@ namespace Angelina
 
 namespace RoboHockey
 {
+namespace Common
+{
+	class Logger;
+}
+
 namespace Layer
 {
 namespace Strategy
@@ -27,7 +32,7 @@ namespace Common
 	{
 		Q_OBJECT
 	public:
-		RefereeImpl(const std::string &AngelinaAdressServer);
+		RefereeImpl(const std::string &AngelinaAdressServer, RoboHockey::Common::Logger &logger);
 		~RefereeImpl();
 		virtual void reportReady();
 		virtual void reportDone();
@@ -53,6 +58,7 @@ namespace Common
 		void slotConnectFailed();
 
 	private:
+		RoboHockey::Common::Logger &m_logger;
 		Extern::Angelina::Referee *m_referee;
 		bool m_disconnected;
 		bool m_detectionStart;

@@ -1,14 +1,16 @@
 #include "layer/strategy/common/refereeimpl.h"
 #include "extern/angelina/referee.h"
 #include "common/point.h"
+#include "common/logger.h"
 #include <assert.h>
 
 using namespace RoboHockey::Common;
 using namespace RoboHockey::Layer::Strategy::Common;
 using namespace Extern::Angelina;
 
-RefereeImpl::RefereeImpl(const std::string &AngelinaAdressServer):
+RefereeImpl::RefereeImpl(const std::string &AngelinaAdressServer, Logger &logger):
 	QObject(0),
+	m_logger(logger),
 	m_trueColorOfTeam(FieldColorUnknown)
 {
 	m_detectionStart = false;
@@ -112,11 +114,13 @@ bool RefereeImpl::isValid()
 
 void RefereeImpl::slotDisconnected()
 {
+	m_logger.logToConsoleAndGlobalLogFile("referee: disconnected");
 	m_disconnected = true;
 }
 
 void RefereeImpl::slotDetectionStart()
 {
+	m_logger.logToConsoleAndGlobalLogFile("referee: detection start");
 	m_detectionStart = true;
 	m_gameStart = false;
 	m_gameOver = false;
@@ -125,6 +129,7 @@ void RefereeImpl::slotDetectionStart()
 
 void RefereeImpl::slotGameStart()
 {
+	m_logger.logToConsoleAndGlobalLogFile("referee: game start");
 	m_detectionStart = false;
 	m_gameStart = true;
 	m_gameOver = false;
@@ -133,6 +138,7 @@ void RefereeImpl::slotGameStart()
 
 void RefereeImpl::slotGameOver()
 {
+	m_logger.logToConsoleAndGlobalLogFile("referee: game over");
 	m_detectionStart = false;
 	m_gameStart = false;
 	m_gameOver = true;
@@ -141,6 +147,8 @@ void RefereeImpl::slotGameOver()
 
 void RefereeImpl::slotTrueColorOfTeam(TeamColor color)
 {
+	m_logger.logToConsoleAndGlobalLogFile("referee: true color of team");
+
 	if (color == blue)
 		m_trueColorOfTeam = FieldColorBlue;
 	else
@@ -149,6 +157,7 @@ void RefereeImpl::slotTrueColorOfTeam(TeamColor color)
 
 void RefereeImpl::slotStopMovement()
 {
+	m_logger.logToConsoleAndGlobalLogFile("referee: stop movement");
 	m_detectionStart = false;
 	m_gameStart = false;
 	m_gameOver = false;
@@ -157,10 +166,12 @@ void RefereeImpl::slotStopMovement()
 
 void RefereeImpl::slotConnected()
 {
+	m_logger.logToConsoleAndGlobalLogFile("referee: connected");
 	m_connected = true;
 }
 
 void RefereeImpl::slotConnectFailed()
 {
+	m_logger.logToConsoleAndGlobalLogFile("referee: connect failed");
 	m_connectFailed = true;
 }
