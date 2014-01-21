@@ -12,8 +12,11 @@ void BorderStoneTest::setUp()
 
 void BorderStoneTest::tearDown()
 {
-	for (vector<Point*>::iterator i = m_possibleChildren.begin(); i != m_possibleChildren.end(); ++i)
-		delete *i;
+	while(!m_possibleChildren.empty())
+	{
+		delete m_possibleChildren.front();
+		m_possibleChildren.erase(m_possibleChildren.begin());
+	}
 	m_possibleChildren.clear();
 }
 
