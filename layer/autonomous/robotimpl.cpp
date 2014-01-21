@@ -68,6 +68,9 @@ void RobotImpl::goTo(const list<RobotPosition> &possibleTargets)
 	m_possibleTargets = possibleTargets;
 	m_currentTarget = m_possibleTargets.front();
 	m_carryingPuck = isPuckCollected();
+	stringstream message;
+	message << "got " << possibleTargets.size() << " new targets for goTo";
+	log(message.str());
 }
 
 void RobotImpl::turnTo(const Point &position)
@@ -268,6 +271,7 @@ void RobotImpl::updateEngine(const Field &field)
 	{
 		DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
 		engine.stop();
+		log("stopping because would try to tackle obstacle");
 		return;
 	}
 
@@ -300,6 +304,7 @@ void RobotImpl::updateEngineForDriving()
 	if (m_cantReachTarget)
 	{
 		engine.stop();
+		log("cant reach target during driving");
 		return;
 	}
 
