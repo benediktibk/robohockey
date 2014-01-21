@@ -25,6 +25,7 @@ namespace Autonomous
 		void setChessMode(bool value);
 
 		void setRoute(const Common::Point &one, const Common::Point &two, const Common::Point &three);
+		void setInvalidRoute();
 
 	private:
 		bool m_chessMode;

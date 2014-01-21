@@ -929,10 +929,14 @@ void RobotTest::goTo_droveALittleBitToFarToFinalPoint_reachedTarget()
 void RobotTest::stuckAtObstacle_tryingToTackleObstacle_true()
 {
 	m_engine->setTryingToTackleObstacle(true);
+	m_targets.push_back(RobotPosition(Point(10, 0), 0));
+	m_routerMock->setInvalidRoute();
 
 	m_robot->updateSensorData();
+	m_robot->goTo(m_targets);
 	m_robot->updateActuators(*m_field);
 
+	CPPUNIT_ASSERT(m_robot->cantReachTarget());
 	CPPUNIT_ASSERT(m_robot->stuckAtObstacle());
 }
 
@@ -946,8 +950,11 @@ void RobotTest::stuckAtObstacle_notTryingToTackleObstacle_false()
 void RobotTest::stuckAtObstacle_updateCalledTwiceAfterStuckAtObstacle_true()
 {
 	m_engine->setTryingToTackleObstacle(true);
+	m_targets.push_back(RobotPosition(Point(10, 0), 0));
+	m_routerMock->setInvalidRoute();
 
 	m_robot->updateSensorData();
+	m_robot->goTo(m_targets);
 	m_robot->updateActuators(*m_field);
 	m_engine->setTryingToTackleObstacle(false);
 	m_robot->updateSensorData();
@@ -1240,7 +1247,6 @@ void RobotTest::reachedTarget_nearlyHitTargetButTookSomeAdditionalWayToStop_fals
 	m_robot->updateActuators(*m_field);
 
 	CPPUNIT_ASSERT(!m_robot->reachedTarget());
-	CPPUNIT_ASSERT(m_robot->stuckAtObstacle());
 }
 
 void RobotTest::cantReachTarget_calledDirectAfterConstructor_false()

@@ -46,3 +46,9 @@ void RouterMock::setRoute(const Point &one, const Point &two, const Point &three
 	m_route.addPoint(two);
 	m_route.addPoint(three);
 }
+
+void RouterMock::setInvalidRoute()
+{
+	m_routeSet = true;
+	m_route = Route(0.38);
+}

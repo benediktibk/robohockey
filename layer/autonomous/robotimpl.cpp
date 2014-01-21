@@ -81,7 +81,7 @@ void RobotImpl::turnTo(const Point &position)
 
 bool RobotImpl::stuckAtObstacle()
 {
-	return m_tryingToTackleObstacle;
+	return m_tryingToTackleObstacle && m_cantReachTarget;
 }
 
 bool RobotImpl::reachedTarget()
@@ -267,6 +267,7 @@ void RobotImpl::updateEngine(const Field &field)
 	{
 		engine.stop();
 		log("stopping because would try to tackle obstacle");
+		clearRoute();
 	}
 
 	switch(m_state)
