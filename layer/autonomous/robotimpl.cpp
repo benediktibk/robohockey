@@ -161,7 +161,7 @@ void RobotImpl::updateDrivingState(const Field &field)
 
 			if (isOrientationDifferenceSmallEnoughForSmoothTurn(nextTarget))
 				changeIntoState(RobotStateDrivingStraightPart);
-			else
+			else if (!isTargetForRotatingReached())
 				changeIntoState(RobotStateDrivingTurningPart);
 		}
 	}
@@ -479,6 +479,19 @@ Point RobotImpl::getTargetForDrivingTurningPart()
 	}
 
 	return target;
+}
+
+bool RobotImpl::isTargetForRotatingReached()
+{
+	DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
+
+	if (!engine.reachedTarget())
+		return false;
+
+	Point currentTarget = engine.getCurrentTarget();
+	Point nextTargetWouldBe = getTargetForDrivingTurningPart();
+	Compare compare(0.001);
+	return compare.isFuzzyEqual(currentTarget, nextTargetWouldBe);
 }
 
 void RobotImpl::updateActuators(const Field &field)

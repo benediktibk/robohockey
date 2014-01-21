@@ -86,6 +86,7 @@ namespace Autonomous
 		const Common::Point& getNextTarget() const;
 		void log(const std::string &message);
 		Common::Point getTargetForDrivingTurningPart();
+		bool isTargetForRotatingReached();
 
 	private:
 		// forbid copies
