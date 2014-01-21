@@ -1675,6 +1675,28 @@ void FieldTest::getAllHardObstacles_fairlyBigObject_diameterIs08()
 	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(1, 0), object.getCenter()));
 }
 
+void FieldTest::getAllHardObstacles_severalBoundaryPosts_resultSizeIs4()
+{
+	DataAnalysis::LidarObjects lidarObjects;
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 1), 0.06));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 1.417), 0.06));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 2.666), 0.06));
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 3.5), 0.06));
+	m_lidar->setAllObjects(lidarObjects);
+	m_odometry->setCurrentPosition(RobotPosition(Point(0,2), Angle()));
+
+	m_lidar->setCanBeSeen(true);
+	m_lidar->setCanBeSeenPartly(true);
+	updateFieldForObjectsToAppear();
+	m_field->calibratePosition();
+	lidarObjects.clear();
+	m_lidar->setAllObjects(lidarObjects);
+	m_field->update();
+	vector<Circle> obstacles = m_field->getAllHardObstacles();
+
+	CPPUNIT_ASSERT_EQUAL((size_t)4, obstacles.size());
+}
+
 void FieldTest::getAllHardAndVisibleObstacles_hardObstacleWhichCantBeSeen_resultSizeIs0()
 {
 	RobotPosition ownPosition(Point(0, 0), 0);

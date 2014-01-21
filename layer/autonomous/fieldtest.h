@@ -108,6 +108,7 @@ namespace Autonomous
 		CPPUNIT_TEST(getAllHardObstacles_oneSmallObstacleWithUnknownColor_resultSizeIs0);
 		CPPUNIT_TEST(getAllHardObstacles_oneBigObstacleDisappeared_resultSizeIs0);
 		CPPUNIT_TEST(getAllHardObstacles_fairlyBigObject_diameterIs08);
+		CPPUNIT_TEST(getAllHardObstacles_severalBoundaryPosts_resultSizeIs4);
 		CPPUNIT_TEST(getAllHardAndVisibleObstacles_hardObstacleWhichCantBeSeen_resultSizeIs0);
 		CPPUNIT_TEST(getAllHardAndVisibleObstacles_visibleSoftObstacle_resultSizeIs0);
 		CPPUNIT_TEST(getAllHardAndVisibleObstacles_visibleButTooDistantHardObstacle_resultSizeIs0);
@@ -239,6 +240,7 @@ namespace Autonomous
 		void getAllHardObstacles_oneSmallObstacleWithUnknownColor_resultSizeIs0();
 		void getAllHardObstacles_oneBigObstacleDisappeared_resultSizeIs0();
 		void getAllHardObstacles_fairlyBigObject_diameterIs08();
+		void getAllHardObstacles_severalBoundaryPosts_resultSizeIs4();
 		void getAllHardAndVisibleObstacles_hardObstacleWhichCantBeSeen_resultSizeIs0();
 		void getAllHardAndVisibleObstacles_visibleSoftObstacle_resultSizeIs0();
 		void getAllHardAndVisibleObstacles_visibleButTooDistantHardObstacle_resultSizeIs0();

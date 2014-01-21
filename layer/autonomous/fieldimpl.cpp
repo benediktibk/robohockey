@@ -866,12 +866,16 @@ void FieldImpl::updateObstacles()
 	{
 		const FieldObject &fieldObject = *i;
 		Circle obstacle = fieldObject.getObstacle();
+		const Circle &circle = fieldObject.getCircle();
+		const Point &center = circle.getCenter();
+		bool isInsideField = isPointInsideField(center);
 
-		if (fieldObject.isHardObstacle())
+		if (fieldObject.isHardObstacle() || !isInsideField)
 		{
 			m_hardObstacles.push_back(obstacle);
 
-			if (canBeSeenPartly(fieldObject) && isInViewArea(fieldObject, getRangeOfViewArea()))
+			if (	(canBeSeenPartly(fieldObject) && isInViewArea(fieldObject, getRangeOfViewArea())) ||
+					!isInsideField)
 				m_hardAndVisibleObstacles.push_back(obstacle);
 		}
 		else
