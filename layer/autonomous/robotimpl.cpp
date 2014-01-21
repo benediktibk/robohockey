@@ -695,16 +695,14 @@ bool RobotImpl::updateRoute(const Field &field)
 
 	if (m_ignoringNotVisibleObstacle)
 	{
-		vector<Circle> visibleObstaclesShrinked =
-				m_router->filterObstacles(vector<Circle>(), shrinkObstacles(hardAndVisibleObstacles), getCurrentPosition().getPosition());
+		vector<Circle> visibleObstaclesShrinked = shrinkObstacles(hardAndVisibleObstacles);
 
 		if (isRouteFeasible(visibleObstaclesShrinked))
 				return false;
 	}
 	else if (m_ignoringSoftObstacles)
 	{
-		vector<Circle> softObstaclesShrinked =
-				m_router->filterObstacles(shrinkObstacles(softObstacles), vector<Circle>(), getCurrentPosition().getPosition());
+		vector<Circle> softObstaclesShrinked = shrinkObstacles(softObstacles);
 
 		if (isRouteFeasible(softObstaclesShrinked))
 				return false;
@@ -723,12 +721,6 @@ bool RobotImpl::updateRoute(const Field &field)
 	vector<Circle> hardObstaclesGrown = growObstacles(hardObstacles);
 	vector<Circle> hardAndVisibleObstaclesGrown = growObstacles(hardAndVisibleObstacles);
 	const vector<Circle> allObstaclesGrown = m_router->filterObstacles(softObstaclesGrown, hardObstaclesGrown, robotPosition.getPosition());
-	const vector<Circle> softObstaclesGrownFiltered =
-			m_router->filterObstacles(softObstaclesGrown, vector<Circle>(), getCurrentPosition().getPosition());
-	const vector<Circle> hardObstaclesGrownFiltered =
-			m_router->filterObstacles(vector<Circle>(), hardAndVisibleObstaclesGrown, getCurrentPosition().getPosition());
-	const vector<Circle> hardAndVisibleObstaclesGrownFiltered =
-			m_router->filterObstacles(vector<Circle>(), hardAndVisibleObstaclesGrown, getCurrentPosition().getPosition());
 
 	//! If the current route is not feasible anymore we try to create a new one.
 	clearRoute();
@@ -741,7 +733,7 @@ bool RobotImpl::updateRoute(const Field &field)
 	{
 		m_currentTarget = *i;
 		success = updateRouteForTarget(
-					field, m_currentTarget, allObstaclesGrown, false, hardObstaclesGrownFiltered, softObstaclesGrownFiltered);
+					field, m_currentTarget, allObstaclesGrown, false, hardObstaclesGrown, softObstaclesGrown);
 	}
 
 	if (success)
@@ -753,7 +745,7 @@ bool RobotImpl::updateRoute(const Field &field)
 	{
 		m_currentTarget = *i;
 		success = updateRouteForTarget(
-					field, m_currentTarget, hardObstaclesGrownFiltered, false, hardObstaclesGrownFiltered, vector<Circle>());
+					field, m_currentTarget, hardObstaclesGrown, false, hardObstaclesGrown, vector<Circle>());
 	}
 
 	if (success)
@@ -765,7 +757,7 @@ bool RobotImpl::updateRoute(const Field &field)
 	{
 		m_currentTarget = *i;
 		success = updateRouteForTarget(
-					field, m_currentTarget, hardAndVisibleObstaclesGrownFiltered, false, hardAndVisibleObstaclesGrownFiltered, vector<Circle>());
+					field, m_currentTarget, hardAndVisibleObstaclesGrown, false, hardAndVisibleObstaclesGrown, vector<Circle>());
 	}
 
 	if (success)
@@ -777,7 +769,7 @@ bool RobotImpl::updateRoute(const Field &field)
 	{
 		m_currentTarget = *i;
 		success = updateRouteForTarget(
-					field, m_currentTarget, hardAndVisibleObstaclesGrownFiltered, true, hardAndVisibleObstaclesGrownFiltered, vector<Circle>());
+					field, m_currentTarget, hardAndVisibleObstaclesGrown, true, hardAndVisibleObstaclesGrown, vector<Circle>());
 	}
 
 	if (!success)
