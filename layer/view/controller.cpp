@@ -319,7 +319,7 @@ void Controller::updateObjects()
 	{
 		QGraphicsEllipseItem &currentItem = *(m_objectPositions[i]);
 		const FieldObject &currentObject = object[i];
-		const Circle &currentCircle = currentObject.getCircle();
+		const Circle &currentCircle = currentObject.getObstacle();
 		double diameter = currentCircle.getDiameter();
 		Point center = currentCircle.getCenter();
 		diameter = diameter * m_pixelPerMeter;
