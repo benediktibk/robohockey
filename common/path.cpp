@@ -16,7 +16,6 @@ Path::Path(const Point &start, const Point &end, double width) :
 
 bool Path::intersectsWith(const Circle &circle) const
 {
-
 	if(isCircleCenterOnPath(circle))
 		return true;
 	if (getIntersectPoints(circle).getIntersectPointsCount() != 0)

@@ -11,7 +11,6 @@ namespace Hardware
 {
 	class Sonar;
 }
-
 namespace DataAnalysis
 {
 	class SonarImpl :

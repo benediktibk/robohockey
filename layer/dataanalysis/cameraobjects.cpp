@@ -6,8 +6,7 @@ using namespace RoboHockey::Common;
 using namespace std;
 
 CameraObjects::CameraObjects()
-{
-}
+{ }
 
 void CameraObjects::addObject(const CameraObject &object)
 {
