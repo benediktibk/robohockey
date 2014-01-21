@@ -326,7 +326,7 @@ void Controller::updateObjects()
 		center = center * m_pixelPerMeter;
 		double centerX = center.getX();
 		double centerY = center.getY();
-		currentItem.setRect(centerX, -1.0 * centerY, diameter, diameter);
+		currentItem.setRect(centerX - diameter/2, -1.0 * centerY - diameter/2, diameter, diameter);
 
 		if (currentObject.getColor() == FieldColorBlue)
 			currentItem.setBrush(Qt::blue);
