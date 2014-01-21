@@ -594,7 +594,7 @@ std::list<Point> RobotImpl::getAllRoutePoints() const
 
 bool RobotImpl::cantReachTarget() const
 {
-	return m_cantReachTarget || m_tryingToTackleObstacle;
+	return m_cantReachTarget;
 }
 
 bool RobotImpl::isPuckCollected() const

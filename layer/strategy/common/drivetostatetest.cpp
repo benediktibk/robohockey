@@ -77,7 +77,7 @@ void DriveToStateTest::nextState_cantReachTarget_stateAfterCantReachTarget()
 	delete state;
 }
 
-void DriveToStateTest::nextState_stuckAtObstacle_stateAfterCantReachTarget()
+void DriveToStateTest::nextState_stuckAtObstacle_null()
 {
 	RobotMock robot;
 	FieldMock field;
@@ -89,11 +89,10 @@ void DriveToStateTest::nextState_stuckAtObstacle_stateAfterCantReachTarget()
 	targetList.push_back(RobotPosition());
 	DriveToState driveToState(robot, field, referee, logger, targetList, stateAfterTargetReached, stateAfterTargetUnreachable);
 	driveToState.update();
-	robot.setReachedTarget(true);
+	robot.setReachedTarget(false);
 	robot.setStuckAtObstacle(true);
 
 	State *state = driveToState.nextState();
 
-	CPPUNIT_ASSERT(state == stateAfterTargetUnreachable);
-	delete state;
+	CPPUNIT_ASSERT(state == 0);
 }

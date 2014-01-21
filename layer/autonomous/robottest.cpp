@@ -1240,7 +1240,7 @@ void RobotTest::reachedTarget_nearlyHitTargetButTookSomeAdditionalWayToStop_fals
 	m_robot->updateActuators(*m_field);
 
 	CPPUNIT_ASSERT(!m_robot->reachedTarget());
-	CPPUNIT_ASSERT(m_robot->cantReachTarget());
+	CPPUNIT_ASSERT(m_robot->stuckAtObstacle());
 }
 
 void RobotTest::cantReachTarget_calledDirectAfterConstructor_false()
@@ -1401,19 +1401,6 @@ void RobotTest::cantReachTarget_leavePuckCalled_false()
 	m_robot->updateActuators(*m_field);
 
 	CPPUNIT_ASSERT(!m_robot->cantReachTarget());
-}
-
-void RobotTest::cantReachTarget_stuckAtObstacle_true()
-{
-	m_robot->updateSensorData();
-	m_targets.push_back(RobotPosition(Point(10, 0), 0));
-	m_robot->goTo(m_targets);
-	m_robot->updateActuators(*m_field);
-	m_engine->setTryingToTackleObstacle(true);
-	m_robot->updateSensorData();
-	m_robot->updateActuators(*m_field);
-
-	CPPUNIT_ASSERT(m_robot->cantReachTarget());
 }
 
 void RobotTest::isPuckCollected_lidarSaysNo_false()

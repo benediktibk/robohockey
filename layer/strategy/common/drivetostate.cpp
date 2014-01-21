@@ -36,7 +36,7 @@ State* DriveToState::nextState()
 	assert(m_stateAfterTargetReached != 0);
 	assert(m_stateAfterTargetUnreachable != 0);
 
-	if (m_robot.stuckAtObstacle() || m_robot.cantReachTarget())
+	if (m_robot.cantReachTarget())
 	{
 		State *result = m_stateAfterTargetUnreachable;
 		m_stateAfterTargetUnreachable = 0;
