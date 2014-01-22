@@ -2,6 +2,7 @@
 #include "layer/autonomous/fieldobject.h"
 #include "layer/autonomous/fielddetector.h"
 #include "layer/autonomous/fieldobjectdistancecompare.h"
+#include "layer/autonomous/fieldobjectcolorcompare.h"
 #include "layer/autonomous/robot.h"
 #include "layer/dataanalysis/lidar.h"
 #include "layer/dataanalysis/camera.h"
@@ -48,6 +49,8 @@ FieldImpl::~FieldImpl()
 void FieldImpl::update()
 {
 	updateWithOdometryData();
+	FieldObjectColorCompare colorCompare;
+	sort(m_fieldObjects.begin(), m_fieldObjects.end(), colorCompare);
 
 	if (!m_robot.isRotating())
 	{
