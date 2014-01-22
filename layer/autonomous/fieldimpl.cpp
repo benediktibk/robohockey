@@ -730,9 +730,6 @@ void FieldImpl::updateWithLidarData(double range)
 	objectsInsideField = notYetMergedObjects;
 	notYetMergedObjects.clear();
 	tryToMergeLidarAndFieldObjects(objectsInsideField, inVisibleArea, newObjects, notYetMergedObjects, m_defaultEpsilonForMergingObjects);
-	objectsInsideField = notYetMergedObjects;
-	notYetMergedObjects.clear();
-	tryToMergeLidarAndFieldObjects(objectsInsideField, inVisibleArea, newObjects, notYetMergedObjects, m_defaultEpsilonForMergingObjects*2);
 
 	for (vector<DataAnalysis::LidarObject>::const_iterator i = notYetMergedObjects.begin(); i != notYetMergedObjects.end(); ++i)
 	{
