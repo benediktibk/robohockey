@@ -725,31 +725,10 @@ void FieldImpl::updateWithLidarData(double range)
 			objectsInsideField.push_back(lidarObject);
 	}
 
-	list<DataAnalysis::LidarObject> notYetMergedObjects;
-	for (vector<DataAnalysis::LidarObject>::const_iterator i = objectsInsideField.begin(); i != objectsInsideField.end(); ++i)
-	{
-		const DataAnalysis::LidarObject &lidarObject = *i;
+	vector<DataAnalysis::LidarObject> notYetMergedObjects;
+	tryToMergeLidarAndFieldObjects(objectsInsideField, inVisibleArea, newObjects, notYetMergedObjects, 0.11);
 
-		if (inVisibleArea.empty())
-		{
-			notYetMergedObjects.push_back(lidarObject);
-			continue;
-		}
-
-		vector<FieldObject>::iterator currentObject = getNextObjectFromPosition(inVisibleArea, lidarObject.getCenter());
-		FieldObject &nextFieldObject = *currentObject;
-
-		if (tryToMergeLidarAndFieldObject(nextFieldObject, lidarObject, 0.11))
-		{
-			nextFieldObject.seen();
-			newObjects.push_back(nextFieldObject);
-			inVisibleArea.erase(currentObject);
-		}
-		else
-			notYetMergedObjects.push_back(lidarObject);
-	}
-
-	for (list<DataAnalysis::LidarObject>::const_iterator i = notYetMergedObjects.begin(); i != notYetMergedObjects.end(); ++i)
+	for (vector<DataAnalysis::LidarObject>::const_iterator i = notYetMergedObjects.begin(); i != notYetMergedObjects.end(); ++i)
 	{
 		const DataAnalysis::LidarObject &lidarObject = *i;
 		bool couldBeAPartlyVisibleObject = false;
@@ -1002,6 +981,34 @@ bool FieldImpl::couldBeTheSameObject(const Circle &firstObject, const Circle &se
 {
 	Compare positionCompare(epsilon);
 	return positionCompare.isFuzzyEqual(firstObject.getCenter(), secondObject.getCenter());
+}
+
+void FieldImpl::tryToMergeLidarAndFieldObjects(
+		const vector<DataAnalysis::LidarObject> &lidarObjects, vector<FieldObject> &visibleFieldObjects,
+		vector<FieldObject> &newObjects, vector<DataAnalysis::LidarObject> &notMergedLidarObjects, double epsilon)
+{
+	for (vector<DataAnalysis::LidarObject>::const_iterator i = lidarObjects.begin(); i != lidarObjects.end(); ++i)
+	{
+		const DataAnalysis::LidarObject &lidarObject = *i;
+
+		if (visibleFieldObjects.empty())
+		{
+			notMergedLidarObjects.push_back(lidarObject);
+			continue;
+		}
+
+		vector<FieldObject>::iterator currentObject = getNextObjectFromPosition(visibleFieldObjects, lidarObject.getCenter());
+		FieldObject &nextFieldObject = *currentObject;
+
+		if (tryToMergeLidarAndFieldObject(nextFieldObject, lidarObject, epsilon))
+		{
+			nextFieldObject.seen();
+			newObjects.push_back(nextFieldObject);
+			visibleFieldObjects.erase(currentObject);
+		}
+		else
+			notMergedLidarObjects.push_back(lidarObject);
+	}
 }
 
 void FieldImpl::transformCoordinateSystem(const RobotPosition &newOrigin)

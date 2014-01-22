@@ -103,6 +103,10 @@ namespace Autonomous
 		std::vector<FieldObject>::iterator getNextObjectFromPosition(std::vector<FieldObject> &fieldObjects, Common::Point position);
 		bool tryToMergeLidarAndFieldObject(FieldObject &fieldObject, const DataAnalysis::LidarObject &lidarObject, double epsilon);
 		bool couldBeTheSameObject(const Common::Circle &firstObject, const Common::Circle &secondObject, double epsilon) const;
+		void tryToMergeLidarAndFieldObjects(
+				const std::vector<DataAnalysis::LidarObject> &lidarObjects, std::vector<FieldObject> &visibleFieldObjects,
+				std::vector<FieldObject> &newObjects, std::vector<DataAnalysis::LidarObject> &notMergedLidarObjects,
+				double epsilon);
 
 		void transformCoordinateSystem(const Common::RobotPosition &newOrigin);
 		void moveCoordinateSystem(const Common::Point &newOrigin);
