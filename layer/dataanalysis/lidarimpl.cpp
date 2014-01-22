@@ -351,6 +351,7 @@ double LidarImpl::canBeSeenPercentage(const Circle &object, const RobotPosition 
 	{
 		double distanceToObject = calculateDistanceToObject(movedObject, i, distanceToCenter, orientationOfObject);
 		double distanceFromSensor = m_rawData->getValue(i);
+		assert(distanceToObject >= 0);
 
 		if (compare.isFuzzySmaller(distanceToObject, distanceFromSensor))
 			++sensorCount;
