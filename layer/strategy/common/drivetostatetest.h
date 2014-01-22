@@ -19,14 +19,14 @@ class DriveToStateTest :
 		CPPUNIT_TEST(nextState_didntReachedTarget_NULL);
 		CPPUNIT_TEST(nextState_reachedTarget_stateAfterReachedTarget);
 		CPPUNIT_TEST(nextState_cantReachTarget_stateAfterCantReachTarget);
-		CPPUNIT_TEST(nextState_stuckAtObstacle_null);
+		CPPUNIT_TEST(nextState_stuckAtObstacle_stateAfterStuckAtObstacle);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
 		void nextState_didntReachedTarget_NULL();
 		void nextState_reachedTarget_stateAfterReachedTarget();
 		void nextState_cantReachTarget_stateAfterCantReachTarget();
-		void nextState_stuckAtObstacle_null();
+		void nextState_stuckAtObstacle_stateAfterStuckAtObstacle();
 		
 	};
 }

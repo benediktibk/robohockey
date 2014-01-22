@@ -5,6 +5,7 @@
 #include "layer/autonomous/robot.h"
 #include "layer/autonomous/field.h"
 #include "layer/strategy/common/waitcyclesstate.h"
+#include "layer/strategy/drivepuckstatemachine/leavepuckstate.h"
 
 using namespace RoboHockey::Layer::Strategy::Common;
 using namespace RoboHockey::Layer::Strategy::DrivePuckStateMachine;
@@ -21,7 +22,8 @@ State *FindPuckState::nextState()
 				m_robot, m_field, m_referee, m_logger, m_field.getTargetsForSearchingPucks(),
 				new WaitCyclesState(m_robot, m_field, m_referee, m_logger,
 					new VerifyPuckState(m_robot, m_field, m_referee, m_logger, m_puckTargetFetcher), 15, false),
-				new FindPuckState(m_robot, m_field, m_referee, m_logger, m_puckTargetFetcher));
+				new FindPuckState(m_robot, m_field, m_referee, m_logger, m_puckTargetFetcher),
+				new LeavePuckState(m_robot, m_field, m_referee, m_logger, m_puckTargetFetcher, false));
 }
 
 std::string FindPuckState::getName()

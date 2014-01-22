@@ -22,6 +22,7 @@ State *DrivePuckToEnemyThirdState::nextState()
 		return new DriveToState(
 					m_robot, m_field, m_referee, m_logger, m_field.getTargetsInEnemyThird(),
 					new LeavePuckState(m_robot, m_field, m_referee, m_logger, m_puckTargetFetcher, false),
+					new LeavePuckState(m_robot, m_field, m_referee, m_logger, m_puckTargetFetcher, false),
 					new LeavePuckState(m_robot, m_field, m_referee, m_logger, m_puckTargetFetcher, false));
 	else
 		return new DriveToCollectPuckState(m_robot, m_field, m_referee, m_logger, m_puckTargetFetcher);

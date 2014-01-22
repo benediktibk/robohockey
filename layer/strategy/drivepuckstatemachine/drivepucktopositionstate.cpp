@@ -21,7 +21,8 @@ State *DrivePuckToPositionState::nextState()
 		return new DriveToState(
 					m_robot, m_field, m_referee, m_logger, m_puckTargetFetcher.getTargetPositions(),
 					new LeavePuckState(m_robot, m_field, m_referee, m_logger, m_puckTargetFetcher, m_puckTargetFetcher.isAchievingGoals()),
-					new DrivePuckToEnemyThirdState(m_robot, m_field, m_referee, m_logger, m_puckTargetFetcher));
+					new DrivePuckToEnemyThirdState(m_robot, m_field, m_referee, m_logger, m_puckTargetFetcher),
+					new LeavePuckState(m_robot, m_field, m_referee, m_logger, m_puckTargetFetcher, false));
 	else
 		return new DriveToCollectPuckState(m_robot, m_field, m_referee, m_logger, m_puckTargetFetcher);
 }

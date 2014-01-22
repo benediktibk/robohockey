@@ -23,7 +23,7 @@ namespace Common
 	public:
 		DriveToState(Autonomous::Robot &robot, Autonomous::Field &field, Common::Referee &referee, RoboHockey::Common::Logger &logger,
 				std::list<RoboHockey::Common::RobotPosition> targetList,
-				State *stateAfterTargetReached, State *stateAfterTargetUnreachable);
+				State *stateAfterTargetReached, State *stateAfterTargetUnreachable, State *stateAfterStuckAtObstacle);
 		virtual ~DriveToState();
 
 		virtual State* nextState();
@@ -36,6 +36,7 @@ namespace Common
 		std::list<RoboHockey::Common::RobotPosition> m_target;
 		State *m_stateAfterTargetReached;
 		State *m_stateAfterTargetUnreachable;
+		State *m_stateAfterStuckAtObstacle;
 	};
 }
 }

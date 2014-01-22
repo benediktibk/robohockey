@@ -4,7 +4,7 @@
 #include "layer/strategy/drivepuckstatemachine/verifypuckstate.h"
 #include "layer/strategy/common/waitcyclesstate.h"
 #include "layer/strategy/common/drivetostate.h"
-#include "layer/strategy/common/referee.h"
+#include "layer/strategy/drivepuckstatemachine/leavepuckstate.h"
 #include "layer/autonomous/robot.h"
 #include "layer/autonomous/field.h"
 
@@ -26,7 +26,8 @@ State* DriveToCollectPuckState::nextState()
 					m_robot, m_field, m_referee, m_logger, m_puckTargetFetcher.getPositionsToCollectPuck(),
 					new WaitCyclesState(m_robot, m_field, m_referee, m_logger,
 							new VerifyPuckState(m_robot, m_field, m_referee, m_logger, m_puckTargetFetcher), 15, false),
-					new InitialState(m_robot, m_field, m_referee, m_logger, m_puckTargetFetcher));
+					new InitialState(m_robot, m_field, m_referee, m_logger, m_puckTargetFetcher),
+					new LeavePuckState(m_robot, m_field, m_referee, m_logger, m_puckTargetFetcher, false));
 }
 
 std::string DriveToCollectPuckState::getName()
