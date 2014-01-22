@@ -28,7 +28,7 @@ RobotImpl::RobotImpl(DataAnalysis::DataAnalyser *dataAnalyser, Router *router, c
 	m_maximumDistanceToCollectPuck(0.75),
 	m_maximumAngleToCollectPuck(10.0/180*M_PI),
 	m_timeout(30),
-	m_maximumAngleForSmoothTurn(Angle::getHalfRotation()/8),
+	m_maximumAngleForSmoothTurn(Angle::getHalfRotation()/20),
 	m_enableSonar(enableSonar),
 	m_dataAnalyser(dataAnalyser),
 	m_router(router),

@@ -727,8 +727,8 @@ void RobotTest::goTo_firstPointReachedAndSmallTurnNecessary_noCallsToTurnToTarge
 
 void RobotTest::goTo_firstPointReachedAndSmallTurnNecessary_engineGotCorrectNextTarget()
 {
-	m_routerMock->setRoute(Point(0, 0), Point(5, 0), Point(7, 0.1));
-	m_targets.push_back(RobotPosition(Point(7, 0.1), Angle(0)));
+	m_routerMock->setRoute(Point(0, 0), Point(5, 0), Point(10, 0.001));
+	m_targets.push_back(RobotPosition(Point(10, 0.001), Angle(0)));
 
 	m_engine->setReachedTarget(true);
 	m_odometry->setCurrentPosition(RobotPosition(Point(0, 0), Angle(0)));
@@ -748,7 +748,7 @@ void RobotTest::goTo_firstPointReachedAndSmallTurnNecessary_engineGotCorrectNext
 	CPPUNIT_ASSERT_EQUAL((unsigned int)1, m_engine->getCallsToGoToStraight());
 	const Point &lastTarget = m_engine->getLastTarget();
 	Compare compare(0.001);
-	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(7, 0.1), lastTarget));
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(Point(10, 0.001), lastTarget));
 }
 
 void RobotTest::goTo_orientationDifferenceZero_engineGotOnlyCallToGoToStraight()
@@ -1962,5 +1962,5 @@ void RobotTest::isOrientationDifferenceSmallEnoughForSmoothTurn_currentSpeedMaxV
 {
 	m_engine->setCurrentSpeed(0.5);
 
-	CPPUNIT_ASSERT(m_robot->isOrientationDifferenceSmallEnoughForSmoothTurn(Angle::getEighthRotation()/3));
+	CPPUNIT_ASSERT(m_robot->isOrientationDifferenceSmallEnoughForSmoothTurn(Angle::getEighthRotation()/100));
 }
