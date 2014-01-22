@@ -53,7 +53,8 @@ void FieldImpl::update()
 
 	if (!m_robot.isRotating())
 	{
-		updateWithLidarData(getRangeOfViewArea());
+		double range = getRangeOfViewArea();
+		updateWithLidarData(range);
 		if (!m_robot.isMoving())
 			updateWithCameraData();
 	}

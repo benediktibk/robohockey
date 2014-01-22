@@ -46,6 +46,8 @@ namespace Autonomous
 
 	private:
 		void loadNextRound(unsigned int roundCount);
+		void readDataFromFiles(unsigned int roundCount);
+		void updateObjectCounts();
 
 	private:
 		std::string m_path;

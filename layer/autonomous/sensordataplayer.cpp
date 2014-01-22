@@ -102,6 +102,15 @@ Point SensorDataPlayer::getCurrentPosition() const
 
 void SensorDataPlayer::loadNextRound(unsigned int roundCount)
 {
+	readDataFromFiles(roundCount);
+	m_robot->updateSensorData();
+	m_field->update();
+	m_robot->updateActuators(*m_field);
+	updateObjectCounts();
+}
+
+void SensorDataPlayer::readDataFromFiles(unsigned int roundCount)
+{
 	Hardware::CameraMock &camera = m_hardwareRobot->getCameraMock();
 	Hardware::LidarMock &lidar = m_hardwareRobot->getLidarMock();
 	Hardware::OdometryMock &odometry = m_hardwareRobot->getOdometryMock();
@@ -126,10 +135,10 @@ void SensorDataPlayer::loadNextRound(unsigned int roundCount)
 	odometry.readDataFromFile(odometryFileName.str());
 	engine.readDataFromFile(engineFileName.str());
 	sonar.readDataFromFile(sonarFileName.str());
-	m_robot->updateSensorData();
-	m_field->update();
-	m_robot->updateActuators(*m_field);
+}
 
+void SensorDataPlayer::updateObjectCounts()
+{
 	m_oldBlueObjectCount = m_blueObjectCount;
 	m_oldGreenObjectCount = m_greenObjectCount;
 	m_oldYellowObjectCount = m_yellowObjectCount;
