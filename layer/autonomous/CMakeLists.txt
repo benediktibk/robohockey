@@ -12,6 +12,7 @@ set(LAYER_AUTONOMOUS_SRC
 	routingobstacle.cpp
 	routingresult.cpp
 	fielddetectionresult.cpp
+	fieldobjectcolorcompare.cpp
 )
 
 set(LAYER_AUTONOMOUS_TEST_SRC
@@ -33,6 +34,7 @@ set(LAYER_AUTONOMOUS_TEST_SRC
 	fieldlivedatatest.cpp
 	robotmock.cpp
 	sensordataplayer.cpp
+	fieldobjectcolorcomparetest.cpp
 )
 
 add_library(layerautonomous ${LAYER_AUTONOMOUS_SRC})

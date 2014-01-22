@@ -7,10 +7,10 @@ namespace Common
 {
 	enum FieldColor
 	{
-		FieldColorUnknown,
 		FieldColorYellow,
 		FieldColorBlue,
-		FieldColorGreen
+		FieldColorGreen,
+		FieldColorUnknown
 	};
 }
 }

@@ -2751,3 +2751,7 @@ resources/testfiles/field_detection_worst_case/camera_5.png
 main/testregistrationlivedata.cpp
 layer/autonomous/fieldlivedatatest.h
 layer/autonomous/fieldlivedatatest.cpp
+layer/autonomous/fieldobjectcolorcomparetest.h
+layer/autonomous/fieldobjectcolorcompare.h
+layer/autonomous/fieldobjectcolorcomparetest.cpp
+layer/autonomous/fieldobjectcolorcompare.cpp

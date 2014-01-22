@@ -43,6 +43,7 @@
 #include "layer/autonomous/routingobstacletest.h"
 #include "layer/autonomous/routingresulttest.h"
 #include "layer/autonomous/fielddetectionresulttest.h"
+#include "layer/autonomous/fieldobjectcolorcomparetest.h"
 #include "layer/view/modeltest.h"
 #include "layer/strategy/common/statemachinetest.h"
 #include "layer/strategy/common/drivetostatetest.h"
@@ -117,6 +118,7 @@ CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Autonomous::RouteLengthCompar
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Autonomous::RoutingObstacleTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Autonomous::RoutingResultTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Autonomous::FieldDetectionResultTest);
+CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Autonomous::FieldObjectColorCompareTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::View::ModelTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Strategy::Common::StateMachineTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(RoboHockey::Layer::Strategy::Common::DriveToStateTest);
