@@ -22,8 +22,6 @@ using namespace RoboHockey::Layer::Autonomous;
 FieldImpl::FieldImpl(DataAnalysis::Odometry &odometry, const DataAnalysis::Lidar &lidar, DataAnalysis::Camera &camera, Robot &autonomousRobot, Logger &logger):
 	m_logger(logger),
 	m_seenTresholdForFieldObjects(5),
-	m_maximumDistanceToDeleteFieldObject(2.5),
-	m_maximumAngleToDeleteFieldObject(Angle::getQuarterRotation()),
 	m_odometry(odometry),
 	m_lidar(lidar),
 	m_camera(camera),
