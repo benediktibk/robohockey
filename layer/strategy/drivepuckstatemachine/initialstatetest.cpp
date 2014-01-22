@@ -92,3 +92,20 @@ void InitialStateTest::nextState_numberOfKnownPucksIs2AndCantReachTargetLimitIsR
 	delete state;
 }
 
+void InitialStateTest::nextState_stuckAtObstacle_nextStateIsLeavePuckState()
+{
+	RobotMock robot;
+	FieldMock field;
+	RefereeMock referee;
+	LoggerMock logger;
+	ColorDependentPuckTargetFetcherMock puckTargetFetcher;
+	robot.setStuckAtObstacle(true);
+	InitialState initialState(robot, field, referee, logger, puckTargetFetcher);
+	State *state;
+	state = initialState.nextState();
+	LeavePuckState *stateCasted = dynamic_cast<LeavePuckState*>(state);
+
+	CPPUNIT_ASSERT(stateCasted != 0);
+	delete state;
+}
+
