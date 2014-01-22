@@ -73,6 +73,8 @@ void FieldLiveDataTest::update_changingData2_noColoredObjectsAreLost()
 	}
 
 	CPPUNIT_ASSERT(sensorDataPlayer.getBlueObjectCount() > 0);
+	CPPUNIT_ASSERT(sensorDataPlayer.getYellowObjectCount() > 0);
+	CPPUNIT_ASSERT(sensorDataPlayer.getGreenObjectCount() > 0);
 }
 
 void FieldLiveDataTest::calibratePosition_goodRealWorldExample_positionIsCorrect()
