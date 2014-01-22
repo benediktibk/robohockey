@@ -1679,6 +1679,18 @@ void LidarTest::canBeSeen_objectPartlyVisibleAtRightEdgeOfViewArea_false()
 	CPPUNIT_ASSERT(!canBeSeen);
 }
 
+void LidarTest::canBeSeen_onePuckBehindAnotherOne_false()
+{
+	Hardware::LidarMock hardwareLidar;
+	LidarImpl lidar(hardwareLidar);
+	RobotPosition ownPosition(Point(1.163, -0.661), Angle(-2.80998));
+	hardwareLidar.readDataFromFile("resources/testfiles/lidar_42.txt");
+	lidar.updateSensorData();
+	Circle object(Point(0.717916, 0.09792793), 0.032516);
+
+	CPPUNIT_ASSERT(!lidar.canBeSeen(object, ownPosition));
+}
+
 vector<LidarObject> LidarTest::getDifferentObjects(
 		const vector<LidarObject> &one, const vector<LidarObject> &two)
 {
