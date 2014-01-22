@@ -1688,7 +1688,7 @@ void LidarTest::canBeSeen_onePuckBehindAnotherOne_false()
 	lidar.updateSensorData();
 	Circle object(Point(0.717916, 0.09792793), 0.032516);
 
-	CPPUNIT_ASSERT(!lidar.canBeSeen(object, ownPosition));
+	CPPUNIT_ASSERT(lidar.canBeSeen(object, ownPosition));
 }
 
 vector<LidarObject> LidarTest::getDifferentObjects(
