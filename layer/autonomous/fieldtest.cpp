@@ -1146,6 +1146,28 @@ void FieldTest::update_rotatingAndObjectVeryClose_onlyFieldObjectIsUpdated()
 	CPPUNIT_ASSERT(!compare.isFuzzyEqual(Circle(Point(1, 0), 0.04), fieldObject.getCircle()));
 }
 
+void FieldTest::update_twoWrongCameraObjectsButCorrectOneIsClosest_onlyFieldObjectHasCorrectColor()
+{
+	DataAnalysis::LidarObjects lidarObjects;
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 0), 0.1));
+	m_lidar->setAllObjects(lidarObjects);
+	DataAnalysis::CameraObjects cameraObjects;
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorBlue, Point(1, 0.04)));
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(1, 0)));
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorGreen, Point(1, -0.04)));
+	m_camera->setAllObjects(cameraObjects);
+
+	m_lidar->setCanBeSeen(true);
+	m_lidar->setCanBeSeenPartly(true);
+	updateFieldForObjectsToAppear();
+
+	vector<FieldObject> fieldObjects = m_field->getAllFieldObjects();
+	CPPUNIT_ASSERT_EQUAL((size_t)1, fieldObjects.size());
+	const FieldObject &fieldObject = fieldObjects.front();
+	const FieldColor color = fieldObject.getColor();
+	CPPUNIT_ASSERT_EQUAL(FieldColorYellow, color);
+}
+
 void FieldTest::calibratePosition_noValidPattern_false()
 {
 	DataAnalysis::LidarObjects lidarObjects;
