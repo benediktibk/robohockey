@@ -256,6 +256,7 @@ double LidarImpl::calculateDistanceToObject(
 {
 	Compare compare(0.01);
 	Angle viewAngle = calculateOrientationFromSensorNumber(sensorNumber) - angleToCenterOfCircle;
+	viewAngle.abs();
 	double radius = circle.getDiameter()/2;
 
 	if (compare.isFuzzyEqual(radius, 0) || compare.isFuzzyEqual(viewAngle.getValueBetweenMinusPiAndPi(), 0))
@@ -264,7 +265,7 @@ double LidarImpl::calculateDistanceToObject(
 	double argument = distanceToCenter/radius*sin(viewAngle.getValueBetweenMinusPiAndPi());
 	Angle gamma;
 
-	if (argument >= -1)
+	if (argument >= -1 && argument <= 1)
 		gamma = asin(argument);
 	else
 		gamma = Angle::getQuarterRotation();
