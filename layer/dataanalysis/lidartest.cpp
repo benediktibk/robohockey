@@ -465,6 +465,24 @@ void LidarTest::getAllObjects_twoPucksCloseTogether_objectCountIs2()
 	CPPUNIT_ASSERT_EQUAL((size_t)2, selectedObjects.size());
 }
 
+void LidarTest::getAllObjects_twoPucksCloseTogetherBehind_objectCountIs2()
+{
+	Hardware::LidarMock hardwareLidar;
+	LidarImpl lidar(hardwareLidar);
+	RobotPosition ownPosition(Point(1.163, -0.661), Angle(-2.80998));
+	hardwareLidar.readDataFromFile("resources/testfiles/lidar_42.txt");
+
+	lidar.updateSensorData();
+	LidarObjects objects = lidar.getAllObjects(ownPosition);
+
+	vector<LidarObject> selectedObjects = objects.getObjectsWithDistanceBelow(ownPosition, 1);
+	CPPUNIT_ASSERT_EQUAL((size_t)1, selectedObjects.size());
+	Point position(0.8149, 0.0176);
+	Compare compare(0.11);
+	const LidarObject &firstObject = selectedObjects.front();
+	CPPUNIT_ASSERT(compare.isFuzzyEqual(position, firstObject.getCenter()));
+}
+
 void LidarTest::isObstacleInFront_noObstacleInFront_false()
 {
 	Hardware::LidarMock hardwareLidar;
