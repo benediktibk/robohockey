@@ -2,6 +2,7 @@
 #include "layer/strategy/drivepuckstatemachine/collectpuckstate.h"
 #include "layer/strategy/drivepuckstatemachine/drivetocollectpuckstate.h"
 #include "layer/strategy/drivepuckstatemachine/drivepucktopositionstate.h"
+#include "layer/strategy/drivepuckstatemachine/leavepuckstate.h"
 #include "layer/strategy/common/statemachine.h"
 #include "layer/strategy/common/statemock.h"
 #include "layer/strategy/common/refereemock.h"
@@ -105,7 +106,7 @@ void CollectPuckStateTest::nextState_puckIsCollectableButNoTargetIsLeft_nextStat
 	delete state;
 }
 
-void CollectPuckStateTest::nextState_puckCollectableAndStuckAtObstacle_nextStateIsDriveToCollectPuckState()
+void CollectPuckStateTest::nextState_stuckAtObstacle_nextStateIsLeavePuckState()
 {
 	RobotMock robot;
 	FieldMock field;
@@ -121,7 +122,7 @@ void CollectPuckStateTest::nextState_puckCollectableAndStuckAtObstacle_nextState
 
 	State *state = collectPuckState.nextState();
 
-	DriveToCollectPuckState *stateCasted = dynamic_cast<DriveToCollectPuckState*>(state);
+	LeavePuckState *stateCasted = dynamic_cast<LeavePuckState*>(state);
 	CPPUNIT_ASSERT(stateCasted != 0);
 	delete state;
 }

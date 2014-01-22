@@ -91,3 +91,24 @@ void DrivePuckToEnemyThirdStateTest::nextState_puckIsNotCollected_nextStateIsDri
 	CPPUNIT_ASSERT(stateCasted != 0);
 	delete state;
 }
+
+void DrivePuckToEnemyThirdStateTest::nextState_stuckAtObstacle_nextStateIsLeavePuckState()
+{
+	RobotMock robot;
+	FieldMock field;
+	RefereeMock referee;
+	LoggerMock logger;
+	ColorDependentPuckTargetFetcherMock puckTargetFetcher;
+	robot.setPuckCollected(true);
+	robot.setStuckAtObstacle(true);
+	DrivePuckToEnemyThirdState driveToEnemyThirdState(robot, field, referee, logger, puckTargetFetcher);
+	State *driveToState;
+	driveToState = driveToEnemyThirdState.nextState();
+	State *state;
+	state = driveToState->nextState();
+	LeavePuckState *stateCasted = dynamic_cast<LeavePuckState*>(state);
+
+	CPPUNIT_ASSERT(stateCasted != 0);
+	delete state;
+	delete driveToState;
+}

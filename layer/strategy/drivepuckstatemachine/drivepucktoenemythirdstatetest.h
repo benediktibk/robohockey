@@ -20,6 +20,7 @@ namespace DrivePuckStateMachine
 		CPPUNIT_TEST(nextState_cantReachTarget_nextStateLeavePuckState);
 		CPPUNIT_TEST(nextState_canReachTarget_nextStateIs0);
 		CPPUNIT_TEST(nextState_puckIsNotCollected_nextStateIsDriveToCollectPuck);
+		CPPUNIT_TEST(nextState_stuckAtObstacle_nextStateIsLeavePuckState);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
@@ -27,6 +28,7 @@ namespace DrivePuckStateMachine
 		void nextState_cantReachTarget_nextStateLeavePuckState();
 		void nextState_canReachTarget_nextStateIs0();
 		void nextState_puckIsNotCollected_nextStateIsDriveToCollectPuck();
+		void nextState_stuckAtObstacle_nextStateIsLeavePuckState();
 
 	};
 }
