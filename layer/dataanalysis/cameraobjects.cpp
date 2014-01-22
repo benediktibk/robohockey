@@ -45,6 +45,11 @@ const CameraObject &CameraObjects::getCameraObjectAtPosition(const Common::Point
 	return m_objects[objectNumberNextToPosition];
 }
 
+const vector<CameraObject> &CameraObjects::getAllObjects() const
+{
+	return m_objects;
+}
+
 const CameraObject &CameraObjects::operator [](size_t index) const
 {
 	return m_objects[index];

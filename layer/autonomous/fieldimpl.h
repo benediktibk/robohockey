@@ -5,6 +5,7 @@
 #include "layer/autonomous/field.h"
 #include "common/fieldcolor.h"
 #include <vector>
+#include <list>
 
 namespace RoboHockey
 {
@@ -24,6 +25,7 @@ namespace DataAnalysis
 	class Sonar;
 	class Odometry;
 	class Camera;
+	class CameraObject;
 }
 
 namespace Autonomous
@@ -118,6 +120,7 @@ namespace Autonomous
 		void updateAllNotVisibleObjects();
 		bool isPointFuzzyInsideField(const Common::Point &point, double epsilon) const;
 		void removeAllFieldObjectsOutsideOfField();
+		std::list<DataAnalysis::CameraObject>::iterator getClosestCameraObject(const FieldObject &fieldObject, std::list<DataAnalysis::CameraObject> &cameraObjects) const;
 
 	private:
 		Common::Logger &m_logger;

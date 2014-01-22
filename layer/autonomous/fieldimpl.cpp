@@ -808,22 +808,33 @@ void FieldImpl::updateWithOdometryData()
 
 void FieldImpl::updateWithCameraData()
 {
-	const DataAnalysis::CameraObjects &allCameraObjects = m_camera.getAllCameraObjects(*m_position);
+	const DataAnalysis::CameraObjects &cameraObjects = m_camera.getAllCameraObjects(*m_position);
 
-	if (m_fieldObjects.size() == 0 || allCameraObjects.getObjectCount() == 0)
+	if (m_fieldObjects.size() == 0 || cameraObjects.getObjectCount() == 0)
 		return;
 
-	for (size_t i = 0; i < allCameraObjects.getObjectCount(); ++i)
+	const vector<DataAnalysis::CameraObject> &cameraObjectVector = cameraObjects.getAllObjects();
+	list<DataAnalysis::CameraObject> cameraObjectList(cameraObjectVector.begin(), cameraObjectVector.end());
+
+	for (vector<FieldObject>::iterator i = m_fieldObjects.begin(); i != m_fieldObjects.end(); ++i)
 	{
-		const DataAnalysis::CameraObject &currentObject = allCameraObjects[i];
+		FieldObject &fieldObject = *i;
 
-		vector<FieldObject>::iterator nextFieldObjectIterator = getNextObjectFromPosition(currentObject.getPosition());
-		FieldObject &nextFieldObject = *nextFieldObjectIterator;
-
-		if (currentObject.getPosition().distanceTo(nextFieldObject.getCircle().getCenter()) > 0.07)
+		if (fieldObject.getColor() != FieldColorUnknown)
 			continue;
 
-		nextFieldObject.setColor(currentObject.getColor());
+		list<DataAnalysis::CameraObject>::iterator closestCameraObjectIterator = getClosestCameraObject(fieldObject, cameraObjectList);
+		const DataAnalysis::CameraObject &closestCameraObject = *closestCameraObjectIterator;
+		const Point &fieldObjectPosition = fieldObject.getCircle().getCenter();
+
+		if (fieldObjectPosition.distanceTo(closestCameraObject.getPosition()) > 0.07)
+			continue;
+
+		fieldObject.setColor(closestCameraObject.getColor());
+		cameraObjectList.erase(closestCameraObjectIterator);
+
+		if (cameraObjectList.empty())
+			return;
 	}
 }
 
@@ -1169,4 +1180,30 @@ void FieldImpl::removeAllFieldObjectsOutsideOfField()
 		}
 		++i;
 	}
+}
+
+list<RoboHockey::Layer::DataAnalysis::CameraObject>::iterator FieldImpl::getClosestCameraObject(const FieldObject &fieldObject, list<DataAnalysis::CameraObject> &cameraObjects) const
+{
+	assert(cameraObjects.size() > 0);
+	const DataAnalysis::CameraObject &firstObject = cameraObjects.front();
+	const Circle &fieldObjectCircle = fieldObject.getCircle();
+	const Point &fieldObjectPosition = fieldObjectCircle.getCenter();
+	double closestDistance = fieldObjectPosition.distanceTo(firstObject.getPosition());
+	list<DataAnalysis::CameraObject>::iterator result = cameraObjects.begin();
+	list<DataAnalysis::CameraObject>::iterator i = cameraObjects.begin();
+	++i;
+
+	for (; i != cameraObjects.end(); ++i)
+	{
+		const DataAnalysis::CameraObject &cameraObject = *i;
+		double distance = fieldObjectPosition.distanceTo(cameraObject.getPosition());
+
+		if (distance < closestDistance)
+		{
+			result = i;
+			closestDistance = distance;
+		}
+	}
+
+	return result;
 }
