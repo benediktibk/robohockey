@@ -22,6 +22,7 @@ using namespace RoboHockey::Layer::Autonomous;
 FieldImpl::FieldImpl(DataAnalysis::Odometry &odometry, const DataAnalysis::Lidar &lidar, DataAnalysis::Camera &camera, Robot &autonomousRobot, Logger &logger):
 	m_logger(logger),
 	m_seenTresholdForFieldObjects(5),
+	m_defaultEpsilonForMergingObjects(0.11),
 	m_odometry(odometry),
 	m_lidar(lidar),
 	m_camera(camera),
@@ -724,13 +725,13 @@ void FieldImpl::updateWithLidarData(double range)
 	}
 
 	vector<DataAnalysis::LidarObject> notYetMergedObjects;
-	tryToMergeLidarAndFieldObjects(objectsInsideField, inVisibleArea, newObjects, notYetMergedObjects, 0.05);
+	tryToMergeLidarAndFieldObjects(objectsInsideField, inVisibleArea, newObjects, notYetMergedObjects, m_defaultEpsilonForMergingObjects/2);
 	objectsInsideField = notYetMergedObjects;
 	notYetMergedObjects.clear();
-	tryToMergeLidarAndFieldObjects(objectsInsideField, inVisibleArea, newObjects, notYetMergedObjects, 0.11);
+	tryToMergeLidarAndFieldObjects(objectsInsideField, inVisibleArea, newObjects, notYetMergedObjects, m_defaultEpsilonForMergingObjects);
 	objectsInsideField = notYetMergedObjects;
 	notYetMergedObjects.clear();
-	tryToMergeLidarAndFieldObjects(objectsInsideField, inVisibleArea, newObjects, notYetMergedObjects, 0.2);
+	tryToMergeLidarAndFieldObjects(objectsInsideField, inVisibleArea, newObjects, notYetMergedObjects, m_defaultEpsilonForMergingObjects*2);
 
 	for (vector<DataAnalysis::LidarObject>::const_iterator i = notYetMergedObjects.begin(); i != notYetMergedObjects.end(); ++i)
 	{
@@ -738,7 +739,7 @@ void FieldImpl::updateWithLidarData(double range)
 		bool couldBeAPartlyVisibleObject = false;
 
 		for (vector<FieldObject>::const_iterator i = partlyVisibleObjects.begin(); i != partlyVisibleObjects.end() && !couldBeAPartlyVisibleObject; ++i)
-			if (couldBeTheSameObject(i->getCircle(), lidarObject, 0.11))
+			if (couldBeTheSameObject(i->getCircle(), lidarObject, m_defaultEpsilonForMergingObjects))
 				couldBeAPartlyVisibleObject = true;
 
 		if (!couldBeAPartlyVisibleObject)
@@ -774,7 +775,7 @@ void FieldImpl::tryToMergeDoubledFieldObjects()
 				const FieldObject &firstObject = *i;
 				const FieldObject &secondObject = *j;
 
-				if (!couldBeTheSameObject(firstObject.getCircle(), secondObject.getCircle(), 0.11))
+				if (!couldBeTheSameObject(firstObject.getCircle(), secondObject.getCircle(), m_defaultEpsilonForMergingObjects))
 					continue;
 
 				if (firstObject.getColor() != FieldColorUnknown && secondObject.getColor() != FieldColorUnknown)

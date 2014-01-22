@@ -129,6 +129,7 @@ namespace Autonomous
 	private:
 		Common::Logger &m_logger;
 		const unsigned int m_seenTresholdForFieldObjects;
+		const double m_defaultEpsilonForMergingObjects;
 		DataAnalysis::Odometry &m_odometry;
 		const DataAnalysis::Lidar &m_lidar;
 		DataAnalysis::Camera &m_camera;
