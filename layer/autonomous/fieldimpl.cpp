@@ -716,7 +716,8 @@ void FieldImpl::updateWithLidarData(double range)
 	for (vector<FieldObject>::iterator i = inVisibleArea.begin(); i != inVisibleArea.end(); ++i)
 		i->shouldBeSeen();
 
-	list<DataAnalysis::LidarObject> objectsInsideField;
+	vector<DataAnalysis::LidarObject> objectsInsideField;
+	objectsInsideField.reserve(objectsInRange.size());
 	for (vector<DataAnalysis::LidarObject>::const_iterator i = objectsInRange.begin(); i != objectsInRange.end(); ++i)
 	{
 		const DataAnalysis::LidarObject &lidarObject = *i;
@@ -724,24 +725,33 @@ void FieldImpl::updateWithLidarData(double range)
 			objectsInsideField.push_back(lidarObject);
 	}
 
-	for (list<DataAnalysis::LidarObject>::const_iterator i = objectsInsideField.begin(); i != objectsInsideField.end(); ++i)
+	list<DataAnalysis::LidarObject> notYetMergedObjects;
+	for (vector<DataAnalysis::LidarObject>::const_iterator i = objectsInsideField.begin(); i != objectsInsideField.end(); ++i)
 	{
 		const DataAnalysis::LidarObject &lidarObject = *i;
 
-		if (inVisibleArea.size() > 0)
+		if (inVisibleArea.empty())
 		{
-			vector<FieldObject>::iterator currentObject = getNextObjectFromPosition(inVisibleArea, lidarObject.getCenter());
-			FieldObject &nextFieldObject = *currentObject;
-
-			if (tryToMergeLidarAndFieldObject(nextFieldObject, lidarObject, 0.11))
-			{
-				nextFieldObject.seen();
-				newObjects.push_back(nextFieldObject);
-				inVisibleArea.erase(currentObject);
-				continue;
-			}
+			notYetMergedObjects.push_back(lidarObject);
+			continue;
 		}
 
+		vector<FieldObject>::iterator currentObject = getNextObjectFromPosition(inVisibleArea, lidarObject.getCenter());
+		FieldObject &nextFieldObject = *currentObject;
+
+		if (tryToMergeLidarAndFieldObject(nextFieldObject, lidarObject, 0.11))
+		{
+			nextFieldObject.seen();
+			newObjects.push_back(nextFieldObject);
+			inVisibleArea.erase(currentObject);
+		}
+		else
+			notYetMergedObjects.push_back(lidarObject);
+	}
+
+	for (list<DataAnalysis::LidarObject>::const_iterator i = notYetMergedObjects.begin(); i != notYetMergedObjects.end(); ++i)
+	{
+		const DataAnalysis::LidarObject &lidarObject = *i;
 		bool couldBeAPartlyVisibleObject = false;
 
 		for (vector<FieldObject>::const_iterator i = partlyVisibleObjects.begin(); i != partlyVisibleObjects.end() && !couldBeAPartlyVisibleObject; ++i)
