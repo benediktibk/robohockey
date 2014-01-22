@@ -256,7 +256,7 @@ void RobotImpl::updateEngine(const Field &field)
 {
 	DataAnalysis::Engine &engine = m_dataAnalyser->getEngine();
 
-	if (m_cantReachTarget || m_tryingToTackleObstacle)
+	if (m_cantReachTarget)
 	{
 		engine.stop();
 		log("stopping because cant reach target");
