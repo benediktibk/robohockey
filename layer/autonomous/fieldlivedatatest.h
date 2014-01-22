@@ -30,6 +30,7 @@ namespace Autonomous
 	{
 		CPPUNIT_TEST_SUITE(FieldLiveDataTest);
 		CPPUNIT_TEST(update_changingData_noColoredObjectsAreLost);
+		CPPUNIT_TEST(update_changingData2_noColoredObjectsAreLost);
 		CPPUNIT_TEST(calibratePosition_goodRealWorldExample_positionIsCorrect);
 		CPPUNIT_TEST(calibratePosition_worstCaseRealWorldExample_positionIsCorrect);
 		CPPUNIT_TEST(calibratePosition_anotherRealWorldExample_positionIsCorrect);
@@ -41,6 +42,7 @@ namespace Autonomous
 
 	private:
 		void update_changingData_noColoredObjectsAreLost();
+		void update_changingData2_noColoredObjectsAreLost();
 		void calibratePosition_goodRealWorldExample_positionIsCorrect();
 		void calibratePosition_worstCaseRealWorldExample_positionIsCorrect();
 		void calibratePosition_anotherRealWorldExample_positionIsCorrect();

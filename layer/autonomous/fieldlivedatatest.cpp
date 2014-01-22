@@ -61,6 +61,20 @@ void FieldLiveDataTest::update_changingData_noColoredObjectsAreLost()
 	CPPUNIT_ASSERT(sensorDataPlayer.getBlueObjectCount() > 0);
 }
 
+void FieldLiveDataTest::update_changingData2_noColoredObjectsAreLost()
+{
+	SensorDataPlayer sensorDataPlayer("resources/testfiles/loosing_puck_2");
+
+	for (unsigned int round = 0; round < sensorDataPlayer.getMaximumRoundCount(); ++round)
+	{
+		sensorDataPlayer.loadNextRound();
+		if (sensorDataPlayer.countOfColoredObjectsDecreased())
+			CPPUNIT_ASSERT(false);
+	}
+
+	CPPUNIT_ASSERT(sensorDataPlayer.getBlueObjectCount() > 0);
+}
+
 void FieldLiveDataTest::calibratePosition_goodRealWorldExample_positionIsCorrect()
 {
 	SensorDataPlayer sensorDataPlayer("resources/testfiles/field_detection_perfect");
