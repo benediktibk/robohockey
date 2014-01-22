@@ -1,6 +1,7 @@
 #include "layer/strategy/drivepuckstatemachine/collectpuckstate.h"
 #include "layer/strategy/drivepuckstatemachine/drivepucktopositionstate.h"
 #include "layer/strategy/drivepuckstatemachine/drivetocollectpuckstate.h"
+#include "layer/strategy/drivepuckstatemachine/leavepuckstate.h"
 #include "common/robotposition.h"
 #include "layer/strategy/common/referee.h"
 #include "layer/autonomous/robot.h"
@@ -26,7 +27,9 @@ State* CollectPuckState::nextState()
 
 	if(m_robot.isPuckCollected())
 		return new DrivePuckToPositionState(m_robot, m_field, m_referee, m_logger, m_puckTargetFetcher);
-	else if(m_robot.cantReachTarget() || !m_robot.isPuckCollectable() || targetPositions.empty() || m_robot.stuckAtObstacle())
+	if(m_robot.stuckAtObstacle())
+		return new LeavePuckState(m_robot, m_field, m_referee, m_logger, m_puckTargetFetcher, false);
+	else if(m_robot.cantReachTarget() || !m_robot.isPuckCollectable() || targetPositions.empty())
 		return new DriveToCollectPuckState(m_robot, m_field, m_referee, m_logger, m_puckTargetFetcher);
 	else
 		return 0;

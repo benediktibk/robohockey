@@ -16,7 +16,7 @@ InitialState::InitialState(Robot &robot, Field &field, Referee &referee, RoboHoc
 
 State* InitialState::nextState()
 {
-	if(m_robot.isPuckCollected())
+	if(m_robot.isPuckCollected() || m_robot.stuckAtObstacle())
 		return new LeavePuckState(m_robot, m_field, m_referee, m_logger, m_puckTargetFetcher, false);
 	if(m_puckTargetFetcher.getNumberOfKnownPucksNotInEnemyThird() > 0 && !m_puckTargetFetcher.isCantReachTargetLimitReached())
 		return new DriveToCollectPuckState(m_robot, m_field, m_referee, m_logger, m_puckTargetFetcher);

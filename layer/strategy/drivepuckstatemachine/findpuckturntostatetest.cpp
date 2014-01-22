@@ -2,6 +2,7 @@
 #include "layer/strategy/drivepuckstatemachine/findpuckturntostate.h"
 #include "layer/strategy/drivepuckstatemachine/verifypuckstate.h"
 #include "layer/strategy/drivepuckstatemachine/findpuckstate.h"
+#include "layer/strategy/drivepuckstatemachine/leavepuckstate.h"
 #include "layer/strategy/common/waitcyclesstate.h"
 #include "layer/strategy/common/statemachine.h"
 #include "layer/strategy/common/statemock.h"
@@ -126,5 +127,25 @@ void FindPuckTurnToStateTest::nextState_emptyTargetListAndTargetNotReached_nextS
 	CPPUNIT_ASSERT(stateCasted != 0);
 	delete state;
 	delete waitState;
+}
+
+void FindPuckTurnToStateTest::nextState_stuckAtObstacle_nextStateIsLeavePuckState()
+{
+	RobotMock robot;
+	FieldMock field;
+	RefereeMock referee;
+	LoggerMock logger;
+	ColorDependentPuckTargetFetcherMock puckTargetFetcher;
+	robot.setStuckAtObstacle(true);
+	list<Point> targetList;
+	targetList.push_back(Point());
+	FindPuckTurnToState findPuckTurnToState(robot, field, referee, logger, puckTargetFetcher, targetList);
+	findPuckTurnToState.update();
+	State *state;
+	state = findPuckTurnToState.nextState();
+	LeavePuckState *stateCasted = dynamic_cast<LeavePuckState*>(state);
+
+	CPPUNIT_ASSERT(stateCasted != 0);
+	delete state;
 }
 

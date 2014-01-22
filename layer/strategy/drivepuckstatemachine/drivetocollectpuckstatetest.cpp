@@ -3,6 +3,7 @@
 #include "layer/strategy/drivepuckstatemachine/findpuckturntostate.h"
 #include "layer/strategy/drivepuckstatemachine/initialstate.h"
 #include "layer/strategy/drivepuckstatemachine/verifypuckstate.h"
+#include "layer/strategy/drivepuckstatemachine/leavepuckstate.h"
 #include "layer/strategy/common/waitcyclesstate.h"
 #include "layer/strategy/common/drivetostate.h"
 #include "layer/strategy/common/statemachine.h"
@@ -120,4 +121,25 @@ void DriveToCollectPuckStateTest::nextState_cantReachTarget_nextStateIsDriveToSt
 
 	CPPUNIT_ASSERT(stateCasted != 0);
 	delete state;
+}
+
+void DriveToCollectPuckStateTest::nextState_stuckAtObstacle_nextStateIsLeavePuckState()
+{
+	RobotMock robot;
+	FieldMock field;
+	RefereeMock referee;
+	LoggerMock logger;
+	ColorDependentPuckTargetFetcherMock puckTargetFetcher;
+	puckTargetFetcher.setNumberOfKnownPucksNotInEnemyThird(2);
+	robot.setStuckAtObstacle(true);
+	DriveToCollectPuckState driveToCollectPuckState(robot, field, referee, logger, puckTargetFetcher);
+	State *driveToState;
+	driveToState = driveToCollectPuckState.nextState();
+	State *state;
+	state = driveToState->nextState();
+	LeavePuckState *stateCasted = dynamic_cast<LeavePuckState*>(state);
+
+	CPPUNIT_ASSERT(stateCasted != 0);
+	delete state;
+	delete driveToState;
 }

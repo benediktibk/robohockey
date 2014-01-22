@@ -93,4 +93,25 @@ void DrivePuckToPositionStateTest::nextState_puckIsNotCollected_nextStateIsDrive
 	delete state;
 }
 
+void DrivePuckToPositionStateTest::nextState_stuckAtObstacle_nextStateIsLeavePuckState()
+{
+	RobotMock robot;
+	FieldMock field;
+	RefereeMock referee;
+	LoggerMock logger;
+	ColorDependentPuckTargetFetcherMock puckTargetFetcher;
+	robot.setPuckCollected(true);
+	robot.setStuckAtObstacle(true);
+	DrivePuckToPositionState drivePuckToPositionState(robot, field, referee, logger, puckTargetFetcher);
+	State *driveToState;
+	driveToState = drivePuckToPositionState.nextState();
+	State *state;
+	state = driveToState->nextState();
+	LeavePuckState *stateCasted = dynamic_cast<LeavePuckState*>(state);
+
+	CPPUNIT_ASSERT(stateCasted != 0);
+	delete state;
+	delete driveToState;
+}
+
 

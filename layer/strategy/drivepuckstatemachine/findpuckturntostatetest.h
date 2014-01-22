@@ -21,6 +21,7 @@ namespace DrivePuckStateMachine
 		CPPUNIT_TEST(nextState_targetList_nextStateIsFindPuckTurnToState);
 		CPPUNIT_TEST(nextState_foundPuckAndLimitReachedAndEmptyTargetListAndTargetReached_nextStateIsFindPuckState);
 		CPPUNIT_TEST(nextState_emptyTargetListAndTargetNotReached_nextStateIsFindPuckTurnToState);
+		CPPUNIT_TEST(nextState_stuckAtObstacle_nextStateIsLeavePuckState);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
@@ -29,6 +30,7 @@ namespace DrivePuckStateMachine
 		void nextState_targetList_nextStateIsFindPuckTurnToState();
 		void nextState_foundPuckAndLimitReachedAndEmptyTargetListAndTargetReached_nextStateIsFindPuckState();
 		void nextState_emptyTargetListAndTargetNotReached_nextStateIsFindPuckTurnToState();
+		void nextState_stuckAtObstacle_nextStateIsLeavePuckState();
 
 };
 }

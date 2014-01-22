@@ -1,7 +1,6 @@
 #include "layer/strategy/fielddetectionstatemachine/detectfield.h"
 #include "layer/strategy/fielddetectionstatemachine/turnangle.h"
 #include "layer/strategy/fielddetectionstatemachine/checkgoalcolor.h"
-#include "layer/strategy/common/referee.h"
 #include "layer/strategy/common/drivetostate.h"
 #include "layer/autonomous/robot.h"
 #include "layer/autonomous/field.h"
@@ -34,8 +33,9 @@ State* DetectField::nextState()
 		//! @todo use different state if DriveTo can't reach target!
 	{
 		return new DriveToState(m_robot, m_field, m_referee, m_logger, m_field.getTargetsForGoalDetection(),
-						   new CheckGoalColor(m_robot, m_field, m_referee, m_logger),
-						   new CheckGoalColor(m_robot, m_field, m_referee, m_logger));
+							new CheckGoalColor(m_robot, m_field, m_referee, m_logger),
+							new CheckGoalColor(m_robot, m_field, m_referee, m_logger),
+							new CheckGoalColor(m_robot, m_field, m_referee, m_logger));
 	}
 	else
 		return 0;
