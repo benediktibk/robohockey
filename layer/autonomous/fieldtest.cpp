@@ -1168,6 +1168,36 @@ void FieldTest::update_twoWrongCameraObjectsButCorrectOneIsClosest_onlyFieldObje
 	CPPUNIT_ASSERT_EQUAL(FieldColorYellow, color);
 }
 
+void FieldTest::update_colorOfObjectIsDifferentSecondTime_onlyFieldObjectHasNewColor()
+{
+	DataAnalysis::LidarObjects lidarObjects;
+	lidarObjects.addObject(DataAnalysis::LidarObject(Point(1, 0), 0.1));
+	m_lidar->setAllObjects(lidarObjects);
+	DataAnalysis::CameraObjects cameraObjects;
+
+	m_lidar->setCanBeSeen(true);
+	m_lidar->setCanBeSeenPartly(true);
+	updateFieldForObjectsToAppear();
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorYellow, Point(1, 0)));
+	m_camera->setAllObjects(cameraObjects);
+	m_field->update();
+	vector<FieldObject> fieldObjectsBefore = m_field->getAllFieldObjects();
+	cameraObjects.clear();
+	cameraObjects.addObject(DataAnalysis::CameraObject(FieldColorBlue, Point(1, 0)));
+	m_camera->setAllObjects(cameraObjects);
+	m_field->update();
+	vector<FieldObject> fieldObjectsAfter = m_field->getAllFieldObjects();
+
+	CPPUNIT_ASSERT_EQUAL((size_t)1, fieldObjectsBefore.size());
+	CPPUNIT_ASSERT_EQUAL((size_t)1, fieldObjectsAfter.size());
+	const FieldObject &fieldObjectBefore = fieldObjectsBefore.front();
+	const FieldObject &fieldObjectAfter = fieldObjectsAfter.front();
+	const FieldColor colorBefore = fieldObjectBefore.getColor();
+	const FieldColor colorAfter = fieldObjectAfter.getColor();
+	CPPUNIT_ASSERT_EQUAL(FieldColorYellow, colorBefore);
+	CPPUNIT_ASSERT_EQUAL(FieldColorBlue, colorAfter);
+}
+
 void FieldTest::calibratePosition_noValidPattern_false()
 {
 	DataAnalysis::LidarObjects lidarObjects;

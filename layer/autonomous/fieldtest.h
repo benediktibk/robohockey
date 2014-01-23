@@ -81,6 +81,7 @@ namespace Autonomous
 		CPPUNIT_TEST(update_rotatingAndObjectALittleBitDistanceMoved_onlyFieldObjectStaysTheSame);
 		CPPUNIT_TEST(update_rotatingAndObjectVeryClose_onlyFieldObjectIsUpdated);
 		CPPUNIT_TEST(update_twoWrongCameraObjectsButCorrectOneIsClosest_onlyFieldObjectHasCorrectColor);
+		CPPUNIT_TEST(update_colorOfObjectIsDifferentSecondTime_onlyFieldObjectHasNewColor);
 		CPPUNIT_TEST(calibratePosition_noValidPattern_false);
 		CPPUNIT_TEST(calibratePosition_validPattern_true);
 		CPPUNIT_TEST(calibratePosition_noValidPattern_noTransformation);
@@ -214,6 +215,7 @@ namespace Autonomous
 		void update_rotatingAndObjectALittleBitDistanceMoved_onlyFieldObjectStaysTheSame();
 		void update_rotatingAndObjectVeryClose_onlyFieldObjectIsUpdated();
 		void update_twoWrongCameraObjectsButCorrectOneIsClosest_onlyFieldObjectHasCorrectColor();
+		void update_colorOfObjectIsDifferentSecondTime_onlyFieldObjectHasNewColor();
 		void calibratePosition_noValidPattern_false();
 		void calibratePosition_validPattern_true();
 		void calibratePosition_noValidPattern_noTransformation();
