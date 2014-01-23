@@ -149,3 +149,139 @@ void FindPuckTurnToStateTest::nextState_stuckAtObstacle_nextStateIsLeavePuckStat
 	delete state;
 }
 
+void FindPuckTurnToStateTest::nextState_emptyTargetListAndRobotHasNotReachedTarget_nextStateIsFindPuck()
+{
+	RobotMock robot;
+	FieldMock field;
+	RefereeMock referee;
+	LoggerMock logger;
+	ColorDependentPuckTargetFetcherMock puckTargetFetcher;
+	robot.setStuckAtObstacle(false);
+	robot.setReachedTarget(false);
+	list<Point> targetList;
+	FindPuckTurnToState findPuckTurnToState(robot, field, referee, logger, puckTargetFetcher, targetList);
+	findPuckTurnToState.update();
+
+	State *state = findPuckTurnToState.nextState();
+
+	FindPuckState *stateCasted = dynamic_cast<FindPuckState*>(state);
+	CPPUNIT_ASSERT(stateCasted != 0);
+	delete state;
+}
+
+void FindPuckTurnToStateTest::nextState_oneTargetAndRobotHasNotReachedTarget_nextStateIs0()
+{
+	RobotMock robot;
+	FieldMock field;
+	RefereeMock referee;
+	LoggerMock logger;
+	ColorDependentPuckTargetFetcherMock puckTargetFetcher;
+	robot.setStuckAtObstacle(false);
+	robot.setReachedTarget(false);
+	list<Point> targetList;
+	targetList.push_back(Point());
+	FindPuckTurnToState findPuckTurnToState(robot, field, referee, logger, puckTargetFetcher, targetList);
+	findPuckTurnToState.update();
+
+	State *state = findPuckTurnToState.nextState();
+
+	CPPUNIT_ASSERT(state == 0);
+}
+
+void FindPuckTurnToStateTest::nextState_oneTargetAndRobotHasNotReachedOwnTarget_nextStateIs0()
+{
+	RobotMock robot;
+	FieldMock field;
+	RefereeMock referee;
+	LoggerMock logger;
+	ColorDependentPuckTargetFetcherMock puckTargetFetcher;
+	robot.setStuckAtObstacle(false);
+	robot.setReachedTarget(true);
+	list<Point> targetList;
+	FindPuckTurnToState findPuckTurnToState(robot, field, referee, logger, puckTargetFetcher, targetList);
+	findPuckTurnToState.update();
+
+	robot.setReachedTarget(false);
+	State *state = findPuckTurnToState.nextState();
+
+	CPPUNIT_ASSERT(state == 0);
+}
+
+void FindPuckTurnToStateTest::nextState_oneTargetAndRobotHasReachedOwnTarget_nextStateIsFindPuck()
+{
+	RobotMock robot;
+	FieldMock field;
+	RefereeMock referee;
+	LoggerMock logger;
+	ColorDependentPuckTargetFetcherMock puckTargetFetcher;
+	robot.setStuckAtObstacle(false);
+	robot.setReachedTarget(true);
+	list<Point> targetList;
+	FindPuckTurnToState findPuckTurnToState(robot, field, referee, logger, puckTargetFetcher, targetList);
+	findPuckTurnToState.update();
+
+	robot.setReachedTarget(false);
+	State *state = findPuckTurnToState.nextState();
+	CPPUNIT_ASSERT(state == 0);
+	robot.setReachedTarget(true);
+	findPuckTurnToState.update();
+	state = findPuckTurnToState.nextState();
+
+	FindPuckState *stateCasted = dynamic_cast<FindPuckState*>(state);
+	CPPUNIT_ASSERT(stateCasted != 0);
+	delete state;
+}
+
+void FindPuckTurnToStateTest::update_emptyTargets_robotGotNoCallToTurnTo()
+{
+	RobotMock robot;
+	FieldMock field;
+	RefereeMock referee;
+	LoggerMock logger;
+	ColorDependentPuckTargetFetcherMock puckTargetFetcher;
+	robot.setStuckAtObstacle(false);
+	robot.setReachedTarget(true);
+	list<Point> targetList;
+	FindPuckTurnToState findPuckTurnToState(robot, field, referee, logger, puckTargetFetcher, targetList);
+
+	findPuckTurnToState.update();
+
+	CPPUNIT_ASSERT_EQUAL((unsigned int)0, robot.getCallsToTurnTo());
+}
+
+void FindPuckTurnToStateTest::update_oneTargetAndReachedTarget_robotGotOneCallToTurnTo()
+{
+	RobotMock robot;
+	FieldMock field;
+	RefereeMock referee;
+	LoggerMock logger;
+	ColorDependentPuckTargetFetcherMock puckTargetFetcher;
+	robot.setStuckAtObstacle(false);
+	robot.setReachedTarget(true);
+	list<Point> targetList;
+	targetList.push_back(Point());
+	FindPuckTurnToState findPuckTurnToState(robot, field, referee, logger, puckTargetFetcher, targetList);
+
+	findPuckTurnToState.update();
+
+	CPPUNIT_ASSERT_EQUAL((unsigned int)1, robot.getCallsToTurnTo());
+}
+
+void FindPuckTurnToStateTest::update_oneTargetAndNotReachedTarget_robotGotOneCallToTurnTo()
+{
+	RobotMock robot;
+	FieldMock field;
+	RefereeMock referee;
+	LoggerMock logger;
+	ColorDependentPuckTargetFetcherMock puckTargetFetcher;
+	robot.setStuckAtObstacle(false);
+	robot.setReachedTarget(false);
+	list<Point> targetList;
+	targetList.push_back(Point());
+	FindPuckTurnToState findPuckTurnToState(robot, field, referee, logger, puckTargetFetcher, targetList);
+
+	findPuckTurnToState.update();
+
+	CPPUNIT_ASSERT_EQUAL((unsigned int)1, robot.getCallsToTurnTo());
+}
+

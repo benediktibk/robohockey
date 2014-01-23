@@ -22,6 +22,13 @@ namespace DrivePuckStateMachine
 		CPPUNIT_TEST(nextState_foundPuckAndLimitReachedAndEmptyTargetListAndTargetReached_nextStateIsFindPuckState);
 		CPPUNIT_TEST(nextState_emptyTargetListAndTargetNotReached_nextStateIsFindPuckTurnToState);
 		CPPUNIT_TEST(nextState_stuckAtObstacle_nextStateIsLeavePuckState);
+		CPPUNIT_TEST(nextState_emptyTargetListAndRobotHasNotReachedTarget_nextStateIsFindPuck);
+		CPPUNIT_TEST(nextState_oneTargetAndRobotHasNotReachedTarget_nextStateIs0);
+		CPPUNIT_TEST(nextState_oneTargetAndRobotHasNotReachedOwnTarget_nextStateIs0);
+		CPPUNIT_TEST(nextState_oneTargetAndRobotHasReachedOwnTarget_nextStateIsFindPuck);
+		CPPUNIT_TEST(update_emptyTargets_robotGotNoCallToTurnTo);
+		CPPUNIT_TEST(update_oneTargetAndReachedTarget_robotGotOneCallToTurnTo);
+		CPPUNIT_TEST(update_oneTargetAndNotReachedTarget_robotGotOneCallToTurnTo);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
@@ -31,7 +38,13 @@ namespace DrivePuckStateMachine
 		void nextState_foundPuckAndLimitReachedAndEmptyTargetListAndTargetReached_nextStateIsFindPuckState();
 		void nextState_emptyTargetListAndTargetNotReached_nextStateIsFindPuckTurnToState();
 		void nextState_stuckAtObstacle_nextStateIsLeavePuckState();
-
+		void nextState_emptyTargetListAndRobotHasNotReachedTarget_nextStateIsFindPuck();
+		void nextState_oneTargetAndRobotHasNotReachedTarget_nextStateIs0();
+		void nextState_oneTargetAndRobotHasNotReachedOwnTarget_nextStateIs0();
+		void nextState_oneTargetAndRobotHasReachedOwnTarget_nextStateIsFindPuck();
+		void update_emptyTargets_robotGotNoCallToTurnTo();
+		void update_oneTargetAndReachedTarget_robotGotOneCallToTurnTo();
+		void update_oneTargetAndNotReachedTarget_robotGotOneCallToTurnTo();
 };
 }
 }
