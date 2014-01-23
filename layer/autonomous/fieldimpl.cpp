@@ -819,10 +819,6 @@ void FieldImpl::updateWithCameraData()
 	for (vector<FieldObject>::iterator i = m_fieldObjects.begin(); i != m_fieldObjects.end(); ++i)
 	{
 		FieldObject &fieldObject = *i;
-
-		if (fieldObject.getColor() != FieldColorUnknown)
-			continue;
-
 		list<DataAnalysis::CameraObject>::iterator closestCameraObjectIterator = getClosestCameraObject(fieldObject, cameraObjectList);
 		const DataAnalysis::CameraObject &closestCameraObject = *closestCameraObjectIterator;
 		const Point &fieldObjectPosition = fieldObject.getCircle().getCenter();
