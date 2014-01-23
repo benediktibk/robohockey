@@ -32,10 +32,10 @@ void FindPuckTurnToStateTest::nextState_foundPuck_nextStateIsVerifyPuckState()
 	list<Point> targetList;
 	targetList.push_back(Point());
 	FindPuckTurnToState findPuckTurnToState(robot, field, referee, logger, puckTargetFetcher, targetList);
-	State *waitState;
-	waitState = findPuckTurnToState.nextState();
-	State *state;
-	state = waitState->nextState();
+	findPuckTurnToState.update();
+
+	State *waitState = findPuckTurnToState.nextState();
+	State *state = waitState->nextState();
 	VerifyPuckState *stateCasted = dynamic_cast<VerifyPuckState*>(state);
 
 	CPPUNIT_ASSERT(stateCasted != 0);
@@ -55,8 +55,8 @@ void FindPuckTurnToStateTest::nextState_emptyTargetListAndTargetReached_nextStat
 	targetList.push_back(Point());
 	FindPuckTurnToState findPuckTurnToState(robot, field, referee, logger, puckTargetFetcher, targetList);
 	findPuckTurnToState.update();
-	State *state;
-	state = findPuckTurnToState.nextState();
+
+	State *state = findPuckTurnToState.nextState();
 	FindPuckState *stateCasted = dynamic_cast<FindPuckState*>(state);
 
 	CPPUNIT_ASSERT(stateCasted != 0);
@@ -74,11 +74,12 @@ void FindPuckTurnToStateTest::nextState_targetList_nextStateIsFindPuckTurnToStat
 	robot.setReachedTarget(true);
 	list<Point> targetList;
 	targetList.push_back(Point());
+	targetList.push_back(Point());
 	FindPuckTurnToState findPuckTurnToState(robot, field, referee, logger, puckTargetFetcher, targetList);
-	State *waitState;
-	waitState = findPuckTurnToState.nextState();
-	State *state;
-	state = waitState->nextState();
+	findPuckTurnToState.update();
+
+	State *waitState = findPuckTurnToState.nextState();
+	State *state = waitState->nextState();
 	FindPuckTurnToState *stateCasted = dynamic_cast<FindPuckTurnToState*>(state);
 
 	CPPUNIT_ASSERT(stateCasted != 0);
@@ -100,15 +101,15 @@ void FindPuckTurnToStateTest::nextState_foundPuckAndLimitReachedAndEmptyTargetLi
 	targetList.push_back(Point());
 	FindPuckTurnToState findPuckTurnToState(robot, field, referee, logger, puckTargetFetcher, targetList);
 	findPuckTurnToState.update();
-	State *state;
-	state = findPuckTurnToState.nextState();
+
+	State *state = findPuckTurnToState.nextState();
 	FindPuckState *stateCasted = dynamic_cast<FindPuckState*>(state);
 
 	CPPUNIT_ASSERT(stateCasted != 0);
 	delete state;
 }
 
-void FindPuckTurnToStateTest::nextState_emptyTargetListAndTargetNotReached_nextStateIsFindPuckTurnToState()
+void FindPuckTurnToStateTest::nextState_emptyTargetListAndTargetNotReached_nextStateIsFindPuckState()
 {
 	RobotMock robot;
 	FieldMock field;
@@ -116,17 +117,16 @@ void FindPuckTurnToStateTest::nextState_emptyTargetListAndTargetNotReached_nextS
 	LoggerMock logger;
 	ColorDependentPuckTargetFetcherMock puckTargetFetcher;
 	field.setIsPuckcolorDetected(true);
+	robot.setReachedTarget(true);
 	list<Point> targetList;
 	FindPuckTurnToState findPuckTurnToState(robot, field, referee, logger, puckTargetFetcher, targetList);
-	State *waitState;
-	waitState = findPuckTurnToState.nextState();
-	State *state;
-	state = waitState->nextState();
-	FindPuckTurnToState *stateCasted = dynamic_cast<FindPuckTurnToState*>(state);
+	findPuckTurnToState.update();
+
+	State *state = findPuckTurnToState.nextState();
+	FindPuckState *stateCasted = dynamic_cast<FindPuckState*>(state);
 
 	CPPUNIT_ASSERT(stateCasted != 0);
 	delete state;
-	delete waitState;
 }
 
 void FindPuckTurnToStateTest::nextState_stuckAtObstacle_nextStateIsLeavePuckState()
@@ -198,6 +198,7 @@ void FindPuckTurnToStateTest::nextState_oneTargetAndRobotHasNotReachedOwnTarget_
 	robot.setStuckAtObstacle(false);
 	robot.setReachedTarget(true);
 	list<Point> targetList;
+	targetList.push_back(Point());
 	FindPuckTurnToState findPuckTurnToState(robot, field, referee, logger, puckTargetFetcher, targetList);
 	findPuckTurnToState.update();
 
@@ -217,6 +218,7 @@ void FindPuckTurnToStateTest::nextState_oneTargetAndRobotHasReachedOwnTarget_nex
 	robot.setStuckAtObstacle(false);
 	robot.setReachedTarget(true);
 	list<Point> targetList;
+	targetList.push_back(Point());
 	FindPuckTurnToState findPuckTurnToState(robot, field, referee, logger, puckTargetFetcher, targetList);
 	findPuckTurnToState.update();
 

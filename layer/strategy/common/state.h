@@ -33,6 +33,7 @@ namespace Common
 		void update();
 		virtual std::string getName() = 0;
 		virtual bool allowLogMessages();
+		bool updateAlreadyCalled() const;
 
 	protected:
 		virtual void updateInternal() = 0;

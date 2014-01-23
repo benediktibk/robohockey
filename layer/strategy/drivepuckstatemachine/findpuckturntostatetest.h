@@ -20,7 +20,7 @@ namespace DrivePuckStateMachine
 		CPPUNIT_TEST(nextState_emptyTargetListAndTargetReached_nextStateIsFindPuckState);
 		CPPUNIT_TEST(nextState_targetList_nextStateIsFindPuckTurnToState);
 		CPPUNIT_TEST(nextState_foundPuckAndLimitReachedAndEmptyTargetListAndTargetReached_nextStateIsFindPuckState);
-		CPPUNIT_TEST(nextState_emptyTargetListAndTargetNotReached_nextStateIsFindPuckTurnToState);
+		CPPUNIT_TEST(nextState_emptyTargetListAndTargetNotReached_nextStateIsFindPuckState);
 		CPPUNIT_TEST(nextState_stuckAtObstacle_nextStateIsLeavePuckState);
 		CPPUNIT_TEST(nextState_emptyTargetListAndRobotHasNotReachedTarget_nextStateIsFindPuck);
 		CPPUNIT_TEST(nextState_oneTargetAndRobotHasNotReachedTarget_nextStateIs0);
@@ -36,7 +36,7 @@ namespace DrivePuckStateMachine
 		void nextState_emptyTargetListAndTargetReached_nextStateIsFindPuckState();
 		void nextState_targetList_nextStateIsFindPuckTurnToState();
 		void nextState_foundPuckAndLimitReachedAndEmptyTargetListAndTargetReached_nextStateIsFindPuckState();
-		void nextState_emptyTargetListAndTargetNotReached_nextStateIsFindPuckTurnToState();
+		void nextState_emptyTargetListAndTargetNotReached_nextStateIsFindPuckState();
 		void nextState_stuckAtObstacle_nextStateIsLeavePuckState();
 		void nextState_emptyTargetListAndRobotHasNotReachedTarget_nextStateIsFindPuck();
 		void nextState_oneTargetAndRobotHasNotReachedTarget_nextStateIs0();

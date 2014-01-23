@@ -33,6 +33,7 @@ namespace DrivePuckStateMachine
 	private:
 		Common::ColorDependentPuckTargetFetcher &m_puckTargetFetcher;
 		std::list<RoboHockey::Common::Point> m_target;
+		bool m_startedWithEmptyTargetList;
 
 };
 }

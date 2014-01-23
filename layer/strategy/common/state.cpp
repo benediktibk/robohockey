@@ -32,3 +32,8 @@ bool State::allowLogMessages()
 {
 	return true;
 }
+
+bool State::updateAlreadyCalled() const
+{
+	return m_updateAlreadyCalled;
+}

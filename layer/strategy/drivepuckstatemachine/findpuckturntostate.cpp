@@ -17,17 +17,22 @@ FindPuckTurnToState::FindPuckTurnToState(Robot &robot, Field &field, Referee &re
 										 std::list<RoboHockey::Common::Point> targetList):
 	State(robot, field, referee, logger, true),
 	m_puckTargetFetcher(puckTargetFetcher),
-	m_target(targetList)
+	m_target(targetList),
+	m_startedWithEmptyTargetList(m_target.empty())
 { }
 
 State *FindPuckTurnToState::nextState()
 {
-	if(m_robot.stuckAtObstacle())
+	if (m_startedWithEmptyTargetList)
+		return new FindPuckState(m_robot, m_field, m_referee, m_logger, m_puckTargetFetcher);
+	else if(m_robot.stuckAtObstacle())
 		return new LeavePuckState(m_robot, m_field, m_referee, m_logger, m_puckTargetFetcher, false);
 	else if(m_puckTargetFetcher.getNumberOfKnownPucksNotInEnemyThird() > 0 && !m_puckTargetFetcher.isCantReachTargetLimitReached())
 		return new WaitCyclesState(m_robot, m_field, m_referee, m_logger,
 								   new VerifyPuckState(m_robot, m_field, m_referee, m_logger, m_puckTargetFetcher), 15, false);
-	else if(m_target.empty() && m_robot.reachedTarget())
+	else if (!m_robot.reachedTarget() || !updateAlreadyCalled())
+		return 0;
+	else if(m_target.empty())
 		return new FindPuckState(m_robot, m_field, m_referee, m_logger, m_puckTargetFetcher);
 	else
 		return new WaitCyclesState(m_robot, m_field, m_referee, m_logger,
