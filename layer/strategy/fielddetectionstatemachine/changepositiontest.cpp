@@ -39,9 +39,10 @@ void ChangePositionTest::nextState_cantReachTarget_detectField()
 	robot.setCantReachedTarget(true);
 	changePositionState.update();
 	State *state = changePositionState.nextState();
-	State *stateCasted = dynamic_cast<DetectField*>(state);
+	DetectField *stateCasted = dynamic_cast<DetectField*>(state);
 
 	CPPUNIT_ASSERT(stateCasted != 0);
+	delete state;
 }
 
 void ChangePositionTest::nextState_reachedTarget_detectField()
@@ -55,7 +56,8 @@ void ChangePositionTest::nextState_reachedTarget_detectField()
 	robot.setReachedTarget(true);
 	changePositionState.update();
 	State *state = changePositionState.nextState();
-	State *stateCasted = dynamic_cast<DetectField*>(state);
+	DetectField *stateCasted = dynamic_cast<DetectField*>(state);
 
 	CPPUNIT_ASSERT(stateCasted != 0);
+	delete state;
 }
