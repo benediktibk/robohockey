@@ -14,16 +14,16 @@ using namespace RoboHockey::Layer::Strategy::FieldDetectionStateMachine;
 using namespace RoboHockey::Layer::Autonomous;
 
 TurnAngle::TurnAngle(Autonomous::Robot &robot, Autonomous::Field &field, Common::Referee &referee, Logger &logger, Angle angle,
-					 list<pair<unsigned int, RobotPosition> > calibratedPositions) :
+					 unsigned int numberOfTurns) :
 	State(robot, field, referee, logger,  true),
 	m_angle(angle),
-	m_calibratedPositions(calibratedPositions)
+	m_numberOfTurns(numberOfTurns)
 { }
 
 State* TurnAngle::nextState()
 {
 	if (m_robot.reachedTarget())
-		return new DetectField(m_robot, m_field, m_referee, m_logger, m_calibratedPositions);
+		return new DetectField(m_robot, m_field, m_referee, m_logger, m_numberOfTurns);
 	else
 		return 0;
 }

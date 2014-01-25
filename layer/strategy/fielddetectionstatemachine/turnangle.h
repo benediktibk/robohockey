@@ -23,8 +23,7 @@ namespace FieldDetectionStateMachine
 	{
 	public:
 		TurnAngle(Autonomous::Robot &robot, Autonomous::Field &field, Common::Referee &referee, RoboHockey::Common::Logger &logger,
-				  RoboHockey::Common::Angle angle,
-				  std::list<std::pair<unsigned int, RoboHockey::Common::RobotPosition> > calibratedPositions);
+				  RoboHockey::Common::Angle angle, unsigned int numberOfTurns);
 
 		virtual State* nextState();
 		virtual std::string getName();
@@ -34,7 +33,7 @@ namespace FieldDetectionStateMachine
 
 	private:
 		RoboHockey::Common::Angle m_angle;
-		std::list<std::pair<unsigned int, RoboHockey::Common::RobotPosition> > m_calibratedPositions;
+		unsigned int m_numberOfTurns;
 
 	};
 }
