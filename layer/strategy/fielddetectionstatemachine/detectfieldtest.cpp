@@ -78,24 +78,12 @@ void DetectFieldTest::nextState_calibratedOnSecondTry_driveTo()
 
 	State *state = detectFieldState.nextState();
 
-	DriveToState *stateCasted = dynamic_cast<DriveToState*>(state);
-	CPPUNIT_ASSERT(stateCasted != 0);
-	delete state;
-}
+	CPPUNIT_ASSERT(state == 0);
 
-void DetectFieldTest::nextState_calibrationSuccessfulButTooFewCalibrationResults_turnAngle()
-{
-	RobotMock robot;
-	FieldMock field;
-	RefereeMock referee;
-	LoggerMock logger;
-
-	DetectField detectFieldState(robot, field, referee, logger, 0);
-
+	field.setCalibrationReturnPosition(RobotPosition(Point(1,2), Angle::getEighthRotation()));
 	detectFieldState.update();
-
-	State *state;
 	state = detectFieldState.nextState();
+
 	DriveToState *stateCasted = dynamic_cast<DriveToState*>(state);
 	CPPUNIT_ASSERT(stateCasted != 0);
 	delete state;
