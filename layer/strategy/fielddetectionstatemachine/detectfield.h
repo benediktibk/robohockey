@@ -22,7 +22,7 @@ namespace FieldDetectionStateMachine
 	{
 	public:
 		DetectField(Autonomous::Robot &robot, Autonomous::Field &field, Common::Referee &referee, RoboHockey::Common::Logger &logger,
-					std::list<std::pair<unsigned int, RoboHockey::Common::RobotPosition> > previousCalibrationResults);
+					unsigned int numberOfTurns);
 
 		virtual State* nextState();
 		virtual std::string getName();
@@ -31,13 +31,9 @@ namespace FieldDetectionStateMachine
 		virtual void updateInternal();
 
 	private:
-		void logCurrentSavedPositions();
-
-	private:
 		bool m_successful;
 		unsigned int m_numberOfTries;
-		std::list<std::pair<unsigned int, RoboHockey::Common::RobotPosition> > m_calibrationResults;
-
+		unsigned int m_numberOfTurns;
 	};
 }
 }

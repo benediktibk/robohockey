@@ -16,11 +16,11 @@ using namespace RoboHockey::Layer::Strategy::Common;
 using namespace RoboHockey::Layer::Strategy::FieldDetectionStateMachine;
 using namespace RoboHockey::Layer::Autonomous;
 
-DetectField::DetectField(Robot &robot, Field &field, Referee &referee, Logger &logger, list<pair<unsigned int, RobotPosition> > previousCalibrationResults) :
+DetectField::DetectField(Robot &robot, Field &field, Referee &referee, Logger &logger, unsigned int numberOfTurns) :
 	State(robot, field, referee, logger, false),
 	m_successful(false),
 	m_numberOfTries(0),
-	m_calibrationResults(previousCalibrationResults)
+	m_numberOfTurns(numberOfTurns)
 { }
 
 State* DetectField::nextState()
@@ -52,43 +52,16 @@ void DetectField::updateInternal()
 	RobotPosition result = m_field.getNewOriginFromFieldDetection(numberOfStones, true);
 
 	if (!(result == RobotPosition()))
-	{
-		if (numberOfStones >= m_calibrationResults.front().first)
-			m_calibrationResults.push_front(pair<unsigned int, RoboHockey::Common::RobotPosition>(numberOfStones, result));
-		else
-			m_calibrationResults.push_back(pair<unsigned int, RoboHockey::Common::RobotPosition>(numberOfStones, result));
-
 		m_successful = true;
-	}
-
-	logCurrentSavedPositions();
 
 	m_numberOfTries++;
 
-	if ((size_t) 0 < m_calibrationResults.size())
+	if (m_successful)
 	{
 		stringstream message;
 		message << "Transforming to Position: " << m_calibrationResults.front().second;
 		m_logger.logToLogFileOfType(Logger::LogFileTypeStateChanges, message.str());
-		m_field.transformFieldToNewOrigin(m_calibrationResults.front().second);
+		m_field.transformFieldToNewOrigin(result);
 		m_successful = true;
 	}
-}
-
-void DetectField::logCurrentSavedPositions()
-{
-	m_logger.logToLogFileOfType(Logger::LogFileTypeFieldDetection, "BEGIN: Saved State Data");
-
-	unsigned int counter = 0;
-	for (list<pair<unsigned int, RobotPosition> >::iterator it = m_calibrationResults.begin(); it != m_calibrationResults.end(); ++it)
-	{
-		stringstream message;
-		message << "\tresult:\n\tOrigin: " << (*it).second << "\n\tNumber: " << (*it).first << endl;
-
-		m_logger.logToLogFileOfType(Logger::LogFileTypeFieldDetection, message.str());
-		counter++;
-	}
-
-	m_logger.logToLogFileOfType(Logger::LogFileTypeFieldDetection, "END: Saved State Data");
-
 }
