@@ -16,9 +16,16 @@ class ChangePositionTest :
 		public CPPUNIT_NS::TestFixture
 	{
 		CPPUNIT_TEST_SUITE(ChangePositionTest);
+		CPPUNIT_TEST(nextState_didntReachedTarget_NULL);
+		CPPUNIT_TEST(nextState_cantReachTarget_detectField);
+		CPPUNIT_TEST(nextState_reachedTarget_detectField);
 		CPPUNIT_TEST_SUITE_END();
+
 	private:
-		
+		void nextState_didntReachedTarget_NULL();
+		void nextState_cantReachTarget_detectField();
+		void nextState_reachedTarget_detectField();
+
 	};
 }
 }
