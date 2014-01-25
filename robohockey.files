@@ -2756,3 +2756,7 @@ layer/autonomous/fieldobjectcolorcompare.h
 layer/autonomous/fieldobjectcolorcomparetest.cpp
 layer/autonomous/fieldobjectcolorcompare.cpp
 resources/testfiles/lidar_42.txt
+layer/strategy/fielddetectionstatemachine/changepositiontest.h
+layer/strategy/fielddetectionstatemachine/changeposition.h
+layer/strategy/fielddetectionstatemachine/changepositiontest.cpp
+layer/strategy/fielddetectionstatemachine/changeposition.cpp

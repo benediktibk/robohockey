@@ -4,6 +4,7 @@ set(LAYER_STRATEGY_FIELDDETECTIONSTATEMACHINE_SRC
 	checkgoalcolor.cpp
 	turnangle.cpp
 	calibrationfinished.cpp
+	changeposition.cpp
 )
 
 set(LAYER_STRATEGY_FIELDDETECTIONSTATEMACHINE_TEST_SRC
@@ -12,6 +13,7 @@ set(LAYER_STRATEGY_FIELDDETECTIONSTATEMACHINE_TEST_SRC
 	checkgoalcolortest.cpp
 	turnangletest.cpp
 	calibrationfinishedtest.cpp
+	changepositiontest.cpp
 )
 
 add_library(layerstrategyfielddetectionstatemachine ${LAYER_STRATEGY_FIELDDETECTIONSTATEMACHINE_SRC})
