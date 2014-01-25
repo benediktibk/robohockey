@@ -28,7 +28,7 @@ State* DetectField::nextState()
 	if (!m_successful && m_numberOfTries < 3)
 		return 0;
 	else if (!m_successful)
-		return new TurnAngle(m_robot, m_field, m_referee, m_logger,  Angle::convertFromDegreeToRadiant(100), m_calibrationResults);
+		return new TurnAngle(m_robot, m_field, m_referee, m_logger,  Angle::convertFromDegreeToRadiant(100), m_numberOfTurns + 1);
 	else if (m_field.isCalibrated())
 		//! @todo use different state if DriveTo can't reach target!
 	{
@@ -59,7 +59,7 @@ void DetectField::updateInternal()
 	if (m_successful)
 	{
 		stringstream message;
-		message << "Transforming to Position: " << m_calibrationResults.front().second;
+		message << "Transforming to Position: " << result;
 		m_logger.logToLogFileOfType(Logger::LogFileTypeStateChanges, message.str());
 		m_field.transformFieldToNewOrigin(result);
 		m_successful = true;

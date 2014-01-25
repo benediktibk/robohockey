@@ -12,7 +12,7 @@ InitialState::InitialState(Robot &robot, Field &field, Referee &referee, RoboHoc
 
 State* InitialState::nextState()
 {
-	return new DetectField(m_robot, m_field, m_referee, m_logger, std::list<std::pair<unsigned int, RoboHockey::Common::RobotPosition> >() );
+	return new DetectField(m_robot, m_field, m_referee, m_logger, 0);
 }
 
 std::string InitialState::getName()
