@@ -1,6 +1,7 @@
 #include "layer/strategy/fielddetectionstatemachine/detectfield.h"
 #include "layer/strategy/fielddetectionstatemachine/turnangle.h"
 #include "layer/strategy/fielddetectionstatemachine/checkgoalcolor.h"
+#include "layer/strategy/fielddetectionstatemachine/changeposition.h"
 #include "layer/strategy/common/drivetostate.h"
 #include "layer/autonomous/robot.h"
 #include "layer/autonomous/field.h"
@@ -27,10 +28,14 @@ State* DetectField::nextState()
 {
 	if (!m_successful && m_numberOfTries < 3)
 		return 0;
+
+	else if (!m_successful && m_numberOfTurns > 7)
+		return new ChangePosition(m_robot, m_field, m_referee, m_logger);
+
 	else if (!m_successful)
 		return new TurnAngle(m_robot, m_field, m_referee, m_logger,  Angle::convertFromDegreeToRadiant(100), m_numberOfTurns + 1);
+
 	else if (m_field.isCalibrated())
-		//! @todo use different state if DriveTo can't reach target!
 	{
 		return new DriveToState(m_robot, m_field, m_referee, m_logger, m_field.getTargetsForGoalDetection(),
 							new CheckGoalColor(m_robot, m_field, m_referee, m_logger),
