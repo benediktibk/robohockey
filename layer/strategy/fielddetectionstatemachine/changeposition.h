@@ -19,17 +19,13 @@ namespace FieldDetectionStateMachine
 		public Common::State
 	{
 	public:
-		ChangePosition(Autonomous::Robot &robot, Autonomous::Field &field, Common::Referee &referee, RoboHockey::Common::Logger &logger,
-					   unsigned int numberOfTurns);
+		ChangePosition(Autonomous::Robot &robot, Autonomous::Field &field, Common::Referee &referee, RoboHockey::Common::Logger &logger);
 
 		virtual State* nextState();
 		virtual std::string getName();
 
 	protected:
 		virtual void updateInternal();
-
-	private:
-		unsigned int m_numberOfTurns;
 		
 	};
 }

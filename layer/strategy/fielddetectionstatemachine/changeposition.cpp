@@ -7,10 +7,8 @@ using namespace RoboHockey::Common;
 using namespace RoboHockey::Layer;
 using namespace RoboHockey::Layer::Strategy::FieldDetectionStateMachine;
 
-ChangePosition::ChangePosition(Autonomous::Robot &robot, Autonomous::Field &field, Strategy::Common::Referee &referee, Logger &logger,
-							   unsigned int numberOfTurns):
-	State(robot, field, referee, logger, true),
-	m_numberOfTurns(numberOfTurns)
+ChangePosition::ChangePosition(Autonomous::Robot &robot, Autonomous::Field &field, Strategy::Common::Referee &referee, Logger &logger):
+	State(robot, field, referee, logger, true)
 { }
 
 RoboHockey::Layer::Strategy::Common::State *ChangePosition::nextState()
