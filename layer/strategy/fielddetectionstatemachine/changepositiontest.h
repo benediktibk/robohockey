@@ -19,12 +19,14 @@ class ChangePositionTest :
 		CPPUNIT_TEST(nextState_didntReachedTarget_NULL);
 		CPPUNIT_TEST(nextState_cantReachTarget_detectField);
 		CPPUNIT_TEST(nextState_reachedTarget_detectField);
+		CPPUNIT_TEST(update_updateSeveralTimes_robotFunctionGetCalledOnlyOnce);
 		CPPUNIT_TEST_SUITE_END();
 
 	private:
 		void nextState_didntReachedTarget_NULL();
 		void nextState_cantReachTarget_detectField();
 		void nextState_reachedTarget_detectField();
+		void update_updateSeveralTimes_robotFunctionGetCalledOnlyOnce();
 
 	};
 }

@@ -61,3 +61,20 @@ void ChangePositionTest::nextState_reachedTarget_detectField()
 	CPPUNIT_ASSERT(stateCasted != 0);
 	delete state;
 }
+
+void ChangePositionTest::update_updateSeveralTimes_robotFunctionGetCalledOnlyOnce()
+{
+	RobotMock robot;
+	FieldMock field;
+	RefereeMock referee;
+	LoggerMock logger;
+	ChangePosition changePositionState (robot, field, referee, logger);
+
+	CPPUNIT_ASSERT_EQUAL((unsigned int) 0, robot.getCallsToLeavePuck());
+
+	changePositionState.update();
+	CPPUNIT_ASSERT_EQUAL((unsigned int) 1, robot.getCallsToLeavePuck());
+
+	changePositionState.update();
+	CPPUNIT_ASSERT_EQUAL((unsigned int) 1, robot.getCallsToLeavePuck());
+}
