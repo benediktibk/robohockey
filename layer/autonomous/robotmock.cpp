@@ -17,7 +17,8 @@ RobotMock::RobotMock() :
 	m_cantReachTarget(false),
 	m_puckCollected(false),
 	m_puckCollectable(false),
-	m_callsToTurnTo(0)
+	m_callsToTurnTo(0),
+	m_callsToLeavePuck(0)
 { }
 
 void RobotMock::goTo(const list<RobotPosition> &possibleTargets)
@@ -95,7 +96,9 @@ void RobotMock::updatePuckPosition(const Point &)
 { }
 
 void RobotMock::leaveCollectedPuck()
-{ }
+{
+	++m_callsToLeavePuck;
+}
 
 bool RobotMock::isMoving() const
 {
@@ -176,4 +179,9 @@ const Point &RobotMock::getLastTurnToTarget() const
 unsigned int RobotMock::getCallsToTurnTo() const
 {
 	return m_callsToTurnTo;
+}
+
+unsigned int RobotMock::getCallsToLeavePuck() const
+{
+	return m_callsToLeavePuck;
 }

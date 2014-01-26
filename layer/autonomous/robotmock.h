@@ -54,6 +54,7 @@ namespace Autonomous
 		void setPuckCollectable(bool value);
 		const Common::Point &getLastTurnToTarget() const;
 		unsigned int getCallsToTurnTo() const;
+		unsigned int getCallsToLeavePuck() const;
 
 	private:
 		Common::RobotPosition m_lastTarget;
@@ -69,6 +70,7 @@ namespace Autonomous
 		bool m_puckCollectable;
 		Common::Point m_lastTurnToTarget;
 		unsigned int m_callsToTurnTo;
+		unsigned int m_callsToLeavePuck;
 	};
 }
 }
