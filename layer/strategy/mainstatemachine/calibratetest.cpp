@@ -160,7 +160,7 @@ void CalibrateTest::nextState_detectionStartAndGameStart_AchieveGoals()
 	delete state;
 }
 
-void CalibrateTest::nextState_GameStartAndGameOver_notCalibrate()
+void CalibrateTest::nextState_gameStartAndGameOver_notCalibrate()
 {
 	RobotMock robot;
 	FieldMock field;
@@ -178,6 +178,76 @@ void CalibrateTest::nextState_GameStartAndGameOver_notCalibrate()
 	Calibrate *stateCasted = dynamic_cast<Calibrate*>(state);
 	CPPUNIT_ASSERT(stateCasted == 0);
 	delete state;
+}
+
+void CalibrateTest::nextState_gameStartAndDetectionStartButNotCalibrated_NULL()
+{
+	RobotMock robot;
+	FieldMock field;
+	RefereeMock referee;
+	LoggerMock logger;
+	Calibrate calibrate(robot, field, referee, logger);
+	referee.setGameStart(true);
+	referee.setDetectionStart(true);
+	referee.setGameOver(false);
+	referee.setStopMovement(false);
+
+	field.setCalibrationReturn(false);
+	State *state;
+
+	state = calibrate.nextState();
+
+	CPPUNIT_ASSERT(state == 0);
+	delete state;
+}
+
+void CalibrateTest::nextState_gameStartAndDetectionStartAndCalibratedButNoTeamColorKnown_NULL()
+{
+	RobotMock robot;
+	FieldMock field;
+	RefereeMock referee;
+	LoggerMock logger;
+	Calibrate calibrate(robot, field, referee, logger);
+	referee.setGameStart(true);
+	referee.setDetectionStart(true);
+	referee.setGameOver(false);
+	referee.setStopMovement(false);
+
+	field.setCalibrationReturn(true);
+	State *state;
+
+	state = calibrate.nextState();
+
+	CPPUNIT_ASSERT(state == 0);
+	delete state;
+}
+
+void CalibrateTest::nextState_gameStartAndDetectionStartAndTeamColorKnownOnSecondTry_NULL()
+{
+	RobotMock robot;
+	FieldMock field;
+	RefereeMock referee;
+	LoggerMock logger;
+	Calibrate calibrate(robot, field, referee, logger);
+	referee.setGameStart(true);
+	referee.setDetectionStart(true);
+	referee.setGameOver(false);
+	referee.setStopMovement(false);
+
+	field.setCalibrationReturn(true);
+	State *state;
+	state = calibrate.nextState();
+
+	CPPUNIT_ASSERT(state == 0);
+
+	field.setTrueTeamColor(FieldColorYellow);
+	state = calibrate.nextState();
+	AchieveGoals *stateCasted = dynamic_cast<AchieveGoals*>(state);
+
+	CPPUNIT_ASSERT(stateCasted != 0);
+
+	delete state;
+
 }
 
 void CalibrateTest::nextState_stopMovement_pause()
