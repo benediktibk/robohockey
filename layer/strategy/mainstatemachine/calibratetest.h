@@ -16,7 +16,7 @@ class CalibrateTest:
         public CPPUNIT_NS::TestFixture
     {
         CPPUNIT_TEST_SUITE(CalibrateTest);
-        CPPUNIT_TEST(nextState_gameStart_achieveGoals);
+        CPPUNIT_TEST(nextState_gameStartAndCalibratedAndTeamColorKnown_achieveGoals);
         CPPUNIT_TEST(nextState_stopMovement_pause);
         CPPUNIT_TEST(nextState_gameOver_pause);
         CPPUNIT_TEST(nextState_detectionStart_notAchieveGoals);
@@ -29,7 +29,7 @@ class CalibrateTest:
         CPPUNIT_TEST_SUITE_END();
 
     private:
-        void nextState_gameStart_achieveGoals();
+        void nextState_gameStartAndCalibratedAndTeamColorKnown_achieveGoals();
         void nextState_stopMovement_pause();
         void nextState_gameOver_pause();
         void nextState_detectionStart_notAchieveGoals();

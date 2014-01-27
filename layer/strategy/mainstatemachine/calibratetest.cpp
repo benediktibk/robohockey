@@ -15,7 +15,7 @@ using namespace RoboHockey::Layer::Strategy::Common;
 using namespace RoboHockey::Layer::Strategy::MainStateMachine;
 using namespace RoboHockey::Layer::Autonomous;
 
-void CalibrateTest::nextState_gameStart_achieveGoals()
+void CalibrateTest::nextState_gameStartAndCalibratedAndTeamColorKnown_achieveGoals()
 {
 	RobotMock robot;
 	FieldMock field;
@@ -26,6 +26,9 @@ void CalibrateTest::nextState_gameStart_achieveGoals()
 	referee.setDetectionStart(false);
 	referee.setGameOver(false);
 	referee.setStopMovement(false);
+
+	field.setCalibrationReturn(true);
+	field.setTrueTeamColor(FieldColorYellow);
 	State *state;
 
 	state = calibrate.nextState();
@@ -145,6 +148,9 @@ void CalibrateTest::nextState_detectionStartAndGameStart_AchieveGoals()
 	referee.setDetectionStart(true);
 	referee.setGameOver(false);
 	referee.setStopMovement(false);
+
+	field.setCalibrationReturn(true);
+	field.setTrueTeamColor(FieldColorBlue);
 	State *state;
 
 	state = calibrate.nextState();
