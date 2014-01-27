@@ -3,7 +3,9 @@
 #include "layer/strategy/mainstatemachine/pause.h"
 #include "layer/strategy/common/referee.h"
 #include "layer/strategy/fielddetectionstatemachine/initialstate.h"
+#include "layer/autonomous/field.h"
 
+using namespace RoboHockey::Common;
 using namespace RoboHockey::Layer::Strategy::Common;
 using namespace RoboHockey::Layer::Strategy::MainStateMachine;
 using namespace RoboHockey::Layer::Autonomous;
@@ -23,7 +25,7 @@ Calibrate::~Calibrate()
 
 State* Calibrate::nextState()
 {
-	if(m_referee.gameStart())
+	if(m_referee.gameStart() && m_field.isCalibrated() && m_field.getOwnTeamColor() != FieldColorUnknown)
 	{
 		return new AchieveGoals(m_robot, m_field, m_referee, m_logger);
 	}
