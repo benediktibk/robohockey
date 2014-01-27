@@ -5,6 +5,7 @@
 #include "common/loggerimpl.h"
 #include "common/stopwatch.h"
 #include "layer/dataanalysis/dataanalyserimpl.h"
+#include "layer/dataanalysis/camera.h"
 #include "layer/hardware/robotimpl.h"
 #include "layer/hardware/sensordatarecorder.h"
 #include "layer/autonomous/robotimpl.h"
@@ -95,6 +96,9 @@ Game::Game(int argc, char **argv) :
 	m_globalStopWatch->getTimeAndRestart();
 	m_timer->start(0);
 	m_referee->reportReady();
+
+	DataAnalysis::Camera &camera = dataAnalyser->getCamera();
+	camera.getProbabilityForYellowGoal();
 }
 
 Game::~Game()
