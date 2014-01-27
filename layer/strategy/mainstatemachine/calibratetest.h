@@ -16,7 +16,7 @@ class CalibrateTest:
         public CPPUNIT_NS::TestFixture
     {
         CPPUNIT_TEST_SUITE(CalibrateTest);
-        CPPUNIT_TEST(nextState_gameStart_achieveGoals);
+        CPPUNIT_TEST(nextState_gameStartAndCalibratedAndTeamColorKnown_achieveGoals);
         CPPUNIT_TEST(nextState_stopMovement_pause);
         CPPUNIT_TEST(nextState_gameOver_pause);
         CPPUNIT_TEST(nextState_detectionStart_notAchieveGoals);
@@ -25,11 +25,14 @@ class CalibrateTest:
         CPPUNIT_TEST(nextState_gameStartAndGameOver_notInitialState);
         CPPUNIT_TEST(nextState_detectionStart_notPause);
         CPPUNIT_TEST(nextState_detectionStartAndGameStart_AchieveGoals);
-        CPPUNIT_TEST(nextState_GameStartAndGameOver_notCalibrate);
+		CPPUNIT_TEST(nextState_gameStartAndGameOver_notCalibrate);
+		CPPUNIT_TEST(nextState_gameStartAndDetectionStartButNotCalibrated_NULL);
+		CPPUNIT_TEST(nextState_gameStartAndDetectionStartAndCalibratedButNoTeamColorKnown_NULL);
+		CPPUNIT_TEST(nextState_gameStartAndDetectionStartAndTeamColorKnownOnSecondTry_NULL);
         CPPUNIT_TEST_SUITE_END();
 
     private:
-        void nextState_gameStart_achieveGoals();
+        void nextState_gameStartAndCalibratedAndTeamColorKnown_achieveGoals();
         void nextState_stopMovement_pause();
         void nextState_gameOver_pause();
         void nextState_detectionStart_notAchieveGoals();
@@ -38,7 +41,10 @@ class CalibrateTest:
         void nextState_gameStartAndGameOver_notInitialState();
         void nextState_detectionStart_notPause();
         void nextState_detectionStartAndGameStart_AchieveGoals();
-        void nextState_GameStartAndGameOver_notCalibrate();
+		void nextState_gameStartAndGameOver_notCalibrate();
+		void nextState_gameStartAndDetectionStartButNotCalibrated_NULL();
+		void nextState_gameStartAndDetectionStartAndCalibratedButNoTeamColorKnown_NULL();
+		void nextState_gameStartAndDetectionStartAndTeamColorKnownOnSecondTry_NULL();
 	};
 }
 }
