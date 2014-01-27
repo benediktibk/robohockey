@@ -11,7 +11,7 @@ ColorDependentPuckTargetFetcher::ColorDependentPuckTargetFetcher() :
 
 bool ColorDependentPuckTargetFetcher::isCantReachTargetLimitReached() const
 {
-	if (m_cantReachTargetCounter < 10) //if(m_cantReachTargetCounter < 20)
+	if (m_cantReachTargetCounter < 10)
 		return false;
 	else
 		return true;
