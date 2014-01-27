@@ -203,7 +203,7 @@ list<RobotPosition> FieldImpl::getTargetsForScoringGoals() const
 	list<RobotPosition> targets;
 	double offsetX, offsetY;
 	offsetX = 0;
-	offsetY = 0;
+	offsetY = -0.1;
 	if (m_estimatedAchievedGoals % 3 == 0)
 	{
 		targets.push_front(RobotPosition( Point(5 - 4.5/8.0 - 0.14 + offsetX, 1.7 + offsetY), Angle() ));
