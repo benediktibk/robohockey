@@ -1,4 +1,3 @@
-syntax: glob
 build/*
 *.creator.user*
 documents/specification_sheet/*.aux
